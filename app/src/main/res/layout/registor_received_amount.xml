@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fillViewport="true">
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" android:background="#fff"
+            android:layout_marginTop="50dp">
+
+
+            <!-- Registration Form -->
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="7dp"
+                android:background="@drawable/shadow">
+
+                <!-- Full Name Label -->
+                <LinearLayout android:id="@+id/header"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/header_gradient"
+                    android:paddingTop="5dip"
+                    android:paddingBottom="5dip"
+                    >
+
+                    <TextView android:id="@+id/reg_fullname_detaills"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dip"
+                        android:singleLine="true"
+                        android:textColor="@color/white"
+                        android:text="Customer Name(Received Loan)"
+                        android:textSize="20sp"
+                        android:textAlignment="center"
+                        />
+                    <!-- Logo Ends -->
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="10dp">
+                    <TextView
+
+
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight=".7"
+                        android:text="Paid Date"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        />
+
+                    <EditText
+                        android:id="@+id/rxDate"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/shadow"
+
+                        android:drawableEnd="@drawable/shadow3"
+                        android:paddingRight="15dp"
+                        android:paddingTop="9dp"
+                        android:paddingBottom="9dp"
+                        android:layout_weight=".7"
+                        android:drawableRight="@drawable/shadow3"
+
+
+
+                        android:clickable="true"
+                        android:editable="false"
+                        android:hint="selecte Date"
+                        />
+
+                </LinearLayout>
+
+
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="10dp"
+                    android:weightSum="1">
+                    <TextView
+
+
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight=".5"
+                        android:text="Received Amount"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        />
+                    <EditText
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+
+                        android:id="@+id/rxReceivedAmount"                     android:background="@drawable/shadow"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".5"/>
+
+                </LinearLayout>
+
+
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="10dp">
+                    <TextView
+
+
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight=".7"
+                        android:text="description"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        />
+                    <LinearLayout
+                    android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                 android:background="@drawable/shadow5"
+android:paddingLeft="10dp"
+                        android:paddingTop="10dp"
+                        >
+              <Spinner
+                  android:layout_weight=".7"
+                  android:id="@+id/spinnerrx"      android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="right"
+                  ></Spinner>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
+
+
+
+                <Button android:id="@+id/btn_customer_name"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:text="Submit"
+                    android:textColor="@color/white"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/header_gradient" />
+                <TextView
+                    android:id="@+id/displayrx"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:scrollbars="vertical"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textSize="18sp" />
+
+                <!--             <TextView
+                                 android:id="@+id/display1"
+
+                                 android:layout_width="wrap_content"
+                                 android:layout_height="wrap_content"
+                                 android:gravity="center"
+                                 android:padding="10dp"
+                                 android:scrollbars="vertical"
+                                 android:textAppearance="?android:attr/textAppearanceLarge"
+                                 android:textSize="18sp" />-->
+
+            </LinearLayout>
+            <!-- Registration Form Ends -->
+        </RelativeLayout>
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>

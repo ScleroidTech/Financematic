@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#2a78ac</color>
+    <color name="colorPrimaryDark">#2672a5</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="textcolor">#0068ee</color>
+    <color name="white">#f9fafc</color>
+    <color name="green">#288113</color>
+    <color name="red">#b72b21</color>
+    <color name="grey_300">#E0E0E0</color>
+    <color name="color_white">#fefefe</color>
+    <color name="year">#999999</color>
+    <color name="title">#121111</color>
+    <color name="colorBackground">#662222</color>
+    <color name="colorDivide">#cf4545</color>
+    <color name="blues">#d5e5f0</color>
+    <color name="dash">#4c4c4c</color>
+    <color name="card_color">#93944f</color>
+
+
+</resources>

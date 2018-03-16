@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#ddd"
+        android:layout_marginTop="50dp">
+
+        <SearchView
+            android:background="@drawable/shadow"
+            android:id="@+id/simpleSearchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+       android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+
+    />
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/list_all_peoples_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        android:layout_below="@+id/simpleSearchView"
+        />
+    <Button
+        android:id="@+id/button_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="List person summery"
+        android:layout_below="@+id/list_all_peoples_recycler"
+
+        android:layout_marginBottom="50dp"/>
+    </RelativeLayout>
+    </ScrollView>
+</android.support.constraint.ConstraintLayout>
+
