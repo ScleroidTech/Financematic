@@ -18,23 +18,11 @@ import com.scleroid.financematic.utils.RecyclerTouchListener;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
- * Created by scleroid on 3/3/18.
- * <p>
- * Created by scleroid on 2/3/18.
- * <p>
- * Created by scleroid on 2/3/18.
- * <p>
- * Created by scleroid on 2/3/18.
- */
-/**
- * Created by scleroid on 2/3/18.
- */
-/**
- * Created by scleroid on 2/3/18.
- */
-/**
- * Created by scleroid on 2/3/18.
+ * Copyright (C) 2018
+ * @author Ganesh Kaple
+ * @since 2/3/18
  */
 
 public class Fragment_passbook  extends Fragment {

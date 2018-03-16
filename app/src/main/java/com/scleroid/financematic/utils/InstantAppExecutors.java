@@ -16,7 +16,8 @@ package com.scleroid.financematic.utils;
  * limitations under the License.
  */
 
-import com.scleroidtech.gatepass.AppExecutors;
+
+import com.scleroid.financematic.AppExecutors;
 
 import java.util.concurrent.Executor;
 

@@ -15,12 +15,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.scleroid.financematic.fragments.FragmentReport;
 import com.scleroid.financematic.fragments.Fragment_Reg_new_customer;
 import com.scleroid.financematic.fragments.Fragment_dashboard;
 import com.scleroid.financematic.fragments.Fragment_list_all_peoples;
 import com.scleroid.financematic.fragments.Fragment_registor_given_money;
 import com.scleroid.financematic.fragments.Fragment_reminder;
-import com.scleroid.financematic.fragments.Fragment_report;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     return true;
                 case R.id.person_details:
                 /*    toolbar.setTitle("Report");*/
-                    fragment = new Fragment_report();
+                    fragment = new FragmentReport();
                     loadFragment(fragment);
 
                     return true;

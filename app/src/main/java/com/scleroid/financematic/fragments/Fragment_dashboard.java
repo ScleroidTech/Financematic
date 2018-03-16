@@ -58,13 +58,7 @@ public class Fragment_dashboard   extends Fragment {
 
 //Intend
         firstFragment = rootView.findViewById(R.id.cardview_list_title);
-        firstFragment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                loadFragment(new Fragment_passbook());
-            }
-        });
+        firstFragment.setOnClickListener(v -> loadFragment(new Fragment_passbook()));
 
         recyclerView = rootView.findViewById(R.id.dash_my_recycler);
 

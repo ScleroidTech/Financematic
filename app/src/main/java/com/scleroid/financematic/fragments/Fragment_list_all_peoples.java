@@ -126,7 +126,6 @@ public class Fragment_list_all_peoples extends Fragment {
     }
 
 
-
     //for intend passook
     private void loadFragment(Fragment fragment) {
         FragmentManager fm = getFragmentManager();

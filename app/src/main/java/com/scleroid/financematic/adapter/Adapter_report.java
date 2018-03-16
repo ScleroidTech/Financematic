@@ -75,7 +75,7 @@ public class Adapter_report extends RecyclerView.Adapter<Adapter_report.MyViewHo
         public MyViewHolder(View view) {
             super(view);
            /* view.setOnClickListener(this);*/
-            passbook_date = view.findViewById(R.id.report_Acc_no);
+            passbook_date = view.findViewById(R.id.acc_no_text_view);
             passbook_name = view.findViewById(R.id.report_Lent);
             passbook_taken_money = view.findViewById(R.id.report_Interest);
             passbook_received_money = view.findViewById(R.id.report_Earned);

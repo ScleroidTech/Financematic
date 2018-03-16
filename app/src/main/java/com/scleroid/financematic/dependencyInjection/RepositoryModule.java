@@ -5,8 +5,8 @@ package com.scleroid.financematic.dependencyInjection;
  * Author ganesh
  */
 
-import com.scleroidtech.gatepass.AppExecutors;
-import com.scleroidtech.gatepass.utils.DiskIOThreadExecutor;
+import com.scleroid.financematic.AppExecutors;
+import com.scleroid.financematic.utils.DiskIOThreadExecutor;
 
 import java.util.concurrent.Executors;
 

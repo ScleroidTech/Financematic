@@ -1,17 +1,10 @@
 package com.scleroid.financematic.dependencyInjection;
 
-/**
- * Copyright (C) 3/9/18
- * Author ganesh
- */
-
 
 import android.app.Application;
 
-import com.scleroidtech.gatepass.App;
-import com.scleroidtech.gatepass.utils.DateUtils;
-import com.scleroidtech.gatepass.utils.SnackBarUtils;
-import com.scleroidtech.gatepass.utils.ToastUtils;
+import com.scleroid.financematic.App;
+import com.scleroid.financematic.utils.DateUtils;
 
 import javax.inject.Singleton;
 
@@ -43,9 +36,7 @@ public interface AppComponent extends AndroidInjector<DaggerApplication> {
     void inject(App application);
 
     //   TasksRepository getTasksRepository();
-    SnackBarUtils getSnackBarUtils();
 
-    ToastUtils getToastUtils();
 
     DateUtils getDateUtils();
 
