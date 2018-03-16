@@ -14,23 +14,14 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.scleroid.financematic.R;
-import com.scleroid.financematic.RecyclerTouchListener;
 import com.scleroid.financematic.adapter.Adapter_personal_summery_details;
 import com.scleroid.financematic.model.Personal_summery_loan_details;
+import com.scleroid.financematic.utils.RecyclerTouchListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by scleroid on 2/3/18.
- * <p>
- * Created by scleroid on 2/3/18.
- * <p>
- * Created by scleroid on 2/3/18.
- */
-/**
- * Created by scleroid on 2/3/18.
- */
+
 /**
  * Created by scleroid on 2/3/18.
  */

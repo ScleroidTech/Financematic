@@ -11,9 +11,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.scleroid.financematic.R;
-import com.scleroid.financematic.RecyclerTouchListener;
 import com.scleroid.financematic.adapter.Adapter_passbook;
 import com.scleroid.financematic.model.Passbook;
+import com.scleroid.financematic.utils.RecyclerTouchListener;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -14,9 +14,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.scleroid.financematic.R;
-import com.scleroid.financematic.RecyclerTouchListener;
 import com.scleroid.financematic.adapter.LoanesAdapter;
 import com.scleroid.financematic.model.Loan;
+import com.scleroid.financematic.utils.RecyclerTouchListener;
 
 import java.util.ArrayList;
 import java.util.List;

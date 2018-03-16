@@ -1,6 +1,7 @@
 package com.scleroid.financematic.fragments;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import com.scleroid.financematic.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -26,6 +28,8 @@ import java.util.Locale;
 
 public class Fragment_registor_given_money extends Fragment implements
         AdapterView.OnItemSelectedListener {
+
+    private static final int REQUEST_DATE = 1;
     Spinner spin;
     Calendar myCalendar = Calendar.getInstance();
     Calendar myCalendar1 = Calendar.getInstance();
@@ -44,6 +48,26 @@ public class Fragment_registor_given_money extends Fragment implements
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> arg0) {
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+
+        if (requestCode == REQUEST_DATE) {
+            Date date = (Date) intent.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
+            dateUtils.setDate(date);
+        }
+
     }
 
     @Override
@@ -148,15 +172,6 @@ public class Fragment_registor_given_money extends Fragment implements
         String myFormat = "dd/MM/yy"; //In which you need put here
         SimpleDateFormat sdf1 = new SimpleDateFormat(myFormat, Locale.US);
         ettxEndDate.setText(sdf1.format(myCalendar1.getTime()));
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> arg0) {
     }
 
 }

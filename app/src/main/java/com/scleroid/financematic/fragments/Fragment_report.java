@@ -14,9 +14,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.scleroid.financematic.R;
-import com.scleroid.financematic.RecyclerTouchListener;
 import com.scleroid.financematic.adapter.Adapter_report;
 import com.scleroid.financematic.model.Report;
+import com.scleroid.financematic.utils.RecyclerTouchListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

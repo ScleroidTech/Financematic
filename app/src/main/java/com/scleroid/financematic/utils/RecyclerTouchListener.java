@@ -10,11 +10,7 @@ import android.view.View;
  * Created by scleroid on 3/3/18.
  */
 
-/**
- * Created by Ravi Tamada on 03/09/16.
- * updated by Ravi on 14/11/17
- * www.androidhive.info
- */
+
 public class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
 
     private GestureDetector gestureDetector;
