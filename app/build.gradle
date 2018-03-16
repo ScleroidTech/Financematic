@@ -47,7 +47,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
     // gson Library
-    implementation 'com.google.code.gson:gson:2.6.2'
+    implementation 'com.google.code.gson:gson:2.8.2'
 
     // ButterKnife
     compile "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
