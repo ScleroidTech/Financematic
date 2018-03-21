@@ -15,9 +15,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.scleroid.financematic.fragments.DashboardFragment;
 import com.scleroid.financematic.fragments.FragmentReport;
 import com.scleroid.financematic.fragments.Fragment_Reg_new_customer;
-import com.scleroid.financematic.fragments.Fragment_dashboard;
 import com.scleroid.financematic.fragments.Fragment_list_all_peoples;
 import com.scleroid.financematic.fragments.Fragment_registor_given_money;
 import com.scleroid.financematic.fragments.Fragment_reminder;
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 case R.id.navigation_home:
                    /* toolbar.setTitle("Customer");*/
-                    fragment = new Fragment_dashboard();
+                    fragment = new DashboardFragment();
                     loadFragment(fragment);
 
                     return true;
@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // load the store fragment by default
        /* toolbar.setTitle("Finance Matic");*/
-        loadFragment(new Fragment_dashboard());
+        loadFragment(new DashboardFragment());
 
     }
 

@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,7 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.scleroid.financematic.R;
-import com.scleroid.financematic.adapter.LoanesAdapter;
+import com.scleroid.financematic.adapter.LoanAdapter;
 import com.scleroid.financematic.model.Loan;
 import com.scleroid.financematic.utils.RecyclerTouchListener;
 
@@ -27,19 +28,18 @@ import java.util.List;
  */
 
 
-
-
-public class Fragment_dashboard   extends Fragment {
+public class DashboardFragment extends Fragment {
     TextView firstFragment;
     private List<Loan> loanList = new ArrayList<>();
     private RecyclerView recyclerView;
-    private LoanesAdapter mAdapter;
-    public Fragment_dashboard  () {
+    private LoanAdapter mAdapter;
+
+    public DashboardFragment() {
         // Required empty public constructor
     }
 
-    public static Fragment_dashboard   newInstance(String param1, String param2) {
-        Fragment_dashboard   fragment = new Fragment_dashboard  ();
+    public static DashboardFragment newInstance(String param1, String param2) {
+        DashboardFragment fragment = new DashboardFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -59,12 +59,12 @@ public class Fragment_dashboard   extends Fragment {
 
 
 //Intend
-        firstFragment = rootView.findViewById(R.id.cardview_list_title);
+        firstFragment = rootView.findViewById(R.id.total_amount_text_view);
         firstFragment.setOnClickListener(v -> loadFragment(new Fragment_passbook()));
 
-        recyclerView = rootView.findViewById(R.id.dash_my_recycler);
+        recyclerView = rootView.findViewById(R.id.recycler_view_dashboard);
 
-        mAdapter = new LoanesAdapter(loanList);
+        mAdapter = new LoanAdapter(loanList);
 
         recyclerView.setHasFixedSize(true);
 
@@ -84,6 +84,10 @@ public class Fragment_dashboard   extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         recyclerView.setAdapter(mAdapter);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
+                DividerItemDecoration.VERTICAL);
+        // recyclerView.addItemDecoration(dividerItemDecoration);
+
 
         // row click listener
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity().getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
@@ -106,11 +110,11 @@ public class Fragment_dashboard   extends Fragment {
 
 
     private void prepareLoanData() {
-        Loan loan = new Loan("Person Name 1", "Amount 2000", "14/6/2018");
+        Loan loan = new Loan("Shahrukh Khan", "2000", "2 Days to go");
        loanList.add(loan);
-          loan = new Loan("Person Name 2", "Amount 1000", "11/5/2018");
+        loan = new Loan("Akshay Kumar", "1000", "3 days to go");
         loanList.add(loan);
-        loan = new Loan("Person Name 3", "Amount 1500", "1/4/2018");
+        loan = new Loan("Amitabh Bachchan", "1500", "5 days to go");
         loanList.add(loan);
 
 

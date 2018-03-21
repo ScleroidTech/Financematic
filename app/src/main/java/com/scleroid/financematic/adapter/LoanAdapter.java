@@ -15,18 +15,18 @@ import java.util.List;
  * Created by scleroid on 3/3/18.
  */
 
-public class LoanesAdapter extends RecyclerView.Adapter<LoanesAdapter.MyViewHolder> {
+public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> {
 
     private List<Loan> loanList;
 
-    public LoanesAdapter(List<Loan> loanList) {
+    public LoanAdapter(List<Loan> loanList) {
         this.loanList = loanList;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.loan_list_row_recycler, parent, false);
+                .inflate(R.layout.list_item_dashboard, parent, false);
 
         return new MyViewHolder(itemView);
     }
@@ -35,23 +35,26 @@ public class LoanesAdapter extends RecyclerView.Adapter<LoanesAdapter.MyViewHold
     public void onBindViewHolder(MyViewHolder holder, int position) {
        Loan loan = loanList.get(position);
         holder.title.setText(loan .getTitle());
-        holder.genre.setText(loan .getGenre());
+        holder.genre.setText(bindNumber(loan.getGenre()));
         holder.year.setText(loan .getYear());
     }
 
+    public String bindNumber(String amount) {
+        return String.format("₹ %s", amount);
+    }
     @Override
     public int getItemCount() {
         return loanList.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView title, year, genre;
+    static class MyViewHolder extends RecyclerView.ViewHolder {
+        TextView title, year, genre;
 
-        public MyViewHolder(View view) {
+        MyViewHolder(View view) {
             super(view);
-            title = view.findViewById(R.id.title);
-            genre = view.findViewById(R.id.genre);
-            year = view.findViewById(R.id.year);
+            title = view.findViewById(R.id.customer_name_text_view);
+            genre = view.findViewById(R.id.amount_text_view);
+            year = view.findViewById(R.id.time_remaining);
         }
     }
 }
