@@ -2,7 +2,8 @@ package com.scleroid.financematic;
 
 import android.app.Application;
 
-import com.scleroid.financematic.dependencyInjection.AppComponent;
+import com.scleroid.financematic.DI.AppComponent;
+import com.scleroid.financematic.DI.DaggerAppComponent;
 
 import dagger.android.AndroidInjector;
 import dagger.android.DaggerApplication;

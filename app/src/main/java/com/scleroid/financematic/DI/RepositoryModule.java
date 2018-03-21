@@ -1,4 +1,4 @@
-package com.scleroid.financematic.dependencyInjection;
+package com.scleroid.financematic.DI;
 
 /**
  * Copyright (C) 3/10/18

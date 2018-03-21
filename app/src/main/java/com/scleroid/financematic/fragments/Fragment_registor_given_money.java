@@ -15,11 +15,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.scleroid.financematic.R;
+import com.scleroid.financematic.utils.DateUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+import javax.inject.Inject;
 
 /**
  * Created by scleroid on 9/3/18.
@@ -30,6 +33,8 @@ public class Fragment_registor_given_money extends Fragment implements
         AdapterView.OnItemSelectedListener {
 
     private static final int REQUEST_DATE = 1;
+    @Inject
+    DateUtils dateUtils;
     Spinner spin;
     Calendar myCalendar = Calendar.getInstance();
     Calendar myCalendar1 = Calendar.getInstance();

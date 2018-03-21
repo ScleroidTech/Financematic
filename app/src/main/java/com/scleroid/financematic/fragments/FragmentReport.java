@@ -29,24 +29,13 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 
+
 /**
- * Created by scleroid on 3/3/18.
- * <p>
- * Created by scleroid on 2/3/18.
- * <p>
- * Created by scleroid on 2/3/18.
- * <p>
- * Created by scleroid on 2/3/18.
+ * Copyright (C) 2018
+ * @author Ganesh Kaple
+ * @since 2/3/18
  */
-/**
- * Created by scleroid on 2/3/18.
- */
-/**
- * Created by scleroid on 2/3/18.
- */
-/**
- * Created by scleroid on 2/3/18.
- */
+
 
 public class FragmentReport extends Fragment {
     private static final String DIALOG_DATE = "DIALOG_DATE";
