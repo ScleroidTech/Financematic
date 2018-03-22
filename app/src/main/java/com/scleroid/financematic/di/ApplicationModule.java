@@ -1,4 +1,4 @@
-package com.scleroid.financematic.DI;
+package com.scleroid.financematic.di;
 
 /**
  * Copyright (C) 3/9/18

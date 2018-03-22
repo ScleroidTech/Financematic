@@ -21,7 +21,6 @@ import com.scleroid.financematic.fragments.Fragment_dashboard;
 import com.scleroid.financematic.fragments.Fragment_list_all_peoples;
 import com.scleroid.financematic.fragments.Fragment_registor_given_money;
 import com.scleroid.financematic.fragments.Fragment_reminder;
-import com.scleroid.financematic.fragments.Fragment_report;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -39,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 case R.id.navigation_home:
                    /* toolbar.setTitle("Customer");*/
-                    fragment = new Fragment_dashboard();
+                    fragment = new DashboardFragment();
                     loadFragment(fragment);
 
                     return true;
@@ -50,22 +49,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     return true;
                 case R.id.person_details:
                 /*    toolbar.setTitle("Report");*/
-                    fragment = new Fragment_report();
+                    fragment = new FragmentReport();
                     loadFragment(fragment);
 
                     return true;
-                case R.id.navigation_person_loan_details:
-               /*  toolbar.setTitle("Person Details");*/
+               /* case R.id.navigation_person_loan_details:
+               *//*  toolbar.setTitle("Person Details");*//*
                     fragment = new Fragment_Reg_new_customer();
                     loadFragment(fragment);
                     return true;
                 case R.id.navigation_reminders:
-                /*  toolbar.setTitle("Reminder");*/
+                *//*  toolbar.setTitle("Reminder");*//*
                     fragment = new Fragment_reminder();
                     loadFragment(fragment);
                     return true;
 
-
+*/
             }
             return false;
         }
@@ -101,8 +100,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
   /*    toolbar = getSupportActionBar();*/
 
-        BottomNavigationView navigation = findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
 
         // attaching bottom sheet behaviour - hide / show on scroll
       /*  CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) navigation.getLayoutParams();*/
@@ -110,15 +110,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // load the store fragment by default
        /* toolbar.setTitle("Finance Matic");*/
-        loadFragment(new Fragment_dashboard());
+        loadFragment(new DashboardFragment());
 
     }
 
-  /* @Override
+    private void loadFragment(Fragment fragment) {
+        // load fragment
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.activity_main, menu);
+        MenuItem create_new = menu.findItem(R.id.action_create_new_loan);
+        MenuItem notification = menu.findItem(R.id.action_notification);
+        tintMenuIcon(this, create_new, android.R.color.white);
+        tintMenuIcon(this, notification, android.R.color.white);
         return true;
+    }
+
+    public void tintMenuIcon(Context context, MenuItem item, @ColorRes int color) {
+        if (item == null) return;
+        Drawable normalDrawable = item.getIcon();
+        Drawable wrapDrawable = DrawableCompat.wrap(normalDrawable);
+        DrawableCompat.setTint(wrapDrawable, context.getResources().getColor(color));
+
+        item.setIcon(wrapDrawable);
     }
 
     @Override
@@ -129,8 +150,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_create_new_loan) {
+
+            Fragment_Reg_new_customer fragment = new Fragment_Reg_new_customer();
+            loadFragment(fragment);
             return true;
+        }
+
+        // user is in notifications fragment
+        // and selected 'Mark all as Read'
+        if (id == R.id.action_notification) {
+            Fragment_reminder fragment = new Fragment_reminder();
+            loadFragment(fragment);
+        }
+
+        // user is in notifications fragment
+        // and selected 'Clear All'
+        if (id == R.id.action_settings) {
+            Toast.makeText(getApplicationContext(), "Clear all notifications!", Toast.LENGTH_LONG).show();
         }
 
         return super.onOptionsItemSelected(item);

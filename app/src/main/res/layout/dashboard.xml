@@ -1,250 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
 
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.scleroid.financematic.MainActivity">
+        android:layout_height="match_parent">
 
-        <ScrollView
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/dashboard_summery_card_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="25dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="100dp"
+            android:visibility="visible"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
+
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
 
+                android:padding="16dp">
+                <!-- <ImageView
+                         android:id="@+id/rs1_image"
+                         android:layout_width="30dp"
+                         android:layout_height="25dp"
+                         android:layout_alignParentTop="true"
+                         android:layout_marginRight="18dp"
+                         android:layout_marginTop="5dp"
+                         android:background="@drawable/rs1" />-->
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/total_amount_text_view"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:text="\u20B9 20,000.00"
+                    android:textColor="@color/gray_text"
+                    android:textSize="33sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/total_amount_title_text_view" />
+
+                <TextView
+                    android:id="@+id/total_amount_title_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/total_amount_text_view"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/total_amount"
+                    android:textColor="@color/gray_text"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/remaining_amount_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="8dp"
+                    android:drawablePadding="10dp"
+                    android:drawableStart="@drawable/ic_trending_up_black_24dp"
+                    android:drawableTint="@color/green"
+                    android:text="@string/amount_with_symbol"
+                    android:textColor="@color/green"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/available_amount_text_view" />
+
+                <TextView
+                    android:id="@+id/lent_amount_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:drawablePadding="10dp"
+                    android:drawableStart="@drawable/ic_trending_down_black_24dp"
+                    android:drawableTint="@color/red"
+                    android:text="@string/amount_with_symbol"
+                    android:textColor="@color/red"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/lent_amount_title_text_view" />
+
+                <TextView
+                    android:id="@+id/lent_amount_title_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/remaining_amount_text_view"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/lent_amount"
+                    android:textColor="@color/gray_text"
+                    android:textSize="15sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/total_amount_text_view" />
+
+                <TextView
+                    android:id="@+id/available_amount_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/remaining_amount_text_view"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_toRightOf="@+id/lent_amount_title_text_view"
+                    android:text="@string/available_amount_title"
+                    android:textColor="@color/gray_text"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/total_amount_text_view" />
+
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.v7.widget.CardView>
 
 
-                    android:orientation="vertical"
-                    android:padding="16dp">
+        <LinearLayout
+            android:id="@+id/recycler_linear_layout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
 
-                    <android.support.v7.widget.CardView
-                        android:id="@+id/android_card_view_example"
-                        android:layout_width="match_parent"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical"
+            android:visibility="visible"
 
-                        android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dashboard_summery_card_view">
 
-                        app:cardBackgroundColor="@color/color_white"
-                        app:cardCornerRadius="10dp"
-                        app:cardElevation="5dp"
-                        app:cardUseCompatPadding="true"
+            <TextView
+                android:id="@+id/upcoming_events_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:text="@string/upcoming_events"
+                android:textColor="@color/black_text"
+                android:textSize="21sp"
+                android:textStyle="bold" />
 
-                        >
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view_dashboard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical"
+                tools:listitem="@layout/list_item_dashboard" />
 
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+        </LinearLayout>
 
-                            android:padding="16dp">
-                            <!-- <ImageView
-                                 android:id="@+id/rs1_image"
-                                 android:layout_width="30dp"
-                                 android:layout_height="25dp"
-                                 android:layout_alignParentTop="true"
-                                 android:layout_marginRight="18dp"
-                                 android:layout_marginTop="5dp"
-                                 android:background="@drawable/rs1" />-->
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="188dp"
 
-                            <TextView
-                                android:id="@+id/cardview_list_title"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentTop="true"
-                                android:text="RS. 20,000"
-                                android:textSize="26sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/cardview_list_title4"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/cardview_list_title"
-
-                                android:text="Total Amount"
-                                android:textSize="18sp" />
-
-                            <ImageView
-                                android:id="@+id/cardview_image1"
-                                android:layout_width="60dp"
-                                android:layout_height="70dp"
-                                android:layout_alignParentRight="true"
-                                android:layout_alignParentTop="true"
-
-
-                                android:background="@drawable/ammm2" />
-
-                            <ImageView
-                                android:id="@+id/cardview_image"
-                                android:layout_width="60dp"
-                                android:layout_height="45dp"
-                                android:layout_below="@+id/cardview_list_title4"
-                                android:layout_marginRight="18dp"
-                                android:layout_marginTop="15dp"
-                                android:background="@drawable/lent1" />
-
-                            <ImageView
-                                android:id="@+id/cardview_image7"
-                                android:layout_width="60dp"
-                                android:layout_height="45dp"
-                                android:layout_below="@+id/cardview_list_title4"
-                                android:layout_marginLeft="100dp"
-                                android:layout_marginTop="15dp"
-                                android:layout_toRightOf="@+id/cardview_image"
-                                android:background="@drawable/receive" />
-
-                            <TextView
-                                android:id="@+id/cardview_list_title1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/cardview_image"
-                                android:text="RS. 10000"
-                                android:textColor="@color/textcolor"
-                                android:textSize="21sp" />
-
-                            <TextView
-                                android:id="@+id/cardview_list_title7"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/cardview_image"
-                                android:layout_marginLeft="100dp"
-                                android:layout_toRightOf="@+id/cardview_image"
-                                android:text="RS. 10000"
-                                android:textColor="@color/textcolor"
-                                android:textSize="21sp" />
-
-                            <TextView
-                                android:id="@+id/cardview_list_title5"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/cardview_list_title1"
-                                android:text="Lent Amount"
-                                android:textSize="18sp" />
-
-                            <TextView
-                                android:id="@+id/cardview_list_title86"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/cardview_list_title1"
-                                android:layout_marginLeft="50dp"
-                                android:layout_toRightOf="@+id/cardview_list_title5"
-                                android:text="Available Amount"
-                                android:textSize="18sp" />
-                            <!-- <Button
-                                    android:id="@+id/button11" android:layout_below="@id/cardview_list_title86"
-                                     android:text="intend"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        />-->
-
-                        </RelativeLayout>
-
-                    </android.support.v7.widget.CardView>
-                    <!--  <android.support.v7.widget.CardView
-                          android:id="@+id/android_card_view_example1"
-                          android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:layout_marginTop="8dp"
-                          >
-                          <RelativeLayout
-                              android:layout_width="match_parent"
-                              android:layout_height="wrap_content"
-
-
-                              android:elevation="4dp"
-                              android:padding="15dp">
-                              <TextView
-                                  android:id="@+id/cardview_list_title10"
-                                  android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                                  android:layout_alignParentTop="true"
-                                  android:text="Person Name 1"
-                                  android:textSize="26sp"
-                                  android:textStyle="bold"/>
-                              <TextView
-                                  android:id="@+id/title"
-                                  android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                                  android:layout_below="@+id/cardview_list_title10"
-                                  android:layout_marginTop="15dp"
-                                  android:text="Amount  2000"
-                                  android:textSize="18sp" />
-                              <TextView
-                                  android:id="@+id/cardview_list_title19"
-
-                                  android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                                  android:layout_below="@+id/cardview_list_title10"
-                                  android:layout_marginTop="15dp"
-                                  android:layout_alignParentRight="true"
-                                  android:text="Due in two days"
-                                  android:textSize="18sp" />
-                              <ImageView
-                                  android:id="@+id/cardview_image12"
-                                  android:layout_width="50dp"
-                                  android:layout_height="40dp"
-                                  android:layout_alignParentRight="true"
-                                  android:layout_alignParentTop="true"
-                                  app:srcCompat="@drawable/ic_phone_black_24dp"
-
-
-                                  />
-
-
-                          </RelativeLayout>
-
-
-
-                      </android.support.v7.widget.CardView>-->
-
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/header_gradient1"
-                        android:paddingBottom="5dip"
-                        android:paddingTop="5dip">
-
-                        <TextView
-
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="15dp"
-                            android:text="Upcoming Due Days"
-                            android:textColor="@color/white"
-                            android:textSize="21sp" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp">
-
-                        <android.support.v7.widget.RecyclerView
-                            android:id="@+id/dash_my_recycler"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:scrollbars="vertical"
-                            tools:listitem="@layout/loan_list_row_recycler" />
-                    </RelativeLayout>
-
-                </LinearLayout>
-            </LinearLayout>
-        </ScrollView>
+            android:background="@drawable/gradient_header_dashboard"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
-
-</merge>
+    </ScrollView>

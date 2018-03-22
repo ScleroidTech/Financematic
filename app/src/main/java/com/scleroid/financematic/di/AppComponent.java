@@ -1,4 +1,4 @@
-package com.scleroid.financematic.DI;
+package com.scleroid.financematic.di;
 
 
 import android.app.Application;
