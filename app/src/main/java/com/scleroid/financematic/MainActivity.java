@@ -1,19 +1,25 @@
 package com.scleroid.financematic;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.scleroid.financematic.fragments.DashboardFragment;
 import com.scleroid.financematic.fragments.FragmentReport;
@@ -21,6 +27,7 @@ import com.scleroid.financematic.fragments.Fragment_Reg_new_customer;
 import com.scleroid.financematic.fragments.Fragment_list_all_peoples;
 import com.scleroid.financematic.fragments.Fragment_registor_given_money;
 import com.scleroid.financematic.fragments.Fragment_reminder;
+import com.scleroid.financematic.utils.BottomNavigationViewHelper;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -53,18 +60,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     loadFragment(fragment);
 
                     return true;
-                case R.id.navigation_person_loan_details:
-               /*  toolbar.setTitle("Person Details");*/
+               /* case R.id.navigation_person_loan_details:
+               *//*  toolbar.setTitle("Person Details");*//*
                     fragment = new Fragment_Reg_new_customer();
                     loadFragment(fragment);
                     return true;
                 case R.id.navigation_reminders:
-                /*  toolbar.setTitle("Reminder");*/
+                *//*  toolbar.setTitle("Reminder");*//*
                     fragment = new Fragment_reminder();
                     loadFragment(fragment);
                     return true;
 
-
+*/
             }
             return false;
         }
@@ -74,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-/*sidebar navigation*/
+/*sidebar bottomNavigationView*/
 
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -100,8 +107,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
   /*    toolbar = getSupportActionBar();*/
 
-        BottomNavigationView navigation = findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
 
         // attaching bottom sheet behaviour - hide / show on scroll
       /*  CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) navigation.getLayoutParams();*/
@@ -113,11 +121,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-  /* @Override
+    private void loadFragment(Fragment fragment) {
+        // load fragment
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.activity_main, menu);
+        MenuItem create_new = menu.findItem(R.id.action_create_new_loan);
+        MenuItem notification = menu.findItem(R.id.action_notification);
+        tintMenuIcon(this, create_new, android.R.color.white);
+        tintMenuIcon(this, notification, android.R.color.white);
         return true;
+    }
+
+    public void tintMenuIcon(Context context, MenuItem item, @ColorRes int color) {
+        if (item == null) return;
+        Drawable normalDrawable = item.getIcon();
+        Drawable wrapDrawable = DrawableCompat.wrap(normalDrawable);
+        DrawableCompat.setTint(wrapDrawable, context.getResources().getColor(color));
+
+        item.setIcon(wrapDrawable);
     }
 
     @Override
@@ -128,19 +157,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_create_new_loan) {
+
+            Fragment_Reg_new_customer fragment = new Fragment_Reg_new_customer();
+            loadFragment(fragment);
             return true;
         }
 
-        return super.onOptionsItemSelected(item);
-    }*/
+        // user is in notifications fragment
+        // and selected 'Mark all as Read'
+        if (id == R.id.action_notification) {
+            Fragment_reminder fragment = new Fragment_reminder();
+            loadFragment(fragment);
+        }
 
-    private void loadFragment(Fragment fragment) {
-        // load fragment
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        // user is in notifications fragment
+        // and selected 'Clear All'
+        if (id == R.id.action_settings) {
+            Toast.makeText(getApplicationContext(), "Clear all notifications!", Toast.LENGTH_LONG).show();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 
