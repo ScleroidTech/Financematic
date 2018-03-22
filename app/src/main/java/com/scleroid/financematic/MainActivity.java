@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
-import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -22,11 +21,11 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.scleroid.financematic.fragments.DashboardFragment;
-import com.scleroid.financematic.fragments.FragmentReport;
 import com.scleroid.financematic.fragments.Fragment_Reg_new_customer;
 import com.scleroid.financematic.fragments.Fragment_list_all_peoples;
 import com.scleroid.financematic.fragments.Fragment_registor_given_money;
 import com.scleroid.financematic.fragments.Fragment_reminder;
+import com.scleroid.financematic.fragments.Fragment_report;
 import com.scleroid.financematic.utils.BottomNavigationViewHelper;
 
 
@@ -34,47 +33,42 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private ActionBar toolbar;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+            = item -> {
+        Fragment fragment;
 
-        @Override
+        switch (item.getItemId()) {
 
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Fragment fragment;
+            case R.id.navigation_home:
+                       /* toolbar.setTitle("Customer");*/
+                fragment = new DashboardFragment();
+                loadFragment(fragment);
 
-            switch (item.getItemId()) {
+                return true;
+            case R.id.navigation_list:
+                       /* toolbar.setTitle("Loan Details");*/
+                fragment = new Fragment_list_all_peoples();
+                loadFragment(fragment);
+                return true;
+            case R.id.person_details:
+                    /*    toolbar.setTitle("Report");*/
+                fragment = new Fragment_report();
+                loadFragment(fragment);
 
-                case R.id.navigation_home:
-                   /* toolbar.setTitle("Customer");*/
-                    fragment = new DashboardFragment();
-                    loadFragment(fragment);
+                return true;
+                   /* case R.id.navigation_person_loan_details:
+                   *//*  toolbar.setTitle("Person Details");*//*
+                        fragment = new Fragment_Reg_new_customer();
+                        loadFragment(fragment);
+                        return true;
+                    case R.id.navigation_reminders:
+                    *//*  toolbar.setTitle("Reminder");*//*
+                        fragment = new Fragment_reminder();
+                        loadFragment(fragment);
+                        return true;
 
-                    return true;
-                case R.id.navigation_list:
-                   /* toolbar.setTitle("Loan Details");*/
-                    fragment = new Fragment_list_all_peoples();
-                    loadFragment(fragment);
-                    return true;
-                case R.id.person_details:
-                /*    toolbar.setTitle("Report");*/
-                    fragment = new FragmentReport();
-                    loadFragment(fragment);
-
-                    return true;
-               /* case R.id.navigation_person_loan_details:
-               *//*  toolbar.setTitle("Person Details");*//*
-                    fragment = new Fragment_Reg_new_customer();
-                    loadFragment(fragment);
-                    return true;
-                case R.id.navigation_reminders:
-                *//*  toolbar.setTitle("Reminder");*//*
-                    fragment = new Fragment_reminder();
-                    loadFragment(fragment);
-                    return true;
-
-*/
-            }
-            return false;
+    */
         }
+        return false;
     };
 
     @Override

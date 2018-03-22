@@ -9,16 +9,16 @@
         <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
+            android:background="@color/report_table"
         android:orientation="vertical"
-android:layout_marginTop="10dp"
-        android:background="@color/cardview_dark_background"
         >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
 
 
             >
@@ -27,44 +27,44 @@ android:layout_marginTop="10dp"
                 android:id="@+id/TextView100"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:textColor="@color/white"
-android:layout_marginLeft="10dp"
+                android:layout_marginLeft="10dp"
                 android:layout_weight=".7"
                 android:text="@string/loan_date"
                 android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/white"
+                android:textSize="15sp"
                />
             <TextView
 
                 android:id="@+id/TextView101"
                 android:layout_width="0dp"                         android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:textColor="@color/white"
-
                 android:layout_weight="1.1"
                 android:text="Holder Name"
+
                 android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/white"
+                android:textSize="15sp"
                 />
             <TextView
 
                 android:id="@+id/TextView103"
                 android:layout_width="0dp"                         android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:textColor="@color/white"
                 android:layout_weight=".9"
                 android:text="Given (RS)"
                 android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/white"
+                android:textSize="15sp"
                 />
             <TextView
 
                 android:id="@+id/TextView102"
                 android:layout_width="0dp"                         android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:textColor="@color/white"
-
                 android:layout_weight="1"
                 android:text="Recieved(Rs)"
+
                 android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/white"
+                android:textSize="15sp"
                />
 
 

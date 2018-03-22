@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="50dp">
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,7 +34,7 @@
                     android:textSize="26sp"
                     android:textStyle="bold"/>
                 <TextView
-                    android:id="@+id/cardview_list_title11"
+                    android:id="@+id/total_amount_title_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/cardview_list_title10"
@@ -42,13 +42,13 @@
                     android:text="Due Date 4/6/2018"
                     android:textSize="20sp" />
                 <TextView
-                    android:id="@+id/cardview_list_title19"
+                    android:id="@+id/received_amount_title_text_view"
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
                     android:layout_below="@+id/cardview_list_title10"
                     android:layout_marginTop="15dp"
-                    android:layout_alignParentRight="true"
                     android:text="EMI amout 2000"
                     android:textSize="20sp" />
 
@@ -104,9 +104,9 @@
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
                     android:layout_below="@+id/cardview_list_title14"
                     android:layout_marginTop="15dp"
-                    android:layout_alignParentRight="true"
                     android:text="EMI amout 2000"
                     android:textSize="20sp" />
 

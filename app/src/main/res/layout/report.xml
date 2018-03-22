@@ -29,9 +29,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="horizontal"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
+            android:orientation="horizontal"
             android:paddingBottom="5dp"
             android:paddingRight="10dp">
            <!-- <TextView
@@ -48,21 +48,22 @@
                 />-->
 
             <TextView
-                android:paddingLeft="10dp"
-                android:layout_margin="10dp"
                 android:id="@+id/fromDate"
                 android:layout_width="0dp"
-                android:text="From" android:layout_height="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
                 android:background="@drawable/drawable_report_shadow"
-android:drawableTint="@color/colorPrimary"
                 android:drawableEnd="@drawable/shadow3"
-                android:textSize="16sp"
-           android:textColor="@color/colorPrimary"
+                android:drawableRight="@drawable/shadow3"
+                android:drawableTint="@color/colorPrimary"
+                android:paddingBottom="6dp"
+                android:paddingLeft="10dp"
                 android:paddingRight="15dp"
                 android:paddingTop="6dp"
-                android:paddingBottom="6dp"
-                android:layout_weight="1"
-                android:drawableRight="@drawable/shadow3" />
+                android:text="From"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp" />
        <!--     <TextView
 
 
@@ -76,21 +77,22 @@ android:drawableTint="@color/colorPrimary"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:gravity="center" />-->
             <TextView
-                android:paddingLeft="10dp"
-                android:layout_margin="10dp"
                 android:id="@+id/toDate"
                 android:layout_width="0dp"
-                android:text="To Date" android:layout_height="wrap_content"
-                android:textSize="16sp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
                 android:background="@drawable/drawable_report_shadow"
-                android:drawableTint="@color/colorPrimary"
-                android:textColor="@color/colorPrimary"
                 android:drawableEnd="@drawable/shadow3"
+                android:drawableRight="@drawable/shadow3"
+                android:drawableTint="@color/colorPrimary"
+                android:paddingBottom="6dp"
+                android:paddingLeft="10dp"
                 android:paddingRight="15dp"
                 android:paddingTop="6dp"
-                android:paddingBottom="6dp"
-                android:layout_weight="1"
-                android:drawableRight="@drawable/shadow3" />
+                android:text="To Date"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp" />
 
 
         </LinearLayout>
@@ -100,28 +102,30 @@ android:drawableTint="@color/colorPrimary"
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="horizontal"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal"
 
             android:paddingBottom="5dp"
             android:paddingRight="10dp">
             <TextView
 
-android:paddingTop="3dp"
                 android:layout_width="0dp"
-                android:textAlignment="viewEnd"
-                android:layout_marginRight="30dp" android:layout_height="wrap_content"
-                android:textSize="20sp"
-
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
+                android:layout_marginRight="30dp"
                 android:layout_weight=".7"
+                android:paddingTop="3dp"
+
                 android:text="Sort"
-                android:textColor="@color/colorPrimary"
+                android:textAlignment="viewEnd"
                 android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp"
                 />
             <LinearLayout
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="@drawable/drawable_report_shadow"
                 android:paddingLeft="10dp"
                 android:paddingTop="5dp"
@@ -129,12 +133,13 @@ android:paddingTop="3dp"
 
                 >
                 <Spinner
-                    android:layout_weight=".6"
-                    android:id="@+id/spinnerr"      android:layout_width="wrap_content"
-
-                    android:textColor="@color/colorPrimary"
+                    android:id="@+id/spinnerr"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+
                     android:layout_gravity="right"
+                    android:layout_weight=".6"
+                    android:textColor="@color/colorPrimary"
                     ></Spinner>
 
             </LinearLayout>
@@ -144,76 +149,80 @@ android:paddingTop="3dp"
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-
             android:background="@color/report_table"
+
+            android:orientation="vertical"
             >
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
 
 
                 >
                 <TextView
-                    android:background="@drawable/borderright1"
                     android:id="@+id/report_Acc_no"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:textSize="15sp"
-                    android:textColor="@color/white"
-
                     android:layout_weight="1.2"
+                    android:background="@drawable/borderright1"
                     android:text="Loan Acc.No"
+
                     android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
                     />
                 <TextView
-                    android:background="@drawable/borderright1"
                     android:id="@+id/report_Lent"
-                    android:layout_width="0dp"                         android:layout_height="wrap_content"
-                    android:textSize="15sp"
-                    android:textColor="@color/white"
-                    android:textAlignment="center"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight=".9"
+                    android:background="@drawable/borderright1"
                     android:text="Lent"
+                    android:textAlignment="center"
                     android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
                     />
                 <TextView
-                    android:background="@drawable/borderright1"
-                    android:textAlignment="center"
                     android:id="@+id/report_Interest"
-                    android:layout_width="0dp"                         android:layout_height="wrap_content"
-                    android:textSize="15sp"
-                    android:textColor="@color/white"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight=".9"
-                    android:text="Interest"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    />
-                <TextView
                     android:background="@drawable/borderright1"
+                    android:text="Interest"
                     android:textAlignment="center"
-                    android:id="@+id/report_Earned"
-                    android:layout_width="0dp"                         android:layout_height="wrap_content"
-                    android:textSize="15sp"
-                    android:textColor="@color/white"
-
-                    android:layout_weight=".9"
-                    android:text="Earned"
                     android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
                     />
                 <TextView
-                    android:textAlignment="center"
-                    android:id="@+id/report_Balance"
-                    android:layout_width="0dp"                         android:layout_height="wrap_content"
-
-                    android:textSize="15sp"
-                    android:textColor="@color/white"
-
+                    android:id="@+id/report_Earned"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight=".9"
-                    android:text="Received"
+                    android:background="@drawable/borderright1"
+                    android:text="Earned"
+                    android:textAlignment="center"
+
                     android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    />
+                <TextView
+                    android:id="@+id/report_Balance"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".9"
+
+                    android:text="Received"
+                    android:textAlignment="center"
+
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
                     />
 
 

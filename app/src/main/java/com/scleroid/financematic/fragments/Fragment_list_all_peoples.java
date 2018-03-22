@@ -108,15 +108,15 @@ public class Fragment_list_all_peoples extends Fragment {
     }
 
     private void prepareLoanData() {
-        List_all_peoples loan = new List_all_peoples("Person Name 1", "12100", "Rs200000");
+        List_all_peoples loan = new List_all_peoples("Customer Name 1", 12100, 200000);
         list_all_peoplesList.add(loan);
-        loan = new List_all_peoples("Person Name 2", "12100", "22100");
+        loan = new List_all_peoples("Customer Name 2", 12100, 22100);
         list_all_peoplesList.add(loan);
-        loan = new List_all_peoples("Person Name 3", " 1500", "842100");
+        loan = new List_all_peoples("Customer Name 3", 1500, 842100);
         list_all_peoplesList.add(loan);
-        loan = new List_all_peoples("Person Name 4", " 12500", "22100");
+        loan = new List_all_peoples("Customer Name 4", 12500, 22100);
         list_all_peoplesList.add(loan);
-        loan = new List_all_peoples("Person Name 5", " 21500", "552100");
+        loan = new List_all_peoples("Customer Name 5", 21500, 552100);
         list_all_peoplesList.add(loan);
 
 

@@ -10,17 +10,17 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_marginTop="55dp"
         android:background="#ddd"
-        android:layout_marginTop="50dp">
+        android:orientation="vertical">
 
         <SearchView
-            android:background="@drawable/shadow"
             android:id="@+id/simpleSearchView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-       android:layout_marginLeft="5dp"
+            android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
+            android:background="@drawable/shadow"
 
     />
 
@@ -36,10 +36,10 @@
         android:id="@+id/button_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="List person summery"
         android:layout_below="@+id/list_all_peoples_recycler"
+        android:layout_marginBottom="50dp"
 
-        android:layout_marginBottom="50dp"/>
+        android:text="List person summery" />
     </RelativeLayout>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>

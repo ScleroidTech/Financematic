@@ -8,8 +8,13 @@ import android.widget.TextView;
 
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.model.List_all_peoples;
+import com.scleroid.financematic.utils.CircleCustomView;
 
+import java.text.DecimalFormat;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by scleroid on 6/3/18.
@@ -17,6 +22,7 @@ import java.util.List;
 
 
 public class Adapter_list_all_peoples extends RecyclerView.Adapter<Adapter_list_all_peoples.MyViewHolder> {
+
 
     private List<List_all_peoples> list_all_peoplesList;
 
@@ -35,9 +41,11 @@ public class Adapter_list_all_peoples extends RecyclerView.Adapter<Adapter_list_
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         List_all_peoples passbook = list_all_peoplesList.get(position);
-        holder.list_person_name.setText(passbook .getList_person_name());
-        holder.list_total_loan.setText(passbook .getList_total_loan());
-        holder.list_received_amount.setText(passbook.getList_received_amoun());
+        // holder.setPassbook(passbook);
+        holder.list_person_name.setText(passbook.getList_person_name());
+        holder.list_total_loan.setText(String.format("%d", passbook.getList_total_loan()));
+        holder.list_received_amount.setText(String.format("%d", passbook.getList_received_amoun()));
+        holder.drawCircle(passbook);
 
     }
 
@@ -46,15 +54,50 @@ public class Adapter_list_all_peoples extends RecyclerView.Adapter<Adapter_list_
         return list_all_peoplesList.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+
         public TextView list_person_name, list_total_loan, list_received_amount;
+        @BindView(R.id.payment_circle_view)
+        CircleCustomView paymentCircleView;
+        @BindView(R.id.person_name_text_view)
+        TextView personNameTextView;
+        @BindView(R.id.total_amount_title_text_view)
+        TextView totalAmountTitleTextView;
+        @BindView(R.id.total_loan_text_view)
+        TextView totalLoanTextView;
+        @BindView(R.id.received_amount_title_text_view)
+        TextView receivedAmountTitleTextView;
+        @BindView(R.id.received_amount_text_view)
+        TextView receivedAmountTextView;
+        @BindView(R.id.percentage_pie_chart_text_view)
+        TextView percentagePieChartTextView;
 
         public MyViewHolder(View view) {
             super(view);
-            list_person_name = view.findViewById(R.id.list_person_name);
-            list_total_loan = view.findViewById(R.id.list_total_loan);
-            list_received_amount = view.findViewById(R.id.list_received_amount);
+            ButterKnife.bind(this, view);
+            list_person_name = view.findViewById(R.id.person_name_text_view);
+            list_total_loan = view.findViewById(R.id.total_loan_text_view);
+            list_received_amount = view.findViewById(R.id.received_amount_text_view);
 
+
+        }
+
+        private void drawCircle(List_all_peoples passbook) {
+            float percentage = getPercentage(passbook.getList_received_amoun(), passbook.getList_total_loan());
+            String percentageString = new DecimalFormat("##").format(percentage);
+            percentagePieChartTextView.setText(String.format("%s %%", percentageString));
+            float angle = getAngle(percentage);
+            paymentCircleView.setAngle(angle);
+            paymentCircleView.invalidate();
+        }
+
+        private float getAngle(float avg) {
+            int angle = (int) ((avg / 100) * 360);
+            return (float) angle;
+        }
+
+        private float getPercentage(float list_received_amoun, int list_total_loan) {
+            return (list_received_amoun / list_total_loan) * 100;
         }
     }
 }

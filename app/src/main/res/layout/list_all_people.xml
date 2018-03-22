@@ -32,7 +32,7 @@
                 android:textSize="26sp"
                 android:textStyle="bold"/>
             <TextView
-                android:id="@+id/cardview_list_title11"
+                android:id="@+id/total_amount_title_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/cardview_list_title10"
@@ -40,7 +40,7 @@
                 android:text="Loan Amount  22000"
                 android:textSize="17sp" />
             <TextView
-                android:id="@+id/cardview_list_title19"
+                android:id="@+id/received_amount_title_text_view"
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_below="@+id/cardview_list_title19"
+                android:layout_below="@+id/received_amount_title_text_view"
                 android:layout_marginTop="15dp"
                 android:text="Due Date 11/6/2019"
                 android:textSize="17sp" />
@@ -64,7 +64,7 @@
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/cardview_list_title11"
+                android:layout_below="@+id/total_amount_title_text_view"
                 android:layout_marginTop="15dp"
 
                 android:text="Paid amount 1100"
