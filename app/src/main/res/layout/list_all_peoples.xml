@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -24,13 +25,13 @@
     />
 
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/list_all_peoples_recycler"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="vertical"
-        android:layout_below="@+id/simpleSearchView"
-        />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list_all_peoples_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/simpleSearchView"
+            android:scrollbars="vertical"
+            tools:listitem="@layout/recycler_list_all_peoples_list" />
     <Button
         android:id="@+id/button_list"
         android:layout_width="wrap_content"

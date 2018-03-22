@@ -21,6 +21,7 @@ import com.scleroid.financematic.fragments.Fragment_dashboard;
 import com.scleroid.financematic.fragments.Fragment_list_all_peoples;
 import com.scleroid.financematic.fragments.Fragment_registor_given_money;
 import com.scleroid.financematic.fragments.Fragment_reminder;
+import com.scleroid.financematic.fragments.Fragment_report;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     return true;
                 case R.id.person_details:
                 /*    toolbar.setTitle("Report");*/
-                    fragment = new FragmentReport();
+                    fragment = new Fragment_report();
                     loadFragment(fragment);
 
                     return true;

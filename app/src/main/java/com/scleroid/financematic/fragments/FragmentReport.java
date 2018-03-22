@@ -150,11 +150,11 @@ public class FragmentReport extends Fragment {
     private void prepareLoanData() {
         Report report = new Report("10225 ", "Rs 25000", "3%","3000","Rs 15000");
         reportList.add(report);
-        report = new Report("20225 ", "Rs 45000", "3%","2000","Rs 5000");
+        report = new Report("20225 ", "Rs 45000", "2%","2000","Rs 5000");
         reportList.add(report);
         report = new Report("10225 ", "Rs 25000", "3%","2000","Rs 5000");
         reportList.add(report);
-        report = new Report("10325 ", "Rs 35000", "3%","2500","Rs 1000");
+        report = new Report("10325 ", "Rs 35000", "4%","2500","Rs 1000");
         reportList.add(report);
 
 
