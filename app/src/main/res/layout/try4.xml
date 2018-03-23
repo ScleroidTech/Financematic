@@ -16,13 +16,26 @@
 
             android:layout_weight="0.4"
             android:background="@drawable/gradient_header_dashboard"
-            android:gravity="top|center">
+            android:gravity="top|center"
+            android:orientation="vertical">
 
             <TextView
+                android:id="@+id/title_total_amount_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Customer Name"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="Total Loan"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/total_amount_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:text="@string/amount_with_symbol"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="32dp" />
@@ -52,216 +65,7 @@
 
             >
 
-
-            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/card_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                card_view:cardBackgroundColor="@color/white"
-                card_view:cardCornerRadius="10dp"
-                card_view:cardElevation="5dp"
-                card_view:cardUseCompatPadding="true">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="5dp"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="7dp"
-                        android:orientation="horizontal"
-                        android:paddingBottom="7dp"
-
-                        >
-
-
-                        <TextView
-                            android:id="@+id/TextView1"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginTop="6dp"
-                            android:layout_weight="1"
-                            android:drawableStart="@drawable/ic_account_balance_black_24dp"
-                            android:text="@string/total_loan"
-                            android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:textSize="18sp" />
-
-
-
-
-                            <TextView
-                                android:id="@+id/textViewName2"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="6dp"
-                                android:layout_weight="0.7"
-
-                                android:text="@string/amount_with_symbol"
-                                android:textAppearance="?android:attr/textAppearanceLarge"
-                                android:textSize="17sp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-
-                        android:orientation="horizontal"
-                        android:paddingBottom="5dp"
-
-                        >
-
-
-                        <TextView
-
-                            android:id="@+id/imageView2"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="15dp"
-                            android:layout_weight="1"
-                            android:text="@string/paid_amount"
-
-                            android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:textSize="18sp" />
-
-
-                        <TextView
-                                android:id="@+id/textViewName3"
-
-                            android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                            android:layout_weight="0.7"
-                            android:text="@string/amount_with_symbol"
-                            android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:textSize="18sp" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:orientation="horizontal"
-                        android:paddingBottom="5dp">
-
-
-                        <TextView
-
-                            android:id="@+id/imageView3"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="15dp"
-                            android:layout_weight="1"
-                            android:text="Interest  "
-                            android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:textSize="18sp" />
-
-
-
-                            <TextView
-                                android:id="@+id/textViewName4"
-
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-
-                                android:layout_weight="0.7"
-                                android:text="@string/amount_with_symbol"
-
-                                android:textAppearance="?android:attr/textAppearanceLarge"
-                                android:textSize="18sp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-
-                        android:orientation="horizontal"
-                        android:paddingBottom="5dp"
-
-                        >
-
-
-
-                        <TextView
-
-                            android:id="@+id/imageView5"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="15dp"
-                            android:layout_weight="1"
-                            android:drawableStart="@drawable/ic_calendarclocktime"
-                            android:text="Duration "
-                            android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:textSize="18sp" />
-
-
-
-                            <TextView
-                                android:id="@+id/textViewName6"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight=".7"
-
-
-                                android:text="6 Months"
-
-
-                                android:textAppearance="?android:attr/textAppearanceLarge"
-                                android:textSize="18sp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-
-
-                        android:orientation="horizontal"
-                        android:paddingBottom="5dp">
-
-                        <TextView
-
-                            android:id="@+id/imageView1"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="15dp"
-                            android:layout_weight="1"
-                            android:drawablePadding="5dp"
-                            android:drawableStart="@drawable/ic_credit_card"
-                            android:text="Installment"
-                            android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:textSize="18sp" />
-
-
-
-                            <TextView
-                                android:id="@+id/textViewName1"
-
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-
-
-                                android:layout_weight=".7"
-                                android:text="@string/amount_with_symbol"
-                                android:textAppearance="?android:attr/textAppearanceLarge"
-                                android:textSize="18sp" />
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
+            <!-- <include layout="@layout/personal_details_cardview" />-->
 
         </LinearLayout>
 
