@@ -101,7 +101,7 @@
                                 android:layout_marginTop="6dp"
                                 android:layout_weight="0.7"
 
-                                android:text="RS 150000"
+                                android:text="@string/amount_with_symbol"
                                 android:textAppearance="?android:attr/textAppearanceLarge"
                                 android:textSize="17sp" />
 
@@ -138,7 +138,7 @@
                             android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                             android:layout_weight="0.7"
-                                android:text="Rs50000"
+                            android:text="@string/amount_with_symbol"
                             android:textAppearance="?android:attr/textAppearanceLarge"
                             android:textSize="18sp" />
 
@@ -173,7 +173,7 @@
                                 android:layout_height="wrap_content"
 
                                 android:layout_weight="0.7"
-                                android:text="RS   5000"
+                                android:text="@string/amount_with_symbol"
 
                                 android:textAppearance="?android:attr/textAppearanceLarge"
                                 android:textSize="18sp" />
@@ -253,7 +253,7 @@
 
 
                                 android:layout_weight=".7"
-                                android:text="RS  1800"
+                                android:text="@string/amount_with_symbol"
                                 android:textAppearance="?android:attr/textAppearanceLarge"
                                 android:textSize="18sp" />
 
