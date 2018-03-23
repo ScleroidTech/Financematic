@@ -65,7 +65,7 @@
 
             >
 
-            <!-- <include layout="@layout/personal_details_cardview" />-->
+            <include layout="@layout/personal_details_cardview" />
 
         </LinearLayout>
 
