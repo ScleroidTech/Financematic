@@ -12,9 +12,8 @@
 
     android:background="@drawable/shadow"
     android:orientation="vertical"
-    android:text="14 Mar, 2018"
-    android:textAppearance="?android:attr/textAppearanceLarge"
-    android:textSize="20sp"
+
+
     card_view:layout_constraintBottom_toBottomOf="parent"
     card_view:layout_constraintStart_toStartOf="parent"
     card_view:layout_constraintTop_toTopOf="parent"
@@ -41,7 +40,7 @@
         android:textColor="#313942"
         android:textSize="22sp" />
 
-    <TextView
+   <!-- <TextView
         android:id="@+id/day_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -49,8 +48,8 @@
         android:text="Mon"
         android:textAlignment="center"
         android:textColor="#313942"
-        android:textSize="12sp" />
-
+        android:textSize="12sp" />-->
+<!--
     <TextView
         android:id="@+id/year_text_view"
         android:layout_width="match_parent"
@@ -59,7 +58,7 @@
         android:padding="1dp"
         android:text="2018"
         android:textAlignment="center"
-        android:textColor="@color/black_text" />
+        android:textColor="@color/black_text" />-->
 
 
 </LinearLayout>

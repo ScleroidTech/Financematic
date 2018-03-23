@@ -47,12 +47,9 @@ public class LoanDetailsFragment extends Fragment {
     TextView installmentTextView;
     @BindView(R.id.card_view)
     CardView cardView;
-    @BindView(R.id.textViewName11)
-    TextView textViewName11;
-    @BindView(R.id.textViewName54)
-    TextView textViewName54;
-    @BindView(R.id.Btn_pay_rx_summery)
-    Button BtnPayRxSummery;
+
+
+
     @BindView(R.id.pesonal_summery_details_recycler)
     RecyclerView pesonalSummeryDetailsRecycler;
     Unbinder unbinder;
@@ -86,8 +83,7 @@ public class LoanDetailsFragment extends Fragment {
 /*        View rootView =  inflater.inflate(R.layout.personal_loan_aacount_details, container, false);*/
 
 
-        Button button_pay = rootView.findViewById(R.id.Btn_pay_rx_summery);
-        button_pay.setOnClickListener(v -> activityUtils.loadFragment(new RegistorReceivedFragment(), getFragmentManager()));
+
 
         recyclerView = rootView.findViewById(R.id.pesonal_summery_details_recycler);
 
