@@ -22,6 +22,7 @@ import com.scleroid.financematic.utils.RecyclerTouchListener;
 import com.scleroid.financematic.utils.TextViewUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -115,7 +116,7 @@ public class Fragment_personal_loan_details extends Fragment {
             @Override
             public void onClick(View view, int position) {
                 Personal_summery_loan_details loan = summeryList.get(position);
-                Toast.makeText(getActivity().getApplicationContext(), loan.getSummery_date() + " is selected!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), loan.getSummery_amount() + " is selected!", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -134,11 +135,11 @@ public class Fragment_personal_loan_details extends Fragment {
 
 
     private void prepareLoanData() {
-        Personal_summery_loan_details loan = new Personal_summery_loan_details("14/6/2018", "Received", "2000");
+        Personal_summery_loan_details loan = new Personal_summery_loan_details("Received", "2000", new Date("14/6/2018"));
         summeryList.add(loan);
-        loan = new Personal_summery_loan_details("1/5/2018", "Received", "5000");
+        loan = new Personal_summery_loan_details("Received", "5000", new Date("12/3/2018"));
         summeryList.add(loan);
-        loan = new Personal_summery_loan_details("12/2/2018", "Received", "1000");
+        loan = new Personal_summery_loan_details("Received", "1000", new Date("24/5/2018"));
         summeryList.add(loan);
 
 

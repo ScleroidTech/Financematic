@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.model.Loan;
+import com.scleroid.financematic.utils.CurrencyStringUtils;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ import java.util.List;
 
 public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> {
 
+    private final CurrencyStringUtils currencyStringUtils = new CurrencyStringUtils();
     private List<Loan> loanList;
 
     public LoanAdapter(List<Loan> loanList) {
@@ -35,13 +37,11 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> 
     public void onBindViewHolder(MyViewHolder holder, int position) {
        Loan loan = loanList.get(position);
         holder.title.setText(loan .getTitle());
-        holder.genre.setText(bindNumber(loan.getGenre()));
+        holder.genre.setText(currencyStringUtils.bindNumber(loan.getGenre()));
         holder.year.setText(loan .getYear());
     }
 
-    public String bindNumber(String amount) {
-        return String.format("₹ %s", amount);
-    }
+
     @Override
     public int getItemCount() {
         return loanList.size();

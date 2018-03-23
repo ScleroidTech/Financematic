@@ -2,6 +2,7 @@ package com.scleroid.financematic.utils;
 
 import android.text.format.DateFormat;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -47,6 +48,11 @@ public class DateUtils {
 
     public CharSequence getFormattedDate(Date parcelDate) {
         return DateFormat.format("hh:mm AA, MMM dd, yyyy", parcelDate);
+    }
+
+    public CharSequence getFormattedDate(Date date, String format) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+        return simpleDateFormat.format(date);
     }
 
 
