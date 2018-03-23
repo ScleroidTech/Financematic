@@ -24,8 +24,6 @@ import com.scleroid.financematic.utils.TextViewUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -36,8 +34,8 @@ import butterknife.Unbinder;
 
 
 public class DashboardFragment extends Fragment {
-    @Inject
-    TextViewUtils TextViewUtils;
+
+    TextViewUtils textViewUtils = new TextViewUtils();
     TextView firstFragment;
     @BindView(R.id.total_amount_text_view)
     TextView totalAmountTextView;
@@ -90,8 +88,8 @@ public class DashboardFragment extends Fragment {
 
 
         setupRecyclerView();
-        TextViewUtils.textViewExperiments(upcomingEventsTextView);
-        TextViewUtils.textViewExperiments(totalAmountTextView);
+        textViewUtils.textViewExperiments(upcomingEventsTextView);
+        textViewUtils.textViewExperiments(totalAmountTextView);
 
         return rootView;
     }
