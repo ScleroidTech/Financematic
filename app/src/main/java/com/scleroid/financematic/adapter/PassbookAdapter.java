@@ -17,11 +17,11 @@ import java.util.List;
  * Created by scleroid on 5/3/18.
  */
 
-public class Adapter_passbook extends RecyclerView.Adapter<Adapter_passbook.MyViewHolder>  {
+public class PassbookAdapter extends RecyclerView.Adapter<PassbookAdapter.MyViewHolder> {
 
     private List<Passbook> passbookList;
 
-    public Adapter_passbook(List<Passbook> passbookList) {
+    public PassbookAdapter(List<Passbook> passbookList) {
         this.passbookList = passbookList;
     }
 

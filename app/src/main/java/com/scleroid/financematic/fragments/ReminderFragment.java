@@ -10,16 +10,26 @@ import com.scleroid.financematic.R;
 
 /**
  * Created by scleroid on 2/3/18.
+ * <p>
+ * Created by scleroid on 2/3/18.
+ * <p>
+ * Created by scleroid on 2/3/18.
+ */
+/**
+ * Created by scleroid on 2/3/18.
+ */
+/**
+ * Created by scleroid on 2/3/18.
  */
 
-public class Fragment_loan_details extends Fragment {
+public class ReminderFragment extends Fragment {
 
-    public Fragment_loan_details() {
+    public ReminderFragment() {
         // Required empty public constructor
     }
 
-    public static Fragment_loan_details newInstance(String param1, String param2) {
-        Fragment_loan_details fragment = new Fragment_loan_details();
+    public static ReminderFragment newInstance(String param1, String param2) {
+        ReminderFragment fragment = new ReminderFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -34,6 +44,6 @@ public class Fragment_loan_details extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.dashboard, container, false);
+        return inflater.inflate(R.layout.reminders, container, false);
     }
 }

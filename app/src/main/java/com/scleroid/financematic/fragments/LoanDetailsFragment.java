@@ -2,8 +2,6 @@ package com.scleroid.financematic.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,8 +14,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.scleroid.financematic.R;
-import com.scleroid.financematic.adapter.Adapter_personal_summery_details;
+import com.scleroid.financematic.adapter.SummeryAdapter;
 import com.scleroid.financematic.model.Personal_summery_loan_details;
+import com.scleroid.financematic.utils.ActivityUtils;
 import com.scleroid.financematic.utils.RecyclerTouchListener;
 import com.scleroid.financematic.utils.TextViewUtils;
 
@@ -34,7 +33,7 @@ import butterknife.Unbinder;
  * Created by scleroid on 2/3/18.
  */
 
-public class Fragment_personal_loan_details extends Fragment {
+public class LoanDetailsFragment extends Fragment {
 
 
     TextViewUtils textViewUtils = new TextViewUtils();
@@ -59,14 +58,15 @@ public class Fragment_personal_loan_details extends Fragment {
     Unbinder unbinder;
     private List<Personal_summery_loan_details> summeryList = new ArrayList<>();
     private RecyclerView recyclerView;
-    private Adapter_personal_summery_details mAdapter;
+    private SummeryAdapter mAdapter;
+    private ActivityUtils activityUtils = new ActivityUtils();
 
-    public Fragment_personal_loan_details() {
+    public LoanDetailsFragment() {
         // Required empty public constructor
     }
 
-    public static Fragment_personal_loan_details newInstance(String param1, String param2) {
-        Fragment_personal_loan_details fragment = new Fragment_personal_loan_details();
+    public static LoanDetailsFragment newInstance(String param1, String param2) {
+        LoanDetailsFragment fragment = new LoanDetailsFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -87,11 +87,11 @@ public class Fragment_personal_loan_details extends Fragment {
 
 
         Button button_pay = rootView.findViewById(R.id.Btn_pay_rx_summery);
-        button_pay.setOnClickListener(v -> loadFragment(new Fragment_registor_received_amount()));
+        button_pay.setOnClickListener(v -> activityUtils.loadFragment(new RegistorReceivedFragment(), getFragmentManager()));
 
         recyclerView = rootView.findViewById(R.id.pesonal_summery_details_recycler);
 
-        mAdapter = new Adapter_personal_summery_details(summeryList);
+        mAdapter = new SummeryAdapter(summeryList);
 
         recyclerView.setHasFixedSize(true);
 
@@ -148,16 +148,6 @@ public class Fragment_personal_loan_details extends Fragment {
         mAdapter.notifyDataSetChanged();
     }
 
-    //for intend passook
-    private void loadFragment(Fragment fragment) {
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        // replace the FrameLayout with new Fragment
-        fragmentTransaction.replace(R.id.frame_container, fragment);
-        fragmentTransaction.commit(); // save the changes
-        // load fragment
-
-    }
 
 
     @Override

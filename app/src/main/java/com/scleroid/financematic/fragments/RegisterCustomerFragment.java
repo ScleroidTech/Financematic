@@ -3,8 +3,6 @@ package com.scleroid.financematic.fragments;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.scleroid.financematic.R;
+import com.scleroid.financematic.utils.ActivityUtils;
 
 /**
  * Created by scleroid on 2/3/18.
@@ -24,17 +23,20 @@ import com.scleroid.financematic.R;
  * @since 2/3/18
  */
 
-public class Fragment_Reg_new_customer extends Fragment {
+public class RegisterCustomerFragment extends Fragment {
     TextView tv;
     Button firstFragment;
     private Button b;
     private TextInputEditText etname, etmobile, etAddress, etLoan_number, etIDproofno;
-    public Fragment_Reg_new_customer() {
+
+    private ActivityUtils activityUtils = new ActivityUtils();
+
+    public RegisterCustomerFragment() {
         // Required empty public constructor
     }
 
-    public static Fragment_Reg_new_customer newInstance(String param1, String param2) {
-        Fragment_Reg_new_customer fragment = new Fragment_Reg_new_customer();
+    public static RegisterCustomerFragment newInstance(String param1, String param2) {
+        RegisterCustomerFragment fragment = new RegisterCustomerFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -72,7 +74,7 @@ public class Fragment_Reg_new_customer extends Fragment {
                 etLoan_number = rootView.findViewById(R.id.Loan_number_EditText);
                 etIDproofno = rootView.findViewById(R.id.IDproofno);
 
-                loadFragment(new Fragment_registor_given_money());
+                activityUtils.loadFragment(new RegisterMoneyFragment(), getFragmentManager());
                /* tv.setText("Your Input: \n"+etname.getText().toString()+"\n"+etAddress.getText().toString()+"\n"+etmobile.getText().toString()+"\n"+etLoan_number.getText().toString()+"\n"+etIDproofno.getText().toString()+"\n"+"\nEnd.");*/
             }
         });
@@ -83,15 +85,6 @@ public class Fragment_Reg_new_customer extends Fragment {
     }
 
 
-    //for intend passook
-    private void loadFragment(Fragment fragment) {
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        // replace the FrameLayout with new Fragment
-        fragmentTransaction.replace(R.id.frame_container, fragment);
-        fragmentTransaction.commit(); // save the changes
-        // load fragment
 
-    }
 
 }

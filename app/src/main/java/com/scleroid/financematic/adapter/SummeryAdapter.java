@@ -24,12 +24,12 @@ import butterknife.ButterKnife;
  */
 
 
-public class Adapter_personal_summery_details extends RecyclerView.Adapter<Adapter_personal_summery_details.MyViewHolder> {
+public class SummeryAdapter extends RecyclerView.Adapter<SummeryAdapter.MyViewHolder> {
 
 
     private List<Personal_summery_loan_details> summeryList;
 
-    public Adapter_personal_summery_details(List<Personal_summery_loan_details> summeryList) {
+    public SummeryAdapter(List<Personal_summery_loan_details> summeryList) {
         this.summeryList = summeryList;
     }
 

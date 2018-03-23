@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.scleroid.financematic.R;
-import com.scleroid.financematic.adapter.Adapter_passbook;
+import com.scleroid.financematic.adapter.PassbookAdapter;
 import com.scleroid.financematic.model.Passbook;
 import com.scleroid.financematic.utils.RecyclerTouchListener;
 
@@ -25,17 +25,17 @@ import java.util.List;
  * @since 2/3/18
  */
 
-public class Fragment_passbook  extends Fragment {
+public class PassbookFragment extends Fragment {
     private List<Passbook> passbookList = new ArrayList<>();
     private RecyclerView recyclerView;
-    private Adapter_passbook mAdapter;
+    private PassbookAdapter mAdapter;
 
-    public Fragment_passbook () {
+    public PassbookFragment() {
         // Required empty public constructor
     }
 
-    public static Fragment_passbook  newInstance(String param1, String param2) {
-        Fragment_passbook  fragment = new Fragment_passbook ();
+    public static PassbookFragment newInstance(String param1, String param2) {
+        PassbookFragment fragment = new PassbookFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -55,7 +55,7 @@ public class Fragment_passbook  extends Fragment {
 
         recyclerView = rootView.findViewById(R.id.passbook_my_recycler);
 
-        mAdapter = new Adapter_passbook(passbookList);
+        mAdapter = new PassbookAdapter(passbookList);
 
         recyclerView.setHasFixedSize(true);
 

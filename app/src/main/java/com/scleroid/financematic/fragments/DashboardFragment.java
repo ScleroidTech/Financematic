@@ -3,8 +3,6 @@ package com.scleroid.financematic.fragments;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,6 +16,7 @@ import android.widget.Toast;
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.adapter.LoanAdapter;
 import com.scleroid.financematic.model.Loan;
+import com.scleroid.financematic.utils.ActivityUtils;
 import com.scleroid.financematic.utils.RecyclerTouchListener;
 import com.scleroid.financematic.utils.TextViewUtils;
 
@@ -52,6 +51,7 @@ public class DashboardFragment extends Fragment {
     Unbinder unbinder;
     private List<Loan> loanList = new ArrayList<>();
     private LoanAdapter mAdapter;
+    private ActivityUtils activityUtils = new ActivityUtils();
 
     public DashboardFragment() {
         // Required empty public constructor
@@ -80,7 +80,7 @@ public class DashboardFragment extends Fragment {
 
 //Intend
         firstFragment = rootView.findViewById(R.id.total_amount_text_view);
-        firstFragment.setOnClickListener(v -> loadFragment(new Fragment_passbook()));
+        firstFragment.setOnClickListener(v -> activityUtils.loadFragment(new PassbookFragment(), getFragmentManager()));
 
         // recyclerView = rootView.findViewById(R.id.recycler_view_dashboard);
 
@@ -151,16 +151,7 @@ public class DashboardFragment extends Fragment {
     }
 
 
-    //for intend passook
-    private void loadFragment(Fragment fragment) {
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        // replace the FrameLayout with new Fragment
-        fragmentTransaction.replace(R.id.frame_container, fragment);
-        fragmentTransaction.commit(); // save the changes
-        // load fragment
 
-    }
 
 
     @Override
