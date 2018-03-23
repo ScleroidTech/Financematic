@@ -63,8 +63,9 @@ public class SummeryAdapter extends RecyclerView.Adapter<SummeryAdapter.MyViewHo
         TextView onlyDateTextView;
         @BindView(R.id.day_text_view)
         TextView dayTextView;
-        @BindView(R.id.year_text_view)
-        TextView yearTextView;
+
+        /*  @BindView(R.id.year_text_view)
+          TextView yearTextView;*/
         @BindView(R.id.summery_descpription)
         TextView summeryDescpription;
         @BindView(R.id.summery_amount)
@@ -89,14 +90,14 @@ public class SummeryAdapter extends RecyclerView.Adapter<SummeryAdapter.MyViewHo
         }
 
         private void setDate(Date date) {
-            CharSequence month = dateUtils.getFormattedDate(date, "MMM");
+            CharSequence month = dateUtils.getFormattedDate(date, "MMM. yyyy");
             CharSequence exactDate = dateUtils.getFormattedDate(date, "dd");
             CharSequence day = dateUtils.getFormattedDate(date, "EEE");
             CharSequence year = dateUtils.getFormattedDate(date, "yyyy");
             monthTextView.setText(month);
             onlyDateTextView.setText(exactDate);
             dayTextView.setText(day);
-            yearTextView.setText(year);
+            //    yearTextView.setText(year);
         }
     }
 }

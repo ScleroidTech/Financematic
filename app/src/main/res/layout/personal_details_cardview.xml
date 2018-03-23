@@ -9,7 +9,7 @@
     android:layout_height="150dp"
     card_view:cardBackgroundColor="@color/white"
     card_view:cardCornerRadius="10dp"
-    card_view:cardElevation="5dp"
+    card_view:cardElevation="10dp"
     card_view:cardUseCompatPadding="true"
     tools:showIn="@layout/try4">
 

@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -131,11 +130,27 @@ public class LoanDetailsFragment extends Fragment {
 
 
     private void prepareLoanData() {
-        Personal_summery_loan_details loan = new Personal_summery_loan_details("Received", "2000", new Date("14/6/2018"));
+        Personal_summery_loan_details loan = new Personal_summery_loan_details("Received", "2000", new Date("1/6/2018"));
         summeryList.add(loan);
         loan = new Personal_summery_loan_details("Received", "5000", new Date("12/3/2018"));
         summeryList.add(loan);
-        loan = new Personal_summery_loan_details("Received", "1000", new Date("24/5/2018"));
+        loan = new Personal_summery_loan_details("Received", "1000", new Date("4/15/2018"));
+        summeryList.add(loan);
+        loan = new Personal_summery_loan_details("Not Received", "7000", new Date("7/25/2018"));
+        summeryList.add(loan);
+        loan = new Personal_summery_loan_details("Received", "1000", new Date("2/15/2018"));
+        summeryList.add(loan);
+        loan = new Personal_summery_loan_details("Received", "3000", new Date("4/13/2018"));
+        summeryList.add(loan);
+        loan = new Personal_summery_loan_details("Received", "5000", new Date("12/3/2018"));
+        summeryList.add(loan);
+        loan = new Personal_summery_loan_details("Received", "1000", new Date("4/15/2018"));
+        summeryList.add(loan);
+        loan = new Personal_summery_loan_details("Not Received", "7000", new Date("7/25/2018"));
+        summeryList.add(loan);
+        loan = new Personal_summery_loan_details("Received", "1000", new Date("2/15/2018"));
+        summeryList.add(loan);
+        loan = new Personal_summery_loan_details("Received", "3000", new Date("4/13/2018"));
         summeryList.add(loan);
 
 
