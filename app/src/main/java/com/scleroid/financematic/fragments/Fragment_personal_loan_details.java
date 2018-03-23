@@ -24,8 +24,6 @@ import com.scleroid.financematic.utils.TextViewUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -37,8 +35,8 @@ import butterknife.Unbinder;
 
 public class Fragment_personal_loan_details extends Fragment {
 
-    @Inject
-    TextViewUtils textViewUtils;
+
+    TextViewUtils textViewUtils = new TextViewUtils();
     @BindView(R.id.total_amount_text_view)
     TextView totalAmountTextView;
     @BindView(R.id.duration_text_view)
@@ -128,7 +126,7 @@ public class Fragment_personal_loan_details extends Fragment {
 
         prepareLoanData();
 
-        textViewUtils.textViewExperiments(totalAmountTextView);
+        //  textViewUtils.textViewExperiments(totalAmountTextView);
         return rootView;
 
 
