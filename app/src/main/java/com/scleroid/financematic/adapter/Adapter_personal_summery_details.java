@@ -9,12 +9,15 @@ import android.widget.TextView;
 
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.model.Personal_summery_loan_details;
+import com.scleroid.financematic.utils.CurrencyStringUtils;
+import com.scleroid.financematic.utils.DateUtils;
+import com.scleroid.financematic.utils.TextViewUtils;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by scleroid on 6/3/18.
@@ -51,6 +54,9 @@ public class Adapter_personal_summery_details extends RecyclerView.Adapter<Adapt
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
+        static DateUtils dateUtils = new DateUtils();
+        static TextViewUtils textViewUtils = new TextViewUtils();
+        static CurrencyStringUtils currencyStringUtils = new CurrencyStringUtils();
         @BindView(R.id.month_text_view)
         TextView monthTextView;
         @BindView(R.id.only_date_text_view)
@@ -68,6 +74,7 @@ public class Adapter_personal_summery_details extends RecyclerView.Adapter<Adapt
 
         public MyViewHolder(View view) {
             super(view);
+            ButterKnife.bind(this, view);
 
 
         }
@@ -75,18 +82,21 @@ public class Adapter_personal_summery_details extends RecyclerView.Adapter<Adapt
         public void setData(Personal_summery_loan_details passbook) {
             //  holder.summery_date.setText(passbook.getSummery_date());
             summeryDescpription.setText(passbook.getSummery_descpription());
-            summeryAmount.setText(passbook.getSummery_amount());
+            summeryAmount.setText(currencyStringUtils.bindNumber(passbook.getSummery_amount()));
             setDate(passbook.getSummeryDate());
+            textViewUtils.textViewExperiments(summeryAmount);
 
         }
 
         private void setDate(Date date) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(date);
-            monthTextView.setText(calendar.get(Calendar.MONTH));
-            onlyDateTextView.setText(calendar.get(Calendar.DATE));
-            dayTextView.setText(calendar.get(Calendar.DAY_OF_MONTH));
-            yearTextView.setText(calendar.get(Calendar.YEAR));
+            CharSequence month = dateUtils.getFormattedDate(date, "MMM");
+            CharSequence exactDate = dateUtils.getFormattedDate(date, "dd");
+            CharSequence day = dateUtils.getFormattedDate(date, "EEE");
+            CharSequence year = dateUtils.getFormattedDate(date, "yyyy");
+            monthTextView.setText(month);
+            onlyDateTextView.setText(exactDate);
+            dayTextView.setText(day);
+            yearTextView.setText(year);
         }
     }
 }
