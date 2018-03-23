@@ -52,7 +52,8 @@ public class Fragment_personal_loan_details  extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView =  inflater.inflate(R.layout.personal_loan_aacount_details, container, false);
+        View rootView =  inflater.inflate(R.layout.try4, container, false);
+/*        View rootView =  inflater.inflate(R.layout.personal_loan_aacount_details, container, false);*/
 
 
         Button button_pay = rootView.findViewById(R.id.Btn_pay_rx_summery);

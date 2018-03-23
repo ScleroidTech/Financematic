@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.scleroid.financematic.fragments.DashboardFragment;
 import com.scleroid.financematic.fragments.Fragment_Reg_new_customer;
 import com.scleroid.financematic.fragments.Fragment_list_all_peoples;
+import com.scleroid.financematic.fragments.Fragment_personal_loan_details;
 import com.scleroid.financematic.fragments.Fragment_registor_given_money;
 import com.scleroid.financematic.fragments.Fragment_reminder;
 import com.scleroid.financematic.fragments.Fragment_report;
@@ -161,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // user is in notifications fragment
         // and selected 'Mark all as Read'
         if (id == R.id.action_notification) {
-            Fragment_reminder fragment = new Fragment_reminder();
+            Fragment_personal_loan_details fragment = new Fragment_personal_loan_details();
             loadFragment(fragment);
         }
 
