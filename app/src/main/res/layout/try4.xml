@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="50dp">
@@ -15,18 +14,18 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
 
-            android:background="@drawable/gradient_header_dashboard"
             android:layout_weight="0.4"
+            android:background="@drawable/gradient_header_dashboard"
             android:gravity="top|center">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:text="Customer Name"
-                android:textColor="@color/white"
-                android:textSize="32dp"
                 android:textAlignment="center"
-                android:layout_marginTop="20dp" />
+                android:textColor="@color/white"
+                android:textSize="32dp" />
 
         </LinearLayout>
 
@@ -46,16 +45,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight=".9"
             android:layout_marginTop="70dp"
+            android:layout_weight=".9"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
 
             >
 
 
-            <android.support.v7.widget.CardView android:id="@+id/card_view"
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/card_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 card_view:cardBackgroundColor="@color/white"
@@ -66,269 +65,198 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp">
+                    android:orientation="vertical">
 
                     <LinearLayout
-                        android:background="@drawable/bottom_side_line"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="7dp"
-                        android:paddingBottom="7dp"
                         android:orientation="horizontal"
+                        android:paddingBottom="7dp"
 
                         >
 
-                        <ImageView
-                            android:layout_marginTop="6dp"
-                            android:layout_width="0dp"
-                            android:layout_height="35dp"
-                            android:layout_weight=".3"
-                            app:srcCompat="@drawable/hometotal" />
 
                         <TextView
-
                             android:id="@+id/TextView1"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:textSize="18sp"
-                            android:layout_marginTop="6dp"
                             android:layout_marginLeft="15dp"
+                            android:layout_marginTop="6dp"
                             android:layout_weight="1"
+                            android:drawableStart="@drawable/ic_account_balance_black_24dp"
                             android:text="@string/total_loan"
-                            android:textAppearance="?android:attr/textAppearanceLarge" />
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:textSize="18sp" />
 
 
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
 
-                            android:layout_weight=".7"
-                            android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/textViewName2"
-                                android:textSize="17sp"
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-
                                 android:layout_marginTop="6dp"
+                                android:layout_weight="0.7"
+
                                 android:text="RS 150000"
-                                android:textAppearance="?android:attr/textAppearanceLarge" />
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:textSize="17sp" />
 
-
-                        </LinearLayout>
                     </LinearLayout>
 
                     <LinearLayout
 
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-
                         android:layout_marginTop="5dp"
+
+                        android:orientation="horizontal"
                         android:paddingBottom="5dp"
-                        android:background="@drawable/bottom_side_line"
 
                         >
 
-                        <ImageView
-
-                            android:layout_width="0dp"
-                            android:layout_height="28dp"
-                            android:layout_weight=".3"
-                            app:srcCompat="@drawable/receive"
-                           />
 
                         <TextView
 
                             android:id="@+id/imageView2"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:textSize="18sp"
-                            android:layout_weight="1"
                             android:layout_marginLeft="15dp"
+                            android:layout_weight="1"
                             android:text="@string/paid_amount"
-                            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:textSize="18sp" />
 
 
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:background="@drawable/bottom_side_line"
-                            android:layout_height="wrap_content"
-                            android:layout_weight=".7"
-                            android:orientation="vertical">
-
-                            <TextView
+                        <TextView
                                 android:id="@+id/textViewName3"
 
-                                android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:textSize="18sp"
+                            android:layout_weight="0.7"
                                 android:text="Rs50000"
-                                android:textAppearance="?android:attr/textAppearanceLarge" />
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:textSize="18sp" />
 
 
-                        </LinearLayout>
                     </LinearLayout>
 
                     <LinearLayout
-                        android:background="@drawable/bottom_side_line"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-
                         android:layout_marginTop="5dp"
+                        android:orientation="horizontal"
                         android:paddingBottom="5dp">
 
-                        <ImageView
-
-                            android:layout_width="0dp"
-                            android:layout_height="28dp"
-                            android:layout_weight=".3"
-                            app:srcCompat="@drawable/percentamount" />
 
                         <TextView
 
                             android:id="@+id/imageView3"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:textSize="18sp"
-                            android:layout_weight="1"
                             android:layout_marginLeft="15dp"
+                            android:layout_weight="1"
                             android:text="Interest  "
-                            android:textAppearance="?android:attr/textAppearanceLarge" />
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:textSize="18sp" />
 
 
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-
-
-                            android:layout_weight=".7"
-                            android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/textViewName4"
 
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:textSize="18sp"
 
+                                android:layout_weight="0.7"
                                 android:text="RS   5000"
-                                android:textAppearance="?android:attr/textAppearanceLarge" />
 
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:textSize="18sp" />
 
-                        </LinearLayout>
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:background="@drawable/bottom_side_line"
-
                         android:layout_marginTop="5dp"
+
+                        android:orientation="horizontal"
                         android:paddingBottom="5dp"
 
                         >
 
-                        <ImageView
 
-                            android:layout_width="0dp"
-                            android:layout_height="28dp"
-                            android:layout_weight=".3"
-                            app:srcCompat="@drawable/ic_calendarclocktime" />
 
                         <TextView
 
                             android:id="@+id/imageView5"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:textSize="18sp"
-                            android:layout_weight="1"
                             android:layout_marginLeft="15dp"
+                            android:layout_weight="1"
+                            android:drawableStart="@drawable/ic_calendarclocktime"
                             android:text="Duration "
-                            android:textAppearance="?android:attr/textAppearanceLarge" />
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:textSize="18sp" />
 
 
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-
-                            android:layout_weight=".7"
-                            android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/textViewName6"
-                                android:textSize="18sp"
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_weight=".7"
 
 
                                 android:text="6 Months"
-                                android:textAppearance="?android:attr/textAppearanceLarge" />
 
 
-                        </LinearLayout>
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:textSize="18sp" />
+
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-
-
                         android:layout_marginTop="5dp"
+
+
+                        android:orientation="horizontal"
                         android:paddingBottom="5dp">
-
-                        <ImageView
-
-                            android:layout_width="0dp"
-                            android:layout_height="28dp"
-                            android:layout_weight=".3"
-                            app:srcCompat="@drawable/ic_report_black_24dp" />
 
                         <TextView
 
                             android:id="@+id/imageView1"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:textSize="18sp"
-                            android:layout_weight="1"
                             android:layout_marginLeft="15dp"
+                            android:layout_weight="1"
+                            android:drawablePadding="5dp"
+                            android:drawableStart="@drawable/ic_credit_card"
                             android:text="Installment"
-                            android:textAppearance="?android:attr/textAppearanceLarge" />
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:textSize="18sp" />
 
 
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-
-                            android:layout_weight=".7"
-                            android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/textViewName1"
 
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:textSize="18sp"
+
+
+                                android:layout_weight=".7"
                                 android:text="RS  1800"
-                                android:textAppearance="?android:attr/textAppearanceLarge" />
-                            <!--
-                                                <TextView
-                                                    android:id="@+id/textViewVersion"
-                                                    android:layout_width="wrap_content"
-                                                    android:layout_height="wrap_content"
-                                                    android:layout_gravity="center_horizontal"
-                                                    android:layout_marginTop="10dp"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:textSize="18sp" />
 
-                                                    android:text="Android Version"
-                                                    android:textAppearance="?android:attr/textAppearanceMedium"/>-->
-
-                        </LinearLayout>
                     </LinearLayout>
 
 
@@ -351,10 +279,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:background="@color/cardview_dark_background">
+                android:layout_marginTop="10dp"
+                android:background="@color/cardview_dark_background"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -371,12 +299,12 @@
                         android:id="@+id/TextView100"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textSize="20sp"
-                        android:textColor="@color/white"
                         android:layout_marginLeft="15dp"
                         android:layout_weight="1"
                         android:text="@string/loan_date"
-                        android:textAppearance="?android:attr/textAppearanceLarge" />
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
 
 
                     <LinearLayout
@@ -388,14 +316,14 @@
 
                         <TextView
                             android:id="@+id/textViewName77"
-                            android:textSize="20sp"
                             android:layout_width="wrap_content"
-                            android:textColor="@color/white"
                             android:layout_height="wrap_content"
-
-
                             android:text="Description"
-                            android:textAppearance="?android:attr/textAppearanceLarge" />
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+
+
+                            android:textColor="@color/white"
+                            android:textSize="20sp" />
 
 
                     </LinearLayout>
@@ -409,13 +337,13 @@
 
                         <TextView
                             android:id="@+id/textViewName83"
-                            android:textSize="20sp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:textColor="@color/white"
                             android:text="Amount"
-                            android:textAppearance="?android:attr/textAppearanceLarge" />
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:textColor="@color/white"
+                            android:textSize="20sp" />
 
 
                     </LinearLayout>
@@ -430,13 +358,13 @@
 
                         <TextView
                             android:id="@+id/textViewName444"
-                            android:textSize="20sp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:textColor="@color/white"
                             android:text="Pay"
-                            android:textAppearance="?android:attr/textAppearanceLarge" />
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:textColor="@color/white"
+                            android:textSize="20sp" />
 
 
                     </LinearLayout>
@@ -446,8 +374,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_marginTop="1dp"
+                android:orientation="vertical"
 
 
                 >
@@ -455,9 +383,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-
                     android:layout_marginBottom="5dp"
+
+                    android:orientation="horizontal"
 
                     >
 
@@ -466,12 +394,12 @@
                         android:id="@+id/TextView33"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textSize="20sp"
-
-
                         android:layout_weight="1"
+
+
                         android:text="1/7/2018"
-                        android:textAppearance="?android:attr/textAppearanceLarge" />
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textSize="20sp" />
 
 
                     <LinearLayout
@@ -484,14 +412,14 @@
 
                         <TextView
                             android:id="@+id/textViewName11"
-                            android:textSize="20sp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-
                             android:background="@color/red"
-                            android:textColor="@color/white"
+
                             android:text="Due pay"
-                            android:textAppearance="?android:attr/textAppearanceLarge" />
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:textColor="@color/white"
+                            android:textSize="20sp" />
 
 
                     </LinearLayout>
@@ -505,13 +433,13 @@
 
                         <TextView
                             android:id="@+id/textViewName54"
-                            android:textSize="20sp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-
                             android:text="14000"
-                            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:textSize="20sp" />
 
 
                     </LinearLayout>
@@ -535,9 +463,9 @@
                 </LinearLayout>
 
                 <View
-                    android:background="#c4bebe"
+                    android:layout_width="fill_parent"
                     android:layout_height="1dp"
-                    android:layout_width="fill_parent" />
+                    android:background="#c4bebe" />
             </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
