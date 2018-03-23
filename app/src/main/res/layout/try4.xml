@@ -24,7 +24,7 @@
                 android:layout_marginTop="40dp"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:paddingzStart="8dp">
+                android:paddingStart="8dp">
 
                 <TextView
                     android:id="@+id/title_interest_text_view"
