@@ -21,12 +21,11 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.scleroid.financematic.fragments.DashboardFragment;
-import com.scleroid.financematic.fragments.Fragment_Reg_new_customer;
-import com.scleroid.financematic.fragments.Fragment_list_all_peoples;
-import com.scleroid.financematic.fragments.Fragment_personal_loan_details;
-import com.scleroid.financematic.fragments.Fragment_registor_given_money;
-import com.scleroid.financematic.fragments.Fragment_reminder;
 import com.scleroid.financematic.fragments.Fragment_report;
+import com.scleroid.financematic.fragments.LoanDetailsFragment;
+import com.scleroid.financematic.fragments.PeopleFragment;
+import com.scleroid.financematic.fragments.RegisterCustomerFragment;
+import com.scleroid.financematic.fragments.RegisterMoneyFragment;
 import com.scleroid.financematic.utils.BottomNavigationViewHelper;
 
 
@@ -47,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return true;
             case R.id.navigation_list:
                        /* toolbar.setTitle("Loan Details");*/
-                fragment = new Fragment_list_all_peoples();
+                fragment = new PeopleFragment();
                 loadFragment(fragment);
                 return true;
             case R.id.person_details:
@@ -58,12 +57,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return true;
                    /* case R.id.navigation_person_loan_details:
                    *//*  toolbar.setTitle("Person Details");*//*
-                        fragment = new Fragment_Reg_new_customer();
+                        fragment = new RegisterCustomerFragment();
                         loadFragment(fragment);
                         return true;
                     case R.id.navigation_reminders:
                     *//*  toolbar.setTitle("Reminder");*//*
-                        fragment = new Fragment_reminder();
+                        fragment = new ReminderFragment();
                         loadFragment(fragment);
                         return true;
 
@@ -154,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_create_new_loan) {
 
-            Fragment_Reg_new_customer fragment = new Fragment_Reg_new_customer();
+            RegisterCustomerFragment fragment = new RegisterCustomerFragment();
             loadFragment(fragment);
             return true;
         }
@@ -162,7 +161,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // user is in notifications fragment
         // and selected 'Mark all as Read'
         if (id == R.id.action_notification) {
-            Fragment_personal_loan_details fragment = new Fragment_personal_loan_details();
+            LoanDetailsFragment fragment = new LoanDetailsFragment();
             loadFragment(fragment);
         }
 
@@ -211,13 +210,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.navigation_list) {
-            fragment = new Fragment_list_all_peoples();
+            fragment = new PeopleFragment();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.frame_container, fragment);
             ft.commit();
 
         } else if (id == R.id.nav_slideshow) {
-            fragment = new Fragment_registor_given_money();
+            fragment = new RegisterMoneyFragment();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.frame_container, fragment);
             ft.commit();

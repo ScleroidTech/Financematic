@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,12 +34,13 @@ import butterknife.ButterKnife;
 
 /**
  * Copyright (C) 2018
+ *
  * @author Ganesh Kaple
  * @since 2/3/18
  */
 
-
-public class FragmentReport extends Fragment {
+public class ReportFragment extends Fragment implements
+        AdapterView.OnItemSelectedListener {
     private static final String DIALOG_DATE = "DIALOG_DATE";
     private static final int REQUEST_DATE_FROM = 1;
     private static final int REQUEST_DATE_TO = 2;
@@ -48,16 +51,20 @@ public class FragmentReport extends Fragment {
     Calendar myCalendar = Calendar.getInstance();
     Calendar myCalendar1 = Calendar.getInstance();
 
+    String[] country = {"All Amount", "Received Amount", "Lent Amount", "Expenditure", "Interest Earned"};
+    Spinner spin;
+    private Spinner spinner;
+
     private List<Report> reportList = new ArrayList<>();
     private RecyclerView recyclerView;
     private Adapter_report mAdapter;
 
-    public FragmentReport() {
+    public ReportFragment() {
         // Required empty public constructor
     }
 
-    public static FragmentReport newInstance(String param1, String param2) {
-        FragmentReport fragment = new FragmentReport();
+    public static ReportFragment newInstance(String param1, String param2) {
+        ReportFragment fragment = new ReportFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -103,7 +110,6 @@ public class FragmentReport extends Fragment {
         ButterKnife.bind(this, rootView);
 
 
-
         mAdapter = new Adapter_report(reportList);
 
         recyclerView.setHasFixedSize(true);
@@ -144,27 +150,32 @@ public class FragmentReport extends Fragment {
         return rootView;
 
 
-
     }
 
     private void prepareLoanData() {
-        Report report = new Report("10225 ", "Rs 25000", "3%","3000","Rs 15000");
+        Report report = new Report("10225 ", "Rs 25000", "3%", "3000", "Rs 15000");
         reportList.add(report);
-        report = new Report("20225 ", "Rs 45000", "2%","2000","Rs 5000");
+        report = new Report("20225 ", "Rs 45000", "2%", "2000", "Rs 5000");
         reportList.add(report);
-        report = new Report("10225 ", "Rs 25000", "3%","2000","Rs 5000");
+        report = new Report("10225 ", "Rs 25000", "3%", "2000", "Rs 5000");
         reportList.add(report);
-        report = new Report("10325 ", "Rs 35000", "4%","2500","Rs 1000");
+        report = new Report("10325 ", "Rs 35000", "4%", "2500", "Rs 1000");
         reportList.add(report);
-
-
-
-
 
 
         // notify adapter about data set changes
         // so that it will render the list with new data
         mAdapter.notifyDataSetChanged();
+    }
+
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> arg0) {
     }
 
 

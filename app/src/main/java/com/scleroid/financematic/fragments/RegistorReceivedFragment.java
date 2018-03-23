@@ -26,7 +26,7 @@ import java.util.Locale;
  */
 
 
-public class Fragment_registor_received_amount extends Fragment  implements
+public class RegistorReceivedFragment extends Fragment implements
         AdapterView.OnItemSelectedListener{
     private static final String DIALOG_DATE = "DIALOG_DATE";
     private static final int REQUEST_DATE = 0;
@@ -40,13 +40,12 @@ public class Fragment_registor_received_amount extends Fragment  implements
     private TextView  etrxDate, etrxTotalInterestAmount, etrxReceivedAmount,tv;
 
 
-
-    public Fragment_registor_received_amount() {
+    public RegistorReceivedFragment() {
         // Required empty public constructor
     }
 
-    public static Fragment_registor_received_amount newInstance(String param1, String param2) {
-        Fragment_registor_received_amount fragment = new Fragment_registor_received_amount();
+    public static RegistorReceivedFragment newInstance(String param1, String param2) {
+        RegistorReceivedFragment fragment = new RegistorReceivedFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;

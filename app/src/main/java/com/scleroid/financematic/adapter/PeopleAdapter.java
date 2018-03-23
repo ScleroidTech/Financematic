@@ -21,12 +21,12 @@ import butterknife.ButterKnife;
  */
 
 
-public class Adapter_list_all_peoples extends RecyclerView.Adapter<Adapter_list_all_peoples.MyViewHolder> {
+public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHolder> {
 
 
     private List<List_all_peoples> list_all_peoplesList;
 
-    public Adapter_list_all_peoples(List<List_all_peoples> list_all_peoplesList) {
+    public PeopleAdapter(List<List_all_peoples> list_all_peoplesList) {
         this.list_all_peoplesList = list_all_peoplesList;
     }
 

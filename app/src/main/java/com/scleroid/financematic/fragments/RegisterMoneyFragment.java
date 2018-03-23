@@ -29,7 +29,7 @@ import javax.inject.Inject;
  */
 
 
-public class Fragment_registor_given_money extends Fragment implements
+public class RegisterMoneyFragment extends Fragment implements
         AdapterView.OnItemSelectedListener {
 
     private static final int REQUEST_DATE = 1;
@@ -43,13 +43,12 @@ public class Fragment_registor_given_money extends Fragment implements
     private TextView  ettxloan_amout, ettxStartDate, ettxEndDate,ettxrateInterest,ettxInterestAmount,ettxInstallmentduration,etTotalLoanAmount ,ettxNoofInstallment,tv;
 
 
-
-    public Fragment_registor_given_money() {
+    public RegisterMoneyFragment() {
         // Required empty public constructor
     }
 
-    public static Fragment_registor_given_money newInstance(String param1, String param2) {
-        Fragment_registor_given_money fragment = new Fragment_registor_given_money();
+    public static RegisterMoneyFragment newInstance(String param1, String param2) {
+        RegisterMoneyFragment fragment = new RegisterMoneyFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -111,28 +110,18 @@ public class Fragment_registor_given_money extends Fragment implements
 
         };
         ettxStartDate = rootView.findViewById(R.id.txStartDate);
-        ettxStartDate.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                new DatePickerDialog(getActivity(), date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
+        ettxStartDate.setOnClickListener(v -> {
+            // TODO Auto-generated method stub
+            new DatePickerDialog(getActivity(), date, myCalendar
+                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                    myCalendar.get(Calendar.DAY_OF_MONTH)).show();
         });
-        final DatePickerDialog.OnDateSetListener date1 = new DatePickerDialog.OnDateSetListener() {
-
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                // TODO Auto-generated method stub
-                myCalendar1.set(Calendar.YEAR, year);
-                myCalendar1.set(Calendar.MONTH, monthOfYear);
-                myCalendar1.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateLabel1();
-            }
-
+        final DatePickerDialog.OnDateSetListener date1 = (view, year, monthOfYear, dayOfMonth) -> {
+            // TODO Auto-generated method stub
+            myCalendar1.set(Calendar.YEAR, year);
+            myCalendar1.set(Calendar.MONTH, monthOfYear);
+            myCalendar1.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateLabel1();
         };
         ettxEndDate = rootView.findViewById(R.id.txEndDate);
         ettxEndDate.setOnClickListener(new View.OnClickListener() {

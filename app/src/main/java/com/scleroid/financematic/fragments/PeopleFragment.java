@@ -2,8 +2,6 @@ package com.scleroid.financematic.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,8 +12,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.scleroid.financematic.R;
-import com.scleroid.financematic.adapter.Adapter_list_all_peoples;
+import com.scleroid.financematic.adapter.PeopleAdapter;
 import com.scleroid.financematic.model.List_all_peoples;
+import com.scleroid.financematic.utils.ActivityUtils;
 import com.scleroid.financematic.utils.RecyclerTouchListener;
 
 import java.util.ArrayList;
@@ -25,18 +24,19 @@ import java.util.List;
  * Created by scleroid on 28/2/18.
  */
 
-public class Fragment_list_all_peoples extends Fragment {
+public class PeopleFragment extends Fragment {
+    private final ActivityUtils activityUtils = new ActivityUtils();
     TextView firstFragment;
     private List<List_all_peoples> list_all_peoplesList = new ArrayList<>();
     private RecyclerView recyclerView;
-    private Adapter_list_all_peoples mAdapter;
+    private PeopleAdapter mAdapter;
 
-    public Fragment_list_all_peoples() {
+    public PeopleFragment() {
         // Required empty public constructor
     }
 
-    public static Fragment_list_all_peoples newInstance(String param1, String param2) {
-        Fragment_list_all_peoples fragment = new Fragment_list_all_peoples();
+    public static PeopleFragment newInstance(String param1, String param2) {
+        PeopleFragment fragment = new PeopleFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -55,18 +55,12 @@ public class Fragment_list_all_peoples extends Fragment {
 
         //Intend
         firstFragment = rootView.findViewById(R.id.button_list);
-        firstFragment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                loadFragment(new Fragment_personal_loan_details());
-            }
-        });
+        firstFragment.setOnClickListener(v -> activityUtils.loadFragment(new LoanDetailsFragment(), getFragmentManager()));
 
 
         recyclerView = rootView.findViewById(R.id.list_all_peoples_recycler);
 
-        mAdapter = new Adapter_list_all_peoples(list_all_peoplesList);
+        mAdapter = new PeopleAdapter(list_all_peoplesList);
 
         recyclerView.setHasFixedSize(true);
 
@@ -126,15 +120,6 @@ public class Fragment_list_all_peoples extends Fragment {
     }
 
 
-    //for intend passook
-    private void loadFragment(Fragment fragment) {
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        // replace the FrameLayout with new Fragment
-        fragmentTransaction.replace(R.id.frame_container, fragment);
-        fragmentTransaction.commit(); // save the changes
-        // load fragment
 
-    }
 
 }
