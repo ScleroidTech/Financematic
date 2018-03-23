@@ -1,8 +1,5 @@
 package com.scleroid.financematic.fragments;
 
-import android.graphics.Color;
-import android.graphics.LinearGradient;
-import android.graphics.Shader;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -22,14 +19,16 @@ import com.scleroid.financematic.R;
 import com.scleroid.financematic.adapter.LoanAdapter;
 import com.scleroid.financematic.model.Loan;
 import com.scleroid.financematic.utils.RecyclerTouchListener;
+import com.scleroid.financematic.utils.TextViewUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import timber.log.Timber;
 
 /**
  * Created by scleroid on 2/3/18.
@@ -37,6 +36,8 @@ import timber.log.Timber;
 
 
 public class DashboardFragment extends Fragment {
+    @Inject
+    TextViewUtils TextViewUtils;
     TextView firstFragment;
     @BindView(R.id.total_amount_text_view)
     TextView totalAmountTextView;
@@ -89,22 +90,12 @@ public class DashboardFragment extends Fragment {
 
 
         setupRecyclerView();
-        textViewExperiments(upcomingEventsTextView);
-        textViewExperiments(totalAmountTextView);
+        TextViewUtils.textViewExperiments(upcomingEventsTextView);
+        TextViewUtils.textViewExperiments(totalAmountTextView);
 
         return rootView;
     }
 
-    private void textViewExperiments(TextView textView) {
-        Shader textShaderOther = new LinearGradient(0, 0, 300, textView.getLineHeight(),
-                new int[]{0xFF852D91, 0xFF6253E1, 0xFF00E0E4},
-                null, Shader.TileMode.CLAMP);
-        Timber.i("textview Values" + textView.getTextScaleX() + " " + textView.getTextSize() + " " + textView.getMeasuredWidth() + " " + textView.getLineHeight());
-        Shader textShader = new LinearGradient(0, 0, 150, textView.getLineHeight(),
-                new int[]{Color.GRAY, Color.BLUE},
-                null, Shader.TileMode.CLAMP);
-        textView.getPaint().setShader(textShaderOther);
-    }
 
     private void setupRecyclerView() {
         mAdapter = new LoanAdapter(loanList);

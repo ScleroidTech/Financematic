@@ -17,16 +17,23 @@
             android:layout_weight="0.4"
             android:background="@drawable/gradient_header_dashboard"
             android:gravity="top|center"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/title_total_amount_text_view"
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="7"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/total_amount_label_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_marginTop="10dp"
+                    android:paddingStart="60dp"
                 android:text="Total Loan"
-                android:textAlignment="center"
+                    android:textAlignment="textStart"
+
                 android:textColor="@color/white"
                 android:textSize="15sp" />
 
@@ -34,11 +41,42 @@
                 android:id="@+id/total_amount_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:paddingStart="60dp"
                 android:text="@string/amount_with_symbol"
-                android:textAlignment="center"
+                android:textAlignment="textStart"
                 android:textColor="@color/white"
-                android:textSize="32dp" />
+                android:textSize="33dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp"
+                android:layout_weight="3"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/title_duration_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="8dp"
+                    android:text="Duration"
+                    android:textAlignment="textEnd"
+                    android:textColor="#bfff"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/duration_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:paddingEnd="8dp"
+                    android:text="6 Months"
+                    android:textAlignment="textEnd"
+                    android:textColor="#bfff"
+                    android:textSize="20dp" />
+            </LinearLayout>
+
 
         </LinearLayout>
 

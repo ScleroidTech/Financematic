@@ -1,7 +1,9 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
     <item android:drawable="@color/colorPrimary" />
-
+    <!--  <item>
+          <bitmap android:src="@drawable/bebe" android:gravity="center" android:alpha="0.1"/>
+      </item>-->
     <item
         android:bottom="-50dp"
         android:left="0dp"

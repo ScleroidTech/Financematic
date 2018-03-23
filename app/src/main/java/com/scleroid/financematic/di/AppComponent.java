@@ -5,6 +5,7 @@ import android.app.Application;
 
 import com.scleroid.financematic.App;
 import com.scleroid.financematic.utils.DateUtils;
+import com.scleroid.financematic.utils.TextViewUtils;
 
 import javax.inject.Singleton;
 
@@ -39,6 +40,8 @@ public interface AppComponent extends AndroidInjector<DaggerApplication> {
 
 
     DateUtils getDateUtils();
+
+    TextViewUtils getTextViewUtils();
 
     @Override
     void inject(DaggerApplication instance);
