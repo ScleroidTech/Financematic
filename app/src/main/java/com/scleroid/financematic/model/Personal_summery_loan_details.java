@@ -1,5 +1,7 @@
 package com.scleroid.financematic.model;
 
+import java.util.Date;
+
 /**
  * Created by scleroid on 6/3/18.
  */
@@ -8,24 +10,24 @@ package com.scleroid.financematic.model;
 
 
 public class Personal_summery_loan_details {
-    private String summery_date,summery_descpription ,summery_amount;
+    private String summery_descpription, summery_amount;
+    private Date summeryDate;
+
+    public Personal_summery_loan_details(String summery_descpription, String summery_amount, Date summeryDate) {
+        this.summery_descpription = summery_descpription;
+        this.summery_amount = summery_amount;
+        this.summeryDate = summeryDate;
+    }
 
     public Personal_summery_loan_details() {
     }
 
-    public Personal_summery_loan_details(String summery_date, String summery_descpription, String summery_amount) {
-        this.summery_date = summery_date;
-        this.summery_descpription= summery_descpription;
-        this.summery_amount= summery_amount;
-
+    public Date getSummeryDate() {
+        return summeryDate;
     }
 
-    public String getSummery_date() {
-        return summery_date;
-    }
-
-    void setSummery_date(String summery_date) {
-        this.summery_date = summery_date;
+    public void setSummeryDate(Date summeryDate) {
+        this.summeryDate = summeryDate;
     }
 
     public String getSummery_descpription() {

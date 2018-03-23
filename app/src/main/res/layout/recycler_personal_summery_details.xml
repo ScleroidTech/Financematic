@@ -1,100 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout
+
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_height="120dp"
+        card_view:cardBackgroundColor="@color/white"
+        card_view:cardCornerRadius="10dp"
+        card_view:cardElevation="5dp"
+        card_view:cardUseCompatPadding="true">
 
-
-        >
-        <LinearLayout
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <include layout="@layout/date_layout" />
 
 
-            >
             <TextView
-
-                android:id="@+id/summery_date"
-                android:layout_width="0dp"                         android:layout_height="wrap_content"
-                android:textSize="20sp"
-
-
-                android:layout_weight="1.1"
-                android:text="14/6/2018"
-                android:textAppearance="?android:attr/textAppearanceLarge"/>
-
-
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-
-                android:layout_weight="1"
-                android:orientation="vertical"
-                >
-
-                <TextView
-                    android:id="@+id/summery_descpription"
-                    android:textSize="20sp"  android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:background="@color/green"
-                    android:textColor="@color/white"
-                    android:text="Received"
-                    android:textAppearance="?android:attr/textAppearanceLarge"/>
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
+                android:id="@+id/summery_descpription"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:layout_weight="1"
-                android:orientation="vertical"
-                >
-
-                <TextView
-                    android:id="@+id/summery_amount"
-                    android:textSize="20sp"  android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-
-                    android:text="14000"
-                    android:textAppearance="?android:attr/textAppearanceLarge"/>
+                android:layout_marginStart="8dp"
+                android:text="Received on time"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/gray_text"
+                android:textSize="15sp"
+                card_view:layout_constraintStart_toEndOf="@+id/summery_date"
+                card_view:layout_constraintTop_toBottomOf="@+id/summery_amount" />
 
 
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/summery_amount"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
 
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:layout_marginBottom="3dp"
-                >
-<Button
-    android:id="@+id/Btn_paid_rx_summery"
-    android:layout_width="wrap_content"
-    android:layout_height="31dp"
-    android:background="@color/green"
-    android:text="Paid"
-    android:textColor="@color/white"/>
+                android:layout_marginStart="8dp"
+                android:text="@string/amount_with_symbol"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="32sp"
+                card_view:layout_constraintStart_toEndOf="@+id/summery_date"
+                card_view:layout_constraintTop_toTopOf="parent" />
 
 
-            </LinearLayout>
-        </LinearLayout>
-        <View
-            android:background="#c4bebe"
-            android:layout_height="2dp"
-            android:layout_width="fill_parent"/>
-    </LinearLayout>
+            <Button
+                android:id="@+id/Btn_paid_rx_summery"
+                android:layout_width="wrap_content"
+                android:layout_height="31dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/button_rounded_green"
+                android:text="Paid"
+                android:textColor="@color/white"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+        <!--
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="2dp"
+                    android:background="#c4bebe" />-->
+    </android.support.v7.widget.CardView>
 </android.support.constraint.ConstraintLayout>
