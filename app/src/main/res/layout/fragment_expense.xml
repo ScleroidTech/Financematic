@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:layout_marginTop="55dp"
-
+    android:orientation="vertical"
     >
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/pie_chart_expense"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+
     <LinearLayout
 
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,12 +28,12 @@
             android:id="@+id/toaa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="10dp"
-
             android:text="Total Expenditure "
+
+            android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="15sp"
 
@@ -41,14 +45,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
+            android:layout_marginBottom="10dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginBottom="10dp"
             android:text="Rs 20,000.00"
+            android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="33sp"
             android:textStyle="bold"
-            android:textAlignment="center"
         />
 
 
@@ -64,9 +68,8 @@
 
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
 
-        android:layout_width="0dp"
+              android:layout_width="0dp"
         android:layout_height="wrap_content"
 android:layout_weight=".3"
         android:background="@drawable/shadow6"
@@ -79,8 +82,8 @@ android:layout_weight=".3"
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="1dp"
             android:layout_marginTop="1dp"
+            android:paddingBottom="1dp"
             android:text="Room Rent"
             android:textAlignment="center"
             android:textColor="#ffff"
@@ -89,13 +92,13 @@ android:layout_weight=".3"
 <LinearLayout
     android:layout_width="60dp"
     android:layout_height="60dp"
-    android:background="@color/colorDivide"
-    android:layout_gravity="center">
+    android:layout_gravity="center"
+    android:background="@color/colorDivide">
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@drawable/ic_home_black_24dp"
             android:layout_gravity="center"
+            android:background="@drawable/ic_home_black_24dp"
             android:backgroundTint="@color/white"
 
             />
@@ -114,9 +117,8 @@ android:layout_weight=".3"
 
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
 
-        android:layout_width="0dp"
+              android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight=".3"
 
@@ -130,9 +132,9 @@ android:layout_weight=".3"
         >
 
              <TextView
-                 android:layout_marginTop="1dp"
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
+                 android:layout_marginTop="1dp"
                  android:paddingBottom="1dp"
                  android:text="Light Bill"
                  android:textAlignment="center"
@@ -143,8 +145,8 @@ android:layout_weight=".3"
              <ImageView
                  android:layout_width="50dp"
                  android:layout_height="40dp"
-                 android:background="@drawable/ic_lightbulb_outline_black_24dp"
                  android:layout_gravity="center"
+                 android:background="@drawable/ic_lightbulb_outline_black_24dp"
                  android:backgroundTint="@color/white"
 
                  />
@@ -163,9 +165,8 @@ android:layout_weight=".3"
 
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
 
-            android:layout_width="0dp"
+              android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".3"
 
@@ -179,9 +180,9 @@ android:layout_weight=".3"
             >
 
             <TextView
-                android:layout_marginTop="1dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
                 android:paddingBottom="1dp"
                 android:text="Mobile Bill"
                 android:textAlignment="center"
@@ -192,8 +193,8 @@ android:layout_weight=".3"
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="40dp"
-                android:background="@drawable/ic_phone_android_black_24dp"
                 android:layout_gravity="center"
+                android:background="@drawable/ic_phone_android_black_24dp"
                 android:backgroundTint="@color/white"
 
                 />
@@ -220,9 +221,8 @@ android:layout_weight=".3"
 
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
 
-            android:layout_width="0dp"
+              android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".3"
             android:background="@drawable/shadow6"
@@ -235,9 +235,9 @@ android:layout_weight=".3"
             card_view:layout_constraintTop_toTopOf="parent"
             >
             <TextView
-                android:layout_marginTop="1dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
                 android:paddingBottom="1dp"
                 android:text="Paid Salaries"
                 android:textAlignment="center"
@@ -248,8 +248,8 @@ android:layout_weight=".3"
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="40dp"
-                android:background="@drawable/ic_account_balance_wallet_black_24dp"
                 android:layout_gravity="center"
+                android:background="@drawable/ic_account_balance_wallet_black_24dp"
                 android:backgroundTint="@color/white"
 
                 />
@@ -268,9 +268,8 @@ android:layout_weight=".3"
 
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
 
-            android:layout_width="0dp"
+              android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".3"
 
@@ -284,9 +283,9 @@ android:layout_weight=".3"
             >
 
             <TextView
-                android:layout_marginTop="1dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
                 android:paddingBottom="1dp"
                 android:text="Petrol"
                 android:textAlignment="center"
@@ -313,11 +312,11 @@ android:layout_weight=".3"
                 android:textColor="#313942"
                 android:textSize="22sp" />
         </LinearLayout>
-          <LinearLayout
+
+        <LinearLayout
 
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
 
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -329,13 +328,12 @@ android:layout_weight=".3"
 
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toTopOf="parent"
-            >
+            card_view:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:layout_marginTop="1dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
                 android:paddingBottom="1dp"
                 android:text="Other"
                 android:textAlignment="center"
@@ -346,8 +344,8 @@ android:layout_weight=".3"
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="40dp"
-                android:background="@drawable/ic_view_list_black_24dp"
                 android:layout_gravity="center"
+                android:background="@drawable/ic_view_list_black_24dp"
                 android:backgroundTint="@color/white"
 
                 />

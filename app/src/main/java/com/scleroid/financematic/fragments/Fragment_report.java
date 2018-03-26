@@ -17,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.scleroid.financematic.R;
-import com.scleroid.financematic.adapter.Adapter_report;
+import com.scleroid.financematic.adapter.ReportAdapter;
 import com.scleroid.financematic.model.Report;
 import com.scleroid.financematic.utils.RecyclerTouchListener;
 
@@ -65,7 +65,7 @@ public class Fragment_report extends Fragment implements
 
     private List<Report> reportList = new ArrayList<>();
     private RecyclerView recyclerView;
-    private Adapter_report mAdapter;
+    private ReportAdapter mAdapter;
 
     public Fragment_report() {
         // Required empty public constructor
@@ -151,9 +151,9 @@ public class Fragment_report extends Fragment implements
             }
         });
 
-        recyclerView = rootView.findViewById(R.id.report_my_recycler);
+        recyclerView = rootView.findViewById(R.id.report_recycler_view);
 
-        mAdapter = new Adapter_report(reportList);
+        mAdapter = new ReportAdapter(reportList);
 
         recyclerView.setHasFixedSize(true);
 

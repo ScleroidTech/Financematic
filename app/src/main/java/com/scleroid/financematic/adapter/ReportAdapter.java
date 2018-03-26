@@ -22,11 +22,11 @@ import java.util.List;
  * Created by scleroid on 5/3/18.
  */
 
-public class Adapter_report extends RecyclerView.Adapter<Adapter_report.MyViewHolder>  {
+public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHolder> {
 
     private List<Report> reportList;
 
-    public Adapter_report(List<Report> reportList) {
+    public ReportAdapter(List<Report> reportList) {
         this.reportList = reportList;
     }
 

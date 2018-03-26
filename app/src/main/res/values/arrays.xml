@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="planets_array">planets_array</string-array>
+    <string-array name="nav_item_activity_titles">
+        <item>Dashboard</item>
+        <item>New Customer</item>
+        <item>Report</item>
+        <item>Expenses</item>
+        <item>Notification</item>
+        <item>Settings</item>
+
+    </string-array>
 </resources>
