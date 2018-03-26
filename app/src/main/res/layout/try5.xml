@@ -104,7 +104,7 @@
                     android:layout_height="40dp"
                     android:background="@drawable/ic_home_black_24dp"
                     android:layout_gravity="center"
-                    android:backgroundTint="@color/exp_card1"
+                    android:backgroundTint="@color/colorPrimary"
 
                     />
             </LinearLayout>
@@ -160,7 +160,7 @@
                     android:layout_height="40dp"
                     android:background="@drawable/ic_lightbulb_outline_black_24dp"
                     android:layout_gravity="center"
-                    android:backgroundTint="@color/exp_card2"
+                    android:backgroundTint="@color/card_color"
 
                     />
             </LinearLayout>
@@ -216,7 +216,7 @@
                     android:layout_height="40dp"
                     android:background="@drawable/ic_phone_android_black_24dp"
                     android:layout_gravity="center"
-                    android:backgroundTint="@color/exp_card3"
+                    android:backgroundTint="@color/colorPrimaryDark"
 
                     />
             </LinearLayout>
@@ -272,7 +272,7 @@
                 android:layout_width="60dp"
                 android:layout_height="50dp"
 
-
+                android:background="#1aaea1"
                 android:layout_gravity="center">
 
                 <ImageView
@@ -281,7 +281,7 @@
                     android:layout_height="40dp"
                     android:background="@drawable/ic_account_balance_wallet_black_24dp"
                     android:layout_gravity="center"
-                    android:backgroundTint="@color/exp_card4"
+                    android:backgroundTint="@color/white"
 
                     />
             </LinearLayout>
@@ -328,7 +328,7 @@
             <LinearLayout
                 android:layout_width="60dp"
                 android:layout_height="50dp"
-
+                android:background="#406c0d"
                 android:layout_gravity="center">
 
                 <ImageView
@@ -337,7 +337,7 @@
                     android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:background="@drawable/ic_gaspump"
-                    android:backgroundTint="@color/exp_card5"
+                    android:backgroundTint="@color/white"
 
                     />
             </LinearLayout>
@@ -384,7 +384,7 @@
             <LinearLayout
                 android:layout_width="60dp"
                 android:layout_height="50dp"
-
+                android:background="#9374cb"
                 android:layout_gravity="center">
 
                 <ImageView
@@ -393,7 +393,7 @@
                     android:layout_height="40dp"
                     android:background="@drawable/ic_view_list_black_24dp"
                     android:layout_gravity="center"
-                    android:backgroundTint="@color/exp_card6"
+                    android:backgroundTint="@color/white"
 
                     />
             </LinearLayout>
@@ -517,30 +517,30 @@
 
 
 
-        <LinearLayout
-            android:paddingTop="10dp"
-            android:layout_width="match_parent"
+    <LinearLayout
+        android:paddingTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
+            android:textAlignment="center"
+            android:text="Latest Transation"
+            android:textSize="20sp" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:text="Latest Transation"
-                android:textSize="20sp" />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight=".1"
+            android:layout_marginRight="20dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="viewEnd"
+            android:background="@drawable/ic_search_black_24dp" />
 
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_weight=".1"
-                android:layout_marginRight="20dp"
-                android:layout_height="wrap_content"
-                android:textAlignment="viewEnd"
-                android:background="@drawable/ic_search_black_24dp" />
-
-        </LinearLayout>
+    </LinearLayout>
 
 
 

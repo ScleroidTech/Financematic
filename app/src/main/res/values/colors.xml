@@ -21,4 +21,18 @@
 
     <color name="report_table">#0fa8bc</color>
 
+
+    <color name="exp_card1">#424fb5 </color>
+    <color name="exp_card2">#f27116</color>
+    <color name="exp_card3">#bc14cb</color>
+    <color name="exp_card4">#1aaea1</color>
+    <color name="exp_card5">#406c0d</color>
+    <color name="exp_card6">#9374cb</color>
+
+
+
+
+
+
+
 </resources>
