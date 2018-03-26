@@ -77,17 +77,12 @@ public class LoanDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.try4, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_loan_details, container, false);
         unbinder = ButterKnife.bind(this, rootView);
 /*        View rootView =  inflater.inflate(R.layout.personal_loan_aacount_details, container, false);*/
 
-
-
-
         recyclerView = rootView.findViewById(R.id.pesonal_summery_details_recycler);
-
         mAdapter = new SummeryAdapter(summeryList);
-
         recyclerView.setHasFixedSize(true);
 
 

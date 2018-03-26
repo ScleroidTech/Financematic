@@ -22,7 +22,6 @@ import android.widget.Toast;
 
 import com.scleroid.financematic.fragments.DashboardFragment;
 import com.scleroid.financematic.fragments.ExpenseFragment;
-import com.scleroid.financematic.fragments.Fragment_report;
 import com.scleroid.financematic.fragments.LoanDetailsFragment;
 import com.scleroid.financematic.fragments.PeopleFragment;
 import com.scleroid.financematic.fragments.RegisterCustomerFragment;
@@ -73,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return true;
             case R.id.person_details:
                     /*    toolbar.setTitle("Report");*/
-                fragment = new Fragment_report();
+                fragment = new ReportFragment();
                 loadFragment(fragment);
 
                 return true;
