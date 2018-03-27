@@ -1,8 +1,145 @@
 package com.scleroid.financematic.adapter;
 
+import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.scleroid.financematic.R;
+import com.scleroid.financematic.model.Expense;
+import com.scleroid.financematic.utils.DateUtils;
+import com.scleroid.financematic.utils.TextViewUtils;
+
+import java.util.Date;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by scleroid on 27/3/18.
  */
 
-public class ExpenseAdapter {
+public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHolder> {
+    List<Expense> expenses;
+
+    public ExpenseAdapter(List<Expense> expenses) {
+        this.expenses = expenses;
+    }
+
+    public List<Expense> getExpenses() {
+        return expenses;
+    }
+
+    public void setExpenses(List<Expense> expenses) {
+        this.expenses = expenses;
+    }
+
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.recycler_fragment_expense, parent, false);
+        return new ViewHolder(itemView);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.setData(expenses.get(position));
+    }
+
+
+    @Override
+    public int getItemCount() {
+        //TODO change according to type
+        return expenses.size();
+    }
+
+
+    static class ViewHolder extends RecyclerView.ViewHolder {
+
+        static DateUtils dateUtils = new DateUtils();
+        static TextViewUtils textViewUtils = new TextViewUtils();
+        @BindView(R.id.month_text_view)
+        TextView monthTextView;
+        @BindView(R.id.only_date_text_view)
+        TextView onlyDateTextView;
+        @BindView(R.id.day_text_view)
+        TextView dayTextView;
+
+        @BindView(R.id.expense_image)
+        ImageView expenseImage;
+        @BindView(R.id.expense_type_text_view)
+        TextView expenseTypeTextView;
+        @BindView(R.id.expense_amount)
+        TextView expenseAmount;
+        @BindView(R.id.card_view)
+        CardView cardView;
+
+        ViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+
+        public void setData(Expense expense) {
+            setDate(expense.getExpenseDate());
+            expenseAmount.setText(expense.getExpenseAmount());
+            byte expenseType = expense.getExpenseType();
+            setExpenseType(expenseType);
+
+
+        }
+
+        private void setExpenseType(byte expenseType) {
+            String expenseTypeText;
+            int expenseTypeImageSrc;
+            switch (expenseType) {
+                case 1:
+                    expenseTypeText = "Room Rent";
+                    expenseTypeImageSrc = R.drawable.ic_home_black_24dp;
+                    break;
+                case 2:
+                    expenseTypeText = "Light Bill";
+                    expenseTypeImageSrc = R.drawable.ic_lightbulb_outline_black_24dp;
+                    break;
+                case 3:
+                    expenseTypeText = "Mobile Bill";
+                    expenseTypeImageSrc = R.drawable.ic_phone_android_black_24dp;
+                    break;
+                case 4:
+                    expenseTypeText = "Paid Salaries";
+                    expenseTypeImageSrc = R.drawable.ic_account_balance_wallet_black_24dp;
+                    break;
+                case 5:
+                    expenseTypeText = "Fuel";
+                    expenseTypeImageSrc = R.drawable.ic_gaspump;
+                    break;
+                case 0:
+                default:
+                    expenseTypeText = "Other";
+                    expenseTypeImageSrc = R.drawable.ic_view_list_black_24dp;
+                    break;
+
+            }
+            expenseTypeTextView.setText(expenseTypeText);
+            expenseImage.setImageResource(expenseTypeImageSrc);
+        }
+
+        private void setDate(Date date) {
+            CharSequence month = dateUtils.getFormattedDate(date, "MMM. yyyy");
+            CharSequence exactDate = dateUtils.getFormattedDate(date, "dd");
+            CharSequence day = dateUtils.getFormattedDate(date, "EEE");
+            CharSequence year = dateUtils.getFormattedDate(date, "yyyy");
+            monthTextView.setText(month);
+            onlyDateTextView.setText(exactDate);
+            dayTextView.setText(day);
+            //    yearTextView.setText(year);
+        }
+    }
+
+
 }

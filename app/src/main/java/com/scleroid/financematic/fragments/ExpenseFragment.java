@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -22,12 +21,11 @@ import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.adapter.ExpenseAdapter;
-import com.scleroid.financematic.adapter.PassbookAdapter;
-import com.scleroid.financematic.model.Passbook;
-import com.scleroid.financematic.model.expense;
+import com.scleroid.financematic.model.Expense;
 import com.scleroid.financematic.utils.RecyclerTouchListener;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -36,8 +34,10 @@ import butterknife.Unbinder;
 
 
 public class ExpenseFragment extends Fragment {
-    private List<expense> passbookList = new ArrayList<>();
-    private RecyclerView recyclerView;
+    @BindView(R.id.expense_recycler)
+    RecyclerView expenseRecyclerView;
+    private List<Expense> expenseList = new ArrayList<>();
+
     private ExpenseAdapter mAdapter;
 
     @BindView(R.id.pie_chart_expense)
@@ -70,14 +70,26 @@ public class ExpenseFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_expense, container, false);
-        //recyler add
-        recyclerView = rootView.findViewById(R.id.expense_recycler);
 
-        mAdapter = new PassbookAdapter(passbookList);
 
-        recyclerView.setHasFixedSize(true);
+        //
 
-       /* recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this.getContext()));*/
+
+        unbinder = ButterKnife.bind(this, view);
+        initializeRecyclerView();
+        //      float[] data = {450, 630, 300, 200, 400};
+        //    mChart.setData(data);
+        mChart.setUsePercentValues(true);
+        mChart.getDescription().setEnabled(false);
+        //  mChart.setCenterTextTypeface(mTfLight);
+
+        initializeChartData();
+        return view;
+    }
+
+    private void initializeRecyclerView() {
+        mAdapter = new ExpenseAdapter(expenseList);
+        /* recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this.getContext()));*/
 
         // vertical RecyclerView
         // keep movie_list_row.xml width to `match_parent`
@@ -87,19 +99,19 @@ public class ExpenseFragment extends Fragment {
         // keep movie_list_row.xml width to `wrap_content`
         // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
 
-        recyclerView.setLayoutManager(mLayoutManager);
+        expenseRecyclerView.setLayoutManager(mLayoutManager);
 
 
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        expenseRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        recyclerView.setAdapter(mAdapter);
+        expenseRecyclerView.setAdapter(mAdapter);
 
         // row click listener
-        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity().getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
+        expenseRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity().getApplicationContext(), expenseRecyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Passbook passbook = passbookList.get(position);
-                Toast.makeText(getActivity().getApplicationContext(), passbook.getPassbook_received_money() + " is selected!", Toast.LENGTH_SHORT).show();
+                Expense expense = expenseList.get(position);
+                // Toast.makeText(getActivity().getApplicationContext(), expense.getExpense_received_money() + " is selected!", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -107,21 +119,6 @@ public class ExpenseFragment extends Fragment {
 
             }
         }));
-
-
-
-
-
-
-        unbinder = ButterKnife.bind(this, view);
-        //      float[] data = {450, 630, 300, 200, 400};
-        //    mChart.setData(data);
-        mChart.setUsePercentValues(true);
-        mChart.getDescription().setEnabled(false);
-        //  mChart.setCenterTextTypeface(mTfLight);
-
-        initializeChartData();
-        return view;
     }
 
     private void initializeChartData() {
@@ -183,34 +180,26 @@ public class ExpenseFragment extends Fragment {
     }
 
 
-    private void prepareLoanData() {
-        Passbook passbook = new Passbook("14/6/2018 ", "Person Name 1", "50,000","");
-        passbookList.add(passbook);
-        passbook = new Passbook("12/6/2018 ", "Person Name 2", "","3000");
-        passbookList.add(passbook);
-        passbook = new Passbook("12/6/2018 ", "Person Name 3", "","4000");
-        passbookList.add(passbook);
-        passbook = new Passbook("12/6/2018 ", "Person Name 1", "1200","");
-        passbookList.add(passbook);
-        passbook = new Passbook("1/2/2018 ", "Person Name 2", "4000","");
-        passbookList.add(passbook);
-
-        passbook = new Passbook("10/1/2018 ", "Person Name 3", "","2000");
-        passbookList.add(passbook);
-
-        passbook = new Passbook("12/1/2018 ", "Person Name 1", "4000","");
-        passbookList.add(passbook);
+    private void prepareExpenseData() {
+        Expense expense = new Expense(200, Expense.LIGHT_BILL, new Date("1/6/2018"));
+        expenseList.add(expense);
+        expense = new Expense(42642, Expense.FUEL, new Date("12/3/2018"));
+        expenseList.add(expense);
+        expense = new Expense(54545, Expense.PAID_SALARIES, new Date("4/15/2018"));
+        expenseList.add(expense);
+        expense = new Expense(2323, Expense.PHONE_BILL, new Date("7/25/2018"));
+        expenseList.add(expense);
+        expense = new Expense(12122, Expense.ROOM_RENT, new Date("2/15/2018"));
+        expenseList.add(expense);
+        expense = new Expense(45, Expense.OTHER, new Date("4/13/2018"));
+        expenseList.add(expense);
 
 
-
-
-
+        mAdapter.setExpenses(expenseList);
         // notify adapter about data set changes
         // so that it will render the list with new data
         mAdapter.notifyDataSetChanged();
     }
-
-
 
 
 
