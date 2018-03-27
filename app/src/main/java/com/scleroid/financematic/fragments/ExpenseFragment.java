@@ -116,7 +116,7 @@ public class ExpenseFragment extends Fragment {
     }
 
     private void initializeRecyclerView() {
-        mAdapter = new ExpenseAdapter(expenseList);
+        mAdapter = new ExpenseAdapter(expenseList, getContext());
         /* recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this.getContext()));*/
 
         // vertical RecyclerView
@@ -147,6 +147,7 @@ public class ExpenseFragment extends Fragment {
 
             }
         }));
+        prepareExpenseData();
     }
 
     private void initializeChartData() {

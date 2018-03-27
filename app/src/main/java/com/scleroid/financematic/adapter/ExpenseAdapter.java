@@ -1,5 +1,6 @@
 package com.scleroid.financematic.adapter;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -11,8 +12,8 @@ import android.widget.TextView;
 
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.model.Expense;
+import com.scleroid.financematic.utils.CurrencyStringUtils;
 import com.scleroid.financematic.utils.DateUtils;
-import com.scleroid.financematic.utils.TextViewUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -27,9 +28,13 @@ import butterknife.ButterKnife;
 public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHolder> {
     List<Expense> expenses;
 
-    public ExpenseAdapter(List<Expense> expenses) {
+    Context context;
+
+    public ExpenseAdapter(List<Expense> expenses, Context context) {
         this.expenses = expenses;
+        this.context = context;
     }
+
 
     public List<Expense> getExpenses() {
         return expenses;
@@ -49,7 +54,9 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.setData(expenses.get(position));
+
+        holder.setData(context, expenses.get(position));
+
     }
 
 
@@ -63,7 +70,7 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
     static class ViewHolder extends RecyclerView.ViewHolder {
 
         static DateUtils dateUtils = new DateUtils();
-        static TextViewUtils textViewUtils = new TextViewUtils();
+        static CurrencyStringUtils currencyStringUtils = new CurrencyStringUtils();
         @BindView(R.id.month_text_view)
         TextView monthTextView;
         @BindView(R.id.only_date_text_view)
@@ -75,7 +82,7 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
         ImageView expenseImage;
         @BindView(R.id.expense_type_text_view)
         TextView expenseTypeTextView;
-        @BindView(R.id.expense_amount)
+        @BindView(R.id.expense_amount_text_view)
         TextView expenseAmount;
         @BindView(R.id.card_view)
         CardView cardView;
@@ -85,48 +92,59 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
             ButterKnife.bind(this, itemView);
         }
 
-        public void setData(Expense expense) {
+        public void setData(Context context, Expense expense) {
             setDate(expense.getExpenseDate());
-            expenseAmount.setText(expense.getExpenseAmount());
+            expenseAmount.setText(currencyStringUtils.bindNumber(expense.getExpenseAmount()));
             byte expenseType = expense.getExpenseType();
-            setExpenseType(expenseType);
+            setExpenseType(expenseType, context);
 
 
         }
 
-        private void setExpenseType(byte expenseType) {
+        private void setExpenseType(byte expenseType, Context context) {
             String expenseTypeText;
             int expenseTypeImageSrc;
+            int expenseColor;
+
             switch (expenseType) {
                 case 1:
                     expenseTypeText = "Room Rent";
                     expenseTypeImageSrc = R.drawable.ic_home_black_24dp;
+                    expenseColor = context.getResources().getColor(R.color.exp_card1);
+
                     break;
                 case 2:
                     expenseTypeText = "Light Bill";
                     expenseTypeImageSrc = R.drawable.ic_lightbulb_outline_black_24dp;
+                    expenseColor = context.getResources().getColor(R.color.exp_card2);
+
                     break;
                 case 3:
                     expenseTypeText = "Mobile Bill";
                     expenseTypeImageSrc = R.drawable.ic_phone_android_black_24dp;
+                    expenseColor = context.getResources().getColor(R.color.exp_card3);
                     break;
                 case 4:
                     expenseTypeText = "Paid Salaries";
                     expenseTypeImageSrc = R.drawable.ic_account_balance_wallet_black_24dp;
+                    expenseColor = context.getResources().getColor(R.color.exp_card4);
                     break;
                 case 5:
                     expenseTypeText = "Fuel";
                     expenseTypeImageSrc = R.drawable.ic_gaspump;
+                    expenseColor = context.getResources().getColor(R.color.exp_card5);
                     break;
                 case 0:
                 default:
                     expenseTypeText = "Other";
                     expenseTypeImageSrc = R.drawable.ic_view_list_black_24dp;
+                    expenseColor = context.getResources().getColor(R.color.exp_card6);
                     break;
 
             }
             expenseTypeTextView.setText(expenseTypeText);
             expenseImage.setImageResource(expenseTypeImageSrc);
+            expenseImage.setColorFilter(expenseColor);
         }
 
         private void setDate(Date date) {
@@ -139,6 +157,8 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
             dayTextView.setText(day);
             //    yearTextView.setText(year);
         }
+
+
     }
 
 
