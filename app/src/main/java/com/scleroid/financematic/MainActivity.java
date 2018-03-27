@@ -1,37 +1,58 @@
 package com.scleroid.financematic;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.scleroid.financematic.fragments.DashboardFragment;
-import com.scleroid.financematic.fragments.Fragment_report;
+import com.scleroid.financematic.fragments.ExpenseFragment;
 import com.scleroid.financematic.fragments.LoanDetailsFragment;
 import com.scleroid.financematic.fragments.PeopleFragment;
 import com.scleroid.financematic.fragments.RegisterCustomerFragment;
-import com.scleroid.financematic.fragments.RegisterMoneyFragment;
+import com.scleroid.financematic.fragments.ReportFragment;
+import com.scleroid.financematic.utils.ActivityUtils;
 import com.scleroid.financematic.utils.BottomNavigationViewHelper;
+import com.scleroid.financematic.utils.InstantAppExecutors;
+
+import javax.inject.Inject;
+
+import es.dmoral.toasty.Toasty;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private ActionBar toolbar;
+    // tags used to attach the fragments
+    private static final String TAG_DASHBOARD = "dashboard";
+    private static final String TAG_NEW_CUSTOMER = "new_customer";
+    private static final String TAG_REPORT = "report";
+    private static final String TAG_EXPENSES = "expenses";
+    private static final String TAG_SETTINGS = "settings";
+    private static final String TAG_NOTIFICATION = "notification";
+    private static final int THREAD_COUNT = 3;
+    // index to identify current nav menu item
+    public static int navItemIndex = 0;
+    public static String CURRENT_TAG = TAG_DASHBOARD;
+
+    @Inject
+    ActivityUtils activityUtils = new ActivityUtils();
+    @Inject
+    AppExecutors appExecutors;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = item -> {
         Fragment fragment;
@@ -51,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return true;
             case R.id.person_details:
                     /*    toolbar.setTitle("Report");*/
-                fragment = new Fragment_report();
+                fragment = new ReportFragment();
                 loadFragment(fragment);
 
                 return true;
@@ -70,38 +91,61 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         return false;
     };
+    private Toolbar toolbar;
+    private DrawerLayout drawer;
+    private NavigationView navigationView;
+    private BottomNavigationView bottomNavigationView;
+    private String[] activityTitles;
 
-    @Override
+
+    @NonNull
+    public static Intent newIntent(Context activity) {
+        return new Intent(activity, MainActivity.class);
+    }
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-/*sidebar navigation*/
 
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                // Code here will be triggered once the drawer open as we dont want anything to happen so we leave this blank
+                super.onDrawerOpened(drawerView);
+
+                //Used to change the z index of a custom drawer,
+                //Hack when navigation drawer doesn't listen to click events
+                drawerView.bringToFront();
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                // Code here will be triggered once the drawer closes as we dont want anything to happen so we leave this blank
+                super.onDrawerClosed(drawerView);
+            }
+        };
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        // load toolbar titles from string resources
+        activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
 
-
-
-
-
-
-        /*bottom vavigation*/
+        /*bottom navigation*/
 
   /*    toolbar = getSupportActionBar();*/
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.navigation);
+        bottomNavigationView = findViewById(R.id.navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
 
@@ -111,16 +155,103 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // load the store fragment by default
        /* toolbar.setTitle("Finance Matic");*/
-        loadFragment(new DashboardFragment());
+        // loadFragment(new DashboardFragment());
+        appExecutors = new InstantAppExecutors();
+        if (savedInstanceState == null) {
+            navItemIndex = 0;
+            CURRENT_TAG = TAG_DASHBOARD;
+            loadFragmentFromNavigationDrawers();
+        }
+
+    }
+
+    /***
+     * Returns respected fragment that user
+     * selected from navigation menu
+     */
+    private void loadFragmentFromNavigationDrawers() {
+        // selecting appropriate nav menu item
+        selectNavMenu();
+
+        // set toolbar title
+        setToolbarTitle();
+
+        // if user select the current navigation menu again, don't do anything
+        // just close the navigation drawer
+        if (getSupportFragmentManager().findFragmentByTag(CURRENT_TAG) != null) {
+            drawer.closeDrawers();
+
+            return;
+        }
+
+        // Sometimes, when fragment has huge data, screen seems hanging
+        // when switching between navigation menus
+        // So using runnable, the fragment is loaded with cross fade effect
+        // This effect can be seen in GMail app
+
+        Runnable pendingRunnable = () -> {
+            // update the main content by replacing fragments
+
+            Fragment fragment = getCurrentFragment();
+            loadFragment(fragment);
+        };
+
+        // If pendingRunnable is not null, then add to the message queue
+        // boolean post = handler.post(pendingRunnable);
+        appExecutors.diskIO().execute(pendingRunnable);
+
+        // show or hide the fab button
+
+
+        //Closing drawer on item click
+        drawer.closeDrawers();
+
+        // refresh toolbar menu
+        invalidateOptionsMenu();
 
     }
 
     private void loadFragment(Fragment fragment) {
-        // load fragment
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        activityUtils.loadFragment(fragment, getSupportFragmentManager());
+    }
+
+    private void selectNavMenu() {
+        navigationView.getMenu().getItem(navItemIndex).setChecked(true);
+    }
+
+    private void setToolbarTitle() {
+        getSupportActionBar().setTitle(activityTitles[navItemIndex]);
+    }
+
+    private Fragment getCurrentFragment() {
+        switch (navItemIndex) {
+            //TODO
+            case 0:
+                // dashboard
+                return new DashboardFragment();
+            case 1:
+                // new Customers fragment
+                return new RegisterCustomerFragment();
+            case 2:
+                // Report fragment
+                return new ReportFragment();
+            case 3:
+                // Expenses fragment
+                return new ExpenseFragment();
+
+          /*
+           TODO
+           case 4:
+                // Notifications fragment
+                return new Fragment();
+
+            case 5:
+                //setting fragment
+                return new SettingsFragment();*/
+            default:
+                return new DashboardFragment();// HomeFragment.newInstance(HomeFragment.parcelCount);
+        }
+
     }
 
     @Override
@@ -142,6 +273,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         item.setIcon(wrapDrawable);
     }
+
+
+
+/*
+    https://stackoverflow.com/questions/23273275/toggle-button-not-working-for-navigation-drawer
+    @Override
+    public boolean onOptionsItemSelected(android.view.MenuItem item) {
+        return drawerToggle.onOptionsItemSelected(item);
+    }*/
+
+
+
+
+    /*bottom navigation*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -174,20 +319,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return super.onOptionsItemSelected(item);
     }
 
-
-
-/*
-    https://stackoverflow.com/questions/23273275/toggle-button-not-working-for-navigation-drawer
-    @Override
-    public boolean onOptionsItemSelected(android.view.MenuItem item) {
-        return drawerToggle.onOptionsItemSelected(item);
-    }*/
-
-
-
-
-    /*bottom navigation*/
-
     /*sidebar navigation*/
     @Override
     public void onBackPressed() {
@@ -199,42 +330,66 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
+
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Fragment fragment;
-        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), item.getTitle() + " clicked", Snackbar.LENGTH_SHORT);
+        Toasty.error(getBaseContext(), item.getTitle() + " clicked", Toast.LENGTH_SHORT).show();
+
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.navigation_list) {
-            fragment = new PeopleFragment();
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.frame_container, fragment);
-            ft.commit();
+        //Check to see which item was being clicked and perform appropriate action
+        switch (item.getItemId()) {
+            //Replacing the main content with ContentFragment Which is our Inbox View;
+            case R.id.nav_dashboard:
+                navItemIndex = 0;
+                CURRENT_TAG = TAG_DASHBOARD;
+                break;
+            case R.id.nav_new_customer:
+                navItemIndex = 1;
+                CURRENT_TAG = TAG_NEW_CUSTOMER;
+                break;
+            case R.id.nav_report:
+                navItemIndex = 2;
+                CURRENT_TAG = TAG_REPORT;
+                break;
+            case R.id.nav_expenses:
+                navItemIndex = 3;
+                CURRENT_TAG = TAG_EXPENSES;
+                break;
 
-        } else if (id == R.id.nav_slideshow) {
-            fragment = new RegisterMoneyFragment();
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.frame_container, fragment);
-            ft.commit();
-
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+          /*  case R.id.nav_profile:
+                navItemIndex = 4;
+                CURRENT_TAG = TAG_PROFILE;
+                break;
+            case R.id.nav_settings:
+                navItemIndex = 5;
+                CURRENT_TAG = TAG_SETTINGS;
+                break;
+            case R.id.nav_share:
+                //TODO launch new intent instead of loading fragment
+                //   startActivity(new Intent(MainActivity.this, AboutUsActivity.class));
+                drawer.closeDrawers();
+                return true;
+            case R.id.nav_send:
+                // launch new intent instead of loading fragment
+                //TODO  startActivity(new Intent(MainActivity.this, PrivacyPolicyActivity.class));
+                drawer.closeDrawers();
+                return true;*/
+            default:
+                navItemIndex = 0;
+        }
+        //Checking if the item is in checked state or not, if not make it in checked state
+        if (item.isChecked()) {
+            item.setChecked(false);
+        } else {
+            item.setChecked(true);
         }
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        loadFragmentFromNavigationDrawers();
         drawer.closeDrawer(GravityCompat.START);
+
         return true;
     }
-
-
-
 }

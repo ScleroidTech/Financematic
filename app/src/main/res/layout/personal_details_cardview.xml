@@ -11,7 +11,7 @@
     card_view:cardCornerRadius="10dp"
     card_view:cardElevation="10dp"
     card_view:cardUseCompatPadding="true"
-    tools:showIn="@layout/try4">
+    tools:showIn="@layout/fragment_loan_details">
 
     <ImageView
         android:layout_width="match_parent"

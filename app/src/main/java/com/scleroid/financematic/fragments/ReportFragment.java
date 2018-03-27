@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.scleroid.financematic.R;
-import com.scleroid.financematic.adapter.Adapter_report;
+import com.scleroid.financematic.adapter.ReportAdapter;
 import com.scleroid.financematic.model.Report;
 import com.scleroid.financematic.utils.DateUtils;
 import com.scleroid.financematic.utils.RecyclerTouchListener;
@@ -29,7 +29,9 @@ import java.util.Locale;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 
 /**
@@ -47,17 +49,25 @@ public class ReportFragment extends Fragment implements
 
     @Inject
     DateUtils dateUtils;
-    TextView fromDateEditText, toDateEditText;
+
     Calendar myCalendar = Calendar.getInstance();
     Calendar myCalendar1 = Calendar.getInstance();
 
     String[] country = {"All Amount", "Received Amount", "Lent Amount", "Expenditure", "Interest Earned"};
     Spinner spin;
+    @BindView(R.id.from_date_text_view)
+    TextView fromDateTextView;
+    @BindView(R.id.to_date_text_view)
+    TextView toDateTextView;
+
+    @BindView(R.id.report_recycler_view)
+    RecyclerView reportRecyclerView;
     private Spinner spinner;
 
     private List<Report> reportList = new ArrayList<>();
-    private RecyclerView recyclerView;
-    private Adapter_report mAdapter;
+
+    private ReportAdapter mAdapter;
+    private Unbinder unbinder;
 
     public ReportFragment() {
         // Required empty public constructor
@@ -74,13 +84,13 @@ public class ReportFragment extends Fragment implements
         String myFormat = "dd/MM/yy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
-        fromDateEditText.setText(sdf.format(myCalendar.getTime()));
+        fromDateTextView.setText(sdf.format(myCalendar.getTime()));
     }
 
     private void updateLabel1() {
         String myFormat = "dd/MM/yy"; //In which you need put here
         SimpleDateFormat sdf1 = new SimpleDateFormat(myFormat, Locale.US);
-        toDateEditText.setText(sdf1.format(myCalendar1.getTime()));
+        toDateTextView.setText(sdf1.format(myCalendar1.getTime()));
     }
 
     @Override
@@ -89,10 +99,10 @@ public class ReportFragment extends Fragment implements
 
         if (requestCode == REQUEST_DATE_FROM) {
             Date date = (Date) intent.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
-            fromDateEditText.setText(dateUtils.getFormattedDate(date));
+            fromDateTextView.setText(dateUtils.getFormattedDate(date));
         } else if (requestCode == REQUEST_DATE_TO) {
             Date date = (Date) intent.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
-            toDateEditText.setText(dateUtils.getFormattedDate(date));
+            toDateTextView.setText(dateUtils.getFormattedDate(date));
         }
 
     }
@@ -107,14 +117,14 @@ public class ReportFragment extends Fragment implements
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_report, container, false);
-        ButterKnife.bind(this, rootView);
+        unbinder = ButterKnife.bind(this, rootView);
 
 
-        mAdapter = new Adapter_report(reportList);
+        mAdapter = new ReportAdapter(reportList);
 
-        recyclerView.setHasFixedSize(true);
+        reportRecyclerView.setHasFixedSize(true);
 
-       /* recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this.getContext()));*/
+       /* reportRecyclerView.addItemDecoration(new SimpleDividerItemDecoration(this.getContext()));*/
 
         // vertical RecyclerView
         // keep movie_list_row.xml width to `match_parent`
@@ -124,15 +134,15 @@ public class ReportFragment extends Fragment implements
         // keep movie_list_row.xml width to `wrap_content`
         // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
 
-        recyclerView.setLayoutManager(mLayoutManager);
+        reportRecyclerView.setLayoutManager(mLayoutManager);
 
 
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        reportRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        recyclerView.setAdapter(mAdapter);
+        reportRecyclerView.setAdapter(mAdapter);
 
         // row click listener
-        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity().getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
+        reportRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity().getApplicationContext(), reportRecyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
                 Report report = reportList.get(position);
@@ -168,6 +178,11 @@ public class ReportFragment extends Fragment implements
         mAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -177,6 +192,4 @@ public class ReportFragment extends Fragment implements
     @Override
     public void onNothingSelected(AdapterView<?> arg0) {
     }
-
-
 }
