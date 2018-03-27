@@ -14,7 +14,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
-      //  multiDexEnabled true
+        //  multiDexEnabled true
     }
     dexOptions {
         preDexLibraries = false
@@ -38,12 +38,12 @@ dependencies {
     //implementation 'com.android.support:multidex:1.0.3'
 
     //noinspection GradleCompatible
-   // implementation "com.android.support:support-v4:$rootProject.supportLibraryVersion"
+    // implementation "com.android.support:support-v4:$rootProject.supportLibraryVersion"
     implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
     implementation "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
     implementation "com.android.support:design:$rootProject.supportLibraryVersion"
     implementation "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
-  //  implementation "com.android.support:support-v4:$rootProject.supportLibraryVersion"
+    //  implementation "com.android.support:support-v4:$rootProject.supportLibraryVersion"
     implementation "com.android.support.test.espresso:espresso-idling-resource:$rootProject.espressoVersion"
 
     //ConstraintLayout
@@ -52,8 +52,7 @@ dependencies {
     //   compile "com.google.guava:guava:$rootProject.guavaVersion"
     implementation "android.arch.persistence.room:runtime:$rootProject.roomVersion"
     annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomVersion"
-  //  implementation 'com.wdullaer:materialdatetimepicker:3.5.1'
-
+    //  implementation 'com.wdullaer:materialdatetimepicker:3.5.1'
 
     // gson Library
     implementation 'com.google.code.gson:gson:2.8.2'
@@ -88,7 +87,7 @@ dependencies {
 
     // Dagger dependencies
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
-    provided 'org.glassfish:javax.annotation:10.0-b28'
+    compileOnly 'org.glassfish:javax.annotation:10.0-b28'
     implementation "com.google.dagger:dagger:$rootProject.daggerVersion"
     implementation "com.google.dagger:dagger-android:$rootProject.daggerVersion"
     implementation "com.google.dagger:dagger-android-support:$rootProject.daggerVersion"
@@ -98,9 +97,12 @@ dependencies {
     implementation 'com.github.blocoio:faker:1.2.7'
 
 
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+
+    implementation 'com.annimon:stream:1.1.9'
 
 }

@@ -10,8 +10,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.annimon.stream.Collectors;
+import com.annimon.stream.Stream;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
@@ -30,12 +33,37 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 
 public class ExpenseFragment extends Fragment {
     @BindView(R.id.expense_recycler)
     RecyclerView expenseRecyclerView;
+    @BindView(R.id.room_rent_amt_text_view)
+    TextView roomRentAmtTextViewTextView;
+    @BindView(R.id.light_bill_text_view)
+    TextView lightBillTextView;
+    @BindView(R.id.phone_bill_text_view)
+    TextView phoneBillTextView;
+    @BindView(R.id.salary_text_view)
+    TextView salaryTextView;
+    @BindView(R.id.fuel_text_view)
+    TextView fuelTextView;
+    @BindView(R.id.other_text_view)
+    TextView otherTextView;
+    @BindView(R.id.room_rent_card)
+    LinearLayout roomRentCard;
+    @BindView(R.id.light_bill_card)
+    LinearLayout lightBillCard;
+    @BindView(R.id.phone_bill_card)
+    LinearLayout phoneBillCard;
+    @BindView(R.id.salary_card)
+    LinearLayout salaryCard;
+    @BindView(R.id.fuel_card)
+    LinearLayout fuelCard;
+    @BindView(R.id.other_card)
+    LinearLayout otherCard;
     private List<Expense> expenseList = new ArrayList<>();
 
     private ExpenseAdapter mAdapter;
@@ -195,12 +223,50 @@ public class ExpenseFragment extends Fragment {
         expenseList.add(expense);
 
 
-        mAdapter.setExpenses(expenseList);
-        // notify adapter about data set changes
-        // so that it will render the list with new data
+        refreshRecyclerView(expenseList);
+    }
+
+    private void refreshRecyclerView(List<Expense> expenses) {
+        mAdapter.setExpenses(expenses);
         mAdapter.notifyDataSetChanged();
     }
 
+    @OnClick({R.id.room_rent_card, R.id.light_bill_card, R.id.phone_bill_card, R.id.salary_card, R.id.fuel_card, R.id.other_card})
+    public void onViewClicked(View view) {
+
+        switch (view.getId()) {
+            case R.id.room_rent_card:
+                filterThenRefresh(1);
+                break;
+            case R.id.light_bill_card:
+                filterThenRefresh(2);
+                break;
+            case R.id.phone_bill_card:
+                filterThenRefresh(3);
+                break;
+            case R.id.salary_card:
+                filterThenRefresh(4);
+                break;
+            case R.id.fuel_card:
+                filterThenRefresh(5);
+                break;
+            case R.id.other_card:
+                filterThenRefresh(0);
+                break;
+        }
 
 
+    }
+
+    private void filterThenRefresh(int selectedOption) {
+        List<Expense> expenses = filterResults(selectedOption);
+        refreshRecyclerView(expenses);
+    }
+
+    private List<Expense> filterResults(int selected_type) {
+
+        return Stream.of(expenseList)
+                .filter(expenseList -> expenseList.getExpenseType() == selected_type)
+                .collect(Collectors.toList());
+    }
 }
