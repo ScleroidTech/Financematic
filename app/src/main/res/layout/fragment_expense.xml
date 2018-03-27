@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
+>
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_marginTop="5dp"
+    android:layout_marginTop="55dp"
+android:paddingBottom="120dp"
+
+
 
     >
+
+
 
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/pie_chart_expense"
@@ -443,11 +455,19 @@
                 android:background="@drawable/ic_search_black_24dp" />
 
         </LinearLayout>
-
-
-    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/expense_recycler"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        tools:listitem="@layout/recycler_fragment_expense" />
+
+
+    <!--<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+       >
 
         <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -457,12 +477,14 @@
             card_view:cardBackgroundColor="@color/white"
             card_view:cardCornerRadius="5dp"
             card_view:cardElevation="2dp"
-            card_view:cardUseCompatPadding="true">
+            card_view:cardUseCompatPadding="true"
+           >
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+             >
 
                 <include
                     android:id="@+id/include2"
@@ -530,7 +552,7 @@
                     card_view:layout_constraintTop_toTopOf="parent" />
 
 
-                <!--        <Button
+                &lt;!&ndash;        <Button
                     android:id="@+id/Btn_paid_rx_summery"
                     android:layout_width="wrap_content"
                     android:layout_height="31dp"
@@ -542,19 +564,19 @@
                     android:textColor="@color/white"
                     card_view:layout_constraintBottom_toBottomOf="parent"
                     card_view:layout_constraintEnd_toEndOf="parent"
-                    card_view:layout_constraintTop_toTopOf="parent" />-->
+                    card_view:layout_constraintTop_toTopOf="parent" />&ndash;&gt;
 
             </android.support.constraint.ConstraintLayout>
-            <!--
+            &lt;!&ndash;
                     <View
                         android:layout_width="fill_parent"
                         android:layout_height="2dp"
-                        android:background="#c4bebe" />-->
+                        android:background="#c4bebe" />&ndash;&gt;
         </android.support.v7.widget.CardView>
 
-    </android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>-->
 
 
 </LinearLayout>
 
-
+</ScrollView>
