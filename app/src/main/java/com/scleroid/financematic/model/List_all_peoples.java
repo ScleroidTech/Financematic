@@ -9,7 +9,6 @@ public class List_all_peoples {
     int list_received_amoun;
     int list_total_loan;
     private String list_person_name;
-
     public List_all_peoples() {
     }
 

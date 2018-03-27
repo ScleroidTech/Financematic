@@ -139,7 +139,7 @@
 
                     android:layout_gravity="right"
                     android:layout_weight=".6"
-                    android:textColor="@color/colorPrimary"></Spinner>
+                    android:textColor="@color/colorPrimary" />
 
             </LinearLayout>
         </LinearLayout>
