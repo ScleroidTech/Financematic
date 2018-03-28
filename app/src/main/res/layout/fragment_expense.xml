@@ -3,461 +3,457 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="wrap_content"
     android:fillViewport="true">
 
-    <RelativeLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="55dp"
+        android:orientation="vertical"
+        android:paddingBottom="120dp"
 
-        <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
+
+        >
+
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pie_chart_expense"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="90dp"
-            android:layout_marginTop="55dp"
+            android:layout_height="200dp" />
 
+        <LinearLayout
+
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shadow6"
             android:orientation="vertical"
+
+            >
+
+            <TextView
+                android:id="@+id/toaa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="10dp"
+                android:text="Total Expenditure "
+
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/totsss"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:text="Rs 20,000.00"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="33sp"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
 
 
             >
 
-
-            <com.github.mikephil.charting.charts.PieChart
-                android:id="@+id/pie_chart_expense"
-                android:layout_width="match_parent"
-                android:layout_height="200dp" />
-
-            <LinearLayout
-
-                xmlns:android="http://schemas.android.com/apk/res/android"
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/room_rent_card"
 
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/shadow6"
+                android:layout_weight=".3"
+                android:background="@drawable/shadow"
+                android:orientation="vertical"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:paddingBottom="1dp"
+                    android:text="Room Rent"
+                    android:textAlignment="center"
+
+                    android:textSize="18sp" />
+
+                <LinearLayout
+                    android:layout_width="60dp"
+                    android:layout_height="50dp"
+
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/ic_home_black_24dp"
+                        android:backgroundTint="@color/exp_card1"
+
+                        />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/room_rent_amt_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="1dp"
+                    android:text="RS 2400"
+                    android:textAlignment="center"
+                    android:textColor="#488711"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/light_bill_card"
+
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+
+                android:background="@drawable/shadow"
                 android:orientation="vertical"
 
-                >
+
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/toaa"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="10dp"
-                    android:text="Total Expenditure "
-
+                    android:layout_marginTop="1dp"
+                    android:paddingBottom="1dp"
+                    android:text="Light Bill"
                     android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:textSize="15sp"
 
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:layout_width="60dp"
+                    android:layout_height="50dp"
+
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="6dp"
+                        android:background="@drawable/ic_lightbulb_outline_black_24dp"
+                        android:backgroundTint="@color/exp_card2"
+
+                        />
+                </LinearLayout>
 
                 <TextView
-                    android:id="@+id/totsss"
+                    android:id="@+id/light_bill_text_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
-                    android:text="Rs 20,000.00"
+                    android:paddingTop="1dp"
+                    android:text="RS 2400"
                     android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:textSize="33sp"
-                    android:textStyle="bold" />
-
-
+                    android:textColor="#488711"
+                    android:textSize="18sp" />
             </LinearLayout>
 
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/phone_bill_card"
 
-            <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_weight=".3"
 
+                android:background="@drawable/shadow"
+                android:orientation="vertical"
 
-                >
 
-                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    xmlns:tools="http://schemas.android.com/tools"
-                    android:id="@+id/room_rent_card"
-
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".3"
-                    android:background="@drawable/shadow"
-                    android:orientation="vertical"
-                    card_view:layout_constraintBottom_toBottomOf="parent"
-                    card_view:layout_constraintStart_toStartOf="parent"
-                    card_view:layout_constraintTop_toTopOf="parent">
-
-                    <TextView
-
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="1dp"
-                        android:paddingBottom="1dp"
-                        android:text="Room Rent"
-                        android:textAlignment="center"
-
-                        android:textSize="18sp" />
-
-                    <LinearLayout
-                        android:layout_width="60dp"
-                        android:layout_height="50dp"
-
-                        android:layout_gravity="center">
-
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="10dp"
-                            android:background="@drawable/ic_home_black_24dp"
-                            android:backgroundTint="@color/exp_card1"
-
-                            />
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/room_rent_amt_text_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="1dp"
-                        android:text="RS 2400"
-                        android:textAlignment="center"
-                        android:textColor="#488711"
-                        android:textSize="18sp" />
-                </LinearLayout>
-
-                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    xmlns:tools="http://schemas.android.com/tools"
-                    android:id="@+id/light_bill_card"
-
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".3"
-
-                    android:background="@drawable/shadow"
-                    android:orientation="vertical"
-
-
-                    card_view:layout_constraintBottom_toBottomOf="parent"
-                    card_view:layout_constraintStart_toStartOf="parent"
-                    card_view:layout_constraintTop_toTopOf="parent">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="1dp"
-                        android:paddingBottom="1dp"
-                        android:text="Light Bill"
-                        android:textAlignment="center"
-
-                        android:textSize="16sp" />
-
-                    <LinearLayout
-                        android:layout_width="60dp"
-                        android:layout_height="50dp"
-
-                        android:layout_gravity="center">
-
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="40dp"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="6dp"
-                            android:background="@drawable/ic_lightbulb_outline_black_24dp"
-                            android:backgroundTint="@color/exp_card2"
-
-                            />
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/light_bill_text_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="1dp"
-                        android:text="RS 2400"
-                        android:textAlignment="center"
-                        android:textColor="#488711"
-                        android:textSize="18sp" />
-                </LinearLayout>
-
-                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    xmlns:tools="http://schemas.android.com/tools"
-                    android:id="@+id/phone_bill_card"
-
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".3"
-
-                    android:background="@drawable/shadow"
-                    android:orientation="vertical"
-
-
-                    card_view:layout_constraintBottom_toBottomOf="parent"
-                    card_view:layout_constraintStart_toStartOf="parent"
-                    card_view:layout_constraintTop_toTopOf="parent">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="1dp"
-                        android:paddingBottom="1dp"
-                        android:text="Mobile Bill"
-                        android:textAlignment="center"
-
-                        android:textSize="18sp" />
-
-                    <LinearLayout
-                        android:layout_width="60dp"
-                        android:layout_height="50dp"
-
-                        android:layout_gravity="center">
-
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="40dp"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="6dp"
-                            android:background="@drawable/ic_phone_android_black_24dp"
-                            android:backgroundTint="@color/exp_card3"
-
-                            />
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/phone_bill_text_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="1dp"
-                        android:text="RS 2400"
-                        android:textAlignment="center"
-                        android:textColor="#488711"
-                        android:textSize="18sp" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp">
-
-                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    xmlns:tools="http://schemas.android.com/tools"
-                    android:id="@+id/salary_card"
-
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".3"
-                    android:background="@drawable/shadow"
-                    android:orientation="vertical"
-
-
-                    card_view:layout_constraintBottom_toBottomOf="parent"
-                    card_view:layout_constraintStart_toStartOf="parent"
-                    card_view:layout_constraintTop_toTopOf="parent">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="1dp"
-                        android:paddingBottom="1dp"
-                        android:text="Paid Salaries"
-                        android:textAlignment="center"
-
-                        android:textSize="17sp" />
-
-                    <LinearLayout
-                        android:layout_width="60dp"
-                        android:layout_height="50dp"
-
-
-                        android:layout_gravity="center">
-
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="40dp"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="6dp"
-                            android:background="@drawable/ic_account_balance_wallet_black_24dp"
-                            android:backgroundTint="@color/exp_card4"
-
-                            />
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/salary_text_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="1dp"
-                        android:text="RS 2400"
-                        android:textAlignment="center"
-                        android:textColor="#488711"
-                        android:textSize="18sp" />
-                </LinearLayout>
-
-                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    xmlns:tools="http://schemas.android.com/tools"
-                    android:id="@+id/fuel_card"
-
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".3"
-
-                    android:background="@drawable/shadow"
-                    android:orientation="vertical"
-
-
-                    card_view:layout_constraintBottom_toBottomOf="parent"
-                    card_view:layout_constraintStart_toStartOf="parent"
-                    card_view:layout_constraintTop_toTopOf="parent">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="1dp"
-                        android:paddingBottom="1dp"
-                        android:text="Fuel"
-                        android:textAlignment="center"
-
-                        android:textSize="18sp" />
-
-                    <LinearLayout
-                        android:layout_width="60dp"
-                        android:layout_height="50dp"
-
-                        android:layout_gravity="center">
-
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="40dp"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="6dp"
-                            android:background="@drawable/ic_gaspump"
-                            android:backgroundTint="@color/exp_card5"
-
-                            />
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/fuel_text_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="1dp"
-                        android:text="RS 2400"
-                        android:textAlignment="center"
-                        android:textColor="#488711"
-                        android:textSize="18sp" />
-                </LinearLayout>
-
-                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    xmlns:tools="http://schemas.android.com/tools"
-                    android:id="@+id/other_card"
-
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".3"
-
-                    android:background="@drawable/shadow"
-                    android:orientation="vertical"
-
-
-                    card_view:layout_constraintBottom_toBottomOf="parent"
-                    card_view:layout_constraintStart_toStartOf="parent"
-                    card_view:layout_constraintTop_toTopOf="parent">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="1dp"
-                        android:paddingBottom="1dp"
-                        android:text="Other"
-                        android:textAlignment="center"
-
-                        android:textSize="18sp" />
-
-                    <LinearLayout
-                        android:layout_width="60dp"
-                        android:layout_height="50dp"
-
-                        android:layout_gravity="center">
-
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="40dp"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="6dp"
-                            android:background="@drawable/ic_view_list_black_24dp"
-                            android:backgroundTint="@color/exp_card6"
-
-                            />
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/other_text_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="1dp"
-                        android:text="RS 2400"
-                        android:textAlignment="center"
-                        android:textColor="#488711"
-                        android:textSize="18sp" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="10dp">
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Latest Transaction"
+                    android:layout_marginTop="1dp"
+                    android:paddingBottom="1dp"
+                    android:text="Mobile Bill"
                     android:textAlignment="center"
-                    android:textSize="20sp" />
 
-                <ImageView
-                    android:layout_width="0dp"
+                    android:textSize="18sp" />
+
+                <LinearLayout
+                    android:layout_width="60dp"
+                    android:layout_height="50dp"
+
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="6dp"
+                        android:background="@drawable/ic_phone_android_black_24dp"
+                        android:backgroundTint="@color/exp_card3"
+
+                        />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/phone_bill_text_view"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="20dp"
-                    android:layout_weight=".1"
-                    android:background="@drawable/ic_search_black_24dp"
-                    android:textAlignment="viewEnd" />
-
+                    android:paddingTop="1dp"
+                    android:text="RS 2400"
+                    android:textAlignment="center"
+                    android:textColor="#488711"
+                    android:textSize="18sp" />
             </LinearLayout>
-
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/expense_recycler"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:listitem="@layout/recycler_fragment_expense" />
-
 
         </LinearLayout>
-    </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/salary_card"
+
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:background="@drawable/shadow"
+                android:orientation="vertical"
+
+
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:paddingBottom="1dp"
+                    android:text="Paid Salaries"
+                    android:textAlignment="center"
+
+                    android:textSize="17sp" />
+
+                <LinearLayout
+                    android:layout_width="60dp"
+                    android:layout_height="50dp"
+
+
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="6dp"
+                        android:background="@drawable/ic_account_balance_wallet_black_24dp"
+                        android:backgroundTint="@color/exp_card4"
+
+                        />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/salary_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="1dp"
+                    android:text="RS 2400"
+                    android:textAlignment="center"
+                    android:textColor="#488711"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/fuel_card"
+
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+
+                android:background="@drawable/shadow"
+                android:orientation="vertical"
+
+
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:paddingBottom="1dp"
+                    android:text="Fuel"
+                    android:textAlignment="center"
+
+                    android:textSize="18sp" />
+
+                <LinearLayout
+                    android:layout_width="60dp"
+                    android:layout_height="50dp"
+
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="6dp"
+                        android:background="@drawable/ic_gaspump"
+                        android:backgroundTint="@color/exp_card5"
+
+                        />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/fuel_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="1dp"
+                    android:text="RS 2400"
+                    android:textAlignment="center"
+                    android:textColor="#488711"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/other_card"
+
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+
+                android:background="@drawable/shadow"
+                android:orientation="vertical"
+
+
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:paddingBottom="1dp"
+                    android:text="Other"
+                    android:textAlignment="center"
+
+                    android:textSize="18sp" />
+
+                <LinearLayout
+                    android:layout_width="60dp"
+                    android:layout_height="50dp"
+
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="6dp"
+                        android:background="@drawable/ic_view_list_black_24dp"
+                        android:backgroundTint="@color/exp_card6"
+
+                        />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/other_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="1dp"
+                    android:text="RS 2400"
+                    android:textAlignment="center"
+                    android:textColor="#488711"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="10dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Latest Transation"
+                android:textAlignment="center"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_weight=".1"
+                android:background="@drawable/ic_search_black_24dp"
+                android:textAlignment="viewEnd" />
+
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/expense_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+            tools:listitem="@layout/recycler_fragment_expense" />
+
+
+    </LinearLayout>
+
 </ScrollView>
