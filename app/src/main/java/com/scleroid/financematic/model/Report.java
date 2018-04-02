@@ -6,19 +6,22 @@ package com.scleroid.financematic.model;
  * Created by scleroid on 3/3/18.
  */
 
+import java.util.Date;
+
 /**
  * Created by Lincoln on 15/01/16.
  */
 public class Report {
-    private String report_Acc_no, report_Lent, report_Interest,report_Earned,report_Balance;
+    private String report_Acc_no, report_Lent, report_Earned, report_Balance;
+    private Date transactionDate;
 
     public Report() {
     }
 
-    public Report(String report_Acc_no, String report_Lent, String report_Interest,String report_Earned, String report_Balance) {
+    public Report(String report_Acc_no, String report_Lent, Date transactionDate, String report_Earned, String report_Balance) {
         this.report_Acc_no= report_Acc_no;
         this.report_Lent= report_Lent;
-        this.report_Interest = report_Interest;
+        this.transactionDate = transactionDate;
         this.report_Earned = report_Earned;
         this.report_Balance=report_Balance;
 
@@ -40,12 +43,12 @@ public class Report {
         this.report_Lent = report_Lent;
     }
 
-    public String getReport_Interest() {
-        return report_Interest;
+    public Date getTransactionDate() {
+        return transactionDate;
     }
 
-    void setReport_Interest(String report_Interest) {
-        this.report_Interest = report_Interest;
+    void setTransactionDate(Date transactionDate) {
+        this.transactionDate = transactionDate;
     }
 
     public String getReport_Earned() {

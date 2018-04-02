@@ -42,6 +42,17 @@ public class DatePickerFragment extends DialogFragment {
 
     }
 
+    public static DatePickerFragment newInstance() {
+        Bundle bundle = new Bundle();
+        //  bundle.putSerializable(ARG_DATE, date);
+
+        DatePickerFragment fragment = new DatePickerFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+
+
+    }
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Date date = (Date) getArguments().getSerializable(ARG_DATE);

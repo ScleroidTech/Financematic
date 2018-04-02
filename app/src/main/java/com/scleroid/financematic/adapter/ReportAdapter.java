@@ -26,6 +26,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
 
     private List<Report> reportList;
 
+
     public ReportAdapter(List<Report> reportList) {
         this.reportList = reportList;
     }
@@ -47,7 +48,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
         holder.passbook_date.setText(report.getReport_Acc_no());
         holder.passbook_name.setText(report .getReport_Lent());
 
-        holder.passbook_taken_money.setText(report.getReport_Interest());
+        holder.passbook_taken_money.setText(report.getTransactionDate());
         holder.passbook_received_money.setText(report.getReport_Earned());
         holder.report_report_Balance.setText(report.getReport_Balance());
         if(position %2 == 1)

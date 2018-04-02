@@ -89,7 +89,7 @@ public class RegisterMoneyFragment extends Fragment implements
         spin.setOnItemSelectedListener(this);
 
 /*        final String text = spin.getSelectedItem().toString();*/
-        //Creating the ArrayAdapter instance having the country list
+        //Creating the ArrayAdapter instance having the filterSuggestions list
         ArrayAdapter aa = new ArrayAdapter(getActivity().getApplicationContext(),android.R.layout.simple_spinner_item,country);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //Setting the ArrayAdapter data on the Spinner

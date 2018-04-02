@@ -17,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.scleroid.financematic.R;
-import com.scleroid.financematic.adapter.ReportAdapter2;
+import com.scleroid.financematic.adapter.ReportAdapter;
 import com.scleroid.financematic.model.Report;
 import com.scleroid.financematic.utils.RecyclerTouchListener;
 
@@ -49,7 +49,7 @@ public class ReportFragment1 extends Fragment implements
 
     private List<Report> reportList = new ArrayList<>();
     private RecyclerView recyclerView;
-    private ReportAdapter2 mAdapter;
+    private ReportAdapter mAdapter;
 
     public ReportFragment1() {
         // Required empty public constructor
@@ -83,7 +83,7 @@ public class ReportFragment1 extends Fragment implements
             }
         });*/
 /*        final String text = spin.getSelectedItem().toString();*/
-        //Creating the ArrayAdapter instance having the country list
+        //Creating the ArrayAdapter instance having the filterSuggestions list
         ArrayAdapter aa = new ArrayAdapter(getActivity().getApplicationContext(), android.R.layout.simple_spinner_item, country);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //Setting the ArrayAdapter data on the Spinner
@@ -144,7 +144,7 @@ public class ReportFragment1 extends Fragment implements
 
         recyclerView = rootView.findViewById(R.id.report_recycler_view);
 
-        mAdapter = new ReportAdapter2 (reportList);
+        mAdapter = new ReportAdapter(reportList);
 
         recyclerView.setHasFixedSize(true);
 
@@ -241,7 +241,7 @@ public class ReportFragment1 extends Fragment implements
     }
 /*    private void sortData()
     {
-        List<String> galaxiesList= Arrays.asList(country);
+        List<String> galaxiesList= Arrays.asList(filterSuggestions);
 
         if(unSorted)Collections.sort(galaxiesList);
         else Collections.reverse(galaxiesList);

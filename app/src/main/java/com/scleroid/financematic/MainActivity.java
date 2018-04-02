@@ -25,6 +25,7 @@ import com.scleroid.financematic.fragments.ExpenseFragment;
 import com.scleroid.financematic.fragments.LoanDetailsFragment;
 import com.scleroid.financematic.fragments.PeopleFragment;
 import com.scleroid.financematic.fragments.RegisterCustomerFragment;
+import com.scleroid.financematic.fragments.ReportFragment;
 import com.scleroid.financematic.fragments.ReportFragment1;
 import com.scleroid.financematic.utils.ActivityUtils;
 import com.scleroid.financematic.utils.BottomNavigationViewHelper;
@@ -235,7 +236,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return new RegisterCustomerFragment();
             case 2:
                 // Report fragment
-                return new ReportFragment1();
+                return new ReportFragment();
             case 3:
                 // Expenses fragment
                 return new ExpenseFragment();
