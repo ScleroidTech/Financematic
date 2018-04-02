@@ -130,7 +130,7 @@
 
                 >
                 <TextView
-                    android:id="@+id/report_Acc_no"
+                    android:id="@+id/accNo"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".7"
@@ -152,7 +152,7 @@
                     android:textColor="@color/white"
                     android:textSize="15sp" />
                 <TextView
-                    android:id="@+id/report_Lent"
+                    android:id="@+id/lentAmt"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".9"
@@ -164,7 +164,7 @@
                     android:textSize="15sp" />
 
                 <TextView
-                    android:id="@+id/report_Earned"
+                    android:id="@+id/earnedAmt"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".9"
@@ -176,7 +176,7 @@
                     android:textColor="@color/white"
                     android:textSize="15sp" />
                 <TextView
-                    android:id="@+id/report_Balance"
+                    android:id="@+id/balanceAmt"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".9"

@@ -10,11 +10,11 @@ import java.util.Date;
 
 
 public class Personal_summery_loan_details {
-    private String summery_descpription, summery_amount;
+    private String summery_description, summery_amount;
     private Date summeryDate;
 
-    public Personal_summery_loan_details(String summery_descpription, String summery_amount, Date summeryDate) {
-        this.summery_descpription = summery_descpription;
+    public Personal_summery_loan_details(String summery_description, String summery_amount, Date summeryDate) {
+        this.summery_description = summery_description;
         this.summery_amount = summery_amount;
         this.summeryDate = summeryDate;
     }
@@ -30,12 +30,12 @@ public class Personal_summery_loan_details {
         this.summeryDate = summeryDate;
     }
 
-    public String getSummery_descpription() {
-        return summery_descpription;
+    public String getSummery_description() {
+        return summery_description;
     }
 
-    void setSummery_descpription(String summery_descpription) {
-        this.summery_descpription = summery_descpription;
+    void setSummery_description(String summery_description) {
+        this.summery_description = summery_description;
     }
 
     public String getSummery_amount() {

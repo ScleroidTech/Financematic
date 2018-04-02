@@ -1,10 +1,6 @@
 package com.scleroid.financematic.model;
 
 /**
- * Created by scleroid on 3/3/18.
- */
-
-/**
  * Created by Lincoln on 15/01/16.
  */
 public class Loan {

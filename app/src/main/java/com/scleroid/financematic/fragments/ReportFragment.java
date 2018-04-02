@@ -178,7 +178,7 @@ public class ReportFragment extends Fragment implements
             @Override
             public void onClick(View view, int position) {
                 Report report = reportList.get(position);
-                Toast.makeText(getActivity().getApplicationContext(), report.getReport_Balance() + " is Available Balance", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), report.getBalanceAmt() + " is Available Balance", Toast.LENGTH_SHORT).show();
             }
 
             @Override

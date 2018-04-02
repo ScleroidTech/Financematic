@@ -82,7 +82,7 @@ public class SummeryAdapter extends RecyclerView.Adapter<SummeryAdapter.MyViewHo
 
         public void setData(Personal_summery_loan_details passbook) {
             //  holder.summery_date.setText(passbook.getSummery_date());
-            summeryDescpription.setText(passbook.getSummery_descpription());
+            summeryDescpription.setText(passbook.getSummery_description());
             summeryAmount.setText(currencyStringUtils.bindNumber(passbook.getSummery_amount()));
             setDate(passbook.getSummeryDate());
             textViewUtils.textViewExperiments(summeryAmount);

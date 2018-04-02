@@ -2,9 +2,6 @@ package com.scleroid.financematic.model;
 
 import java.util.Date;
 
-/**
- * Created by scleroid on 27/3/18.
- */
 
 public class Expense {
     public static final byte OTHER = 0;

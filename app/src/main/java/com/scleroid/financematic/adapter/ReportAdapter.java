@@ -86,11 +86,11 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
 
 
         private void setData(Report report) {
-            accNoTextView.setText(report.getReport_Acc_no());
+            accNoTextView.setText(report.getAccNo());
             transactionDate.setText(dateUtils.getFormattedDate(report.getTransactionDate()));
-            reportLent.setText(report.getReport_Lent());
-            reportEarned.setText(report.getReport_Earned());
-            reportBalance.setText(report.getReport_Balance());
+            reportLent.setText(report.getLentAmt());
+            reportEarned.setText(report.getEarnedAmt());
+            reportBalance.setText(report.getBalanceAmt());
         }
 
 
