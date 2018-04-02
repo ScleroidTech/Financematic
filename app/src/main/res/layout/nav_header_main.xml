@@ -24,6 +24,9 @@
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
         android:text="Scleroid Technologies"
+        android:textStyle="bold"
+
+android:textSize="16dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView

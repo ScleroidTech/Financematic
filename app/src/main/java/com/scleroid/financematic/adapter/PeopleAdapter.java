@@ -1,14 +1,18 @@
 package com.scleroid.financematic.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.model.List_all_peoples;
 import com.scleroid.financematic.utils.CircleCustomView;
+import com.scleroid.financematic.utils.CustomFilter;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -20,15 +24,24 @@ import butterknife.ButterKnife;
  * Created by scleroid on 6/3/18.
  */
 
+public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHolder> implements Filterable {
 
-public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHolder> {
+    Context c;
+    public List<List_all_peoples> list_all_peoplesList;
+    private List<List_all_peoples> filterList;
+    CustomFilter filter;
 
-
-    private List<List_all_peoples> list_all_peoplesList;
+    public PeopleAdapter(Context ctx, List<List_all_peoples> list_all_peoplesList) {
+        this.c=ctx;
+        this.list_all_peoplesList = list_all_peoplesList;
+        this.filterList=list_all_peoplesList;
+    }
 
     public PeopleAdapter(List<List_all_peoples> list_all_peoplesList) {
         this.list_all_peoplesList = list_all_peoplesList;
+        this.filterList=list_all_peoplesList;
     }
+
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -46,6 +59,8 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
         holder.list_total_loan.setText(String.format("%d", passbook.getList_total_loan()));
         holder.list_received_amount.setText(String.format("%d", passbook.getList_received_amoun()));
         holder.drawCircle(passbook);
+
+
 
     }
 
@@ -99,5 +114,17 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
         private float getPercentage(float list_received_amoun, int list_total_loan) {
             return (list_received_amoun / list_total_loan) * 100;
         }
+    }
+
+
+    //RETURN FILTER OBJ
+    @Override
+    public Filter getFilter() {
+        if(filter==null)
+        {
+            filter=new CustomFilter(filterList,this);
+        }
+
+        return filter;
     }
 }

@@ -2,7 +2,9 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -11,10 +13,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="55dp"
+
         android:background="#ddd"
         android:orientation="vertical">
 
-        <SearchView
+  <!--      <SearchView
             android:id="@+id/simpleSearchView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -22,7 +25,15 @@
             android:layout_marginRight="5dp"
             android:background="@drawable/shadow"
 
-    />
+    />-->
+        <android.support.v7.widget.SearchView
+            android:id="@+id/simpleSearchView"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/shadow"
+            app:defaultQueryHint="Search.."
+
+            ></android.support.v7.widget.SearchView>
 
 
         <android.support.v7.widget.RecyclerView
@@ -32,14 +43,16 @@
             android:layout_below="@+id/simpleSearchView"
             android:scrollbars="vertical"
             tools:listitem="@layout/recycler_list_all_peoples_list" />
-    <Button
+<!--    <Button
         android:id="@+id/button_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/list_all_peoples_recycler"
-        android:layout_marginBottom="50dp"
 
-        android:text="List person summery" />
+
+
+
+        android:text="person summery" />-->
     </RelativeLayout>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>

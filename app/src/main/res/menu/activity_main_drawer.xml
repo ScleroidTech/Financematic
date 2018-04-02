@@ -16,10 +16,15 @@
             android:id="@+id/nav_report"
             android:icon="@drawable/ic_report_black_24dp"
             android:title="Report" />
+
         <item
             android:id="@+id/nav_expenses"
             android:icon="@drawable/ic_storage_black_24dp"
             android:title="Expenses" />
+        <item
+            android:id="@+id/summery_details"
+            android:icon="@drawable/ic_person_black_24dp"
+            android:title="Customer Details" />
     </group>
 
     <item android:title="Communicate">

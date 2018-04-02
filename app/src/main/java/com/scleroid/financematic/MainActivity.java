@@ -25,7 +25,7 @@ import com.scleroid.financematic.fragments.ExpenseFragment;
 import com.scleroid.financematic.fragments.LoanDetailsFragment;
 import com.scleroid.financematic.fragments.PeopleFragment;
 import com.scleroid.financematic.fragments.RegisterCustomerFragment;
-import com.scleroid.financematic.fragments.ReportFragment;
+import com.scleroid.financematic.fragments.ReportFragment1;
 import com.scleroid.financematic.utils.ActivityUtils;
 import com.scleroid.financematic.utils.BottomNavigationViewHelper;
 import com.scleroid.financematic.utils.InstantAppExecutors;
@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final String TAG_NEW_CUSTOMER = "new_customer";
     private static final String TAG_REPORT = "report";
     private static final String TAG_EXPENSES = "expenses";
+    private static final String TAG_SUMMERY = "Customer_Summery";
     private static final String TAG_SETTINGS = "settings";
     private static final String TAG_NOTIFICATION = "notification";
     private static final int THREAD_COUNT = 3;
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return true;
             case R.id.person_details:
                     /*    toolbar.setTitle("Report");*/
-                fragment = new ReportFragment();
+                fragment = new ReportFragment1();
                 loadFragment(fragment);
 
                 return true;
@@ -234,10 +235,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return new RegisterCustomerFragment();
             case 2:
                 // Report fragment
-                return new ReportFragment();
+                return new ReportFragment1();
             case 3:
                 // Expenses fragment
                 return new ExpenseFragment();
+            case 4:
+                // Expenses fragment
+                return new LoanDetailsFragment();
 
           /*
            TODO
@@ -358,12 +362,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 navItemIndex = 3;
                 CURRENT_TAG = TAG_EXPENSES;
                 break;
-
-          /*  case R.id.nav_profile:
+             case R.id.summery_details:
                 navItemIndex = 4;
-                CURRENT_TAG = TAG_PROFILE;
+                CURRENT_TAG = TAG_SUMMERY;
                 break;
-            case R.id.nav_settings:
+
+          /* case R.id.nav_settings:
                 navItemIndex = 5;
                 CURRENT_TAG = TAG_SETTINGS;
                 break;

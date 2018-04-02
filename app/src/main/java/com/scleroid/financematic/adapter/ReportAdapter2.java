@@ -14,6 +14,10 @@ import com.scleroid.financematic.model.Report;
 import java.util.List;
 
 /**
+ * Created by scleroid on 28/3/18.
+ */
+
+/**
  * Created by scleroid on 16/3/18.
  * <p>
  * Created by scleroid on 5/3/18.
@@ -22,11 +26,11 @@ import java.util.List;
  * Created by scleroid on 5/3/18.
  */
 
-public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHolder> {
+public class ReportAdapter2  extends RecyclerView.Adapter<ReportAdapter2 .MyViewHolder> {
 
     private List<Report> reportList;
 
-    public ReportAdapter(List<Report> reportList) {
+    public ReportAdapter2 (List<Report> reportList) {
         this.reportList = reportList;
     }
 
@@ -45,11 +49,14 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
         Report report = reportList.get(position);
 
         holder.passbook_date.setText(report.getReport_Acc_no());
-        holder.passbook_name.setText(report .getReport_Lent());
+        holder.passbook_name.setText(report.getReport_Lent());
 
         holder.passbook_taken_money.setText(report.getReport_Interest());
         holder.passbook_received_money.setText(report.getReport_Earned());
         holder.report_report_Balance.setText(report.getReport_Balance());
+
+
+
         if(position %2 == 1)
         {
             holder.itemView.setBackgroundColor(Color.parseColor("#d5e5f0"));
@@ -80,7 +87,6 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
             passbook_taken_money = view.findViewById(R.id.report_Interest);
             passbook_received_money = view.findViewById(R.id.report_Earned);
             report_report_Balance = view.findViewById(R.id.report_Balance);
-
 
         }
 

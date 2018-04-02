@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +20,12 @@ import com.scleroid.financematic.utils.RecyclerTouchListener;
 
 import java.util.ArrayList;
 import java.util.List;
-
 /**
  * Created by scleroid on 28/2/18.
  */
 
 public class PeopleFragment extends Fragment {
+    SearchView sv;
     private final ActivityUtils activityUtils = new ActivityUtils();
     TextView firstFragment;
     private List<List_all_peoples> list_all_peoplesList = new ArrayList<>();
@@ -53,20 +54,19 @@ public class PeopleFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.list_all_peoples, container, false);
 
+      sv= rootView.findViewById(R.id.simpleSearchView);
+
         //Intend
-        firstFragment = rootView.findViewById(R.id.button_list);
-        firstFragment.setOnClickListener(v -> activityUtils.loadFragment(new LoanDetailsFragment(), getFragmentManager()));
+     /*   firstFragment = rootView.findViewById(R.id.button_list);
+        firstFragment.setOnClickListener(v -> activityUtils.loadFragment(new LoanDetailsFragment(), getFragmentManager()));*/
 
-
+//recyclerView
         recyclerView = rootView.findViewById(R.id.list_all_peoples_recycler);
 
-        mAdapter = new PeopleAdapter(list_all_peoplesList);
+        mAdapter = new PeopleAdapter(this.list_all_peoplesList);
 
         recyclerView.setHasFixedSize(true);
-
-
         // vertical RecyclerView
-        // keep movie_list_row.xml width to `match_parent`
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
 
         // horizontal RecyclerView
@@ -86,6 +86,8 @@ public class PeopleFragment extends Fragment {
             public void onClick(View view, int position) {
                 List_all_peoples loan = list_all_peoplesList.get(position);
                 Toast.makeText(getActivity().getApplicationContext(), loan.getList_received_amoun() + " is selected!", Toast.LENGTH_SHORT).show();
+
+
             }
 
             @Override
@@ -93,6 +95,30 @@ public class PeopleFragment extends Fragment {
 
             }
         }));
+
+      /*  //SET ITS PROPETRIES
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        //ADAPTER
+        final PeopleAdapter adapter=new PeopleAdapter(this,getPlayers());
+        recyclerView.setAdapter(adapter);*/
+        //SEARCH
+      sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                //FILTER AS YOU TYPE
+                mAdapter.getFilter().filter(query);
+                return false;
+            }
+        });
+
+
 
         prepareLoanData();
 
