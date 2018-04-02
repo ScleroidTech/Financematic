@@ -1,14 +1,21 @@
 package com.scleroid.financematic.model;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
 
 import java.util.Date;
 
+import static android.arch.persistence.room.ForeignKey.CASCADE;
+
 /**
  * Created by Lincoln on 15/01/16.
  */
-@Entity
+
+@Entity(foreignKeys = @ForeignKey(entity = Customer.class,
+        parentColumns = "_id",
+        childColumns = "custId",
+        onDelete = CASCADE))
 public class Loan {
     /* private String title, genre, year;
      */
@@ -24,7 +31,9 @@ public class Loan {
     @PrimaryKey
     private int accountNo;
 
-    public Loan(int loanAmt, Date startDate, Date endDate, float rateOfInterest, int amtOfInterest, int noOfInstallments, int duration, String installmentType, int repayAmt) {
+    private int custId;
+
+    public Loan(int loanAmt, Date startDate, Date endDate, float rateOfInterest, int amtOfInterest, int noOfInstallments, int duration, String installmentType, int repayAmt, int custId) {
         this.loanAmt = loanAmt;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -34,8 +43,18 @@ public class Loan {
         this.duration = duration;
         this.installmentType = installmentType;
         this.repayAmt = repayAmt;
-
+        this.custId = custId;
     }
+
+    public int getCustId() {
+        return custId;
+    }
+
+    public void setCustId(int custId) {
+        this.custId = custId;
+    }
+
+
 
     public int getLoanAmt() {
         return loanAmt;

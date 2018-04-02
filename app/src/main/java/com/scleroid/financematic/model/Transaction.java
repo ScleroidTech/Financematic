@@ -1,9 +1,12 @@
 package com.scleroid.financematic.model;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
 
 import java.util.Date;
+
+import static android.arch.persistence.room.ForeignKey.CASCADE;
 
 /**
  * Copyright (C) 2018
@@ -11,7 +14,10 @@ import java.util.Date;
  * @author Ganesh Kaple
  * @since 4/2/18
  */
-@Entity
+@Entity(foreignKeys = @ForeignKey(entity = Loan.class,
+        parentColumns = "accountNo",
+        childColumns = "loanAcNo",
+        onDelete = CASCADE))
 public class Transaction {
     @PrimaryKey(autoGenerate = true)
     private int transactionId;
@@ -20,14 +26,24 @@ public class Transaction {
     private int gainedAmt;
     private int receivedAmt;
 
-    public Transaction(Date transactionDate, int lentAmt, int gainedAmt, int receivedAmt) {
+    private int loanAcNo;
 
-
+    public Transaction(Date transactionDate, int lentAmt, int gainedAmt, int receivedAmt, int loanAcNo) {
         this.transactionDate = transactionDate;
         this.lentAmt = lentAmt;
         this.gainedAmt = gainedAmt;
         this.receivedAmt = receivedAmt;
+        this.loanAcNo = loanAcNo;
     }
+
+    public int getLoanAcNo() {
+        return loanAcNo;
+    }
+
+    public void setLoanAcNo(int loanAcNo) {
+        this.loanAcNo = loanAcNo;
+    }
+
 
     public int getTransactionId() {
         return transactionId;
