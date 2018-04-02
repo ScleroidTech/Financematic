@@ -15,7 +15,7 @@ import android.content.Context;
 import com.scleroid.financematic.model.Customer;
 import com.scleroid.financematic.model.Expense;
 import com.scleroid.financematic.model.Loan;
-import com.scleroid.financematic.model.Transaction;
+import com.scleroid.financematic.model.TransactionModel;
 import com.scleroid.financematic.model.dao.CustomerDao;
 import com.scleroid.financematic.model.dao.ExpenseDao;
 import com.scleroid.financematic.model.dao.LoanDao;
@@ -25,7 +25,7 @@ import com.scleroid.financematic.model.dao.TransactionDao;
  * @author Ganesh Kaple
  * @see Customer
  * @see Loan
- * @see Transaction
+ * @see TransactionModel
  * @see Expense
  * @since 27/10/17
  * It is a singleton class,so it holds only one object for it's entire existence
@@ -33,7 +33,7 @@ import com.scleroid.financematic.model.dao.TransactionDao;
  * It handles creating of the database if it doesn't exists & providing the database object whenever required
  * There are 3 tables in this database,
  */
-@Database(entities = {Customer.class, Loan.class, Transaction.class, Expense.class}, version = 1, exportSchema = false)
+@Database(entities = {Customer.class, Loan.class, TransactionModel.class, Expense.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     /**
      * Holds the instance of the database
@@ -103,7 +103,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
 
     /**
-     * Transaction Model Data Access Object,
+     * TransactionModel Model Data Access Object,
      * For Room Library
      *
      * @return returns an object of

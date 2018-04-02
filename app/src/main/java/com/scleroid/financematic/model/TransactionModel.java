@@ -21,7 +21,7 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
         parentColumns = "accountNo",
         childColumns = "loanAcNo",
         onDelete = CASCADE))
-public class Transaction {
+public class TransactionModel {
     @PrimaryKey(autoGenerate = true)
     private int transactionId;
     @TypeConverters(DateConverter.class)
@@ -32,7 +32,7 @@ public class Transaction {
 
     private int loanAcNo;
 
-    public Transaction(Date transactionDate, int lentAmt, int gainedAmt, int receivedAmt, int loanAcNo) {
+    public TransactionModel(Date transactionDate, int lentAmt, int gainedAmt, int receivedAmt, int loanAcNo) {
         this.transactionDate = transactionDate;
         this.lentAmt = lentAmt;
         this.gainedAmt = gainedAmt;
