@@ -25,7 +25,7 @@
                 android:layout_weight=".7"
 
 
-                android:text="122222"
+                android:text="1222"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="13sp"
                 />
@@ -33,7 +33,7 @@
                 android:id="@+id/report_Interest"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight=".9"
+                android:layout_weight="1"
                 android:text="31/3/2018"
 
                 android:textAlignment="center"
@@ -44,8 +44,8 @@
                 android:id="@+id/report_Lent"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight=".9"
-                android:text="RS 25000"
+                android:layout_weight=".8"
+                android:text="25000"
 
 
                 android:textAlignment="center"
@@ -57,8 +57,8 @@
                 android:id="@+id/report_Earned"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight=".9"
-                android:text="Rs 3000"
+                android:layout_weight=".8"
+                android:text="3000"
 
 
                 android:textAlignment="center"
@@ -69,14 +69,24 @@
 
                 android:id="@+id/report_Balance"
                 android:layout_width="0dp"                         android:layout_height="wrap_content"
-                android:layout_weight=".9"
-                android:text="RS 20000"
+                android:layout_weight="1"
+                android:text="20000"
 
                 android:textAlignment="center"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="15sp"
                 />
+            <TextView
 
+                android:id="@+id/report_balence"
+                android:layout_width="0dp"                         android:layout_height="wrap_content"
+                android:layout_weight=".8"
+                android:text="20000"
+
+                android:textAlignment="center"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="15sp"
+                />
 
 
 

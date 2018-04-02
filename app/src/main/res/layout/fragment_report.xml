@@ -155,7 +155,7 @@
                     android:id="@+id/report_Lent"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".9"
+                    android:layout_weight=".8"
                     android:background="@drawable/borderright1"
                     android:text="Lent"
                     android:textAlignment="center"
@@ -167,7 +167,7 @@
                     android:id="@+id/report_Earned"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".9"
+                    android:layout_weight=".8"
                     android:background="@drawable/borderright1"
                     android:text="Earned"
                     android:textAlignment="center"
@@ -179,10 +179,21 @@
                     android:id="@+id/report_Balance"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".9"
-
+                    android:layout_weight="1"
+                    android:background="@drawable/borderright1"
                     android:text="Received"
                     android:textAlignment="center"
+
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+                <TextView
+                    android:id="@+id/report_balence"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".8"
+
+                    android:text="Balence"
 
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="@color/white"
@@ -203,7 +214,7 @@
 
 
 
-        <LinearLayout
+      <!--  <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/report_table"
@@ -275,7 +286,7 @@
             android:layout_marginTop="10dp"
             android:scrollbars="vertical"
 
-            />
+            />-->
 
 
     </LinearLayout>

@@ -137,11 +137,11 @@ public class DashboardFragment extends Fragment {
 
 
     private void prepareLoanData() {
-        Loan loan = new Loan("Shahrukh Khan", "2000", "2 Days to go");
+        Loan loan = new Loan("Shahrukh Khan", "2000", "25 Feb 2018");
         loanList.add(loan);
-        loan = new Loan("Akshay Kumar", "1000", "3 days to go");
+        loan = new Loan("Akshay Kumar", "1000", "24 Feb 2018");
         loanList.add(loan);
-        loan = new Loan("Amitabh Bachchan", "1500", "5 days to go");
+        loan = new Loan("Amitabh Bachchan", "1500", "22 Feb 2018");
         loanList.add(loan);
 
 

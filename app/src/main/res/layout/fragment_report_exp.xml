@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+
+            >
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingRight="10dp">
+
+
+            <TextView
+                android:id="@+id/from_date_text_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/drawable_report_shadow"
+                android:drawableEnd="@drawable/shadow3"
+
+                android:drawableTint="@color/colorPrimary"
+                android:paddingBottom="6dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="15dp"
+                android:paddingTop="6dp"
+                android:text="From"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/to_date_text_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/drawable_report_shadow"
+                android:drawableEnd="@drawable/shadow3"
+                android:drawableRight="@drawable/shadow3"
+                android:drawableTint="@color/colorPrimary"
+                android:paddingBottom="6dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="15dp"
+                android:paddingTop="6dp"
+                android:text="To Date"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/report_table"
+
+              android:orientation="vertical">
+              <LinearLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginBottom="5dp"
+                  android:layout_marginTop="5dp"
+                  android:orientation="horizontal"
+
+
+                  >
+                  <TextView
+                      android:id="@+id/report_exp_Acc_no"
+                      android:layout_width="0dp"
+                      android:layout_height="wrap_content"
+                      android:layout_weight=".7"
+                      android:background="@drawable/borderright1"
+                      android:text="Acc.No"
+
+                      android:textAppearance="?android:attr/textAppearanceLarge"
+                      android:textColor="@color/white"
+                      android:textSize="15sp" />
+                  <TextView
+                      android:id="@+id/report_exp_date"
+                      android:layout_width="0dp"
+                      android:layout_height="wrap_content"
+                      android:layout_weight=".9"
+                      android:background="@drawable/borderright1"
+                      android:text="Date"
+                      android:textAlignment="center"
+                      android:textAppearance="?android:attr/textAppearanceLarge"
+                      android:textColor="@color/white"
+                      android:textSize="15sp" />
+                  <TextView
+                      android:id="@+id/report_type"
+                      android:layout_width="0dp"
+                      android:layout_height="wrap_content"
+                      android:layout_weight=".9"
+                      android:background="@drawable/borderright1"
+                      android:text="Type"
+                      android:textAlignment="center"
+                      android:textAppearance="?android:attr/textAppearanceLarge"
+                      android:textColor="@color/white"
+                      android:textSize="15sp" />
+
+                  <TextView
+                      android:id="@+id/report_exp_amount"
+                      android:layout_width="0dp"
+                      android:layout_height="wrap_content"
+                      android:layout_weight=".9"
+                      android:background="@drawable/borderright1"
+                      android:text="Amount"
+                      android:textAlignment="center"
+
+                      android:textAppearance="?android:attr/textAppearanceLarge"
+                      android:textColor="@color/white"
+                      android:textSize="15sp" />
+
+
+              </LinearLayout>
+          </LinearLayout>
+          <android.support.v7.widget.RecyclerView
+              android:id="@+id/report_recycler_expendi"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="10dp"
+              android:scrollbars="vertical"
+
+              />
+
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
