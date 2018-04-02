@@ -3,6 +3,9 @@ package com.scleroid.financematic.model;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
+
+import com.scleroid.financematic.utils.DateConverter;
 
 import java.util.Date;
 
@@ -20,7 +23,9 @@ public class Loan {
     /* private String title, genre, year;
      */
     private int loanAmt;
+    @TypeConverters(DateConverter.class)
     private Date startDate;
+    @TypeConverters(DateConverter.class)
     private Date endDate;
     private float rateOfInterest;
     private int amtOfInterest;

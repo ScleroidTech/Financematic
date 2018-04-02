@@ -2,6 +2,9 @@ package com.scleroid.financematic.model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
+
+import com.scleroid.financematic.utils.DateConverter;
 
 import java.util.Date;
 
@@ -16,6 +19,7 @@ public class Expense {
 
     private int expenseAmount;
     private byte expenseType;
+    @TypeConverters(DateConverter.class)
     private Date expenseDate;
 
     @PrimaryKey(autoGenerate = true)
