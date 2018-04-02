@@ -1,8 +1,11 @@
 package com.scleroid.financematic.model;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
 import java.util.Date;
 
-
+@Entity
 public class Expense {
     public static final byte OTHER = 0;
     public static final byte ROOM_RENT = 1;
@@ -14,6 +17,17 @@ public class Expense {
     private int expenseAmount;
     private byte expenseType;
     private Date expenseDate;
+
+    @PrimaryKey(autoGenerate = true)
+    private int expenseId;
+
+    public int getExpenseId() {
+        return expenseId;
+    }
+
+    public void setExpenseId(int expenseId) {
+        this.expenseId = expenseId;
+    }
 
     public Expense(int expenseAmount, byte expenseType, Date expenseDate) {
 
