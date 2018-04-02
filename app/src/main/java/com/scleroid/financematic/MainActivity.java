@@ -26,7 +26,6 @@ import com.scleroid.financematic.fragments.LoanDetailsFragment;
 import com.scleroid.financematic.fragments.PeopleFragment;
 import com.scleroid.financematic.fragments.RegisterCustomerFragment;
 import com.scleroid.financematic.fragments.ReportFragment;
-import com.scleroid.financematic.fragments.ReportFragment1;
 import com.scleroid.financematic.utils.ActivityUtils;
 import com.scleroid.financematic.utils.BottomNavigationViewHelper;
 import com.scleroid.financematic.utils.InstantAppExecutors;
@@ -62,24 +61,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (item.getItemId()) {
 
             case R.id.navigation_home:
-                       /* toolbar.setTitle("Customer");*/
+                /* toolbar.setTitle("Customer");*/
                 fragment = new DashboardFragment();
                 loadFragment(fragment);
 
                 return true;
             case R.id.navigation_list:
-                       /* toolbar.setTitle("Loan Details");*/
+                /* toolbar.setTitle("Loan Details");*/
                 fragment = new PeopleFragment();
                 loadFragment(fragment);
                 return true;
             case R.id.person_details:
-                    /*    toolbar.setTitle("Report");*/
-                fragment = new ReportFragment1();
+                /*    toolbar.setTitle("Report");*/
+                fragment = new ReportFragment();
                 loadFragment(fragment);
 
                 return true;
-                   /* case R.id.navigation_person_loan_details:
-                   *//*  toolbar.setTitle("Person Details");*//*
+            /* case R.id.navigation_person_loan_details:
+             *//*  toolbar.setTitle("Person Details");*//*
                         fragment = new RegisterCustomerFragment();
                         loadFragment(fragment);
                         return true;
@@ -145,18 +144,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         /*bottom navigation*/
 
-  /*    toolbar = getSupportActionBar();*/
+        /*    toolbar = getSupportActionBar();*/
 
         bottomNavigationView = findViewById(R.id.navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
 
         // attaching bottom sheet behaviour - hide / show on scroll
-      /*  CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) navigation.getLayoutParams();*/
-       /* layoutParams.setBehavior(new BottomNavigationBehavior());*/
+        /*  CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) navigation.getLayoutParams();*/
+        /* layoutParams.setBehavior(new BottomNavigationBehavior());*/
 
         // load the store fragment by default
-       /* toolbar.setTitle("Finance Matic");*/
+        /* toolbar.setTitle("Finance Matic");*/
         // loadFragment(new DashboardFragment());
         appExecutors = new InstantAppExecutors();
         if (savedInstanceState == null) {
@@ -363,7 +362,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 navItemIndex = 3;
                 CURRENT_TAG = TAG_EXPENSES;
                 break;
-             case R.id.summery_details:
+            case R.id.summery_details:
                 navItemIndex = 4;
                 CURRENT_TAG = TAG_SUMMERY;
                 break;
