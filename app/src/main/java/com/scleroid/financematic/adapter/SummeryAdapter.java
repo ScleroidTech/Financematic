@@ -66,7 +66,7 @@ public class SummeryAdapter extends RecyclerView.Adapter<SummeryAdapter.MyViewHo
 
         /*  @BindView(R.id.year_text_view)
           TextView yearTextView;*/
-        @BindView(R.id.summery_descpription)
+        @BindView(R.id.summery_description)
         TextView summeryDescpription;
         @BindView(R.id.summery_amount)
         TextView summeryAmount;

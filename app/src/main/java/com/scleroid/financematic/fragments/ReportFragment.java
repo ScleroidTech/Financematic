@@ -68,7 +68,7 @@ public class ReportFragment extends Fragment implements
     RecyclerView reportRecyclerView;
     @BindView(R.id.spinnerr)
     Spinner spinnerFilter;
-    @BindView(R.id.report_Balance)
+    @BindView(R.id.balanceAmt)
     TextView reportBalance;
 
 

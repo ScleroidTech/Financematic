@@ -1,5 +1,6 @@
 package com.scleroid.financematic.adapter;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.model.Loan;
+import com.scleroid.financematic.model.TempDashBoardModel;
 import com.scleroid.financematic.utils.CurrencyStringUtils;
 
 import java.util.List;
@@ -20,11 +22,17 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> 
 
     private final CurrencyStringUtils currencyStringUtils = new CurrencyStringUtils();
     private List<Loan> loanList;
-
+    private List<TempDashBoardModel> loanList2;
+/*TODO Work in Progress ,Add this & remove other constructor
     public LoanAdapter(List<Loan> loanList) {
         this.loanList = loanList;
+    }*/
+
+    public LoanAdapter(List<TempDashBoardModel> loanList) {
+        this.loanList2 = loanList;
     }
 
+    @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
@@ -35,10 +43,10 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-       Loan loan = loanList.get(position);
-        holder.title.setText(loan .getTitle());
+        TempDashBoardModel loan = loanList2.get(position);
+        holder.title.setText(loan.getTitle());
         holder.genre.setText(currencyStringUtils.bindNumber(loan.getGenre()));
-        holder.year.setText(loan .getYear());
+        holder.year.setText(loan.getYear());
     }
 
 

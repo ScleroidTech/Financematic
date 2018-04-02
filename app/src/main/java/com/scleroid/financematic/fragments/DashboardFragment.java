@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.adapter.LoanAdapter;
-import com.scleroid.financematic.model.Loan;
+import com.scleroid.financematic.model.TempDashBoardModel;
 import com.scleroid.financematic.utils.ActivityUtils;
 import com.scleroid.financematic.utils.RecyclerTouchListener;
 import com.scleroid.financematic.utils.TextViewUtils;
@@ -49,7 +49,7 @@ public class DashboardFragment extends Fragment {
     @BindView(R.id.recycler_view_dashboard)
     RecyclerView recyclerViewDashboard;
     Unbinder unbinder;
-    private List<Loan> loanList = new ArrayList<>();
+    private List<TempDashBoardModel> loanList = new ArrayList<>();
     private LoanAdapter mAdapter;
     private ActivityUtils activityUtils = new ActivityUtils();
 
@@ -84,7 +84,7 @@ public class DashboardFragment extends Fragment {
 
         // recyclerView = rootView.findViewById(R.id.recycler_view_dashboard);
 
-        prepareLoanData();
+        prepareTempDashBoardModelData();
 
 
         setupRecyclerView();
@@ -124,7 +124,7 @@ public class DashboardFragment extends Fragment {
         recyclerViewDashboard.addOnItemTouchListener(new RecyclerTouchListener(getActivity().getApplicationContext(), recyclerViewDashboard, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Loan loan = loanList.get(position);
+                TempDashBoardModel loan = loanList.get(position);
                 Toast.makeText(getActivity().getApplicationContext(), loan.getTitle() + " is selected!", Toast.LENGTH_SHORT).show();
             }
 
@@ -136,12 +136,12 @@ public class DashboardFragment extends Fragment {
     }
 
 
-    private void prepareLoanData() {
-        Loan loan = new Loan("Shahrukh Khan", "2000", "2 Days to go");
+    private void prepareTempDashBoardModelData() {
+        TempDashBoardModel loan = new TempDashBoardModel("Shahrukh Khan", "2000", "2 Days to go");
         loanList.add(loan);
-        loan = new Loan("Akshay Kumar", "1000", "3 days to go");
+        loan = new TempDashBoardModel("Akshay Kumar", "1000", "3 days to go");
         loanList.add(loan);
-        loan = new Loan("Amitabh Bachchan", "1500", "5 days to go");
+        loan = new TempDashBoardModel("Amitabh Bachchan", "1500", "5 days to go");
         loanList.add(loan);
 
 

@@ -68,11 +68,11 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
         TextView accNoTextView;
         @BindView(R.id.transactionDate)
         TextView transactionDate;
-        @BindView(R.id.report_Lent)
+        @BindView(R.id.lentAmt)
         TextView reportLent;
-        @BindView(R.id.report_Earned)
+        @BindView(R.id.earnedAmt)
         TextView reportEarned;
-        @BindView(R.id.report_Balance)
+        @BindView(R.id.balanceAmt)
         TextView reportBalance;
         private SparseBooleanArray selectedItems = new SparseBooleanArray();
 
