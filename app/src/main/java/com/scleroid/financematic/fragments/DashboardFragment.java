@@ -137,11 +137,11 @@ public class DashboardFragment extends Fragment {
 
 
     private void prepareTempDashBoardModelData() {
-        TempDashBoardModel loan = new TempDashBoardModel("Shahrukh Khan", "2000", "2 Days to go");
+        TempDashBoardModel loan = new TempDashBoardModel("Shahrukh Khan", "2000", "5 Feb 2018");
         loanList.add(loan);
-        loan = new TempDashBoardModel("Akshay Kumar", "1000", "3 days to go");
+        loan = new TempDashBoardModel("Akshay Kumar", "1000", "2 Feb 2018");
         loanList.add(loan);
-        loan = new TempDashBoardModel("Amitabh Bachchan", "1500", "5 days to go");
+        loan = new TempDashBoardModel("Amitabh Bachchan", "1500", "1 Feb 2018");
         loanList.add(loan);
 
 
