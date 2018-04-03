@@ -1,4 +1,4 @@
-package com.scleroid.financematic.model.dao;
+package com.scleroid.financematic.model.local.dao;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
@@ -7,7 +7,7 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import com.scleroid.financematic.model.TransactionModel;
+import com.scleroid.financematic.model.local.TransactionModel;
 
 import java.util.List;
 

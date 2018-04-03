@@ -1,4 +1,4 @@
-package com.scleroid.financematic.model.dao;
+package com.scleroid.financematic.model.local.dao;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
@@ -7,7 +7,7 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import com.scleroid.financematic.model.Loan;
+import com.scleroid.financematic.model.local.Expense;
 
 import java.util.List;
 
@@ -26,82 +26,82 @@ import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
  * @author Ganesh Kaple
  * @see android.arch.persistence.room.Room
  * For Model
- * @see Loan
+ * @see Expense
  * @since 10-01-2018
  */
 @Dao
-public interface LoanDao {
+public interface ExpenseDao {
 
     /**
      * Select Query
      *
-     * @return List of all loans in database
+     * @return List of all expenses in database
      */
-    @Query("SELECT * FROM Loan")
-    List<Loan> getAll();
+    @Query("SELECT * FROM Expense")
+    List<Expense> getAll();
 
     /**
-     * Returns  list of all loans
+     * Returns  list of all expenses
      *
-     * @return LiveData object List of all loans in database
+     * @return LiveData object List of all expenses in database
      */
-    @Query("SELECT * FROM Loan")
-    LiveData<List<Loan>> getAllLoansLive();
+    @Query("SELECT * FROM Expense")
+    LiveData<List<Expense>> getAllExpenseLive();
 
     /**
      * Returns a specific value compared to serialNo passed
      *
      * @param serialNo the serialNo of object to be found
-     * @return loan object with same serialNo
+     * @return expense object with same serialNo
      */
-    @Query("SELECT * FROM Loan where accountNo  = :serialNo ")
-    Loan findById(int serialNo);
+    @Query("SELECT * FROM Expense where expenseId = :serialNo ")
+    Expense findById(int serialNo);
 
     /**
-     * select query to count Number of loan
+     * select query to count Number of expense
      *
      * @return number of total entries in the table
      */
-    @Query("SELECT COUNT(*) from Loan")
-    int countLoan();
+    @Query("SELECT COUNT(*) from Expense")
+    int countExpense();
 
     /**
      * Performs insertion operation
      *
-     * @param loan inserts this object in the database
+     * @param expense inserts this object in the database
      */
     @Insert(onConflict = REPLACE)
-    void insert(Loan loan);
+    void insert(Expense expense);
 
     /**
      * Performs insertion operation for multiple values
      *
-     * @param loan inserts list of loan object
+     * @param expense inserts list of expense object
      */
     @Insert
-    void insertAll(Loan... loan);
+    void insertAll(Expense... expense);
 
     /**
      * Updates a specified dataset
      *
-     * @param loan the loan which needs to be updated
+     * @param expense the expense which needs to be updated
      */
     @Update(onConflict = REPLACE)
-    void update(Loan loan);
+    void update(Expense expense);
 
     /**
      * Removes a particular dataset from the database
      *
-     * @param loan the object which needs to be deleted
+     * @param expense the object which needs to be deleted
      */
     @Delete
-    void delete(Loan loan);
+    void delete(Expense expense);
 
     /**
      * Let the database be a part of history
      * I meant, it deletes the whole table
      */
-    @Query("DELETE FROM Loan")
+    @Query("DELETE FROM Expense")
     void nukeTable();
 
 

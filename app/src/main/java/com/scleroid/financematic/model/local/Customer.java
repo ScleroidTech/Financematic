@@ -1,6 +1,7 @@
-package com.scleroid.financematic.model;
+package com.scleroid.financematic.model.local;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
 /**
@@ -9,7 +10,7 @@ import android.arch.persistence.room.PrimaryKey;
  * @author Ganesh Kaple
  * @since 4/2/18
  */
-@Entity
+@Entity(indices = {@Index(value = "_id", unique = true)})
 public class Customer {
     @PrimaryKey(autoGenerate = true)
     private int _id;

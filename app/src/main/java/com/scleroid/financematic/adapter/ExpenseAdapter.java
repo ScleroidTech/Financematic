@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.scleroid.financematic.R;
-import com.scleroid.financematic.model.Expense;
+import com.scleroid.financematic.model.local.Expense;
 import com.scleroid.financematic.utils.CurrencyStringUtils;
 import com.scleroid.financematic.utils.DateUtils;
 

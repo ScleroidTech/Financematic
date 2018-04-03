@@ -6,7 +6,7 @@ import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 
 import com.scleroid.financematic.AppDatabase;
-import com.scleroid.financematic.model.Customer;
+import com.scleroid.financematic.model.local.Customer;
 
 import java.util.List;
 

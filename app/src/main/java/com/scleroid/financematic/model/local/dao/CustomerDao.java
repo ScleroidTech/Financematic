@@ -1,4 +1,4 @@
-package com.scleroid.financematic.model.dao;
+package com.scleroid.financematic.model.local.dao;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
@@ -7,102 +7,97 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import com.scleroid.financematic.model.Expense;
+import com.scleroid.financematic.model.local.Customer;
 
 import java.util.List;
 
 import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 
 /**
+ * Data Access Object required for
+ *
  * Copyright (C) 2018
  *
  * @author Ganesh Kaple
  * @since 4/2/18
- */
-
-/**
- * Data Access Object required for
- *
- * @author Ganesh Kaple
  * @see android.arch.persistence.room.Room
  * For Model
- * @see Expense
+ * @see Customer
  * @since 10-01-2018
  */
 @Dao
-public interface ExpenseDao {
+public interface CustomerDao {
 
     /**
      * Select Query
      *
-     * @return List of all expenses in database
+     * @return List of all customers in database
      */
-    @Query("SELECT * FROM Expense")
-    List<Expense> getAll();
+    @Query("SELECT * FROM Customer")
+    List<Customer> getAll();
 
     /**
-     * Returns  list of all expenses
+     * Returns  list of all customers
      *
-     * @return LiveData object List of all expenses in database
+     * @return LiveData object List of all customers in database
      */
-    @Query("SELECT * FROM Expense")
-    LiveData<List<Expense>> getAllExpenseLive();
+    @Query("SELECT * FROM Customer")
+    LiveData<List<Customer>> getAllCustomerLive();
 
     /**
      * Returns a specific value compared to serialNo passed
      *
      * @param serialNo the serialNo of object to be found
-     * @return expense object with same serialNo
+     * @return customer object with same serialNo
      */
-    @Query("SELECT * FROM Expense where expenseId = :serialNo ")
-    Expense findById(int serialNo);
+    @Query("SELECT * FROM Customer where _id = :serialNo ")
+    Customer findById(int serialNo);
 
     /**
-     * select query to count Number of expense
+     * select query to count Number of customer
      *
      * @return number of total entries in the table
      */
-    @Query("SELECT COUNT(*) from Expense")
-    int countExpense();
+    @Query("SELECT COUNT(*) from Customer")
+    int countCustomer();
 
     /**
      * Performs insertion operation
      *
-     * @param expense inserts this object in the database
+     * @param customer inserts this object in the database
      */
     @Insert(onConflict = REPLACE)
-    void insert(Expense expense);
+    void insert(Customer customer);
 
     /**
      * Performs insertion operation for multiple values
      *
-     * @param expense inserts list of expense object
+     * @param customer inserts list of customer object
      */
     @Insert
-    void insertAll(Expense... expense);
+    void insertAll(Customer... customer);
 
     /**
      * Updates a specified dataset
      *
-     * @param expense the expense which needs to be updated
+     * @param customer the customer which needs to be updated
      */
     @Update(onConflict = REPLACE)
-    void update(Expense expense);
+    void update(Customer customer);
 
     /**
      * Removes a particular dataset from the database
      *
-     * @param expense the object which needs to be deleted
+     * @param customer the object which needs to be deleted
      */
     @Delete
-    void delete(Expense expense);
+    void delete(Customer customer);
 
     /**
      * Let the database be a part of history
      * I meant, it deletes the whole table
      */
-    @Query("DELETE FROM Expense")
+    @Query("DELETE FROM Customer")
     void nukeTable();
-
 
 }

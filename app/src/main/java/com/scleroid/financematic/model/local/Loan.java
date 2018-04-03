@@ -1,7 +1,8 @@
-package com.scleroid.financematic.model;
+package com.scleroid.financematic.model.local;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 
@@ -18,7 +19,8 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
 @Entity(foreignKeys = @ForeignKey(entity = Customer.class,
         parentColumns = "_id",
         childColumns = "custId",
-        onDelete = CASCADE))
+        onDelete = CASCADE),
+        indices = {@Index(value = "accountNo", unique = true)})
 public class Loan {
     /* private String title, genre, year;
      */
