@@ -48,7 +48,7 @@ public class RupeeTextView extends android.support.v7.widget.AppCompatTextView {
             // The comma in the format specifier does the trick
             DecimalFormat formatter = (DecimalFormat) NumberFormat.getInstance(Locale.US);
             formatter.applyPattern("#,##,##,##,###");
-            formattedString = String.format("₹" + formatter.format(Double.parseDouble(text.toString())));  // adds rupee symbol and thousand seperater
+            formattedString = "₹" + formatter.format(Double.parseDouble(text.toString()));  // adds rupee symbol and thousand seperater
         } catch (NumberFormatException e) {
             Timber.e("Rupee TextView NumberFormatException");
             e.printStackTrace();
