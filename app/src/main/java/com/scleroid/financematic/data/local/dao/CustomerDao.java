@@ -55,6 +55,15 @@ public interface CustomerDao {
     Customer getCustomer(int serialNo);
 
     /**
+     * Returns a specific value compared to serialNo passed
+     *
+     * @param serialNo the serialNo of object to be found
+     * @return customer object with same serialNo
+     */
+    @Query("SELECT * FROM Customer where customerId = :serialNo ")
+    LiveData<Customer> getCustomerLive(int serialNo);
+
+    /**
      * Returns no of loans per customer
      *
      * @param custId the id of customer which we need data about
