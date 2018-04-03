@@ -3,9 +3,6 @@ package com.scleroid.financematic.data.local;
 import com.scleroid.financematic.AppDatabase;
 import com.scleroid.financematic.data.local.dao.LoanDao;
 import com.scleroid.financematic.data.local.dao.TransactionModelDao;
-import com.scleroid.financematic.data.local.model.Loan;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -25,7 +22,7 @@ public class DatabaseHelperLoan {
         transactionDao = database.transactionDao();
     }
 
-    public Loan getLoan(int id) {
+ /*   public Loan getLoan(int id) {
         Loan loan = dao.getLoan(id);
         loan.setTransactions(dao.getTransactions(id));
         return loan;
@@ -49,6 +46,6 @@ public class DatabaseHelperLoan {
         for (Loan loan : loans) {
             transactionDao.saveTransactions(loan.getTransactions());
         }
-    }
+    }*/
 
 }
