@@ -20,6 +20,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.scleroid.financematic.data.local.model.Customer;
+import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.fragments.DashboardFragment;
 import com.scleroid.financematic.fragments.ExpenseFragment;
 import com.scleroid.financematic.fragments.LoanDetailsFragment;
@@ -33,9 +35,10 @@ import com.scleroid.financematic.utils.InstantAppExecutors;
 import javax.inject.Inject;
 
 import es.dmoral.toasty.Toasty;
+import io.bloco.faker.Faker;
 
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, GarlandApp.FakerReadyListener {
 
     // tags used to attach the fragments
     private static final String TAG_DASHBOARD = "dashboard";
@@ -395,5 +398,50 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
 
         return true;
+    }
+
+    @Override
+    public void onFakerReady(Faker faker) {
+        populateData(faker);
+
+
+    }
+
+    private void populateData(Faker faker) {
+        int customerId = faker.number.positive();
+        int accountNo = Integer.parseInt(faker.business.creditCardNumber());
+
+    }
+
+    private Customer createCustomerData(Faker faker, int customerId) {
+
+        return new Customer(
+                customerId,
+                faker.name.name(),
+                faker.phoneNumber.phoneNumber(),
+                faker.address.streetAddress(),
+                faker.address.city(),
+                (faker.number.hexadecimal(12)) + "",
+                (byte) faker.number.between(0, 6)
+
+        );
+    }
+
+    private Loan createLoanData(Faker faker, int customerId, int accountNo) {
+
+        return new Loan(
+                faker.commerce.price(5000, 1000000),
+                faker.date.backward(),
+                faker.date.forward(),
+                faker.number.between(1, 100),
+                faker.commerce.price(0, 2000),
+                faker.number.between(1, 20), faker.number.between(0, 20),
+                (byte) faker.number.between(0, 6),
+                faker.commerce.price(6000, 1100000),
+                accountNo,
+                customerId
+
+
+        );
     }
 }
