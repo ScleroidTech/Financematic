@@ -8,6 +8,7 @@ import android.arch.persistence.room.TypeConverters;
 
 import com.scleroid.financematic.utils.DateConverter;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
@@ -28,13 +29,13 @@ public class TransactionModel {
     private int transactionId;
     @TypeConverters(DateConverter.class)
     private Date transactionDate;
-    private int lentAmt;
-    private int gainedAmt;
-    private int receivedAmt;
+    private BigDecimal lentAmt;
+    private BigDecimal gainedAmt;
+    private BigDecimal receivedAmt;
 
     private int loanAcNo;
 
-    public TransactionModel(int transactionId, Date transactionDate, int lentAmt, int gainedAmt, int receivedAmt, int loanAcNo) {
+    public TransactionModel(int transactionId, Date transactionDate, BigDecimal lentAmt, BigDecimal gainedAmt, BigDecimal receivedAmt, int loanAcNo) {
         this.transactionId = transactionId;
         this.transactionDate = transactionDate;
         this.lentAmt = lentAmt;
@@ -68,27 +69,27 @@ public class TransactionModel {
         this.transactionDate = transactionDate;
     }
 
-    public int getLentAmt() {
+    public BigDecimal getLentAmt() {
         return lentAmt;
     }
 
-    public void setLentAmt(int lentAmt) {
+    public void setLentAmt(BigDecimal lentAmt) {
         this.lentAmt = lentAmt;
     }
 
-    public int getGainedAmt() {
+    public BigDecimal getGainedAmt() {
         return gainedAmt;
     }
 
-    public void setGainedAmt(int gainedAmt) {
+    public void setGainedAmt(BigDecimal gainedAmt) {
         this.gainedAmt = gainedAmt;
     }
 
-    public int getReceivedAmt() {
+    public BigDecimal getReceivedAmt() {
         return receivedAmt;
     }
 
-    public void setReceivedAmt(int receivedAmt) {
+    public void setReceivedAmt(BigDecimal receivedAmt) {
         this.receivedAmt = receivedAmt;
     }
 }

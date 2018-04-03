@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.local.model.Loan;
+import com.scleroid.financematic.data.local.model.TransactionModel;
 import com.scleroid.financematic.fragments.DashboardFragment;
 import com.scleroid.financematic.fragments.ExpenseFragment;
 import com.scleroid.financematic.fragments.LoanDetailsFragment;
@@ -436,11 +437,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 faker.number.between(1, 100),
                 faker.commerce.price(0, 2000),
                 faker.number.between(1, 20), faker.number.between(0, 20),
-                (byte) faker.number.between(0, 6),
+                (byte) faker.number.between(0, 9),
                 faker.commerce.price(6000, 1100000),
                 accountNo,
                 customerId
 
+        );
+    }
+
+    private TransactionModel createTransactionData(Faker faker, int accountNo) {
+
+        return new TransactionModel(
+                faker.number.positive(),
+                faker.date.backward(),
+                faker.commerce.price(),
+                faker.commerce.price(),
+                faker.commerce.price(0, 2000),
+                accountNo
 
         );
     }
