@@ -1,6 +1,7 @@
 package com.scleroid.financematic.adapter;
 
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -10,26 +11,26 @@ import android.widget.TextView;
 
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.model.Report;
+import com.scleroid.financematic.utils.DateUtils;
 
 import java.util.List;
 
-/**
- * Created by scleroid on 16/3/18.
- * <p>
- * Created by scleroid on 5/3/18.
- */
-/**
- * Created by scleroid on 5/3/18.
- */
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+
 
 public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHolder> {
 
+
     private List<Report> reportList;
+
 
     public ReportAdapter(List<Report> reportList) {
         this.reportList = reportList;
     }
 
+    @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
@@ -40,23 +41,16 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
         Report report = reportList.get(position);
 
-        holder.passbook_date.setText(report.getReport_Acc_no());
-        holder.passbook_name.setText(report .getReport_Lent());
+        holder.setData(report);
 
-        holder.passbook_taken_money.setText(report.getReport_Interest());
-        holder.passbook_received_money.setText(report.getReport_Earned());
-        holder.report_report_Balance.setText(report.getReport_Balance());
-        if(position %2 == 1)
-        {
+        if (position % 2 == 1) {
             holder.itemView.setBackgroundColor(Color.parseColor("#d5e5f0"));
             //  holder.imageView.setBackgroundColor(Color.parseColor("#FFFFFF"));
-        }
-        else
-        {
+        } else {
             holder.itemView.setBackgroundColor(Color.parseColor("#FFFAF8FD"));
             //  holder.imageView.setBackgroundColor(Color.parseColor("#FFFAF8FD"));
         }
@@ -68,20 +62,35 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
+        DateUtils dateUtils = new DateUtils();
         /* for selecte row and chnage color        implements View.OnClickListener*/
-        public TextView passbook_taken_money, passbook_name, passbook_date, passbook_received_money, report_report_Balance;
+        @BindView(R.id.acc_no_text_view)
+        TextView accNoTextView;
+        @BindView(R.id.transactionDate)
+        TextView transactionDate;
+        @BindView(R.id.lentAmt)
+        TextView reportLent;
+        @BindView(R.id.earnedAmt)
+        TextView reportEarned;
+        @BindView(R.id.balanceAmt)
+        TextView reportBalance;
         private SparseBooleanArray selectedItems = new SparseBooleanArray();
 
         public MyViewHolder(View view) {
             super(view);
-           /* view.setOnClickListener(this);*/
-            passbook_date = view.findViewById(R.id.acc_no_text_view);
-            passbook_name = view.findViewById(R.id.report_Lent);
-            passbook_taken_money = view.findViewById(R.id.report_Interest);
-            passbook_received_money = view.findViewById(R.id.report_Earned);
-            report_report_Balance = view.findViewById(R.id.report_Balance);
+            /* view.setOnClickListener(this);*/
+            ButterKnife.bind(this, view);
 
 
+        }
+
+
+        private void setData(Report report) {
+            accNoTextView.setText(report.getAccNo());
+            transactionDate.setText(dateUtils.getFormattedDate(report.getTransactionDate()));
+            reportLent.setText(report.getLentAmt());
+            reportEarned.setText(report.getEarnedAmt());
+            reportBalance.setText(report.getBalanceAmt());
         }
 
 

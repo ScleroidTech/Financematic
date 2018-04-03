@@ -4,6 +4,8 @@ package com.scleroid.financematic.di;
 import android.app.Application;
 
 import com.scleroid.financematic.App;
+import com.scleroid.financematic.utils.ActivityUtils;
+import com.scleroid.financematic.utils.CurrencyStringUtils;
 import com.scleroid.financematic.utils.DateUtils;
 import com.scleroid.financematic.utils.TextViewUtils;
 
@@ -42,6 +44,11 @@ public interface AppComponent extends AndroidInjector<DaggerApplication> {
     DateUtils getDateUtils();
 
     TextViewUtils getTextViewUtils();
+
+    ActivityUtils getActivityUtils();
+
+    CurrencyStringUtils getCurrencyStringUtils();
+
 
     @Override
     void inject(DaggerApplication instance);

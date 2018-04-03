@@ -6,61 +6,62 @@ package com.scleroid.financematic.model;
  * Created by scleroid on 3/3/18.
  */
 
-/**
- * Created by Lincoln on 15/01/16.
- */
+import java.util.Date;
+
+
 public class Report {
-    private String report_Acc_no, report_Lent, report_Interest,report_Earned,report_Balance;
+    private String accNo, lentAmt, earnedAmt, balanceAmt;
+    private Date transactionDate;
 
     public Report() {
     }
 
-    public Report(String report_Acc_no, String report_Lent, String report_Interest,String report_Earned, String report_Balance) {
-        this.report_Acc_no= report_Acc_no;
-        this.report_Lent= report_Lent;
-        this.report_Interest = report_Interest;
-        this.report_Earned = report_Earned;
-        this.report_Balance=report_Balance;
+    public Report(String accNo, String lentAmt, Date transactionDate, String earnedAmt, String balanceAmt) {
+        this.accNo = accNo;
+        this.lentAmt = lentAmt;
+        this.transactionDate = transactionDate;
+        this.earnedAmt = earnedAmt;
+        this.balanceAmt = balanceAmt;
 
     }
 
-    public String getReport_Acc_no() {
-        return report_Acc_no;
+    public String getAccNo() {
+        return accNo;
     }
 
-    void setReport_Acc_no(String report_Acc_no) {
-        this.report_Acc_no = report_Acc_no;
+    void setAccNo(String accNo) {
+        this.accNo = accNo;
     }
 
-    public String getReport_Lent() {
-        return report_Lent;
+    public String getLentAmt() {
+        return lentAmt;
     }
 
-    void setReport_Lent(String report_Lent) {
-        this.report_Lent = report_Lent;
+    void setLentAmt(String lentAmt) {
+        this.lentAmt = lentAmt;
     }
 
-    public String getReport_Interest() {
-        return report_Interest;
+    public Date getTransactionDate() {
+        return transactionDate;
     }
 
-    void setReport_Interest(String report_Interest) {
-        this.report_Interest = report_Interest;
+    void setTransactionDate(Date transactionDate) {
+        this.transactionDate = transactionDate;
     }
 
-    public String getReport_Earned() {
-        return report_Earned;
+    public String getEarnedAmt() {
+        return earnedAmt;
     }
 
-    void setReport_Earned(String report_Earned) {
-        this.report_Earned = report_Earned;
+    void setEarnedAmt(String earnedAmt) {
+        this.earnedAmt = earnedAmt;
     }
 
-    public String getReport_Balance() {
-        return report_Balance;
+    public String getBalanceAmt() {
+        return balanceAmt;
     }
 
-    void setReport_Balance(String report_Balance) {
-        this.report_Balance = report_Balance;
+    void setBalanceAmt(String balanceAmt) {
+        this.balanceAmt = balanceAmt;
     }
 }
