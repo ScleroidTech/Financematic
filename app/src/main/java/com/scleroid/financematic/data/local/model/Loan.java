@@ -20,7 +20,7 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
  */
 
 @Entity(foreignKeys = @ForeignKey(entity = Customer.class,
-        parentColumns = "_id",
+        parentColumns = "customerId",
         childColumns = "custId",
         onDelete = CASCADE),
         indices = {@Index(value = "accountNo", unique = true)})
