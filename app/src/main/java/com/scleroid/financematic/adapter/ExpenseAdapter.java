@@ -94,7 +94,7 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
 
         public void setData(Context context, Expense expense) {
             setDate(expense.getExpenseDate());
-            expenseAmount.setText(currencyStringUtils.bindNumber(expense.getExpenseAmount()));
+            expenseAmount.setText(currencyStringUtils.bindNumber(expense.getExpenseAmount().intValueExact()));
             byte expenseType = expense.getExpenseType();
             setExpenseType(expenseType, context);
 
