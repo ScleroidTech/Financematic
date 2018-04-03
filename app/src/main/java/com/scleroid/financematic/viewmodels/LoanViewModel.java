@@ -28,7 +28,7 @@ public class LoanViewModel extends AndroidViewModel {
 
     private LiveData<List<Loan>> updateLoanLiveData() {
 
-        LiveData<List<Loan>> loanList = appDatabase.loanDao().getAllLoansLive();
+        LiveData<List<Loan>> loanList = appDatabase.loanDao().getLoansLive();
         return loanList;
     }
 

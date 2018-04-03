@@ -52,7 +52,7 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> 
 
     @Override
     public int getItemCount() {
-        return loanList.size();
+        return loanList2.size();
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder {

@@ -17,15 +17,7 @@
         android:background="#ddd"
         android:orientation="vertical">
 
-  <!--      <SearchView
-            android:id="@+id/simpleSearchView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/shadow"
 
-    />-->
         <android.support.v7.widget.SearchView
             android:id="@+id/simpleSearchView"
             android:layout_width="match_parent"
