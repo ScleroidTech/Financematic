@@ -7,7 +7,10 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.scleroid.financematic.R;
 
+import javax.inject.Inject;
+
 public class ActivityUtils {
+    @Inject
     public ActivityUtils() {
     }//for intend passook
 

@@ -36,7 +36,7 @@ public interface TransactionModelDao {
      * @return LiveData object List of all transactionModels in database
      */
     @Query("SELECT * FROM TransactionModel")
-    LiveData<List<TransactionModel>> getAllTransactionModelLive();
+    LiveData<List<TransactionModel>> getAllTransactionsLive();
 
     /**
      * Returns a specific value compared to serialNo passed
@@ -45,7 +45,7 @@ public interface TransactionModelDao {
      * @return transactionModel object with same serialNo
      */
     @Query("SELECT * FROM TransactionModel where transactionId = :serialNo ")
-    TransactionModel findById(long serialNo);
+    TransactionModel findById(int serialNo);
 
     /**
      * select query to count Number of transactionModel
@@ -53,7 +53,7 @@ public interface TransactionModelDao {
      * @return number of total entries in the table
      */
     @Query("SELECT COUNT(*) from TransactionModel")
-    int countTransactionModel();
+    int countTransaction();
 
     /**
      * Performs insertion operation

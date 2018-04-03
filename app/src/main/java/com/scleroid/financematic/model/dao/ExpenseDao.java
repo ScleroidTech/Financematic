@@ -55,7 +55,7 @@ public interface ExpenseDao {
      * @return expense object with same serialNo
      */
     @Query("SELECT * FROM Expense where expenseId = :serialNo ")
-    Expense findById(long serialNo);
+    Expense findById(int serialNo);
 
     /**
      * select query to count Number of expense
