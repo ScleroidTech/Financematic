@@ -7,6 +7,7 @@ import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 
 import com.scleroid.financematic.utils.DateConverter;
+import com.scleroid.financematic.utils.MoneyConverter;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -29,8 +30,11 @@ public class TransactionModel {
     private int transactionId;
     @TypeConverters(DateConverter.class)
     private Date transactionDate;
+    @TypeConverters(MoneyConverter.class)
     private BigDecimal lentAmt;
+    @TypeConverters(MoneyConverter.class)
     private BigDecimal gainedAmt;
+    @TypeConverters(MoneyConverter.class)
     private BigDecimal receivedAmt;
 
     private int loanAcNo;
