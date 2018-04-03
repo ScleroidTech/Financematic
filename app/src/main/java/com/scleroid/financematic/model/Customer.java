@@ -19,8 +19,6 @@ public class Customer {
     private String idProofNo;
     private String idProofType;
 
-    private int accountNo;
-
     public int get_id() {
         return _id;
     }
@@ -69,11 +67,5 @@ public class Customer {
         this.idProofType = idProofType;
     }
 
-    public int getAccountNo() {
-        return accountNo;
-    }
 
-    public void setAccountNo(int accountNo) {
-        this.accountNo = accountNo;
-    }
 }
