@@ -1,4 +1,4 @@
-package com.scleroid.financematic.model.local.dao;
+package com.scleroid.financematic.data.local.dao;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
@@ -7,7 +7,7 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import com.scleroid.financematic.model.local.TransactionModel;
+import com.scleroid.financematic.data.local.model.TransactionModel;
 
 import java.util.List;
 
@@ -61,7 +61,7 @@ public interface TransactionModelDao {
      * @param transactionModelModel inserts this object in the database
      */
     @Insert(onConflict = REPLACE)
-    void insert(TransactionModel transactionModelModel);
+    void saveTransactions(List<TransactionModel> transactionModelModel);
 
     /**
      * Performs insertion operation for multiple values

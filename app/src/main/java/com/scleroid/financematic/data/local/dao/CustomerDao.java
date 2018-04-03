@@ -1,4 +1,4 @@
-package com.scleroid.financematic.model.local.dao;
+package com.scleroid.financematic.data.local.dao;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
@@ -7,7 +7,8 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import com.scleroid.financematic.model.local.Customer;
+import com.scleroid.financematic.data.local.model.Customer;
+import com.scleroid.financematic.data.local.model.Loan;
 
 import java.util.List;
 
@@ -34,7 +35,7 @@ public interface CustomerDao {
      * @return List of all customers in database
      */
     @Query("SELECT * FROM Customer")
-    List<Customer> getAll();
+    List<Customer> getCustomers();
 
     /**
      * Returns  list of all customers
@@ -50,8 +51,28 @@ public interface CustomerDao {
      * @param serialNo the serialNo of object to be found
      * @return customer object with same serialNo
      */
-    @Query("SELECT * FROM Customer where _id = :serialNo ")
-    Customer findById(int serialNo);
+    @Query("SELECT * FROM Customer where customerId = :serialNo ")
+    Customer getCustomer(int serialNo);
+
+    /**
+     * Returns no of loans per customer
+     *
+     * @param custId the id of customer which we need data about
+     * @return list of loans
+     */
+
+    @Query("SELECT * FROM Loan WHERE custId = :custId")
+    List<Loan> getLoans(int custId);
+
+    /**
+     * Returns no of loans per customer
+     *
+     * @param custId customer id which we need loan about
+     * @return list of loans in a livedata wrapper
+     */
+
+    @Query("SELECT * FROM Loan WHERE custId = :custId")
+    LiveData<List<Loan>> getLoansLive(int custId);
 
     /**
      * select query to count Number of customer
@@ -67,7 +88,7 @@ public interface CustomerDao {
      * @param customer inserts this object in the database
      */
     @Insert(onConflict = REPLACE)
-    void insert(Customer customer);
+    void saveCustomer(Customer customer);
 
     /**
      * Performs insertion operation for multiple values
@@ -75,7 +96,7 @@ public interface CustomerDao {
      * @param customer inserts list of customer object
      */
     @Insert
-    void insertAll(Customer... customer);
+    void saveCustomers(List<Customer> customer);
 
     /**
      * Updates a specified dataset

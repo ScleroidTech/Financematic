@@ -10,7 +10,7 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.scleroid.financematic.R;
-import com.scleroid.financematic.model.List_all_peoples;
+import com.scleroid.financematic.data.List_all_peoples;
 import com.scleroid.financematic.utils.CircleCustomView;
 import com.scleroid.financematic.utils.CustomFilter;
 

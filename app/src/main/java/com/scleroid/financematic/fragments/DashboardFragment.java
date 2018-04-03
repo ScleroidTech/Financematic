@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.adapter.LoanAdapter;
-import com.scleroid.financematic.model.TempDashBoardModel;
+import com.scleroid.financematic.data.TempDashBoardModel;
 import com.scleroid.financematic.utils.ActivityUtils;
 import com.scleroid.financematic.utils.RecyclerTouchListener;
 import com.scleroid.financematic.utils.TextViewUtils;

@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.scleroid.financematic.R;
-import com.scleroid.financematic.model.Report;
+import com.scleroid.financematic.data.Report;
 import com.scleroid.financematic.utils.DateUtils;
 
 import java.util.List;

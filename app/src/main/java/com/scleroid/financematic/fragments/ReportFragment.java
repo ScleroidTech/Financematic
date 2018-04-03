@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.adapter.ReportAdapter;
-import com.scleroid.financematic.model.Report;
+import com.scleroid.financematic.data.Report;
 import com.scleroid.financematic.utils.ActivityUtils;
 import com.scleroid.financematic.utils.DateUtils;
 import com.scleroid.financematic.utils.RecyclerTouchListener;

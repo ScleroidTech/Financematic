@@ -1,4 +1,4 @@
-package com.scleroid.financematic.model.local.dao;
+package com.scleroid.financematic.data.local.dao;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
@@ -7,7 +7,8 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import com.scleroid.financematic.model.local.Loan;
+import com.scleroid.financematic.data.local.model.Loan;
+import com.scleroid.financematic.data.local.model.TransactionModel;
 
 import java.util.List;
 
@@ -38,7 +39,7 @@ public interface LoanDao {
      * @return List of all loans in database
      */
     @Query("SELECT * FROM Loan")
-    List<Loan> getAll();
+    List<Loan> getLoans();
 
     /**
      * Returns  list of all loans
@@ -46,7 +47,7 @@ public interface LoanDao {
      * @return LiveData object List of all loans in database
      */
     @Query("SELECT * FROM Loan")
-    LiveData<List<Loan>> getAllLoansLive();
+    LiveData<List<Loan>> getLoansLive();
 
     /**
      * Returns a specific value compared to serialNo passed
@@ -55,7 +56,7 @@ public interface LoanDao {
      * @return loan object with same serialNo
      */
     @Query("SELECT * FROM Loan where accountNo  = :serialNo ")
-    Loan findById(int serialNo);
+    Loan getLoan(int serialNo);
 
     /**
      * select query to count Number of loan
@@ -71,7 +72,7 @@ public interface LoanDao {
      * @param loan inserts this object in the database
      */
     @Insert(onConflict = REPLACE)
-    void insert(Loan loan);
+    void saveLoan(Loan loan);
 
     /**
      * Performs insertion operation for multiple values
@@ -79,7 +80,7 @@ public interface LoanDao {
      * @param loan inserts list of loan object
      */
     @Insert
-    void insertAll(Loan... loan);
+    void saveLoans(List<Loan> loan);
 
     /**
      * Updates a specified dataset
@@ -103,6 +104,28 @@ public interface LoanDao {
      */
     @Query("DELETE FROM Loan")
     void nukeTable();
+
+
+    /**
+     * Returns no of transactions per loan
+     *
+     * @param accNo the id of loan which we need data about
+     * @return list of transactions per loan
+     */
+
+    @Query("SELECT * FROM TransactionModel WHERE loanAcNo = :accNo")
+    List<TransactionModel> getTransactions(int accNo);
+
+    /**
+     * Returns no of loans per customer
+     *
+     * @param accNo id of the loan which we need data about
+     * @return list of transactions in a livedata wrapper
+     */
+
+    @Query("SELECT * FROM TransactionModel WHERE loanAcNo = :accNo")
+    LiveData<List<TransactionModel>> getTransactionsLive(int accNo);
+
 
 
 }
