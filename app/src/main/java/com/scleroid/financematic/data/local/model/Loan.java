@@ -28,7 +28,7 @@ public class Loan {
      */
 
     @Ignore
-    public static final byte Daily = 0;
+    public static final byte DAILY = 0;
     @Ignore
     public static final byte WEEKLY = 1;
     @Ignore
