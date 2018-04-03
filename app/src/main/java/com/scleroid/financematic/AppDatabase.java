@@ -19,7 +19,7 @@ import com.scleroid.financematic.model.TransactionModel;
 import com.scleroid.financematic.model.dao.CustomerDao;
 import com.scleroid.financematic.model.dao.ExpenseDao;
 import com.scleroid.financematic.model.dao.LoanDao;
-import com.scleroid.financematic.model.dao.TransactionDao;
+import com.scleroid.financematic.model.dao.TransactionModelDao;
 
 /**
  * @author Ganesh Kaple
@@ -79,7 +79,7 @@ public abstract class AppDatabase extends RoomDatabase {
      * @see CustomerDao
      * @see CustomerDao
      */
-    public abstract CustomerDao CustomerDao();
+    public abstract CustomerDao customerDao();
 
     /**
      * Loan Model Data Access Object,
@@ -89,7 +89,7 @@ public abstract class AppDatabase extends RoomDatabase {
      * @see LoanDao
      * @see LoanDao
      */
-    public abstract LoanDao LoanDao();
+    public abstract LoanDao loanDao();
 
     /**
      * Expense Model Data Access Object,
@@ -107,10 +107,10 @@ public abstract class AppDatabase extends RoomDatabase {
      * For Room Library
      *
      * @return returns an object of
-     * @see TransactionDao
-     * @see TransactionDao
+     * @see TransactionModelDao
+     * @see TransactionModelDao
      */
-    public abstract TransactionDao transactionDao();
+    public abstract TransactionModelDao transactionDao();
 
 
 }

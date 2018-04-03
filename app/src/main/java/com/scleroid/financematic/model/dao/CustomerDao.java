@@ -55,7 +55,7 @@ public interface CustomerDao {
      * @return customer object with same serialNo
      */
     @Query("SELECT * FROM Customer where _id = :serialNo ")
-    Customer findById(long serialNo);
+    Customer findById(int serialNo);
 
     /**
      * select query to count Number of customer

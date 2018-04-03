@@ -1,6 +1,9 @@
 package com.scleroid.financematic.utils;
 
+import javax.inject.Inject;
+
 public class CurrencyStringUtils {
+    @Inject
     public CurrencyStringUtils() {
     }
 
