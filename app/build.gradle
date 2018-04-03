@@ -53,6 +53,10 @@ dependencies {
     //   compile "com.google.guava:guava:$rootProject.guavaVersion"
     implementation "android.arch.persistence.room:runtime:$rootProject.roomVersion"
     annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomVersion"
+    implementation "android.arch.lifecycle:extensions:$rootProject.lifecycleVersion"
+    //compile "android.arch.persistence.room:runtime:1.0.0"
+    annotationProcessor "android.arch.lifecycle:compiler:$rootProject.lifecycleVersion"
+   // annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
     //  implementation 'com.wdullaer:materialdatetimepicker:3.5.1'
 
     // gson Library
