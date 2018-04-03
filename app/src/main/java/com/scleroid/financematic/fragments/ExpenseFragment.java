@@ -27,6 +27,7 @@ import com.scleroid.financematic.adapter.ExpenseAdapter;
 import com.scleroid.financematic.data.local.model.Expense;
 import com.scleroid.financematic.utils.RecyclerTouchListener;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -210,17 +211,17 @@ public class ExpenseFragment extends Fragment {
 
 
     private void prepareExpenseData() {
-        Expense expense = new Expense(200, Expense.LIGHT_BILL, new Date("1/6/2018"));
+        Expense expense = new Expense(new BigDecimal(2000), Expense.LIGHT_BILL, new Date(2018, 6, 1));
         expenseList.add(expense);
-        expense = new Expense(42642, Expense.FUEL, new Date("12/3/2018"));
+        expense = new Expense(new BigDecimal(42642), Expense.FUEL, new Date(2018, 3, 12));
         expenseList.add(expense);
-        expense = new Expense(54545, Expense.PAID_SALARIES, new Date("4/15/2018"));
+        expense = new Expense(new BigDecimal(54545), Expense.PAID_SALARIES, new Date(2018, 4, 15));
         expenseList.add(expense);
-        expense = new Expense(2323, Expense.PHONE_BILL, new Date("7/25/2018"));
+        expense = new Expense(new BigDecimal(2323), Expense.PHONE_BILL, new Date(2018, 7, 25));
         expenseList.add(expense);
-        expense = new Expense(12122, Expense.ROOM_RENT, new Date("2/15/2018"));
+        expense = new Expense(new BigDecimal(12122), Expense.ROOM_RENT, new Date(2018, 2, 15));
         expenseList.add(expense);
-        expense = new Expense(45, Expense.OTHER, new Date("4/13/2018"));
+        expense = new Expense(new BigDecimal(4500), Expense.OTHER, new Date(2018, 4, 13));
         expenseList.add(expense);
 
 

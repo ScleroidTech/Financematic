@@ -33,7 +33,7 @@ import com.scleroid.financematic.data.local.model.TransactionModel;
  * It handles creating of the database if it doesn't exists & providing the database object whenever required
  * There are 3 tables in this database,
  */
-@Database(entities = {Customer.class, Loan.class, TransactionModel.class, Expense.class}, version = 1, exportSchema = false)
+@Database(entities = {Customer.class, Loan.class, TransactionModel.class, Expense.class}, version = 2, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     /**
      * Holds the instance of the database
