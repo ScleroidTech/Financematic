@@ -1,4 +1,4 @@
-package com.scleroid.financematic.model;
+package com.scleroid.financematic.data;
 
 /**
  * Copyright (C) 2018

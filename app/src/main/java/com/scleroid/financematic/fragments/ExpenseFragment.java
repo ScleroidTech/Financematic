@@ -24,7 +24,7 @@ import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.adapter.ExpenseAdapter;
-import com.scleroid.financematic.model.Expense;
+import com.scleroid.financematic.data.local.model.Expense;
 import com.scleroid.financematic.utils.RecyclerTouchListener;
 
 import java.util.ArrayList;

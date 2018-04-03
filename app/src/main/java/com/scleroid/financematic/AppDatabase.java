@@ -12,14 +12,14 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
-import com.scleroid.financematic.model.Customer;
-import com.scleroid.financematic.model.Expense;
-import com.scleroid.financematic.model.Loan;
-import com.scleroid.financematic.model.TransactionModel;
-import com.scleroid.financematic.model.dao.CustomerDao;
-import com.scleroid.financematic.model.dao.ExpenseDao;
-import com.scleroid.financematic.model.dao.LoanDao;
-import com.scleroid.financematic.model.dao.TransactionModelDao;
+import com.scleroid.financematic.data.local.dao.CustomerDao;
+import com.scleroid.financematic.data.local.dao.ExpenseDao;
+import com.scleroid.financematic.data.local.dao.LoanDao;
+import com.scleroid.financematic.data.local.dao.TransactionModelDao;
+import com.scleroid.financematic.data.local.model.Customer;
+import com.scleroid.financematic.data.local.model.Expense;
+import com.scleroid.financematic.data.local.model.Loan;
+import com.scleroid.financematic.data.local.model.TransactionModel;
 
 /**
  * @author Ganesh Kaple

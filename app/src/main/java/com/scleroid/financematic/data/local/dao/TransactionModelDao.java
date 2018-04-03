@@ -1,4 +1,4 @@
-package com.scleroid.financematic.model.dao;
+package com.scleroid.financematic.data.local.dao;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
@@ -7,7 +7,7 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import com.scleroid.financematic.model.TransactionModel;
+import com.scleroid.financematic.data.local.model.TransactionModel;
 
 import java.util.List;
 
@@ -61,7 +61,7 @@ public interface TransactionModelDao {
      * @param transactionModelModel inserts this object in the database
      */
     @Insert(onConflict = REPLACE)
-    void insert(TransactionModel transactionModelModel);
+    void saveTransactions(List<TransactionModel> transactionModelModel);
 
     /**
      * Performs insertion operation for multiple values
@@ -93,5 +93,12 @@ public interface TransactionModelDao {
      */
     @Query("DELETE FROM TransactionModel")
     void nukeTable();
+
+    @Query("SELECT * FROM transactionmodel WHERE loanAcNo=:userId")
+    List<TransactionModel> findTrasactionsForLoans(final int userId);
+
+    @Query("SELECT * FROM transactionmodel WHERE loanAcNo=:userId")
+    LiveData<List<TransactionModel>> findLoansForCustomerLive(final int userId);
+
 
 }
