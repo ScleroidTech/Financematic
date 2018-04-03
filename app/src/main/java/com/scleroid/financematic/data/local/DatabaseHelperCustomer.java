@@ -1,7 +1,7 @@
 package com.scleroid.financematic.data.local;
 
+import android.arch.core.util.Function;
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.Transformations;
 
 import com.scleroid.financematic.AppDatabase;
@@ -67,7 +67,8 @@ public class DatabaseHelperCustomer {
     public LiveData<List<Customer>> getCustomers() {
         LiveData<List<Customer>> customerLiveData = dao.getAllCustomerLive();
 
-        customerLiveData = Transformations.switchMap(customerLiveData, inputCustomers -> {
+       /* TODO Test this, if works remove below code, this part has performance issues
+       customerLiveData = Transformations.switchMap(customerLiveData, inputCustomers -> {
             MediatorLiveData<List<Customer>> customerMediatorLiveData = new MediatorLiveData<>();
             for (Customer customer : inputCustomers) {
                 customerMediatorLiveData.addSource(dao.getLoansLive(customer.getCustomerId()), loans -> {
@@ -77,6 +78,17 @@ public class DatabaseHelperCustomer {
                 });
             }
             return customerMediatorLiveData;
+        });
+        return customerLiveData;*/
+        customerLiveData = Transformations.map(customerLiveData, new Function<List<Customer>, List<Customer>>() {
+
+            @Override
+            public List<Customer> apply(final List<Customer> inputStates) {
+                for (Customer state : inputStates) {
+                    state.setLoans(dao.getLoans(state.getCustomerId()));
+                }
+                return inputStates;
+            }
         });
         return customerLiveData;
     }

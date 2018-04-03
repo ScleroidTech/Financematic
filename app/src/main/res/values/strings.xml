@@ -27,4 +27,7 @@
     <string name="available_amount_title">Available</string>
     <string name="lent_amount">Lent</string>
     <string name="upcoming_events">Upcoming</string>
+
+    <string name="Rs">\u20B9</string>
+    <string name="rs">\u20A8</string>
 </resources>

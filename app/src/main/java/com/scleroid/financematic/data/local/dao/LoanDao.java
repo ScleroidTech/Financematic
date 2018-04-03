@@ -126,6 +126,13 @@ public interface LoanDao {
     @Query("SELECT * FROM TransactionModel WHERE loanAcNo = :accNo")
     LiveData<List<TransactionModel>> getTransactionsLive(int accNo);
 
+    @Query("SELECT * FROM loan WHERE custId=:userId")
+    List<Loan> findLoansForCustomer(final int userId);
+
+    @Query("SELECT * FROM loan WHERE custId=:userId")
+    LiveData<List<Loan>> findLoansForCustomerLive(final int userId);
+
+
 
 
 }

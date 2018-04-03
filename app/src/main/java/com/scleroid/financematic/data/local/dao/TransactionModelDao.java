@@ -94,4 +94,11 @@ public interface TransactionModelDao {
     @Query("DELETE FROM TransactionModel")
     void nukeTable();
 
+    @Query("SELECT * FROM transactionmodel WHERE loanAcNo=:userId")
+    List<TransactionModel> findTrasactionsForLoans(final int userId);
+
+    @Query("SELECT * FROM transactionmodel WHERE loanAcNo=:userId")
+    LiveData<List<TransactionModel>> findLoansForCustomerLive(final int userId);
+
+
 }
