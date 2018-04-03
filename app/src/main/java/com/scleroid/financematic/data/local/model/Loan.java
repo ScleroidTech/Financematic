@@ -8,6 +8,7 @@ import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 
 import com.scleroid.financematic.utils.DateConverter;
+import com.scleroid.financematic.utils.MoneyConverter;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -46,17 +47,19 @@ public class Loan {
     @Ignore
     public static final byte ONE_TIME = 8;
 
-
+    @TypeConverters(MoneyConverter.class)
     private BigDecimal loanAmt;
     @TypeConverters(DateConverter.class)
     private Date startDate;
     @TypeConverters(DateConverter.class)
     private Date endDate;
     private float rateOfInterest;
+    @TypeConverters(MoneyConverter.class)
     private BigDecimal amtOfInterest;
     private int noOfInstallments;
     private int duration;
     private byte installmentType;
+    @TypeConverters(MoneyConverter.class)
     private BigDecimal repayAmt;
     @PrimaryKey
     private int accountNo;

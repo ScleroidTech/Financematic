@@ -6,7 +6,9 @@ import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 
 import com.scleroid.financematic.utils.DateConverter;
+import com.scleroid.financematic.utils.MoneyConverter;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity(indices = {@Index(value = "expenseId", unique = true)})
@@ -18,7 +20,8 @@ public class Expense {
     public static final byte PAID_SALARIES = 4;
     public static final byte FUEL = 5;
 
-    private int expenseAmount;
+    @TypeConverters(MoneyConverter.class)
+    private BigDecimal expenseAmount;
     private byte expenseType;
     @TypeConverters(DateConverter.class)
     private Date expenseDate;
@@ -26,7 +29,7 @@ public class Expense {
     @PrimaryKey(autoGenerate = true)
     private int expenseId;
 
-    public Expense(int expenseAmount, byte expenseType, Date expenseDate) {
+    public Expense(BigDecimal expenseAmount, byte expenseType, Date expenseDate) {
 
         this.expenseAmount = expenseAmount;
         this.expenseType = expenseType;
@@ -42,11 +45,11 @@ public class Expense {
         this.expenseId = expenseId;
     }
 
-    public int getExpenseAmount() {
+    public BigDecimal getExpenseAmount() {
         return expenseAmount;
     }
 
-    public void setExpenseAmount(int expenseAmount) {
+    public void setExpenseAmount(BigDecimal expenseAmount) {
         this.expenseAmount = expenseAmount;
     }
 
