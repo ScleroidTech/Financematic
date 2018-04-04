@@ -153,9 +153,7 @@ public class ReportFragment extends Fragment implements
         ArrayAdapter<? extends String> spinnerList = new ArrayAdapter<>(Objects.requireNonNull(getActivity()).getApplicationContext(), android.R.layout.simple_spinner_item, filterSuggestions);
         spinnerList.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerFilter.setAdapter(spinnerList);
-        spinnerFilter.setOnItemClickListener((parent, view, position, id) -> {
 
-        });
 
     }
 

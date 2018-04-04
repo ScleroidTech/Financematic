@@ -13,6 +13,7 @@ import com.scleroid.financematic.R;
 import com.scleroid.financematic.data.List_all_peoples;
 import com.scleroid.financematic.utils.CircleCustomView;
 import com.scleroid.financematic.utils.CustomFilter;
+import com.scleroid.financematic.utils.RupeeTextView;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -71,7 +72,8 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView list_person_name, list_total_loan, list_received_amount;
+        public TextView list_person_name;
+        public RupeeTextView list_total_loan, list_received_amount;
         @BindView(R.id.payment_circle_view)
         CircleCustomView paymentCircleView;
         @BindView(R.id.person_name_text_view)
@@ -79,11 +81,11 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
         @BindView(R.id.total_amount_title_text_view)
         TextView totalAmountTitleTextView;
         @BindView(R.id.total_loan_text_view)
-        TextView totalLoanTextView;
+        RupeeTextView totalLoanTextView;
         @BindView(R.id.received_amount_title_text_view)
         TextView receivedAmountTitleTextView;
         @BindView(R.id.received_amount_text_view)
-        TextView receivedAmountTextView;
+        RupeeTextView receivedAmountTextView;
         @BindView(R.id.percentage_pie_chart_text_view)
         TextView percentagePieChartTextView;
 
