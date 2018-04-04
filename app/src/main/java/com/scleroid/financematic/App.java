@@ -29,11 +29,11 @@ public class App extends DaggerApplication {
             Timber.plant(new Timber.DebugTree());
         }
 
-        DaggerAppComponent
+      /*  DaggerAppComponent
                 .builder()
                 .application(this)
                 .build()
-                .inject(this);
+                .inject(this);*/
 
         //    JobManagerFactory.getJobManager(this);
     }
@@ -44,7 +44,7 @@ public class App extends DaggerApplication {
                 .builder()
                 .application(this)
                 .build();
-        appComponent.inject(this);
+        // appComponent.inject(this);
 
         return appComponent;
     }
