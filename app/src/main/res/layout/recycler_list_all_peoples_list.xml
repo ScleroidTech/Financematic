@@ -72,7 +72,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
 
-                <com.scleroid.financematic.utils.RupeeTextViewTextView
+                <com.scleroid.financematic.utils.RupeeTextView
                     android:id="@+id/total_loan_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

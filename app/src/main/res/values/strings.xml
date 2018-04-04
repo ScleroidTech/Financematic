@@ -30,4 +30,13 @@
 
     <string name="Rs">\u20B9</string>
     <string name="rs">\u20A8</string>
+
+
+
+    <string name="transition_background" translatable="false">background</string>
+    <string name="transition_avatar_border" translatable="false">avatar_border</string>
+    <string name="transition_card" translatable="false">card</string>
+
+    <string name="transition_list" translatable="false">list</string>
+    <string name="location">Location</string>
 </resources>

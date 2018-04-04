@@ -27,6 +27,7 @@ import com.scleroid.financematic.fragments.DashboardFragment;
 import com.scleroid.financematic.fragments.ExpenseFragment;
 import com.scleroid.financematic.fragments.LoanDetailsFragment;
 import com.scleroid.financematic.fragments.PeopleFragment;
+import com.scleroid.financematic.fragments.ProfileFragment;
 import com.scleroid.financematic.fragments.RegisterCustomerFragment;
 import com.scleroid.financematic.fragments.ReportFragment;
 import com.scleroid.financematic.utils.ActivityUtils;
@@ -314,7 +315,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // user is in notifications fragment
         // and selected 'Mark all as Read'
         if (id == R.id.action_notification) {
-            LoanDetailsFragment fragment = new LoanDetailsFragment();
+            ProfileFragment fragment = new ProfileFragment();
             loadFragment(fragment);
         }
 
