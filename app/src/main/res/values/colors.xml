@@ -19,6 +19,8 @@
     <color name="card_color">#93944f</color>
     <color name="gray_text">#9c9c9c</color>
     <color name="black_text">#a000</color>
+    <color name="text_profile">#aab4ba</color>
+    <color name="tint_profile">#f95b2a</color>
 
     <color name="report_table">#0fa8bc</color>
 
@@ -35,6 +37,7 @@
 
     <color name="backgroundTop">#444a5a</color>
     <color name="header_green">#b3d577</color>
+    <color name="header_green1">#66c693</color>
     <color name="details_name_color">#333333</color>
     <color name="item_info_color">#bdc5cc</color>
     <color name="item_name_color">#aab4ba</color>
