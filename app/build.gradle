@@ -110,6 +110,8 @@ dependencies {
 
     implementation 'com.annimon:stream:1.1.9'
 
+    compile "com.google.guava:guava:$rootProject.guavaVersion"
+
 }
 
 

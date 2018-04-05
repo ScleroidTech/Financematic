@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 
 import com.scleroid.financematic.AppDatabase;
 import com.scleroid.financematic.data.local.model.Customer;
+import com.scleroid.financematic.data.todoCode.LoanRepository;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class CustomerViewModel extends AndroidViewModel {
 
     private AppDatabase appDatabase;
 
-    public CustomerViewModel(@NonNull Application application) {
+    public CustomerViewModel(@NonNull Application application, LoanRepository mLoanRepository) {
         super(application);
 
         appDatabase = AppDatabase.getAppDatabase(this.getApplication());

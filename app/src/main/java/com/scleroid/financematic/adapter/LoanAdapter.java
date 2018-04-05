@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.scleroid.financematic.R;
-import com.scleroid.financematic.data.TempDashBoardModel;
 import com.scleroid.financematic.data.local.model.Loan;
+import com.scleroid.financematic.data.tempModels.TempDashBoardModel;
 import com.scleroid.financematic.utils.CurrencyStringUtils;
 
 import java.util.List;

@@ -3,7 +3,7 @@ package com.scleroid.financematic.utils;
 import android.widget.Filter;
 
 import com.scleroid.financematic.adapter.PeopleAdapter;
-import com.scleroid.financematic.data.List_all_peoples;
+import com.scleroid.financematic.data.tempModels.List_all_peoples;
 
 import java.util.ArrayList;
 import java.util.List;

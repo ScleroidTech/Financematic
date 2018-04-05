@@ -7,6 +7,8 @@ package com.scleroid.financematic.data.todoCode;
  * @since 4/4/18
  */
 
+import com.scleroid.financematic.data.DataSource;
+
 import javax.inject.Singleton;
 
 /**
@@ -14,7 +16,7 @@ import javax.inject.Singleton;
  */
 
 @Singleton
-public class TasksRemoteDataSource implements TasksDataSource {
+public class RemoteDataSource implements DataSource {
 /*
     private static final int SERVICE_LATENCY_IN_MILLIS = 5000;
 
@@ -26,7 +28,7 @@ public class TasksRemoteDataSource implements TasksDataSource {
         addTask("Finish bridge in Tacoma", "Found awesome girders at half the cost!");
     }
 
-    public TasksRemoteDataSource() {}
+    public RemoteDataSource() {}
 
     private static void addTask(String title, String description) {
         Task newTask = new Task(title, description);
@@ -82,7 +84,7 @@ public class TasksRemoteDataSource implements TasksDataSource {
 
     @Override
     public void completeTask(@NonNull String taskId) {
-        // Not required for the remote data source because the {@link TasksRepository} handles
+        // Not required for the remote data source because the {@link LoanRepository} handles
         // converting from a {@code taskId} to a {@link task} using its cached data.
     }
 
@@ -94,7 +96,7 @@ public class TasksRemoteDataSource implements TasksDataSource {
 
     @Override
     public void activateTask(@NonNull String taskId) {
-        // Not required for the remote data source because the {@link TasksRepository} handles
+        // Not required for the remote data source because the {@link LoanRepository} handles
         // converting from a {@code taskId} to a {@link task} using its cached data.
     }
 
@@ -111,7 +113,7 @@ public class TasksRemoteDataSource implements TasksDataSource {
 
     @Override
     public void refreshTasks() {
-        // Not required because the {@link TasksRepository} handles the logic of refreshing the
+        // Not required because the {@link LoanRepository} handles the logic of refreshing the
         // tasks from all the available data sources.
     }
 

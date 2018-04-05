@@ -1,4 +1,4 @@
-package com.scleroid.financematic.data;
+package com.scleroid.financematic.data.tempModels;
 
 /**
  * Created by scleroid on 6/3/18.
@@ -9,6 +9,7 @@ public class List_all_peoples {
     int list_received_amoun;
     int list_total_loan;
     private String list_person_name;
+
     public List_all_peoples() {
     }
 

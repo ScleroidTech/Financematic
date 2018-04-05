@@ -1,12 +1,10 @@
-package com.scleroid.financematic.data;
+package com.scleroid.financematic.data.tempModels;
 
 import java.util.Date;
 
 /**
  * Created by scleroid on 6/3/18.
  */
-
-
 
 
 public class Personal_summery_loan_details {

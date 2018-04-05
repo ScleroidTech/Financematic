@@ -1,29 +1,30 @@
-package com.scleroid.financematic.data;
+package com.scleroid.financematic.data.tempModels;
 
 /**
  * Created by scleroid on 5/3/18.
  */
 
 
-
 public class Passbook {
-    private String passbook_date,passbook_name ,passbook_taken_money,passbook_received_money;
+    private String passbook_date, passbook_name, passbook_taken_money, passbook_received_money;
 
     public Passbook() {
     }
 
-    public Passbook(String passbook_date, String passbook_name, String passbook_taken_money,String passbook_received_money) {
+    public Passbook(String passbook_date, String passbook_name, String passbook_taken_money, String passbook_received_money) {
         this.passbook_date = passbook_date;
-        this.passbook_name= passbook_name;
-        this.passbook_taken_money= passbook_taken_money;
-        this.passbook_received_money=passbook_received_money;
+        this.passbook_name = passbook_name;
+        this.passbook_taken_money = passbook_taken_money;
+        this.passbook_received_money = passbook_received_money;
     }
 
     public String getPassbook_date() {
         return passbook_date;
     }
 
-    void setPassbook_date(String passbook_date) {this.passbook_date = passbook_date;}
+    void setPassbook_date(String passbook_date) {
+        this.passbook_date = passbook_date;
+    }
 
     public String getPassbook_name() {
         return passbook_name;

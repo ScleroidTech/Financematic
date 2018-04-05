@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.scleroid.financematic.R;
-import com.scleroid.financematic.data.Passbook;
+import com.scleroid.financematic.data.tempModels.Passbook;
 
 import java.util.List;
 

@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.adapter.PeopleAdapter;
-import com.scleroid.financematic.data.List_all_peoples;
+import com.scleroid.financematic.data.tempModels.List_all_peoples;
 import com.scleroid.financematic.utils.ActivityUtils;
 import com.scleroid.financematic.utils.RecyclerTouchListener;
 

@@ -35,6 +35,7 @@ import com.scleroid.financematic.utils.InstantAppExecutors;
 
 import javax.inject.Inject;
 
+import dagger.android.AndroidInjection;
 import es.dmoral.toasty.Toasty;
 import io.bloco.faker.Faker;
 
@@ -109,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     protected void onCreate(Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 

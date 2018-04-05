@@ -7,13 +7,15 @@ package com.scleroid.financematic.data.todoCode;
  * @since 4/4/18
  */
 
+import com.scleroid.financematic.data.DataSource;
+
 import javax.inject.Singleton;
 
 /**
  * Concrete implementation of a data source as a db.
  */
 @Singleton
-public class LocalDataSource implements TasksDataSource {
+public class LocalDataSource implements DataSource {
 
  /*   private final TasksDao mTasksDao;
 
@@ -105,7 +107,7 @@ public class LocalDataSource implements TasksDataSource {
 
     @Override
     public void completeTask(@NonNull String taskId) {
-        // Not required for the local data source because the {@link TasksRepository} handles
+        // Not required for the local data source because the {@link LoanRepository} handles
         // converting from a {@code taskId} to a {@link task} using its cached data.
     }
 
@@ -122,7 +124,7 @@ public class LocalDataSource implements TasksDataSource {
 
     @Override
     public void activateTask(@NonNull String taskId) {
-        // Not required for the local data source because the {@link TasksRepository} handles
+        // Not required for the local data source because the {@link LoanRepository} handles
         // converting from a {@code taskId} to a {@link task} using its cached data.
     }
 
@@ -141,7 +143,7 @@ public class LocalDataSource implements TasksDataSource {
 
     @Override
     public void refreshTasks() {
-        // Not required because the {@link TasksRepository} handles the logic of refreshing the
+        // Not required because the {@link LoanRepository} handles the logic of refreshing the
         // tasks from all the available data sources.
     }
 
