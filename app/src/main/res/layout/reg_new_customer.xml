@@ -11,10 +11,11 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" android:background="#fff"
-            android:layout_marginTop="50dp">
+            android:layout_marginTop="50dp"
+           >
 
 
-            <!-- Registration Form -->
+            <!--  Registration Form -->
             <LinearLayout
                 xmlns:android="http://schemas.android.com/apk/res/android"
 
@@ -27,21 +28,186 @@
                 <!-- Full Name Label -->            <LinearLayout android:id="@+id/header"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/header_gradient"
+                android:background="#0fa8bc"
                 android:paddingTop="5dip"
                 android:paddingBottom="5dip">
                 <TextView android:id="@+id/reg_fullname2"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dip"
+
                     android:singleLine="true"
                     android:textColor="@color/white"
                     android:text="New Customer Fill Details"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textAlignment="center"/>
                 <!-- Logo Ends -->
             </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="10dp">
 
+                    <TextView
+
+
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+
+                        android:layout_weight=".7"
+                        android:text="Full Name"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textSize="18sp" />
+
+                    <EditText
+
+                        android:id="@+id/coustomer_Name_EditText"
+                        android:layout_width="0dp"
+                        android:maxLines="1"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".7"
+                        android:background="@drawable/shadow"
+                        android:paddingBottom="6dp"
+
+                        android:paddingTop="6dp" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="10dp">
+
+                    <TextView
+
+
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+
+                        android:layout_weight=".7"
+                        android:text="Mobile Number"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textSize="18sp" />
+
+                    <EditText
+
+                        android:id="@+id/Mobile_Number_EditText"
+                        android:layout_width="0dp"
+                        android:maxLines="1"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".7"
+                        android:background="@drawable/shadow"
+                        android:paddingBottom="6dp"
+
+                        android:paddingTop="6dp" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="10dp">
+
+                    <TextView
+
+
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+
+                        android:layout_weight=".7"
+                        android:text="Address"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textSize="18sp" />
+
+                    <EditText
+
+                        android:id="@+id/Address_EditText"
+                        android:layout_width="0dp"
+                        android:maxLines="1"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".7"
+                        android:background="@drawable/shadow"
+                        android:paddingBottom="6dp"
+
+                        android:paddingTop="6dp" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="10dp">
+
+                    <TextView
+
+
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+
+                        android:layout_weight=".7"
+                        android:text="Loan Number"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textSize="18sp" />
+
+                    <EditText
+
+                        android:id="@+id/Loan_number_EditText"
+                        android:layout_width="0dp"
+                        android:maxLines="1"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".7"
+                        android:background="@drawable/shadow"
+                        android:paddingBottom="6dp"
+
+                        android:paddingTop="6dp" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="10dp">
+
+                    <TextView
+
+
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+
+                        android:layout_weight=".7"
+                        android:text="Id proof no"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textSize="18sp" />
+
+                    <EditText
+
+                        android:id="@+id/IDproofno"
+                        android:layout_width="0dp"
+                        android:maxLines="1"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".7"
+                        android:background="@drawable/shadow"
+                        android:paddingBottom="6dp"
+
+                        android:paddingTop="6dp" />
+
+                </LinearLayout>
+<!--
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/Name_EditText_layout"
                     android:layout_width="match_parent"
@@ -124,7 +290,7 @@
                 </android.support.design.widget.TextInputLayout>
 
 
-
+-->
 
                <!-- <Button android:id="@+id/btn_new_customer_Register"
                     android:layout_width="fill_parent"
@@ -139,15 +305,16 @@
                     android:background="@drawable/header_gradient" />-->
                 <Button android:id="@+id/btn_new_customer_Register1"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dip"
+                    android:layout_height="33dp"
+                    android:layout_marginTop="10dp"
                     android:text="next"
+                    android:textSize="16dp"
                     android:textColor="@color/white"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
 
-                    android:layout_marginBottom="20dp"
-                    android:background="@drawable/header_gradient" />
+                    android:layout_marginBottom="10dp"
+                    android:background="#0fa8bc" />
                 <TextView
                     android:id="@+id/display"
 
@@ -162,6 +329,7 @@
 
             </LinearLayout>
             <!-- Registration Form Ends -->
+
         </RelativeLayout>
 
 

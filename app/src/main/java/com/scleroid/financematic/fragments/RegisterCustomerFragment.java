@@ -1,12 +1,12 @@
 package com.scleroid.financematic.fragments;
 
 import android.os.Bundle;
-import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.scleroid.financematic.R;
@@ -27,7 +27,7 @@ public class RegisterCustomerFragment extends Fragment {
     TextView tv;
     Button firstFragment;
     private Button b;
-    private TextInputEditText etname, etmobile, etAddress, etLoan_number, etIDproofno;
+    private EditText etname, etmobile, etAddress, etLoan_number, etIDproofno;
 
     private ActivityUtils activityUtils = new ActivityUtils();
 

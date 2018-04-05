@@ -30,7 +30,7 @@
                     android:id="@+id/header"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/header_gradient"
+                    android:background="#0fa8bc"
                     android:paddingBottom="5dip"
                     android:paddingTop="5dip">
 
@@ -38,12 +38,12 @@
                         android:id="@+id/reg_fullname_detaills"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dip"
+
                         android:singleLine="true"
-                        android:text="Customer Name(Given Loan)"
+                        android:text="Customer Name"
                         android:textAlignment="center"
                         android:textColor="@color/white"
-                        android:textSize="20sp" />
+                        android:textSize="16sp" />
                     <!-- Logo Ends -->
                 </LinearLayout>
 
@@ -68,12 +68,15 @@
                         android:textSize="18sp" />
 
                     <EditText
+
                         android:id="@+id/txloan_amout"
                         android:layout_width="0dp"
+                        android:maxLines="1"
                         android:layout_height="wrap_content"
                         android:layout_weight=".7"
                         android:background="@drawable/shadow"
                         android:paddingBottom="6dp"
+
                         android:paddingTop="6dp" />
 
                 </LinearLayout>
@@ -239,10 +242,10 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="2dp"
                     android:orientation="horizontal"
-                    android:paddingBottom="5dp"
+                    android:paddingBottom="2dp"
                     android:paddingRight="10dp">
 
                     <TextView
@@ -323,7 +326,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="10dip"
-                    android:background="@drawable/header_gradient"
+                    android:background="#0fa8bc"
 
                     android:text="Submit"
                     android:textColor="@color/white" />
