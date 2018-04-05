@@ -111,6 +111,8 @@ dependencies {
     implementation 'com.annimon:stream:1.1.9'
 
     compile "com.google.guava:guava:$rootProject.guavaVersion"
+    compile 'com.google.code.gson:gson:2.8.2'
+    compileOnly    "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
 
 }
 

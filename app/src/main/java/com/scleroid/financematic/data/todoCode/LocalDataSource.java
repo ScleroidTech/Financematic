@@ -7,8 +7,10 @@ package com.scleroid.financematic.data.todoCode;
  * @since 4/4/18
  */
 
+import com.scleroid.financematic.AppExecutors;
 import com.scleroid.financematic.data.DataSource;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
@@ -17,7 +19,7 @@ import javax.inject.Singleton;
 @Singleton
 public class LocalDataSource implements DataSource {
 
- /*   private final TasksDao mTasksDao;
+    private final TasksDao mTasksDao;
 
     private final AppExecutors mAppExecutors;
 
@@ -27,10 +29,10 @@ public class LocalDataSource implements DataSource {
         mAppExecutors = executors;
     }
 
-    *//**
+    /*
      * Note: {@link LoadTasksCallback#onDataNotAvailable()} is fired if the database doesn't exist
      * or the table is empty.
-     *//*
+     */
     @Override
     public void getTasks(@NonNull final LoadTasksCallback callback) {
         Runnable runnable = new Runnable() {
@@ -54,10 +56,7 @@ public class LocalDataSource implements DataSource {
         mAppExecutors.diskIO().execute(runnable);
     }
 
-    *//**
-     * Note: {@link GetTaskCallback#onDataNotAvailable()} is fired if the {@link Task} isn't
-     * found.
-     *//*
+
     @Override
     public void getTask(@NonNull final String taskId, @NonNull final GetTaskCallback callback) {
         Runnable runnable = new Runnable() {
@@ -169,5 +168,5 @@ public class LocalDataSource implements DataSource {
         };
 
         mAppExecutors.diskIO().execute(deleteRunnable);
-    }*/
+    }
 }

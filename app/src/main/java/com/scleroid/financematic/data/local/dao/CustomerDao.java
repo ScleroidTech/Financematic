@@ -27,6 +27,7 @@ import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
  * @since 10-01-2018
  */
 @Dao
+
 public interface CustomerDao {
 
     /**

@@ -20,7 +20,7 @@ import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
  * @since 4/2/18
  */
 @Dao
-public interface TransactionModelDao {
+public interface TransactionDao {
 
     /**
      * Select Query
