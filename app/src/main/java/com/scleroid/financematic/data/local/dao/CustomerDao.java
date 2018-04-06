@@ -8,7 +8,6 @@ import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
 import com.scleroid.financematic.data.local.model.Customer;
-import com.scleroid.financematic.data.local.model.Loan;
 
 import java.util.List;
 
@@ -64,26 +63,26 @@ public interface CustomerDao {
     @Query("SELECT * FROM Customer where customerId = :serialNo ")
     LiveData<Customer> getCustomerLive(int serialNo);
 
-    /**
+    /* *//**
      * Returns no of loans per customer
      *
      * @param custId the id of customer which we need data about
      * @return list of loans
-     */
+     *//*
 
     @Query("SELECT * FROM Loan WHERE custId = :custId")
     List<Loan> getLoans(int custId);
 
-    /**
+    *//**
      * Returns no of loans per customer
      *
      * @param custId customer id which we need loan about
      * @return list of loans in a livedata wrapper
-     */
+     *//*
 
     @Query("SELECT * FROM Loan WHERE custId = :custId")
     LiveData<List<Loan>> getLoansLive(int custId);
-
+*/
     /**
      * select query to count Number of customer
      *
@@ -98,7 +97,7 @@ public interface CustomerDao {
      * @param customer inserts this object in the database
      */
     @Insert(onConflict = REPLACE)
-    void saveCustomer(Customer customer);
+    long saveCustomer(Customer customer);
 
     /**
      * Performs insertion operation for multiple values
@@ -106,7 +105,7 @@ public interface CustomerDao {
      * @param customer inserts list of customer object
      */
     @Insert
-    void saveCustomers(List<Customer> customer);
+    long saveCustomers(List<Customer> customer);
 
     /**
      * Updates a specified dataset

@@ -8,7 +8,7 @@ package com.scleroid.financematic.data.todoCode;
  */
 
 import com.google.common.collect.Lists;
-import com.scleroid.financematic.data.DataSource;
+import com.scleroid.financematic.data.local.LocalDataSource;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -20,7 +20,7 @@ import javax.inject.Singleton;
  */
 
 @Singleton
-public class RemoteDataSource implements DataSource {
+public class RemoteLocalDataSource implements LocalDataSource {
     private static final int SERVICE_LATENCY_IN_MILLIS = 5000;
 
     private final static Map<String, Task> TASKS_SERVICE_DATA;
@@ -31,7 +31,8 @@ public class RemoteDataSource implements DataSource {
         addTask("Finish bridge in Tacoma", "Found awesome girders at half the cost!");
     }
 
-    public RemoteDataSource() {}
+    public RemoteLocalDataSource() {
+    }
 
     private static void addTask(String title, String description) {
         Task newTask = new Task(title, description);

@@ -1,4 +1,4 @@
-package com.scleroid.financematic.data;
+package com.scleroid.financematic.data.local;
 
 /**
  * Copyright (C) 2018
@@ -7,9 +7,13 @@ package com.scleroid.financematic.data;
  * @since 4/4/18
  */
 
+import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 
 import java.util.List;
+
+import io.reactivex.Completable;
+import io.reactivex.Single;
 
 /**
  * Main entry point for accessing Items data.
@@ -19,43 +23,36 @@ import java.util.List;
  * a new Item is created, it's synchronously stored in cache but usually every operation on database
  * or network should be executed in a different thread.
  */
-public interface DataSource<T> {
+public interface LocalDataSource<T> {
 
     /**
      * gets a list of all items
      *
-     * @param callback callback upon receiving the data
      */
-    void getItems(@NonNull LoadCallback callback);
+    LiveData<List<T>> getItems();
 
     /**
      * gets a single item provided by id
      *
-     * @param ItemId   the id of the item to be get
-     * @param callback callback receiving upon data
+     * @param itemId   the id of the item to be get
+
      */
-    void getItem(int ItemId, @NonNull GetCallback callback);
+    LiveData<T> getItem(int itemId);
 
     /**
      * Saves item to data source
      *
      * @param item item object to be saved
      */
-    void saveItem(@NonNull T item);
+    Single<T> saveItem(@NonNull T item);
 
-    /**
-     * adds a new item to the data source
-     *
-     * @param item object to be added in the database
-     */
-    void addItem(@NonNull T item);
 
     /**
      * adds a list of objects to the data source
      *
      * @param items list of items
      */
-    void addItems(@NonNull List<T> items);
+    Completable addItems(@NonNull List<T> items);
 
     /**
      * refreshes the data source
@@ -65,46 +62,48 @@ public interface DataSource<T> {
     /**
      * Deletes all the data source
      */
-    void deleteAllItems();
+    Completable deleteAllItems();
 
     /**
      * deletes a single item from the database
      *
      * @param itemId id of item to be deleted
      */
-    void deleteItem(int itemId);
+    Completable deleteItem(int itemId);
 
     /**
      * deletes a single item from the database
      *
      * @param item item to be deleted
      */
-    void deleteItem(@NonNull T item);
+    Completable deleteItem(@NonNull T item);
 
-    /**
+    /*Not using Callback anymore
+     *
+     * *//**
      * Callback for getItems
      *
      * @param <T>
-     */
+     *//*
     interface LoadCallback<T> {
 
-        void onLoaded(List<T> items);
+        void onLoaded(LiveData<List<T>> items);
 
         void onDataNotAvailable();
     }
 
 
-    /**
+    *//**
      * CallBack for getItem
      *
      * @param <T>
-     */
+     *//*
     interface GetCallback<T> {
 
-        default void onLoaded(T item) {
+        default void onLoaded(LiveData<T> item) {
 
         }
 
         void onDataNotAvailable();
-    }
+    }*/
 }

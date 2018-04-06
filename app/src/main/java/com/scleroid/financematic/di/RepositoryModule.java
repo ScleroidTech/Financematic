@@ -38,12 +38,12 @@ abstract public class RepositoryModule {
   /*  @Singleton
     @Binds
     @Local
-    abstract DataSource provideTasksLocalDataSource(TasksLocalDataSource dataSource);
+    abstract LocalDataSource provideTasksLocalDataSource(LocalLocalDataSource dataSource);
 
     @Singleton
     @Binds
     @Remote
-    abstract DataSource provideTasksRemoteDataSource(FakeTasksRemoteDataSource dataSource);
+    abstract LocalDataSource provideTasksRemoteDataSource(FakeTasksRemoteDataSource dataSource);
 
 */
     @Singleton

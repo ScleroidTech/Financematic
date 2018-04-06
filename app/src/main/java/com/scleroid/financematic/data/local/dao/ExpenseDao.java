@@ -72,7 +72,7 @@ public interface ExpenseDao {
      * @param expense inserts this object in the database
      */
     @Insert(onConflict = REPLACE)
-    void saveExpense(Expense expense);
+    long saveExpense(Expense expense);
 
     /**
      * Performs insertion operation for multiple values
@@ -80,7 +80,7 @@ public interface ExpenseDao {
      * @param expense inserts list of expense object
      */
     @Insert
-    void saveExpenses(List<Expense> expense);
+    long saveExpenses(List<Expense> expense);
 
     /**
      * Updates a specified dataset

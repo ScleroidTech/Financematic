@@ -73,7 +73,7 @@ public interface LoanDao {
      * @param loan inserts this object in the database
      */
     @Insert(onConflict = REPLACE)
-    void saveLoan(Loan loan);
+    long saveLoan(Loan loan);
 
     /**
      * Performs insertion operation for multiple values
@@ -81,7 +81,7 @@ public interface LoanDao {
      * @param loan inserts list of loan object
      */
     @Insert
-    void saveLoans(List<Loan> loan);
+    long saveLoans(List<Loan> loan);
 
     /**
      * Updates a specified dataset

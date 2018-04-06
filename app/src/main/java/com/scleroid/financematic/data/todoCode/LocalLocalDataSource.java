@@ -8,7 +8,6 @@ package com.scleroid.financematic.data.todoCode;
  */
 
 import com.scleroid.financematic.AppExecutors;
-import com.scleroid.financematic.data.DataSource;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -17,14 +16,14 @@ import javax.inject.Singleton;
  * Concrete implementation of a data source as a db.
  */
 @Singleton
-public class LocalDataSource implements DataSource {
+public class LocalLocalDataSource implements com.scleroid.financematic.data.local.LocalDataSource {
 
     private final TasksDao mTasksDao;
 
     private final AppExecutors mAppExecutors;
 
     @Inject
-    public TasksLocalDataSource(@NonNull AppExecutors executors, @NonNull TasksDao tasksDao) {
+    public LocalLocalDataSource(@NonNull AppExecutors executors, @NonNull TasksDao tasksDao) {
         mTasksDao = tasksDao;
         mAppExecutors = executors;
     }
