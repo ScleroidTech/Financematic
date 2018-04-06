@@ -29,7 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * This is used by Dagger to inject the required arguments into the {@link }.
  */
-@Module
+@Module(includes = ViewModelModule.class)
 abstract public class RepositoryModule {
 
     private static final int THREAD_COUNT = 3;

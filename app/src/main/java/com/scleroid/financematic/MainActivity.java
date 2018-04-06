@@ -36,11 +36,14 @@ import com.scleroid.financematic.utils.InstantAppExecutors;
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
 import es.dmoral.toasty.Toasty;
 import io.bloco.faker.Faker;
 
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, GarlandApp.FakerReadyListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, GarlandApp.FakerReadyListener, HasSupportFragmentInjector {
 
     // tags used to attach the fragments
     private static final String TAG_DASHBOARD = "dashboard";
@@ -56,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static String CURRENT_TAG = TAG_DASHBOARD;
 
     @Inject
-    ActivityUtils activityUtils = new ActivityUtils();
+    ActivityUtils activityUtils;
     @Inject
     AppExecutors appExecutors;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -458,5 +461,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 accountNo
 
         );
+    }
+
+    @Inject
+    DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
+
+    /**
+     * Returns an {@link AndroidInjector} of {@link Fragment}s.
+     */
+    @Override
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return fragmentDispatchingAndroidInjector;
     }
 }

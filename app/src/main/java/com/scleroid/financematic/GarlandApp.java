@@ -1,5 +1,6 @@
 package com.scleroid.financematic;
 
+import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 
 import java.lang.ref.WeakReference;
@@ -45,6 +46,7 @@ public class GarlandApp extends App {
      * Initializes the faker object,
      * It is then used to generate fake or temporary data,
      */
+    @SuppressLint("CheckResult")
     private void initFaker() {
         /**
          * Uses RxJava Subscriber pattern to get single value at a time  on Faker object
