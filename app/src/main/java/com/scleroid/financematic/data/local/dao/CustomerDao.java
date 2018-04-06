@@ -53,7 +53,7 @@ public interface CustomerDao {
      * @return customer object with same serialNo
      */
     @Query("SELECT * FROM Customer where customerId = :serialNo ")
-    Customer getCustomer(int serialNo);
+    LiveData<Customer> getCustomer(int serialNo);
 
     /**
      * Returns a specific value compared to serialNo passed

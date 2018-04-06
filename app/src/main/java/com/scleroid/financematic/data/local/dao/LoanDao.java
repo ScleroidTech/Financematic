@@ -30,8 +30,8 @@ import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
  * @see Loan
  * @since 10-01-2018
  */
-@Dao
 
+@Dao
 public interface LoanDao {
 
     /**
@@ -57,7 +57,7 @@ public interface LoanDao {
      * @return loan object with same serialNo
      */
     @Query("SELECT * FROM Loan where accountNo  = :serialNo ")
-    Loan getLoan(int serialNo);
+    LiveData<Loan> getLoan(int serialNo);
 
     /**
      * select query to count Number of loan
@@ -128,10 +128,10 @@ public interface LoanDao {
     LiveData<List<TransactionModel>> getTransactionsLive(int accNo);
 
     @Query("SELECT * FROM loan WHERE custId=:userId")
-    List<Loan> findLoansForCustomer(final int userId);
+    List<Loan> getLoansForCustomer(final int userId);
 
     @Query("SELECT * FROM loan WHERE custId=:userId")
-    LiveData<List<Loan>> findLoansForCustomerLive(final int userId);
+    LiveData<List<Loan>> getLoansForCustomerLive(final int userId);
 
 
 

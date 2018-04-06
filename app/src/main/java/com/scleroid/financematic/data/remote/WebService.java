@@ -1,9 +1,12 @@
 package com.scleroid.financematic.data.remote;
 
+import android.arch.lifecycle.LiveData;
+
 import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.local.model.Loan;
 
-import retrofit2.Call;
+import java.util.List;
+
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
@@ -16,12 +19,18 @@ import retrofit2.http.Path;
 public interface WebService {
     //TODO Replace with actual api
     @GET("/users/{customer}")
-    Call<Customer> getCustomer(@Path("customer") String customerId);
+    LiveData<ApiResponse<Customer>> getCustomer(@Path("customer") int customerId);
+
+    @GET("/users/{customer}")
+    LiveData<ApiResponse<List<Customer>>> getCustomers();
 
     @GET("/users/{loan}")
-    Call<Loan> getLoan(@Path("loan") String loanId);
+    LiveData<ApiResponse<Loan>> getLoan(@Path("loan") int loanId);
 
     @GET("/users/")
-    Call<Loan> getLoans();
+    LiveData<ApiResponse<List<Loan>>> getLoans();
+
+    @GET("/users/")
+    LiveData<ApiResponse<List<Loan>>> getLoans(int customerId);
 
 }

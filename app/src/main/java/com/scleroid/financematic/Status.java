@@ -1,13 +1,12 @@
 package com.scleroid.financematic;
 
+
 /**
  * Copyright (C) 2018
  *
  * @author Ganesh Kaple
  * @since 4/5/18
- */
-
-/**
+ *
  * Status of a resource that is provided to the UI.
  * <p>
  * These are usually created by the Repository classes where they return {@code
