@@ -114,6 +114,17 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.2'
     compileOnly    "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
 
+    // Priority Job Queue
+    implementation "com.birbit:android-priority-jobqueue:$project.priorityJobQueueVersion"
+
+    //GCM Network Manager
+    implementation "com.google.android.gms:play-services-gcm:$project.playServicesVersion"
+
+    // OkHttp Logging Interceptor
+    implementation "com.squareup.okhttp3:okhttp:$project.okHttpVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$project.okHttpVersion"
+
+
 }
 
 
