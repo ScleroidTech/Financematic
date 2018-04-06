@@ -63,38 +63,7 @@ public class ExpenseRepo {
         this.appExecutors = appExecutors;
     }
 
-    public LiveData<Resource<List<Expense>>> loadExpensesForCustomer(int customerId) {
-        return new NetworkBoundResource<List<Expense>, List<Expense>>(appExecutors) {
-            @Override
-            protected void onFetchFailed() {
-                expenseListRateLimit.reset(customerId + "");
-            }
 
-            @Override
-            protected void saveCallResult(@NonNull List<Expense> item) {
-                expenseDao.saveExpenses(item);
-            }
-
-            @Override
-            protected boolean shouldFetch(@Nullable List<Expense> data) {
-                return data == null || data.isEmpty() || expenseListRateLimit.shouldFetch(customerId + "");
-            }
-
-            @NonNull
-            @Override
-            protected LiveData<List<Expense>> loadFromDb() {
-                return expenseDao.getExpensesForCustomerLive(customerId);
-            }
-
-            @NonNull
-            @Override
-            protected LiveData<ApiResponse<List<Expense>>> createCall() {
-                return webService.getExpenses(customerId);
-            }
-
-
-        }.asLiveData();
-    }
 
     public LiveData<Resource<List<Expense>>> loadExpenses() {
         return new NetworkBoundResource<List<Expense>, List<Expense>>(appExecutors) {
@@ -113,7 +82,7 @@ public class ExpenseRepo {
             @NonNull
             @Override
             protected LiveData<List<Expense>> loadFromDb() {
-                return expenseDao.getExpensesLive();
+                return expenseDao.getAllExpenseLive();
             }
 
             @NonNull
@@ -130,7 +99,7 @@ public class ExpenseRepo {
     }
 
 
-    public LiveData<Resource<Expense>> loadExpense(int acNo) {
+    public LiveData<Resource<Expense>> loadExpense(int expenseNo) {
         return new NetworkBoundResource<Expense, Expense>(appExecutors) {
             @Override
             protected void saveCallResult(@NonNull Expense item) {
@@ -144,14 +113,14 @@ public class ExpenseRepo {
 
             @NonNull
             @Override
-            protected LiveData<Expense> loadFromDb() {
-                return expenseDao.getExpense(acNo);
+            protected LiveData<ApiResponse<Expense>> createCall() {
+                return webService.getExpense(expenseNo);
             }
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<Expense>> createCall() {
-                return webService.getExpense(acNo);
+            protected LiveData<Expense> loadFromDb() {
+                return expenseDao.getExpense(expenseNo);
             }
         }.asLiveData();
     }

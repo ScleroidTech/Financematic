@@ -56,7 +56,7 @@ public interface ExpenseDao {
      * @return expense object with same serialNo
      */
     @Query("SELECT * FROM Expense where expenseId = :serialNo ")
-    Expense findById(int serialNo);
+    LiveData<Expense> getExpense(int serialNo);
 
     /**
      * select query to count Number of expense
@@ -72,7 +72,7 @@ public interface ExpenseDao {
      * @param expense inserts this object in the database
      */
     @Insert(onConflict = REPLACE)
-    void insert(Expense expense);
+    void saveExpense(Expense expense);
 
     /**
      * Performs insertion operation for multiple values
@@ -80,7 +80,7 @@ public interface ExpenseDao {
      * @param expense inserts list of expense object
      */
     @Insert
-    void insertAll(Expense... expense);
+    void saveExpenses(List<Expense> expense);
 
     /**
      * Updates a specified dataset

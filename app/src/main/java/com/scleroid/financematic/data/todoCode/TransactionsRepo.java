@@ -8,7 +8,6 @@ import com.scleroid.financematic.AppDatabase;
 import com.scleroid.financematic.AppExecutors;
 import com.scleroid.financematic.Resource;
 import com.scleroid.financematic.data.local.dao.TransactionDao;
-import com.scleroid.financematic.data.local.model.Transaction;
 import com.scleroid.financematic.data.local.model.TransactionModel;
 import com.scleroid.financematic.data.remote.ApiResponse;
 import com.scleroid.financematic.data.remote.WebService;
@@ -64,11 +63,11 @@ public class TransactionsRepo {
         this.appExecutors = appExecutors;
     }
 
-    public LiveData<Resource<List<TransactionModel>>> loadTransactionsForCustomer(int customerId) {
+    public LiveData<Resource<List<TransactionModel>>> loadTransactionsForLoan(int loanAcNo) {
         return new NetworkBoundResource<List<TransactionModel>, List<TransactionModel>>(appExecutors) {
             @Override
             protected void onFetchFailed() {
-                transactionListRateLimit.reset(customerId + "");
+                transactionListRateLimit.reset(loanAcNo + "");
             }
 
             @Override
@@ -76,22 +75,24 @@ public class TransactionsRepo {
                 transactionDao.saveTransactions(item);
             }
 
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<List<TransactionModel>>> createCall() {
+                return webService.getTransactionsForLoan(loanAcNo);
+            }
+
             @Override
             protected boolean shouldFetch(@Nullable List<TransactionModel> data) {
-                return data == null || data.isEmpty() || transactionListRateLimit.shouldFetch(customerId + "");
+                return data == null || data.isEmpty() || transactionListRateLimit.shouldFetch(loanAcNo + "");
             }
 
             @NonNull
             @Override
             protected LiveData<List<TransactionModel>> loadFromDb() {
-                return transactionDao.getTransactionsForCustomerLive(customerId);
+                return transactionDao.getTransactionsForLoanLive(loanAcNo);
             }
 
-            @NonNull
-            @Override
-            protected LiveData<ApiResponse<List<TransactionModel>>> createCall() {
-                return webService.getTransactions(customerId);
-            }
+
 
 
         }.asLiveData();
@@ -114,12 +115,12 @@ public class TransactionsRepo {
             @NonNull
             @Override
             protected LiveData<List<TransactionModel>> loadFromDb() {
-                return transactionDao.getTransactionsLive();
+                return transactionDao.getAllTransactionsLive();
             }
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<List<Transaction>>> createCall() {
+            protected LiveData<ApiResponse<List<TransactionModel>>> createCall() {
                 return webService.getTransactions();
             }
 
@@ -131,7 +132,7 @@ public class TransactionsRepo {
     }
 
 
-    public LiveData<Resource<TransactionModel>> loadTransaction(int acNo) {
+    public LiveData<Resource<TransactionModel>> loadTransaction(int transactionNo) {
         return new NetworkBoundResource<TransactionModel, TransactionModel>(appExecutors) {
             @Override
             protected void saveCallResult(@NonNull TransactionModel item) {
@@ -146,13 +147,13 @@ public class TransactionsRepo {
             @NonNull
             @Override
             protected LiveData<TransactionModel> loadFromDb() {
-                return transactionDao.getTransaction(acNo);
+                return transactionDao.getTransaction(transactionNo);
             }
 
             @NonNull
             @Override
             protected LiveData<ApiResponse<TransactionModel>> createCall() {
-                return webService.getTransaction(acNo);
+                return webService.getTransaction(transactionNo);
             }
         }.asLiveData();
     }
@@ -161,4 +162,4 @@ public class TransactionsRepo {
 
 
 
-}
+

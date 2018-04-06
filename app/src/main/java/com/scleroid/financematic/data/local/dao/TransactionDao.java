@@ -45,7 +45,7 @@ public interface TransactionDao {
      * @return transactionModel object with same serialNo
      */
     @Query("SELECT * FROM TransactionModel where transactionId = :serialNo ")
-    TransactionModel findById(int serialNo);
+    LiveData<TransactionModel> getTransaction(int serialNo);
 
     /**
      * select query to count Number of transactionModel
@@ -62,6 +62,15 @@ public interface TransactionDao {
      */
     @Insert(onConflict = REPLACE)
     void saveTransactions(List<TransactionModel> transactionModelModel);
+
+    /**
+     * Performs insertion operation
+     *
+     * @param transactionModelModel inserts this object in the database
+     */
+    @Insert(onConflict = REPLACE)
+    void saveTransaction(TransactionModel transactionModelModel);
+
 
     /**
      * Performs insertion operation for multiple values
@@ -95,10 +104,10 @@ public interface TransactionDao {
     void nukeTable();
 
     @Query("SELECT * FROM transactionmodel WHERE loanAcNo=:userId")
-    List<TransactionModel> findTrasactionsForLoans(final int userId);
+    List<TransactionModel> getTransactionsForLoan(final int userId);
 
     @Query("SELECT * FROM transactionmodel WHERE loanAcNo=:userId")
-    LiveData<List<TransactionModel>> findLoansForCustomerLive(final int userId);
+    LiveData<List<TransactionModel>> getTransactionsForLoanLive(final int userId);
 
 
 }
