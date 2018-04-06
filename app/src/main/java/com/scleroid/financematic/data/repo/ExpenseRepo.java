@@ -1,4 +1,4 @@
-package com.scleroid.financematic.data.todoCode;
+package com.scleroid.financematic.data.repo;
 
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
@@ -64,10 +64,14 @@ public class ExpenseRepo {
     }
 
 
-
     public LiveData<Resource<List<Expense>>> loadExpenses() {
         return new NetworkBoundResource<List<Expense>, List<Expense>>(appExecutors) {
             String key = Math.random() + "";
+
+            @Override
+            protected void onFetchFailed() {
+                expenseListRateLimit.reset(key + "");
+            }
 
             @Override
             protected void saveCallResult(@NonNull List<Expense> item) {
@@ -91,10 +95,7 @@ public class ExpenseRepo {
                 return webService.getExpenses();
             }
 
-            @Override
-            protected void onFetchFailed() {
-                expenseListRateLimit.reset(key + "");
-            }
+
         }.asLiveData();
     }
 

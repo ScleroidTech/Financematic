@@ -1,5 +1,5 @@
 
-package com.scleroid.financematic.data.todoCode;
+package com.scleroid.financematic.data.repo;
 
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;

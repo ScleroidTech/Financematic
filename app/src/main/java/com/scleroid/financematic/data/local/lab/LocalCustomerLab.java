@@ -1,4 +1,4 @@
-package com.scleroid.financematic.data.local.repo;
+package com.scleroid.financematic.data.local.lab;
 
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
@@ -6,8 +6,8 @@ import android.support.annotation.NonNull;
 import com.scleroid.financematic.AppDatabase;
 import com.scleroid.financematic.AppExecutors;
 import com.scleroid.financematic.data.local.LocalDataSource;
-import com.scleroid.financematic.data.local.dao.ExpenseDao;
-import com.scleroid.financematic.data.local.model.Expense;
+import com.scleroid.financematic.data.local.dao.CustomerDao;
+import com.scleroid.financematic.data.local.model.Customer;
 
 import java.util.List;
 
@@ -23,40 +23,39 @@ import timber.log.Timber;
  * @author Ganesh Kaple
  * @since 4/5/18
  */
-public class LocalExpenseRepo implements LocalDataSource<Expense> {
+public class LocalCustomerLab implements LocalDataSource<Customer> {
     private final AppDatabase appDatabase;
     private final AppExecutors appExecutors;
-    private final ExpenseDao expenseDao;
+    private final CustomerDao customerDao;
 
     @Inject
-    private LocalExpenseRepo(final AppDatabase appDatabase, final AppExecutors appExecutors) {
+    private LocalCustomerLab(final AppDatabase appDatabase, final AppExecutors appExecutors) {
         this.appDatabase = appDatabase;
         this.appExecutors = appExecutors;
-        this.expenseDao = appDatabase.expenseDao();
+        this.customerDao = appDatabase.customerDao();
     }
-
 
     /**
      * gets a list of all items
      */
     @Override
-    public LiveData<List<Expense>> getItems() {
+    public LiveData<List<Customer>> getItems() {
         /* Alternate Method for same purpose
         Runnable runnable = () -> {
-            final LiveData<List<Expense>> expenses= expenseDao.getAllExpenseLive();
+            final LiveData<List<Customer>> customers= customerDao.getAllCustomerLive();
             appExecutors.mainThread().execute(() -> {
-                if (expenses.getValue().isEmpty()){
+                if (customers.getValue().isEmpty()){
                     callback.onDataNotAvailable();
                 }
-                else callback.onLoaded(expenses);
+                else callback.onLoaded(customers);
             });
 
 
         };
         appExecutors.diskIO().execute(runnable);*/
 
-        Timber.d("getting all expenses");
-        return expenseDao.getAllExpenseLive();
+        Timber.d("getting all customers");
+        return customerDao.getAllCustomerLive();
     }
 
     /**
@@ -65,9 +64,9 @@ public class LocalExpenseRepo implements LocalDataSource<Expense> {
      * @param itemId the id of the item to be get
      */
     @Override
-    public LiveData<Expense> getItem(final int itemId) {
-        Timber.d("getting expense with id %d", itemId);
-        return expenseDao.getExpense(itemId);
+    public LiveData<Customer> getItem(final int itemId) {
+        Timber.d("getting customer with id %d", itemId);
+        return customerDao.getCustomer(itemId);
     }
 
     /**
@@ -76,12 +75,12 @@ public class LocalExpenseRepo implements LocalDataSource<Expense> {
      * @param item item object to be saved
      */
     @Override
-    public Single<Expense> saveItem(@NonNull final Expense item) {
-        Timber.d("creating new expense ");
+    public Single<Customer> saveItem(@NonNull final Customer item) {
+        Timber.d("creating new customer ");
 
         return Single.fromCallable(() -> {
-            long rowId = expenseDao.saveExpense(item);
-            Timber.d("expense stored " + rowId);
+            long rowId = customerDao.saveCustomer(item);
+            Timber.d("customer stored " + rowId);
             return item;
         });
     }
@@ -93,12 +92,12 @@ public class LocalExpenseRepo implements LocalDataSource<Expense> {
      * @param items list of items
      */
     @Override
-    public Completable addItems(@NonNull final List<Expense> items) {
-        Timber.d("creating new expense ");
+    public Completable addItems(@NonNull final List<Customer> items) {
+        Timber.d("creating new customer ");
 
         return Completable.fromAction(() -> {
-            long rowId = expenseDao.saveExpenses(items);
-            Timber.d("expense stored " + rowId);
+            long rowId = customerDao.saveCustomers(items);
+            Timber.d("customer stored " + rowId);
         });
     }
 
@@ -115,8 +114,8 @@ public class LocalExpenseRepo implements LocalDataSource<Expense> {
      */
     @Override
     public Completable deleteAllItems() {
-        Timber.d("Deleting all expenses");
-        return Completable.fromAction(() -> expenseDao.nukeTable());
+        Timber.d("Deleting all customers");
+        return Completable.fromAction(() -> customerDao.nukeTable());
 
     }
 
@@ -127,9 +126,9 @@ public class LocalExpenseRepo implements LocalDataSource<Expense> {
      */
     @Override
     public Completable deleteItem(final int itemId) {
-        Timber.d("deleting expense with id %d", itemId);
+        Timber.d("deleting customer with id %d", itemId);
 
-        return Completable.fromAction(() -> expenseDao.delete(expenseDao.getExpense(itemId).getValue()));
+        return Completable.fromAction(() -> customerDao.delete(customerDao.getCustomer(itemId).getValue()));
     }
 
     /**
@@ -138,9 +137,9 @@ public class LocalExpenseRepo implements LocalDataSource<Expense> {
      * @param item item to be deleted
      */
     @Override
-    public Completable deleteItem(@NonNull final Expense item) {
-        Timber.d("deleting expense with id %d", item.getExpenseId());
+    public Completable deleteItem(@NonNull final Customer item) {
+        Timber.d("deleting customer with id %d", item.getCustomerId());
 
-        return Completable.fromAction(() -> expenseDao.delete(item));
+        return Completable.fromAction(() -> customerDao.delete(item));
     }
 }

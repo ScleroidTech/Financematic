@@ -1,8 +1,8 @@
 package com.scleroid.financematic.data;
 
-import com.scleroid.financematic.data.local.repo.LocalCustomerRepo;
-import com.scleroid.financematic.data.local.repo.LocalExpenseRepo;
-import com.scleroid.financematic.data.local.repo.LocalLoanRepo;
+import com.scleroid.financematic.data.local.lab.LocalCustomerLab;
+import com.scleroid.financematic.data.local.lab.LocalExpenseLab;
+import com.scleroid.financematic.data.local.lab.LocalLoanLab;
 
 /**
  * Copyright (C) 2018
@@ -12,9 +12,9 @@ import com.scleroid.financematic.data.local.repo.LocalLoanRepo;
  */
 public interface Repository {
 
-    LocalCustomerRepo customerData();
+    LocalCustomerLab customerData();
 
-    LocalExpenseRepo expenseData();
+    LocalExpenseLab expenseData();
 
-    LocalLoanRepo loanData();
+    LocalLoanLab loanData();
 }
