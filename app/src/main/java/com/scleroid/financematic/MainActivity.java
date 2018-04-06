@@ -44,7 +44,7 @@ import io.bloco.faker.Faker;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, GarlandApp.FakerReadyListener, HasSupportFragmentInjector {
-
+    //TODO Refactor repeating code, look at  android-mvvm-architecture for ideas, its by mind-dorks
     // tags used to attach the fragments
     private static final String TAG_DASHBOARD = "dashboard";
     private static final String TAG_NEW_CUSTOMER = "new_customer";
@@ -100,10 +100,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         return false;
     };
-    private Toolbar toolbar;
     private DrawerLayout drawer;
     private NavigationView navigationView;
-    private BottomNavigationView bottomNavigationView;
     private String[] activityTitles;
 
 
@@ -118,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
 
-        toolbar = findViewById(R.id.toolbar);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 
@@ -155,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         /*    toolbar = getSupportActionBar();*/
 
-        bottomNavigationView = findViewById(R.id.navigation);
+        final BottomNavigationView bottomNavigationView = findViewById(R.id.navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
 
