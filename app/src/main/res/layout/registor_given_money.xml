@@ -13,6 +13,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="55dp"
+            android:paddingBottom="70dp"
             android:background="#fff">
 
 
@@ -21,6 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
+
 
                 android:background="@drawable/shadow"
                 android:orientation="vertical">
@@ -57,7 +59,7 @@
 
                     <TextView
 
-
+                        android:textColor="#409bbf"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -68,7 +70,7 @@
                         android:textSize="18sp" />
 
                     <EditText
-
+                        android:textColor="#409bbf"
                         android:id="@+id/txloan_amout"
                         android:layout_width="0dp"
                         android:maxLines="1"
@@ -91,7 +93,7 @@
 
                     <TextView
 
-
+                        android:textColor="#409bbf"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -102,14 +104,15 @@
                         android:textSize="17sp" />
 
                     <EditText
+                        android:textColor="#409bbf"
                         android:id="@+id/txStartDate"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight=".7"
 
                         android:background="@drawable/shadow"
-                        android:drawableEnd="@drawable/ic_date_range_black_24dp"
-                        android:drawableRight="@drawable/ic_date_range_black_24dp"
+                        android:drawableEnd="@drawable/calender_custom"
+                        android:drawableRight="@drawable/calender_custom"
                         android:paddingBottom="6dp"
                         android:paddingRight="15dp"
                         android:paddingTop="6dp" />
@@ -126,7 +129,7 @@
 
                     <TextView
 
-
+                        android:textColor="#409bbf"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -137,14 +140,15 @@
                         android:textSize="17sp" />
 
                     <EditText
+                        android:textColor="#409bbf"
                         android:id="@+id/txEndDate"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight=".7"
 
                         android:background="@drawable/shadow"
-                        android:drawableEnd="@drawable/ic_date_range_black_24dp"
-                        android:drawableRight="@drawable/ic_date_range_black_24dp"
+                        android:drawableEnd="@drawable/calender_custom"
+                        android:drawableRight="@drawable/calender_custom"
                         android:paddingBottom="6dp"
                         android:paddingRight="15dp"
                         android:paddingTop="6dp" />
@@ -159,17 +163,19 @@
                     android:paddingRight="10dp">
 
                     <TextView
+                        android:textColor="#409bbf"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="8dp"
 
                         android:layout_weight=".7"
-                        android:text=" rate of Interest"
+                        android:text="Rate of Interest"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textSize="17sp" />
 
                     <EditText
+                        android:textColor="#409bbf"
                         android:id="@+id/txrateInterest"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -191,6 +197,7 @@
                     android:paddingRight="10dp">
 
                     <TextView
+                        android:textColor="#409bbf"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -201,6 +208,7 @@
                         android:textSize="17sp" />
 
                     <EditText
+                        android:textColor="#409bbf"
                         android:id="@+id/txInterestAmount"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -220,6 +228,7 @@
                     android:paddingRight="10dp">
 
                     <TextView
+                        android:textColor="#409bbf"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -230,6 +239,7 @@
                         android:textSize="17sp" />
 
                     <EditText
+                        android:textColor="#409bbf"
                         android:id="@+id/txNoofInstallment"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -249,37 +259,40 @@
                     android:paddingRight="10dp">
 
                     <TextView
+                        android:textColor="#409bbf"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-
+android:layout_gravity="center_vertical"
                         android:layout_weight=".7"
                         android:text="Installment duration "
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textSize="17sp" />
 
-                    <EditText
-                        android:id="@+id/txInstallmentduration"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".2"
-                        android:background="@drawable/shadow"
-                        android:paddingBottom="6dp"
-                        android:paddingTop="6dp" />
-
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/shadow5"
-                        android:paddingLeft="10dp"
-                        android:paddingTop="10dp">
+                        android:layout_weight=".85"                     android:layout_width="0dp"
+                        android:layout_height="45dp"
+                    android:gravity="right" android:background="@drawable/shadow7"
+                        android:paddingTop="7dp"
+                        android:paddingBottom="5dp"
+                        >
+                    <EditText
+                        android:textColor="#409bbf"     android:id="@+id/txInstallmentduration"
+                        android:layout_width="45dp"
+                        android:layout_height="33dp"
+
+                        android:layout_gravity="left" android:background="@drawable/shadow"
+                      />
+
 
                         <Spinner
                             android:id="@+id/spinnertx"
-                            android:layout_width="wrap_content"
+                            android:textColor="#409bbf"    android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="right"
-                            android:layout_weight=".7"></Spinner>
+                            android:layout_gravity="left"
+
+                            android:paddingTop="2dp"
+                        ></Spinner>
 
                     </LinearLayout>
 
@@ -295,8 +308,7 @@
                     android:paddingRight="10dp">
 
                     <TextView
-
-
+                        android:textColor="#409bbf"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -307,11 +319,12 @@
                         android:textSize="17sp" />
 
                     <EditText
+                        android:textColor="#409bbf"
                         android:id="@+id/txTotalLoanAmount"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight=".7"
-                        android:background="@drawable/shadow"
+                       android:layout_marginBottom="10dp" android:background="@drawable/shadow"
                         android:paddingBottom="6dp"
                         android:paddingTop="6dp" />
 
@@ -321,13 +334,13 @@
                 <Button
                     android:id="@+id/btn_givenmoney"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
+                    android:layout_height="32dp"
+                    android:layout_marginBottom="1dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dip"
+                    android:layout_marginTop="1dip"
                     android:background="#0fa8bc"
-
+android:textSize="16sp"
                     android:text="Submit"
                     android:textColor="@color/white" />
 

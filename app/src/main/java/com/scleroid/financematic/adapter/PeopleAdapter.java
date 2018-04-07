@@ -26,7 +26,6 @@ import butterknife.ButterKnife;
  */
 
 public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHolder> implements Filterable {
-
     Context c;
     public List<List_all_peoples> list_all_peoplesList;
     private List<List_all_peoples> filterList;
@@ -96,6 +95,9 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
             list_total_loan = view.findViewById(R.id.total_loan_text_view);
             list_received_amount = view.findViewById(R.id.received_amount_text_view);
 
+           //for tryintend
+
+
 
         }
 
@@ -129,4 +131,8 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 
         return filter;
     }
+
+
+
+
 }

@@ -31,9 +31,8 @@ import butterknife.Unbinder;
  * Created by scleroid on 2/3/18.
  */
 
-
 public class DashboardFragment extends Fragment {
-
+     public static final String INTENT_LOAN="eeee";
     TextViewUtils textViewUtils = new TextViewUtils();
     TextView firstFragment;
     @BindView(R.id.total_amount_text_view)
@@ -49,6 +48,8 @@ public class DashboardFragment extends Fragment {
     @BindView(R.id.recycler_view_dashboard)
     RecyclerView recyclerViewDashboard;
     Unbinder unbinder;
+
+
     private List<TempDashBoardModel> loanList = new ArrayList<>();
     private LoanAdapter mAdapter;
     private ActivityUtils activityUtils = new ActivityUtils();
@@ -76,6 +77,9 @@ public class DashboardFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.dashboard, container, false);
         unbinder = ButterKnife.bind(this, rootView);
+
+
+
 
 
 //Intend
@@ -118,13 +122,27 @@ public class DashboardFragment extends Fragment {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerViewDashboard.getContext(),
                 DividerItemDecoration.VERTICAL);
         //  recyclerView.addItemDecoration(dividerItemDecoration);
-
+     /*   Intent Intent = new Intent(this, ProfileFragment.class);
+        startActivity(Intent);*/
 
         // row click listener
-        recyclerViewDashboard.addOnItemTouchListener(new RecyclerTouchListener(getActivity().getApplicationContext(), recyclerViewDashboard, new RecyclerTouchListener.ClickListener() {
+     recyclerViewDashboard.addOnItemTouchListener(new RecyclerTouchListener(getActivity().getApplicationContext(), recyclerViewDashboard, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
                 TempDashBoardModel loan = loanList.get(position);
+ /*               Intent Intent = new Intent(this, ProfileFragment.class);
+                Intent.putExtra(INTENT_LOAN,loan);
+                startActivity(Intent);
+*/
+              /*  final Intent intent;
+                if (getAdapterPosition() == sth){
+                    intent =  new Intent(context, OneActivity.class);
+                } else if (getPosition() == sth2){
+                    intent =  new Intent(context, SecondActivity.class);
+                } else {
+                    intent =  new Intent(context, DifferentActivity.class);
+                }
+                context.startActivity(intent);*/
                 Toast.makeText(getActivity().getApplicationContext(), loan.getTitle() + " is selected!", Toast.LENGTH_SHORT).show();
             }
 

@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:padding="5dip"
                 android:layout_margin="10dp"
-                android:background="@drawable/shadow">
+                android:background="@drawable/shadow7">
                 <!-- Full Name Label -->            <LinearLayout android:id="@+id/header"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -59,33 +59,38 @@
 
                         android:layout_weight=".7"
                         android:text="Full Name"
+                        android:textColor="#409bbf"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textSize="18sp" />
 
                     <EditText
-
-                        android:id="@+id/coustomer_Name_EditText"
+                        android:textColor="#409bbf"
+                        android:textColorLink="#783302"
+                        android:textColorHighlight="#ff0000"
+                        android:autoLink="web"
+                       android:id="@+id/coustomer_Name_EditText"
                         android:layout_width="0dp"
                         android:maxLines="1"
                         android:layout_height="wrap_content"
                         android:layout_weight=".7"
                         android:background="@drawable/shadow"
                         android:paddingBottom="6dp"
-
-                        android:paddingTop="6dp" />
+android:paddingRight="10dp"
+                        android:paddingTop="6dp"
+                        />
 
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal"
                     android:paddingBottom="5dp"
                     android:paddingRight="10dp">
 
                     <TextView
 
-
+                        android:textColor="#409bbf"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -96,7 +101,7 @@
                         android:textSize="18sp" />
 
                     <EditText
-
+                        android:textColor="#409bbf"
                         android:id="@+id/Mobile_Number_EditText"
                         android:layout_width="0dp"
                         android:maxLines="1"
@@ -104,21 +109,20 @@
                         android:layout_weight=".7"
                         android:background="@drawable/shadow"
                         android:paddingBottom="6dp"
-
                         android:paddingTop="6dp" />
 
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal"
                     android:paddingBottom="5dp"
                     android:paddingRight="10dp">
 
                     <TextView
 
-
+                        android:textColor="#409bbf"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -129,7 +133,7 @@
                         android:textSize="18sp" />
 
                     <EditText
-
+                        android:textColor="#409bbf"
                         android:id="@+id/Address_EditText"
                         android:layout_width="0dp"
                         android:maxLines="1"
@@ -144,14 +148,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal"
                     android:paddingBottom="5dp"
                     android:paddingRight="10dp">
 
                     <TextView
 
-
+                        android:textColor="#409bbf"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -163,7 +167,7 @@
 
                     <EditText
 
-                        android:id="@+id/Loan_number_EditText"
+                        android:textColor="#409bbf"   android:id="@+id/Loan_number_EditText"
                         android:layout_width="0dp"
                         android:maxLines="1"
                         android:layout_height="wrap_content"
@@ -177,13 +181,13 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal"
                     android:paddingBottom="5dp"
                     android:paddingRight="10dp">
 
                     <TextView
-
+                        android:textColor="#409bbf"
 
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -195,7 +199,7 @@
                         android:textSize="18sp" />
 
                     <EditText
-
+                        android:textColor="#409bbf"
                         android:id="@+id/IDproofno"
                         android:layout_width="0dp"
                         android:maxLines="1"
@@ -337,3 +341,4 @@
     </ScrollView>
 
 </android.support.constraint.ConstraintLayout>
+<!-- for uderline utils https://gist.github.com/benvium/e2d1897d00d7850fb6dc-->
