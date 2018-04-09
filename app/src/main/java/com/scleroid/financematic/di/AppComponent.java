@@ -29,11 +29,12 @@ import dagger.android.support.AndroidSupportInjectionModule;
         ApplicationModule.class,
         /* ActivityBindingModule.class,*/
         MainActivityModule.class,
+        UtilsModule.class,
         AndroidSupportInjectionModule.class})
 
 public interface AppComponent extends AndroidInjector<DaggerApplication> {
 
-    void inject(App application);
+    /* void inject(App application);*/
 
     //   LoanRepository getTasksRepository();
 

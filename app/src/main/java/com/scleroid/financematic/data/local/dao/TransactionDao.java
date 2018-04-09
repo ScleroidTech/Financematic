@@ -61,7 +61,7 @@ public interface TransactionDao {
      * @param transactionModelModel inserts this object in the database
      */
     @Insert(onConflict = REPLACE)
-    long saveTransactions(List<TransactionModel> transactionModelModel);
+    long[] saveTransactions(List<TransactionModel> transactionModelModel);
 
     /**
      * Performs insertion operation

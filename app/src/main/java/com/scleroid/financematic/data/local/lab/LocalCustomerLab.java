@@ -29,7 +29,7 @@ public class LocalCustomerLab implements LocalDataSource<Customer> {
     private final CustomerDao customerDao;
 
     @Inject
-    private LocalCustomerLab(final AppDatabase appDatabase, final AppExecutors appExecutors) {
+    LocalCustomerLab(final AppDatabase appDatabase, final AppExecutors appExecutors) {
         this.appDatabase = appDatabase;
         this.appExecutors = appExecutors;
         this.customerDao = appDatabase.customerDao();

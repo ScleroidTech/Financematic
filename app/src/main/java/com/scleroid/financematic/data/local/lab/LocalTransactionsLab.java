@@ -96,8 +96,8 @@ public class LocalTransactionsLab implements LocalDataSource<TransactionModel> {
         Timber.d("creating new transaction ");
 
         return Completable.fromAction(() -> {
-            long rowId = transactionDao.saveTransactions(items);
-            Timber.d("transaction stored " + rowId);
+            long[] rowId = transactionDao.saveTransactions(items);
+            Timber.d("transaction stored " + rowId.length);
         });
     }
 

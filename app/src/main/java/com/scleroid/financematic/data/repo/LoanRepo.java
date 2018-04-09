@@ -60,7 +60,7 @@ public class LoanRepo {
     private RateLimiter<String> loanListRateLimit = new RateLimiter<>(10, TimeUnit.MINUTES);
 
     @Inject
-    private LoanRepo(final AppDatabase db, final LoanDao loanDao, final WebService webService, final AppExecutors appExecutors) {
+    LoanRepo(final AppDatabase db, final LoanDao loanDao, final WebService webService, final AppExecutors appExecutors) {
         this.db = db;
         this.loanDao = loanDao;
         this.webService = webService;

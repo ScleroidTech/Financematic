@@ -81,7 +81,7 @@ public interface LoanDao {
      * @param loan inserts list of loan object
      */
     @Insert
-    long saveLoans(List<Loan> loan);
+    long[] saveLoans(List<Loan> loan);
 
     /**
      * Updates a specified dataset

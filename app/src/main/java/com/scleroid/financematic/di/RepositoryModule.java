@@ -87,7 +87,7 @@ abstract public class RepositoryModule {
 
     @Singleton
     @Provides
-    WebService provideWebService() {
+    static WebService provideWebService() {
         return new Retrofit.Builder()
                 .baseUrl("https://api.github.com/")
                 .addConverterFactory(GsonConverterFactory.create())

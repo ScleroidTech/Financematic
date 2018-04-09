@@ -29,7 +29,7 @@ public class LocalLoanLab implements LocalDataSource<Loan> {
     private final LoanDao loanDao;
 
     @Inject
-    private LocalLoanLab(final AppDatabase appDatabase, final AppExecutors appExecutors) {
+    LocalLoanLab(final AppDatabase appDatabase, final AppExecutors appExecutors) {
         this.appDatabase = appDatabase;
         this.appExecutors = appExecutors;
         this.loanDao = appDatabase.loanDao();
@@ -96,8 +96,8 @@ public class LocalLoanLab implements LocalDataSource<Loan> {
         Timber.d("creating new loan ");
 
         return Completable.fromAction(() -> {
-            long rowId = loanDao.saveLoans(items);
-            Timber.d("loan stored " + rowId);
+            long[] rowId = loanDao.saveLoans(items);
+            Timber.d("loan stored " + rowId.length);
         });
     }
 

@@ -56,7 +56,7 @@ public class DashboardFragment extends Fragment {
     private List<TempDashBoardModel> loanList = new ArrayList<>();
     private LoanAdapter mAdapter;
     @Inject
-    private ActivityUtils activityUtils;
+    ActivityUtils activityUtils;
     //j bjbjbjbj
 
     public DashboardFragment() {
