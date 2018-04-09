@@ -13,6 +13,7 @@ import java.util.List;
  * @since 4/9/18
  */
 public class CustomerViewModel extends BaseViewModel implements com.scleroid.financematic.viewmodels.CustomerViewModel {
+
     //TODO add  data in it
     @Override
     protected LiveData<List> updateItemLiveData() {

@@ -12,7 +12,7 @@ import java.util.List;
  * @author Ganesh Kaple
  * @since 4/9/18
  */
-public class TransactionViewModel extends BaseViewModel implements com.scleroid.financematic.viewmodels.TransactionViewModel {
+public class PassbookViewModel extends BaseViewModel implements com.scleroid.financematic.viewmodels.TransactionViewModel {
     //TODO add  data in it
     @Override
     protected LiveData<List> updateItemLiveData() {

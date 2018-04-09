@@ -13,10 +13,12 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.VisibleForTesting;
 
-import com.scleroid.financematic.viewmodels.CustomerViewModel;
-import com.scleroid.financematic.viewmodels.ExpenseViewModel;
-import com.scleroid.financematic.viewmodels.LoanViewModel;
-import com.scleroid.financematic.viewmodels.TransactionViewModel;
+import com.scleroid.financematic.fragments.customer.CustomerViewModel;
+import com.scleroid.financematic.fragments.dashboard.DashboardViewModel;
+import com.scleroid.financematic.fragments.expense.ExpenseViewModel;
+import com.scleroid.financematic.fragments.loanDetails.LoanDetailsViewModel;
+import com.scleroid.financematic.fragments.passbook.PassbookViewModel;
+import com.scleroid.financematic.fragments.people.PeopleViewModel;
 
 /**
  * A creator is used to inject the product ID into the ViewModel
@@ -60,16 +62,23 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
     public <T extends ViewModel> T create(Class<T> modelClass) {
         if (modelClass.isAssignableFrom(CustomerViewModel.class)) {
             //noinspection unchecked
-            return (T) new CustomerViewModel(mApplication);
+            return (T) new CustomerViewModel();
         } else if (modelClass.isAssignableFrom(ExpenseViewModel.class)) {
             //noinspection unchecked
-            return (T) new ExpenseViewModel(mApplication);
-        } else if (modelClass.isAssignableFrom(LoanViewModel.class)) {
+            return (T) new ExpenseViewModel();
+
+        } else if (modelClass.isAssignableFrom(LoanDetailsViewModel.class)) {
             //noinspection unchecked
-            return (T) new LoanViewModel(mApplication);
-        } else if (modelClass.isAssignableFrom(TransactionViewModel.class)) {
+            return (T) new LoanDetailsViewModel();
+        } else if (modelClass.isAssignableFrom(PeopleViewModel.class)) {
             //noinspection unchecked
-            return (T) new TransactionViewModel(mApplication);
+            return (T) new PeopleViewModel();
+        } else if (modelClass.isAssignableFrom(DashboardViewModel.class)) {
+            //noinspection unchecked
+            return (T) new DashboardViewModel();
+        } else if (modelClass.isAssignableFrom(PassbookViewModel.class)) {
+            //noinspection unchecked
+            return (T) new PassbookViewModel();
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }
