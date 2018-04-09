@@ -1,34 +1,40 @@
 package com.scleroid.financematic.viewmodels;
 
-import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
-import android.support.annotation.NonNull;
+import android.arch.lifecycle.ViewModel;
 
 import com.scleroid.financematic.AppDatabase;
 import com.scleroid.financematic.data.local.model.Loan;
+import com.scleroid.financematic.data.todoCode.LoanRepository;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 
 /**
  * Created by Ganesh on 13-12-2017.
  */
 
-public class LoanViewModel extends AndroidViewModel {
+public class LoanViewModel extends ViewModel {
     private LiveData<List<Loan>> loanList;
     private AppDatabase appDatabase;
 
-    public LoanViewModel(@NonNull Application application) {
-        super(application);
+    private final LoanRepository loanRepository;
+    private LiveData<Loan> loanLiveData;
 
-        appDatabase = AppDatabase.getAppDatabase(this.getApplication());
+    @Inject
+    public LoanViewModel(LoanRepository loanRepository) {
+        this.loanRepository = loanRepository;
+
+
+
         loanList = updateLoanLiveData();
     }
 
     private LiveData<List<Loan>> updateLoanLiveData() {
 
-        LiveData<List<Loan>> loanList = appDatabase.loanDao().getLoansLive();
+        LiveData<List<Loan>> loanList = loanRepository.getLoans();
         return loanList;
     }
 

@@ -42,7 +42,7 @@ ext {
 
     // App dependencies
     supportLibraryVersion = '27.1.0'
-    guavaVersion = '18.0'
+    guavaVersion = '22.0-android'
     junitVersion = '4.12'
     mockitoVersion = '1.10.19'
     powerMockito = '1.6.2'
@@ -52,13 +52,16 @@ ext {
     espressoVersion = '3.0.1'
     roomVersion = "1.1.0-beta1"
     lifecycleVersion = "1.1.1"
-    daggerVersion = '2.11'
+    daggerVersion = '2.14.1'
     dexmakerVersion = '1.2'
     firebaseVersion = "11.8.0"
     butterKnifeVersion = "8.8.1"
     glideVersion = "4.4.0"
     retrofitVersion = "2.3.0"
     rxJavaVersion = "2.1.2"
-    rxAndroidVersion = "2.0.1"
+    rxAndroidVersion = "2.0.2"
+    okHttpVersion = "3.4.1"
+    priorityJobQueueVersion = "2.0.1"
+    playServicesVersion = "12.0.1"
 }
 

@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.adapter.PassbookAdapter;
-import com.scleroid.financematic.data.Passbook;
+import com.scleroid.financematic.data.tempModels.Passbook;
 import com.scleroid.financematic.utils.RecyclerTouchListener;
 
 import java.util.ArrayList;

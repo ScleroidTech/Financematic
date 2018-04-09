@@ -3,10 +3,12 @@ package com.scleroid.financematic;
 import android.app.Application;
 
 import com.scleroid.financematic.di.AppComponent;
+import com.scleroid.financematic.di.AppInjector;
 import com.scleroid.financematic.di.DaggerAppComponent;
 
 import dagger.android.AndroidInjector;
 import dagger.android.DaggerApplication;
+import dagger.android.HasActivityInjector;
 import timber.log.Timber;
 
 /**
@@ -19,7 +21,7 @@ import timber.log.Timber;
  * We then override applicationInjector() which tells Dagger how to make our @Singleton Component
  * We never have to call `component.inject(this)` as {@link DaggerApplication} will do that for us.
  */
-public class App extends DaggerApplication {
+public class App extends DaggerApplication implements HasActivityInjector {
 
     @Override
     public void onCreate() {
@@ -34,6 +36,7 @@ public class App extends DaggerApplication {
                 .application(this)
                 .build()
                 .inject(this);
+        AppInjector.init(this);
 
         //    JobManagerFactory.getJobManager(this);
     }

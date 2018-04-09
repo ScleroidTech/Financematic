@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 
 import com.scleroid.financematic.AppDatabase;
 import com.scleroid.financematic.data.local.model.TransactionModel;
+import com.scleroid.financematic.data.todoCode.LoanRepository;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class TransactionViewModel extends AndroidViewModel {
     private final AppDatabase appDatabase;
     private LiveData<List<TransactionModel>> transactionList;
 
-    public TransactionViewModel(@NonNull Application application) {
+    public TransactionViewModel(@NonNull Application application, LoanRepository mLoanRepository) {
         super(application);
         appDatabase = AppDatabase.getAppDatabase(this.getApplication());
         transactionList = updateTransactionLiveData();

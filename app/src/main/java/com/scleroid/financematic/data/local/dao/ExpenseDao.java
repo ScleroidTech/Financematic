@@ -30,6 +30,7 @@ import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
  * @since 10-01-2018
  */
 @Dao
+
 public interface ExpenseDao {
 
     /**
@@ -55,7 +56,7 @@ public interface ExpenseDao {
      * @return expense object with same serialNo
      */
     @Query("SELECT * FROM Expense where expenseId = :serialNo ")
-    Expense findById(int serialNo);
+    LiveData<Expense> getExpense(int serialNo);
 
     /**
      * select query to count Number of expense
@@ -71,7 +72,7 @@ public interface ExpenseDao {
      * @param expense inserts this object in the database
      */
     @Insert(onConflict = REPLACE)
-    void insert(Expense expense);
+    long saveExpense(Expense expense);
 
     /**
      * Performs insertion operation for multiple values
@@ -79,7 +80,7 @@ public interface ExpenseDao {
      * @param expense inserts list of expense object
      */
     @Insert
-    void insertAll(Expense... expense);
+    long saveExpenses(List<Expense> expense);
 
     /**
      * Updates a specified dataset

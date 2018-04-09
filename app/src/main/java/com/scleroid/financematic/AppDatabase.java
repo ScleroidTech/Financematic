@@ -8,14 +8,12 @@ package com.scleroid.financematic;
  */
 
 import android.arch.persistence.room.Database;
-import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
-import android.content.Context;
 
 import com.scleroid.financematic.data.local.dao.CustomerDao;
 import com.scleroid.financematic.data.local.dao.ExpenseDao;
 import com.scleroid.financematic.data.local.dao.LoanDao;
-import com.scleroid.financematic.data.local.dao.TransactionModelDao;
+import com.scleroid.financematic.data.local.dao.TransactionDao;
 import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.local.model.Expense;
 import com.scleroid.financematic.data.local.model.Loan;
@@ -33,25 +31,26 @@ import com.scleroid.financematic.data.local.model.TransactionModel;
  * It handles creating of the database if it doesn't exists & providing the database object whenever required
  * There are 3 tables in this database,
  */
+
 @Database(entities = {Customer.class, Loan.class, TransactionModel.class, Expense.class}, version = 2, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     /**
      * Holds the instance of the database
-     */
+     *//*
 
     private static AppDatabase instance;
 
-    /**
+    *//**
      * Returns the instance of AppDatabase class, creates a new one if doesn't exists,
      * & returns that
      *
      * @param context Context of Application or current activity needs to be passed
      * @return AppDatabase returns the instance of Appdatabase
-     */
+     *//*
     public static AppDatabase getAppDatabase(Context context) {
-        /*
+        *//*
            creates a new database if instance doesn't exists
-         */
+         *//*
 
         if (instance == null) {
             instance =
@@ -63,14 +62,14 @@ public abstract class AppDatabase extends RoomDatabase {
         return instance;
     }
 
-    /**
+    *//**
      * Destroys the instance of the database, doesn't actually destroy the database, just the pointer to it,
-     */
+     *//*
     public static void destroyInstance() {
 
         instance = null;
     }
-
+*/
     /**
      * Customer Model Data Access Object,
      * For Room Library
@@ -107,10 +106,10 @@ public abstract class AppDatabase extends RoomDatabase {
      * For Room Library
      *
      * @return returns an object of
-     * @see TransactionModelDao
-     * @see TransactionModelDao
+     * @see TransactionDao
+     * @see TransactionDao
      */
-    public abstract TransactionModelDao transactionDao();
+    public abstract TransactionDao transactionDao();
 
 
 }

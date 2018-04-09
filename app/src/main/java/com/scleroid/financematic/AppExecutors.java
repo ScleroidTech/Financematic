@@ -45,7 +45,7 @@ public class AppExecutors {
 
     @Inject
     public AppExecutors() {
-        this(Executors.newSingleThreadExecutor(), Executors.newFixedThreadPool(3),
+        this(Executors.newSingleThreadExecutor(), Executors.newFixedThreadPool(THREAD_COUNT),
                 new MainThreadExecutor());
     }
 

@@ -4,10 +4,6 @@ package com.scleroid.financematic.di;
 import android.app.Application;
 
 import com.scleroid.financematic.App;
-import com.scleroid.financematic.utils.ActivityUtils;
-import com.scleroid.financematic.utils.CurrencyStringUtils;
-import com.scleroid.financematic.utils.DateUtils;
-import com.scleroid.financematic.utils.TextViewUtils;
 
 import javax.inject.Singleton;
 
@@ -31,23 +27,17 @@ import dagger.android.support.AndroidSupportInjectionModule;
 @Singleton
 @Component(modules = {RepositoryModule.class,
         ApplicationModule.class,
-        // ActivityBindingModule.class,
+        /* ActivityBindingModule.class,*/
+        MainActivityModule.class,
         AndroidSupportInjectionModule.class})
 
 public interface AppComponent extends AndroidInjector<DaggerApplication> {
 
     void inject(App application);
 
-    //   TasksRepository getTasksRepository();
+    //   LoanRepository getTasksRepository();
 
 
-    DateUtils getDateUtils();
-
-    TextViewUtils getTextViewUtils();
-
-    ActivityUtils getActivityUtils();
-
-    CurrencyStringUtils getCurrencyStringUtils();
 
 
     @Override

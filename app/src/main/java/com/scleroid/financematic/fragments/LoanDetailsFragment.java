@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.adapter.SummeryAdapter;
-import com.scleroid.financematic.data.Personal_summery_loan_details;
+import com.scleroid.financematic.data.tempModels.Personal_summery_loan_details;
 import com.scleroid.financematic.utils.ActivityUtils;
 import com.scleroid.financematic.utils.RecyclerTouchListener;
 import com.scleroid.financematic.utils.TextViewUtils;
