@@ -27,7 +27,7 @@ public interface InstallmentDao {
      *
      * @return List of all installments in database
      */
-    @Query("SELECT * FROM Installment")
+    @Query("SELECT * FROM installment")
     List<Installment> getAll();
 
     /**

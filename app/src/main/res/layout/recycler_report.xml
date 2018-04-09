@@ -33,7 +33,7 @@
                 android:textSize="13sp" />
 
             <TextView
-                android:id="@+id/installmentDate"
+                android:id="@+id/transactionDate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -44,7 +44,7 @@
                 android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/expectedAmt"
+                android:id="@+id/lentAmt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".8"

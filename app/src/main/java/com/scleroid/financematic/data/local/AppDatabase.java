@@ -17,6 +17,7 @@ import com.scleroid.financematic.data.local.dao.LoanDao;
 import com.scleroid.financematic.data.local.dao.TransactionDao;
 import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.local.model.Expense;
+import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.data.local.model.TransactionModel;
 
@@ -34,7 +35,7 @@ import com.scleroid.financematic.data.local.model.TransactionModel;
  * There are 3 tables in this database,
  */
 
-@Database(entities = {Customer.class, Loan.class, TransactionModel.class, Expense.class}, version = 3, exportSchema = false)
+@Database(entities = {Customer.class, Loan.class, TransactionModel.class, Expense.class, Installment.class}, version = 3, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     /**
      * Holds the instance of the database

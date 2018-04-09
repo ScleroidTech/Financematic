@@ -15,6 +15,11 @@ import com.scleroid.financematic.data.local.dao.InstallmentDao;
 import com.scleroid.financematic.data.local.dao.LoanDao;
 import com.scleroid.financematic.data.local.dao.TransactionDao;
 import com.scleroid.financematic.data.remote.WebService;
+import com.scleroid.financematic.data.repo.CustomerRepo;
+import com.scleroid.financematic.data.repo.ExpenseRepo;
+import com.scleroid.financematic.data.repo.InstallmentRepo;
+import com.scleroid.financematic.data.repo.LoanRepo;
+import com.scleroid.financematic.data.repo.TransactionsRepo;
 import com.scleroid.financematic.utils.DiskIOThreadExecutor;
 import com.scleroid.financematic.utils.LiveDataCallAdapterFactory;
 
@@ -98,6 +103,26 @@ abstract public class RepositoryModule {
     static InstallmentDao provideInstallmentDao(AppDatabase db) {
         return db.installmentDao();
     }
+
+    @Singleton
+    @Provides
+    abstract LoanRepo provideLoanRepo(AppDatabase db);
+
+    @Singleton
+    @Provides
+    abstract ExpenseRepo provideExpenseRepo(AppDatabase db);
+
+    @Singleton
+    @Provides
+    abstract CustomerRepo provideCustomerRepo(AppDatabase db);
+
+    @Singleton
+    @Provides
+    abstract TransactionsRepo provideTransactionsRepo(AppDatabase db);
+
+    @Singleton
+    @Provides
+    abstract InstallmentRepo provideInstallmentRepo(AppDatabase db);
 
     @Singleton
     @Provides
