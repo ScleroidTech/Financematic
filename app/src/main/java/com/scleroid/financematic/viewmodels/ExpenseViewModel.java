@@ -1,13 +1,11 @@
 package com.scleroid.financematic.viewmodels;
 
-import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 
 import com.scleroid.financematic.AppDatabase;
+import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.local.model.Expense;
-import com.scleroid.financematic.data.todoCode.LoanRepository;
 
 import java.util.List;
 
@@ -17,7 +15,7 @@ import java.util.List;
  * @since 09-01-2018
  */
 
-public class ExpenseViewModel extends AndroidViewModel {
+public class ExpenseViewModel extends BaseViewModel {
     //  private Parcel parcel;
     private List<Expense> expenses;
 
@@ -25,10 +23,8 @@ public class ExpenseViewModel extends AndroidViewModel {
 
     private AppDatabase appDatabase;
 
-    public ExpenseViewModel(@NonNull Application application, LoanRepository mLoanRepository) {
+    public ExpenseViewModel(@NonNull AppDatabase application) {
         super(application);
-
-        appDatabase = AppDatabase.getAppDatabase(this.getApplication());
 
         expenseList = updateExpenseLiveData();
     }

@@ -2,7 +2,7 @@ package com.scleroid.financematic.base;
 
 import android.arch.lifecycle.ViewModel;
 
-import io.reactivex.disposables.CompositeDisposable;
+import com.scleroid.financematic.AppDatabase;
 
 /**
  * Copyright (C) 2018
@@ -10,16 +10,15 @@ import io.reactivex.disposables.CompositeDisposable;
  * @author Ganesh Kaple
  * @since 4/6/18
  */
-class BaseViewModel extends ViewModel {
+public class BaseViewModel extends ViewModel {
 
-    private CompositeDisposable mCompositeDisposable;
+    protected AppDatabase appDatabase;
 
-
-    private BaseViewModel(final CompositeDisposable mCompositeDisposable) {
-        this.mCompositeDisposable = mCompositeDisposable;
+    public BaseViewModel(final AppDatabase appDatabase) {
+        this.appDatabase = appDatabase;
     }
 
-    @Override
+ /* @Override
     protected void onCleared() {
         mCompositeDisposable.dispose();
         super.onCleared();
@@ -28,6 +27,6 @@ class BaseViewModel extends ViewModel {
     public CompositeDisposable getCompositeDisposable() {
         return mCompositeDisposable;
     }
-
+*/
 
 }

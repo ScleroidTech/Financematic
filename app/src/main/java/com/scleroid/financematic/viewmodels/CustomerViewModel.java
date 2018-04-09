@@ -1,30 +1,26 @@
 package com.scleroid.financematic.viewmodels;
 
-import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 
 import com.scleroid.financematic.AppDatabase;
+import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.local.model.Customer;
-import com.scleroid.financematic.data.todoCode.LoanRepository;
 
 import java.util.List;
 
 
-public class CustomerViewModel extends AndroidViewModel {
+public class CustomerViewModel extends BaseViewModel {
 
     private List<Customer> customers;
 
     //    private LiveData<List<Parcel>> parcelList;
     private LiveData<List<Customer>> customerList;
 
-    private AppDatabase appDatabase;
 
-    public CustomerViewModel(@NonNull Application application, LoanRepository mLoanRepository) {
-        super(application);
+    public CustomerViewModel(@NonNull AppDatabase database) {
+        super(database);
 
-        appDatabase = AppDatabase.getAppDatabase(this.getApplication());
         //      parcelList = updateParcelLiveData();
         customerList = updateCustomerLiveData();
     }
