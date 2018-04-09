@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import com.scleroid.financematic.R;
+import com.scleroid.financematic.fragments.PassbookFragment;
 
 import javax.inject.Inject;
 
@@ -38,6 +39,17 @@ public class ActivityUtils {
 
         fragment.setTargetFragment(targetFragment, requestValue);
         fragment.show(fm, dialogValue);
+        // load fragment
+    }
+
+    void loadFragment(PassbookFragment fragment, FragmentManager fm) {
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        // replace the FrameLayout with new Fragment
+        fragmentTransaction.replace(R.id.frame_container, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                android.R.anim.fade_out);
+        fragmentTransaction.commit(); // save the changes
         // load fragment
     }
 }
