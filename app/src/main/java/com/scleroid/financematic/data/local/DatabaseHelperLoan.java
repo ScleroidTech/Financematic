@@ -1,6 +1,5 @@
 package com.scleroid.financematic.data.local;
 
-import com.scleroid.financematic.AppDatabase;
 import com.scleroid.financematic.data.local.dao.LoanDao;
 import com.scleroid.financematic.data.local.dao.TransactionDao;
 
@@ -22,8 +21,8 @@ public class DatabaseHelperLoan {
         transactionDao = database.transactionDao();
     }
 
- /*   public Loan getLoan(int id) {
-        Loan loan = dao.getLoan(id);
+ /*   public Loan getLoanLive(int id) {
+        Loan loan = dao.getLoanLive(id);
         loan.setTransactions(dao.getTransactions(id));
         return loan;
     }

@@ -3,8 +3,8 @@ package com.scleroid.financematic.data.local.lab;
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 
-import com.scleroid.financematic.AppDatabase;
 import com.scleroid.financematic.AppExecutors;
+import com.scleroid.financematic.data.local.AppDatabase;
 import com.scleroid.financematic.data.local.LocalDataSource;
 import com.scleroid.financematic.data.local.dao.ExpenseDao;
 import com.scleroid.financematic.data.local.model.Expense;

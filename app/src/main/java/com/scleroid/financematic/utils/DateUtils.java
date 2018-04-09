@@ -55,5 +55,29 @@ public class DateUtils {
         return simpleDateFormat.format(date);
     }
 
+    public boolean isThisDateWithinAWeek(Date date) {
+
+        //  SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+        // sdf.setLenient(false);
+
+
+        // if not valid, it will throw ParseException
+        // Date date = sdf.parse(dateToValidate);
+
+        // current date after 3 months
+        Calendar dateAfterAWeek = Calendar.getInstance();
+        dateAfterAWeek.add(Calendar.DATE, 7);
+
+        // current date
+        Calendar currentDate = Calendar.getInstance();
+
+
+        //ok everything is fine, date in range
+        return date.before(dateAfterAWeek.getTime())
+                && date.after(currentDate.getTime());
+
+
+    }
+
 
 }

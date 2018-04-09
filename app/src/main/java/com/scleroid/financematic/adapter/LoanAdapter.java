@@ -8,11 +8,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.scleroid.financematic.R;
-import com.scleroid.financematic.data.local.model.Loan;
-import com.scleroid.financematic.data.tempModels.TempDashBoardModel;
+import com.scleroid.financematic.fragments.dashboard.DashBoardModel;
 import com.scleroid.financematic.utils.CurrencyStringUtils;
+import com.scleroid.financematic.utils.DateUtils;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 /**
  * Created by scleroid on 3/3/18.
@@ -20,16 +22,26 @@ import java.util.List;
 
 public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> {
 
-    private final CurrencyStringUtils currencyStringUtils = new CurrencyStringUtils();
-    private List<Loan> loanList;
-    private List<TempDashBoardModel> loanList2;
+    @Inject
+    DateUtils dateUtils;
+    @Inject
+    CurrencyStringUtils currencyStringUtils;
+    private List<DashBoardModel> loanList;
+
+    public LoanAdapter(List<DashBoardModel> loanList) {
+        this.loanList = loanList;
+    }
+
+    public List<DashBoardModel> getLoanList() {
+        return loanList;
+    }
 /*TODO Work in Progress ,Add this & remove other constructor
     public LoanAdapter(List<Loan> loanList) {
         this.loanList = loanList;
     }*/
 
-    public LoanAdapter(List<TempDashBoardModel> loanList) {
-        this.loanList2 = loanList;
+    public void setLoanList(final List<DashBoardModel> loanList) {
+        this.loanList = loanList;
     }
 
     @NonNull
@@ -43,16 +55,16 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        TempDashBoardModel loan = loanList2.get(position);
-        holder.title.setText(loan.getTitle());
-        holder.genre.setText(currencyStringUtils.bindNumber(loan.getGenre()));
-        holder.year.setText(loan.getYear());
+        DashBoardModel loan = loanList.get(position);
+        holder.title.setText(loan.getCustomerName());
+        holder.genre.setText(currencyStringUtils.bindNumber(loan.getAmtDue().intValueExact()));
+        holder.year.setText(dateUtils.getFormattedDate(loan.getInstallmentDate()));
     }
 
 
     @Override
     public int getItemCount() {
-        return loanList2.size();
+        return loanList.size();
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder {

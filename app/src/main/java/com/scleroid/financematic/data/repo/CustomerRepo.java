@@ -4,9 +4,9 @@ import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.scleroid.financematic.AppDatabase;
 import com.scleroid.financematic.AppExecutors;
 import com.scleroid.financematic.Resource;
+import com.scleroid.financematic.data.local.AppDatabase;
 import com.scleroid.financematic.data.local.dao.CustomerDao;
 import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.remote.ApiResponse;
@@ -27,6 +27,10 @@ public class CustomerRepo {
 
 
     private final AppDatabase db;
+
+    public CustomerDao getCustomerDao() {
+        return customerDao;
+    }
 
     private final CustomerDao customerDao;
 
@@ -93,7 +97,7 @@ public class CustomerRepo {
             @NonNull
             @Override
             protected LiveData<Customer> loadFromDb() {
-                return customerDao.getCustomer(customerNo);
+                return customerDao.getCustomerLive(customerNo);
             }
 
             @NonNull

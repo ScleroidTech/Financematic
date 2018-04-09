@@ -71,7 +71,7 @@
 
                 android:layout_marginTop="8dp"
                 android:text="2 Feb 2018 to 10 Dec2018"
-                android:textColor="@color/year"
+                android:textColor="@color/installmentDate"
                 android:textSize="15sp"
                 app:layout_constraintStart_toEndOf="@+id/imageView2"
                 app:layout_constraintTop_toBottomOf="@+id/customer_name_text_view" />

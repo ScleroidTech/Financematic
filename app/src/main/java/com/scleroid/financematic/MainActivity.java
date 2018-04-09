@@ -69,29 +69,29 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         switch (item.getItemId()) {
 
             case R.id.navigation_home:
-                /* toolbar.setTitle("Customer");*/
+                /* toolbar.setCustomerName("Customer");*/
                 fragment = new DashboardFragment();
                 loadFragment(fragment);
 
                 return true;
             case R.id.navigation_list:
-                /* toolbar.setTitle("Loan Details");*/
+                /* toolbar.setCustomerName("Loan Details");*/
                 fragment = new PeopleFragment();
                 loadFragment(fragment);
                 return true;
             case R.id.person_details:
-                /*    toolbar.setTitle("Report");*/
+                /*    toolbar.setCustomerName("Report");*/
                 fragment = new ReportFragment();
                 loadFragment(fragment);
 
                 return true;
             /* case R.id.navigation_person_loan_details:
-             *//*  toolbar.setTitle("Person Details");*//*
+             *//*  toolbar.setCustomerName("Person Details");*//*
                         fragment = new RegisterCustomerFragment();
                         loadFragment(fragment);
                         return true;
                     case R.id.navigation_reminders:
-                    *//*  toolbar.setTitle("Reminder");*//*
+                    *//*  toolbar.setCustomerName("Reminder");*//*
                         fragment = new ReminderFragment();
                         loadFragment(fragment);
                         return true;
@@ -169,7 +169,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         /* layoutParams.setBehavior(new BottomNavigationBehavior());*/
 
         // load the store fragment by default
-        /* toolbar.setTitle("Finance Matic");*/
+        /* toolbar.setCustomerName("Finance Matic");*/
         // loadFragment(new DashboardFragment());
         appExecutors = new InstantAppExecutors();
         if (savedInstanceState == null) {
@@ -463,6 +463,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 faker.commerce.price(),
                 faker.commerce.price(),
                 faker.commerce.price(0, 2000),
+                faker.company.catchPhrase(),
                 accountNo
 
         );

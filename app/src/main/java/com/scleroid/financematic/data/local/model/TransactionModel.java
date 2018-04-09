@@ -37,16 +37,28 @@ public class TransactionModel {
     @TypeConverters(MoneyConverter.class)
     private BigDecimal receivedAmt;
 
+    private String description;
     private int loanAcNo;
 
-    public TransactionModel(int transactionId, Date transactionDate, BigDecimal lentAmt, BigDecimal gainedAmt, BigDecimal receivedAmt, int loanAcNo) {
+    public TransactionModel(final int transactionId, final Date transactionDate, final BigDecimal lentAmt, final BigDecimal gainedAmt, final BigDecimal receivedAmt, final String description, final int loanAcNo) {
         this.transactionId = transactionId;
         this.transactionDate = transactionDate;
         this.lentAmt = lentAmt;
         this.gainedAmt = gainedAmt;
         this.receivedAmt = receivedAmt;
+        this.description = description;
         this.loanAcNo = loanAcNo;
     }
+
+    private String getDescription() {
+        return description;
+    }
+
+    private void setDescription(final String description) {
+        this.description = description;
+    }
+
+
 
     public int getLoanAcNo() {
         return loanAcNo;

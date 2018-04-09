@@ -13,11 +13,13 @@ import com.scleroid.financematic.R;
 import com.scleroid.financematic.adapter.ProfileAdapter;
 import com.scleroid.financematic.base.BaseFragment;
 import com.scleroid.financematic.base.BaseViewModel;
-import com.scleroid.financematic.data.Profile;
+import com.scleroid.financematic.data.tempModels.Profile;
 import com.scleroid.financematic.utils.RecyclerTouchListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import timber.log.Timber;
 
 /**
  * Created by scleroid on 4/4/18.
@@ -60,7 +62,7 @@ public class CustomerFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View rootView = getRootView();
 
-
+        Timber.d("whats the rootview" + rootView);
         recyclerView = rootView.findViewById(R.id.profile_my_recycler);
 
         mAdapter = new ProfileAdapter(profileList);

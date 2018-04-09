@@ -4,9 +4,9 @@ import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.scleroid.financematic.AppDatabase;
 import com.scleroid.financematic.AppExecutors;
 import com.scleroid.financematic.Resource;
+import com.scleroid.financematic.data.local.AppDatabase;
 import com.scleroid.financematic.data.local.dao.TransactionDao;
 import com.scleroid.financematic.data.local.model.TransactionModel;
 import com.scleroid.financematic.data.remote.ApiResponse;

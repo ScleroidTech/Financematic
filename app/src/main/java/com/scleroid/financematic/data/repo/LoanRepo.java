@@ -5,9 +5,9 @@ import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.scleroid.financematic.AppDatabase;
 import com.scleroid.financematic.AppExecutors;
 import com.scleroid.financematic.Resource;
+import com.scleroid.financematic.data.local.AppDatabase;
 import com.scleroid.financematic.data.local.dao.LoanDao;
 import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.data.remote.ApiResponse;
@@ -50,6 +50,10 @@ import javax.inject.Singleton;
 public class LoanRepo {
 
     private final AppDatabase db;
+
+    public LoanDao getLoanDao() {
+        return loanDao;
+    }
 
     private final LoanDao loanDao;
 
@@ -149,7 +153,7 @@ public class LoanRepo {
             @NonNull
             @Override
             protected LiveData<Loan> loadFromDb() {
-                return loanDao.getLoan(acNo);
+                return loanDao.getLoanLive(acNo);
             }
 
             @NonNull

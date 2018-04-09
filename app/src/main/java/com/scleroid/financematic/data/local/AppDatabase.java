@@ -1,4 +1,4 @@
-package com.scleroid.financematic;
+package com.scleroid.financematic.data.local;
 
 /**
  * Copyright (C) 2018
@@ -12,6 +12,7 @@ import android.arch.persistence.room.RoomDatabase;
 
 import com.scleroid.financematic.data.local.dao.CustomerDao;
 import com.scleroid.financematic.data.local.dao.ExpenseDao;
+import com.scleroid.financematic.data.local.dao.InstallmentDao;
 import com.scleroid.financematic.data.local.dao.LoanDao;
 import com.scleroid.financematic.data.local.dao.TransactionDao;
 import com.scleroid.financematic.data.local.model.Customer;
@@ -25,6 +26,7 @@ import com.scleroid.financematic.data.local.model.TransactionModel;
  * @see Loan
  * @see TransactionModel
  * @see Expense
+ * @see com.scleroid.financematic.data.local.model.Installment
  * @since 27/10/17
  * It is a singleton class,so it holds only one object for it's entire existence
  * It holds the current object of database
@@ -32,7 +34,7 @@ import com.scleroid.financematic.data.local.model.TransactionModel;
  * There are 3 tables in this database,
  */
 
-@Database(entities = {Customer.class, Loan.class, TransactionModel.class, Expense.class}, version = 2, exportSchema = false)
+@Database(entities = {Customer.class, Loan.class, TransactionModel.class, Expense.class}, version = 3, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     /**
      * Holds the instance of the database
@@ -110,6 +112,15 @@ public abstract class AppDatabase extends RoomDatabase {
      * @see TransactionDao
      */
     public abstract TransactionDao transactionDao();
+
+    /**
+     * TransactionModel Model Data Access Object, For Room Library
+     *
+     * @return returns an object of
+     * @see TransactionDao
+     * @see TransactionDao
+     */
+    public abstract InstallmentDao installmentDao();
 
 
 }

@@ -7,10 +7,11 @@ package com.scleroid.financematic.di;
 import android.app.Application;
 import android.arch.persistence.room.Room;
 
-import com.scleroid.financematic.AppDatabase;
 import com.scleroid.financematic.AppExecutors;
+import com.scleroid.financematic.data.local.AppDatabase;
 import com.scleroid.financematic.data.local.dao.CustomerDao;
 import com.scleroid.financematic.data.local.dao.ExpenseDao;
+import com.scleroid.financematic.data.local.dao.InstallmentDao;
 import com.scleroid.financematic.data.local.dao.LoanDao;
 import com.scleroid.financematic.data.local.dao.TransactionDao;
 import com.scleroid.financematic.data.remote.WebService;
@@ -50,6 +51,21 @@ abstract public class RepositoryModule {
     @Provides
     static AppDatabase provideDb(Application context) {
         return Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "financeMatic.db")
+                /*TODO.addCallback(new RoomDatabase.Callback() {
+                 *//**
+         * Called when the database is created for the first time.
+         * This is called after all the tables are created.
+         *
+         * @param db The database.
+         *//*
+                    @Override
+                    public void onCreate(@NonNull final SupportSQLiteDatabase db) {
+                        super.onCreate(db);
+
+                        //TODO add trigger to update values depending upon operations
+                        db.execSQL("CREATE TRIGGER");
+                    }
+                })*/
                 .build();
     }
 
@@ -75,6 +91,12 @@ abstract public class RepositoryModule {
     @Provides
     static TransactionDao provideTransactionsDao(AppDatabase db) {
         return db.transactionDao();
+    }
+
+    @Singleton
+    @Provides
+    static InstallmentDao provideInstallmentDao(AppDatabase db) {
+        return db.installmentDao();
     }
 
     @Singleton

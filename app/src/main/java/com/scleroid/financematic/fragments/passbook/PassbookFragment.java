@@ -60,10 +60,9 @@ public class PassbookFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+
         // Inflate the layout for this fragment
         View rootView = getRootView();
-
-
         recyclerView = rootView.findViewById(R.id.passbook_my_recycler);
 
         mAdapter = new PassbookAdapter(passbookList);

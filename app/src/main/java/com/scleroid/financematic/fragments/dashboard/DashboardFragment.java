@@ -1,7 +1,10 @@
 package com.scleroid.financematic.fragments.dashboard;
 
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,14 +18,14 @@ import android.widget.Toast;
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.adapter.LoanAdapter;
 import com.scleroid.financematic.base.BaseFragment;
-import com.scleroid.financematic.base.BaseViewModel;
-import com.scleroid.financematic.data.tempModels.TempDashBoardModel;
 import com.scleroid.financematic.fragments.passbook.PassbookFragment;
 import com.scleroid.financematic.utils.ActivityUtils;
 import com.scleroid.financematic.utils.RecyclerTouchListener;
 import com.scleroid.financematic.utils.TextViewUtils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -36,7 +39,7 @@ import butterknife.Unbinder;
  */
 
 
-public class DashboardFragment extends BaseFragment {
+public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 
     @Inject
     TextViewUtils textViewUtils;
@@ -54,10 +57,13 @@ public class DashboardFragment extends BaseFragment {
     @BindView(R.id.recycler_view_dashboard)
     RecyclerView recyclerViewDashboard;
     Unbinder unbinder;
-    private List<TempDashBoardModel> loanList = new ArrayList<>();
-    private LoanAdapter mAdapter;
     @Inject
     ActivityUtils activityUtils;
+    @Inject
+    ViewModelProvider.Factory viewModelFactory;
+    private List<DashBoardModel> loanList = new ArrayList<>();
+    private LoanAdapter mAdapter;
+    private DashboardViewModel dashBoardViewModel;
 
 
     public DashboardFragment() {
@@ -80,11 +86,6 @@ public class DashboardFragment extends BaseFragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -92,7 +93,6 @@ public class DashboardFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View rootView = getRootView();
         // unbinder = ButterKnife.bind(this, rootView);
-
 
 
 //Intent
@@ -111,19 +111,50 @@ public class DashboardFragment extends BaseFragment {
         return rootView;
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
     /**
      * Override for set view model
      *
      * @return view model instance
      */
     @Override
-    public BaseViewModel getViewModel() {
-        return null;
+    public DashboardViewModel getViewModel() {
+        dashBoardViewModel = ViewModelProviders.of(this, viewModelFactory).get(DashboardViewModel.class);
+        return dashBoardViewModel;
     }
 
+    /**
+     * Called when the fragment's activity has been created and this fragment's view hierarchy
+     * instantiated.  It can be used to do final initialization once these pieces are in place, such
+     * as retrieving views or restoring state.  It is also useful for fragments that use {@link
+     * #setRetainInstance(boolean)} to retain their instance, as this callback tells the fragment
+     * when it is fully associated with the new activity instance.  This is called after {@link
+     * #onCreateView} and before {@link #onViewStateRestored(Bundle)}.
+     *
+     * @param savedInstanceState If the fragment is being re-created from a previous saved state,
+     *                           this is the state.
+     */
+    @Override
+    public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        subscribeToLiveData();
+    }
+
+    private void subscribeToLiveData() {
+        dashBoardViewModel.getTransformedUpcomingData().observe(this,
+                items -> {
+                    if (items == null)
+                        mAdapter.setLoanList(new ArrayList<>());
+                    mAdapter.setLoanList(items);
+                });
+    }
 
     private void setupRecyclerView() {
-        mAdapter = new LoanAdapter(loanList);
+        mAdapter = new LoanAdapter(new ArrayList<>());
 
         recyclerViewDashboard.setHasFixedSize(true);
 
@@ -151,8 +182,8 @@ public class DashboardFragment extends BaseFragment {
         recyclerViewDashboard.addOnItemTouchListener(new RecyclerTouchListener(getActivity().getApplicationContext(), recyclerViewDashboard, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                TempDashBoardModel loan = loanList.get(position);
-                Toast.makeText(getActivity().getApplicationContext(), loan.getTitle() + " is selected!", Toast.LENGTH_SHORT).show();
+                DashBoardModel loan = loanList.get(position);
+                Toast.makeText(getActivity().getApplicationContext(), loan.getCustomerName() + " is selected!", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -162,13 +193,12 @@ public class DashboardFragment extends BaseFragment {
         }));
     }
 
-
     private void prepareTempDashBoardModelData() {
-        TempDashBoardModel loan = new TempDashBoardModel("Shahrukh Khan", "2000", "5 Feb 2018");
+        DashBoardModel loan = new DashBoardModel("Shahrukh Khan", new BigDecimal(2000), new Date(2018, 2, 23));
         loanList.add(loan);
-        loan = new TempDashBoardModel("Akshay Kumar", "1000", "2 Feb 2018");
+        loan = new DashBoardModel("Akshay Kumar", new BigDecimal(1000), new Date(2018, 2, 22));
         loanList.add(loan);
-        loan = new TempDashBoardModel("Amitabh Bachchan", "1500", "1 Feb 2018");
+        loan = new DashBoardModel("Amitabh Bachchan", new BigDecimal(1500), new Date(2018, 4, 23));
         loanList.add(loan);
 
 

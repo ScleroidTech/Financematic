@@ -3,8 +3,8 @@ package com.scleroid.financematic.data.local.lab;
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 
-import com.scleroid.financematic.AppDatabase;
 import com.scleroid.financematic.AppExecutors;
+import com.scleroid.financematic.data.local.AppDatabase;
 import com.scleroid.financematic.data.local.LocalDataSource;
 import com.scleroid.financematic.data.local.dao.LoanDao;
 import com.scleroid.financematic.data.local.model.Loan;
@@ -67,7 +67,7 @@ public class LocalLoanLab implements LocalDataSource<Loan> {
     @Override
     public LiveData<Loan> getItem(final int itemId) {
         Timber.d("getting loan with id %d", itemId);
-        return loanDao.getLoan(itemId);
+        return loanDao.getLoanLive(itemId);
     }
 
     /**
@@ -128,7 +128,7 @@ public class LocalLoanLab implements LocalDataSource<Loan> {
     public Completable deleteItem(final int itemId) {
         Timber.d("deleting loan with id %d", itemId);
 
-        return Completable.fromAction(() -> loanDao.delete(loanDao.getLoan(itemId).getValue()));
+        return Completable.fromAction(() -> loanDao.delete(loanDao.getLoanLive(itemId).getValue()));
     }
 
     /**

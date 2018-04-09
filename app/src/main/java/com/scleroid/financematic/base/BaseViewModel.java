@@ -3,6 +3,8 @@ package com.scleroid.financematic.base;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 
+import com.scleroid.financematic.Resource;
+
 import java.util.List;
 
 /**
@@ -14,9 +16,9 @@ import java.util.List;
 public abstract class BaseViewModel<N> extends ViewModel {
 
 
-    protected abstract LiveData<List<N>> updateItemLiveData();
+    protected abstract LiveData<Resource<List<N>>> updateItemLiveData();
 
-    protected abstract LiveData<List<N>> getItemList();
+    protected abstract LiveData<Resource<List<N>>> getItemList();
 
 
  /* @Override

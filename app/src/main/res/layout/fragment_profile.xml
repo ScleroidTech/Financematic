@@ -451,7 +451,7 @@
 
                     android:layout_marginTop="8dp"
                     android:text="2 Feb 2018"
-                    android:textColor="@color/year"
+                    android:textColor="@color/installmentDate"
                     android:textSize="14sp"
                     app:layout_constraintStart_toEndOf="@+id/imageView2"
                     app:layout_constraintTop_toBottomOf="@+id/customer_name_text_view" />
@@ -476,7 +476,7 @@
                     android:layout_marginStart="4dp"
                     android:layout_marginTop="8dp"
                     android:text="to"
-                    android:textColor="@color/year"
+                    android:textColor="@color/installmentDate"
                     android:textSize="14sp"
                     app:layout_constraintStart_toEndOf="@+id/time_remaining"
                     app:layout_constraintTop_toBottomOf="@+id/customer_name_text_view" />
@@ -491,7 +491,7 @@
                     android:layout_marginStart="4dp"
                     android:layout_marginTop="8dp"
                     android:text="2 Dec 2018"
-                    android:textColor="@color/year"
+                    android:textColor="@color/installmentDate"
                     android:textSize="14sp"
                     app:layout_constraintStart_toEndOf="@+id/textView2"
                     app:layout_constraintTop_toBottomOf="@+id/customer_name_text_view" />
@@ -731,7 +731,7 @@
 
                     android:layout_marginTop="8dp"
                     android:text="2 Feb 2018 to 10 Dec2018"
-                    android:textColor="@color/year"
+                    android:textColor="@color/installmentDate"
                     android:textSize="15sp"
                     app:layout_constraintStart_toEndOf="@+id/imageView22"
                     app:layout_constraintTop_toBottomOf="@+id/customer_name_text_view22" />
@@ -918,7 +918,7 @@
 
                     android:layout_marginTop="8dp"
                     android:text="2 Feb 2018 to 10 Dec2018"
-                    android:textColor="@color/year"
+                    android:textColor="@color/installmentDate"
                     android:textSize="15sp"
                     app:layout_constraintStart_toEndOf="@+id/imageView44"
                     app:layout_constraintTop_toBottomOf="@+id/customer_name_text_view44" />
@@ -1111,7 +1111,7 @@
 
                         android:layout_marginTop="8dp"
                         android:text="2 Feb 2018"
-                        android:textColor="@color/year"
+                        android:textColor="@color/installmentDate"
                         android:textSize="13sp"
                         app:layout_constraintStart_toEndOf="@+id/imageView2"
                         app:layout_constraintTop_toBottomOf="@+id/customer_name_text_view" />
@@ -1155,7 +1155,7 @@
                         android:layout_marginStart="2dp"
                         android:layout_marginTop="8dp"
                         android:text="2 Dec 2018"
-                        android:textColor="@color/year"
+                        android:textColor="@color/installmentDate"
                         android:textSize="13sp"
                         app:layout_constraintStart_toEndOf="@+id/imageView10"
                         app:layout_constraintTop_toBottomOf="@+id/customer_name_text_view" />
