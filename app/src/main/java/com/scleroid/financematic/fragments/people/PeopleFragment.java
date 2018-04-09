@@ -62,6 +62,7 @@ public class PeopleFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        super.onCreateView(inflater, container, savedInstanceState);
         View rootView = getRootView();
 
         sv = rootView.findViewById(R.id.simpleSearchView);

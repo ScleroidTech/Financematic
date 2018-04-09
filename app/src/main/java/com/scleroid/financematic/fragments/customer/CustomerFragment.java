@@ -1,7 +1,6 @@
 package com.scleroid.financematic.fragments.customer;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +11,8 @@ import android.widget.Toast;
 
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.adapter.ProfileAdapter;
+import com.scleroid.financematic.base.BaseFragment;
+import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.Profile;
 import com.scleroid.financematic.utils.RecyclerTouchListener;
 
@@ -23,7 +24,7 @@ import java.util.List;
  */
 
 
-public class CustomerFragment extends Fragment {
+public class CustomerFragment extends BaseFragment {
     private List<Profile> profileList = new ArrayList<>();
     private RecyclerView recyclerView;
     private ProfileAdapter mAdapter;
@@ -44,11 +45,20 @@ public class CustomerFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     * @return layout resource id
+     */
+    @Override
+    public int getLayoutId() {
+        return R.layout.fragment_profile;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
+        View rootView = getRootView();
 
 
         recyclerView = rootView.findViewById(R.id.profile_my_recycler);
@@ -93,6 +103,16 @@ public class CustomerFragment extends Fragment {
         return rootView;
 
 
+    }
+
+    /**
+     * Override for set view model
+     *
+     * @return view model instance
+     */
+    @Override
+    public BaseViewModel getViewModel() {
+        return null;
     }
 
     private void prepareLoanData() {
