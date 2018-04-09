@@ -23,6 +23,8 @@ import com.scleroid.financematic.utils.TextViewUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -34,7 +36,8 @@ import butterknife.Unbinder;
 
 public class DashboardFragment extends Fragment {
 
-    TextViewUtils textViewUtils = new TextViewUtils();
+    @Inject
+    TextViewUtils textViewUtils;
     TextView firstFragment;
     @BindView(R.id.total_amount_text_view)
     TextView totalAmountTextView;
@@ -51,7 +54,8 @@ public class DashboardFragment extends Fragment {
     Unbinder unbinder;
     private List<TempDashBoardModel> loanList = new ArrayList<>();
     private LoanAdapter mAdapter;
-    private ActivityUtils activityUtils = new ActivityUtils();
+    @Inject
+    private ActivityUtils activityUtils;
 
     public DashboardFragment() {
         // Required empty public constructor
@@ -78,7 +82,7 @@ public class DashboardFragment extends Fragment {
         unbinder = ButterKnife.bind(this, rootView);
 
 
-//Intend
+//Intent
         firstFragment = rootView.findViewById(R.id.total_amount_text_view);
         firstFragment.setOnClickListener(v -> activityUtils.loadFragment(new PassbookFragment(), getFragmentManager()));
 
