@@ -1,9 +1,9 @@
 package com.scleroid.financematic.viewmodels;
 
+import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 
-import com.scleroid.financematic.AppDatabase;
 import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.local.model.Customer;
 
@@ -18,8 +18,8 @@ public class CustomerViewModel extends BaseViewModel {
     private LiveData<List<Customer>> customerList;
 
 
-    public CustomerViewModel(@NonNull AppDatabase database) {
-        super(database);
+    public CustomerViewModel(@NonNull Application database) {
+
 
         //      parcelList = updateParcelLiveData();
         customerList = updateCustomerLiveData();
@@ -40,7 +40,7 @@ public class CustomerViewModel extends BaseViewModel {
     }*/
 
     private LiveData<List<Customer>> updateCustomerLiveData() {
-        LiveData<List<Customer>> customerList = appDatabase.customerDao().getAllCustomerLive();
+        //TODo     LiveData<List<Customer>> customerList = appDatabase.customerDao().getAllCustomerLive();
         return customerList;
     }
 

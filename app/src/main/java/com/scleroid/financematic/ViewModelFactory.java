@@ -13,7 +13,6 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.VisibleForTesting;
 
-import com.scleroid.financematic.data.todoCode.LoanRepository;
 import com.scleroid.financematic.viewmodels.CustomerViewModel;
 import com.scleroid.financematic.viewmodels.ExpenseViewModel;
 import com.scleroid.financematic.viewmodels.LoanViewModel;
@@ -32,16 +31,13 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
 
     private final Application mApplication;
 
-    private final LoanRepository mLoanRepository;
+
 
     public ViewModelFactory(Application application) {
         mApplication = application;
     }
 
-    private ViewModelFactory(Application application, LoanRepository loanRepository) {
-        mApplication = application;
-        mLoanRepository = loanRepository;
-    }
+
 
     public static ViewModelFactory getInstance(Application application) {
 
@@ -64,16 +60,16 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
     public <T extends ViewModel> T create(Class<T> modelClass) {
         if (modelClass.isAssignableFrom(CustomerViewModel.class)) {
             //noinspection unchecked
-            return (T) new CustomerViewModel(mApplication, mLoanRepository);
+            return (T) new CustomerViewModel(mApplication);
         } else if (modelClass.isAssignableFrom(ExpenseViewModel.class)) {
             //noinspection unchecked
-            return (T) new ExpenseViewModel(mApplication, mLoanRepository);
+            return (T) new ExpenseViewModel(mApplication);
         } else if (modelClass.isAssignableFrom(LoanViewModel.class)) {
             //noinspection unchecked
-            return (T) new LoanViewModel(mApplication, mLoanRepository);
+            return (T) new LoanViewModel(mApplication);
         } else if (modelClass.isAssignableFrom(TransactionViewModel.class)) {
             //noinspection unchecked
-            return (T) new TransactionViewModel(mApplication, mLoanRepository);
+            return (T) new TransactionViewModel(mApplication);
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }

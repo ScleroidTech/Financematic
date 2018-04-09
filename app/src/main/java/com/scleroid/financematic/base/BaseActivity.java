@@ -16,6 +16,7 @@ import com.scleroid.financematic.utils.CommonUtils;
 import com.scleroid.financematic.utils.NetworkUtils;
 
 import dagger.android.AndroidInjection;
+import dagger.android.support.HasSupportFragmentInjector;
 
 /**
  * Copyright (C) 2018
@@ -24,22 +25,15 @@ import dagger.android.AndroidInjection;
  * @since 4/6/18
  */
 
-public abstract class BaseActivity<V extends BaseViewModel> extends AppCompatActivity
-        implements BaseFragment.Callback {
+public abstract class BaseActivity
+        extends AppCompatActivity
+        implements BaseFragment.Callback, HasSupportFragmentInjector {
 
     // TODO
     // this can probably depend on isLoading variable of BaseViewModel,
     // since its going to be common for all the activities
     private ProgressDialog mProgressDialog;
 
-    private V mViewModel;
-
-    /**
-     * Override for set binding variable
-     *
-     * @return variable id
-     */
-    public abstract int getBindingVariable();
 
     /**
      * @return layout resource id
@@ -48,12 +42,6 @@ public abstract class BaseActivity<V extends BaseViewModel> extends AppCompatAct
     @LayoutRes
     int getLayoutId();
 
-    /**
-     * Override for set view model
-     *
-     * @return view model instance
-     */
-    public abstract V getViewModel();
 
     @Override
     public void onFragmentAttached() {

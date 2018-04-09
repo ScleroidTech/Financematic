@@ -13,13 +13,13 @@ import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.scleroid.financematic.base.BaseActivity;
 import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.data.local.model.TransactionModel;
@@ -44,7 +44,7 @@ import es.dmoral.toasty.Toasty;
 import io.bloco.faker.Faker;
 
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, GarlandApp.FakerReadyListener, HasSupportFragmentInjector {
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, GarlandApp.FakerReadyListener, HasSupportFragmentInjector {
     //TODO Refactor repeating code, look at  android-mvvm-architecture for ideas, its by mind-dorks
     // tags used to attach the fragments
     private static final String TAG_DASHBOARD = "dashboard";
@@ -104,6 +104,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawer;
     private NavigationView navigationView;
     private String[] activityTitles;
+    private int layoutMain;
 
 
     @NonNull
@@ -111,10 +112,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return new Intent(activity, MainActivity.class);
     }
 
+    /**
+     * @return layout resource id
+     */
+    @Override
+    public int getLayoutId() {
+        return layoutMain;
+    }
+
     protected void onCreate(Bundle savedInstanceState) {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        layoutMain = R.layout.activity_main;
+        setContentView(layoutMain);
 
 
         final Toolbar toolbar = findViewById(R.id.toolbar);

@@ -1,9 +1,9 @@
 package com.scleroid.financematic.viewmodels;
 
+import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 
-import com.scleroid.financematic.AppDatabase;
 import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.local.model.TransactionModel;
 
@@ -18,14 +18,14 @@ public class TransactionViewModel extends BaseViewModel {
 
     private LiveData<List<TransactionModel>> transactionList;
 
-    public TransactionViewModel(@NonNull AppDatabase application) {
-        super(application);
+    public TransactionViewModel(@NonNull Application application) {
 
         transactionList = updateTransactionLiveData();
     }
 
     private LiveData<List<TransactionModel>> updateTransactionLiveData() {
-        return appDatabase.transactionDao().getAllTransactionsLive();
+        //   return appDatabase.transactionDao().getAllTransactionsLive();
+        return null;//TODO WOrk here
     }
 
     public LiveData<List<TransactionModel>> getTransactionList() {

@@ -1,5 +1,6 @@
 package com.scleroid.financematic.viewmodels;
 
+import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 
@@ -23,15 +24,15 @@ public class ExpenseViewModel extends BaseViewModel {
 
     private AppDatabase appDatabase;
 
-    public ExpenseViewModel(@NonNull AppDatabase application) {
-        super(application);
+    public ExpenseViewModel(@NonNull Application application) {
+
 
         expenseList = updateExpenseLiveData();
     }
 
     private LiveData<List<Expense>> updateExpenseLiveData() {
         //TODO use Network based data source here
-        LiveData<List<Expense>> expenseList = appDatabase.expenseDao().getAllExpenseLive();
+        //     LiveData<List<Expense>> expenseList = appDatabase.expenseDao().getAllExpenseLive();
         return expenseList;
     }
 

@@ -1,8 +1,8 @@
 package com.scleroid.financematic.viewmodels;
 
+import android.app.Application;
 import android.arch.lifecycle.LiveData;
 
-import com.scleroid.financematic.AppDatabase;
 import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.local.model.Loan;
 
@@ -17,14 +17,14 @@ import javax.inject.Inject;
 
 public class LoanViewModel extends BaseViewModel {
     private LiveData<List<Loan>> loanList;
-    private AppDatabase appDatabase;
+
 
 
     private LiveData<Loan> loanLiveData;
 
     @Inject
-    public LoanViewModel(AppDatabase appDatabase) {
-        super(appDatabase);
+    public LoanViewModel(Application appDatabase) {
+
 
 
 

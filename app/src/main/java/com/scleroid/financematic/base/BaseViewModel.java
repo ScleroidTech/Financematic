@@ -2,8 +2,6 @@ package com.scleroid.financematic.base;
 
 import android.arch.lifecycle.ViewModel;
 
-import com.scleroid.financematic.AppDatabase;
-
 /**
  * Copyright (C) 2018
  *
@@ -12,10 +10,8 @@ import com.scleroid.financematic.AppDatabase;
  */
 public class BaseViewModel extends ViewModel {
 
-    protected AppDatabase appDatabase;
 
-    public BaseViewModel(final AppDatabase appDatabase) {
-        this.appDatabase = appDatabase;
+    public BaseViewModel() {
     }
 
  /* @Override
