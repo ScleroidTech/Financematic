@@ -8,7 +8,6 @@ import com.scleroid.financematic.AppDatabase;
 import com.scleroid.financematic.data.local.dao.CustomerDao;
 import com.scleroid.financematic.data.local.dao.LoanDao;
 import com.scleroid.financematic.data.local.model.Customer;
-import com.scleroid.financematic.data.local.model.Loan;
 
 import java.util.List;
 
@@ -43,14 +42,14 @@ public class DatabaseHelperCustomer {
 
     public LiveData<Customer> getCustomer(int id) {
         LiveData<Customer> customerLiveData = dao.getCustomerLive(id);
-        customerLiveData = Transformations.switchMap(customerLiveData, inputCustomer -> {
-            LiveData<List<Loan>> loanLiveData = dao.getLoansLive(inputCustomer.getCustomerId());
+        /*customerLiveData = Transformations.switchMap(customerLiveData, inputCustomer -> {
+            LiveData<List<Loan>> loanLiveData = loanDao.getLoansLive(inputCustomer.getCustomerId());
             LiveData<Customer> outputLiveData = Transformations.map(loanLiveData, input -> {
                 inputCustomer.setLoans(input);
                 return inputCustomer;
             });
             return outputLiveData;
-        });
+        });*/
         return customerLiveData;
         //Good Job buddy, now the real challenge is next method
     }
@@ -84,9 +83,9 @@ public class DatabaseHelperCustomer {
 
             @Override
             public List<Customer> apply(final List<Customer> inputStates) {
-                for (Customer state : inputStates) {
+               /* for (Customer state : inputStates) {
                     state.setLoans(dao.getLoans(state.getCustomerId()));
-                }
+                }*/
                 return inputStates;
             }
         });
