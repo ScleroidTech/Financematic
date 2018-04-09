@@ -1,7 +1,6 @@
 package com.scleroid.financematic.fragments.passbook;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +11,8 @@ import android.widget.Toast;
 
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.adapter.PassbookAdapter;
+import com.scleroid.financematic.base.BaseFragment;
+import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.tempModels.Passbook;
 import com.scleroid.financematic.utils.RecyclerTouchListener;
 
@@ -26,7 +27,7 @@ import java.util.List;
  * @since 2/3/18
  */
 
-public class PassbookFragment extends Fragment {
+public class PassbookFragment extends BaseFragment {
     private List<Passbook> passbookList = new ArrayList<>();
     private RecyclerView recyclerView;
     private PassbookAdapter mAdapter;
@@ -42,6 +43,14 @@ public class PassbookFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * @return layout resource id
+     */
+    @Override
+    public int getLayoutId() {
+        return R.layout.passbook;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +60,7 @@ public class PassbookFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.passbook, container, false);
+        View rootView = getRootView();
 
 
         recyclerView = rootView.findViewById(R.id.passbook_my_recycler);
@@ -96,6 +105,16 @@ public class PassbookFragment extends Fragment {
         return rootView;
 
 
+    }
+
+    /**
+     * Override for set view model
+     *
+     * @return view model instance
+     */
+    @Override
+    public BaseViewModel getViewModel() {
+        return null;
     }
 
     private void prepareLoanData() {

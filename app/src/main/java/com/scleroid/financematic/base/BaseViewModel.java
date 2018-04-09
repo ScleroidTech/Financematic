@@ -1,6 +1,9 @@
 package com.scleroid.financematic.base;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
+
+import java.util.List;
 
 /**
  * Copyright (C) 2018
@@ -8,11 +11,13 @@ import android.arch.lifecycle.ViewModel;
  * @author Ganesh Kaple
  * @since 4/6/18
  */
-public class BaseViewModel extends ViewModel {
+public abstract class BaseViewModel<N> extends ViewModel {
 
 
-    public BaseViewModel() {
-    }
+    protected abstract LiveData<List<N>> updateItemLiveData();
+
+    protected abstract LiveData<List<N>> getItemList();
+
 
  /* @Override
     protected void onCleared() {

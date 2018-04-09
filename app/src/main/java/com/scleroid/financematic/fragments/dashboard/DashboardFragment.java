@@ -2,7 +2,6 @@ package com.scleroid.financematic.fragments.dashboard;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +14,8 @@ import android.widget.Toast;
 
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.adapter.LoanAdapter;
+import com.scleroid.financematic.base.BaseFragment;
+import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.tempModels.TempDashBoardModel;
 import com.scleroid.financematic.fragments.passbook.PassbookFragment;
 import com.scleroid.financematic.utils.ActivityUtils;
@@ -35,7 +36,7 @@ import butterknife.Unbinder;
  */
 
 
-public class DashboardFragment extends Fragment {
+public class DashboardFragment extends BaseFragment {
 
     @Inject
     TextViewUtils textViewUtils;
@@ -57,7 +58,7 @@ public class DashboardFragment extends Fragment {
     private LoanAdapter mAdapter;
     @Inject
     ActivityUtils activityUtils;
-    //j bjbjbjbj
+
 
     public DashboardFragment() {
         // Required empty public constructor
@@ -70,6 +71,14 @@ public class DashboardFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * @return layout resource id
+     */
+    @Override
+    public int getLayoutId() {
+        return R.layout.dashboard;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,10 +87,12 @@ public class DashboardFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.setDebug(true);
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.dashboard, container, false);
-        unbinder = ButterKnife.bind(this, rootView);
+        View rootView = getRootView();
+        // unbinder = ButterKnife.bind(this, rootView);
+
 
 
 //Intent
@@ -98,6 +109,16 @@ public class DashboardFragment extends Fragment {
         textViewUtils.textViewExperiments(totalAmountTextView);
 
         return rootView;
+    }
+
+    /**
+     * Override for set view model
+     *
+     * @return view model instance
+     */
+    @Override
+    public BaseViewModel getViewModel() {
+        return null;
     }
 
 
@@ -157,9 +178,4 @@ public class DashboardFragment extends Fragment {
     }
 
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
 }

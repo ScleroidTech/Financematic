@@ -1,7 +1,6 @@
 package com.scleroid.financematic.fragments.people;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +13,8 @@ import android.widget.Toast;
 
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.adapter.PeopleAdapter;
+import com.scleroid.financematic.base.BaseFragment;
+import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.tempModels.List_all_peoples;
 import com.scleroid.financematic.utils.ActivityUtils;
 import com.scleroid.financematic.utils.RecyclerTouchListener;
@@ -25,7 +26,7 @@ import java.util.List;
  * Created by scleroid on 28/2/18.
  */
 
-public class PeopleFragment extends Fragment {
+public class PeopleFragment extends BaseFragment {
     private final ActivityUtils activityUtils = new ActivityUtils();
     SearchView sv;
     TextView firstFragment;
@@ -44,6 +45,14 @@ public class PeopleFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * @return layout resource id
+     */
+    @Override
+    public int getLayoutId() {
+        return R.layout.list_all_peoples;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +62,7 @@ public class PeopleFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.list_all_peoples, container, false);
+        View rootView = getRootView();
 
         sv = rootView.findViewById(R.id.simpleSearchView);
 
@@ -125,6 +134,16 @@ public class PeopleFragment extends Fragment {
         return rootView;
 
 
+    }
+
+    /**
+     * Override for set view model
+     *
+     * @return view model instance
+     */
+    @Override
+    public BaseViewModel getViewModel() {
+        return null;
     }
 
     private void prepareLoanData() {

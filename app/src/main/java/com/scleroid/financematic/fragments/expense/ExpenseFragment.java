@@ -3,7 +3,6 @@ package com.scleroid.financematic.fragments.expense;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +23,8 @@ import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.adapter.ExpenseAdapter;
+import com.scleroid.financematic.base.BaseFragment;
+import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.local.model.Expense;
 import com.scleroid.financematic.utils.RecyclerTouchListener;
 
@@ -33,12 +34,11 @@ import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
 
-public class ExpenseFragment extends Fragment {
+public class ExpenseFragment extends BaseFragment {
     @BindView(R.id.expense_recycler)
     RecyclerView expenseRecyclerView;
     @BindView(R.id.room_rent_amt_text_view)
@@ -87,6 +87,14 @@ public class ExpenseFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * @return layout resource id
+     */
+    @Override
+    public int getLayoutId() {
+        return R.layout.fragment_expense;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,13 +104,11 @@ public class ExpenseFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_expense, container, false);
+        View view = getRootView();
 
 
         //
 
-
-        unbinder = ButterKnife.bind(this, view);
         initializeRecyclerView();
         //      float[] data = {450, 630, 300, 200, 400};
         //    mChart.setData(data);
@@ -112,6 +118,17 @@ public class ExpenseFragment extends Fragment {
 
         initializeChartData();
         return view;
+    }
+
+    /**
+     * Override for set view model
+     *
+     * @return view model instance
+     */
+    @Override
+    public BaseViewModel getViewModel() {
+        //TODO
+        return null;
     }
 
     private void initializeRecyclerView() {
@@ -224,11 +241,6 @@ public class ExpenseFragment extends Fragment {
 
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
 
     @OnClick({R.id.room_rent_card, R.id.light_bill_card, R.id.phone_bill_card, R.id.salary_card, R.id.fuel_card, R.id.other_card})
     public void onViewClicked(View view) {

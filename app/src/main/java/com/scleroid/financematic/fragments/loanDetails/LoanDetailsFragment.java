@@ -1,7 +1,6 @@
 package com.scleroid.financematic.fragments.loanDetails;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +13,8 @@ import android.widget.Toast;
 
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.adapter.SummeryAdapter;
+import com.scleroid.financematic.base.BaseFragment;
+import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.tempModels.Personal_summery_loan_details;
 import com.scleroid.financematic.utils.ActivityUtils;
 import com.scleroid.financematic.utils.RecyclerTouchListener;
@@ -24,7 +25,6 @@ import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 
@@ -32,7 +32,7 @@ import butterknife.Unbinder;
  * Created by scleroid on 2/3/18.
  */
 
-public class LoanDetailsFragment extends Fragment {
+public class LoanDetailsFragment extends BaseFragment {
 
 
     TextViewUtils textViewUtils = new TextViewUtils();
@@ -67,6 +67,14 @@ public class LoanDetailsFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * @return layout resource id
+     */
+    @Override
+    public int getLayoutId() {
+        return R.layout.fragment_loan_details;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,8 +84,7 @@ public class LoanDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_loan_details, container, false);
-        unbinder = ButterKnife.bind(this, rootView);
+        View rootView = getRootView();
         /*        View rootView =  inflater.inflate(R.layout.personal_loan_aacount_details, container, false);*/
 
         recyclerView = rootView.findViewById(R.id.pesonal_summery_details_recycler);
@@ -122,6 +129,16 @@ public class LoanDetailsFragment extends Fragment {
 
     }
 
+    /**
+     * Override for set view model
+     *
+     * @return view model instance
+     */
+    @Override
+    public BaseViewModel getViewModel() {
+        return null;
+    }
+
 
     private void prepareLoanData() {
         Personal_summery_loan_details loan = new Personal_summery_loan_details("Received", "2000", new Date("1/6/2018"));
@@ -153,10 +170,4 @@ public class LoanDetailsFragment extends Fragment {
         mAdapter.notifyDataSetChanged();
     }
 
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
 }
