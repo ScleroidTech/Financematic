@@ -35,12 +35,6 @@ public abstract class BaseFragment<V extends BaseViewModel> extends Fragment {
     private BaseActivity mActivity;
     private V mViewModel;
 
-    /**
-     * Override for set binding variable
-     *
-     * @return variable id
-     */
-    public abstract int getBindingVariable();
 
     /**
      * @return layout resource id

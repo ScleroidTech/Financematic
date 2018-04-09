@@ -1,4 +1,4 @@
-package com.scleroid.financematic.fragments;
+package com.scleroid.financematic.fragments.people;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,13 +20,14 @@ import com.scleroid.financematic.utils.RecyclerTouchListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * Created by scleroid on 28/2/18.
  */
 
 public class PeopleFragment extends Fragment {
-    SearchView sv;
     private final ActivityUtils activityUtils = new ActivityUtils();
+    SearchView sv;
     TextView firstFragment;
     private List<List_all_peoples> list_all_peoplesList = new ArrayList<>();
     private RecyclerView recyclerView;
@@ -54,7 +55,7 @@ public class PeopleFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.list_all_peoples, container, false);
 
-      sv= rootView.findViewById(R.id.simpleSearchView);
+        sv = rootView.findViewById(R.id.simpleSearchView);
 
         //Intend
      /*   firstFragment = rootView.findViewById(R.id.button_list);
@@ -104,7 +105,7 @@ public class PeopleFragment extends Fragment {
         final PeopleAdapter adapter=new PeopleAdapter(this,getPlayers());
         recyclerView.setAdapter(adapter);*/
         //SEARCH
-      sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 return false;
@@ -117,7 +118,6 @@ public class PeopleFragment extends Fragment {
                 return false;
             }
         });
-
 
 
         prepareLoanData();
@@ -144,8 +144,6 @@ public class PeopleFragment extends Fragment {
         // so that it will render the list with new data
         mAdapter.notifyDataSetChanged();
     }
-
-
 
 
 }

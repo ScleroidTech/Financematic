@@ -1,15 +1,15 @@
 package com.scleroid.financematic.di;
 
-import com.scleroid.financematic.fragments.DashboardFragment;
-import com.scleroid.financematic.fragments.ExpenseFragment;
-import com.scleroid.financematic.fragments.LoanDetailsFragment;
-import com.scleroid.financematic.fragments.PassbookFragment;
-import com.scleroid.financematic.fragments.PeopleFragment;
 import com.scleroid.financematic.fragments.RegisterCustomerFragment;
 import com.scleroid.financematic.fragments.RegisterMoneyFragment;
 import com.scleroid.financematic.fragments.RegisterReceivedFragment;
 import com.scleroid.financematic.fragments.ReminderFragment;
 import com.scleroid.financematic.fragments.ReportFragment;
+import com.scleroid.financematic.fragments.dashboard.DashboardFragment;
+import com.scleroid.financematic.fragments.expense.ExpenseFragment;
+import com.scleroid.financematic.fragments.loanDetails.LoanDetailsFragment;
+import com.scleroid.financematic.fragments.passbook.PassbookFragment;
+import com.scleroid.financematic.fragments.people.PeopleFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

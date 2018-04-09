@@ -1,4 +1,4 @@
-package com.scleroid.financematic.fragments;
+package com.scleroid.financematic.fragments.dashboard;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.adapter.LoanAdapter;
 import com.scleroid.financematic.data.tempModels.TempDashBoardModel;
+import com.scleroid.financematic.fragments.passbook.PassbookFragment;
 import com.scleroid.financematic.utils.ActivityUtils;
 import com.scleroid.financematic.utils.RecyclerTouchListener;
 import com.scleroid.financematic.utils.TextViewUtils;
@@ -154,9 +155,6 @@ public class DashboardFragment extends Fragment {
         // so that it will render the list with new data
         //mAdapter.notifyDataSetChanged();
     }
-
-
-
 
 
     @Override

@@ -1,4 +1,4 @@
-package com.scleroid.financematic.fragments;
+package com.scleroid.financematic.fragments.expense;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -65,10 +65,6 @@ public class ExpenseFragment extends Fragment {
     LinearLayout fuelCard;
     @BindView(R.id.other_card)
     LinearLayout otherCard;
-    private List<Expense> expenseList = new ArrayList<>();
-
-    private ExpenseAdapter mAdapter;
-
     @BindView(R.id.pie_chart_expense)
     PieChart mChart;
     @BindView(R.id.toaa)
@@ -76,6 +72,8 @@ public class ExpenseFragment extends Fragment {
     @BindView(R.id.totsss)
     TextView totsss;
     ArrayList<PieEntry> values = new ArrayList<>();
+    private List<Expense> expenseList = new ArrayList<>();
+    private ExpenseAdapter mAdapter;
     private Unbinder unbinder;
 
     public ExpenseFragment() {
@@ -151,6 +149,29 @@ public class ExpenseFragment extends Fragment {
         prepareExpenseData();
     }
 
+    private void prepareExpenseData() {
+        Expense expense = new Expense(new BigDecimal(2000), Expense.LIGHT_BILL, new Date(2018, 6, 1));
+        expenseList.add(expense);
+        expense = new Expense(new BigDecimal(42642), Expense.FUEL, new Date(2018, 3, 12));
+        expenseList.add(expense);
+        expense = new Expense(new BigDecimal(54545), Expense.PAID_SALARIES, new Date(2018, 4, 15));
+        expenseList.add(expense);
+        expense = new Expense(new BigDecimal(2323), Expense.PHONE_BILL, new Date(2018, 7, 25));
+        expenseList.add(expense);
+        expense = new Expense(new BigDecimal(12122), Expense.ROOM_RENT, new Date(2018, 2, 15));
+        expenseList.add(expense);
+        expense = new Expense(new BigDecimal(4500), Expense.OTHER, new Date(2018, 4, 13));
+        expenseList.add(expense);
+
+
+        refreshRecyclerView(expenseList);
+    }
+
+    private void refreshRecyclerView(List<Expense> expenses) {
+        mAdapter.setExpenses(expenses);
+        mAdapter.notifyDataSetChanged();
+    }
+
     private void initializeChartData() {
         // IMPORTANT: In a PieChart, no values (Entry) should have the same
         // xIndex (even if from different DataSets), since no values can be
@@ -207,30 +228,6 @@ public class ExpenseFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-    }
-
-
-    private void prepareExpenseData() {
-        Expense expense = new Expense(new BigDecimal(2000), Expense.LIGHT_BILL, new Date(2018, 6, 1));
-        expenseList.add(expense);
-        expense = new Expense(new BigDecimal(42642), Expense.FUEL, new Date(2018, 3, 12));
-        expenseList.add(expense);
-        expense = new Expense(new BigDecimal(54545), Expense.PAID_SALARIES, new Date(2018, 4, 15));
-        expenseList.add(expense);
-        expense = new Expense(new BigDecimal(2323), Expense.PHONE_BILL, new Date(2018, 7, 25));
-        expenseList.add(expense);
-        expense = new Expense(new BigDecimal(12122), Expense.ROOM_RENT, new Date(2018, 2, 15));
-        expenseList.add(expense);
-        expense = new Expense(new BigDecimal(4500), Expense.OTHER, new Date(2018, 4, 13));
-        expenseList.add(expense);
-
-
-        refreshRecyclerView(expenseList);
-    }
-
-    private void refreshRecyclerView(List<Expense> expenses) {
-        mAdapter.setExpenses(expenses);
-        mAdapter.notifyDataSetChanged();
     }
 
     @OnClick({R.id.room_rent_card, R.id.light_bill_card, R.id.phone_bill_card, R.id.salary_card, R.id.fuel_card, R.id.other_card})

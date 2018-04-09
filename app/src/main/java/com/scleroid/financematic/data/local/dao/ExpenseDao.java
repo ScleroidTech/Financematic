@@ -80,7 +80,7 @@ public interface ExpenseDao {
      * @param expense inserts list of expense object
      */
     @Insert
-    long saveExpenses(List<Expense> expense);
+    long[] saveExpenses(List<Expense> expense);
 
     /**
      * Updates a specified dataset

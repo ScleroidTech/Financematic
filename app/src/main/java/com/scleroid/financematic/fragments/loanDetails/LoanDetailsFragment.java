@@ -1,4 +1,4 @@
-package com.scleroid.financematic.fragments;
+package com.scleroid.financematic.fragments.loanDetails;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -48,7 +48,6 @@ public class LoanDetailsFragment extends Fragment {
     CardView cardView;
 
 
-
     @BindView(R.id.pesonal_summery_details_recycler)
     RecyclerView pesonalSummeryDetailsRecycler;
     Unbinder unbinder;
@@ -79,7 +78,7 @@ public class LoanDetailsFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_loan_details, container, false);
         unbinder = ButterKnife.bind(this, rootView);
-/*        View rootView =  inflater.inflate(R.layout.personal_loan_aacount_details, container, false);*/
+        /*        View rootView =  inflater.inflate(R.layout.personal_loan_aacount_details, container, false);*/
 
         recyclerView = rootView.findViewById(R.id.pesonal_summery_details_recycler);
         mAdapter = new SummeryAdapter(summeryList);
@@ -153,7 +152,6 @@ public class LoanDetailsFragment extends Fragment {
         // so that it will render the list with new data
         mAdapter.notifyDataSetChanged();
     }
-
 
 
     @Override

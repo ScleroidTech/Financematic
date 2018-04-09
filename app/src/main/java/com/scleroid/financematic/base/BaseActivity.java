@@ -58,6 +58,7 @@ public abstract class BaseActivity
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         performDependencyInjection();
         super.onCreate(savedInstanceState);
+        setContentView(getLayoutId());
 
     }
 

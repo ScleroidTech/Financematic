@@ -105,7 +105,7 @@ public interface CustomerDao {
      * @param customer inserts list of customer object
      */
     @Insert
-    long saveCustomers(List<Customer> customer);
+    long[] saveCustomers(List<Customer> customer);
 
     /**
      * Updates a specified dataset

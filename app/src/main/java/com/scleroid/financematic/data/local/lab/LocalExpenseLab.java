@@ -29,7 +29,7 @@ public class LocalExpenseLab implements LocalDataSource<Expense> {
     private final ExpenseDao expenseDao;
 
     @Inject
-    private LocalExpenseLab(final AppDatabase appDatabase, final AppExecutors appExecutors) {
+    LocalExpenseLab(final AppDatabase appDatabase, final AppExecutors appExecutors) {
         this.appDatabase = appDatabase;
         this.appExecutors = appExecutors;
         this.expenseDao = appDatabase.expenseDao();
@@ -97,8 +97,8 @@ public class LocalExpenseLab implements LocalDataSource<Expense> {
         Timber.d("creating new expense ");
 
         return Completable.fromAction(() -> {
-            long rowId = expenseDao.saveExpenses(items);
-            Timber.d("expense stored " + rowId);
+            long[] rowId = expenseDao.saveExpenses(items);
+            Timber.d("expense stored " + rowId.length);
         });
     }
 

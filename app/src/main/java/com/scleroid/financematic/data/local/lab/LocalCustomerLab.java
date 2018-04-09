@@ -96,8 +96,8 @@ public class LocalCustomerLab implements LocalDataSource<Customer> {
         Timber.d("creating new customer ");
 
         return Completable.fromAction(() -> {
-            long rowId = customerDao.saveCustomers(items);
-            Timber.d("customer stored " + rowId);
+            long[] rowId = customerDao.saveCustomers(items);
+            Timber.d("customer stored " + rowId.length);
         });
     }
 

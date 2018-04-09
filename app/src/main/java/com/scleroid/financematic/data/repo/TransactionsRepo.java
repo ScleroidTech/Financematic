@@ -56,7 +56,7 @@ public class TransactionsRepo {
     private RateLimiter<String> transactionListRateLimit = new RateLimiter<>(10, TimeUnit.MINUTES);
 
     @Inject
-    private TransactionsRepo(final AppDatabase db, final TransactionDao transactionDao, final WebService webService, final AppExecutors appExecutors) {
+    TransactionsRepo(final AppDatabase db, final TransactionDao transactionDao, final WebService webService, final AppExecutors appExecutors) {
         this.db = db;
         this.transactionDao = transactionDao;
         this.webService = webService;

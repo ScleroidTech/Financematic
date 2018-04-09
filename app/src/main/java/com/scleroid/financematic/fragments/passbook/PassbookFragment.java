@@ -1,4 +1,4 @@
-package com.scleroid.financematic.fragments;
+package com.scleroid.financematic.fragments.passbook;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,29 +11,32 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.scleroid.financematic.R;
-import com.scleroid.financematic.adapter.ProfileAdapter;
-import com.scleroid.financematic.data.Profile;
+import com.scleroid.financematic.adapter.PassbookAdapter;
+import com.scleroid.financematic.data.tempModels.Passbook;
 import com.scleroid.financematic.utils.RecyclerTouchListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
- * Created by scleroid on 4/4/18.
+ * Copyright (C) 2018
+ *
+ * @author Ganesh Kaple
+ * @since 2/3/18
  */
 
-
-public class ProfileFragment extends Fragment {
-    private List<Profile> profileList = new ArrayList<>();
+public class PassbookFragment extends Fragment {
+    private List<Passbook> passbookList = new ArrayList<>();
     private RecyclerView recyclerView;
-    private ProfileAdapter mAdapter;
+    private PassbookAdapter mAdapter;
 
-    public ProfileFragment() {
+    public PassbookFragment() {
         // Required empty public constructor
     }
 
-    public static ProfileFragment newInstance(String param1, String param2) {
-        ProfileFragment fragment = new ProfileFragment();
+    public static PassbookFragment newInstance(String param1, String param2) {
+        PassbookFragment fragment = new PassbookFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -48,16 +51,16 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
+        View rootView = inflater.inflate(R.layout.passbook, container, false);
 
 
-        recyclerView = rootView.findViewById(R.id.profile_my_recycler);
+        recyclerView = rootView.findViewById(R.id.passbook_my_recycler);
 
-        mAdapter = new ProfileAdapter(profileList);
+        mAdapter = new PassbookAdapter(passbookList);
 
         recyclerView.setHasFixedSize(true);
 
-       /* recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this.getContext()));*/
+        /* recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this.getContext()));*/
 
         // vertical RecyclerView
         // keep movie_list_row.xml width to `match_parent`
@@ -78,8 +81,8 @@ public class ProfileFragment extends Fragment {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity().getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Profile profile = profileList.get(position);
-                Toast.makeText(getActivity().getApplicationContext(), profile.getTitle() + " is selected!", Toast.LENGTH_SHORT).show();
+                Passbook passbook = passbookList.get(position);
+                Toast.makeText(getActivity().getApplicationContext(), passbook.getPassbook_received_money() + " is selected!", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -96,14 +99,28 @@ public class ProfileFragment extends Fragment {
     }
 
     private void prepareLoanData() {
-        Profile profile = new Profile("Loan No 1", "22 Feb 2018", "20000", "1000", "28 dec 2018");
-        profileList.add(profile);
-        profile = new Profile("Loan No 2", "2 Jan 2018", "5000", "3000", "6 Jun 2018");
-        profileList.add(profile);
-        profile = new Profile("Loan No 2", "1 Jan 2018", "10000", "4000", "6 Aug 2018");
-        profileList.add(profile);
+        Passbook passbook = new Passbook("14/6/2018 ", "Person Name 1", "50,000", "");
+        passbookList.add(passbook);
+        passbook = new Passbook("12/6/2018 ", "Person Name 2", "", "3000");
+        passbookList.add(passbook);
+        passbook = new Passbook("12/6/2018 ", "Person Name 3", "", "4000");
+        passbookList.add(passbook);
+        passbook = new Passbook("12/6/2018 ", "Person Name 1", "1200", "");
+        passbookList.add(passbook);
+        passbook = new Passbook("1/2/2018 ", "Person Name 2", "4000", "");
+        passbookList.add(passbook);
+
+        passbook = new Passbook("10/1/2018 ", "Person Name 3", "", "2000");
+        passbookList.add(passbook);
+
+        passbook = new Passbook("12/1/2018 ", "Person Name 1", "4000", "");
+        passbookList.add(passbook);
 
 
+        // notify adapter about data set changes
+        // so that it will render the list with new data
         mAdapter.notifyDataSetChanged();
     }
+
+
 }

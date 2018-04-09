@@ -8,7 +8,6 @@ import com.scleroid.financematic.utils.TextViewUtils;
 import javax.inject.Singleton;
 
 import dagger.Module;
-import dagger.Provides;
 
 /**
  * Copyright (C) 2018
@@ -20,18 +19,16 @@ import dagger.Provides;
 public abstract class UtilsModule {
 
     @Singleton
-    @Provides
+
     abstract DateUtils getDateUtils();
 
     @Singleton
-    @Provides
+
     abstract TextViewUtils getTextViewUtils();
 
     @Singleton
-    @Provides
     abstract ActivityUtils getActivityUtils();
 
     @Singleton
-    @Provides
     abstract CurrencyStringUtils getCurrencyStringUtils();
 }

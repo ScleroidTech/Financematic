@@ -2,7 +2,7 @@ package com.scleroid.financematic.data.local;
 
 import com.scleroid.financematic.AppDatabase;
 import com.scleroid.financematic.data.local.dao.LoanDao;
-import com.scleroid.financematic.data.local.dao.TransactionModelDao;
+import com.scleroid.financematic.data.local.dao.TransactionDao;
 
 import javax.inject.Inject;
 
@@ -14,7 +14,7 @@ import javax.inject.Inject;
  */
 public class DatabaseHelperLoan {
     private LoanDao dao;
-    private TransactionModelDao transactionDao;
+    private TransactionDao transactionDao;
 
     @Inject
     public DatabaseHelperLoan(AppDatabase database) {

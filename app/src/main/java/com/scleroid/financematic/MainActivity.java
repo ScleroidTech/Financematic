@@ -23,20 +23,19 @@ import com.scleroid.financematic.base.BaseActivity;
 import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.data.local.model.TransactionModel;
-import com.scleroid.financematic.fragments.DashboardFragment;
-import com.scleroid.financematic.fragments.ExpenseFragment;
-import com.scleroid.financematic.fragments.LoanDetailsFragment;
-import com.scleroid.financematic.fragments.PeopleFragment;
-import com.scleroid.financematic.fragments.ProfileFragment;
 import com.scleroid.financematic.fragments.RegisterCustomerFragment;
 import com.scleroid.financematic.fragments.ReportFragment;
+import com.scleroid.financematic.fragments.customer.CustomerFragment;
+import com.scleroid.financematic.fragments.dashboard.DashboardFragment;
+import com.scleroid.financematic.fragments.expense.ExpenseFragment;
+import com.scleroid.financematic.fragments.loanDetails.LoanDetailsFragment;
+import com.scleroid.financematic.fragments.people.PeopleFragment;
 import com.scleroid.financematic.utils.ActivityUtils;
 import com.scleroid.financematic.utils.BottomNavigationViewHelper;
 import com.scleroid.financematic.utils.InstantAppExecutors;
 
 import javax.inject.Inject;
 
-import dagger.android.AndroidInjection;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
@@ -117,14 +116,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
      */
     @Override
     public int getLayoutId() {
-        return layoutMain;
+        return R.layout.activity_main;
     }
-
     protected void onCreate(Bundle savedInstanceState) {
-        AndroidInjection.inject(this);
+
         super.onCreate(savedInstanceState);
-        layoutMain = R.layout.activity_main;
-        setContentView(layoutMain);
 
 
         final Toolbar toolbar = findViewById(R.id.toolbar);
@@ -328,7 +324,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         // user is in notifications fragment
         // and selected 'Mark all as Read'
         if (id == R.id.action_notification) {
-            ProfileFragment fragment = new ProfileFragment();
+            CustomerFragment fragment = new CustomerFragment();
             loadFragment(fragment);
         }
 

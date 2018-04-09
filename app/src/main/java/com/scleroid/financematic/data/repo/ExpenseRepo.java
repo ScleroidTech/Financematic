@@ -56,7 +56,7 @@ public class ExpenseRepo {
     private RateLimiter<String> expenseListRateLimit = new RateLimiter<>(10, TimeUnit.MINUTES);
 
     @Inject
-    private ExpenseRepo(final AppDatabase db, final ExpenseDao expenseDao, final WebService webService, final AppExecutors appExecutors) {
+    ExpenseRepo(final AppDatabase db, final ExpenseDao expenseDao, final WebService webService, final AppExecutors appExecutors) {
         this.db = db;
         this.expenseDao = expenseDao;
         this.webService = webService;

@@ -29,7 +29,7 @@ public class LocalTransactionsLab implements LocalDataSource<TransactionModel> {
     private final TransactionDao transactionDao;
 
     @Inject
-    private LocalTransactionsLab(final AppDatabase appDatabase, final AppExecutors appExecutors) {
+    LocalTransactionsLab(final AppDatabase appDatabase, final AppExecutors appExecutors) {
         this.appDatabase = appDatabase;
         this.appExecutors = appExecutors;
         this.transactionDao = appDatabase.transactionDao();
