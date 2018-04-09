@@ -30,7 +30,6 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * This is used by Dagger to inject the required arguments into the {@link }.
@@ -105,23 +104,18 @@ abstract public class RepositoryModule {
     }
 
     @Singleton
-    @Provides
     abstract LoanRepo provideLoanRepo(AppDatabase db);
 
     @Singleton
-    @Provides
     abstract ExpenseRepo provideExpenseRepo(AppDatabase db);
 
     @Singleton
-    @Provides
     abstract CustomerRepo provideCustomerRepo(AppDatabase db);
 
     @Singleton
-    @Provides
     abstract TransactionsRepo provideTransactionsRepo(AppDatabase db);
 
     @Singleton
-    @Provides
     abstract InstallmentRepo provideInstallmentRepo(AppDatabase db);
 
     @Singleton
@@ -137,7 +131,7 @@ abstract public class RepositoryModule {
     static WebService provideWebService() {
         return new Retrofit.Builder()
                 .baseUrl("https://api.github.com/")
-                .addConverterFactory(GsonConverterFactory.create())
+//                .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(new LiveDataCallAdapterFactory())
                 .build()
                 .create(WebService.class);

@@ -17,6 +17,10 @@ android {
         //  multiDexEnabled true
     }
     dexOptions {
+        incremental true
+        // here heap size give 4g i got this thing from https://groups.google.com/forum/#!topic/adt-dev/P_TLBTyFWVY
+
+        javaMaxHeapSize "4g"
         preDexLibraries = false
     }
     buildTypes {
@@ -36,7 +40,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     // App's dependencies, including test
-    //implementation 'com.android.support:multidex:1.0.3'
+    implementation 'com.android.support:multidex:1.0.3'
 
     //noinspection GradleCompatible
     // implementation "com.android.support:support-v4:$rootProject.supportLibraryVersion"
@@ -118,7 +122,7 @@ dependencies {
     implementation "com.birbit:android-priority-jobqueue:$project.priorityJobQueueVersion"
 
     //GCM Network Manager
-    implementation "com.google.android.gms:play-services-gcm:$project.playServicesVersion"
+  //  implementation "com.google.android.gms:play-services-gcm:$project.playServicesVersion"
 
     // OkHttp Logging Interceptor
     implementation "com.squareup.okhttp3:okhttp:$project.okHttpVersion"

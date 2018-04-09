@@ -101,7 +101,7 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 
         // recyclerView = rootView.findViewById(R.id.recycler_view_dashboard);
 
-        prepareTempDashBoardModelData();
+        // prepareTempDashBoardModelData();
 
 
         setupRecyclerView();

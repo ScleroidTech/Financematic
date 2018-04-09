@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.scleroid.financematic.base.BaseActivity;
 import com.scleroid.financematic.data.local.model.Customer;
+import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.data.local.model.TransactionModel;
 import com.scleroid.financematic.fragments.RegisterCustomerFragment;
@@ -413,7 +414,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public void onFakerReady(Faker faker) {
-        populateData(faker);
+        for (int i = 0; i < 5; i++)
+            populateData(faker);
 
 
     }
@@ -421,6 +423,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private void populateData(Faker faker) {
         int customerId = faker.number.positive();
         int accountNo = Integer.parseInt(faker.business.creditCardNumber());
+        createCustomerData(faker, customerId);
+        for (int i = 0; i < 5; i++) {
+
+            createLoanData(faker, customerId, accountNo);
+            for (int j = 0; j < 5; j++)
+                createTransactionData(faker, accountNo);
+
+
+            accountNo = Integer.parseInt(faker.business.creditCardNumber());
+
+        }
 
     }
 
@@ -466,6 +479,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 faker.company.catchPhrase(),
                 accountNo
 
+        );
+    }
+
+    private Installment createInstallmentData(Faker faker, int accountNo) {
+
+        return new Installment(
+                faker.number.positive(),
+                faker.date.backward(),
+                faker.commerce.price(),
+                accountNo
         );
     }
 

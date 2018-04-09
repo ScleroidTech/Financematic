@@ -17,6 +17,8 @@ import com.scleroid.financematic.utils.RateLimiter;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Inject;
+
 /**
  * Copyright (C) 2018
  *
@@ -39,7 +41,8 @@ public class CustomerRepo {
     private final AppExecutors appExecutors;
     private RateLimiter<String> customerListRateLimit = new RateLimiter<>(10, TimeUnit.MINUTES);
 
-    private CustomerRepo(final AppDatabase db, final CustomerDao customerDao, final WebService webService, final AppExecutors appExecutors) {
+    @Inject
+    CustomerRepo(final AppDatabase db, final CustomerDao customerDao, final WebService webService, final AppExecutors appExecutors) {
         this.db = db;
         this.customerDao = customerDao;
         this.webService = webService;

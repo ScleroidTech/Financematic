@@ -52,8 +52,8 @@ public class DashboardViewModel extends BaseViewModel<Installment> implements Cu
     }
 
     private List<Installment> filterResults() {
-
-        return Stream.of(Objects.requireNonNull(getItemList().getValue()).data)
+        // if (Objects.requireNonNull(getItemList().getValue()).data == null) return new ArrayList<>();
+        return Stream.of(Objects.requireNonNull(getItemList().getValue().data))
                 .filter(installments -> dateUtils.isThisDateWithinAWeek(installments.getInstallmentDate()))
                 .collect(Collectors.toList());
     }
