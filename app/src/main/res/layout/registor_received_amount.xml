@@ -27,36 +27,36 @@
 
                 <!-- Full Name Label -->
                 <LinearLayout android:id="@+id/header"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/header_gradient"
-                    android:paddingBottom="5dip"
-                    android:paddingTop="5dip"
+                    android:background="#0fa8bc"
+                    android:paddingBottom="7dp"
+                    android:paddingTop="7dip"
                     >
 
                     <TextView android:id="@+id/reg_fullname_detaills"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dip"
+
                         android:singleLine="true"
                         android:text="Customer Name(Received Loan)"
                         android:textAlignment="center"
                         android:textColor="@color/white"
-                        android:textSize="20sp"
+                        android:textSize="17sp"
                         />
                     <!-- Logo Ends -->
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="15dp"
                     android:orientation="horizontal"
                     android:paddingBottom="5dp"
                     android:paddingRight="10dp">
                     <TextView
 
 
-                        android:layout_width="0dp"
+       android:layout_gravity="center_vertical"                 android:textColor="#409bbf"                    android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
 
@@ -68,13 +68,13 @@
 
                     <EditText
                         android:id="@+id/rxDate"
-                        android:layout_width="0dp"
+                        android:textColor="#409bbf"               android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight=".7"
 
                         android:background="@drawable/shadow"
                         android:clickable="true"
-                        android:drawableEnd="@drawable/ic_date_range_black_24dp"
+        android:drawableTint="@color/colorPrimaryDark"                android:drawableEnd="@drawable/ic_date_range_black_24dp"
                         android:drawableRight="@drawable/ic_date_range_black_24dp"
                         android:editable="false"
                         android:hint="selecte Date"
@@ -94,7 +94,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal"
                     android:paddingBottom="5dp"
                     android:paddingRight="10dp"
@@ -102,7 +102,7 @@
                     <TextView
 
 
-                        android:layout_width="0dp"
+                        android:layout_gravity="center_vertical"                      android:textColor="#409bbf"                     android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
 
@@ -112,9 +112,9 @@
                         android:textSize="20sp"
                         />
                     <EditText
-                        android:id="@+id/rxReceivedAmount"
+                        android:textColor="#409bbf"                 android:id="@+id/rxReceivedAmount"
                         android:layout_width="0dp"
-
+                        android:maxLines="1"
                         android:layout_height="wrap_content"
                         android:layout_weight=".5"
                         android:background="@drawable/shadow"
@@ -130,14 +130,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal"
                     android:paddingBottom="5dp"
                     android:paddingRight="10dp">
                     <TextView
 
-
-                        android:layout_width="0dp"
+                        android:layout_gravity="center_vertical"
+                        android:textColor="#409bbf"                     android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
 
@@ -155,7 +155,7 @@ android:paddingLeft="10dp"
                         >
               <Spinner
                   android:id="@+id/spinnerrx"
-                  android:layout_width="wrap_content"
+                  android:textColor="#409bbf"    android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:layout_gravity="right"
                   android:layout_weight=".7"
@@ -170,15 +170,15 @@ android:paddingLeft="10dp"
 
                 <Button android:id="@+id/btn_customer_name"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
+                    android:layout_height="37dp"
+android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dip"
-                    android:background="@drawable/header_gradient"
+
+                    android:background="#0fa8bc"
 
                     android:text="Submit"
-                    android:textColor="@color/white" />
+          android:textSize="17dp"          android:textColor="@color/white" />
                 <TextView
                     android:id="@+id/displayrx"
 

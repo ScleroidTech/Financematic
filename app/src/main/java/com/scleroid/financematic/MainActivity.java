@@ -24,6 +24,7 @@ import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.data.local.model.TransactionModel;
 import com.scleroid.financematic.fragments.RegisterCustomerFragment;
+import com.scleroid.financematic.fragments.RegisterReceivedFragment;
 import com.scleroid.financematic.fragments.ReportFragment;
 import com.scleroid.financematic.fragments.customer.CustomerFragment;
 import com.scleroid.financematic.fragments.dashboard.DashboardFragment;
@@ -249,7 +250,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 return new RegisterCustomerFragment();
             case 2:
                 // Report fragment
-                return new ReportFragment();
+                return new RegisterReceivedFragment();
             case 3:
                 // Expenses fragment
                 return new ExpenseFragment();
