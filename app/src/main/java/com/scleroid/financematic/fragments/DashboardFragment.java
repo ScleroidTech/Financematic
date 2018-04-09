@@ -56,6 +56,7 @@ public class DashboardFragment extends Fragment {
     private LoanAdapter mAdapter;
     @Inject
     private ActivityUtils activityUtils;
+    //j bjbjbjbj
 
     public DashboardFragment() {
         // Required empty public constructor
