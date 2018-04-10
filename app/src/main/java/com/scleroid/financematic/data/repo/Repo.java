@@ -6,6 +6,9 @@ import com.scleroid.financematic.Resource;
 
 import java.util.List;
 
+import io.reactivex.Completable;
+import io.reactivex.Single;
+
 /**
  * Copyright (C) 2018
  *
@@ -17,9 +20,9 @@ public interface Repo<T> {
 
 	LiveData<Resource<T>> loadItem(int t);
 
-	void saveItems(List<T> items);
+	Completable saveItems(List<T> items);
 
 	//TODO Make this call also save data to network layer
-	void saveItem(T t);
+	Single<T> saveItem(T t);
 
 }

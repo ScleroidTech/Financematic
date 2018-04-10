@@ -8,7 +8,7 @@ import android.support.annotation.Nullable;
 import com.scleroid.financematic.AppExecutors;
 import com.scleroid.financematic.Resource;
 import com.scleroid.financematic.data.local.AppDatabase;
-import com.scleroid.financematic.data.local.dao.LoanDao;
+import com.scleroid.financematic.data.local.lab.LocalLoanLab;
 import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.data.remote.ApiResponse;
 import com.scleroid.financematic.data.remote.WebService;
@@ -20,6 +20,9 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+
+import io.reactivex.Completable;
+import io.reactivex.Single;
 
 
 /**
@@ -51,11 +54,8 @@ public class LoanRepo implements Repo<Loan> {
 
     private final AppDatabase db;
 
-    public LoanDao getLoanDao() {
-        return loanDao;
-    }
 
-    private final LoanDao loanDao;
+    private final LocalLoanLab localLoanLab;
 
     private final WebService webService;
 
@@ -64,9 +64,10 @@ public class LoanRepo implements Repo<Loan> {
     private RateLimiter<String> loanListRateLimit = new RateLimiter<>(10, TimeUnit.MINUTES);
 
     @Inject
-    LoanRepo(final AppDatabase db, final LoanDao loanDao, final WebService webService, final AppExecutors appExecutors) {
+    LoanRepo(final AppDatabase db, final LocalLoanLab loanLab, final WebService webService,
+             final AppExecutors appExecutors) {
         this.db = db;
-        this.loanDao = loanDao;
+        this.localLoanLab = loanLab;
         this.webService = webService;
         this.appExecutors = appExecutors;
     }
@@ -80,7 +81,7 @@ public class LoanRepo implements Repo<Loan> {
 
             @Override
             protected void saveCallResult(@NonNull List<Loan> item) {
-                loanDao.saveLoans(item);
+                localLoanLab.addItems(item);
             }
 
             @Override
@@ -91,7 +92,7 @@ public class LoanRepo implements Repo<Loan> {
             @NonNull
             @Override
             protected LiveData<List<Loan>> loadFromDb() {
-                return loanDao.getLoansForCustomerLive(customerId);
+                return localLoanLab.getItemsForCustomer(customerId);
             }
 
             @NonNull
@@ -111,7 +112,7 @@ public class LoanRepo implements Repo<Loan> {
 
             @Override
             protected void saveCallResult(@NonNull List<Loan> item) {
-                loanDao.saveLoans(item);
+                localLoanLab.addItems(item);
             }
 
             @Override
@@ -122,7 +123,7 @@ public class LoanRepo implements Repo<Loan> {
             @NonNull
             @Override
             protected LiveData<List<Loan>> loadFromDb() {
-                return loanDao.getLoansLive();
+                return localLoanLab.getItems();
             }
 
             @NonNull
@@ -143,7 +144,7 @@ public class LoanRepo implements Repo<Loan> {
         return new NetworkBoundResource<Loan, Loan>(appExecutors) {
             @Override
             protected void saveCallResult(@NonNull Loan item) {
-                loanDao.saveLoan(item);
+                localLoanLab.saveItem(item);
             }
 
             @Override
@@ -154,7 +155,7 @@ public class LoanRepo implements Repo<Loan> {
             @NonNull
             @Override
             protected LiveData<Loan> loadFromDb() {
-                return loanDao.getLoanLive(acNo);
+                return localLoanLab.getItem(acNo);
             }
 
             @NonNull
@@ -165,13 +166,15 @@ public class LoanRepo implements Repo<Loan> {
         }.asLiveData();
     }
 
-	@Override
-	public void saveItems(final List<Loan> items) {
+    @Override
+    public Completable saveItems(final List<Loan> items) {
+        return localLoanLab.addItems(items);
+    }
 
-	}
+    @Override
+    public Single<Loan> saveItem(final Loan loan) {
+        return localLoanLab.saveItem(loan);
+    }
 
-	@Override
-	public void saveItem(final Loan loan) {
 
-	}
 }

@@ -7,7 +7,7 @@ import android.support.annotation.Nullable;
 import com.scleroid.financematic.AppExecutors;
 import com.scleroid.financematic.Resource;
 import com.scleroid.financematic.data.local.AppDatabase;
-import com.scleroid.financematic.data.local.dao.InstallmentDao;
+import com.scleroid.financematic.data.local.lab.LocalInstallmentsLab;
 import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.data.remote.ApiResponse;
 import com.scleroid.financematic.data.remote.WebService;
@@ -18,6 +18,9 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
+
+import io.reactivex.Completable;
+import io.reactivex.Single;
 
 /**
  * Copyright (C) 2018
@@ -46,7 +49,7 @@ public class InstallmentRepo implements Repo<Installment> {
 
     private final AppDatabase db;
 
-    private final InstallmentDao installmentDao;
+    private final LocalInstallmentsLab localInstallmentsLab;
 
     private final WebService webService;
 
@@ -55,9 +58,10 @@ public class InstallmentRepo implements Repo<Installment> {
     private RateLimiter<String> installmentListRateLimit = new RateLimiter<>(10, TimeUnit.MINUTES);
 
     @Inject
-    InstallmentRepo(final AppDatabase db, final InstallmentDao installmentDao, final WebService webService, final AppExecutors appExecutors) {
+    InstallmentRepo(final AppDatabase db, final LocalInstallmentsLab installmentsLab,
+                    final WebService webService, final AppExecutors appExecutors) {
         this.db = db;
-        this.installmentDao = installmentDao;
+        this.localInstallmentsLab = installmentsLab;
         this.webService = webService;
         this.appExecutors = appExecutors;
     }
@@ -71,7 +75,7 @@ public class InstallmentRepo implements Repo<Installment> {
 
             @Override
             protected void saveCallResult(@NonNull List<Installment> item) {
-                installmentDao.saveInstallments(item);
+                localInstallmentsLab.addItems(item);
             }
 
             @NonNull
@@ -88,7 +92,7 @@ public class InstallmentRepo implements Repo<Installment> {
             @NonNull
             @Override
             protected LiveData<List<Installment>> loadFromDb() {
-                return installmentDao.getInstallmentsForLoanLive(loanAcNo);
+                return localInstallmentsLab.getItemsForLoan(loanAcNo);
             }
 
 
@@ -103,7 +107,7 @@ public class InstallmentRepo implements Repo<Installment> {
 
             @Override
             protected void saveCallResult(@NonNull List<Installment> item) {
-                installmentDao.saveInstallments(item);
+                localInstallmentsLab.addItems(item);
             }
 
             @Override
@@ -114,7 +118,7 @@ public class InstallmentRepo implements Repo<Installment> {
             @NonNull
             @Override
             protected LiveData<List<Installment>> loadFromDb() {
-                return installmentDao.getAllInstallmentsLive();
+                return localInstallmentsLab.getItems();
             }
 
             @NonNull
@@ -135,7 +139,7 @@ public class InstallmentRepo implements Repo<Installment> {
         return new NetworkBoundResource<Installment, Installment>(appExecutors) {
             @Override
             protected void saveCallResult(@NonNull Installment item) {
-                installmentDao.saveInstallment(item);
+                localInstallmentsLab.saveItem(item);
             }
 
             @Override
@@ -146,7 +150,7 @@ public class InstallmentRepo implements Repo<Installment> {
             @NonNull
             @Override
             protected LiveData<Installment> loadFromDb() {
-                return installmentDao.getInstallment(installmentNo);
+                return localInstallmentsLab.getItem(installmentNo);
             }
 
             @NonNull
@@ -157,13 +161,15 @@ public class InstallmentRepo implements Repo<Installment> {
         }.asLiveData();
     }
 
-	@Override
-	public void saveItems(final List<Installment> items) {
+    @Override
+    public Completable saveItems(final List<Installment> items) {
+        return localInstallmentsLab.addItems(items);
+    }
 
-	}
+    @Override
+    public Single<Installment> saveItem(final Installment installment) {
+        return localInstallmentsLab.saveItem(installment);
+    }
 
-	@Override
-	public void saveItem(final Installment installment) {
 
-	}
 }

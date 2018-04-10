@@ -7,7 +7,7 @@ import android.support.annotation.Nullable;
 import com.scleroid.financematic.AppExecutors;
 import com.scleroid.financematic.Resource;
 import com.scleroid.financematic.data.local.AppDatabase;
-import com.scleroid.financematic.data.local.dao.CustomerDao;
+import com.scleroid.financematic.data.local.lab.LocalCustomerLab;
 import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.remote.ApiResponse;
 import com.scleroid.financematic.data.remote.WebService;
@@ -19,7 +19,8 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observable;
+import io.reactivex.Completable;
+import io.reactivex.Single;
 
 /**
  * Copyright (C) 2018
@@ -30,26 +31,25 @@ import io.reactivex.Observable;
 public class CustomerRepo implements Repo<Customer> {
 
 
-    private final AppDatabase db;
+	private final LocalCustomerLab localCustomerLab;
+	private final AppDatabase db;
+	//TODO remove direct access to this
+	private final WebService webService;
+	private final AppExecutors appExecutors;
+	private RateLimiter<String> customerListRateLimit = new RateLimiter<>(10, TimeUnit.MINUTES);
 
-    public CustomerDao getCustomerDao() {
-        return customerDao;
-    }
 
-    private final CustomerDao customerDao;
+	@Inject
+	public CustomerRepo(final AppDatabase db, final LocalCustomerLab localCustomerLab,
+	                    final WebService webService,
+	                    final AppExecutors appExecutors) {
+		this.localCustomerLab = localCustomerLab;
+		this.db = db;
+		this.webService = webService;
+		this.appExecutors = appExecutors;
+	}
 
-    private final WebService webService;
 
-    private final AppExecutors appExecutors;
-    private RateLimiter<String> customerListRateLimit = new RateLimiter<>(10, TimeUnit.MINUTES);
-
-    @Inject
-    CustomerRepo(final AppDatabase db, final CustomerDao customerDao, final WebService webService, final AppExecutors appExecutors) {
-        this.db = db;
-        this.customerDao = customerDao;
-        this.webService = webService;
-        this.appExecutors = appExecutors;
-    }
 
 
 	@Override
@@ -63,8 +63,8 @@ public class CustomerRepo implements Repo<Customer> {
 			}
 
 			@Override
-			protected void saveCallResult(@NonNull List<Customer> item) {
-				customerDao.saveCustomers(item);
+			protected void saveCallResult(@NonNull List<Customer> items) {
+				localCustomerLab.addItems(items);
 			}
 
 			@Override
@@ -76,7 +76,7 @@ public class CustomerRepo implements Repo<Customer> {
 			@NonNull
 			@Override
 			protected LiveData<List<Customer>> loadFromDb() {
-				return customerDao.getAllCustomerLive();
+				return localCustomerLab.getItems();
 			}
 
 			@NonNull
@@ -94,7 +94,7 @@ public class CustomerRepo implements Repo<Customer> {
 		return new NetworkBoundResource<Customer, Customer>(appExecutors) {
 			@Override
 			protected void saveCallResult(@NonNull Customer item) {
-				customerDao.saveCustomer(item);
+				localCustomerLab.saveItem(item);
 			}
 
 			@Override
@@ -105,7 +105,7 @@ public class CustomerRepo implements Repo<Customer> {
 			@NonNull
 			@Override
 			protected LiveData<Customer> loadFromDb() {
-				return customerDao.getCustomerLive(customerNo);
+				return localCustomerLab.getItem(customerNo);
 			}
 
 			@NonNull
@@ -117,14 +117,21 @@ public class CustomerRepo implements Repo<Customer> {
 	}
 
 	@Override
-	public void saveItems(final List<Customer> items) {
+	public Completable saveItems(final List<Customer> items) {
 		//TODO save this onRemote Source later
-		Observable.fromCallable(() -> customerDao.saveCustomers(items));
+		//Observable.fromCallable(() -> customerDao.saveCustomers(items));
+
+		return
+				localCustomerLab.addItems(items);
+
 
 	}
 
 	@Override
-	public void saveItem(final Customer customer) {
-		Observable.fromCallable(() -> customerDao.saveCustomer(customer));
+	public Single<Customer> saveItem(final Customer customer) {
+		//Observable.fromCallable(() -> customerDao.saveCustomer(customer));
+
+		return localCustomerLab.saveItem(customer);
+
 	}
 }

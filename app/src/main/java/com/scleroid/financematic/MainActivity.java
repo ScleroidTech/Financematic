@@ -21,10 +21,15 @@ import android.widget.Toast;
 
 import com.scleroid.financematic.base.BaseActivity;
 import com.scleroid.financematic.data.local.model.Customer;
+import com.scleroid.financematic.data.local.model.Expense;
 import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.data.local.model.TransactionModel;
 import com.scleroid.financematic.data.repo.CustomerRepo;
+import com.scleroid.financematic.data.repo.ExpenseRepo;
+import com.scleroid.financematic.data.repo.InstallmentRepo;
+import com.scleroid.financematic.data.repo.LoanRepo;
+import com.scleroid.financematic.data.repo.TransactionsRepo;
 import com.scleroid.financematic.fragments.RegisterCustomerFragment;
 import com.scleroid.financematic.fragments.ReportFragment;
 import com.scleroid.financematic.fragments.customer.CustomerFragment;
@@ -47,54 +52,66 @@ import es.dmoral.toasty.Toasty;
 import io.bloco.faker.Faker;
 
 
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, GarlandApp.FakerReadyListener, HasSupportFragmentInjector {
-    //TODO Refactor repeating code, look at  android-mvvm-architecture for ideas, its by mind-dorks
-    // tags used to attach the fragments
-    private static final String TAG_DASHBOARD = "dashboard";
-    private static final String TAG_NEW_CUSTOMER = "new_customer";
-    private static final String TAG_REPORT = "report";
-    private static final String TAG_EXPENSES = "expenses";
-    private static final String TAG_SUMMERY = "Customer_Summery";
-    private static final String TAG_SETTINGS = "settings";
-    private static final String TAG_NOTIFICATION = "notification";
-    private static final int THREAD_COUNT = 3;
-    // index to identify current nav menu item
-    public static int navItemIndex = 0;
-    public static String CURRENT_TAG = TAG_DASHBOARD;
+public class MainActivity extends BaseActivity
+		implements NavigationView.OnNavigationItemSelectedListener, GarlandApp.FakerReadyListener,
+		           HasSupportFragmentInjector {
+	//TODO Refactor repeating code, look at  android-mvvm-architecture for ideas, its by mind-dorks
+	// tags used to attach the fragments
+	private static final String TAG_DASHBOARD = "dashboard";
+	private static final String TAG_NEW_CUSTOMER = "new_customer";
+	private static final String TAG_REPORT = "report";
+	private static final String TAG_EXPENSES = "expenses";
+	private static final String TAG_SUMMERY = "Customer_Summery";
+	private static final String TAG_SETTINGS = "settings";
+	private static final String TAG_NOTIFICATION = "notification";
+	private static final int THREAD_COUNT = 3;
+	// index to identify current nav menu item
+	public static int navItemIndex = 0;
+	public static String CURRENT_TAG = TAG_DASHBOARD;
 
 	@Inject
 	CustomerRepo customerRepo;
 
 
-    @Inject
-    ActivityUtils activityUtils;
-    @Inject
-    AppExecutors appExecutors;
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = item -> {
-        Fragment fragment;
+	@Inject
+	ActivityUtils activityUtils;
+	@Inject
+	AppExecutors appExecutors;
+	@Inject
+	LoanRepo loanRepo;
+	@Inject
+	TransactionsRepo transactionsRepo;
+	@Inject
+	InstallmentRepo installmentRepo;
+	@Inject
+	ExpenseRepo expenseRepo;
+	@Inject
+	DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
+	private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+			= item -> {
+		Fragment fragment;
 
-        switch (item.getItemId()) {
+		switch (item.getItemId()) {
 
-            case R.id.navigation_home:
-                /* toolbar.setCustomerName("Customer");*/
-                fragment = new DashboardFragment();
-                loadFragment(fragment);
+			case R.id.navigation_home:
+				/* toolbar.setCustomerName("Customer");*/
+				fragment = new DashboardFragment();
+				loadFragment(fragment);
 
-                return true;
-            case R.id.navigation_list:
-                /* toolbar.setCustomerName("Loan Details");*/
-                fragment = new PeopleFragment();
-                loadFragment(fragment);
-                return true;
-            case R.id.person_details:
-                /*    toolbar.setCustomerName("Report");*/
-                fragment = new ReportFragment();
-                loadFragment(fragment);
+				return true;
+			case R.id.navigation_list:
+				/* toolbar.setCustomerName("Loan Details");*/
+				fragment = new PeopleFragment();
+				loadFragment(fragment);
+				return true;
+			case R.id.person_details:
+				/*    toolbar.setCustomerName("Report");*/
+				fragment = new ReportFragment();
+				loadFragment(fragment);
 
-                return true;
-            /* case R.id.navigation_person_loan_details:
-             *//*  toolbar.setCustomerName("Person Details");*//*
+				return true;
+			/* case R.id.navigation_person_loan_details:
+			 *//*  toolbar.setCustomerName("Person Details");*//*
                         fragment = new RegisterCustomerFragment();
                         loadFragment(fragment);
                         return true;
@@ -105,16 +122,23 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         return true;
 
     */
-        }
-        return false;
-    };
-    private DrawerLayout drawer;
-    private NavigationView navigationView;
-    private String[] activityTitles;
-    private int layoutMain;
-
+		}
+		return false;
+	};
+	private DrawerLayout drawer;
+	private NavigationView navigationView;
+	private String[] activityTitles;
+	private int layoutMain;
 	private List<Installment> installments;
 	private List<TransactionModel> transactions;
+	private List<Customer> customers;
+	private List<Loan> loans;
+	private List<Expense> expenses;
+
+	@NonNull
+	public static Intent newIntent(Context activity) {
+		return new Intent(activity, MainActivity.class);
+	}
 
 	public List<Customer> getCustomers() {
 		return customers;
@@ -124,9 +148,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 		return loans;
 	}
 
-	private List<Customer> customers;
-	private List<Loan> loans;
-
 	public List<Installment> getInstallments() {
 		return installments;
 	}
@@ -135,194 +156,131 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 		return transactions;
 	}
 
+	/**
+	 * @return layout resource id
+	 */
+	@Override
+	public int getLayoutId() {
+		return R.layout.activity_main;
+	}
 
-	@NonNull
-    public static Intent newIntent(Context activity) {
-        return new Intent(activity, MainActivity.class);
-    }
+	protected void onCreate(Bundle savedInstanceState) {
 
-    /**
-     * @return layout resource id
-     */
-    @Override
-    public int getLayoutId() {
-        return R.layout.activity_main;
-    }
-
-    protected void onCreate(Bundle savedInstanceState) {
-
-        super.onCreate(savedInstanceState);
+		super.onCreate(savedInstanceState);
 
 
-        final Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+		final Toolbar toolbar = findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
 
 
-        drawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+		drawer = findViewById(R.id.drawer_layout);
+		ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+				this, drawer, toolbar, R.string.navigation_drawer_open,
+				R.string.navigation_drawer_close) {
 
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                // Code here will be triggered once the drawer open as we dont want anything to happen so we leave this blank
-                super.onDrawerOpened(drawerView);
+			@Override
+			public void onDrawerOpened(View drawerView) {
+				// Code here will be triggered once the drawer open as we dont want anything to
+				// happen so we leave this blank
+				super.onDrawerOpened(drawerView);
 
-                //Used to change the z index of a custom drawer,
-                //Hack when navigation drawer doesn't listen to click events
-                drawerView.bringToFront();
-            }
+				//Used to change the z index of a custom drawer,
+				//Hack when navigation drawer doesn't listen to click events
+				drawerView.bringToFront();
+			}
 
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                // Code here will be triggered once the drawer closes as we dont want anything to happen so we leave this blank
-                super.onDrawerClosed(drawerView);
-            }
-        };
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+			@Override
+			public void onDrawerClosed(View drawerView) {
+				// Code here will be triggered once the drawer closes as we dont want anything to
+				// happen so we leave this blank
+				super.onDrawerClosed(drawerView);
+			}
+		};
+		drawer.addDrawerListener(toggle);
+		toggle.syncState();
 
-        navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+		navigationView = findViewById(R.id.nav_view);
+		navigationView.setNavigationItemSelectedListener(this);
 
-        // load toolbar titles from string resources
-        activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
+		// load toolbar titles from string resources
+		activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
 
-        /*bottom navigation*/
+		/*bottom navigation*/
 
-        /*    toolbar = getSupportActionBar();*/
+		/*    toolbar = getSupportActionBar();*/
 
-        final BottomNavigationView bottomNavigationView = findViewById(R.id.navigation);
-        bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
+		final BottomNavigationView bottomNavigationView = findViewById(R.id.navigation);
+		bottomNavigationView.setOnNavigationItemSelectedListener
+				(mOnNavigationItemSelectedListener);
+		BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
 
-        // attaching bottom sheet behaviour - hide / show on scroll
-        /*  CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) navigation.getLayoutParams();*/
-        /* layoutParams.setBehavior(new BottomNavigationBehavior());*/
+		// attaching bottom sheet behaviour - hide / show on scroll
+		/*  CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams)
+		navigation.getLayoutParams();*/
+		/* layoutParams.setBehavior(new BottomNavigationBehavior());*/
 
-        // load the store fragment by default
-        /* toolbar.setCustomerName("Finance Matic");*/
-        // loadFragment(new DashboardFragment());
-	    //     appExecutors = new InstantAppExecutors();
-        if (savedInstanceState == null) {
-            navItemIndex = 0;
-            CURRENT_TAG = TAG_DASHBOARD;
-            loadFragmentFromNavigationDrawers();
-        }
-
-
-    }
-
-    /***
-     * Returns respected fragment that user
-     * selected from navigation menu
-     */
-    private void loadFragmentFromNavigationDrawers() {
-        // selecting appropriate nav menu item
-        selectNavMenu();
-
-        // set toolbar title
-        setToolbarTitle();
-
-        // if user select the current navigation menu again, don't do anything
-        // just close the navigation drawer
-        if (getSupportFragmentManager().findFragmentByTag(CURRENT_TAG) != null) {
-            drawer.closeDrawers();
-
-            return;
-        }
-
-        // Sometimes, when fragment has huge data, screen seems hanging
-        // when switching between navigation menus
-        // So using runnable, the fragment is loaded with cross fade effect
-        // This effect can be seen in GMail app
-
-        Runnable pendingRunnable = () -> {
-            // update the main content by replacing fragments
-
-            Fragment fragment = getCurrentFragment();
-            loadFragment(fragment);
-        };
-
-        // If pendingRunnable is not null, then add to the message queue
-        // boolean post = handler.post(pendingRunnable);
-        appExecutors.diskIO().execute(pendingRunnable);
-
-        // show or hide the fab button
+		// load the store fragment by default
+		/* toolbar.setCustomerName("Finance Matic");*/
+		// loadFragment(new DashboardFragment());
+		//     appExecutors = new InstantAppExecutors();
+		if (savedInstanceState == null) {
+			navItemIndex = 0;
+			CURRENT_TAG = TAG_DASHBOARD;
+			loadFragmentFromNavigationDrawers();
+		}
 
 
-        //Closing drawer on item click
-        drawer.closeDrawers();
+	}
 
-        // refresh toolbar menu
-        invalidateOptionsMenu();
+	/***
+	 * Returns respected fragment that user
+	 * selected from navigation menu
+	 */
+	private void loadFragmentFromNavigationDrawers() {
+		// selecting appropriate nav menu item
+		selectNavMenu();
 
-    }
+		// set toolbar title
+		setToolbarTitle();
 
-    private void loadFragment(Fragment fragment) {
-        activityUtils.loadFragment(fragment, getSupportFragmentManager());
-    }
+		// if user select the current navigation menu again, don't do anything
+		// just close the navigation drawer
+		if (getSupportFragmentManager().findFragmentByTag(CURRENT_TAG) != null) {
+			drawer.closeDrawers();
 
-    private void selectNavMenu() {
-        navigationView.getMenu().getItem(navItemIndex).setChecked(true);
-    }
+			return;
+		}
 
-    private void setToolbarTitle() {
-        getSupportActionBar().setTitle(activityTitles[navItemIndex]);
-    }
+		// Sometimes, when fragment has huge data, screen seems hanging
+		// when switching between navigation menus
+		// So using runnable, the fragment is loaded with cross fade effect
+		// This effect can be seen in GMail app
 
-    private Fragment getCurrentFragment() {
-        switch (navItemIndex) {
-            //TODO
-            case 0:
-                // dashboard
-                return new DashboardFragment();
-            case 1:
-                // new Customers fragment
-                return new RegisterCustomerFragment();
-            case 2:
-                // Report fragment
-                return new ReportFragment();
-            case 3:
-                // Expenses fragment
-                return new ExpenseFragment();
-            case 4:
-                // Expenses fragment
-                return new LoanDetailsFragment();
+		Runnable pendingRunnable = () -> {
+			// update the main content by replacing fragments
 
-          /*
-           TODO
-           case 4:
-                // Notifications fragment
-                return new Fragment();
+			Fragment fragment = getCurrentFragment();
+			loadFragment(fragment);
+		};
 
-            case 5:
-                //setting fragment
-                return new SettingsFragment();*/
-            default:
-                return new DashboardFragment();// HomeFragment.newInstance(HomeFragment.parcelCount);
-        }
+		// If pendingRunnable is not null, then add to the message queue
+		// boolean post = handler.post(pendingRunnable);
+		appExecutors.diskIO().execute(pendingRunnable);
 
-    }
+		// show or hide the fab button
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.activity_main, menu);
-        MenuItem create_new = menu.findItem(R.id.action_create_new_loan);
-        MenuItem notification = menu.findItem(R.id.action_notification);
-        tintMenuIcon(this, create_new, android.R.color.white);
-        tintMenuIcon(this, notification, android.R.color.white);
-        return true;
-    }
 
-    public void tintMenuIcon(Context context, MenuItem item, @ColorRes int color) {
-        if (item == null) return;
-        Drawable normalDrawable = item.getIcon();
-        Drawable wrapDrawable = DrawableCompat.wrap(normalDrawable);
-        DrawableCompat.setTint(wrapDrawable, context.getResources().getColor(color));
+		//Closing drawer on item click
+		drawer.closeDrawers();
 
-        item.setIcon(wrapDrawable);
-    }
+		// refresh toolbar menu
+		invalidateOptionsMenu();
+
+	}
+
+	private void loadFragment(Fragment fragment) {
+		activityUtils.loadFragment(fragment, getSupportFragmentManager());
+	}
 
 
 
@@ -336,82 +294,145 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
 
 
-    /*bottom navigation*/
+	/*bottom navigation*/
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+	private void selectNavMenu() {
+		navigationView.getMenu().getItem(navItemIndex).setChecked(true);
+	}
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_create_new_loan) {
+	private void setToolbarTitle() {
+		getSupportActionBar().setTitle(activityTitles[navItemIndex]);
+	}
 
-            RegisterCustomerFragment fragment = new RegisterCustomerFragment();
-            loadFragment(fragment);
-            return true;
-        }
+	private Fragment getCurrentFragment() {
+		switch (navItemIndex) {
+			//TODO
+			case 0:
+				// dashboard
+				return new DashboardFragment();
+			case 1:
+				// new Customers fragment
+				return new RegisterCustomerFragment();
+			case 2:
+				// Report fragment
+				return new ReportFragment();
+			case 3:
+				// Expenses fragment
+				return new ExpenseFragment();
+			case 4:
+				// Expenses fragment
+				return new LoanDetailsFragment();
 
-        // user is in notifications fragment
-        // and selected 'Mark all as Read'
-        if (id == R.id.action_notification) {
-            CustomerFragment fragment = new CustomerFragment();
-            loadFragment(fragment);
-        }
+          /*
+           TODO
+           case 4:
+                // Notifications fragment
+                return new Fragment();
 
-        // user is in notifications fragment
-        // and selected 'Clear All'
-        if (id == R.id.action_settings) {
-            Toast.makeText(getApplicationContext(), "Clear all notifications!", Toast.LENGTH_LONG).show();
-        }
+            case 5:
+                //setting fragment
+                return new SettingsFragment();*/
+			default:
+				return new DashboardFragment();// HomeFragment.newInstance(HomeFragment
+			// .parcelCount);
+		}
 
-        return super.onOptionsItemSelected(item);
-    }
+	}
 
-    /*sidebar navigation*/
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.activity_main, menu);
+		MenuItem create_new = menu.findItem(R.id.action_create_new_loan);
+		MenuItem notification = menu.findItem(R.id.action_notification);
+		tintMenuIcon(this, create_new, android.R.color.white);
+		tintMenuIcon(this, notification, android.R.color.white);
+		return true;
+	}
 
+	public void tintMenuIcon(Context context, MenuItem item, @ColorRes int color) {
+		if (item == null) return;
+		Drawable normalDrawable = item.getIcon();
+		Drawable wrapDrawable = DrawableCompat.wrap(normalDrawable);
+		DrawableCompat.setTint(wrapDrawable, context.getResources().getColor(color));
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        Fragment fragment;
-        Toasty.error(getBaseContext(), item.getTitle() + " clicked", Toast.LENGTH_SHORT).show();
+		item.setIcon(wrapDrawable);
+	}
 
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
 
-        //Check to see which item was being clicked and perform appropriate action
-        switch (item.getItemId()) {
-            //Replacing the main content with ContentFragment Which is our Inbox View;
-            case R.id.nav_dashboard:
-                navItemIndex = 0;
-                CURRENT_TAG = TAG_DASHBOARD;
-                break;
-            case R.id.nav_new_customer:
-                navItemIndex = 1;
-                CURRENT_TAG = TAG_NEW_CUSTOMER;
-                break;
-            case R.id.nav_report:
-                navItemIndex = 2;
-                CURRENT_TAG = TAG_REPORT;
-                break;
-            case R.id.nav_expenses:
-                navItemIndex = 3;
-                CURRENT_TAG = TAG_EXPENSES;
-                break;
-            case R.id.summery_details:
-                navItemIndex = 4;
-                CURRENT_TAG = TAG_SUMMERY;
-                break;
+		//noinspection SimplifiableIfStatement
+		if (id == R.id.action_create_new_loan) {
+
+			RegisterCustomerFragment fragment = new RegisterCustomerFragment();
+			loadFragment(fragment);
+			return true;
+		}
+
+		// user is in notifications fragment
+		// and selected 'Mark all as Read'
+		if (id == R.id.action_notification) {
+			CustomerFragment fragment = new CustomerFragment();
+			loadFragment(fragment);
+		}
+
+		// user is in notifications fragment
+		// and selected 'Clear All'
+		if (id == R.id.action_settings) {
+			Toast.makeText(getApplicationContext(), "Clear all notifications!", Toast.LENGTH_LONG)
+					.show();
+		}
+
+		return super.onOptionsItemSelected(item);
+	}
+
+	/*sidebar navigation*/
+	@Override
+	public void onBackPressed() {
+		DrawerLayout drawer = findViewById(R.id.drawer_layout);
+		if (drawer.isDrawerOpen(GravityCompat.START)) {
+			drawer.closeDrawer(GravityCompat.START);
+		} else {
+			super.onBackPressed();
+		}
+	}
+
+	@Override
+	public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+		Fragment fragment;
+		Toasty.error(getBaseContext(), item.getTitle() + " clicked", Toast.LENGTH_SHORT).show();
+
+		// Handle navigation view item clicks here.
+		int id = item.getItemId();
+
+		//Check to see which item was being clicked and perform appropriate action
+		switch (item.getItemId()) {
+			//Replacing the main content with ContentFragment Which is our Inbox View;
+			case R.id.nav_dashboard:
+				navItemIndex = 0;
+				CURRENT_TAG = TAG_DASHBOARD;
+				break;
+			case R.id.nav_new_customer:
+				navItemIndex = 1;
+				CURRENT_TAG = TAG_NEW_CUSTOMER;
+				break;
+			case R.id.nav_report:
+				navItemIndex = 2;
+				CURRENT_TAG = TAG_REPORT;
+				break;
+			case R.id.nav_expenses:
+				navItemIndex = 3;
+				CURRENT_TAG = TAG_EXPENSES;
+				break;
+			case R.id.summery_details:
+				navItemIndex = 4;
+				CURRENT_TAG = TAG_SUMMERY;
+				break;
 
           /* case R.id.nav_settings:
                 navItemIndex = 5;
@@ -427,121 +448,132 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 //TODO  startActivity(new Intent(MainActivity.this, PrivacyPolicyActivity.class));
                 drawer.closeDrawers();
                 return true;*/
-            default:
-                navItemIndex = 0;
-        }
-        //Checking if the item is in checked state or not, if not make it in checked state
-        if (item.isChecked()) {
-            item.setChecked(false);
-        } else {
-            item.setChecked(true);
-        }
+			default:
+				navItemIndex = 0;
+		}
+		//Checking if the item is in checked state or not, if not make it in checked state
+		if (item.isChecked()) {
+			item.setChecked(false);
+		} else {
+			item.setChecked(true);
+		}
 
-        loadFragmentFromNavigationDrawers();
-        drawer.closeDrawer(GravityCompat.START);
+		loadFragmentFromNavigationDrawers();
+		drawer.closeDrawer(GravityCompat.START);
 
-        return true;
-    }
+		return true;
+	}
 
-    @Override
-    public void onFakerReady(Faker faker) {
-        for (int i = 0; i < 5; i++)
-            populateData(faker);
+	@Override
+	public void onFakerReady(Faker faker) {
+		for (int i = 0; i < 5; i++)
+			populateData(faker);
 
-	    //  saveInDatabase();
-
-    }
-
-	private void populateData(Faker faker) {
-	    customers = new ArrayList<>();
-	    loans = new ArrayList<>();
-		installments = new ArrayList<>();
-		transactions = new ArrayList<>();
-        int customerId = faker.number.positive();
-        int accountNo = Integer.parseInt(faker.business.creditCardNumber());
-	    customers.add(createCustomerData(faker, customerId));
-        for (int i = 0; i < 5; i++) {
-
-	        loans.add(createLoanData(faker, customerId, accountNo));
-	        for (int j = 0; j < 5; j++) {
-		        transactions.add(createTransactionData(faker, accountNo));
-		        installments.add(createInstallmentData(faker, accountNo));
-	        }
-
-            accountNo = Integer.parseInt(faker.business.creditCardNumber());
-
-        }
-
-    }
-
-	private void saveInDatabase() {
-		customerRepo.saveItems(customers);
+		saveInDatabase();
 
 	}
 
-    private Customer createCustomerData(Faker faker, int customerId) {
+	private void populateData(Faker faker) {
+		customers = new ArrayList<>();
+		loans = new ArrayList<>();
+		installments = new ArrayList<>();
+		transactions = new ArrayList<>();
+		int customerId = faker.number.positive();
+		int accountNo = Integer.parseInt(faker.business.creditCardNumber());
+		customers.add(createCustomerData(faker, customerId));
+		for (int i = 0; i < 5; i++) {
 
-        return new Customer(
-                customerId,
-                faker.name.name(),
-                faker.phoneNumber.phoneNumber(),
-                faker.address.streetAddress(),
-                faker.address.city(),
-                (faker.number.hexadecimal(12)) + "",
-                (byte) faker.number.between(0, 6)
+			loans.add(createLoanData(faker, customerId, accountNo));
+			for (int j = 0; j < 5; j++) {
+				transactions.add(createTransactionData(faker, accountNo));
+				installments.add(createInstallmentData(faker, accountNo));
+				expenses.add(createExpenseData(faker));
+			}
 
-        );
-    }
+			accountNo = Integer.parseInt(faker.business.creditCardNumber());
 
-    private Loan createLoanData(Faker faker, int customerId, int accountNo) {
+		}
 
-        return new Loan(
-                faker.commerce.price(5000, 1000000),
-                faker.date.backward(),
-                faker.date.forward(),
-                faker.number.between(1, 100),
-                faker.commerce.price(0, 2000),
-                faker.number.between(1, 20), faker.number.between(0, 20),
-                (byte) faker.number.between(0, 9),
-                faker.commerce.price(6000, 1100000),
-                accountNo,
-                customerId
+	}
 
-        );
-    }
+	private Customer createCustomerData(Faker faker, int customerId) {
 
-    private TransactionModel createTransactionData(Faker faker, int accountNo) {
+		return new Customer(
+				customerId,
+				faker.name.name(),
+				faker.phoneNumber.phoneNumber(),
+				faker.address.streetAddress(),
+				faker.address.city(),
+				(faker.number.hexadecimal(12)) + "",
+				(byte) faker.number.between(0, 6)
 
-        return new TransactionModel(
-                faker.number.positive(),
-                faker.date.backward(),
-                faker.commerce.price(),
-                faker.commerce.price(),
-                faker.commerce.price(0, 2000),
-                faker.company.catchPhrase(),
-                accountNo
+		);
+	}
 
-        );
-    }
+	private Loan createLoanData(Faker faker, int customerId, int accountNo) {
 
-    private Installment createInstallmentData(Faker faker, int accountNo) {
+		return new Loan(
+				faker.commerce.price(5000, 1000000),
+				faker.date.backward(),
+				faker.date.forward(),
+				faker.number.between(1, 100),
+				faker.commerce.price(0, 2000),
+				faker.number.between(1, 20), faker.number.between(0, 20),
+				(byte) faker.number.between(0, 9),
+				faker.commerce.price(6000, 1100000),
+				accountNo,
+				customerId
 
-        return new Installment(
-                faker.number.positive(),
-                faker.date.backward(),
-                faker.commerce.price(),
-                accountNo
-        );
-    }
+		);
+	}
 
-    @Inject
-    DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
+	private TransactionModel createTransactionData(Faker faker, int accountNo) {
 
-    /**
-     * Returns an {@link AndroidInjector} of {@link Fragment}s.
-     */
-    @Override
-    public AndroidInjector<Fragment> supportFragmentInjector() {
-        return fragmentDispatchingAndroidInjector;
-    }
+		return new TransactionModel(
+				faker.number.positive(),
+				faker.date.backward(),
+				faker.commerce.price(),
+				faker.commerce.price(),
+				faker.commerce.price(0, 2000),
+				faker.company.catchPhrase(),
+				accountNo
+
+		);
+	}
+
+	private Installment createInstallmentData(Faker faker, int accountNo) {
+
+		return new Installment(
+				faker.number.positive(),
+				faker.date.backward(),
+				faker.commerce.price(),
+				accountNo
+		);
+	}
+
+	private Expense createExpenseData(Faker faker) {
+
+		return new Expense(
+				faker.commerce.price(),
+				(byte) faker.number.between(0, 5),
+				faker.date.backward()
+		);
+	}
+
+	private void saveInDatabase() {
+		customerRepo.saveItems(customers);
+		loanRepo.saveItems(loans);
+		transactionsRepo.saveItems(transactions);
+		installmentRepo.saveItems(installments);
+		expenseRepo.saveItems(expenses);
+
+	}
+
+	/**
+	 * Returns an {@link AndroidInjector} of {@link Fragment}s.
+	 */
+	@Override
+	public AndroidInjector<Fragment> supportFragmentInjector() {
+		return fragmentDispatchingAndroidInjector;
+	}
 }
