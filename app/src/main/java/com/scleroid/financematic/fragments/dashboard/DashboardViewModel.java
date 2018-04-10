@@ -9,7 +9,9 @@ import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 import com.scleroid.financematic.Resource;
 import com.scleroid.financematic.base.BaseViewModel;
+import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.local.model.Installment;
+import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.data.repo.CustomerRepo;
 import com.scleroid.financematic.data.repo.InstallmentRepo;
 import com.scleroid.financematic.data.repo.LoanRepo;
@@ -66,8 +68,16 @@ public class DashboardViewModel extends BaseViewModel<Installment> implements Cu
             List<DashBoardModel> dash = new ArrayList<>();
             for (Installment installment : input) {
                 DashBoardModel dashBoardModel;
-                String customerName = customerRepo.getCustomerDao().getCustomer(loanRepo.getLoanDao().getLoan(installment.getLoanAcNo()).getCustId()).getName();
-                dashBoardModel = new DashBoardModel(customerName, installment.getExpectedAmt(), installment.getInstallmentDate());
+                int loanAcNo = installment.getLoanAcNo();
+                final Loan loan = loanRepo.getLoanDao().getLoan(loanAcNo);
+                int custId = loan.getCustId();
+                Customer customer = customerRepo.getCustomerDao().getCustomer(
+                        custId);
+                String customerName = customer.getName();
+                dashBoardModel =
+                        new DashBoardModel(custId, loanAcNo, installment.getInstallmentId(),
+                                customerName, customer.getMobileNumber(),
+                                installment.getExpectedAmt(), installment.getInstallmentDate());
                 dash.add(dashBoardModel);
             }
             data.setValue(dash);
