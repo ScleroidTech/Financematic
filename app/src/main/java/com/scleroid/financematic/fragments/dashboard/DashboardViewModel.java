@@ -45,7 +45,7 @@ public class DashboardViewModel extends BaseViewModel<Installment> implements Cu
         this.loanRepo = loanRepo;
         this.installmentRepo = installmentRepo;
 
-        installments = installmentRepo.loadInstallments();
+        installments = installmentRepo.loadItems();
 
         upcomingInstallments.setValue(filterResults());
         setUpcomingInstallmentsTransformed(getTransformedUpcomingData());
@@ -68,10 +68,10 @@ public class DashboardViewModel extends BaseViewModel<Installment> implements Cu
             for (Installment installment : input) {
                 DashBoardModel dashBoardModel;
                 int loanAcNo = installment.getLoanAcNo();
-                final Loan loan = loanRepo.getLoanDao().getLoan(loanAcNo);
+                final Loan loan = loanRepo.loadItem(loanAcNo).getValue().data;
                 int custId = loan.getCustId();
-                Customer customer = customerRepo.getCustomerDao().getCustomer(
-                        custId);
+                Customer customer = customerRepo.loadItem(
+                        custId).getValue().data;
                 String customerName = customer.getName();
                 dashBoardModel =
                         new DashBoardModel(custId, loanAcNo, installment.getInstallmentId(),

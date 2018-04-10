@@ -70,7 +70,8 @@ public class LocalLoanLab implements LocalDataSource<Loan> {
         return loanDao.getLoanLive(itemId);
     }
 
-    /**
+
+	/**
      * Saves item to data source
      *
      * @param item item object to be saved

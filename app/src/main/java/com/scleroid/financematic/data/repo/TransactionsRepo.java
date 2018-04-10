@@ -37,7 +37,7 @@ import io.reactivex.Single;
  * exist or is empty.
  * <p/>
  * By marking the constructor with {@code @Inject} and the class with {@code @Singleton}, Dagger
- * injects the dependencies required to create an instance of the TransactionsRespository (if it
+ * injects the dependencies required to create an instance of the TransactionsRepository (if it
  * fails, it emits a compiler error). It uses {@link com.scleroid.financematic.di.RepositoryModule}
  * to do so, and the constructed instance is available in
  * {@link com.scleroid.financematic.di.AppComponent}.
