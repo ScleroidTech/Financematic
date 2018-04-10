@@ -30,6 +30,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import retrofit2.Retrofit;
+import timber.log.Timber;
 
 /**
  * This is used by Dagger to inject the required arguments into the {@link }.
@@ -54,7 +55,9 @@ abstract public class RepositoryModule {
     @Singleton
     @Provides
     static AppDatabase provideDb(Application context) {
-        return Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "financeMatic.db")
+
+	    AppDatabase appDatabase =
+			    Room.databaseBuilder(context, AppDatabase.class, "financeMatic.db")
                 /*TODO.addCallback(new RoomDatabase.Callback() {
                  *//**
          * Called when the database is created for the first time.
@@ -71,6 +74,8 @@ abstract public class RepositoryModule {
                     }
                 })*/
                 .build();
+	    Timber.wtf("why we aren't calling this" + appDatabase);
+	    return appDatabase;
     }
 
     @Singleton

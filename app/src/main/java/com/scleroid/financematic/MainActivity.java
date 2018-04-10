@@ -50,6 +50,7 @@ import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 import es.dmoral.toasty.Toasty;
 import io.bloco.faker.Faker;
+import timber.log.Timber;
 
 
 public class MainActivity extends BaseActivity
@@ -87,6 +88,8 @@ public class MainActivity extends BaseActivity
 	ExpenseRepo expenseRepo;
 	@Inject
 	DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
+	@Inject
+	Context context;
 	private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
 			= item -> {
 		Fragment fragment;
@@ -278,10 +281,6 @@ public class MainActivity extends BaseActivity
 
 	}
 
-	private void loadFragment(Fragment fragment) {
-		activityUtils.loadFragment(fragment, getSupportFragmentManager());
-	}
-
 
 
 /*
@@ -295,6 +294,10 @@ public class MainActivity extends BaseActivity
 
 
 	/*bottom navigation*/
+
+	private void loadFragment(Fragment fragment) {
+		activityUtils.loadFragment(fragment, getSupportFragmentManager());
+	}
 
 	private void selectNavMenu() {
 		navigationView.getMenu().getItem(navItemIndex).setChecked(true);
@@ -466,6 +469,7 @@ public class MainActivity extends BaseActivity
 
 	@Override
 	public void onFakerReady(Faker faker) {
+		Timber.wtf("is this called?");
 		for (int i = 0; i < 5; i++)
 			populateData(faker);
 
@@ -561,7 +565,12 @@ public class MainActivity extends BaseActivity
 	}
 
 	private void saveInDatabase() {
-		customerRepo.saveItems(customers);
+		customerRepo.saveItems(customers).subscribe(() -> {
+			// handle completion
+			Toasty.success(context, "Customers Added");
+		}, throwable -> {
+			// handle error
+		}).dispose();
 		loanRepo.saveItems(loans);
 		transactionsRepo.saveItems(transactions);
 		installmentRepo.saveItems(installments);
