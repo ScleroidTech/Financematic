@@ -19,13 +19,15 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
+
 /**
  * Copyright (C) 2018
  *
  * @author Ganesh Kaple
  * @since 4/6/18
  */
-public class CustomerRepo {
+public class CustomerRepo implements Repo<Customer> {
 
 
     private final AppDatabase db;
@@ -49,67 +51,80 @@ public class CustomerRepo {
         this.appExecutors = appExecutors;
     }
 
-    public LiveData<Resource<List<Customer>>> loadCustomers() {
-        return new NetworkBoundResource<List<Customer>, List<Customer>>(appExecutors) {
-            String key = Math.random() + "";
 
-            @Override
-            protected void onFetchFailed() {
-                customerListRateLimit.reset(key);
-            }
+	@Override
+	public LiveData<Resource<List<Customer>>> loadItems() {
+		return new NetworkBoundResource<List<Customer>, List<Customer>>(appExecutors) {
+			String key = Math.random() + "";
 
-            @Override
-            protected void saveCallResult(@NonNull List<Customer> item) {
-                customerDao.saveCustomers(item);
-            }
+			@Override
+			protected void onFetchFailed() {
+				customerListRateLimit.reset(key);
+			}
 
-            @Override
-            protected boolean shouldFetch(@Nullable List<Customer> data) {
+			@Override
+			protected void saveCallResult(@NonNull List<Customer> item) {
+				customerDao.saveCustomers(item);
+			}
 
-                return data == null || data.isEmpty() || customerListRateLimit.shouldFetch(key);
-            }
+			@Override
+			protected boolean shouldFetch(@Nullable List<Customer> data) {
 
-            @NonNull
-            @Override
-            protected LiveData<List<Customer>> loadFromDb() {
-                return customerDao.getAllCustomerLive();
-            }
+				return data == null || data.isEmpty() || customerListRateLimit.shouldFetch(key);
+			}
 
-            @NonNull
-            @Override
-            protected LiveData<ApiResponse<List<Customer>>> createCall() {
-                return webService.getCustomers();
-            }
+			@NonNull
+			@Override
+			protected LiveData<List<Customer>> loadFromDb() {
+				return customerDao.getAllCustomerLive();
+			}
 
-
-        }.asLiveData();
-    }
-
-    public LiveData<Resource<Customer>> loadCustomer(int customerNo) {
-        return new NetworkBoundResource<Customer, Customer>(appExecutors) {
-            @Override
-            protected void saveCallResult(@NonNull Customer item) {
-                customerDao.saveCustomer(item);
-            }
-
-            @Override
-            protected boolean shouldFetch(@Nullable Customer data) {
-                return data == null;//TODO Why this ?
-            }
-
-            @NonNull
-            @Override
-            protected LiveData<Customer> loadFromDb() {
-                return customerDao.getCustomerLive(customerNo);
-            }
-
-            @NonNull
-            @Override
-            protected LiveData<ApiResponse<Customer>> createCall() {
-                return webService.getCustomer(customerNo);
-            }
-        }.asLiveData();
-    }
+			@NonNull
+			@Override
+			protected LiveData<ApiResponse<List<Customer>>> createCall() {
+				return webService.getCustomers();
+			}
 
 
+		}.asLiveData();
+	}
+
+	@Override
+	public LiveData<Resource<Customer>> loadItem(final int customerNo) {
+		return new NetworkBoundResource<Customer, Customer>(appExecutors) {
+			@Override
+			protected void saveCallResult(@NonNull Customer item) {
+				customerDao.saveCustomer(item);
+			}
+
+			@Override
+			protected boolean shouldFetch(@Nullable Customer data) {
+				return data == null;//TODO Why this ?
+			}
+
+			@NonNull
+			@Override
+			protected LiveData<Customer> loadFromDb() {
+				return customerDao.getCustomerLive(customerNo);
+			}
+
+			@NonNull
+			@Override
+			protected LiveData<ApiResponse<Customer>> createCall() {
+				return webService.getCustomer(customerNo);
+			}
+		}.asLiveData();
+	}
+
+	@Override
+	public void saveItems(final List<Customer> items) {
+		//TODO save this onRemote Source later
+		Observable.fromCallable(() -> customerDao.saveCustomers(items));
+
+	}
+
+	@Override
+	public void saveItem(final Customer customer) {
+		Observable.fromCallable(() -> customerDao.saveCustomer(customer));
+	}
 }

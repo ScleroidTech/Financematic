@@ -23,9 +23,7 @@ import com.scleroid.financematic.utils.ActivityUtils;
 import com.scleroid.financematic.utils.RecyclerTouchListener;
 import com.scleroid.financematic.utils.TextViewUtils;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -34,9 +32,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-/**
- * Created by scleroid on 2/3/18.
- */
 
 
 public class DashboardFragment extends BaseFragment<DashboardViewModel> {
@@ -193,19 +188,7 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
         }));
     }
 
-    private void prepareTempDashBoardModelData() {
-        DashBoardModel loan = new DashBoardModel("Shahrukh Khan", new BigDecimal(2000), new Date(2018, 2, 23));
-        loanList.add(loan);
-        loan = new DashBoardModel("Akshay Kumar", new BigDecimal(1000), new Date(2018, 2, 22));
-        loanList.add(loan);
-        loan = new DashBoardModel("Amitabh Bachchan", new BigDecimal(1500), new Date(2018, 4, 23));
-        loanList.add(loan);
 
-
-        // notify adapter about data set changes
-        // so that it will render the list with new data
-        //mAdapter.notifyDataSetChanged();
-    }
 
 
 }

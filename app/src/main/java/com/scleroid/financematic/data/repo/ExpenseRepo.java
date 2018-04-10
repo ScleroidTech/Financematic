@@ -42,7 +42,7 @@ import javax.inject.Inject;
  * practice minimise the visibility of the class/constructor as much as possible.
  */
 
-public class ExpenseRepo {
+public class ExpenseRepo implements Repo<Expense> {
 
 
     private final AppDatabase db;
@@ -64,7 +64,8 @@ public class ExpenseRepo {
     }
 
 
-    public LiveData<Resource<List<Expense>>> loadExpenses() {
+	@Override
+	public LiveData<Resource<List<Expense>>> loadItems() {
         return new NetworkBoundResource<List<Expense>, List<Expense>>(appExecutors) {
             String key = Math.random() + "";
 
@@ -99,8 +100,8 @@ public class ExpenseRepo {
         }.asLiveData();
     }
 
-
-    public LiveData<Resource<Expense>> loadExpense(int expenseNo) {
+	@Override
+	public LiveData<Resource<Expense>> loadItem(final int expenseNo) {
         return new NetworkBoundResource<Expense, Expense>(appExecutors) {
             @Override
             protected void saveCallResult(@NonNull Expense item) {
@@ -125,6 +126,16 @@ public class ExpenseRepo {
             }
         }.asLiveData();
     }
+
+	@Override
+	public void saveItems(final List<Expense> items) {
+
+	}
+
+	@Override
+	public void saveItem(final Expense expense) {
+
+	}
 }
 
 

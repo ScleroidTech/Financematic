@@ -47,7 +47,7 @@ import javax.inject.Singleton;
  */
 
 @Singleton
-public class LoanRepo {
+public class LoanRepo implements Repo<Loan> {
 
     private final AppDatabase db;
 
@@ -104,7 +104,8 @@ public class LoanRepo {
         }.asLiveData();
     }
 
-    public LiveData<Resource<List<Loan>>> loadLoans() {
+	@Override
+	public LiveData<Resource<List<Loan>>> loadItems() {
         return new NetworkBoundResource<List<Loan>, List<Loan>>(appExecutors) {
             String key = Math.random() + "";
 
@@ -137,8 +138,8 @@ public class LoanRepo {
         }.asLiveData();
     }
 
-
-    public LiveData<Resource<Loan>> loadLoan(int acNo) {
+	@Override
+	public LiveData<Resource<Loan>> loadItem(final int acNo) {
         return new NetworkBoundResource<Loan, Loan>(appExecutors) {
             @Override
             protected void saveCallResult(@NonNull Loan item) {
@@ -164,5 +165,13 @@ public class LoanRepo {
         }.asLiveData();
     }
 
+	@Override
+	public void saveItems(final List<Loan> items) {
 
+	}
+
+	@Override
+	public void saveItem(final Loan loan) {
+
+	}
 }

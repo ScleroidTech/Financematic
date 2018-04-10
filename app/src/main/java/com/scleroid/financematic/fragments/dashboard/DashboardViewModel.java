@@ -20,7 +20,6 @@ import com.scleroid.financematic.viewmodels.CustomerViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -47,15 +46,15 @@ public class DashboardViewModel extends BaseViewModel<Installment> implements Cu
         this.installmentRepo = installmentRepo;
 
         installments = installmentRepo.loadInstallments();
+
         upcomingInstallments.setValue(filterResults());
         setUpcomingInstallmentsTransformed(getTransformedUpcomingData());
-
-
     }
 
     private List<Installment> filterResults() {
-        // if (Objects.requireNonNull(getItemList().getValue()).data == null) return new ArrayList<>();
-        return Stream.of(Objects.requireNonNull(getItemList().getValue().data))
+
+        if ((getItemList().getValue()).data == null) return new ArrayList<>();
+        return Stream.of((getItemList().getValue().data))
                 .filter(installments -> dateUtils.isThisDateWithinAWeek(installments.getInstallmentDate()))
                 .collect(Collectors.toList());
     }

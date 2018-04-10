@@ -43,7 +43,7 @@ import javax.inject.Inject;
  * practice minimise the visibility of the class/constructor as much as possible.
  */
 
-public class TransactionsRepo {
+public class TransactionsRepo implements Repo<TransactionModel> {
 
     private final AppDatabase db;
 
@@ -96,7 +96,9 @@ public class TransactionsRepo {
         }.asLiveData();
     }
 
-    public LiveData<Resource<List<TransactionModel>>> loadTransactions() {
+
+	@Override
+	public LiveData<Resource<List<TransactionModel>>> loadItems() {
         return new NetworkBoundResource<List<TransactionModel>, List<TransactionModel>>(appExecutors) {
             String key = Math.random() + "";
 
@@ -129,8 +131,8 @@ public class TransactionsRepo {
         }.asLiveData();
     }
 
-
-    public LiveData<Resource<TransactionModel>> loadTransaction(int transactionNo) {
+	@Override
+	public LiveData<Resource<TransactionModel>> loadItem(final int transactionNo) {
         return new NetworkBoundResource<TransactionModel, TransactionModel>(appExecutors) {
             @Override
             protected void saveCallResult(@NonNull TransactionModel item) {
@@ -155,6 +157,16 @@ public class TransactionsRepo {
             }
         }.asLiveData();
     }
+
+	@Override
+	public void saveItems(final List<TransactionModel> items) {
+
+	}
+
+	@Override
+	public void saveItem(final TransactionModel transactionModel) {
+
+	}
 }
 
 

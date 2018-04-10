@@ -42,7 +42,7 @@ import javax.inject.Inject;
  * to ensure the developer doesn't instantiate the class manually and bypasses Dagger, it's good
  * practice minimise the visibility of the class/constructor as much as possible.
  */
-public class InstallmentRepo {
+public class InstallmentRepo implements Repo<Installment> {
 
     private final AppDatabase db;
 
@@ -95,7 +95,9 @@ public class InstallmentRepo {
         }.asLiveData();
     }
 
-    public LiveData<Resource<List<Installment>>> loadInstallments() {
+
+	@Override
+	public LiveData<Resource<List<Installment>>> loadItems() {
         return new NetworkBoundResource<List<Installment>, List<Installment>>(appExecutors) {
             String key = Math.random() + "";
 
@@ -128,8 +130,8 @@ public class InstallmentRepo {
         }.asLiveData();
     }
 
-
-    public LiveData<Resource<Installment>> loadInstallment(int installmentNo) {
+	@Override
+	public LiveData<Resource<Installment>> loadItem(final int installmentNo) {
         return new NetworkBoundResource<Installment, Installment>(appExecutors) {
             @Override
             protected void saveCallResult(@NonNull Installment item) {
@@ -154,4 +156,14 @@ public class InstallmentRepo {
             }
         }.asLiveData();
     }
+
+	@Override
+	public void saveItems(final List<Installment> items) {
+
+	}
+
+	@Override
+	public void saveItem(final Installment installment) {
+
+	}
 }

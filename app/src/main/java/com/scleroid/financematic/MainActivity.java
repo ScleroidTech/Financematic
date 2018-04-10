@@ -24,6 +24,7 @@ import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.data.local.model.TransactionModel;
+import com.scleroid.financematic.data.repo.CustomerRepo;
 import com.scleroid.financematic.fragments.RegisterCustomerFragment;
 import com.scleroid.financematic.fragments.ReportFragment;
 import com.scleroid.financematic.fragments.customer.CustomerFragment;
@@ -34,6 +35,9 @@ import com.scleroid.financematic.fragments.people.PeopleFragment;
 import com.scleroid.financematic.utils.ActivityUtils;
 import com.scleroid.financematic.utils.BottomNavigationViewHelper;
 import com.scleroid.financematic.utils.InstantAppExecutors;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -58,6 +62,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     // index to identify current nav menu item
     public static int navItemIndex = 0;
     public static String CURRENT_TAG = TAG_DASHBOARD;
+
+	@Inject
+	CustomerRepo customerRepo;
+
 
     @Inject
     ActivityUtils activityUtils;
@@ -105,9 +113,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private NavigationView navigationView;
     private String[] activityTitles;
     private int layoutMain;
+	private List<Customer> customers;
+	private List<Loan> loans;
 
 
-    @NonNull
+	@NonNull
     public static Intent newIntent(Context activity) {
         return new Intent(activity, MainActivity.class);
     }
@@ -421,15 +431,20 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void populateData(Faker faker) {
+	    customers = new ArrayList<>();
+	    loans = new ArrayList<>();
+	    List<Installment> installments = new ArrayList<>();
+	    List<TransactionModel> transactions = new ArrayList<>();
         int customerId = faker.number.positive();
         int accountNo = Integer.parseInt(faker.business.creditCardNumber());
-        createCustomerData(faker, customerId);
+	    customers.add(createCustomerData(faker, customerId));
         for (int i = 0; i < 5; i++) {
 
-            createLoanData(faker, customerId, accountNo);
-            for (int j = 0; j < 5; j++)
-                createTransactionData(faker, accountNo);
-
+	        loans.add(createLoanData(faker, customerId, accountNo));
+	        for (int j = 0; j < 5; j++) {
+		        transactions.add(createTransactionData(faker, accountNo));
+		        installments.add(createInstallmentData(faker, accountNo));
+	        }
 
             accountNo = Integer.parseInt(faker.business.creditCardNumber());
 
