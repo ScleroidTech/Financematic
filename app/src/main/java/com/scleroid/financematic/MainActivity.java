@@ -34,7 +34,6 @@ import com.scleroid.financematic.fragments.loanDetails.LoanDetailsFragment;
 import com.scleroid.financematic.fragments.people.PeopleFragment;
 import com.scleroid.financematic.utils.ActivityUtils;
 import com.scleroid.financematic.utils.BottomNavigationViewHelper;
-import com.scleroid.financematic.utils.InstantAppExecutors;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,8 +112,28 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private NavigationView navigationView;
     private String[] activityTitles;
     private int layoutMain;
+
+	private List<Installment> installments;
+	private List<TransactionModel> transactions;
+
+	public List<Customer> getCustomers() {
+		return customers;
+	}
+
+	public List<Loan> getLoans() {
+		return loans;
+	}
+
 	private List<Customer> customers;
 	private List<Loan> loans;
+
+	public List<Installment> getInstallments() {
+		return installments;
+	}
+
+	public List<TransactionModel> getTransactions() {
+		return transactions;
+	}
 
 
 	@NonNull
@@ -129,6 +148,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public int getLayoutId() {
         return R.layout.activity_main;
     }
+
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
@@ -182,12 +202,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         // load the store fragment by default
         /* toolbar.setCustomerName("Finance Matic");*/
         // loadFragment(new DashboardFragment());
-        appExecutors = new InstantAppExecutors();
+	    //     appExecutors = new InstantAppExecutors();
         if (savedInstanceState == null) {
             navItemIndex = 0;
             CURRENT_TAG = TAG_DASHBOARD;
             loadFragmentFromNavigationDrawers();
         }
+
 
     }
 
@@ -427,14 +448,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         for (int i = 0; i < 5; i++)
             populateData(faker);
 
+	    //  saveInDatabase();
 
     }
 
-    private void populateData(Faker faker) {
+	private void populateData(Faker faker) {
 	    customers = new ArrayList<>();
 	    loans = new ArrayList<>();
-	    List<Installment> installments = new ArrayList<>();
-	    List<TransactionModel> transactions = new ArrayList<>();
+		installments = new ArrayList<>();
+		transactions = new ArrayList<>();
         int customerId = faker.number.positive();
         int accountNo = Integer.parseInt(faker.business.creditCardNumber());
 	    customers.add(createCustomerData(faker, customerId));
@@ -451,6 +473,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
 
     }
+
+	private void saveInDatabase() {
+		customerRepo.saveItems(customers);
+
+	}
 
     private Customer createCustomerData(Faker faker, int customerId) {
 
