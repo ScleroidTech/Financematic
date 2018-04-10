@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.scleroid.financematic.R;
@@ -16,16 +17,16 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.OnClick;
+
 /**
  * Created by scleroid on 3/3/18.
  */
 
 public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> {
 
-    @Inject
-    DateUtils dateUtils;
-    @Inject
-    CurrencyStringUtils currencyStringUtils;
+
     private List<DashBoardModel> loanList;
 
     public LoanAdapter(List<DashBoardModel> loanList) {
@@ -55,10 +56,10 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        DashBoardModel loan = loanList.get(position);
-        holder.title.setText(loan.getCustomerName());
-        holder.genre.setText(currencyStringUtils.bindNumber(loan.getAmtDue().intValueExact()));
-        holder.year.setText(dateUtils.getFormattedDate(loan.getInstallmentDate()));
+        DashBoardModel dashBoardModel = loanList.get(position);
+        holder.itemView.setTag(dashBoardModel);
+        holder.setData(dashBoardModel);
+
     }
 
 
@@ -67,14 +68,47 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> 
         return loanList.size();
     }
 
+
     static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView title, year, genre;
+        @Inject
+        DateUtils dateUtils;
+        @Inject
+        CurrencyStringUtils currencyStringUtils;
+        @BindView(R.id.customer_name_text_view)
+        TextView customerNameTextView;
+        @BindView(R.id.amount_text_view)
+        TextView amountTextView;
+        @BindView(R.id.due_date_text_view)
+        TextView dueDateTextView;
+        @BindView(R.id.time_remaining_text_view)
+        TextView timeRemainingTextView;
+        @BindView(R.id.call_button)
+        Button callButton;
+        @BindView(R.id.delay_button)
+        Button delayButton;
 
         MyViewHolder(View view) {
             super(view);
-            title = view.findViewById(R.id.customer_name_text_view);
-            genre = view.findViewById(R.id.amount_text_view);
-            year = view.findViewById(R.id.time_remaining);
+
         }
+
+        private void setData(final DashBoardModel dashBoardModel) {
+            customerNameTextView.setText(dashBoardModel.getCustomerName());
+            amountTextView.setText(
+                    currencyStringUtils.bindNumber(dashBoardModel.getAmtDue().intValueExact()));
+            dueDateTextView.setText(
+                    dateUtils.getFormattedDate(dashBoardModel.getInstallmentDate()));
+            timeRemainingTextView.setText(
+                    dateUtils.differenceOfDates(dashBoardModel.getInstallmentDate()));
+        }
+
+        @OnClick(R.id.call_button)
+        public void onCallButtonClicked() {
+        }
+
+        @OnClick(R.id.delay_button)
+        public void onDelayButtonClicked() {
+        }
+
     }
 }

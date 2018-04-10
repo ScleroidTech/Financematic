@@ -442,7 +442,7 @@
 
 
                 <TextView
-                    android:id="@+id/time_remaining"
+                    android:id="@+id/due_date_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:layout_below="@id/customer_name_text_view"
@@ -478,7 +478,7 @@
                     android:text="to"
                     android:textColor="@color/installmentDate"
                     android:textSize="14sp"
-                    app:layout_constraintStart_toEndOf="@+id/time_remaining"
+                    app:layout_constraintStart_toEndOf="@+id/due_date_text_view"
                     app:layout_constraintTop_toBottomOf="@+id/customer_name_text_view" />
 
 
@@ -512,7 +512,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/time_remaining"
+                    app:layout_constraintTop_toBottomOf="@+id/due_date_text_view"
                     app:layout_constraintVertical_bias="0.0">
 
                     <ImageView
@@ -548,7 +548,7 @@
                         app:layout_constraintHorizontal_bias="0.322"
                         app:layout_constraintStart_toStartOf="parent" />
                     <TextView
-                        android:id="@+id/customer_name_text_view2"
+                        android:id="@+id/time_remaining_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
