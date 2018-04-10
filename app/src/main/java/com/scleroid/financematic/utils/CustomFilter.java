@@ -3,7 +3,7 @@ package com.scleroid.financematic.utils;
 import android.widget.Filter;
 
 import com.scleroid.financematic.adapter.PeopleAdapter;
-import com.scleroid.financematic.data.tempModels.List_all_peoples;
+import com.scleroid.financematic.fragments.people.PeopleModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,13 +18,13 @@ import java.util.List;
 public class CustomFilter extends Filter {
 
     PeopleAdapter adapter;
-    ArrayList<List_all_peoples> filterList;
+	ArrayList<PeopleModel> filterList;
 
 
-    public CustomFilter(List<List_all_peoples> filterList, PeopleAdapter adapter)
+	public CustomFilter(List<PeopleModel> filterList, PeopleAdapter adapter)
     {
         this.adapter=adapter;
-        this.filterList= (ArrayList<List_all_peoples>) filterList;
+	    this.filterList = (ArrayList<PeopleModel>) filterList;
 
     }
 
@@ -39,7 +39,7 @@ public class CustomFilter extends Filter {
             //CHANGE TO UPPER
             constraint=constraint.toString().toUpperCase();
             //STORE OUR FILTERED PLAYERS
-            ArrayList<List_all_peoples> filteredPlayers=new ArrayList<>();
+	        ArrayList<PeopleModel> filteredPlayers = new ArrayList<>();
 
             for (int i=0;i<filterList.size();i++)
             {
@@ -67,7 +67,7 @@ public class CustomFilter extends Filter {
     @Override
     protected void publishResults(CharSequence constraint, FilterResults results) {
 
-        adapter.list_all_peoplesList= (ArrayList<List_all_peoples>) results.values;
+	    adapter.peopleModelList = (ArrayList<PeopleModel>) results.values;
 
         //REFRESH
         adapter.notifyDataSetChanged();

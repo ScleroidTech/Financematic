@@ -1,6 +1,7 @@
 package com.scleroid.financematic.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +11,7 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.scleroid.financematic.R;
-import com.scleroid.financematic.data.tempModels.List_all_peoples;
+import com.scleroid.financematic.fragments.people.PeopleModel;
 import com.scleroid.financematic.utils.CircleCustomView;
 import com.scleroid.financematic.utils.CustomFilter;
 import com.scleroid.financematic.utils.RupeeTextView;
@@ -27,33 +28,34 @@ import butterknife.ButterKnife;
 
 public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHolder> implements Filterable {
     Context c;
-    public List<List_all_peoples> list_all_peoplesList;
-    private List<List_all_peoples> filterList;
+    public List<PeopleModel> peopleModelList;
+    private List<PeopleModel> filterList;
     CustomFilter filter;
 
-    public PeopleAdapter(Context ctx, List<List_all_peoples> list_all_peoplesList) {
+    public PeopleAdapter(Context ctx, List<PeopleModel> peopleModelList) {
         this.c=ctx;
-        this.list_all_peoplesList = list_all_peoplesList;
-        this.filterList=list_all_peoplesList;
+        this.peopleModelList = peopleModelList;
+        this.filterList = peopleModelList;
     }
 
-    public PeopleAdapter(List<List_all_peoples> list_all_peoplesList) {
-        this.list_all_peoplesList = list_all_peoplesList;
-        this.filterList=list_all_peoplesList;
+    public PeopleAdapter(List<PeopleModel> peopleModelList) {
+        this.peopleModelList = peopleModelList;
+        this.filterList = peopleModelList;
     }
 
 
+    @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.recycler_list_all_peoples_list, parent, false);
+                .inflate(R.layout.list_item_people, parent, false);
 
         return new MyViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        List_all_peoples passbook = list_all_peoplesList.get(position);
+        PeopleModel passbook = peopleModelList.get(position);
         // holder.setPassbook(passbook);
         holder.list_person_name.setText(passbook.getList_person_name());
         holder.list_total_loan.setText(String.format("%d", passbook.getList_total_loan()));
@@ -66,7 +68,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 
     @Override
     public int getItemCount() {
-        return list_all_peoplesList.size();
+        return peopleModelList.size();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -101,7 +103,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 
         }
 
-        private void drawCircle(List_all_peoples passbook) {
+        private void drawCircle(PeopleModel passbook) {
             float percentage = getPercentage(passbook.getList_received_amoun(), passbook.getList_total_loan());
             String percentageString = new DecimalFormat("##").format(percentage);
             percentagePieChartTextView.setText(String.format("%s %%", percentageString));

@@ -88,6 +88,8 @@ public class MainActivity extends BaseActivity
 	ExpenseRepo expenseRepo;
 	@Inject
 	DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
+	@Inject
+	Context context;
 	private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
 			= item -> {
 		Fragment fragment;
@@ -165,55 +167,6 @@ public class MainActivity extends BaseActivity
 		return R.layout.activity_main;
 	}
 
-	@Inject
-	Context context;
-
-	/***
-	 * Returns respected fragment that user
-	 * selected from navigation menu
-	 */
-	private void loadFragmentFromNavigationDrawers() {
-		// selecting appropriate nav menu item
-		selectNavMenu();
-
-		// set toolbar title
-		setToolbarTitle();
-
-		// if user select the current navigation menu again, don't do anything
-		// just close the navigation drawer
-		if (getSupportFragmentManager().findFragmentByTag(CURRENT_TAG) != null) {
-			drawer.closeDrawers();
-
-			return;
-		}
-
-		// Sometimes, when fragment has huge data, screen seems hanging
-		// when switching between navigation menus
-		// So using runnable, the fragment is loaded with cross fade effect
-		// This effect can be seen in GMail app
-
-		Runnable pendingRunnable = () -> {
-			// update the main content by replacing fragments
-
-			Fragment fragment = getCurrentFragment();
-			loadFragment(fragment);
-		};
-
-		// If pendingRunnable is not null, then add to the message queue
-		// boolean post = handler.post(pendingRunnable);
-		appExecutors.diskIO().execute(pendingRunnable);
-
-		// show or hide the fab button
-
-
-		//Closing drawer on item click
-		drawer.closeDrawers();
-
-		// refresh toolbar menu
-		invalidateOptionsMenu();
-
-	}
-
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
@@ -282,6 +235,52 @@ public class MainActivity extends BaseActivity
 
 	}
 
+	/***
+	 * Returns respected fragment that user
+	 * selected from navigation menu
+	 */
+	private void loadFragmentFromNavigationDrawers() {
+		// selecting appropriate nav menu item
+		selectNavMenu();
+
+		// set toolbar title
+		setToolbarTitle();
+
+		// if user select the current navigation menu again, don't do anything
+		// just close the navigation drawer
+		if (getSupportFragmentManager().findFragmentByTag(CURRENT_TAG) != null) {
+			drawer.closeDrawers();
+
+			return;
+		}
+
+		// Sometimes, when fragment has huge data, screen seems hanging
+		// when switching between navigation menus
+		// So using runnable, the fragment is loaded with cross fade effect
+		// This effect can be seen in GMail app
+
+		Runnable pendingRunnable = () -> {
+			// update the main content by replacing fragments
+
+			Fragment fragment = getCurrentFragment();
+			loadFragment(fragment);
+		};
+
+		// If pendingRunnable is not null, then add to the message queue
+		// boolean post = handler.post(pendingRunnable);
+		appExecutors.diskIO().execute(pendingRunnable);
+
+		// show or hide the fab button
+
+
+		//Closing drawer on item click
+		drawer.closeDrawers();
+
+		// refresh toolbar menu
+		invalidateOptionsMenu();
+
+	}
+
 
 
 /*
@@ -337,6 +336,10 @@ public class MainActivity extends BaseActivity
 			// .parcelCount);
 		}
 
+	}
+
+	private void loadFragment(Fragment fragment) {
+		activityUtils.loadFragment(fragment, getSupportFragmentManager());
 	}
 
 	@Override
@@ -474,8 +477,28 @@ public class MainActivity extends BaseActivity
 
 	}
 
-	private void loadFragment(Fragment fragment) {
-		activityUtils.loadFragment(fragment, getSupportFragmentManager());
+	private void populateData(Faker faker) {
+		customers = new ArrayList<>();
+		loans = new ArrayList<>();
+		installments = new ArrayList<>();
+		transactions = new ArrayList<>();
+		expenses = new ArrayList<>();
+		int customerId = faker.number.positive();
+		int accountNo = faker.number.between();
+		customers.add(createCustomerData(faker, customerId));
+		for (int i = 0; i < 5; i++) {
+
+			loans.add(createLoanData(faker, customerId, accountNo));
+			for (int j = 0; j < 5; j++) {
+				transactions.add(createTransactionData(faker, accountNo));
+				installments.add(createInstallmentData(faker, accountNo));
+				expenses.add(createExpenseData(faker));
+			}
+
+			accountNo = faker.number.between();
+
+		}
+
 	}
 
 	private Customer createCustomerData(Faker faker, int customerId) {
@@ -540,29 +563,6 @@ public class MainActivity extends BaseActivity
 				(byte) faker.number.between(0, 5),
 				faker.date.backward()
 		);
-	}
-
-	private void populateData(Faker faker) {
-		customers = new ArrayList<>();
-		loans = new ArrayList<>();
-		installments = new ArrayList<>();
-		transactions = new ArrayList<>();
-		int customerId = faker.number.positive();
-		int accountNo = faker.number.between();
-		customers.add(createCustomerData(faker, customerId));
-		for (int i = 0; i < 5; i++) {
-
-			loans.add(createLoanData(faker, customerId, accountNo));
-			for (int j = 0; j < 5; j++) {
-				transactions.add(createTransactionData(faker, accountNo));
-				installments.add(createInstallmentData(faker, accountNo));
-				expenses.add(createExpenseData(faker));
-			}
-
-			accountNo = faker.number.between();
-
-		}
-
 	}
 
 	private void saveInDatabase() {

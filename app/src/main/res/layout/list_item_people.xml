@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -62,7 +61,6 @@
 
 
                 <TextView
-                    android:textColor="#4f4e50"
                     android:id="@+id/total_amount_title_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -70,6 +68,7 @@
                     android:layout_marginBottom="3dp"
                     android:layout_marginStart="6dp"
                     android:text="Total loan"
+                    android:textColor="#4f4e50"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toTopOf="@+id/total_loan_text_view"
                     app:layout_constraintStart_toEndOf="@+id/imageView5" />
@@ -87,15 +86,16 @@
                     app:layout_constraintStart_toEndOf="@+id/received_amount_text_view" />
 
                 <TextView
-                    android:textColor="#4f4e50"                 android:id="@+id/received_amount_title_text_view"
-
+                    android:id="@+id/received_amount_title_text_view"
                     android:layout_width="wrap_content"
+
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_below="@+id/person_name_text_view"
                     android:layout_marginBottom="4dp"
                     android:layout_marginStart="8dp"
                     android:text="Received"
+                    android:textColor="#4f4e50"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toTopOf="@+id/received_amount_text_view"
                     app:layout_constraintStart_toEndOf="@+id/imageButton" />
