@@ -88,8 +88,6 @@ public class MainActivity extends BaseActivity
 	ExpenseRepo expenseRepo;
 	@Inject
 	DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
-	@Inject
-	Context context;
 	private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
 			= item -> {
 		Fragment fragment;
@@ -167,6 +165,55 @@ public class MainActivity extends BaseActivity
 		return R.layout.activity_main;
 	}
 
+	@Inject
+	Context context;
+
+	/***
+	 * Returns respected fragment that user
+	 * selected from navigation menu
+	 */
+	private void loadFragmentFromNavigationDrawers() {
+		// selecting appropriate nav menu item
+		selectNavMenu();
+
+		// set toolbar title
+		setToolbarTitle();
+
+		// if user select the current navigation menu again, don't do anything
+		// just close the navigation drawer
+		if (getSupportFragmentManager().findFragmentByTag(CURRENT_TAG) != null) {
+			drawer.closeDrawers();
+
+			return;
+		}
+
+		// Sometimes, when fragment has huge data, screen seems hanging
+		// when switching between navigation menus
+		// So using runnable, the fragment is loaded with cross fade effect
+		// This effect can be seen in GMail app
+
+		Runnable pendingRunnable = () -> {
+			// update the main content by replacing fragments
+
+			Fragment fragment = getCurrentFragment();
+			loadFragment(fragment);
+		};
+
+		// If pendingRunnable is not null, then add to the message queue
+		// boolean post = handler.post(pendingRunnable);
+		appExecutors.diskIO().execute(pendingRunnable);
+
+		// show or hide the fab button
+
+
+		//Closing drawer on item click
+		drawer.closeDrawers();
+
+		// refresh toolbar menu
+		invalidateOptionsMenu();
+
+	}
+
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
@@ -231,53 +278,7 @@ public class MainActivity extends BaseActivity
 			CURRENT_TAG = TAG_DASHBOARD;
 			loadFragmentFromNavigationDrawers();
 		}
-
-
-	}
-
-	/***
-	 * Returns respected fragment that user
-	 * selected from navigation menu
-	 */
-	private void loadFragmentFromNavigationDrawers() {
-		// selecting appropriate nav menu item
-		selectNavMenu();
-
-		// set toolbar title
-		setToolbarTitle();
-
-		// if user select the current navigation menu again, don't do anything
-		// just close the navigation drawer
-		if (getSupportFragmentManager().findFragmentByTag(CURRENT_TAG) != null) {
-			drawer.closeDrawers();
-
-			return;
-		}
-
-		// Sometimes, when fragment has huge data, screen seems hanging
-		// when switching between navigation menus
-		// So using runnable, the fragment is loaded with cross fade effect
-		// This effect can be seen in GMail app
-
-		Runnable pendingRunnable = () -> {
-			// update the main content by replacing fragments
-
-			Fragment fragment = getCurrentFragment();
-			loadFragment(fragment);
-		};
-
-		// If pendingRunnable is not null, then add to the message queue
-		// boolean post = handler.post(pendingRunnable);
-		appExecutors.diskIO().execute(pendingRunnable);
-
-		// show or hide the fab button
-
-
-		//Closing drawer on item click
-		drawer.closeDrawers();
-
-		// refresh toolbar menu
-		invalidateOptionsMenu();
+		((GarlandApp) getApplication()).addListener(this);
 
 	}
 
@@ -294,10 +295,6 @@ public class MainActivity extends BaseActivity
 
 
 	/*bottom navigation*/
-
-	private void loadFragment(Fragment fragment) {
-		activityUtils.loadFragment(fragment, getSupportFragmentManager());
-	}
 
 	private void selectNavMenu() {
 		navigationView.getMenu().getItem(navItemIndex).setChecked(true);
@@ -477,27 +474,8 @@ public class MainActivity extends BaseActivity
 
 	}
 
-	private void populateData(Faker faker) {
-		customers = new ArrayList<>();
-		loans = new ArrayList<>();
-		installments = new ArrayList<>();
-		transactions = new ArrayList<>();
-		int customerId = faker.number.positive();
-		int accountNo = Integer.parseInt(faker.business.creditCardNumber());
-		customers.add(createCustomerData(faker, customerId));
-		for (int i = 0; i < 5; i++) {
-
-			loans.add(createLoanData(faker, customerId, accountNo));
-			for (int j = 0; j < 5; j++) {
-				transactions.add(createTransactionData(faker, accountNo));
-				installments.add(createInstallmentData(faker, accountNo));
-				expenses.add(createExpenseData(faker));
-			}
-
-			accountNo = Integer.parseInt(faker.business.creditCardNumber());
-
-		}
-
+	private void loadFragment(Fragment fragment) {
+		activityUtils.loadFragment(fragment, getSupportFragmentManager());
 	}
 
 	private Customer createCustomerData(Faker faker, int customerId) {
@@ -564,12 +542,36 @@ public class MainActivity extends BaseActivity
 		);
 	}
 
+	private void populateData(Faker faker) {
+		customers = new ArrayList<>();
+		loans = new ArrayList<>();
+		installments = new ArrayList<>();
+		transactions = new ArrayList<>();
+		int customerId = faker.number.positive();
+		int accountNo = faker.number.between();
+		customers.add(createCustomerData(faker, customerId));
+		for (int i = 0; i < 5; i++) {
+
+			loans.add(createLoanData(faker, customerId, accountNo));
+			for (int j = 0; j < 5; j++) {
+				transactions.add(createTransactionData(faker, accountNo));
+				installments.add(createInstallmentData(faker, accountNo));
+				expenses.add(createExpenseData(faker));
+			}
+
+			accountNo = Integer.parseInt(faker.business.creditCardNumber());
+
+		}
+
+	}
+
 	private void saveInDatabase() {
 		customerRepo.saveItems(customers).subscribe(() -> {
 			// handle completion
 			Toasty.success(context, "Customers Added");
 		}, throwable -> {
 			// handle error
+			Toasty.error(context, "Customers Not Added");
 		}).dispose();
 		loanRepo.saveItems(loans);
 		transactionsRepo.saveItems(transactions);
