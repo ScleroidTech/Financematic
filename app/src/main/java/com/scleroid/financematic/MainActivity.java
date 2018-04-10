@@ -559,7 +559,7 @@ public class MainActivity extends BaseActivity
 				expenses.add(createExpenseData(faker));
 			}
 
-			accountNo = Integer.parseInt(faker.business.creditCardNumber());
+			accountNo = faker.number.between();
 
 		}
 
