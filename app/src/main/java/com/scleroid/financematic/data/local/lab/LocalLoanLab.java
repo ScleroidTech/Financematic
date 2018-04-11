@@ -15,6 +15,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Completable;
 import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 /**
@@ -84,7 +85,7 @@ public class LocalLoanLab implements LocalDataSource<Loan> {
             long rowId = loanDao.saveLoan(item);
             Timber.d("loan stored " + rowId);
             return item;
-        });
+        }).subscribeOn(Schedulers.io());
     }
 
     /**
@@ -96,10 +97,10 @@ public class LocalLoanLab implements LocalDataSource<Loan> {
     public Completable addItems(@NonNull final List<Loan> items) {
         Timber.d("creating new loan ");
 
-        return Completable.fromAction(() -> {
+	    return Completable.fromRunnable(() -> {
             long[] rowId = loanDao.saveLoans(items);
             Timber.d("loan stored " + rowId.length);
-        });
+	    }).subscribeOn(Schedulers.io());
     }
 
     /**
@@ -116,7 +117,7 @@ public class LocalLoanLab implements LocalDataSource<Loan> {
     @Override
     public Completable deleteAllItems() {
         Timber.d("Deleting all loans");
-        return Completable.fromAction(() -> loanDao.nukeTable());
+	    return Completable.fromRunnable(() -> loanDao.nukeTable()).subscribeOn(Schedulers.io());
 
     }
 
@@ -129,7 +130,9 @@ public class LocalLoanLab implements LocalDataSource<Loan> {
     public Completable deleteItem(final int itemId) {
         Timber.d("deleting loan with id %d", itemId);
 
-        return Completable.fromAction(() -> loanDao.delete(loanDao.getLoanLive(itemId).getValue()));
+	    return Completable.fromRunnable(
+			    () -> loanDao.delete(loanDao.getLoanLive(itemId).getValue()))
+			    .subscribeOn(Schedulers.io());
     }
 
     /**
@@ -141,7 +144,7 @@ public class LocalLoanLab implements LocalDataSource<Loan> {
     public Completable deleteItem(@NonNull final Loan item) {
         Timber.d("deleting loan with id %d", item.getAccountNo());
 
-        return Completable.fromAction(() -> loanDao.delete(item));
+	    return Completable.fromRunnable(() -> loanDao.delete(item)).subscribeOn(Schedulers.io());
     }
 
     /**

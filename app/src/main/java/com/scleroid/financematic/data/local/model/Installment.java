@@ -6,8 +6,8 @@ import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 
-import com.scleroid.financematic.utils.DateConverter;
-import com.scleroid.financematic.utils.MoneyConverter;
+import com.scleroid.financematic.utils.roomConverters.DateConverter;
+import com.scleroid.financematic.utils.roomConverters.MoneyConverter;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -34,6 +34,17 @@ public class Installment {
     private Date installmentDate;
     @TypeConverters(MoneyConverter.class)
     private BigDecimal expectedAmt;
+
+    @Override
+    public String toString() {
+        return "Installment{" +
+                "installmentId=" + installmentId +
+                ", installmentDate=" + installmentDate +
+                ", expectedAmt=" + expectedAmt.intValue() +
+                ", loanAcNo=" + loanAcNo +
+                '}';
+    }
+
     private int loanAcNo;
 
     public Installment(final int installmentId, final Date installmentDate, final BigDecimal expectedAmt, final int loanAcNo) {

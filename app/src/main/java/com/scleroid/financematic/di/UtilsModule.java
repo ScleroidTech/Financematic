@@ -1,9 +1,9 @@
 package com.scleroid.financematic.di;
 
-import com.scleroid.financematic.utils.ActivityUtils;
-import com.scleroid.financematic.utils.CurrencyStringUtils;
-import com.scleroid.financematic.utils.DateUtils;
-import com.scleroid.financematic.utils.TextViewUtils;
+import com.scleroid.financematic.utils.ui.ActivityUtils;
+import com.scleroid.financematic.utils.ui.CurrencyStringUtils;
+import com.scleroid.financematic.utils.ui.DateUtils;
+import com.scleroid.financematic.utils.ui.TextViewUtils;
 
 import javax.inject.Singleton;
 

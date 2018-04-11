@@ -15,13 +15,15 @@ import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.data.repo.CustomerRepo;
 import com.scleroid.financematic.data.repo.InstallmentRepo;
 import com.scleroid.financematic.data.repo.LoanRepo;
-import com.scleroid.financematic.utils.DateUtils;
+import com.scleroid.financematic.utils.ui.DateUtils;
 import com.scleroid.financematic.viewmodels.CustomerViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import timber.log.Timber;
 
 /**
  * Copyright (C) 2018
@@ -46,8 +48,9 @@ public class DashboardViewModel extends BaseViewModel<Installment> implements Cu
         this.installmentRepo = installmentRepo;
 
         installments = installmentRepo.loadItems();
-
+//        Timber.d(installments.getValue().data.isEmpty() + "" );
         upcomingInstallments.setValue(filterResults());
+        //   Timber.d(upcomingInstallments.getValue().isEmpty() + "" );
         setUpcomingInstallmentsTransformed(getTransformedUpcomingData());
     }
 
@@ -69,9 +72,11 @@ public class DashboardViewModel extends BaseViewModel<Installment> implements Cu
                 DashBoardModel dashBoardModel;
                 int loanAcNo = installment.getLoanAcNo();
                 final Loan loan = loanRepo.loadItem(loanAcNo).getValue().data;
+                Timber.d(loan.toString());
                 int custId = loan.getCustId();
                 Customer customer = customerRepo.loadItem(
                         custId).getValue().data;
+                Timber.d(customer.toString());
                 String customerName = customer.getName();
                 dashBoardModel =
                         new DashBoardModel(custId, loanAcNo, installment.getInstallmentId(),

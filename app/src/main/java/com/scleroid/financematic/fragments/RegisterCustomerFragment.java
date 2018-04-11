@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.scleroid.financematic.R;
-import com.scleroid.financematic.utils.ActivityUtils;
+import com.scleroid.financematic.utils.ui.ActivityUtils;
 
 /**
  * Created by scleroid on 2/3/18.

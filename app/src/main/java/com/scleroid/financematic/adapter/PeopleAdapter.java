@@ -12,9 +12,9 @@ import android.widget.TextView;
 
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.fragments.people.PeopleModel;
-import com.scleroid.financematic.utils.CircleCustomView;
-import com.scleroid.financematic.utils.CustomFilter;
-import com.scleroid.financematic.utils.RupeeTextView;
+import com.scleroid.financematic.utils.ui.CircleCustomView;
+import com.scleroid.financematic.utils.ui.CustomFilter;
+import com.scleroid.financematic.utils.ui.RupeeTextView;
 
 import java.text.DecimalFormat;
 import java.util.List;

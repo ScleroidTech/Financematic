@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.fragments.dashboard.DashBoardModel;
-import com.scleroid.financematic.utils.CurrencyStringUtils;
-import com.scleroid.financematic.utils.DateUtils;
+import com.scleroid.financematic.utils.ui.CurrencyStringUtils;
+import com.scleroid.financematic.utils.ui.DateUtils;
 
 import java.util.List;
 

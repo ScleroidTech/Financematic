@@ -16,9 +16,9 @@ import com.scleroid.financematic.adapter.SummeryAdapter;
 import com.scleroid.financematic.base.BaseFragment;
 import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.tempModels.Personal_summery_loan_details;
-import com.scleroid.financematic.utils.ActivityUtils;
-import com.scleroid.financematic.utils.RecyclerTouchListener;
-import com.scleroid.financematic.utils.TextViewUtils;
+import com.scleroid.financematic.utils.ui.ActivityUtils;
+import com.scleroid.financematic.utils.ui.RecyclerTouchListener;
+import com.scleroid.financematic.utils.ui.TextViewUtils;
 
 import java.util.ArrayList;
 import java.util.Date;

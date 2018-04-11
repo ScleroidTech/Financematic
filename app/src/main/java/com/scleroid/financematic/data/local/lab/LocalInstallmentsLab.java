@@ -15,6 +15,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Completable;
 import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 /**
@@ -83,7 +84,7 @@ public class LocalInstallmentsLab implements LocalDataSource<Installment> {
             long rowId = installmentDao.saveInstallment(item);
             Timber.d("installment stored " + rowId);
             return item;
-        });
+        }).subscribeOn(Schedulers.io());
     }
 
     /**
@@ -95,10 +96,10 @@ public class LocalInstallmentsLab implements LocalDataSource<Installment> {
     public Completable addItems(@NonNull final List<Installment> items) {
         Timber.d("creating new installment ");
 
-        return Completable.fromAction(() -> {
+	    return Completable.fromRunnable(() -> {
             long[] rowId = installmentDao.saveInstallments(items);
             Timber.d("installment stored " + rowId.length);
-        });
+	    }).subscribeOn(Schedulers.io());
     }
 
     /**
@@ -115,7 +116,8 @@ public class LocalInstallmentsLab implements LocalDataSource<Installment> {
     @Override
     public Completable deleteAllItems() {
         Timber.d("Deleting all installments");
-        return Completable.fromAction(() -> installmentDao.nukeTable());
+	    return Completable.fromRunnable(() -> installmentDao.nukeTable())
+			    .subscribeOn(Schedulers.io());
 
     }
 
@@ -128,7 +130,9 @@ public class LocalInstallmentsLab implements LocalDataSource<Installment> {
     public Completable deleteItem(final int itemId) {
         Timber.d("deleting installment with id %d", itemId);
 
-        return Completable.fromAction(() -> installmentDao.delete(installmentDao.getInstallment(itemId).getValue()));
+	    return Completable.fromRunnable(
+			    () -> installmentDao.delete(installmentDao.getInstallment(itemId).getValue()))
+			    .subscribeOn(Schedulers.io());
     }
 
     /**
@@ -140,7 +144,8 @@ public class LocalInstallmentsLab implements LocalDataSource<Installment> {
     public Completable deleteItem(@NonNull final Installment item) {
         Timber.d("deleting installment with id %d", item.getInstallmentId());
 
-        return Completable.fromAction(() -> installmentDao.delete(item));
+	    return Completable.fromRunnable(() -> installmentDao.delete(item))
+			    .subscribeOn(Schedulers.io());
     }
 
     /**

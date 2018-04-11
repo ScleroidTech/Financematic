@@ -19,9 +19,9 @@ import com.scleroid.financematic.R;
 import com.scleroid.financematic.adapter.LoanAdapter;
 import com.scleroid.financematic.base.BaseFragment;
 import com.scleroid.financematic.fragments.passbook.PassbookFragment;
-import com.scleroid.financematic.utils.ActivityUtils;
-import com.scleroid.financematic.utils.RecyclerTouchListener;
-import com.scleroid.financematic.utils.TextViewUtils;
+import com.scleroid.financematic.utils.ui.ActivityUtils;
+import com.scleroid.financematic.utils.ui.RecyclerTouchListener;
+import com.scleroid.financematic.utils.ui.TextViewUtils;
 
 import java.util.ArrayList;
 import java.util.List;

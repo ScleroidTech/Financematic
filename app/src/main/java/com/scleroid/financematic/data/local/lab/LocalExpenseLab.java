@@ -15,6 +15,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Completable;
 import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 /**
@@ -83,7 +84,7 @@ public class LocalExpenseLab implements LocalDataSource<Expense> {
             long rowId = expenseDao.saveExpense(item);
             Timber.d("expense stored " + rowId);
             return item;
-        });
+        }).subscribeOn(Schedulers.io());
     }
 
 
@@ -96,10 +97,10 @@ public class LocalExpenseLab implements LocalDataSource<Expense> {
     public Completable addItems(@NonNull final List<Expense> items) {
         Timber.d("creating new expense ");
 
-        return Completable.fromAction(() -> {
+	    return Completable.fromRunnable(() -> {
             long[] rowId = expenseDao.saveExpenses(items);
             Timber.d("expense stored " + rowId.length);
-        });
+	    }).subscribeOn(Schedulers.io());
     }
 
     /**
@@ -116,7 +117,7 @@ public class LocalExpenseLab implements LocalDataSource<Expense> {
     @Override
     public Completable deleteAllItems() {
         Timber.d("Deleting all expenses");
-        return Completable.fromAction(() -> expenseDao.nukeTable());
+	    return Completable.fromRunnable(() -> expenseDao.nukeTable()).subscribeOn(Schedulers.io());
 
     }
 
@@ -129,7 +130,9 @@ public class LocalExpenseLab implements LocalDataSource<Expense> {
     public Completable deleteItem(final int itemId) {
         Timber.d("deleting expense with id %d", itemId);
 
-        return Completable.fromAction(() -> expenseDao.delete(expenseDao.getExpense(itemId).getValue()));
+	    return Completable.fromRunnable(
+			    () -> expenseDao.delete(expenseDao.getExpense(itemId).getValue()))
+			    .subscribeOn(Schedulers.io());
     }
 
     /**
@@ -141,6 +144,6 @@ public class LocalExpenseLab implements LocalDataSource<Expense> {
     public Completable deleteItem(@NonNull final Expense item) {
         Timber.d("deleting expense with id %d", item.getExpenseId());
 
-        return Completable.fromAction(() -> expenseDao.delete(item));
+	    return Completable.fromRunnable(() -> expenseDao.delete(item)).subscribeOn(Schedulers.io());
     }
 }

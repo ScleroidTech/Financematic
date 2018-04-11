@@ -15,6 +15,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Completable;
 import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 /**
@@ -82,7 +83,7 @@ public class LocalCustomerLab implements LocalDataSource<Customer> {
             long rowId = customerDao.saveCustomer(item);
             Timber.d("customer stored " + rowId);
             return item;
-        });
+        }).subscribeOn(Schedulers.io());
     }
 
 
@@ -95,10 +96,11 @@ public class LocalCustomerLab implements LocalDataSource<Customer> {
     public Completable addItems(@NonNull final List<Customer> items) {
         Timber.d("creating new customer ");
 
-        return Completable.fromAction(() -> {
+	    return Completable.fromRunnable(() -> {
             long[] rowId = customerDao.saveCustomers(items);
             Timber.d("customer stored " + rowId.length);
-        });
+
+	    }).subscribeOn(Schedulers.io());
     }
 
     /**
@@ -115,7 +117,8 @@ public class LocalCustomerLab implements LocalDataSource<Customer> {
     @Override
     public Completable deleteAllItems() {
         Timber.d("Deleting all customers");
-        return Completable.fromAction(() -> customerDao.nukeTable());
+	    return Completable.fromRunnable(() -> customerDao.nukeTable()).subscribeOn(Schedulers.io
+			    ());
 
     }
 
@@ -128,7 +131,9 @@ public class LocalCustomerLab implements LocalDataSource<Customer> {
     public Completable deleteItem(final int itemId) {
         Timber.d("deleting customer with id %d", itemId);
 
-        return Completable.fromAction(() -> customerDao.delete(customerDao.getCustomerLive(itemId).getValue()));
+	    return Completable.fromRunnable(
+			    () -> customerDao.delete(customerDao.getCustomerLive(itemId).getValue()))
+			    .subscribeOn(Schedulers.io());
     }
 
     /**
@@ -140,6 +145,7 @@ public class LocalCustomerLab implements LocalDataSource<Customer> {
     public Completable deleteItem(@NonNull final Customer item) {
         Timber.d("deleting customer with id %d", item.getCustomerId());
 
-        return Completable.fromAction(() -> customerDao.delete(item));
+	    return Completable.fromRunnable(() -> customerDao.delete(item))
+			    .subscribeOn(Schedulers.io());
     }
 }

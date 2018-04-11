@@ -15,6 +15,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Completable;
 import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 /**
@@ -83,7 +84,7 @@ public class LocalTransactionsLab implements LocalDataSource<TransactionModel> {
             long rowId = transactionDao.saveTransaction(item);
             Timber.d("transaction stored " + rowId);
             return item;
-        });
+        }).subscribeOn(Schedulers.io());
     }
 
     /**
@@ -95,10 +96,10 @@ public class LocalTransactionsLab implements LocalDataSource<TransactionModel> {
     public Completable addItems(@NonNull final List<TransactionModel> items) {
         Timber.d("creating new transaction ");
 
-        return Completable.fromAction(() -> {
+	    return Completable.fromRunnable(() -> {
             long[] rowId = transactionDao.saveTransactions(items);
             Timber.d("transaction stored " + rowId.length);
-        });
+	    }).subscribeOn(Schedulers.io());
     }
 
     /**
@@ -115,7 +116,8 @@ public class LocalTransactionsLab implements LocalDataSource<TransactionModel> {
     @Override
     public Completable deleteAllItems() {
         Timber.d("Deleting all transactions");
-        return Completable.fromAction(() -> transactionDao.nukeTable());
+	    return Completable.fromRunnable(() -> transactionDao.nukeTable())
+			    .subscribeOn(Schedulers.io());
 
     }
 
@@ -128,7 +130,9 @@ public class LocalTransactionsLab implements LocalDataSource<TransactionModel> {
     public Completable deleteItem(final int itemId) {
         Timber.d("deleting transaction with id %d", itemId);
 
-        return Completable.fromAction(() -> transactionDao.delete(transactionDao.getTransaction(itemId).getValue()));
+	    return Completable.fromRunnable(
+			    () -> transactionDao.delete(transactionDao.getTransaction(itemId).getValue()))
+			    .subscribeOn(Schedulers.io());
     }
 
     /**
@@ -140,7 +144,8 @@ public class LocalTransactionsLab implements LocalDataSource<TransactionModel> {
     public Completable deleteItem(@NonNull final TransactionModel item) {
         Timber.d("deleting transaction with id %d", item.getTransactionId());
 
-        return Completable.fromAction(() -> transactionDao.delete(item));
+	    return Completable.fromRunnable(() -> transactionDao.delete(item))
+			    .subscribeOn(Schedulers.io());
     }
 
     /**

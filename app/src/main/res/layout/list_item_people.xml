@@ -35,7 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <com.scleroid.financematic.utils.CircleCustomView
+                <com.scleroid.financematic.utils.ui.CircleCustomView
                     android:id="@+id/payment_circle_view"
                     android:layout_width="75dp"
                     android:layout_height="75dp"
@@ -73,7 +73,7 @@
                     app:layout_constraintBottom_toTopOf="@+id/total_loan_text_view"
                     app:layout_constraintStart_toEndOf="@+id/imageView5" />
 
-                <com.scleroid.financematic.utils.RupeeTextView
+                <com.scleroid.financematic.utils.ui.RupeeTextView
                     android:id="@+id/total_loan_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -100,7 +100,7 @@
                     app:layout_constraintBottom_toTopOf="@+id/received_amount_text_view"
                     app:layout_constraintStart_toEndOf="@+id/imageButton" />
 
-                <com.scleroid.financematic.utils.RupeeTextView
+                <com.scleroid.financematic.utils.ui.RupeeTextView
                     android:id="@+id/received_amount_text_view"
 
                     android:layout_width="wrap_content"

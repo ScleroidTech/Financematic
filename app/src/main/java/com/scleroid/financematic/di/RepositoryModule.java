@@ -18,16 +18,16 @@ import com.scleroid.financematic.data.repo.LoanRepo;
 import com.scleroid.financematic.data.repo.TransactionsRepo;
 import com.scleroid.financematic.utils.DiskIOThreadExecutor;
 import com.scleroid.financematic.utils.LiveDataCallAdapterFactory;
+import com.scleroid.financematic.utils.rx.AppSchedulerProvider;
+import com.scleroid.financematic.utils.rx.SchedulerProvider;
 
 import java.util.concurrent.Executors;
 
 import javax.inject.Singleton;
 
-import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 import timber.log.Timber;
 
 /**
@@ -118,23 +118,25 @@ abstract public class RepositoryModule {
     static WebService provideWebService() {
 	    return new Retrofit.Builder()
 			    .baseUrl("https://api.github.com/")
-			    .addConverterFactory(GsonConverterFactory.create())
+//			    .addConverterFactory(GsonConverterFactory.create())
 			    .addCallAdapterFactory(new LiveDataCallAdapterFactory())
 			    .build()
 			    .create(WebService.class);
     }
 
 	@Singleton
-	@Binds
+	@Provides
+	static SchedulerProvider provideSchedulerProvider() {
+		return new AppSchedulerProvider();
+	}
+
+	@Singleton
+
 	abstract ExpenseRepo provideExpenseRepo(AppDatabase db);
 
     @Singleton
-    @Binds
-    abstract CustomerRepo provideCustomerRepo(AppDatabase db);
 
-    @Singleton
-    @Binds
-    abstract TransactionsRepo provideTransactionsRepo(AppDatabase db);
+    abstract CustomerRepo provideCustomerRepo(AppDatabase db);
 
     @Singleton
     @Provides
@@ -145,7 +147,14 @@ abstract public class RepositoryModule {
     }
 
     @Singleton
-    @Binds
     abstract InstallmentRepo provideInstallmentRepo(AppDatabase db);
+	/*@Provides
+	@Singleton
+	Gson provideGson() {
+		return new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+	}*/
 
+	@Singleton
+
+	abstract TransactionsRepo provideTransactionsRepo(AppDatabase db);
 }
