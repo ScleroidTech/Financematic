@@ -392,7 +392,7 @@ android:textSize="16sp"
                           android:id="@+id/txPeroidInMonths"
                           android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
-                          android:text="year" android:layout_weight=".2"/>
+                          android:text="installmentDate" android:layout_weight=".2"/>
                       <EditText
                           android:id="@+id/txPeroidInMonths"
                           android:layout_width="wrap_content"

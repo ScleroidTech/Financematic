@@ -17,6 +17,10 @@ android {
         //  multiDexEnabled true
     }
     dexOptions {
+        incremental true
+        // here heap size give 4g i got this thing from https://groups.google.com/forum/#!topic/adt-dev/P_TLBTyFWVY
+
+        javaMaxHeapSize "4g"
         preDexLibraries = false
     }
     buildTypes {
@@ -36,7 +40,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     // App's dependencies, including test
-    //implementation 'com.android.support:multidex:1.0.3'
+    implementation 'com.android.support:multidex:1.0.3'
 
     //noinspection GradleCompatible
     // implementation "com.android.support:support-v4:$rootProject.supportLibraryVersion"
@@ -56,12 +60,27 @@ dependencies {
     implementation "android.arch.lifecycle:extensions:$rootProject.lifecycleVersion"
     //compile "android.arch.persistence.room:runtime:1.0.0"
     annotationProcessor "android.arch.lifecycle:compiler:$rootProject.lifecycleVersion"
-   // annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
+    // annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
     //  implementation 'com.wdullaer:materialdatetimepicker:3.5.1'
 
     // gson Library
     implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 
+    implementation 'com.annimon:stream:1.1.9'
+
+    compile "com.google.guava:guava:$rootProject.guavaVersion"
+    compileOnly "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+
+    // Priority Job Queue
+    implementation "com.birbit:android-priority-jobqueue:$project.priorityJobQueueVersion"
+
+    //GCM Network Manager
+    //  implementation "com.google.android.gms:play-services-gcm:$project.playServicesVersion"
+
+    // OkHttp Logging Interceptor
+    implementation "com.squareup.okhttp3:okhttp:$project.okHttpVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$project.okHttpVersion"
     // ButterKnife
     implementation "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterKnifeVersion"
@@ -70,7 +89,7 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:4.6.1'
 
     //Awesome Validation
-    implementation 'com.basgeekball:awesome-validation:2.0'
+    //implementation 'com.basgeekball:awesome-validation:2.0'
 
     //Toasty
     implementation 'com.github.GrenderG:Toasty:1.2.5'
@@ -106,23 +125,6 @@ dependencies {
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
-
-    implementation 'com.annimon:stream:1.1.9'
-
-    compile "com.google.guava:guava:$rootProject.guavaVersion"
-    compile 'com.google.code.gson:gson:2.8.2'
-    compileOnly    "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
-
-    // Priority Job Queue
-    implementation "com.birbit:android-priority-jobqueue:$project.priorityJobQueueVersion"
-
-    //GCM Network Manager
-    implementation "com.google.android.gms:play-services-gcm:$project.playServicesVersion"
-
-    // OkHttp Logging Interceptor
-    implementation "com.squareup.okhttp3:okhttp:$project.okHttpVersion"
-    implementation "com.squareup.okhttp3:logging-interceptor:$project.okHttpVersion"
 
 
 

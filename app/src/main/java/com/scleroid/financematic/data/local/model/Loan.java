@@ -186,27 +186,27 @@ public class Loan {
         this.year = year;
     }
 
-    public String getTitle() {
+    public String getCustomerName() {
         return title;
     }
 
-    public void setTitle(String name) {
+    public void setCustomerName(String name) {
         this.title = name;
     }
 
-    public String getYear() {
+    public String getInstallmentDate() {
         return year;
     }
 
-    public void setYear(String year) {
+    public void setInstallmentDate(String year) {
         this.year = year;
     }
 
-    public String getGenre() {
+    public String getAmtDue() {
         return genre;
     }
 
-    public void setGenre(String genre) {
+    public void setAmtDue(String genre) {
         this.genre = genre;
     }*/
 }

@@ -1,14 +1,13 @@
-
 package com.scleroid.financematic.data.repo;
 
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.scleroid.financematic.AppDatabase;
 import com.scleroid.financematic.AppExecutors;
 import com.scleroid.financematic.Resource;
-import com.scleroid.financematic.data.local.dao.LoanDao;
+import com.scleroid.financematic.data.local.AppDatabase;
+import com.scleroid.financematic.data.local.lab.LocalLoanLab;
 import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.data.remote.ApiResponse;
 import com.scleroid.financematic.data.remote.WebService;
@@ -21,11 +20,13 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import io.reactivex.Completable;
+import io.reactivex.Single;
+
 
 /**
  * Copyright (C) 2018
  *
- * @author Ganesh Kaple
  * @since 4/4/18
  */
 
@@ -47,118 +48,132 @@ import javax.inject.Singleton;
  */
 
 @Singleton
-public class LoanRepo {
+public class LoanRepo implements Repo<Loan> {
 
-    private final AppDatabase db;
-
-    private final LoanDao loanDao;
-
-    private final WebService webService;
-
-    private final AppExecutors appExecutors;
-
-    private RateLimiter<String> loanListRateLimit = new RateLimiter<>(10, TimeUnit.MINUTES);
-
-    @Inject
-    LoanRepo(final AppDatabase db, final LoanDao loanDao, final WebService webService, final AppExecutors appExecutors) {
-        this.db = db;
-        this.loanDao = loanDao;
-        this.webService = webService;
-        this.appExecutors = appExecutors;
-    }
-
-    public LiveData<Resource<List<Loan>>> loadLoansForCustomer(int customerId) {
-        return new NetworkBoundResource<List<Loan>, List<Loan>>(appExecutors) {
-            @Override
-            protected void onFetchFailed() {
-                loanListRateLimit.reset(customerId + "");
-            }
-
-            @Override
-            protected void saveCallResult(@NonNull List<Loan> item) {
-                loanDao.saveLoans(item);
-            }
-
-            @Override
-            protected boolean shouldFetch(@Nullable List<Loan> data) {
-                return data == null || data.isEmpty() || loanListRateLimit.shouldFetch(customerId + "");
-            }
-
-            @NonNull
-            @Override
-            protected LiveData<List<Loan>> loadFromDb() {
-                return loanDao.getLoansForCustomerLive(customerId);
-            }
-
-            @NonNull
-            @Override
-            protected LiveData<ApiResponse<List<Loan>>> createCall() {
-                return webService.getLoans(customerId);
-            }
+	private final AppDatabase db;
 
 
-        }.asLiveData();
-    }
+	private final LocalLoanLab localLoanLab;
 
-    public LiveData<Resource<List<Loan>>> loadLoans() {
-        return new NetworkBoundResource<List<Loan>, List<Loan>>(appExecutors) {
-            String key = Math.random() + "";
+	private final WebService webService;
 
-            @Override
-            protected void saveCallResult(@NonNull List<Loan> item) {
-                loanDao.saveLoans(item);
-            }
+	private final AppExecutors appExecutors;
 
-            @Override
-            protected boolean shouldFetch(@Nullable List<Loan> data) {
-                return data == null || data.isEmpty() || loanListRateLimit.shouldFetch(key + "");
-            }
+	private RateLimiter<String> loanListRateLimit = new RateLimiter<>(10, TimeUnit.MINUTES);
 
-            @NonNull
-            @Override
-            protected LiveData<List<Loan>> loadFromDb() {
-                return loanDao.getLoansLive();
-            }
+	@Inject
+	LoanRepo(final AppDatabase db, final LocalLoanLab loanLab, final WebService webService,
+	         final AppExecutors appExecutors) {
+		this.db = db;
+		this.localLoanLab = loanLab;
+		this.webService = webService;
+		this.appExecutors = appExecutors;
+	}
 
-            @NonNull
-            @Override
-            protected LiveData<ApiResponse<List<Loan>>> createCall() {
-                return webService.getLoans();
-            }
+	public LiveData<Resource<List<Loan>>> loadLoansForCustomer(int customerId) {
+		return new NetworkBoundResource<List<Loan>, List<Loan>>(appExecutors) {
+			@Override
+			protected void onFetchFailed() {
+				loanListRateLimit.reset(customerId + "");
+			}
 
-            @Override
-            protected void onFetchFailed() {
-                loanListRateLimit.reset(key + "");
-            }
-        }.asLiveData();
-    }
+			@Override
+			protected void saveCallResult(@NonNull List<Loan> item) {
+				localLoanLab.addItems(item);
+			}
+
+			@Override
+			protected boolean shouldFetch(@Nullable List<Loan> data) {
+				return data == null || data.isEmpty() || loanListRateLimit.shouldFetch(
+						customerId + "");
+			}
+
+			@NonNull
+			@Override
+			protected LiveData<List<Loan>> loadFromDb() {
+				return localLoanLab.getItemsForCustomer(customerId);
+			}
+
+			@NonNull
+			@Override
+			protected LiveData<ApiResponse<List<Loan>>> createCall() {
+				return webService.getLoans(customerId);
+			}
 
 
-    public LiveData<Resource<Loan>> loadLoan(int acNo) {
-        return new NetworkBoundResource<Loan, Loan>(appExecutors) {
-            @Override
-            protected void saveCallResult(@NonNull Loan item) {
-                loanDao.saveLoan(item);
-            }
+		}.asLiveData();
+	}
 
-            @Override
-            protected boolean shouldFetch(@Nullable Loan data) {
-                return data == null;//TODO Why this ?
-            }
+	@Override
+	public LiveData<Resource<List<Loan>>> loadItems() {
+		return new NetworkBoundResource<List<Loan>, List<Loan>>(appExecutors) {
+			String key = Math.random() + "";
 
-            @NonNull
-            @Override
-            protected LiveData<Loan> loadFromDb() {
-                return loanDao.getLoan(acNo);
-            }
+			@Override
+			protected void saveCallResult(@NonNull List<Loan> item) {
+				localLoanLab.addItems(item);
+			}
 
-            @NonNull
-            @Override
-            protected LiveData<ApiResponse<Loan>> createCall() {
-                return webService.getLoan(acNo);
-            }
-        }.asLiveData();
-    }
+			@Override
+			protected boolean shouldFetch(@Nullable List<Loan> data) {
+				return data == null || data.isEmpty() || loanListRateLimit.shouldFetch(key + "");
+			}
+
+			@NonNull
+			@Override
+			protected LiveData<List<Loan>> loadFromDb() {
+				return localLoanLab.getItems();
+			}
+
+			@NonNull
+			@Override
+			protected LiveData<ApiResponse<List<Loan>>> createCall() {
+				return webService.getLoans();
+			}
+
+			@Override
+			protected void onFetchFailed() {
+				loanListRateLimit.reset(key + "");
+			}
+		}.asLiveData();
+	}
+
+	@Override
+	public LiveData<Resource<Loan>> loadItem(final int acNo) {
+		return new NetworkBoundResource<Loan, Loan>(appExecutors) {
+			@Override
+			protected void saveCallResult(@NonNull Loan item) {
+				localLoanLab.saveItem(item);
+			}
+
+			@Override
+			protected boolean shouldFetch(@Nullable Loan data) {
+				return data == null;//TODO Why this ?
+			}
+
+			@NonNull
+			@Override
+			protected LiveData<Loan> loadFromDb() {
+				return localLoanLab.getItem(acNo);
+			}
+
+			@NonNull
+			@Override
+			protected LiveData<ApiResponse<Loan>> createCall() {
+				return webService.getLoan(acNo);
+			}
+		}.asLiveData();
+	}
+
+	@Override
+	public Completable saveItems(final List<Loan> items) {
+		return localLoanLab.addItems(items);
+	}
+
+	@Override
+	public Single<Loan> saveItem(final Loan loan) {
+		return localLoanLab.saveItem(loan);
+	}
 
 
 }

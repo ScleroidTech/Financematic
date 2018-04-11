@@ -4,10 +4,10 @@ import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.scleroid.financematic.AppDatabase;
 import com.scleroid.financematic.AppExecutors;
 import com.scleroid.financematic.Resource;
-import com.scleroid.financematic.data.local.dao.ExpenseDao;
+import com.scleroid.financematic.data.local.AppDatabase;
+import com.scleroid.financematic.data.local.lab.LocalExpenseLab;
 import com.scleroid.financematic.data.local.model.Expense;
 import com.scleroid.financematic.data.remote.ApiResponse;
 import com.scleroid.financematic.data.remote.WebService;
@@ -18,6 +18,9 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
+
+import io.reactivex.Completable;
+import io.reactivex.Single;
 
 /**
  * Copyright (C) 2018
@@ -42,12 +45,12 @@ import javax.inject.Inject;
  * practice minimise the visibility of the class/constructor as much as possible.
  */
 
-public class ExpenseRepo {
+public class ExpenseRepo implements Repo<Expense> {
 
 
     private final AppDatabase db;
 
-    private final ExpenseDao expenseDao;
+    private final LocalExpenseLab localExpenseLab;
 
     private final WebService webService;
 
@@ -56,15 +59,17 @@ public class ExpenseRepo {
     private RateLimiter<String> expenseListRateLimit = new RateLimiter<>(10, TimeUnit.MINUTES);
 
     @Inject
-    ExpenseRepo(final AppDatabase db, final ExpenseDao expenseDao, final WebService webService, final AppExecutors appExecutors) {
+    ExpenseRepo(final AppDatabase db, final LocalExpenseLab localExpenseLab,
+                final WebService webService, final AppExecutors appExecutors) {
         this.db = db;
-        this.expenseDao = expenseDao;
+        this.localExpenseLab = localExpenseLab;
         this.webService = webService;
         this.appExecutors = appExecutors;
     }
 
 
-    public LiveData<Resource<List<Expense>>> loadExpenses() {
+	@Override
+	public LiveData<Resource<List<Expense>>> loadItems() {
         return new NetworkBoundResource<List<Expense>, List<Expense>>(appExecutors) {
             String key = Math.random() + "";
 
@@ -74,8 +79,8 @@ public class ExpenseRepo {
             }
 
             @Override
-            protected void saveCallResult(@NonNull List<Expense> item) {
-                expenseDao.saveExpenses(item);
+            protected void saveCallResult(@NonNull List<Expense> items) {
+                localExpenseLab.addItems(items);
             }
 
             @Override
@@ -86,7 +91,7 @@ public class ExpenseRepo {
             @NonNull
             @Override
             protected LiveData<List<Expense>> loadFromDb() {
-                return expenseDao.getAllExpenseLive();
+                return localExpenseLab.getItems();
             }
 
             @NonNull
@@ -99,12 +104,12 @@ public class ExpenseRepo {
         }.asLiveData();
     }
 
-
-    public LiveData<Resource<Expense>> loadExpense(int expenseNo) {
+	@Override
+	public LiveData<Resource<Expense>> loadItem(final int expenseNo) {
         return new NetworkBoundResource<Expense, Expense>(appExecutors) {
             @Override
             protected void saveCallResult(@NonNull Expense item) {
-                expenseDao.saveExpense(item);
+                localExpenseLab.saveItem(item);
             }
 
             @Override
@@ -121,10 +126,22 @@ public class ExpenseRepo {
             @NonNull
             @Override
             protected LiveData<Expense> loadFromDb() {
-                return expenseDao.getExpense(expenseNo);
+                return localExpenseLab.getItem(expenseNo);
             }
         }.asLiveData();
     }
+
+    @Override
+    public Completable saveItems(final List<Expense> items) {
+        return localExpenseLab.addItems(items);
+    }
+
+    @Override
+    public Single<Expense> saveItem(final Expense expense) {
+        return localExpenseLab.saveItem(expense);
+    }
+
+
 }
 
 

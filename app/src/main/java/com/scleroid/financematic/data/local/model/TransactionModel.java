@@ -37,31 +37,14 @@ public class TransactionModel {
     @TypeConverters(MoneyConverter.class)
     private BigDecimal receivedAmt;
 
+    private String description;
     private int loanAcNo;
-
-    public TransactionModel(int transactionId, Date transactionDate, BigDecimal lentAmt, BigDecimal gainedAmt, BigDecimal receivedAmt, int loanAcNo) {
-        this.transactionId = transactionId;
-        this.transactionDate = transactionDate;
-        this.lentAmt = lentAmt;
-        this.gainedAmt = gainedAmt;
-        this.receivedAmt = receivedAmt;
-        this.loanAcNo = loanAcNo;
-    }
-
-    public int getLoanAcNo() {
-        return loanAcNo;
-    }
-
-    public void setLoanAcNo(int loanAcNo) {
-        this.loanAcNo = loanAcNo;
-    }
-
 
     public int getTransactionId() {
         return transactionId;
     }
 
-    public void setTransactionId(int transactionId) {
+    public void setTransactionId(final int transactionId) {
         this.transactionId = transactionId;
     }
 
@@ -69,7 +52,7 @@ public class TransactionModel {
         return transactionDate;
     }
 
-    public void setTransactionDate(Date transactionDate) {
+    public void setTransactionDate(final Date transactionDate) {
         this.transactionDate = transactionDate;
     }
 
@@ -77,7 +60,7 @@ public class TransactionModel {
         return lentAmt;
     }
 
-    public void setLentAmt(BigDecimal lentAmt) {
+    public void setLentAmt(final BigDecimal lentAmt) {
         this.lentAmt = lentAmt;
     }
 
@@ -85,7 +68,7 @@ public class TransactionModel {
         return gainedAmt;
     }
 
-    public void setGainedAmt(BigDecimal gainedAmt) {
+    public void setGainedAmt(final BigDecimal gainedAmt) {
         this.gainedAmt = gainedAmt;
     }
 
@@ -93,7 +76,34 @@ public class TransactionModel {
         return receivedAmt;
     }
 
-    public void setReceivedAmt(BigDecimal receivedAmt) {
+    public void setReceivedAmt(final BigDecimal receivedAmt) {
         this.receivedAmt = receivedAmt;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(final String description) {
+        this.description = description;
+    }
+
+    public int getLoanAcNo() {
+        return loanAcNo;
+    }
+
+    public void setLoanAcNo(final int loanAcNo) {
+        this.loanAcNo = loanAcNo;
+    }
+
+    public TransactionModel(final int transactionId, final Date transactionDate, final BigDecimal lentAmt, final BigDecimal gainedAmt, final BigDecimal receivedAmt, final String description, final int loanAcNo) {
+        this.transactionId = transactionId;
+        this.transactionDate = transactionDate;
+        this.lentAmt = lentAmt;
+        this.gainedAmt = gainedAmt;
+        this.receivedAmt = receivedAmt;
+        this.description = description;
+        this.loanAcNo = loanAcNo;
+    }
+
 }

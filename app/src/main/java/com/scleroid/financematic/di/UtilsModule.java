@@ -19,11 +19,9 @@ import dagger.Module;
 public abstract class UtilsModule {
 
     @Singleton
-
     abstract DateUtils getDateUtils();
 
     @Singleton
-
     abstract TextViewUtils getTextViewUtils();
 
     @Singleton

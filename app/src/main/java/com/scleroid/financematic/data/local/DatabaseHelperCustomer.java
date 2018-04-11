@@ -4,7 +4,6 @@ import android.arch.core.util.Function;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Transformations;
 
-import com.scleroid.financematic.AppDatabase;
 import com.scleroid.financematic.data.local.dao.CustomerDao;
 import com.scleroid.financematic.data.local.dao.LoanDao;
 import com.scleroid.financematic.data.local.model.Customer;

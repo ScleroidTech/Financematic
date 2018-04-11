@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData;
 
 import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.local.model.Expense;
+import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.data.local.model.TransactionModel;
 
@@ -44,4 +45,10 @@ public interface WebService {
     LiveData<ApiResponse<List<TransactionModel>>> getTransactions();
 
     LiveData<ApiResponse<TransactionModel>> getTransaction(int transactionNo);
+
+    LiveData<ApiResponse<Installment>> getInstallment(int installmentNo);
+
+    LiveData<ApiResponse<List<Installment>>> getInstallments();
+
+    LiveData<ApiResponse<List<Installment>>> getInstallmentsForLoan(int loanAcNo);
 }

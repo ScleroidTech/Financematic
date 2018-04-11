@@ -6,8 +6,8 @@ import android.support.annotation.NonNull;
 import com.scleroid.financematic.AppExecutors;
 import com.scleroid.financematic.data.local.AppDatabase;
 import com.scleroid.financematic.data.local.LocalDataSource;
-import com.scleroid.financematic.data.local.dao.TransactionDao;
-import com.scleroid.financematic.data.local.model.TransactionModel;
+import com.scleroid.financematic.data.local.dao.InstallmentDao;
+import com.scleroid.financematic.data.local.model.Installment;
 
 import java.util.List;
 
@@ -23,16 +23,16 @@ import timber.log.Timber;
  * @author Ganesh Kaple
  * @since 4/5/18
  */
-public class LocalTransactionsLab implements LocalDataSource<TransactionModel> {
+public class LocalInstallmentsLab implements LocalDataSource<Installment> {
     private final AppDatabase appDatabase;
     private final AppExecutors appExecutors;
-    private final TransactionDao transactionDao;
+    private final InstallmentDao installmentDao;
 
     @Inject
-    LocalTransactionsLab(final AppDatabase appDatabase, final AppExecutors appExecutors) {
+    LocalInstallmentsLab(final AppDatabase appDatabase, final AppExecutors appExecutors) {
         this.appDatabase = appDatabase;
         this.appExecutors = appExecutors;
-        this.transactionDao = appDatabase.transactionDao();
+        this.installmentDao = appDatabase.installmentDao();
     }
 
 
@@ -40,23 +40,23 @@ public class LocalTransactionsLab implements LocalDataSource<TransactionModel> {
      * gets a list of all items
      */
     @Override
-    public LiveData<List<TransactionModel>> getItems() {
+    public LiveData<List<Installment>> getItems() {
         /* Alternate Method for same purpose
         Runnable runnable = () -> {
-            final LiveData<List<Transaction>> transactions= transactionDao.getAllTransactionLive();
+            final LiveData<List<Installment>> installments= installmentDao.getAllInstallmentLive();
             appExecutors.mainThread().execute(() -> {
-                if (transactions.getValue().isEmpty()){
+                if (installments.getValue().isEmpty()){
                     callback.onDataNotAvailable();
                 }
-                else callback.onLoaded(transactions);
+                else callback.onLoaded(installments);
             });
 
 
         };
         appExecutors.diskIO().execute(runnable);*/
 
-        Timber.d("getting all transactions");
-        return transactionDao.getAllTransactionsLive();
+        Timber.d("getting all installments");
+        return installmentDao.getAllInstallmentsLive();
     }
 
     /**
@@ -65,9 +65,9 @@ public class LocalTransactionsLab implements LocalDataSource<TransactionModel> {
      * @param itemId the id of the item to be get
      */
     @Override
-    public LiveData<TransactionModel> getItem(final int itemId) {
-        Timber.d("getting transaction with id %d", itemId);
-        return transactionDao.getTransaction(itemId);
+    public LiveData<Installment> getItem(final int itemId) {
+        Timber.d("getting installment with id %d", itemId);
+        return installmentDao.getInstallment(itemId);
     }
 
     /**
@@ -76,12 +76,12 @@ public class LocalTransactionsLab implements LocalDataSource<TransactionModel> {
      * @param item item object to be saved
      */
     @Override
-    public Single<TransactionModel> saveItem(@NonNull final TransactionModel item) {
-        Timber.d("creating new transaction ");
+    public Single<Installment> saveItem(@NonNull final Installment item) {
+        Timber.d("creating new installment ");
 
         return Single.fromCallable(() -> {
-            long rowId = transactionDao.saveTransaction(item);
-            Timber.d("transaction stored " + rowId);
+            long rowId = installmentDao.saveInstallment(item);
+            Timber.d("installment stored " + rowId);
             return item;
         });
     }
@@ -92,12 +92,12 @@ public class LocalTransactionsLab implements LocalDataSource<TransactionModel> {
      * @param items list of items
      */
     @Override
-    public Completable addItems(@NonNull final List<TransactionModel> items) {
-        Timber.d("creating new transaction ");
+    public Completable addItems(@NonNull final List<Installment> items) {
+        Timber.d("creating new installment ");
 
         return Completable.fromAction(() -> {
-            long[] rowId = transactionDao.saveTransactions(items);
-            Timber.d("transaction stored " + rowId.length);
+            long[] rowId = installmentDao.saveInstallments(items);
+            Timber.d("installment stored " + rowId.length);
         });
     }
 
@@ -114,8 +114,8 @@ public class LocalTransactionsLab implements LocalDataSource<TransactionModel> {
      */
     @Override
     public Completable deleteAllItems() {
-        Timber.d("Deleting all transactions");
-        return Completable.fromAction(() -> transactionDao.nukeTable());
+        Timber.d("Deleting all installments");
+        return Completable.fromAction(() -> installmentDao.nukeTable());
 
     }
 
@@ -126,9 +126,9 @@ public class LocalTransactionsLab implements LocalDataSource<TransactionModel> {
      */
     @Override
     public Completable deleteItem(final int itemId) {
-        Timber.d("deleting transaction with id %d", itemId);
+        Timber.d("deleting installment with id %d", itemId);
 
-        return Completable.fromAction(() -> transactionDao.delete(transactionDao.getTransaction(itemId).getValue()));
+        return Completable.fromAction(() -> installmentDao.delete(installmentDao.getInstallment(itemId).getValue()));
     }
 
     /**
@@ -137,32 +137,32 @@ public class LocalTransactionsLab implements LocalDataSource<TransactionModel> {
      * @param item item to be deleted
      */
     @Override
-    public Completable deleteItem(@NonNull final TransactionModel item) {
-        Timber.d("deleting transaction with id %d", item.getTransactionId());
+    public Completable deleteItem(@NonNull final Installment item) {
+        Timber.d("deleting installment with id %d", item.getInstallmentId());
 
-        return Completable.fromAction(() -> transactionDao.delete(item));
+        return Completable.fromAction(() -> installmentDao.delete(item));
     }
 
     /**
      * gets a list of all items for a particular value of customer no
      */
 
-    public LiveData<List<TransactionModel>> getItemsForLoan(int acNo) {
+    public LiveData<List<Installment>> getItemsForLoan(int acNo) {
         /* Alternate Method for same purpose
         Runnable runnable = () -> {
-            final LiveData<List<Transaction>> transactions= transactionDao.getAllTransactionLive();
+            final LiveData<List<Installment>> installments= installmentDao.getAllInstallmentLive();
             appExecutors.mainThread().execute(() -> {
-                if (transactions.getValue().isEmpty()){
+                if (installments.getValue().isEmpty()){
                     callback.onDataNotAvailable();
                 }
-                else callback.onLoaded(transactions);
+                else callback.onLoaded(installments);
             });
 
 
         };
         appExecutors.diskIO().execute(runnable);*/
 
-        Timber.d("getting all transactions");
-        return transactionDao.getTransactionsForLoanLive(acNo);
+        Timber.d("getting all installments");
+        return installmentDao.getInstallmentsForLoanLive(acNo);
     }
 }

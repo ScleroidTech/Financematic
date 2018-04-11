@@ -5,6 +5,7 @@ import android.text.format.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -53,6 +54,57 @@ public class DateUtils {
     public CharSequence getFormattedDate(Date date, String format) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
         return simpleDateFormat.format(date);
+    }
+
+    public boolean isThisDateWithinAWeek(Date date) {
+
+        //  SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+        // sdf.setLenient(false);
+
+
+        // if not valid, it will throw ParseException
+        // Date date = sdf.parse(dateToValidate);
+
+        // current date after 3 months
+        Calendar dateAfterAWeek = Calendar.getInstance();
+        dateAfterAWeek.add(Calendar.DATE, 7);
+
+        // current date
+        Calendar currentDate = Calendar.getInstance();
+
+
+        //ok everything is fine, date in range
+        return date.before(dateAfterAWeek.getTime())
+                && date.after(currentDate.getTime());
+
+
+    }
+
+    public String differenceOfDates(Date date) {
+
+        //  SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+        // sdf.setLenient(false);
+
+
+        // if not valid, it will throw ParseException
+        // Date date = sdf.parse(dateToValidate);
+
+        // current date after 3 months
+        Calendar dateAfterAWeek = Calendar.getInstance();
+        dateAfterAWeek.add(Calendar.DATE, 7);
+
+        // current date
+        Calendar currentDate = Calendar.getInstance();
+        Date currentDateTime = currentDate.getTime();
+
+        String diff = "";
+        long timeDiff = Math.abs(date.getTime() - currentDateTime.getTime());
+        diff = String.format("%d day(s) to go", TimeUnit.MILLISECONDS.toDays(timeDiff));
+        return diff;
+        //ChronoUnit.DAYS.between(firstDate, secondDate);
+        //ok everything is fine, date in range
+
+
     }
 
 

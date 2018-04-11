@@ -1,4 +1,4 @@
-package com.scleroid.financematic.data;
+package com.scleroid.financematic.data.tempModels;
 
 /**
  * Created by scleroid on 5/4/18.

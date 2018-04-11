@@ -11,14 +11,20 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
-import android.support.annotation.VisibleForTesting;
 
+import com.scleroid.financematic.data.repo.CustomerRepo;
+import com.scleroid.financematic.data.repo.ExpenseRepo;
+import com.scleroid.financematic.data.repo.InstallmentRepo;
+import com.scleroid.financematic.data.repo.LoanRepo;
+import com.scleroid.financematic.data.repo.TransactionsRepo;
 import com.scleroid.financematic.fragments.customer.CustomerViewModel;
 import com.scleroid.financematic.fragments.dashboard.DashboardViewModel;
 import com.scleroid.financematic.fragments.expense.ExpenseViewModel;
 import com.scleroid.financematic.fragments.loanDetails.LoanDetailsViewModel;
 import com.scleroid.financematic.fragments.passbook.PassbookViewModel;
 import com.scleroid.financematic.fragments.people.PeopleViewModel;
+
+import javax.inject.Inject;
 
 /**
  * A creator is used to inject the product ID into the ViewModel
@@ -32,31 +38,27 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
     private static volatile ViewModelFactory INSTANCE;
 
     private final Application mApplication;
+    private CustomerRepo customerRepo;
+    private LoanRepo loanRepo;
 
 
+    private InstallmentRepo installmentRepo;
 
-    public ViewModelFactory(Application application) {
-        mApplication = application;
+    private TransactionsRepo transactionsRepo;
+    private ExpenseRepo expenseRepo;
+
+    @Inject
+    public ViewModelFactory(final Application mApplication, final CustomerRepo customerRepo, final LoanRepo loanRepo, final InstallmentRepo installmentRepo, final TransactionsRepo transactionsRepo, final ExpenseRepo expenseRepo) {
+        this.mApplication = mApplication;
+        this.customerRepo = customerRepo;
+        this.loanRepo = loanRepo;
+        this.installmentRepo = installmentRepo;
+        this.transactionsRepo = transactionsRepo;
+        this.expenseRepo = expenseRepo;
     }
 
 
 
-    public static ViewModelFactory getInstance(Application application) {
-
-        if (INSTANCE == null) {
-            synchronized (ViewModelFactory.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = new ViewModelFactory(application);
-                }
-            }
-        }
-        return INSTANCE;
-    }
-
-    @VisibleForTesting
-    public static void destroyInstance() {
-        INSTANCE = null;
-    }
 
     @Override
     public <T extends ViewModel> T create(Class<T> modelClass) {
@@ -75,7 +77,7 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
             return (T) new PeopleViewModel();
         } else if (modelClass.isAssignableFrom(DashboardViewModel.class)) {
             //noinspection unchecked
-            return (T) new DashboardViewModel();
+            return (T) new DashboardViewModel(customerRepo, loanRepo, installmentRepo);
         } else if (modelClass.isAssignableFrom(PassbookViewModel.class)) {
             //noinspection unchecked
             return (T) new PassbookViewModel();

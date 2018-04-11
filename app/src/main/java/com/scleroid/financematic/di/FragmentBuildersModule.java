@@ -5,6 +5,7 @@ import com.scleroid.financematic.fragments.RegisterMoneyFragment;
 import com.scleroid.financematic.fragments.RegisterReceivedFragment;
 import com.scleroid.financematic.fragments.ReminderFragment;
 import com.scleroid.financematic.fragments.ReportFragment;
+import com.scleroid.financematic.fragments.customer.CustomerFragment;
 import com.scleroid.financematic.fragments.dashboard.DashboardFragment;
 import com.scleroid.financematic.fragments.expense.ExpenseFragment;
 import com.scleroid.financematic.fragments.loanDetails.LoanDetailsFragment;
@@ -24,6 +25,9 @@ import dagger.android.ContributesAndroidInjector;
 public abstract class FragmentBuildersModule {
     @ContributesAndroidInjector
     abstract DashboardFragment contributeDashboardFragment();
+
+    @ContributesAndroidInjector
+    abstract CustomerFragment contributeCustomerFragment();
 
     @ContributesAndroidInjector
     abstract ExpenseFragment contributeExpenseFragment();
