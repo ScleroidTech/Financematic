@@ -18,10 +18,13 @@ import android.widget.Toast;
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.adapter.LoanAdapter;
 import com.scleroid.financematic.base.BaseFragment;
+import com.scleroid.financematic.data.local.lab.LocalCustomerLab;
+import com.scleroid.financematic.data.local.lab.LocalLoanLab;
+import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.fragments.passbook.PassbookFragment;
-import com.scleroid.financematic.utils.ActivityUtils;
-import com.scleroid.financematic.utils.RecyclerTouchListener;
-import com.scleroid.financematic.utils.TextViewUtils;
+import com.scleroid.financematic.utils.ui.ActivityUtils;
+import com.scleroid.financematic.utils.ui.RecyclerTouchListener;
+import com.scleroid.financematic.utils.ui.TextViewUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,14 +59,12 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
     ActivityUtils activityUtils;
     @Inject
     ViewModelProvider.Factory viewModelFactory;
-    private List<DashBoardModel> loanList = new ArrayList<>();
     private LoanAdapter mAdapter;
     private DashboardViewModel dashBoardViewModel;
-
-
-    public DashboardFragment() {
-        // Required empty public constructor
-    }
+	@Inject
+	LocalCustomerLab localCustomerLab;
+	@Inject
+	LocalLoanLab localLoanLab;
 
     public static DashboardFragment newInstance(String param1, String param2) {
         DashboardFragment fragment = new DashboardFragment();
@@ -139,17 +140,22 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
         subscribeToLiveData();
     }
 
+	private List<Installment> installments = new ArrayList<>();
+
+	public DashboardFragment() {
+		// Required empty public constructor
+	}
+
     private void subscribeToLiveData() {
-        dashBoardViewModel.getTransformedUpcomingData().observe(this,
+	    dashBoardViewModel.getUpcomingInstallments().observe(this,
                 items -> {
-                    if (items == null)
-                        mAdapter.setLoanList(new ArrayList<>());
-                    mAdapter.setLoanList(items);
+	                mAdapter.setLoanList(items);
+	                installments = items;
                 });
     }
 
     private void setupRecyclerView() {
-        mAdapter = new LoanAdapter(new ArrayList<>());
+	    mAdapter = new LoanAdapter(new ArrayList<>(), localLoanLab, localCustomerLab);
 
         recyclerViewDashboard.setHasFixedSize(true);
 
@@ -177,8 +183,10 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
         recyclerViewDashboard.addOnItemTouchListener(new RecyclerTouchListener(getActivity().getApplicationContext(), recyclerViewDashboard, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                DashBoardModel loan = loanList.get(position);
-                Toast.makeText(getActivity().getApplicationContext(), loan.getCustomerName() + " is selected!", Toast.LENGTH_SHORT).show();
+	            Installment loan = installments.get(position);
+	            Toast.makeText(getActivity().getApplicationContext(),
+			            loan.getLoan().getCustomer().getName() + " is selected!",
+			            Toast.LENGTH_SHORT).show();
             }
 
             @Override

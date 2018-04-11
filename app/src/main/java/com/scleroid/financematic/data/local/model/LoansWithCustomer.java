@@ -11,7 +11,7 @@ import java.util.List;
  * @author Ganesh Kaple
  * @since 4/10/18
  */
-public class CustomerWithLoans {
+public class LoansWithCustomer {
 	//TODO add later
 	@Embedded
 	public Customer customer;

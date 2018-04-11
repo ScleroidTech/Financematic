@@ -15,107 +15,114 @@ import java.util.List;
  */
 @Entity(indices = {@Index(value = "customerId", unique = true)})
 public class Customer {
-    @Ignore
-    public static final byte AADHAR = 0;
-    @Ignore
-    public static final byte PAN = 1;
-    @Ignore
-    public static final byte PASSPORT = 2;
-    @Ignore
-    public static final byte RATION_CARD = 3;
-    @Ignore
-    public static final byte VOTER_ID = 4;
-    @Ignore
-    public static final byte SEVEN_TWELVE_CERTIFICATE = 5;
+	@Ignore
+	public static final byte AADHAR = 0;
+	@Ignore
+	public static final byte PAN = 1;
+	@Ignore
+	public static final byte PASSPORT = 2;
+	@Ignore
+	public static final byte RATION_CARD = 3;
+	@Ignore
+	public static final byte VOTER_ID = 4;
+	@Ignore
+	public static final byte SEVEN_TWELVE_CERTIFICATE = 5;
+	@Ignore
+	List<Loan> loanList;
+	@PrimaryKey(autoGenerate = false)
+	private int customerId;
+	private String name;
+	private String mobileNumber;
+	private String address;
+	private String city;
+	private String idProofNo;
+	private byte idProofType;
+
+	public Customer(int customerId, String name, String mobileNumber, String address, String city,
+	                String idProofNo, byte idProofType) {
+		this.customerId = customerId;
+		this.name = name;
+		this.mobileNumber = mobileNumber;
+		this.address = address;
+		this.city = city;
+		this.idProofNo = idProofNo;
+		this.idProofType = idProofType;
+	}
+  /*  @Ignore
+    private List<Loan> loans;*/
+
+	@Override
+	public String toString() {
+		return "Customer{" +
+				"customerId=" + customerId +
+				", name='" + name + '\'' +
+				", mobileNumber='" + mobileNumber + '\'' +
+				", address='" + address + '\'' +
+				", city='" + city + '\'' +
+				", idProofNo='" + idProofNo + '\'' +
+				", idProofType=" + idProofType +
+				'}';
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
 
 
-    @PrimaryKey(autoGenerate = false)
-    private int customerId;
-    private String name;
-    private String mobileNumber;
-    private String address;
-    private String city;
-    private String idProofNo;
-    private byte idProofType;
-    @Ignore
-    private List<Loan> loans;
+	public int getCustomerId() {
+		return customerId;
+	}
 
-    public Customer(int customerId, String name, String mobileNumber, String address, String city, String idProofNo, byte idProofType) {
-        this.customerId = customerId;
-        this.name = name;
-        this.mobileNumber = mobileNumber;
-        this.address = address;
-        this.city = city;
-        this.idProofNo = idProofNo;
-        this.idProofType = idProofType;
-    }
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
+	}
 
-    public String getCity() {
-        return city;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setCity(String city) {
-        this.city = city;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public List<Loan> getLoans() {
-        return loans;
-    }
+	public String getMobileNumber() {
+		return mobileNumber;
+	}
 
-    public void setLoans(List<Loan> loans) {
-        this.loans = loans;
-    }
+	public void setMobileNumber(String mobileNumber) {
+		this.mobileNumber = mobileNumber;
+	}
 
-    public int getCustomerId() {
-        return customerId;
-    }
+	public String getAddress() {
+		return address;
+	}
 
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
-    }
+	public void setAddress(String address) {
+		this.address = address;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getIdProofNo() {
+		return idProofNo;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setIdProofNo(String idProofNo) {
+		this.idProofNo = idProofNo;
+	}
 
-    public String getMobileNumber() {
-        return mobileNumber;
-    }
+	public byte getIdProofType() {
+		return idProofType;
+	}
 
-    public void setMobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getIdProofNo() {
-        return idProofNo;
-    }
-
-    public void setIdProofNo(String idProofNo) {
-        this.idProofNo = idProofNo;
-    }
-
-    public byte getIdProofType() {
-        return idProofType;
-    }
-
-    public void setIdProofType(byte idProofType) {
-        if (idProofType > 6 && idProofType < 0) {
-            throw new IllegalStateException("The value is not permitted");
-        }
-        this.idProofType = idProofType;
-    }
+	public void setIdProofType(byte idProofType) {
+		if (idProofType > 6 && idProofType < 0) {
+			throw new IllegalStateException("The value is not permitted");
+		}
+		this.idProofType = idProofType;
+	}
 
 
 }

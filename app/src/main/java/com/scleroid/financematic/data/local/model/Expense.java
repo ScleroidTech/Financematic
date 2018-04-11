@@ -5,8 +5,8 @@ import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 
-import com.scleroid.financematic.utils.DateConverter;
-import com.scleroid.financematic.utils.MoneyConverter;
+import com.scleroid.financematic.utils.roomConverters.DateConverter;
+import com.scleroid.financematic.utils.roomConverters.MoneyConverter;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -19,6 +19,16 @@ public class Expense {
     public static final byte PHONE_BILL = 3;
     public static final byte PAID_SALARIES = 4;
     public static final byte FUEL = 5;
+
+    @Override
+    public String toString() {
+        return "Expense{" +
+                "expenseAmount=" + expenseAmount.intValue() +
+                ", expenseType=" + expenseType +
+                ", expenseDate=" + expenseDate +
+                ", expenseId=" + expenseId +
+                '}';
+    }
 
     @TypeConverters(MoneyConverter.class)
     private BigDecimal expenseAmount;

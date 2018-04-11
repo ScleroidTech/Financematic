@@ -91,7 +91,7 @@ public class DatabaseHelperCustomer {
         return customerLiveData;
     }
 
-    public void saveCustomer(Customer customer) {
+   /* public void saveCustomer(Customer customer) {
         dao.saveCustomer(customer);
         loanDao.saveLoans(customer.getLoans());
     }
@@ -101,6 +101,6 @@ public class DatabaseHelperCustomer {
         for (Customer customer : customers) {
             loanDao.saveLoans(customer.getLoans());
         }
-    }
+    }*/
 
 }

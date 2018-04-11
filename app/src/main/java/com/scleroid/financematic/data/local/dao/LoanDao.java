@@ -12,6 +12,8 @@ import com.scleroid.financematic.data.local.model.TransactionModel;
 
 import java.util.List;
 
+import io.reactivex.Single;
+
 import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 
 /**
@@ -68,6 +70,9 @@ public interface LoanDao {
      */
     @Query("SELECT * FROM Loan where accountNo  = :serialNo ")
     Loan getLoan(int serialNo);
+
+	@Query("SELECT * FROM Loan where accountNo  = :serialNo ")
+	Single<Loan> getRxLoan(int serialNo);
 
     /**
      * select query to count Number of loan

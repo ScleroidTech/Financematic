@@ -2,12 +2,13 @@ package com.scleroid.financematic.data.local.model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 
-import com.scleroid.financematic.utils.DateConverter;
-import com.scleroid.financematic.utils.MoneyConverter;
+import com.scleroid.financematic.utils.roomConverters.DateConverter;
+import com.scleroid.financematic.utils.roomConverters.MoneyConverter;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -34,6 +35,31 @@ public class TransactionModel {
     private BigDecimal lentAmt;
     @TypeConverters(MoneyConverter.class)
     private BigDecimal gainedAmt;
+
+	@Ignore
+	private Loan loan;
+
+	public Loan getLoan() {
+		return loan;
+	}
+
+	public void setLoan(final Loan loan) {
+		this.loan = loan;
+	}
+
+    @Override
+    public String toString() {
+        return "TransactionModel{" +
+                "transactionId=" + transactionId +
+                ", transactionDate=" + transactionDate +
+                ", lentAmt=" + lentAmt.intValue() +
+                ", gainedAmt=" + gainedAmt.intValue() +
+                ", receivedAmt=" + receivedAmt.intValue() +
+                ", description='" + description + '\'' +
+                ", loanAcNo=" + loanAcNo +
+                '}';
+    }
+
     @TypeConverters(MoneyConverter.class)
     private BigDecimal receivedAmt;
 

@@ -3,13 +3,13 @@ package com.scleroid.financematic.di;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 
-import com.scleroid.financematic.ViewModelFactory;
 import com.scleroid.financematic.fragments.customer.CustomerViewModel;
 import com.scleroid.financematic.fragments.dashboard.DashboardViewModel;
 import com.scleroid.financematic.fragments.expense.ExpenseViewModel;
 import com.scleroid.financematic.fragments.loanDetails.LoanDetailsViewModel;
 import com.scleroid.financematic.fragments.passbook.PassbookViewModel;
 import com.scleroid.financematic.fragments.people.PeopleViewModel;
+import com.scleroid.financematic.utils.ViewModelFactory;
 
 import dagger.Binds;
 import dagger.Module;

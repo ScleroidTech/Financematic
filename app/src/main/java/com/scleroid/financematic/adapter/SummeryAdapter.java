@@ -9,9 +9,9 @@ import android.widget.TextView;
 
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.data.tempModels.Personal_summery_loan_details;
-import com.scleroid.financematic.utils.CurrencyStringUtils;
-import com.scleroid.financematic.utils.DateUtils;
-import com.scleroid.financematic.utils.TextViewUtils;
+import com.scleroid.financematic.utils.ui.CurrencyStringUtils;
+import com.scleroid.financematic.utils.ui.DateUtils;
+import com.scleroid.financematic.utils.ui.TextViewUtils;
 
 import java.util.Date;
 import java.util.List;

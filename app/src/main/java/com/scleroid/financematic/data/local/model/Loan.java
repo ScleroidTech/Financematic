@@ -7,8 +7,8 @@ import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 
-import com.scleroid.financematic.utils.DateConverter;
-import com.scleroid.financematic.utils.MoneyConverter;
+import com.scleroid.financematic.utils.roomConverters.DateConverter;
+import com.scleroid.financematic.utils.roomConverters.MoneyConverter;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -36,6 +36,34 @@ public class Loan {
     public static final byte BIWEEKLY = 2;
     @Ignore
     public static final byte MONTHLY = 3;
+
+	@Ignore
+	private Customer customer;
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(final Customer customer) {
+		this.customer = customer;
+	}
+    @Override
+    public String toString() {
+        return "Loan{" +
+                "loanAmt=" + loanAmt.intValue() +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", rateOfInterest=" + rateOfInterest +
+                ", amtOfInterest=" + amtOfInterest.intValue() +
+                ", noOfInstallments=" + noOfInstallments +
+                ", duration=" + duration +
+                ", installmentType=" + installmentType +
+                ", repayAmt=" + repayAmt.intValue() +
+                ", accountNo=" + accountNo +
+                ", custId=" + custId +
+                '}';
+    }
+
     @Ignore
     public static final byte BIMONTHLY = 4;
     @Ignore

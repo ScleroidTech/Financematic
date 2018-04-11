@@ -23,8 +23,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.WorkerThread;
 
-import com.scleroid.financematic.AppExecutors;
-import com.scleroid.financematic.Resource;
 import com.scleroid.financematic.data.remote.ApiResponse;
 
 import java.util.Objects;

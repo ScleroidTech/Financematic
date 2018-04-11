@@ -15,7 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.scleroid.financematic.R;
-import com.scleroid.financematic.utils.DateUtils;
+import com.scleroid.financematic.utils.ui.DateUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

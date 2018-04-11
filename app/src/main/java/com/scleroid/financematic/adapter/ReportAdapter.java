@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.data.tempModels.Report;
-import com.scleroid.financematic.utils.DateUtils;
+import com.scleroid.financematic.utils.ui.DateUtils;
 
 import java.util.List;
 

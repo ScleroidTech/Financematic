@@ -26,7 +26,7 @@ import com.scleroid.financematic.adapter.ExpenseAdapter;
 import com.scleroid.financematic.base.BaseFragment;
 import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.local.model.Expense;
-import com.scleroid.financematic.utils.RecyclerTouchListener;
+import com.scleroid.financematic.utils.ui.RecyclerTouchListener;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

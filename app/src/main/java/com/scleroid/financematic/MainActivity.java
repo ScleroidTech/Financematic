@@ -37,8 +37,9 @@ import com.scleroid.financematic.fragments.dashboard.DashboardFragment;
 import com.scleroid.financematic.fragments.expense.ExpenseFragment;
 import com.scleroid.financematic.fragments.loanDetails.LoanDetailsFragment;
 import com.scleroid.financematic.fragments.people.PeopleFragment;
-import com.scleroid.financematic.utils.ActivityUtils;
-import com.scleroid.financematic.utils.BottomNavigationViewHelper;
+import com.scleroid.financematic.utils.AppExecutors;
+import com.scleroid.financematic.utils.ui.ActivityUtils;
+import com.scleroid.financematic.utils.ui.BottomNavigationViewHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,9 +50,9 @@ import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 import es.dmoral.toasty.Toasty;
+import hugo.weaving.DebugLog;
 import io.bloco.faker.Faker;
 import timber.log.Timber;
-
 
 public class MainActivity extends BaseActivity
 		implements NavigationView.OnNavigationItemSelectedListener, GarlandApp.FakerReadyListener,
@@ -470,13 +471,15 @@ public class MainActivity extends BaseActivity
 	@Override
 	public void onFakerReady(Faker faker) {
 		Timber.wtf("is this called?");
-		for (int i = 0; i < 5; i++)
-			populateData(faker);
+		for (int i = 0; i < 5; i++) ;
 
-		saveInDatabase();
+		//populateData(faker);
+
+		//saveInDatabase();
 
 	}
 
+	@DebugLog
 	private void populateData(Faker faker) {
 		customers = new ArrayList<>();
 		loans = new ArrayList<>();
@@ -485,14 +488,24 @@ public class MainActivity extends BaseActivity
 		expenses = new ArrayList<>();
 		int customerId = faker.number.positive();
 		int accountNo = faker.number.between();
-		customers.add(createCustomerData(faker, customerId));
+		Customer customerData = createCustomerData(faker, customerId);
+		Timber.d(customerData.toString());
+		customers.add(customerData);
 		for (int i = 0; i < 5; i++) {
 
-			loans.add(createLoanData(faker, customerId, accountNo));
+			Loan loanData = createLoanData(faker, customerId, accountNo);
+			Timber.d(loanData.toString());
+			loans.add(loanData);
 			for (int j = 0; j < 5; j++) {
-				transactions.add(createTransactionData(faker, accountNo));
-				installments.add(createInstallmentData(faker, accountNo));
-				expenses.add(createExpenseData(faker));
+				TransactionModel transactionData = createTransactionData(faker, accountNo);
+				Timber.d(transactionData.toString());
+				transactions.add(transactionData);
+				Installment installmentData = createInstallmentData(faker, accountNo);
+				Timber.d(installmentData.toString());
+				installments.add(installmentData);
+				Expense expenseData = createExpenseData(faker);
+				Timber.d(expenseData.toString());
+				expenses.add(expenseData);
 			}
 
 			accountNo = faker.number.between();
@@ -565,18 +578,54 @@ public class MainActivity extends BaseActivity
 		);
 	}
 
+	@DebugLog
 	private void saveInDatabase() {
 		customerRepo.saveItems(customers).subscribe(() -> {
 			// handle completion
-			Toasty.success(context, "Customers Added");
+			Timber.d("Items Saved");
+			//YOu can't run this on Background Thread
+			//	Toasty.success(context, "Customers Added");
 		}, throwable -> {
 			// handle error
-			Toasty.error(context, "Customers Not Added");
-		}).dispose();
-		loanRepo.saveItems(loans);
-		transactionsRepo.saveItems(transactions);
-		installmentRepo.saveItems(installments);
-		expenseRepo.saveItems(expenses);
+			Timber.d(throwable, "Items not Saved" + throwable.getMessage());
+			//		Toasty.error(context, "Customers Not Added");
+		});
+		loanRepo.saveItems(loans).subscribe(() -> {
+			// handle completion
+			Timber.d("Items Saved");
+			//		Toasty.success(context, "Customers Added");
+		}, throwable -> {
+			// handle error
+			Timber.d(throwable, "Items not Saved" + throwable.getMessage());
+			//		Toasty.error(context, "Customers Not Added");
+		});
+		transactionsRepo.saveItems(transactions).subscribe(() -> {
+			// handle completion
+			Timber.d("Items Saved");
+			//		Toasty.success(context, "Customers Added");
+		}, throwable -> {
+			// handle error
+			Timber.d(throwable, "Items not Saved" + throwable.getMessage());
+			//		Toasty.error(context, "Customers Not Added");
+		});
+		installmentRepo.saveItems(installments).subscribe(() -> {
+			// handle completion
+			Timber.d("Items Saved");
+			//		Toasty.success(context, "Customers Added");
+		}, throwable -> {
+			// handle error
+			Timber.d(throwable, "Items not Saved" + throwable.getMessage());
+			//		Toasty.error(context, "Customers Not Added");
+		});
+		expenseRepo.saveItems(expenses).subscribe(() -> {
+			// handle completion
+			Timber.d("Items Saved");
+			//		Toasty.success(context, "Customers Added");
+		}, throwable -> {
+			// handle error
+			Timber.d(throwable, "Items not Saved" + throwable.getMessage());
+			//		Toasty.error(context, "Customers Not Added");
+		});
 
 	}
 

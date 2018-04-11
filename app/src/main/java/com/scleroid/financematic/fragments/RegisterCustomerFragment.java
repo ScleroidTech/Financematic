@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.scleroid.financematic.R;
-import com.scleroid.financematic.utils.ActivityUtils;
+import com.scleroid.financematic.utils.ui.ActivityUtils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

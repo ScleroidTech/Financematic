@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.data.tempModels.Profile;
-import com.scleroid.financematic.utils.CurrencyStringUtils;
+import com.scleroid.financematic.utils.ui.CurrencyStringUtils;
 
 import java.util.List;
 

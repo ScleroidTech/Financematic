@@ -1,13 +1,16 @@
 package com.scleroid.financematic.data.local.lab;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MediatorLiveData;
+import android.arch.lifecycle.Transformations;
 import android.support.annotation.NonNull;
 
-import com.scleroid.financematic.AppExecutors;
 import com.scleroid.financematic.data.local.AppDatabase;
 import com.scleroid.financematic.data.local.LocalDataSource;
 import com.scleroid.financematic.data.local.dao.InstallmentDao;
 import com.scleroid.financematic.data.local.model.Installment;
+import com.scleroid.financematic.data.local.model.Loan;
+import com.scleroid.financematic.utils.AppExecutors;
 
 import java.util.List;
 
@@ -15,6 +18,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Completable;
 import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 /**
@@ -83,7 +87,7 @@ public class LocalInstallmentsLab implements LocalDataSource<Installment> {
             long rowId = installmentDao.saveInstallment(item);
             Timber.d("installment stored " + rowId);
             return item;
-        });
+        }).subscribeOn(Schedulers.io());
     }
 
     /**
@@ -95,10 +99,10 @@ public class LocalInstallmentsLab implements LocalDataSource<Installment> {
     public Completable addItems(@NonNull final List<Installment> items) {
         Timber.d("creating new installment ");
 
-        return Completable.fromAction(() -> {
+	    return Completable.fromRunnable(() -> {
             long[] rowId = installmentDao.saveInstallments(items);
             Timber.d("installment stored " + rowId.length);
-        });
+	    }).subscribeOn(Schedulers.io());
     }
 
     /**
@@ -115,7 +119,8 @@ public class LocalInstallmentsLab implements LocalDataSource<Installment> {
     @Override
     public Completable deleteAllItems() {
         Timber.d("Deleting all installments");
-        return Completable.fromAction(() -> installmentDao.nukeTable());
+	    return Completable.fromRunnable(() -> installmentDao.nukeTable())
+			    .subscribeOn(Schedulers.io());
 
     }
 
@@ -128,7 +133,9 @@ public class LocalInstallmentsLab implements LocalDataSource<Installment> {
     public Completable deleteItem(final int itemId) {
         Timber.d("deleting installment with id %d", itemId);
 
-        return Completable.fromAction(() -> installmentDao.delete(installmentDao.getInstallment(itemId).getValue()));
+	    return Completable.fromRunnable(
+			    () -> installmentDao.delete(installmentDao.getInstallment(itemId).getValue()))
+			    .subscribeOn(Schedulers.io());
     }
 
     /**
@@ -140,7 +147,8 @@ public class LocalInstallmentsLab implements LocalDataSource<Installment> {
     public Completable deleteItem(@NonNull final Installment item) {
         Timber.d("deleting installment with id %d", item.getInstallmentId());
 
-        return Completable.fromAction(() -> installmentDao.delete(item));
+	    return Completable.fromRunnable(() -> installmentDao.delete(item))
+			    .subscribeOn(Schedulers.io());
     }
 
     /**
@@ -165,4 +173,41 @@ public class LocalInstallmentsLab implements LocalDataSource<Installment> {
         Timber.d("getting all installments");
         return installmentDao.getInstallmentsForLoanLive(acNo);
     }
+
+	@Inject
+	LocalLoanLab loanLab;
+
+	public LiveData<List<Installment>> getInstallmentWithCustomers() {
+		LiveData<List<Installment>> installmentsLive = installmentDao.getAllInstallmentsLive();
+
+		// TODO Test this, if works remove below code, this part has performance issues
+		installmentsLive = Transformations.switchMap(installmentsLive,
+				(List<Installment> inputInstallment) -> {
+					MediatorLiveData<List<Installment>> installmentMediatorLiveData =
+							new MediatorLiveData<>();
+					for (Installment installment : inputInstallment) {
+						installmentMediatorLiveData.addSource(
+								loanLab.loadLoanDetails(installment.getLoanAcNo()),
+								(Loan customer) -> {
+									installment.setLoan(customer);
+									installmentMediatorLiveData.postValue(inputInstallment);
+
+								});
+					}
+					return installmentMediatorLiveData;
+				});
+		return installmentsLive;
+		/*loansLive = Transformations.map(loansLive, new Function<List<Customer>, List<Customer>>
+		() {
+
+			@Override
+			public List<Customer> apply(final List<Customer> inputStates) {
+               *//* for (Customer state : inputStates) {
+                    state.setLoans(dao.getLoans(state.getCustomerId()));
+                }*//*
+				return inputStates;
+			}
+		});
+		return loansLive;*/
+	}
 }

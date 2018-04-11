@@ -17,8 +17,6 @@ package com.scleroid.financematic.utils;
  */
 
 
-import com.scleroid.financematic.AppExecutors;
-
 import java.util.concurrent.Executor;
 
 public class InstantAppExecutors extends AppExecutors {

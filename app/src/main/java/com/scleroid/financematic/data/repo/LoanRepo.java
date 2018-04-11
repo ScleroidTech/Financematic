@@ -4,15 +4,14 @@ import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.scleroid.financematic.AppExecutors;
-import com.scleroid.financematic.Resource;
-import com.scleroid.financematic.data.local.AppDatabase;
 import com.scleroid.financematic.data.local.lab.LocalLoanLab;
 import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.data.remote.ApiResponse;
 import com.scleroid.financematic.data.remote.WebService;
+import com.scleroid.financematic.utils.AppExecutors;
 import com.scleroid.financematic.utils.NetworkBoundResource;
 import com.scleroid.financematic.utils.RateLimiter;
+import com.scleroid.financematic.utils.Resource;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -50,8 +49,16 @@ import io.reactivex.Single;
 @Singleton
 public class LoanRepo implements Repo<Loan> {
 
-	private final AppDatabase db;
 
+
+	@Inject
+	LoanRepo(final LocalLoanLab loanLab, final WebService webService,
+	         final AppExecutors appExecutors) {
+
+		this.localLoanLab = loanLab;
+		this.webService = webService;
+		this.appExecutors = appExecutors;
+	}
 
 	private final LocalLoanLab localLoanLab;
 
@@ -61,13 +68,8 @@ public class LoanRepo implements Repo<Loan> {
 
 	private RateLimiter<String> loanListRateLimit = new RateLimiter<>(10, TimeUnit.MINUTES);
 
-	@Inject
-	LoanRepo(final AppDatabase db, final LocalLoanLab loanLab, final WebService webService,
-	         final AppExecutors appExecutors) {
-		this.db = db;
-		this.localLoanLab = loanLab;
-		this.webService = webService;
-		this.appExecutors = appExecutors;
+	public LocalLoanLab getLocalLoanLab() {
+		return localLoanLab;
 	}
 
 	public LiveData<Resource<List<Loan>>> loadLoansForCustomer(int customerId) {
