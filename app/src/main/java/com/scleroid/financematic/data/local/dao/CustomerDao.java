@@ -11,6 +11,8 @@ import com.scleroid.financematic.data.local.model.Customer;
 
 import java.util.List;
 
+import io.reactivex.Single;
+
 import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 
 /**
@@ -53,6 +55,9 @@ public interface CustomerDao {
      */
     @Query("SELECT * FROM Customer where customerId = :serialNo ")
     Customer getCustomer(int serialNo);
+
+	@Query("SELECT * FROM Customer where customerId = :serialNo ")
+	Single<Customer> getRxCustomer(int serialNo);
 
     /**
      * Returns a specific value compared to serialNo passed

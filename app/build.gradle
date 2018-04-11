@@ -62,7 +62,7 @@ dependencies {
     //  implementation 'com.wdullaer:materialdatetimepicker:3.5.1'
 
     // RxJava support for Room
-    //implementation 'android.arch.persistence.room:rxjava2:$rootProject.roomVersion'
+    implementation 'android.arch.persistence.room:rxjava2:1.1.0-beta2'
 
     // gson Library
   //  implementation 'com.google.code.gson:gson:2.8.2'

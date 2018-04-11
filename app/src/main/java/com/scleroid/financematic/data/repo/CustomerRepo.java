@@ -4,15 +4,15 @@ import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.scleroid.financematic.AppExecutors;
-import com.scleroid.financematic.Resource;
 import com.scleroid.financematic.data.local.AppDatabase;
 import com.scleroid.financematic.data.local.lab.LocalCustomerLab;
 import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.remote.ApiResponse;
 import com.scleroid.financematic.data.remote.WebService;
+import com.scleroid.financematic.utils.AppExecutors;
 import com.scleroid.financematic.utils.NetworkBoundResource;
 import com.scleroid.financematic.utils.RateLimiter;
+import com.scleroid.financematic.utils.Resource;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -30,6 +30,10 @@ import io.reactivex.Single;
  */
 public class CustomerRepo implements Repo<Customer> {
 
+
+	public LocalCustomerLab getLocalCustomerLab() {
+		return localCustomerLab;
+	}
 
 	private final LocalCustomerLab localCustomerLab;
 	private final AppDatabase db;

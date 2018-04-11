@@ -3,11 +3,11 @@ package com.scleroid.financematic.data.local.lab;
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 
-import com.scleroid.financematic.AppExecutors;
 import com.scleroid.financematic.data.local.AppDatabase;
 import com.scleroid.financematic.data.local.LocalDataSource;
 import com.scleroid.financematic.data.local.dao.CustomerDao;
 import com.scleroid.financematic.data.local.model.Customer;
+import com.scleroid.financematic.utils.AppExecutors;
 
 import java.util.List;
 
@@ -68,6 +68,17 @@ public class LocalCustomerLab implements LocalDataSource<Customer> {
     public LiveData<Customer> getItem(final int itemId) {
         Timber.d("getting customer with id %d", itemId);
         return customerDao.getCustomerLive(itemId);
+    }
+
+    /**
+     * gets a single item provided by id
+     *
+     * @param itemId the id of the item to be get
+     */
+
+    public Customer getRxItem(final int itemId) {
+        Timber.d("getting customer with id %d", itemId);
+        return customerDao.getCustomer(itemId);
     }
 
     /**

@@ -37,6 +37,16 @@ public class Loan {
     @Ignore
     public static final byte MONTHLY = 3;
 
+	@Ignore
+	private Customer customer;
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(final Customer customer) {
+		this.customer = customer;
+	}
     @Override
     public String toString() {
         return "Loan{" +

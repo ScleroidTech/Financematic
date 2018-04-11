@@ -9,28 +9,41 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.scleroid.financematic.R;
-import com.scleroid.financematic.fragments.dashboard.DashBoardModel;
+import com.scleroid.financematic.data.local.lab.LocalCustomerLab;
+import com.scleroid.financematic.data.local.lab.LocalLoanLab;
+import com.scleroid.financematic.data.local.model.Installment;
+import com.scleroid.financematic.data.repo.CustomerRepo;
+import com.scleroid.financematic.data.repo.LoanRepo;
 import com.scleroid.financematic.utils.ui.CurrencyStringUtils;
 import com.scleroid.financematic.utils.ui.DateUtils;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
 
 public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> {
 
 
-	private List<DashBoardModel> loanList;
+	private final LocalLoanLab localLoanLab;
+	private final LocalCustomerLab localCustomerLab;
+	private List<Installment> loanList;
 
-	public LoanAdapter(List<DashBoardModel> loanList) {
+	public LoanAdapter(List<Installment> loanList, LocalLoanLab localLoanLab,
+	                   LocalCustomerLab localCustomerLab) {
 		this.loanList = loanList;
+		this.localLoanLab = localLoanLab;
+		this.localCustomerLab = localCustomerLab;
 	}
 
-	public List<DashBoardModel> getLoanList() {
+	public List<Installment> getLoanList() {
 		return loanList;
 	}
 /*TODO Work in Progress ,Add this & remove other constructor
@@ -38,8 +51,9 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> 
         this.loanList = loanList;
     }*/
 
-	public void setLoanList(final List<DashBoardModel> loanList) {
+	public void setLoanList(final List<Installment> loanList) {
 		this.loanList = loanList;
+		notifyDataSetChanged();
 	}
 
 	@NonNull
@@ -53,9 +67,34 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> 
 
 	@Override
 	public void onBindViewHolder(MyViewHolder holder, int position) {
-		DashBoardModel dashBoardModel = loanList.get(position);
+		Installment dashBoardModel = loanList.get(position);
 		holder.itemView.setTag(dashBoardModel);
+		if (dashBoardModel.getLoan() == null) {
+			Timber.wtf(" loan is empty for " + dashBoardModel.toString());
+			return;
+		}
+
+		if (dashBoardModel.getLoan().getCustomer() == null) {
+			Timber.wtf(" customer is empty for " + dashBoardModel.getLoan().toString());
+			return;
+		}
+		if (
+				dashBoardModel.getLoan().getCustomer().getName() == null) {
+			Timber.wtf(" name is empty for " + dashBoardModel.getLoan().getCustomer().toString());
+			return;
+		}
 		holder.setData(dashBoardModel);
+		localLoanLab
+				.getRxItem(dashBoardModel.getLoanAcNo())
+				.subscribeOn(Schedulers.computation())
+				.subscribe(loan -> {
+					String name = localCustomerLab
+							.getRxItem(loan.getCustId())
+							.getName();
+					holder.customerNameTextView.setText(name);
+				})
+				.dispose();
+
 
 	}
 
@@ -68,9 +107,13 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> 
 
 	static class MyViewHolder extends RecyclerView.ViewHolder {
 		@Inject
-		DateUtils dateUtils;
+		DateUtils dateUtils = new DateUtils();
 		@Inject
-		CurrencyStringUtils currencyStringUtils;
+		CurrencyStringUtils currencyStringUtils = new CurrencyStringUtils();
+		@Inject
+		CustomerRepo customerRepo;
+		@Inject
+		LoanRepo loanRepo;
 		@BindView(R.id.customer_name_text_view)
 		TextView customerNameTextView;
 		@BindView(R.id.amount_text_view)
@@ -86,13 +129,26 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> 
 
 		MyViewHolder(View view) {
 			super(view);
+			ButterKnife.bind(this, view);
 
 		}
 
-		private void setData(final DashBoardModel dashBoardModel) {
-			customerNameTextView.setText(dashBoardModel.getCustomerName());
-			amountTextView.setText(
-					currencyStringUtils.bindNumber(dashBoardModel.getAmtDue().intValueExact()));
+		private void setData(final Installment dashBoardModel) {
+			customerNameTextView.setText("loading ...");
+			//TODO Remove local call
+
+			if (dashBoardModel.getLoan().getCustomer() != null) {
+				customerNameTextView.setText(dashBoardModel.getLoan().getCustomer().getName());
+			}
+			BigDecimal expectedAmt = dashBoardModel.getExpectedAmt();
+			if (expectedAmt == null) {
+				Timber.wtf("THere's no data available " + dashBoardModel.toString());
+				amountTextView.setText("fetching");
+			} else {
+				amountTextView.setText(
+						currencyStringUtils.bindNumber(
+								expectedAmt.intValueExact()));
+			}
 			dueDateTextView.setText(
 					dateUtils.getFormattedDate(dashBoardModel.getInstallmentDate()));
 			timeRemainingTextView.setText(

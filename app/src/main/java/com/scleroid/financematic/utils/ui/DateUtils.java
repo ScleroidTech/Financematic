@@ -49,7 +49,7 @@ public class DateUtils {
 	}
 
 	public CharSequence getFormattedDate(Date parcelDate) {
-		return DateFormat.format("hh:mm AA, MMM dd, yyyy", parcelDate);
+		return DateFormat.format("MMM dd, yyyy", parcelDate);
 	}
 
 	public CharSequence getFormattedDate(Date date, String format) {
@@ -57,7 +57,7 @@ public class DateUtils {
 		return simpleDateFormat.format(date);
 	}
 
-	public boolean isThisDateWithinAWeek(Date date) {
+	public boolean isThisDateWithinRange(Date date, int range) {
 
 		//  SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
 		// sdf.setLenient(false);
@@ -67,15 +67,15 @@ public class DateUtils {
 		// Date date = sdf.parse(dateToValidate);
 
 		// current date after 3 months
-		Calendar dateAfterAWeek = Calendar.getInstance();
-		dateAfterAWeek.add(Calendar.DATE, 7);
+		Calendar dateAfterRange = Calendar.getInstance();
+		dateAfterRange.add(Calendar.DATE, range);
 
 		// current date
 		Calendar currentDate = Calendar.getInstance();
 
 
 		//ok everything is fine, date in range
-		return date.before(dateAfterAWeek.getTime())
+		return date.before(dateAfterRange.getTime())
 				&& date.after(currentDate.getTime());
 
 

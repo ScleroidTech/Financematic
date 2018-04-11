@@ -4,15 +4,15 @@ import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.scleroid.financematic.AppExecutors;
-import com.scleroid.financematic.Resource;
 import com.scleroid.financematic.data.local.AppDatabase;
 import com.scleroid.financematic.data.local.lab.LocalInstallmentsLab;
 import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.data.remote.ApiResponse;
 import com.scleroid.financematic.data.remote.WebService;
+import com.scleroid.financematic.utils.AppExecutors;
 import com.scleroid.financematic.utils.NetworkBoundResource;
 import com.scleroid.financematic.utils.RateLimiter;
+import com.scleroid.financematic.utils.Resource;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -48,6 +48,10 @@ import io.reactivex.Single;
 public class InstallmentRepo implements Repo<Installment> {
 
     private final AppDatabase db;
+
+	public LocalInstallmentsLab getLocalInstallmentsLab() {
+		return localInstallmentsLab;
+	}
 
     private final LocalInstallmentsLab localInstallmentsLab;
 

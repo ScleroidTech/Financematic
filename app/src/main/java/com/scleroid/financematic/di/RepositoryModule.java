@@ -3,7 +3,6 @@ package com.scleroid.financematic.di;
 import android.app.Application;
 import android.arch.persistence.room.Room;
 
-import com.scleroid.financematic.AppExecutors;
 import com.scleroid.financematic.data.local.AppDatabase;
 import com.scleroid.financematic.data.local.dao.CustomerDao;
 import com.scleroid.financematic.data.local.dao.ExpenseDao;
@@ -16,6 +15,7 @@ import com.scleroid.financematic.data.repo.ExpenseRepo;
 import com.scleroid.financematic.data.repo.InstallmentRepo;
 import com.scleroid.financematic.data.repo.LoanRepo;
 import com.scleroid.financematic.data.repo.TransactionsRepo;
+import com.scleroid.financematic.utils.AppExecutors;
 import com.scleroid.financematic.utils.DiskIOThreadExecutor;
 import com.scleroid.financematic.utils.LiveDataCallAdapterFactory;
 import com.scleroid.financematic.utils.rx.AppSchedulerProvider;
@@ -131,11 +131,9 @@ abstract public class RepositoryModule {
 	}
 
 	@Singleton
-
 	abstract ExpenseRepo provideExpenseRepo(AppDatabase db);
 
     @Singleton
-
     abstract CustomerRepo provideCustomerRepo(AppDatabase db);
 
     @Singleton
@@ -155,6 +153,5 @@ abstract public class RepositoryModule {
 	}*/
 
 	@Singleton
-
 	abstract TransactionsRepo provideTransactionsRepo(AppDatabase db);
 }

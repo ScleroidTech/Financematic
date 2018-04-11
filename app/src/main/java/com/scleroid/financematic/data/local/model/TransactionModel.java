@@ -2,6 +2,7 @@ package com.scleroid.financematic.data.local.model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
@@ -34,6 +35,17 @@ public class TransactionModel {
     private BigDecimal lentAmt;
     @TypeConverters(MoneyConverter.class)
     private BigDecimal gainedAmt;
+
+	@Ignore
+	private Loan loan;
+
+	public Loan getLoan() {
+		return loan;
+	}
+
+	public void setLoan(final Loan loan) {
+		this.loan = loan;
+	}
 
     @Override
     public String toString() {

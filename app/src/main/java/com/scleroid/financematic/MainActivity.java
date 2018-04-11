@@ -37,6 +37,7 @@ import com.scleroid.financematic.fragments.dashboard.DashboardFragment;
 import com.scleroid.financematic.fragments.expense.ExpenseFragment;
 import com.scleroid.financematic.fragments.loanDetails.LoanDetailsFragment;
 import com.scleroid.financematic.fragments.people.PeopleFragment;
+import com.scleroid.financematic.utils.AppExecutors;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.BottomNavigationViewHelper;
 
@@ -470,10 +471,11 @@ public class MainActivity extends BaseActivity
 	@Override
 	public void onFakerReady(Faker faker) {
 		Timber.wtf("is this called?");
-		for (int i = 0; i < 5; i++)
-			populateData(faker);
+		for (int i = 0; i < 5; i++) ;
 
-		saveInDatabase();
+		//populateData(faker);
+
+		//saveInDatabase();
 
 	}
 
