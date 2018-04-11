@@ -34,7 +34,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-
+import es.dmoral.toasty.Toasty;
 
 
 public class DashboardFragment extends BaseFragment<DashboardViewModel> {
@@ -183,6 +183,9 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
         recyclerViewDashboard.addOnItemTouchListener(new RecyclerTouchListener(getActivity().getApplicationContext(), recyclerViewDashboard, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
+	            if (installments.isEmpty()) {
+		            Toasty.error(getActivity(), "THe list is empty, something wrong here").show();
+	            }
 	            Installment loan = installments.get(position);
 	            Toast.makeText(getActivity().getApplicationContext(),
 			            loan.getLoan().getCustomer().getName() + " is selected!",
