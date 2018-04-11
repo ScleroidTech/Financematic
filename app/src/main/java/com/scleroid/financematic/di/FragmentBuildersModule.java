@@ -1,5 +1,6 @@
 package com.scleroid.financematic.di;
 
+import com.scleroid.financematic.Notification;
 import com.scleroid.financematic.fragments.RegisterCustomerFragment;
 import com.scleroid.financematic.fragments.RegisterMoneyFragment;
 import com.scleroid.financematic.fragments.RegisterReceivedFragment;
@@ -55,6 +56,9 @@ public abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract ReportFragment contributeReportFragment();
+
+    @ContributesAndroidInjector
+    abstract Notification contributeNotification();
 
 
 }

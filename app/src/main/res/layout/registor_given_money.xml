@@ -13,7 +13,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="55dp"
-            android:paddingBottom="70dp"
+            android:paddingBottom="75dp"
             android:background="#fff">
 
 
@@ -63,7 +63,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-
+                        android:focusableInTouchMode="true"
                         android:layout_weight=".7"
                         android:text="Loan Amount"
                         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -74,11 +74,14 @@
                         android:id="@+id/txloan_amout"
                         android:layout_width="0dp"
                         android:maxLines="1"
-                        android:layout_height="wrap_content"
+
+
+       android:layout_height="38dp"
                         android:layout_weight=".7"
+
+
                         android:background="@drawable/shadow"
                         android:paddingBottom="6dp"
-
                         android:paddingTop="6dp" />
 
                 </LinearLayout>
@@ -107,7 +110,7 @@
                         android:textColor="#409bbf"
                         android:id="@+id/txStartDate"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="38dp"
                         android:layout_weight=".7"
 
                         android:background="@drawable/shadow"
@@ -143,7 +146,7 @@
                         android:textColor="#409bbf"
                         android:id="@+id/txEndDate"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="38dp"
                         android:layout_weight=".7"
 
                         android:background="@drawable/shadow"
@@ -178,7 +181,7 @@
                         android:textColor="#409bbf"
                         android:id="@+id/txrateInterest"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="38dp"
                         android:layout_marginTop="8dp"
                         android:layout_weight=".7"
                         android:background="@drawable/shadow"
@@ -211,7 +214,7 @@
                         android:textColor="#409bbf"
                         android:id="@+id/txInterestAmount"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="38dp"
                         android:layout_weight=".7"
                         android:background="@drawable/shadow"
                         android:paddingBottom="6dp"
@@ -242,7 +245,7 @@
                         android:textColor="#409bbf"
                         android:id="@+id/txNoofInstallment"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="38dp"
                         android:layout_weight=".7"
                         android:background="@drawable/shadow"
                         android:paddingBottom="6dp"
@@ -263,7 +266,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-android:layout_gravity="center_vertical"
+                        android:layout_gravity="center_vertical"
                         android:layout_weight=".7"
                         android:text="Installment duration "
                         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -272,17 +275,17 @@ android:layout_gravity="center_vertical"
                     <LinearLayout
                         android:layout_weight=".85"                     android:layout_width="0dp"
                         android:layout_height="45dp"
-                    android:gravity="right" android:background="@drawable/shadow7"
+                        android:gravity="right" android:background="@drawable/shadow7"
                         android:paddingTop="7dp"
                         android:paddingBottom="5dp"
                         >
-                    <EditText
-                        android:textColor="#409bbf"     android:id="@+id/txInstallmentduration"
-                        android:layout_width="45dp"
-                        android:layout_height="33dp"
+                        <EditText
+                            android:textColor="#409bbf"     android:id="@+id/txInstallmentduration"
+                            android:layout_width="45dp"
+                            android:layout_height="33dp"
 
-                        android:layout_gravity="left" android:background="@drawable/shadow"
-                      />
+                            android:layout_gravity="left" android:background="@drawable/shadow"
+                            />
 
 
                         <Spinner
@@ -292,7 +295,7 @@ android:layout_gravity="center_vertical"
                             android:layout_gravity="left"
 
                             android:paddingTop="2dp"
-                        ></Spinner>
+                            ></Spinner>
 
                     </LinearLayout>
 
@@ -322,9 +325,9 @@ android:layout_gravity="center_vertical"
                         android:textColor="#409bbf"
                         android:id="@+id/txTotalLoanAmount"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="38dp"
                         android:layout_weight=".7"
-                       android:layout_marginBottom="10dp" android:background="@drawable/shadow"
+                        android:layout_marginBottom="10dp" android:background="@drawable/shadow"
                         android:paddingBottom="6dp"
                         android:paddingTop="6dp" />
 
@@ -340,7 +343,7 @@ android:layout_gravity="center_vertical"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="1dip"
                     android:background="#0fa8bc"
-android:textSize="16sp"
+                    android:textSize="16sp"
                     android:text="Submit"
                     android:textColor="@color/white" />
 

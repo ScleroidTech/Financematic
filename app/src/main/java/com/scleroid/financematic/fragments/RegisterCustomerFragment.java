@@ -3,6 +3,7 @@ package com.scleroid.financematic.fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
@@ -56,7 +58,7 @@ public class RegisterCustomerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final View rootView = inflater.inflate(R.layout.insert_expense, container, false);
+        final View rootView = inflater.inflate(R.layout.reg_new_customer, container, false);
 
 //Intend
         firstFragment = rootView.findViewById(R.id.btn_new_customer_Register1);
@@ -80,7 +82,7 @@ public class RegisterCustomerFragment extends Fragment {
 
                 final String mobileval =  etmobile.getText().toString();
                 if (!isValidMobile(mobileval)) {
-                    etmobile.setError("Enter Valid Full name");
+                    etmobile.setError("Enter Valid 10 digit no");
                 }
             }
         });
@@ -89,7 +91,7 @@ public class RegisterCustomerFragment extends Fragment {
 
                 final String addressval = etAddress.getText().toString();
                 if (!isValidAddress(addressval)) {
-                    etAddress.setError("Enter Valid Full name");
+                    etAddress.setError("Enter Valid address");
                 }
             }
         });
@@ -106,9 +108,30 @@ public class RegisterCustomerFragment extends Fragment {
         firstFragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String stretname= etname.getText().toString();
+                String stretmobile= etmobile.getText().toString();
+                String stretAddress= etAddress.getText().toString();
+                if(TextUtils.isEmpty(stretname)) {etname.setError("Enter Loan Amount");}
+                if(TextUtils.isEmpty(stretmobile)) {etmobile.setError("Enter Loan Amount");}
+                if(TextUtils.isEmpty(stretAddress)) {etAddress.setError("Enter Loan Amount");return;}
+             /*   activityUtils.loadFragment(new RegisterMoneyFragment(), getFragmentManager() );
+*/
+                if((etname.getText() != null ) &&
+                        ( etmobile.getText() != null) &&
+                        (  etAddress.getText() != null) )
+                {
+
+                    activityUtils.loadFragment(new RegisterMoneyFragment(), getFragmentManager() );
+                    Toast.makeText(getActivity().getApplicationContext(),"successfully created Customer info",Toast.LENGTH_LONG).show();
+                }
+               /* else
+                {
+                    Toast.makeText(getActivity().getApplicationContext(),"PLz enter all Field",Toast.LENGTH_LONG).show();
+return;
+
+                }*/
 
 
-                activityUtils.loadFragment(new RegisterMoneyFragment(), getFragmentManager());
                /* tv.setText("Your Input: \n"+etname.getText().toString()+"\n"+etAddress.getText().toString()+"\n"+etmobile.getText().toString()+"\n"+etLoan_number.getText().toString()+"\n"+etIDproofno.getText().toString()+"\n"+"\nEnd.");*/
             }
         });
@@ -133,14 +156,14 @@ public class RegisterCustomerFragment extends Fragment {
         return matcher.matches();
     }
     private boolean isValidAddress(String addressval) {
-        String EMAIL_PATTERN = "[a-zA-Z]+\\.?";
+        String EMAIL_PATTERN = "^[a-zA-Z0-9_.-]*$";
         //only alpha space \d+[ ](?:[A-Za-z0-9.-]+[ ]?)+(?:Avenue|Lane|Road|Boulevard|Drive|Street|Ave|Dr|Rd|Blvd|Ln|St)\.?
 
         Pattern pattern = Pattern.compile(EMAIL_PATTERN);
         Matcher matcher = pattern.matcher(addressval);
         return matcher.matches();
     }
-    public abstract class TextValidator implements TextWatcher {
+    public abstract static class TextValidator implements TextWatcher {
         private final TextView textView;
 
         public TextValidator(TextView textView) {

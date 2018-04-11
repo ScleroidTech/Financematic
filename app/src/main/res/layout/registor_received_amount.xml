@@ -117,7 +117,8 @@
                         android:maxLines="1"
                         android:layout_height="wrap_content"
                         android:layout_weight=".5"
-                        android:background="@drawable/shadow"
+                        android:drawableLeft="@drawable/ic_rupeeindian"
+  android:drawableTint="@color/colorPrimaryDark"                      android:background="@drawable/shadow"
                         android:paddingBottom="10dp"
                         android:paddingTop="10dp" />
 
