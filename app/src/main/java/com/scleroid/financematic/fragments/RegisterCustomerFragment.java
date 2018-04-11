@@ -56,7 +56,7 @@ public class RegisterCustomerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final View rootView = inflater.inflate(R.layout.reg_new_customer, container, false);
+        final View rootView = inflater.inflate(R.layout.insert_expense, container, false);
 
 //Intend
         firstFragment = rootView.findViewById(R.id.btn_new_customer_Register1);
@@ -133,7 +133,8 @@ public class RegisterCustomerFragment extends Fragment {
         return matcher.matches();
     }
     private boolean isValidAddress(String addressval) {
-        String EMAIL_PATTERN = "^[a-zA-Z0-9.-\\s]+$";//only alpha space
+        String EMAIL_PATTERN = "[a-zA-Z]+\\.?";
+        //only alpha space \d+[ ](?:[A-Za-z0-9.-]+[ ]?)+(?:Avenue|Lane|Road|Boulevard|Drive|Street|Ave|Dr|Rd|Blvd|Ln|St)\.?
 
         Pattern pattern = Pattern.compile(EMAIL_PATTERN);
         Matcher matcher = pattern.matcher(addressval);
