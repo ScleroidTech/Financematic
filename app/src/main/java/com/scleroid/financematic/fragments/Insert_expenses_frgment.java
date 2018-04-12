@@ -26,10 +26,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * Created by scleroid on 10/4/18.
+ */
+
+/**
  * Created by scleroid on 9/3/18.
  */
 
-public class RegisterReceivedFragment extends Fragment implements
+public class Insert_expenses_frgment extends Fragment implements
         AdapterView.OnItemSelectedListener {
 
 
@@ -43,17 +47,17 @@ public class RegisterReceivedFragment extends Fragment implements
     Context context;
     EditText edittext;
     Calendar myCalendar = Calendar.getInstance();
-    String[] country = { "Received", "Late payment", "Less amount", "Other" };
+    String[] country = { "Light Bill", "MOBILE", "PAID SALARIES","ROOM RENT","FUEL", "Other" };
     private Button b;
     private TextView  etrxDate, etrxTotalInterestAmount, etrxReceivedAmount,tv;
 
 
-    public RegisterReceivedFragment() {
+    public Insert_expenses_frgment() {
         // Required empty public constructor
     }
 
-    public static RegisterReceivedFragment newInstance(String param1, String param2) {
-        RegisterReceivedFragment fragment = new RegisterReceivedFragment();
+    public static Insert_expenses_frgment newInstance(String param1, String param2) {
+        Insert_expenses_frgment fragment = new Insert_expenses_frgment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -69,10 +73,10 @@ public class RegisterReceivedFragment extends Fragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final View rootView = inflater.inflate(R.layout.registor_received_amount, container, false);
+        final View rootView = inflater.inflate(R.layout.insert_expense, container, false);
 
 
-        final Spinner spin = rootView.findViewById(R.id.spinnerrx);
+        final Spinner spin = rootView.findViewById(R.id.spinnerexp);
         spin.setOnItemSelectedListener(this);
 
 /*        final String text = spin.getSelectedItem().toString();*/
@@ -83,8 +87,8 @@ public class RegisterReceivedFragment extends Fragment implements
         spin.setAdapter(aa);
 
 
-        etrxDate = rootView.findViewById(R.id.rxDate);
-        etrxReceivedAmount = rootView.findViewById(R.id.rxReceivedAmount);
+        etrxDate = rootView.findViewById(R.id.exp_date);
+        etrxReceivedAmount = rootView.findViewById(R.id.rxEnterAmount);
 
 
 
@@ -132,7 +136,7 @@ public class RegisterReceivedFragment extends Fragment implements
         b = rootView.findViewById(R.id.btn_customer_name);
 
         tv = rootView.findViewById(R.id.displayrx);
-     b.setOnClickListener(new View.OnClickListener() {
+        b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -155,44 +159,44 @@ public class RegisterReceivedFragment extends Fragment implements
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
-  public abstract class TextValidator implements TextWatcher {
-      private final TextView textView;
+    public abstract class TextValidator implements TextWatcher {
+        private final TextView textView;
 
-      public TextValidator(TextView textView) {
-          this.textView = textView;
-      }
+        public TextValidator(TextView textView) {
+            this.textView = textView;
+        }
 
-      public abstract void validate(TextView textView, String text);
+        public abstract void validate(TextView textView, String text);
 
-      @Override
-      final public void afterTextChanged(Editable s) {
-          String text = textView.getText().toString();
-          validate(textView, text);
-      }
+        @Override
+        final public void afterTextChanged(Editable s) {
+            String text = textView.getText().toString();
+            validate(textView, text);
+        }
 
-      @Override
-      final public void beforeTextChanged(CharSequence s, int start, int count, int after) { /* Don't care */ }
+        @Override
+        final public void beforeTextChanged(CharSequence s, int start, int count, int after) { /* Don't care */ }
 
-          @Override
-          final public void onTextChanged (CharSequence s,int start, int before, int count)
-          { /* Don't care */}
-     }
+        @Override
+        final public void onTextChanged (CharSequence s,int start, int before, int count)
+        { /* Don't care */}
+    }
 
-      private void updateLabel() {
-          String myFormat = "MM/dd/yy"; //In which you need put here
-          SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+    private void updateLabel() {
+        String myFormat = "MM/dd/yy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
-          etrxDate.setText(sdf.format(myCalendar.getTime()));
-      }
+        etrxDate.setText(sdf.format(myCalendar.getTime()));
+    }
 
-      @Override
-      public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-      }
+    }
 
-      @Override
-      public void onNothingSelected(AdapterView<?> arg0) {
-      }
+    @Override
+    public void onNothingSelected(AdapterView<?> arg0) {
+    }
 
-  }
+}
 
