@@ -32,14 +32,14 @@ import javax.inject.Inject;
 public class DashboardViewModel extends BaseViewModel<Installment> implements CustomerViewModel {
 	public static final int RANGE = 100;
 	private final CustomerRepo customerRepo;
-    private final LoanRepo loanRepo;
-    private final InstallmentRepo installmentRepo;
+	private final LoanRepo loanRepo;
+	private final InstallmentRepo installmentRepo;
 
 	private final int FILTER_DAYS = 30;
 	@Inject
 	InstallmentDao installmentDao;
-    @Inject
-    DateUtils dateUtils;
+	@Inject
+	DateUtils dateUtils;
 	@Inject
 	AppExecutors appExecutors;
 	private LiveData<Resource<List<Installment>>> installments;
@@ -60,20 +60,36 @@ public class DashboardViewModel extends BaseViewModel<Installment> implements Cu
     }
 */
 
-    @Inject
-    public DashboardViewModel(CustomerRepo customerRepo, LoanRepo loanRepo, InstallmentRepo installmentRepo) {
+	@Inject
+	public DashboardViewModel(CustomerRepo customerRepo, LoanRepo loanRepo,
+	                          InstallmentRepo installmentRepo) {
 
-	    super();
-        this.customerRepo = customerRepo;
-        this.loanRepo = loanRepo;
-        this.installmentRepo = installmentRepo;
+		super();
+		this.customerRepo = customerRepo;
+		this.loanRepo = loanRepo;
+		this.installmentRepo = installmentRepo;
 
-	    // installments = ;
+		// installments = ;
 //        Timber.d(installments.getValue().data.isEmpty() + "" );
-	    upcomingInstallments = getUpcomingInstallments();
-        //   Timber.d(upcomingInstallments.getValue().isEmpty() + "" );
-	    //   setUpcomingInstallmentsTransformed(getTransformedUpcomingData());
-    }
+		upcomingInstallments = getUpcomingInstallments();
+		//   Timber.d(upcomingInstallments.getValue().isEmpty() + "" );
+		//   setUpcomingInstallmentsTransformed(getTransformedUpcomingData());
+	}
+
+	//TODO make it MutableLiveData
+	public LiveData<List<Installment>> getUpcomingInstallments() {
+		if (upcomingInstallments.getValue() == null || upcomingInstallments.getValue().isEmpty()) {
+			upcomingInstallments = installmentRepo.getLocalInstallmentsLab()
+					.getInstallmentWithCustomers(); /*filterResults(installmentRepo
+					.getLocalInstallmentsLab().getItems());*/
+		}
+		return upcomingInstallments;
+	}
+
+	public void setUpcomingInstallments(
+			final MutableLiveData<List<Installment>> upcomingInstallments) {
+		this.upcomingInstallments = upcomingInstallments;
+	}
 
 	//There's a copy of this code in adapter too,
 	private List<Installment> filterResults(List<Installment> installments) {
@@ -91,20 +107,6 @@ public class DashboardViewModel extends BaseViewModel<Installment> implements Cu
 		return dateUtils.isThisDateWithinRange(
 				installment.getInstallmentDate(), RANGE);
 
-	}
-
-
-
-
-
-	//TODO make it MutableLiveData
-	public LiveData<List<Installment>> getUpcomingInstallments() {
-		if (upcomingInstallments.getValue() == null || upcomingInstallments.getValue().isEmpty()) {
-			upcomingInstallments = installmentRepo.getLocalInstallmentsLab()
-					.getInstallmentWithCustomers(); /*filterResults(installmentRepo
-					.getLocalInstallmentsLab().getItems());*/
-		}
-		return upcomingInstallments;
 	}
 
 	//TODO doesnt work
@@ -136,12 +138,6 @@ public class DashboardViewModel extends BaseViewModel<Installment> implements Cu
 		});
 		return loansLive;*/
 	}
-
-
-	@Override
-	protected LiveData<Resource<List<Installment>>> getItemList() {
-		return installments;
-    }
 
 	/* public LiveData<List<DashboardViewModel>> getTransformedUpcomingData() {
 	 *//* new MediatorLiveData<List<DashBoardModel>>();
@@ -192,14 +188,15 @@ public class DashboardViewModel extends BaseViewModel<Installment> implements Cu
 		return result;
 	}
 */
-    @Override
-    protected LiveData<Resource<List<Installment>>> updateItemLiveData() {
-	    //TODO implement this
-	    return null;
-    }
+	@Override
+	protected LiveData<Resource<List<Installment>>> updateItemLiveData() {
+		//TODO implement this
+		return null;
+	}
 
-    public void setUpcomingInstallments(final MutableLiveData<List<Installment>> upcomingInstallments) {
-        this.upcomingInstallments = upcomingInstallments;
-    }
+	@Override
+	protected LiveData<Resource<List<Installment>>> getItemList() {
+		return installments;
+	}
 
 }

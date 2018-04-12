@@ -78,6 +78,17 @@ public class LocalLoanLab implements LocalDataSource<Loan> {
         return loanDao.getLoanLive(itemId);
     }
 
+	/**
+	 * gets a single item provided by id
+	 *
+	 * @param itemId the id of the item to be get
+	 */
+
+	public LiveData<Loan> getItemWithCustomerId(final int itemId) {
+		Timber.d("getting loan with customer id %d", itemId);
+		return loanDao.getLoanByCustomerIdLive(itemId);
+	}
+
 	@Inject
 	LocalCustomerLab localCustomerLab;
 

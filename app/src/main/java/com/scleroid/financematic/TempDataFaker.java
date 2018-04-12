@@ -85,7 +85,8 @@ public class TempDataFaker {
 				(byte) faker.number.between(0, 9),
 				faker.commerce.price(6000, 1100000),
 				accountNo,
-				customerId
+				customerId,
+				faker.commerce.price(6000, 100000)
 
 		);
 	}

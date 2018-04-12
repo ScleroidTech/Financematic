@@ -47,22 +47,9 @@ public class Loan {
 	public void setCustomer(final Customer customer) {
 		this.customer = customer;
 	}
-    @Override
-    public String toString() {
-        return "Loan{" +
-                "loanAmt=" + loanAmt.intValue() +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                ", rateOfInterest=" + rateOfInterest +
-                ", amtOfInterest=" + amtOfInterest.intValue() +
-                ", noOfInstallments=" + noOfInstallments +
-                ", duration=" + duration +
-                ", installmentType=" + installmentType +
-                ", repayAmt=" + repayAmt.intValue() +
-                ", accountNo=" + accountNo +
-                ", custId=" + custId +
-                '}';
-    }
+
+	@TypeConverters(MoneyConverter.class)
+	private BigDecimal receivedAmt;
 
     @Ignore
     public static final byte BIMONTHLY = 4;
@@ -89,6 +76,48 @@ public class Loan {
     private byte installmentType;
     @TypeConverters(MoneyConverter.class)
     private BigDecimal repayAmt;
+
+	public Loan(final BigDecimal loanAmt, final Date startDate, final Date endDate,
+	            final float rateOfInterest,
+	            final BigDecimal amtOfInterest, final int noOfInstallments, final int duration,
+	            final byte installmentType,
+	            final BigDecimal repayAmt, final int accountNo,
+	            final int custId, final BigDecimal receivedAmt) {
+		this.loanAmt = loanAmt;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.rateOfInterest = rateOfInterest;
+		this.amtOfInterest = amtOfInterest;
+		this.noOfInstallments = noOfInstallments;
+		this.duration = duration;
+		this.installmentType = installmentType;
+		this.repayAmt = repayAmt;
+		this.receivedAmt = receivedAmt;
+		this.accountNo = accountNo;
+		this.custId = custId;
+	}
+
+	@Override
+	public String toString() {
+		return "Loan{" +
+				"loanAmt=" + loanAmt.intValue() +
+				", startDate=" + startDate +
+				", endDate=" + endDate +
+				", rateOfInterest=" + rateOfInterest +
+				", amtOfInterest=" + amtOfInterest.intValue() +
+				", noOfInstallments=" + noOfInstallments +
+				", duration=" + duration +
+				", installmentType=" + installmentType +
+				", repayAmt=" + repayAmt.intValue() +
+				", accountNo=" + accountNo +
+				", custId=" + custId +
+				", receivedAmt=" + receivedAmt.intValue() +
+				'}';
+	}
+
+	public BigDecimal getReceivedAmt() {
+		return receivedAmt;
+	}
     @PrimaryKey
     private int accountNo;
 
@@ -121,7 +150,11 @@ public class Loan {
         this.custId = custId;
     }
 
-    public BigDecimal getLoanAmt() {
+	public void setReceivedAmt(final BigDecimal receivedAmt) {
+		this.receivedAmt = receivedAmt;
+	}
+
+	public BigDecimal getLoanAmt() {
         return loanAmt;
     }
 

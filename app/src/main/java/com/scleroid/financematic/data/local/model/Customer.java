@@ -48,8 +48,17 @@ public class Customer {
 		this.idProofNo = idProofNo;
 		this.idProofType = idProofType;
 	}
-  /*  @Ignore
-    private List<Loan> loans;*/
+
+	@Ignore
+	private List<Loan> loans;
+
+	public List<Loan> getLoans() {
+		return loans;
+	}
+
+	public void setLoans(final List<Loan> loans) {
+		this.loans = loans;
+	}
 
 	@Override
 	public String toString() {

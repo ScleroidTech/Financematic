@@ -9,12 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.scleroid.financematic.R;
-import com.scleroid.financematic.adapter.PeopleAdapter;
 import com.scleroid.financematic.base.BaseFragment;
 import com.scleroid.financematic.base.BaseViewModel;
+import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.RecyclerTouchListener;
 
@@ -40,7 +39,7 @@ public class PeopleFragment extends BaseFragment {
 	@BindView(R.id.people_recycler_view)
 	RecyclerView peopleRecyclerView;
 	Unbinder unbinder;
-	private List<PeopleModel> peopleModelList = new ArrayList<>();
+	private List<Customer> peopleModelList = new ArrayList<>();
 
 	private PeopleAdapter mAdapter;
 
@@ -97,15 +96,15 @@ public class PeopleFragment extends BaseFragment {
 		peopleRecyclerView.setAdapter(mAdapter);
 
 		// row click listener
-		peopleRecyclerView.addOnItemTouchListener(
+		RecyclerTouchListener recyclerTouchListener =
 				new RecyclerTouchListener(getActivity(), peopleRecyclerView,
 						new RecyclerTouchListener.ClickListener() {
 							@Override
 							public void onClick(View view, int position) {
-								PeopleModel loan = peopleModelList.get(position);
-								Toast.makeText(getActivity(),
-										loan.getList_received_amoun() + " is selected!",
-										Toast.LENGTH_SHORT).show();
+								Customer loan = peopleModelList.get(position);
+								/*Toast.makeText(getActivity(),
+										loan.getReceivedAmt() + " is selected!",
+										Toast.LENGTH_SHORT).show();*/
 
 
 							}
@@ -114,7 +113,9 @@ public class PeopleFragment extends BaseFragment {
 							public void onLongClick(View view, int position) {
 
 							}
-						}));
+						});
+		//peopleRecyclerView.addOnItemTouchListener(
+		//			recyclerTouchListener);
 
       /*  //SET ITS PROPERTIES
         peopleRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -139,9 +140,6 @@ public class PeopleFragment extends BaseFragment {
 		});
 
 
-		prepareLoanData();
-
-
 		return rootView;
 
 
@@ -158,23 +156,6 @@ public class PeopleFragment extends BaseFragment {
 		return null;
 	}
 
-	private void prepareLoanData() {
-		PeopleModel loan = new PeopleModel("Customer Name 1", 12100, 200000);
-		peopleModelList.add(loan);
-		loan = new PeopleModel("Customer Name 2", 12100, 22100);
-		peopleModelList.add(loan);
-		loan = new PeopleModel("Customer Name 3", 1500, 842100);
-		peopleModelList.add(loan);
-		loan = new PeopleModel("Customer Name 4", 12500, 22100);
-		peopleModelList.add(loan);
-		loan = new PeopleModel("Customer Name 5", 21500, 552100);
-		peopleModelList.add(loan);
-
-
-		// notify adapter about data set changes
-		// so that it will render the list with new data
-		mAdapter.notifyDataSetChanged();
-	}
 
 
 }

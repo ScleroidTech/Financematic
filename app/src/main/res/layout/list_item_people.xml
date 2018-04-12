@@ -20,7 +20,7 @@
         app:layout_constraintVertical_bias="0.0">
 
         <android.support.v7.widget.CardView
-            android:id="@+id/card_view_list_all_people"
+            android:id="@+id/people_item_card_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="1dp"
@@ -114,7 +114,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/payment_circle_view" />
 
-                <ImageButton
+                <ImageView
                     android:id="@+id/imageButton"
                     android:layout_width="25dp"
                     android:layout_height="22dp"
@@ -126,7 +126,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
 
                     app:layout_constraintStart_toEndOf="@+id/payment_circle_view"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView4"
+                    app:layout_constraintTop_toBottomOf="@+id/callButton"
 
 
                     app:layout_constraintVertical_bias="1.0" />
@@ -160,7 +160,7 @@
                     app:layout_constraintTop_toTopOf="@+id/payment_circle_view" />
 
                 <ImageView
-                    android:id="@+id/imageView4"
+                    android:id="@+id/callButton"
                     android:layout_width="40dp"
                     android:layout_height="35dp"
 

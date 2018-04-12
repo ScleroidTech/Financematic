@@ -1,14 +1,18 @@
 package com.scleroid.financematic.data.local.lab;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MediatorLiveData;
+import android.arch.lifecycle.Transformations;
 import android.support.annotation.NonNull;
 
 import com.scleroid.financematic.data.local.AppDatabase;
 import com.scleroid.financematic.data.local.LocalDataSource;
 import com.scleroid.financematic.data.local.dao.CustomerDao;
 import com.scleroid.financematic.data.local.model.Customer;
+import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.utils.AppExecutors;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -25,22 +29,26 @@ import timber.log.Timber;
  * @since 4/5/18
  */
 public class LocalCustomerLab implements LocalDataSource<Customer> {
-    private final AppDatabase appDatabase;
-    private final AppExecutors appExecutors;
-    private final CustomerDao customerDao;
+	private final AppDatabase appDatabase;
+	private final AppExecutors appExecutors;
+	private final CustomerDao customerDao;
+	@Inject
+	LocalLoanLab loanLab;
+	@Inject
+	private Loan loanDao;
 
-    @Inject
-    LocalCustomerLab(final AppDatabase appDatabase, final AppExecutors appExecutors) {
-        this.appDatabase = appDatabase;
-        this.appExecutors = appExecutors;
-        this.customerDao = appDatabase.customerDao();
-    }
+	@Inject
+	LocalCustomerLab(final AppDatabase appDatabase, final AppExecutors appExecutors) {
+		this.appDatabase = appDatabase;
+		this.appExecutors = appExecutors;
+		this.customerDao = appDatabase.customerDao();
+	}
 
-    /**
-     * gets a list of all items
-     */
-    @Override
-    public LiveData<List<Customer>> getItems() {
+	/**
+	 * gets a list of all items
+	 */
+	@Override
+	public LiveData<List<Customer>> getItems() {
         /* Alternate Method for same purpose
         Runnable runnable = () -> {
             final LiveData<List<Customer>> customers= customerDao.getAllCustomerLive();
@@ -55,108 +63,156 @@ public class LocalCustomerLab implements LocalDataSource<Customer> {
         };
         appExecutors.diskIO().execute(runnable);*/
 
-        Timber.d("getting all customers");
-        return customerDao.getAllCustomerLive();
-    }
+		Timber.d("getting all customers");
+		return customerDao.getAllCustomerLive();
+	}
 
-    /**
-     * gets a single item provided by id
-     *
-     * @param itemId the id of the item to be get
-     */
-    @Override
-    public LiveData<Customer> getItem(final int itemId) {
-        Timber.d("getting customer with id %d", itemId);
-        return customerDao.getCustomerLive(itemId);
-    }
+	/**
+	 * gets a single item provided by id
+	 *
+	 * @param itemId the id of the item to be get
+	 */
+	@Override
+	public LiveData<Customer> getItem(final int itemId) {
+		Timber.d("getting customer with id %d", itemId);
+		return customerDao.getCustomerLive(itemId);
+	}
 
-    /**
-     * gets a single item provided by id
-     *
-     * @param itemId the id of the item to be get
-     */
+	/**
+	 * Saves item to data source
+	 *
+	 * @param item item object to be saved
+	 */
+	@Override
+	public Single<Customer> saveItem(@NonNull final Customer item) {
+		Timber.d("creating new customer ");
 
-    public Customer getRxItem(final int itemId) {
-        Timber.d("getting customer with id %d", itemId);
-        return customerDao.getCustomer(itemId);
-    }
-
-    /**
-     * Saves item to data source
-     *
-     * @param item item object to be saved
-     */
-    @Override
-    public Single<Customer> saveItem(@NonNull final Customer item) {
-        Timber.d("creating new customer ");
-
-        return Single.fromCallable(() -> {
-            long rowId = customerDao.saveCustomer(item);
-            Timber.d("customer stored " + rowId);
-            return item;
-        }).subscribeOn(Schedulers.io());
-    }
+		return Single.fromCallable(() -> {
+			long rowId = customerDao.saveCustomer(item);
+			Timber.d("customer stored " + rowId);
+			return item;
+		}).subscribeOn(Schedulers.io());
+	}
 
 
-    /**
-     * adds a list of objects to the data source
-     *
-     * @param items list of items
-     */
-    @Override
-    public Completable addItems(@NonNull final List<Customer> items) {
-        Timber.d("creating new customer ");
+	/**
+	 * adds a list of objects to the data source
+	 *
+	 * @param items list of items
+	 */
+	@Override
+	public Completable addItems(@NonNull final List<Customer> items) {
+		Timber.d("creating new customer ");
 
-	    return Completable.fromRunnable(() -> {
-            long[] rowId = customerDao.saveCustomers(items);
-            Timber.d("customer stored " + rowId.length);
+		return Completable.fromRunnable(() -> {
+			long[] rowId = customerDao.saveCustomers(items);
+			Timber.d("customer stored " + rowId.length);
 
-	    }).subscribeOn(Schedulers.io());
-    }
+		}).subscribeOn(Schedulers.io());
+	}
 
-    /**
-     * refreshes the data source
-     */
-    @Override
-    public void refreshItems() {
+	/**
+	 * refreshes the data source
+	 */
+	@Override
+	public void refreshItems() {
 
-    }
+	}
 
-    /**
-     * Deletes all the data source
-     */
-    @Override
-    public Completable deleteAllItems() {
-        Timber.d("Deleting all customers");
-	    return Completable.fromRunnable(() -> customerDao.nukeTable()).subscribeOn(Schedulers.io
-			    ());
+	/**
+	 * Deletes all the data source
+	 */
+	@Override
+	public Completable deleteAllItems() {
+		Timber.d("Deleting all customers");
+		return Completable.fromRunnable(() -> customerDao.nukeTable()).subscribeOn(Schedulers.io
+				());
 
-    }
+	}
 
-    /**
-     * deletes a single item from the database
-     *
-     * @param itemId id of item to be deleted
-     */
-    @Override
-    public Completable deleteItem(final int itemId) {
-        Timber.d("deleting customer with id %d", itemId);
+	/**
+	 * deletes a single item from the database
+	 *
+	 * @param itemId id of item to be deleted
+	 */
+	@Override
+	public Completable deleteItem(final int itemId) {
+		Timber.d("deleting customer with id %d", itemId);
 
-	    return Completable.fromRunnable(
-			    () -> customerDao.delete(customerDao.getCustomerLive(itemId).getValue()))
-			    .subscribeOn(Schedulers.io());
-    }
+		return Completable.fromRunnable(
+				() -> customerDao.delete(customerDao.getCustomerLive(itemId).getValue()))
+				.subscribeOn(Schedulers.io());
+	}
 
-    /**
-     * deletes a single item from the database
-     *
-     * @param item item to be deleted
-     */
-    @Override
-    public Completable deleteItem(@NonNull final Customer item) {
-        Timber.d("deleting customer with id %d", item.getCustomerId());
+	/**
+	 * deletes a single item from the database
+	 *
+	 * @param item item to be deleted
+	 */
+	@Override
+	public Completable deleteItem(@NonNull final Customer item) {
+		Timber.d("deleting customer with id %d", item.getCustomerId());
 
-	    return Completable.fromRunnable(() -> customerDao.delete(item))
-			    .subscribeOn(Schedulers.io());
-    }
+		return Completable.fromRunnable(() -> customerDao.delete(item))
+				.subscribeOn(Schedulers.io());
+	}
+
+	/**
+	 * gets a single item provided by id
+	 *
+	 * @param itemId the id of the item to be get
+	 */
+
+	public Customer getRxItem(final int itemId) {
+		Timber.d("getting customer with id %d", itemId);
+		return customerDao.getCustomer(itemId);
+	}
+
+	public LiveData<List<Customer>> getCustomersWithLoans() {
+		LiveData<List<Customer>> customerLiveData = customerDao.getAllCustomerLive();
+
+		// TODO Test this, if works remove below code, this part has performance issues
+		customerLiveData = Transformations.switchMap(customerLiveData, inputCustomers -> {
+			MediatorLiveData<List<Customer>> customerMediatorLiveData = new MediatorLiveData<>();
+			List<Loan> loans = new ArrayList<>();
+			for (Customer customer : inputCustomers) {
+				customerMediatorLiveData.addSource(
+						loanLab.getItemWithCustomerId(customer.getCustomerId()), loan -> {
+							loans.add(loan);
+							customer.setLoans(loans);
+							customerMediatorLiveData.postValue(inputCustomers);
+
+						});
+			}
+			return customerMediatorLiveData;
+		});
+		return customerLiveData;
+       /* customerLiveData = Transformations.map(customerLiveData, inputStates -> {
+            for (Customer state : inputStates) {
+                state.setLoans(loanDao.getLoans(state.getCustomerId()));
+            }
+            return inputStates;
+        });
+        return customerLiveData;*/
+	}
+
+	public LiveData<Customer> getCustomer(int id) {
+		LiveData<Customer> customerLiveData = customerDao.getCustomerLive(id);
+		customerLiveData = Transformations.switchMap(customerLiveData, inputCustomer -> {
+			MediatorLiveData<Customer> mediatorLiveData = new MediatorLiveData<>();
+			List<Loan> loans = new ArrayList<>();
+			mediatorLiveData.addSource(loanLab.getItemWithCustomerId(inputCustomer.getCustomerId
+							()),
+					loan -> {
+						loans.add(loan);
+						inputCustomer.setLoans(loans);
+					});
+
+			return mediatorLiveData;
+		});
+		return customerLiveData;
+		//Good Job buddy, now the real challenge is next method
+	}
+
+
 }

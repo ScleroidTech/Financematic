@@ -1,4 +1,4 @@
-package com.scleroid.financematic.adapter;
+package com.scleroid.financematic.fragments.dashboard;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -33,7 +33,6 @@ import butterknife.OnClick;
 import timber.log.Timber;
 
 import static com.scleroid.financematic.fragments.dashboard.DashboardViewModel.RANGE;
-import static dagger.internal.Preconditions.checkNotNull;
 
 
 public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyViewHolder> {
@@ -129,6 +128,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
 		notifyDataSetChanged();
 	}
 
+
 	static class MyViewHolder extends RecyclerView.ViewHolder {
 		Installment installment;
 		@Inject
@@ -188,18 +188,26 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
 			}
 		}
 
-		@OnClick(R.id.call_button)
-		public void onCallButtonClicked() {
-			String phone = checkNotNull(installment.getLoan().getCustomer().getMobileNumber(),
-					"No number found here");
+
+		@OnClick({R.id.call_button, R.id.delay_button, R.id.dashboard_item_cardview})
+		public void onViewClicked(View view) {
+			switch (view.getId()) {
+				case R.id.call_button:
+					handleCallClick();
+					break;
+				case R.id.delay_button:
+					break;
+				case R.id.dashboard_item_cardview:
+					break;
+			}
+		}
+
+		private void handleCallClick() {
+			String phone = installment.getLoan().getCustomer().getMobileNumber();
+			Timber.d(phone + " of person " + installment.getLoan().getCustomer().getName());
 			Events.placeCall makeACall = new Events.placeCall(phone);
 
 			GlobalBus.getBus().post(makeACall);
 		}
-
-		@OnClick(R.id.delay_button)
-		public void onDelayButtonClicked() {
-		}
-
 	}
 }

@@ -62,6 +62,17 @@ public interface LoanDao {
     LiveData<Loan> getLoanLive(int serialNo);
 
 
+	/**
+	 * Returns a specific value compared to serialNo passed
+	 *
+	 * @param serialNo the customer Id of object to be found
+	 * @return loan object with same serialNo
+	 */
+	@Query("SELECT * FROM Loan where custId  = :serialNo ")
+	LiveData<Loan> getLoanByCustomerIdLive(int serialNo);
+
+
+
     /**
      * Returns a specific value compared to serialNo passed
      *

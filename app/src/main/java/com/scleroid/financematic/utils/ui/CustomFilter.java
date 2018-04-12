@@ -2,8 +2,8 @@ package com.scleroid.financematic.utils.ui;
 
 import android.widget.Filter;
 
-import com.scleroid.financematic.adapter.PeopleAdapter;
-import com.scleroid.financematic.fragments.people.PeopleModel;
+import com.scleroid.financematic.data.local.model.Customer;
+import com.scleroid.financematic.fragments.people.PeopleAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +18,12 @@ import java.util.List;
 public class CustomFilter extends Filter {
 
 	PeopleAdapter adapter;
-	ArrayList<PeopleModel> filterList;
+	ArrayList<Customer> filterList;
 
 
-	public CustomFilter(List<PeopleModel> filterList, PeopleAdapter adapter) {
+	public CustomFilter(List<Customer> filterList, PeopleAdapter adapter) {
 		this.adapter = adapter;
-		this.filterList = (ArrayList<PeopleModel>) filterList;
+		this.filterList = (ArrayList<Customer>) filterList;
 
 	}
 
@@ -37,11 +37,11 @@ public class CustomFilter extends Filter {
 			//CHANGE TO UPPER
 			constraint = constraint.toString().toUpperCase();
 			//STORE OUR FILTERED PLAYERS
-			ArrayList<PeopleModel> filteredPlayers = new ArrayList<>();
+			ArrayList<Customer> filteredPlayers = new ArrayList<>();
 
 			for (int i = 0; i < filterList.size(); i++) {
 				//CHECK
-				if (filterList.get(i).getList_person_name().toUpperCase().contains(constraint)) {
+				if (filterList.get(i).getName().toUpperCase().contains(constraint)) {
 					//ADD PLAYER TO FILTERED PLAYERS
 					filteredPlayers.add(filterList.get(i));
 				}
@@ -62,7 +62,7 @@ public class CustomFilter extends Filter {
 	@Override
 	protected void publishResults(CharSequence constraint, FilterResults results) {
 
-		adapter.peopleModelList = (ArrayList<PeopleModel>) results.values;
+		adapter.customerList = (ArrayList<Customer>) results.values;
 
 		//REFRESH
 		adapter.notifyDataSetChanged();
