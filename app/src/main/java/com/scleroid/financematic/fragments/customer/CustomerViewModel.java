@@ -8,6 +8,7 @@ import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.data.repo.CustomerRepo;
 import com.scleroid.financematic.data.repo.LoanRepo;
+import com.scleroid.financematic.utils.Resource;
 
 import java.util.List;
 
@@ -45,30 +46,35 @@ public class CustomerViewModel extends BaseViewModel
 
 		return customerRepo.getLocalCustomerLab().getItem(currentCustomerId);
 	}    //TODO add  data in it
-	@Override
-	protected LiveData<List<Loan>> updateItemLiveData() {
-		loanLiveData = loanRepo.getLocalLoanLab().getItemWithCustomerId(currentCustomerId);
+
+	protected LiveData<List<Loan>> getLoanList() {
+		if (loanLiveData.getValue() == null || loanLiveData.getValue().isEmpty()) {
+			loanLiveData = updateLoanLiveData();
+		}
 		return loanLiveData;
+
 	}
 
 	public int getCurrentCustomerId() {
 		return currentCustomerId;
 	}
 
-	@Override
-	protected LiveData<List<Loan>> getItemList() {
-		if (loanLiveData.getValue() == null || loanLiveData.getValue().isEmpty()) {
-			loanLiveData = updateItemLiveData();
-		}
+	protected LiveData<List<Loan>> updateLoanLiveData() {
+		loanLiveData = loanRepo.getLocalLoanLab().getItemWithCustomerId(currentCustomerId);
 		return loanLiveData;
-
 	}
 
 	public void setCurrentCustomerId(final int currentCustomerId) {
 		this.currentCustomerId = currentCustomerId;
 	}
 
+	@Override
+	protected LiveData<Resource<List>> updateItemLiveData() {
+		return null;
+	}
 
-
-
+	@Override
+	protected LiveData<Resource<List>> getItemList() {
+		return null;
+	}
 }

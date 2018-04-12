@@ -27,7 +27,7 @@
         android:orientation="vertical">
 
 
-        <TextView
+        <com.scleroid.financematic.utils.ui.RupeeTextView
             android:id="@+id/paid_amount_label_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
             card_view:layout_constraintBottom_toTopOf="@+id/installment_text_view"
             card_view:layout_constraintEnd_toEndOf="parent" />
 
-        <TextView
+        <com.scleroid.financematic.utils.ui.RupeeTextView
             android:id="@+id/installment_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

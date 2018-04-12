@@ -1,4 +1,4 @@
-package com.scleroid.financematic.adapter;
+package com.scleroid.financematic.fragments.loanDetails;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.scleroid.financematic.R;
-import com.scleroid.financematic.data.tempModels.Personal_summery_loan_details;
+import com.scleroid.financematic.data.local.model.TransactionModel;
 import com.scleroid.financematic.utils.ui.CurrencyStringUtils;
 import com.scleroid.financematic.utils.ui.DateUtils;
 import com.scleroid.financematic.utils.ui.TextViewUtils;
@@ -24,13 +24,22 @@ import butterknife.ButterKnife;
  */
 
 
-public class SummeryAdapter extends RecyclerView.Adapter<SummeryAdapter.MyViewHolder> {
+public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> {
 
 
-	private List<Personal_summery_loan_details> summeryList;
+	private List<TransactionModel> transactionList;
 
-	public SummeryAdapter(List<Personal_summery_loan_details> summeryList) {
-		this.summeryList = summeryList;
+	public LoanAdapter(List<TransactionModel> transactionList) {
+		this.transactionList = transactionList;
+	}
+
+	public List<TransactionModel> getTransactionList() {
+		return transactionList;
+	}
+
+	public void setTransactionList(
+			final List<TransactionModel> transactionList) {
+		this.transactionList = transactionList;
 	}
 
 	@Override
@@ -43,14 +52,14 @@ public class SummeryAdapter extends RecyclerView.Adapter<SummeryAdapter.MyViewHo
 
 	@Override
 	public void onBindViewHolder(MyViewHolder holder, int position) {
-		Personal_summery_loan_details passbook = summeryList.get(position);
+		TransactionModel passbook = transactionList.get(position);
 		holder.setData(passbook);
 
 	}
 
 	@Override
 	public int getItemCount() {
-		return summeryList.size();
+		return transactionList.size();
 	}
 
 	public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -80,11 +89,12 @@ public class SummeryAdapter extends RecyclerView.Adapter<SummeryAdapter.MyViewHo
 
 		}
 
-		public void setData(Personal_summery_loan_details passbook) {
+		public void setData(TransactionModel passbook) {
 			//  holder.summery_date.setText(passbook.getSummery_date());
-			summeryDescpription.setText(passbook.getSummery_description());
-			summeryAmount.setText(currencyStringUtils.bindNumber(passbook.getSummery_amount()));
-			setDate(passbook.getSummeryDate());
+			summeryDescpription.setText(passbook.getDescription());
+			summeryAmount.setText(
+					currencyStringUtils.bindNumber(passbook.getReceivedAmt().intValue()));
+			setDate(passbook.getTransactionDate());
 			textViewUtils.textViewExperiments(summeryAmount);
 
 		}

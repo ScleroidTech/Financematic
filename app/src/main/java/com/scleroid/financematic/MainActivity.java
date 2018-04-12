@@ -503,9 +503,19 @@ public class MainActivity extends BaseActivity
 	}
 
 	@Subscribe
-	public void onFragmentOpen(Events.openFragment customerBundle) {
+	public void onCustomerFragmentOpen(Events.openCustomerFragment customerBundle) {
 		int customerId = customerBundle.getCustomerId();
 		CustomerFragment fragment = CustomerFragment.newInstance(customerId);
+
+		activityUtils.loadFragment(fragment, getSupportFragmentManager());
+
+
+	}
+
+	@Subscribe
+	public void onLoanFragmentOpen(Events.openLoanDetailsFragment loanBundle) {
+		int accountNo = loanBundle.getAccountNo();
+		LoanDetailsFragment fragment = LoanDetailsFragment.newInstance(accountNo);
 
 		activityUtils.loadFragment(fragment, getSupportFragmentManager());
 
