@@ -32,8 +32,11 @@ import com.scleroid.financematic.fragments.expense.ExpenseFragment;
 import com.scleroid.financematic.fragments.loanDetails.LoanDetailsFragment;
 import com.scleroid.financematic.fragments.people.PeopleFragment;
 import com.scleroid.financematic.utils.AppExecutors;
+import com.scleroid.financematic.utils.eventBus.Events;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.BottomNavigationViewHelper;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import javax.inject.Inject;
 
@@ -43,6 +46,8 @@ import dagger.android.support.HasSupportFragmentInjector;
 import es.dmoral.toasty.Toasty;
 import io.bloco.faker.Faker;
 import timber.log.Timber;
+
+import static com.scleroid.financematic.utils.CommonUtils.makeToast;
 
 public class MainActivity extends BaseActivity
 		implements NavigationView.OnNavigationItemSelectedListener, GarlandApp.FakerReadyListener,
@@ -60,7 +65,6 @@ public class MainActivity extends BaseActivity
 	// index to identify current nav menu item
 	public static int navItemIndex = 0;
 	public static String CURRENT_TAG = TAG_DASHBOARD;
-
 
 	@Inject
 	CustomerRepo customerRepo;
@@ -487,4 +491,26 @@ public class MainActivity extends BaseActivity
 	public AndroidInjector<Fragment> supportFragmentInjector() {
 		return fragmentDispatchingAndroidInjector;
 	}
+
+	@Subscribe
+	public void onCallClick(Events.placeCall phoneNumberCarrier) {
+
+		String mobileNumber = phoneNumberCarrier.getNumber();
+
+		activityUtils.callIntent(this, mobileNumber);
+
+
+	}
+
+	@Subscribe
+	public void onShowToast(Events.showToast toastData) {
+
+		String message = toastData.getMessage();
+		String type = toastData.getType();
+		makeToast(message, type);
+
+
+	}
+
+
 }

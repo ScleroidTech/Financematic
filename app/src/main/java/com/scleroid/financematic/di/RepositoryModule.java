@@ -21,6 +21,8 @@ import com.scleroid.financematic.utils.LiveDataCallAdapterFactory;
 import com.scleroid.financematic.utils.rx.AppSchedulerProvider;
 import com.scleroid.financematic.utils.rx.SchedulerProvider;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.concurrent.Executors;
 
 import javax.inject.Singleton;
@@ -79,6 +81,12 @@ abstract public class RepositoryModule {
 	    Timber.wtf("why we aren't calling this" + appDatabase);
 	    return appDatabase;
     }
+
+	@Singleton
+	@Provides
+	static EventBus providesGlobalBus() {
+		return EventBus.getDefault();
+	}
 
     @Singleton
     @Provides
@@ -154,4 +162,6 @@ abstract public class RepositoryModule {
 
 	@Singleton
 	abstract TransactionsRepo provideTransactionsRepo(AppDatabase db);
+
+
 }

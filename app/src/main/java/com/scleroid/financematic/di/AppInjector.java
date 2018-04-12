@@ -55,6 +55,7 @@ public class AppInjector {
                     @Override
                     public void onActivityStopped(Activity activity) {
 
+
                     }
 
                     @Override

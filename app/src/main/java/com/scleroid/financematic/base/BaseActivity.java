@@ -14,6 +14,9 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.scleroid.financematic.utils.CommonUtils;
 import com.scleroid.financematic.utils.NetworkUtils;
+import com.scleroid.financematic.utils.eventBus.GlobalBus;
+
+import org.greenrobot.eventbus.EventBus;
 
 import dagger.android.AndroidInjection;
 import dagger.android.support.HasSupportFragmentInjector;
@@ -34,7 +37,7 @@ public abstract class BaseActivity
     // since its going to be common for all the activities
     private ProgressDialog mProgressDialog;
 
-
+	EventBus eventBus = GlobalBus.getBus();
     /**
      * @return layout resource id
      */
@@ -63,7 +66,23 @@ public abstract class BaseActivity
 
     }
 
-    public void performDependencyInjection() {
+	@Override
+	public void onResume() {
+		super.onResume();
+		eventBus.register(this);
+
+        /*if (listState != null) {
+            recyclerViewPager.getLayoutManager().onRestoreInstanceState(listState);
+        }*/
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		eventBus.unregister(this);
+	}
+
+	public void performDependencyInjection() {
         AndroidInjection.inject(this);
     }
 

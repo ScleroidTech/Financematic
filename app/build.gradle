@@ -124,6 +124,9 @@ dependencies {
     //For Fake Data, should not be in Production
     implementation 'com.github.blocoio:faker:1.2.7'
 
+    //Eventbus by greenrobot
+    implementation 'org.greenrobot:eventbus:3.1.1'
+
 
 
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {

@@ -16,7 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.scleroid.financematic.R;
-import com.scleroid.financematic.adapter.LoanAdapter;
+import com.scleroid.financematic.adapter.DashboardAdapter;
 import com.scleroid.financematic.base.BaseFragment;
 import com.scleroid.financematic.data.local.lab.LocalCustomerLab;
 import com.scleroid.financematic.data.local.lab.LocalLoanLab;
@@ -59,7 +59,7 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
     ActivityUtils activityUtils;
     @Inject
     ViewModelProvider.Factory viewModelFactory;
-    private LoanAdapter mAdapter;
+	private DashboardAdapter mAdapter;
     private DashboardViewModel dashBoardViewModel;
 	@Inject
 	LocalCustomerLab localCustomerLab;
@@ -155,7 +155,7 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
     }
 
     private void setupRecyclerView() {
-	    mAdapter = new LoanAdapter(new ArrayList<>(), localLoanLab, localCustomerLab);
+	    mAdapter = new DashboardAdapter(new ArrayList<>(), localLoanLab, localCustomerLab);
 
         recyclerViewDashboard.setHasFixedSize(true);
 

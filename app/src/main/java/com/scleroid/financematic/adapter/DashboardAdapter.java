@@ -16,6 +16,8 @@ import com.scleroid.financematic.data.local.lab.LocalLoanLab;
 import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.data.repo.CustomerRepo;
 import com.scleroid.financematic.data.repo.LoanRepo;
+import com.scleroid.financematic.utils.eventBus.Events;
+import com.scleroid.financematic.utils.eventBus.GlobalBus;
 import com.scleroid.financematic.utils.ui.CurrencyStringUtils;
 import com.scleroid.financematic.utils.ui.DateUtils;
 
@@ -31,9 +33,10 @@ import butterknife.OnClick;
 import timber.log.Timber;
 
 import static com.scleroid.financematic.fragments.dashboard.DashboardViewModel.RANGE;
+import static dagger.internal.Preconditions.checkNotNull;
 
 
-public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> {
+public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyViewHolder> {
 
 
 	private final LocalLoanLab localLoanLab;
@@ -43,8 +46,8 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> 
 	private List<Installment> installmentList;
 
 
-	public LoanAdapter(List<Installment> installmentList, LocalLoanLab localLoanLab,
-	                   LocalCustomerLab localCustomerLab) {
+	public DashboardAdapter(List<Installment> installmentList, LocalLoanLab localLoanLab,
+	                        LocalCustomerLab localCustomerLab) {
 		this.installmentList = installmentList;
 		this.localLoanLab = localLoanLab;
 		this.localCustomerLab = localCustomerLab;
@@ -52,21 +55,12 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> 
 	}
 
 /*TODO Work in Progress ,Add this & remove other constructor
-    public LoanAdapter(List<Loan> installmentList) {
+    public DashboardAdapter(List<Loan> installmentList) {
         this.installmentList = installmentList;
     }*/
 
 	public List<Installment> getFilteredInstallments() {
 		return filterResults(installmentList);
-	}
-
-	@NonNull
-	@Override
-	public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-		View itemView = LayoutInflater.from(parent.getContext())
-				.inflate(R.layout.list_item_dashboard, parent, false);
-
-		return new MyViewHolder(itemView);
 	}
 
 	private List<Installment> filterResults(List<Installment> installments) {
@@ -78,13 +72,13 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> 
 				.collect(Collectors.toList());
 	}
 
-	public void setInstallmentList(final List<Installment> installmentList) {
-		//Timber.d("What's the list" + installmentList.isEmpty() + installmentList.toString());
-		List<Installment> filterResults = filterResults(installmentList);
-		Timber.d("What's the list" + filterResults.isEmpty() + filterResults.toString());
-		this.installmentList = filterResults;
-		//this.installmentList = installmentList;
-		notifyDataSetChanged();
+	@NonNull
+	@Override
+	public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+		View itemView = LayoutInflater.from(parent.getContext())
+				.inflate(R.layout.list_item_dashboard, parent, false);
+
+		return new MyViewHolder(itemView);
 	}
 
 	@Override
@@ -126,8 +120,17 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> 
 		return installmentList.size();
 	}
 
+	public void setInstallmentList(final List<Installment> installmentList) {
+		//Timber.d("What's the list" + installmentList.isEmpty() + installmentList.toString());
+		List<Installment> filterResults = filterResults(installmentList);
+		Timber.d("What's the list" + filterResults.isEmpty() + filterResults.toString());
+		this.installmentList = filterResults;
+		//this.installmentList = installmentList;
+		notifyDataSetChanged();
+	}
 
 	static class MyViewHolder extends RecyclerView.ViewHolder {
+		Installment installment;
 		@Inject
 		DateUtils dateUtils = new DateUtils();
 		@Inject
@@ -155,16 +158,17 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> 
 
 		}
 
-		private void setData(final Installment dashBoardModel) {
+		private void setData(final Installment installment) {
+			this.installment = installment;
 			customerNameTextView.setText("loading ...");
 			//TODO Remove local call
 
-			if (dashBoardModel.getLoan().getCustomer() != null) {
-				customerNameTextView.setText(dashBoardModel.getLoan().getCustomer().getName());
+			if (installment.getLoan().getCustomer() != null) {
+				customerNameTextView.setText(installment.getLoan().getCustomer().getName());
 			}
-			BigDecimal expectedAmt = dashBoardModel.getExpectedAmt();
+			BigDecimal expectedAmt = installment.getExpectedAmt();
 			if (expectedAmt == null) {
-				Timber.wtf("THere's no data available " + dashBoardModel.toString());
+				Timber.wtf("THere's no data available " + installment.toString());
 				amountTextView.setText("fetching");
 			} else {
 				amountTextView.setText(
@@ -172,13 +176,25 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> 
 								expectedAmt.intValueExact()));
 			}
 			dueDateTextView.setText(
-					dateUtils.getFormattedDate(dashBoardModel.getInstallmentDate()));
+					dateUtils.getFormattedDate(installment.getInstallmentDate()));
 			timeRemainingTextView.setText(
-					dateUtils.differenceOfDates(dashBoardModel.getInstallmentDate()));
+					dateUtils.differenceOfDates(installment.getInstallmentDate()));
+			if (installment.getLoan().getCustomer().getMobileNumber() == null) {
+				callButton.setEnabled(false);
+				Events.showToast showToast =
+						new Events.showToast("We don't have this number", "error");
+				GlobalBus.getBus().post(showToast);
+
+			}
 		}
 
 		@OnClick(R.id.call_button)
 		public void onCallButtonClicked() {
+			String phone = checkNotNull(installment.getLoan().getCustomer().getMobileNumber(),
+					"No number found here");
+			Events.placeCall makeACall = new Events.placeCall(phone);
+
+			GlobalBus.getBus().post(makeACall);
 		}
 
 		@OnClick(R.id.delay_button)

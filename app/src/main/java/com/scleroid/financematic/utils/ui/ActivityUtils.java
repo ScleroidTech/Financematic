@@ -1,5 +1,8 @@
 package com.scleroid.financematic.utils.ui;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -40,6 +43,11 @@ public class ActivityUtils {
 		fragment.setTargetFragment(targetFragment, requestValue);
 		fragment.show(fm, dialogValue);
 		// load fragment
+	}
+
+	public void callIntent(Activity activity, String number) {
+		Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", number, null));
+		activity.startActivity(intent);
 	}
 
 

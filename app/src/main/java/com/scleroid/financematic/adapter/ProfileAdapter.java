@@ -25,7 +25,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.MyViewHo
 
     private List<Profile> loanList2;
 /*TODO Work in Progress ,Add this & remove other constructor
-    public LoanAdapter(List<Loan> loanList) {
+    public DashboardAdapter(List<Loan> loanList) {
         this.loanList = loanList;
     }*/
 

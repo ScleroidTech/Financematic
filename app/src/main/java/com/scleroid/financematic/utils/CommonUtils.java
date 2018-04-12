@@ -24,12 +24,15 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.provider.Settings;
 import android.util.Patterns;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import es.dmoral.toasty.Toasty;
 
 /**
  * Created by amitshekhar on 07/07/17.
@@ -78,4 +81,11 @@ public final class CommonUtils {
         progressDialog.setCanceledOnTouchOutside(false);
         return progressDialog;
     }
+
+	public static void makeToast(final String message, final String type) {
+		Toast toast = Toasty.info(null, "Nothing is Happening, We're just having fun here");
+		if (type.equals("error")) {toast = Toasty.error(null, message);}
+//TODO Add Other types of toasts here.
+		toast.show();
+	}
 }
