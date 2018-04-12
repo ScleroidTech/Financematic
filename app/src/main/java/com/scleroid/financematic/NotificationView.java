@@ -35,10 +35,18 @@ public class NotificationView extends BaseFragment {
         return R.layout.notification;
     }
 
-    @Override
+	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
+	/**
+	 * Override so you can observe your viewModel
+	 */
+	@Override
+	protected void subscribeToLiveData() {
+
+	}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
