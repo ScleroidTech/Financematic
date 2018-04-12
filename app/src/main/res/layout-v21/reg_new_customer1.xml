@@ -20,7 +20,7 @@
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_margin="10dp"
                 android:background="@drawable/shadow7"
                 android:orientation="vertical"
                 android:padding="5dip">
@@ -52,20 +52,15 @@
                     android:orientation="horizontal"
                     android:paddingBottom="5dp"
                     android:paddingRight="10dp">
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_marginLeft="10dp" android:layout_gravity="center_vertical"
-                        android:backgroundTint="#409bbf" android:background="@drawable/ic_account_circle_black_24dp"/>
 
                     <TextView
 
 
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginLeft="10dp"
 
-                        android:layout_weight=".5"
+                        android:layout_weight=".7"
                         android:text="Full Name"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="#409bbf"
@@ -96,16 +91,12 @@
                     android:paddingBottom="5dp"
                     android:paddingRight="10dp">
 
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:backgroundTint="#409bbf"                 android:layout_marginLeft="10dp" android:layout_gravity="center_vertical" android:background="@drawable/ic_phone_android_black_24dp"/>
                     <TextView
 
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_weight=".6"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight=".7"
 
                         android:text="Mobile Number"
                         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -125,7 +116,39 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="10dp">
 
+                    <TextView
+
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight=".7"
+
+                        android:text="Address"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="#409bbf"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/Address_EditText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".7"
+                        android:background="@drawable/shadow"
+                        android:maxLines="1"
+                        android:paddingBottom="6dp"
+                        android:paddingTop="6dp"
+
+                        android:textColor="#409bbf" />
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -134,19 +157,15 @@
                     android:orientation="horizontal"
                     android:paddingBottom="5dp"
                     android:paddingRight="10dp">
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:backgroundTint="#409bbf"                 android:layout_marginLeft="10dp" android:layout_gravity="center_vertical" android:background="@drawable/ic_assignment_ind_black_24dp"/>
 
                     <TextView
 
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_weight=".6"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight=".7"
 
-                        android:text="Id Proof Type"
+                        android:text="Loan Number"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="#409bbf"
                         android:textSize="18sp" />
@@ -173,17 +192,13 @@
                     android:orientation="horizontal"
                     android:paddingBottom="5dp"
                     android:paddingRight="10dp">
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:backgroundTint="#409bbf"                  android:layout_marginLeft="10dp" android:layout_gravity="center_vertical" android:background="@drawable/ic_assignment_late_black_24dp"/>
 
                     <TextView
                         android:layout_width="0dp"
 
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_weight=".6"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight=".7"
 
                         android:text="Id proof no"
                         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -192,43 +207,6 @@
 
                     <EditText
                         android:id="@+id/IDproofno"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".7"
-                        android:background="@drawable/shadow"
-                        android:maxLines="1"
-                        android:paddingBottom="6dp"
-                        android:paddingTop="6dp"
-
-                        android:textColor="#409bbf" />
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal"
-                    android:paddingBottom="5dp"
-                    android:paddingRight="10dp">
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:backgroundTint="#409bbf"                 android:layout_marginLeft="10dp" android:layout_gravity="center_vertical" android:background="@drawable/ic_home_black_24dp"/>
-
-                    <TextView
-
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_weight=".6"
-
-                        android:text="Address"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="#409bbf"
-                        android:textSize="18sp" />
-
-                    <EditText
-                        android:id="@+id/Address_EditText"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight=".7"
