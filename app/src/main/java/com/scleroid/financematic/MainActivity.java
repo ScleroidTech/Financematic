@@ -479,7 +479,6 @@ public class MainActivity extends BaseActivity
 		final TempDataFaker tempDataFaker = new TempDataFaker();
 		for (int i = 0; i < 5; i++)
 			tempDataFaker.populateData(faker);
-
 		tempDataFaker.saveInDatabase(this);
 	}
 

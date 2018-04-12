@@ -174,8 +174,9 @@ public class LocalCustomerLab implements LocalDataSource<Customer> {
 		// TODO Test this, if works remove below code, this part has performance issues
 		customerLiveData = Transformations.switchMap(customerLiveData, inputCustomers -> {
 			MediatorLiveData<List<Customer>> customerMediatorLiveData = new MediatorLiveData<>();
-			List<Loan> loans = new ArrayList<>();
+
 			for (Customer customer : inputCustomers) {
+				List<Loan> loans = new ArrayList<>();
 				customerMediatorLiveData.addSource(
 						loanDao.getLoanByCustomerIdLive(customer.getCustomerId()), loan -> {
 							loans.add(loan);

@@ -22,7 +22,8 @@ public class CircleCustomView extends View {
 
 	private float mRadius;
 	private RectF mArcBounds = new RectF();
-	private Float drawUpto;
+	//a big mistake, capital F was used, making it an object
+	private float drawUpto = 0;
 
 	public CircleCustomView(Context context) {
 		super(context);

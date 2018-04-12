@@ -1,6 +1,7 @@
 package com.scleroid.financematic.fragments.people;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 
 import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.local.model.Customer;
@@ -21,7 +22,7 @@ import javax.inject.Inject;
 public class PeopleViewModel extends BaseViewModel implements CustomerViewModel {
 	private final CustomerRepo customerRepo;
 	private final LoanRepo loanRepo;
-	LiveData<List<Customer>> customers;
+	LiveData<List<Customer>> customers = new MutableLiveData<>();
 
 
 	@Inject
@@ -39,12 +40,6 @@ public class PeopleViewModel extends BaseViewModel implements CustomerViewModel 
 		//   setUpcomingInstallmentsTransformed(getTransformedUpcomingData());
 	}
 
-	//TODO add  data in it
-	@Override
-	protected LiveData<List> updateItemLiveData() {
-		return null;
-	}
-
 	@Override
 	protected LiveData<List<Customer>> getItemList() {
 
@@ -55,5 +50,11 @@ public class PeopleViewModel extends BaseViewModel implements CustomerViewModel 
 					.getLocalInstallmentsLab().getItems());*/
 		}
 		return customers;
+	}
+
+	//TODO add  data in it
+	@Override
+	protected LiveData<List> updateItemLiveData() {
+		return null;
 	}
 }
