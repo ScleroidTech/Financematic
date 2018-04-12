@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.annimon.stream.Collectors;
+import com.annimon.stream.Stream;
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.data.local.lab.LocalCustomerLab;
 import com.scleroid.financematic.data.local.lab.LocalLoanLab;
@@ -18,6 +20,7 @@ import com.scleroid.financematic.utils.ui.CurrencyStringUtils;
 import com.scleroid.financematic.utils.ui.DateUtils;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -25,8 +28,9 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
+
+import static com.scleroid.financematic.fragments.dashboard.DashboardViewModel.RANGE;
 
 
 public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> {
@@ -34,26 +38,26 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> 
 
 	private final LocalLoanLab localLoanLab;
 	private final LocalCustomerLab localCustomerLab;
-	private List<Installment> loanList;
+	@Inject
+	DateUtils dateUtils = new DateUtils();
+	private List<Installment> installmentList;
 
-	public LoanAdapter(List<Installment> loanList, LocalLoanLab localLoanLab,
+
+	public LoanAdapter(List<Installment> installmentList, LocalLoanLab localLoanLab,
 	                   LocalCustomerLab localCustomerLab) {
-		this.loanList = loanList;
+		this.installmentList = installmentList;
 		this.localLoanLab = localLoanLab;
 		this.localCustomerLab = localCustomerLab;
+		//this.filteredInstallments = filterResults(installmentList);
 	}
 
-	public List<Installment> getLoanList() {
-		return loanList;
-	}
 /*TODO Work in Progress ,Add this & remove other constructor
-    public LoanAdapter(List<Loan> loanList) {
-        this.loanList = loanList;
+    public LoanAdapter(List<Loan> installmentList) {
+        this.installmentList = installmentList;
     }*/
 
-	public void setLoanList(final List<Installment> loanList) {
-		this.loanList = loanList;
-		notifyDataSetChanged();
+	public List<Installment> getFilteredInstallments() {
+		return filterResults(installmentList);
 	}
 
 	@NonNull
@@ -65,9 +69,27 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> 
 		return new MyViewHolder(itemView);
 	}
 
+	private List<Installment> filterResults(List<Installment> installments) {
+
+		if (installments == null) return new ArrayList<>();
+		return Stream.of(installments)
+				.filter(installment -> dateUtils.isThisDateWithinRange(
+						installment.getInstallmentDate(), RANGE) == true)
+				.collect(Collectors.toList());
+	}
+
+	public void setInstallmentList(final List<Installment> installmentList) {
+		//Timber.d("What's the list" + installmentList.isEmpty() + installmentList.toString());
+		List<Installment> filterResults = filterResults(installmentList);
+		Timber.d("What's the list" + filterResults.isEmpty() + filterResults.toString());
+		this.installmentList = filterResults;
+		//this.installmentList = installmentList;
+		notifyDataSetChanged();
+	}
+
 	@Override
 	public void onBindViewHolder(MyViewHolder holder, int position) {
-		Installment dashBoardModel = loanList.get(position);
+		Installment dashBoardModel = installmentList.get(position);
 		holder.itemView.setTag(dashBoardModel);
 		if (dashBoardModel.getLoan() == null) {
 			Timber.wtf(" loan is empty for " + dashBoardModel.toString());
@@ -84,6 +106,7 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> 
 			return;
 		}
 		holder.setData(dashBoardModel);
+		/*TODO NO longer needed i guess
 		localLoanLab
 				.getRxItem(dashBoardModel.getLoanAcNo())
 				.subscribeOn(Schedulers.computation())
@@ -93,15 +116,14 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> 
 							.getName();
 					holder.customerNameTextView.setText(name);
 				})
-				.dispose();
+				.dispose();*/
 
 
 	}
 
-
 	@Override
 	public int getItemCount() {
-		return loanList.size();
+		return installmentList.size();
 	}
 
 

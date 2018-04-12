@@ -149,7 +149,7 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
     private void subscribeToLiveData() {
 	    dashBoardViewModel.getUpcomingInstallments().observe(this,
                 items -> {
-	                mAdapter.setLoanList(items);
+                    mAdapter.setInstallmentList(items);
 	                installments = items;
                 });
     }

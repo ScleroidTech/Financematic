@@ -36,7 +36,7 @@ public abstract class BaseViewModel<N> extends ViewModel {
 	/*protected BaseViewModel() {
 		this.customerList = getCustomerList();
 		this.transactionList = getTransactionList();
-		this.loanList = getLoanList();
+		this.loanList = getInstallmentList();
 		this.installmentList = getInstallmentList();
 		this.expenseList = getExpenseList();
 	}*/
@@ -60,7 +60,7 @@ public abstract class BaseViewModel<N> extends ViewModel {
 		return localTransactionsLab.getItems();
 	}
 
-	protected LiveData<List<Loan>> getLoanList() {
+	protected LiveData<List<Loan>> getInstallmentList() {
 		if (loanList == null) loanList = updateLoanList();
 		return loanList;
 	}

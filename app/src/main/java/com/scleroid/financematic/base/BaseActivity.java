@@ -60,6 +60,7 @@ public abstract class BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
 
+
     }
 
     public void performDependencyInjection() {

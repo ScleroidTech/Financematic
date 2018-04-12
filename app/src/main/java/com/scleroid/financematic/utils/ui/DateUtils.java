@@ -9,6 +9,8 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
+import timber.log.Timber;
+
 public class DateUtils {
 	private Date date, time;
 
@@ -71,12 +73,18 @@ public class DateUtils {
 		dateAfterRange.add(Calendar.DATE, range);
 
 		// current date
-		Calendar currentDate = Calendar.getInstance();
 
+		Calendar currentDate = Calendar.getInstance();
+		Date currentDateTime = currentDate.getTime();
+
+		long timeDiff = date.getTime() - currentDateTime.getTime();
+		long days = TimeUnit.MILLISECONDS.toDays(timeDiff);
+		Timber.d("time Difference" + days);
+		return days <= range && days >= 0;
 
 		//ok everything is fine, date in range
-		return date.before(dateAfterRange.getTime())
-				&& date.after(currentDate.getTime());
+		//return date.before(dateAfterRange.getTime())
+		//		&& date.after(currentDate.getTime());
 
 
 	}

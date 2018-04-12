@@ -20,11 +20,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.scleroid.financematic.base.BaseActivity;
-import com.scleroid.financematic.data.local.model.Customer;
-import com.scleroid.financematic.data.local.model.Expense;
-import com.scleroid.financematic.data.local.model.Installment;
-import com.scleroid.financematic.data.local.model.Loan;
-import com.scleroid.financematic.data.local.model.TransactionModel;
 import com.scleroid.financematic.data.repo.CustomerRepo;
 import com.scleroid.financematic.data.repo.ExpenseRepo;
 import com.scleroid.financematic.data.repo.InstallmentRepo;
@@ -41,16 +36,12 @@ import com.scleroid.financematic.utils.AppExecutors;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.BottomNavigationViewHelper;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 import es.dmoral.toasty.Toasty;
-import hugo.weaving.DebugLog;
 import io.bloco.faker.Faker;
 import timber.log.Timber;
 
@@ -71,6 +62,7 @@ public class MainActivity extends BaseActivity
 	public static int navItemIndex = 0;
 	public static String CURRENT_TAG = TAG_DASHBOARD;
 
+
 	@Inject
 	CustomerRepo customerRepo;
 
@@ -79,6 +71,28 @@ public class MainActivity extends BaseActivity
 	ActivityUtils activityUtils;
 	@Inject
 	AppExecutors appExecutors;
+
+
+	public CustomerRepo getCustomerRepo() {
+		return customerRepo;
+	}
+
+	public LoanRepo getLoanRepo() {
+		return loanRepo;
+	}
+
+	public TransactionsRepo getTransactionsRepo() {
+		return transactionsRepo;
+	}
+
+	public InstallmentRepo getInstallmentRepo() {
+		return installmentRepo;
+	}
+
+	public ExpenseRepo getExpenseRepo() {
+		return expenseRepo;
+	}
+
 	@Inject
 	LoanRepo loanRepo;
 	@Inject
@@ -133,32 +147,13 @@ public class MainActivity extends BaseActivity
 	private NavigationView navigationView;
 	private String[] activityTitles;
 	private int layoutMain;
-	private List<Installment> installments;
-	private List<TransactionModel> transactions;
-	private List<Customer> customers;
-	private List<Loan> loans;
-	private List<Expense> expenses;
+
 
 	@NonNull
 	public static Intent newIntent(Context activity) {
 		return new Intent(activity, MainActivity.class);
 	}
 
-	public List<Customer> getCustomers() {
-		return customers;
-	}
-
-	public List<Loan> getLoans() {
-		return loans;
-	}
-
-	public List<Installment> getInstallments() {
-		return installments;
-	}
-
-	public List<TransactionModel> getTransactions() {
-		return transactions;
-	}
 
 	/**
 	 * @return layout resource id
@@ -471,163 +466,19 @@ public class MainActivity extends BaseActivity
 	@Override
 	public void onFakerReady(Faker faker) {
 		Timber.wtf("is this called?");
-		for (int i = 0; i < 5; i++) ;
 
-		//populateData(faker);
-
-		//saveInDatabase();
+		addFakeData(faker);
 
 	}
 
-	@DebugLog
-	private void populateData(Faker faker) {
-		customers = new ArrayList<>();
-		loans = new ArrayList<>();
-		installments = new ArrayList<>();
-		transactions = new ArrayList<>();
-		expenses = new ArrayList<>();
-		int customerId = faker.number.positive();
-		int accountNo = faker.number.between();
-		Customer customerData = createCustomerData(faker, customerId);
-		Timber.d(customerData.toString());
-		customers.add(customerData);
-		for (int i = 0; i < 5; i++) {
+	private void addFakeData(final Faker faker) {
+		final TempDataFaker tempDataFaker = new TempDataFaker();
+		for (int i = 0; i < 5; i++)
+			tempDataFaker.populateData(faker);
 
-			Loan loanData = createLoanData(faker, customerId, accountNo);
-			Timber.d(loanData.toString());
-			loans.add(loanData);
-			for (int j = 0; j < 5; j++) {
-				TransactionModel transactionData = createTransactionData(faker, accountNo);
-				Timber.d(transactionData.toString());
-				transactions.add(transactionData);
-				Installment installmentData = createInstallmentData(faker, accountNo);
-				Timber.d(installmentData.toString());
-				installments.add(installmentData);
-				Expense expenseData = createExpenseData(faker);
-				Timber.d(expenseData.toString());
-				expenses.add(expenseData);
-			}
-
-			accountNo = faker.number.between();
-
-		}
-
+		tempDataFaker.saveInDatabase(this);
 	}
 
-	private Customer createCustomerData(Faker faker, int customerId) {
-
-		return new Customer(
-				customerId,
-				faker.name.name(),
-				faker.phoneNumber.phoneNumber(),
-				faker.address.streetAddress(),
-				faker.address.city(),
-				(faker.number.hexadecimal(12)) + "",
-				(byte) faker.number.between(0, 6)
-
-		);
-	}
-
-	private Loan createLoanData(Faker faker, int customerId, int accountNo) {
-
-		return new Loan(
-				faker.commerce.price(5000, 1000000),
-				faker.date.backward(),
-				faker.date.forward(),
-				faker.number.between(1, 100),
-				faker.commerce.price(0, 2000),
-				faker.number.between(1, 20), faker.number.between(0, 20),
-				(byte) faker.number.between(0, 9),
-				faker.commerce.price(6000, 1100000),
-				accountNo,
-				customerId
-
-		);
-	}
-
-	private TransactionModel createTransactionData(Faker faker, int accountNo) {
-
-		return new TransactionModel(
-				faker.number.positive(),
-				faker.date.backward(),
-				faker.commerce.price(),
-				faker.commerce.price(),
-				faker.commerce.price(0, 2000),
-				faker.company.catchPhrase(),
-				accountNo
-
-		);
-	}
-
-	private Installment createInstallmentData(Faker faker, int accountNo) {
-
-		return new Installment(
-				faker.number.positive(),
-				faker.date.backward(),
-				faker.commerce.price(),
-				accountNo
-		);
-	}
-
-	private Expense createExpenseData(Faker faker) {
-
-		return new Expense(
-				faker.commerce.price(),
-				(byte) faker.number.between(0, 5),
-				faker.date.backward()
-		);
-	}
-
-	@DebugLog
-	private void saveInDatabase() {
-		customerRepo.saveItems(customers).subscribe(() -> {
-			// handle completion
-			Timber.d("Items Saved");
-			//YOu can't run this on Background Thread
-			//	Toasty.success(context, "Customers Added");
-		}, throwable -> {
-			// handle error
-			Timber.d(throwable, "Items not Saved" + throwable.getMessage());
-			//		Toasty.error(context, "Customers Not Added");
-		});
-		loanRepo.saveItems(loans).subscribe(() -> {
-			// handle completion
-			Timber.d("Items Saved");
-			//		Toasty.success(context, "Customers Added");
-		}, throwable -> {
-			// handle error
-			Timber.d(throwable, "Items not Saved" + throwable.getMessage());
-			//		Toasty.error(context, "Customers Not Added");
-		});
-		transactionsRepo.saveItems(transactions).subscribe(() -> {
-			// handle completion
-			Timber.d("Items Saved");
-			//		Toasty.success(context, "Customers Added");
-		}, throwable -> {
-			// handle error
-			Timber.d(throwable, "Items not Saved" + throwable.getMessage());
-			//		Toasty.error(context, "Customers Not Added");
-		});
-		installmentRepo.saveItems(installments).subscribe(() -> {
-			// handle completion
-			Timber.d("Items Saved");
-			//		Toasty.success(context, "Customers Added");
-		}, throwable -> {
-			// handle error
-			Timber.d(throwable, "Items not Saved" + throwable.getMessage());
-			//		Toasty.error(context, "Customers Not Added");
-		});
-		expenseRepo.saveItems(expenses).subscribe(() -> {
-			// handle completion
-			Timber.d("Items Saved");
-			//		Toasty.success(context, "Customers Added");
-		}, throwable -> {
-			// handle error
-			Timber.d(throwable, "Items not Saved" + throwable.getMessage());
-			//		Toasty.error(context, "Customers Not Added");
-		});
-
-	}
 
 	/**
 	 * Returns an {@link AndroidInjector} of {@link Fragment}s.

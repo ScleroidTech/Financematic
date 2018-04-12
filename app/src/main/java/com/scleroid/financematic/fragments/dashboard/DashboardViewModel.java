@@ -1,8 +1,12 @@
 package com.scleroid.financematic.fragments.dashboard;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.Transformations;
 
+import com.annimon.stream.Collectors;
+import com.annimon.stream.Stream;
 import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.local.dao.InstallmentDao;
 import com.scleroid.financematic.data.local.model.Installment;
@@ -14,6 +18,7 @@ import com.scleroid.financematic.utils.Resource;
 import com.scleroid.financematic.utils.ui.DateUtils;
 import com.scleroid.financematic.viewmodels.CustomerViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -25,7 +30,8 @@ import javax.inject.Inject;
  * @since 4/9/18
  */
 public class DashboardViewModel extends BaseViewModel<Installment> implements CustomerViewModel {
-    private final CustomerRepo customerRepo;
+	public static final int RANGE = 100;
+	private final CustomerRepo customerRepo;
     private final LoanRepo loanRepo;
     private final InstallmentRepo installmentRepo;
 
@@ -69,6 +75,28 @@ public class DashboardViewModel extends BaseViewModel<Installment> implements Cu
 	    //   setUpcomingInstallmentsTransformed(getTransformedUpcomingData());
     }
 
+	//There's a copy of this code in adapter too,
+	private List<Installment> filterResults(List<Installment> installments) {
+
+		if (installments == null) return new ArrayList<>();
+		return Stream.of(installments)
+				.filter(installment -> dateUtils.isThisDateWithinRange(
+						installment.getInstallmentDate(), RANGE))
+				.collect(Collectors.toList());
+	}
+
+	private boolean filterResult(Installment installment) {
+
+		if (installments == null) return false;
+		return dateUtils.isThisDateWithinRange(
+				installment.getInstallmentDate(), RANGE);
+
+	}
+
+
+
+
+
 	//TODO make it MutableLiveData
 	public LiveData<List<Installment>> getUpcomingInstallments() {
 		if (upcomingInstallments.getValue() == null || upcomingInstallments.getValue().isEmpty()) {
@@ -78,6 +106,37 @@ public class DashboardViewModel extends BaseViewModel<Installment> implements Cu
 		}
 		return upcomingInstallments;
 	}
+
+	//TODO doesnt work
+	public LiveData<List<Installment>> getFilteredResult() {
+		LiveData<List<Installment>> installmentsLive = getUpcomingInstallments();
+
+		// TODO Test this, if works remove below code, this part has performance issues
+		final LiveData<List<Installment>> finalInstallmentsLive = installmentsLive;
+		installmentsLive = Transformations.switchMap(installmentsLive,
+				(List<Installment> inputInstallment) -> {
+					MediatorLiveData<List<Installment>> installmentMediatorLiveData =
+							new MediatorLiveData<>();
+					final List<Installment> install = new ArrayList<>();
+
+					installmentMediatorLiveData.postValue(install);
+					return installmentMediatorLiveData;
+				});
+		return installmentsLive;
+		/*loansLive = Transformations.map(loansLive, new Function<List<Customer>, List<Customer>>
+		() {
+
+			@Override
+			public List<Customer> apply(final List<Customer> inputStates) {
+               *//* for (Customer state : inputStates) {
+                    state.setLoans(dao.getLoans(state.getCustomerId()));
+                }*//*
+				return inputStates;
+			}
+		});
+		return loansLive;*/
+	}
+
 
 	@Override
 	protected LiveData<Resource<List<Installment>>> getItemList() {
@@ -135,7 +194,8 @@ public class DashboardViewModel extends BaseViewModel<Installment> implements Cu
 */
     @Override
     protected LiveData<Resource<List<Installment>>> updateItemLiveData() {
-        return null;
+	    //TODO implement this
+	    return null;
     }
 
     public void setUpcomingInstallments(final MutableLiveData<List<Installment>> upcomingInstallments) {
