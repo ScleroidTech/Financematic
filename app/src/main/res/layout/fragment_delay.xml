@@ -40,7 +40,7 @@
                         android:layout_height="wrap_content"
 
                         android:singleLine="true"
-                        android:text="Expenses"
+                        android:text="Date Delay"
                         android:textAlignment="center"
                         android:textColor="@color/white"
                         android:textSize="20sp" />
@@ -64,13 +64,14 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight=".5"
 
-                        android:text="Enter Amount"
+                        android:text="Pay Amount"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="#409bbf"
                         android:textSize="20sp" />
 
                     <EditText
-
+                        android:paddingLeft="10dp"
+                        android:textSize="18sp"
                         android:id="@+id/rxEnterAmount"
                         android:layout_width="0dp"
                         android:layout_height="45dp"
@@ -99,25 +100,29 @@
                     android:weightSum="1">
 
                     <TextView
+
                         android:id="@+id/exp_date11"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_weight=".5"
 
-                        android:text="Date"
+                        android:text="Delay Date"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="#409bbf"
                         android:textSize="20sp" />
 
 
-                    <EditText
+                    <TextView
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
                         android:id="@+id/exp_date"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="45dp"
                         android:layout_marginLeft="10dp"
                         android:layout_weight=".5"
                         android:background="@drawable/shadow"
+                        android:textSize="18sp"
                         android:drawableRight="@drawable/ic_calendarclocktime"
                         android:drawableTint="@color/colorPrimaryDark"
                         android:maxLines="1"
@@ -145,30 +150,25 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight=".5"
 
-                        android:text="Category"
+                        android:text="Reason"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="#409bbf"
                         android:textSize="20sp" />
 
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".5"
-                        android:background="@drawable/shadow5"
+                    <EditText
                         android:paddingLeft="10dp"
-                        android:paddingTop="10dp">
-
-                        <Spinner
-                            android:id="@+id/spinnerexp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="right"
-                            android:textColor="#409bbf"
-
-                            ></Spinner>
-
-                    </LinearLayout>
+                        android:id="@+id/del_desp"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight=".5"
+                        android:background="@drawable/shadow"
+                        android:textSize="18sp"
+                        android:maxLines="2"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
+                        android:textColor="#409bbf" />
 
 
                 </LinearLayout>
