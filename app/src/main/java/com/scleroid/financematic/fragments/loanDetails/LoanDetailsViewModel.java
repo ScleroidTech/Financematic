@@ -14,14 +14,14 @@ import java.util.List;
  * @since 4/9/18
  */
 public class LoanDetailsViewModel extends BaseViewModel implements LoanViewModel {
-    //TODO add  data in it
-    @Override
-    protected LiveData<List> updateItemLiveData() {
-        return null;
-    }
+	//TODO add  data in it
+	@Override
+	protected LiveData<List> updateItemLiveData() {
+		return null;
+	}
 
-    @Override
-    protected LiveData<List> getItemList() {
-        return null;
-    }
+	@Override
+	protected LiveData<List> getItemList() {
+		return null;
+	}
 }

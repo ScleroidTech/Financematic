@@ -13,10 +13,10 @@ import io.reactivex.Completable;
  */
 public class RemoteCustomerLab implements RemoteDataSource<Customer> {
 
-    @Override
-    public Completable sync(final Customer customer) {
+	@Override
+	public Completable sync(final Customer customer) {
       /*  return Completable.fromAction(()->
         JobManagerFactory.getJobManager().addJobInBackground(new SyncCustomerJob(customer)));*/
-        return null;
-    }
+		return null;
+	}
 }

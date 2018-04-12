@@ -1,5 +1,6 @@
 package com.scleroid.financematic.fragments.people;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,7 +13,6 @@ import android.widget.TextView;
 
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.base.BaseFragment;
-import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.RecyclerTouchListener;
@@ -39,9 +39,10 @@ public class PeopleFragment extends BaseFragment {
 	@BindView(R.id.people_recycler_view)
 	RecyclerView peopleRecyclerView;
 	Unbinder unbinder;
-	private List<Customer> peopleModelList = new ArrayList<>();
+	private List<Customer> customers = new ArrayList<>();
 
 	private PeopleAdapter mAdapter;
+	private PeopleViewModel peopleViewModel;
 
 	public PeopleFragment() {
 		// Required empty public constructor
@@ -52,14 +53,6 @@ public class PeopleFragment extends BaseFragment {
 		Bundle args = new Bundle();
 		fragment.setArguments(args);
 		return fragment;
-	}
-
-	/**
-	 * @return layout resource id
-	 */
-	@Override
-	public int getLayoutId() {
-		return R.layout.fragment_people;
 	}
 
 	@Override
@@ -76,7 +69,7 @@ public class PeopleFragment extends BaseFragment {
         (), getFragmentManager()));*/
 
 //peopleRecyclerView
-		mAdapter = new PeopleAdapter(this.peopleModelList);
+		mAdapter = new PeopleAdapter(this.customers);
 
 		peopleRecyclerView.setHasFixedSize(true);
 		// vertical RecyclerView
@@ -101,7 +94,7 @@ public class PeopleFragment extends BaseFragment {
 						new RecyclerTouchListener.ClickListener() {
 							@Override
 							public void onClick(View view, int position) {
-								Customer loan = peopleModelList.get(position);
+								Customer loan = customers.get(position);
 								/*Toast.makeText(getActivity(),
 										loan.getReceivedAmt() + " is selected!",
 										Toast.LENGTH_SHORT).show();*/
@@ -145,6 +138,22 @@ public class PeopleFragment extends BaseFragment {
 
 	}
 
+	/**
+	 * @return layout resource id
+	 */
+	@Override
+	public int getLayoutId() {
+		return R.layout.fragment_people;
+	}
+
+	@Override
+	protected void subscribeToLiveData() {
+		peopleViewModel.getItemList().observe(this,
+				items -> {
+					mAdapter.setCustomerList(items);
+					customers = items;
+				});
+	}
 
 	/**
 	 * Override for set view model
@@ -152,10 +161,10 @@ public class PeopleFragment extends BaseFragment {
 	 * @return view model instance
 	 */
 	@Override
-	public BaseViewModel getViewModel() {
-		return null;
+	public PeopleViewModel getViewModel() {
+		peopleViewModel =
+				ViewModelProviders.of(this, viewModelFactory).get(PeopleViewModel.class);
+		return peopleViewModel;
 	}
-
-
 
 }

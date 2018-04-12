@@ -1,10 +1,8 @@
 package com.scleroid.financematic.fragments.dashboard;
 
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -56,8 +54,7 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 	Unbinder unbinder;
 	@Inject
 	ActivityUtils activityUtils;
-	@Inject
-	ViewModelProvider.Factory viewModelFactory;
+
 	@Inject
 	LocalCustomerLab localCustomerLab;
 	@Inject
@@ -77,12 +74,9 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 		return fragment;
 	}
 
-	/**
-	 * @return layout resource id
-	 */
 	@Override
-	public int getLayoutId() {
-		return R.layout.dashboard;
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 	}
 
 	@Override
@@ -112,9 +106,12 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 		return rootView;
 	}
 
+	/**
+	 * @return layout resource id
+	 */
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	public int getLayoutId() {
+		return R.layout.dashboard;
 	}
 
 	/**
@@ -182,25 +179,9 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 		// (recyclerTouchListener);
 	}
 
-	/**
-	 * Called when the fragment's activity has been created and this fragment's view hierarchy
-	 * instantiated.  It can be used to do final initialization once these pieces are in place,
-	 * such
-	 * as retrieving views or restoring state.  It is also useful for fragments that use {@link
-	 * #setRetainInstance(boolean)} to retain their instance, as this callback tells the fragment
-	 * when it is fully associated with the new activity instance.  This is called after {@link
-	 * #onCreateView} and before {@link #onViewStateRestored(Bundle)}.
-	 *
-	 * @param savedInstanceState If the fragment is being re-created from a previous saved state,
-	 *                           this is the state.
-	 */
-	@Override
-	public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		subscribeToLiveData();
-	}
 
-	private void subscribeToLiveData() {
+	@Override
+	protected void subscribeToLiveData() {
 		dashBoardViewModel.getUpcomingInstallments().observe(this,
 				items -> {
 					mAdapter.setInstallmentList(items);

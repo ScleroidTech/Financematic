@@ -28,118 +28,132 @@ import java.util.List;
  */
 
 public class PassbookFragment extends BaseFragment {
-    private List<Passbook> passbookList = new ArrayList<>();
-    private RecyclerView recyclerView;
-    private PassbookAdapter mAdapter;
+	private List<Passbook> passbookList = new ArrayList<>();
+	private RecyclerView recyclerView;
+	private PassbookAdapter mAdapter;
 
-    public PassbookFragment() {
-        // Required empty public constructor
-    }
+	public PassbookFragment() {
+		// Required empty public constructor
+	}
 
-    public static PassbookFragment newInstance(String param1, String param2) {
-        PassbookFragment fragment = new PassbookFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
+	public static PassbookFragment newInstance(String param1, String param2) {
+		PassbookFragment fragment = new PassbookFragment();
+		Bundle args = new Bundle();
+		fragment.setArguments(args);
+		return fragment;
+	}
 
-    /**
-     * @return layout resource id
-     */
-    @Override
-    public int getLayoutId() {
-        return R.layout.passbook;
-    }
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+	}
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+	                         Bundle savedInstanceState) {
+		super.onCreateView(inflater, container, savedInstanceState);
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
+		// Inflate the layout for this fragment
+		View rootView = getRootView();
+		recyclerView = rootView.findViewById(R.id.passbook_my_recycler);
 
-        // Inflate the layout for this fragment
-        View rootView = getRootView();
-        recyclerView = rootView.findViewById(R.id.passbook_my_recycler);
+		mAdapter = new PassbookAdapter(passbookList);
 
-        mAdapter = new PassbookAdapter(passbookList);
+		recyclerView.setHasFixedSize(true);
 
-        recyclerView.setHasFixedSize(true);
+		/* recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this.getContext()));*/
 
-        /* recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this.getContext()));*/
+		// vertical RecyclerView
+		// keep movie_list_row.xml width to `match_parent`
+		RecyclerView.LayoutManager mLayoutManager =
+				new LinearLayoutManager(getActivity().getApplicationContext());
 
-        // vertical RecyclerView
-        // keep movie_list_row.xml width to `match_parent`
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+		// horizontal RecyclerView
+		// keep movie_list_row.xml width to `wrap_content`
+		// RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager
+		// (getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
 
-        // horizontal RecyclerView
-        // keep movie_list_row.xml width to `wrap_content`
-        // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
-
-        recyclerView.setLayoutManager(mLayoutManager);
+		recyclerView.setLayoutManager(mLayoutManager);
 
 
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+		recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        recyclerView.setAdapter(mAdapter);
+		recyclerView.setAdapter(mAdapter);
 
-        // row click listener
-        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity().getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                Passbook passbook = passbookList.get(position);
-                Toast.makeText(getActivity().getApplicationContext(), passbook.getPassbook_received_money() + " is selected!", Toast.LENGTH_SHORT).show();
-            }
+		// row click listener
+		recyclerView.addOnItemTouchListener(
+				new RecyclerTouchListener(getActivity().getApplicationContext(), recyclerView,
+						new RecyclerTouchListener.ClickListener() {
+							@Override
+							public void onClick(View view, int position) {
+								Passbook passbook = passbookList.get(position);
+								Toast.makeText(getActivity().getApplicationContext(),
+										passbook.getPassbook_received_money() + " is selected!",
+										Toast.LENGTH_SHORT).show();
+							}
 
-            @Override
-            public void onLongClick(View view, int position) {
+							@Override
+							public void onLongClick(View view, int position) {
 
-            }
-        }));
+							}
+						}));
 
-        prepareLoanData();
+		prepareLoanData();
 
-        return rootView;
-
-
-    }
-
-    /**
-     * Override for set view model
-     *
-     * @return view model instance
-     */
-    @Override
-    public BaseViewModel getViewModel() {
-        return null;
-    }
-
-    private void prepareLoanData() {
-        Passbook passbook = new Passbook("14/6/2018 ", "Person Name 1", "50,000", "");
-        passbookList.add(passbook);
-        passbook = new Passbook("12/6/2018 ", "Person Name 2", "", "3000");
-        passbookList.add(passbook);
-        passbook = new Passbook("12/6/2018 ", "Person Name 3", "", "4000");
-        passbookList.add(passbook);
-        passbook = new Passbook("12/6/2018 ", "Person Name 1", "1200", "");
-        passbookList.add(passbook);
-        passbook = new Passbook("1/2/2018 ", "Person Name 2", "4000", "");
-        passbookList.add(passbook);
-
-        passbook = new Passbook("10/1/2018 ", "Person Name 3", "", "2000");
-        passbookList.add(passbook);
-
-        passbook = new Passbook("12/1/2018 ", "Person Name 1", "4000", "");
-        passbookList.add(passbook);
+		return rootView;
 
 
-        // notify adapter about data set changes
-        // so that it will render the list with new data
-        mAdapter.notifyDataSetChanged();
-    }
+	}
+
+	/**
+	 * @return layout resource id
+	 */
+	@Override
+	public int getLayoutId() {
+		return R.layout.passbook;
+	}
+
+	/**
+	 * Override so you can observe your viewModel
+	 */
+	@Override
+	protected void subscribeToLiveData() {
+
+	}
+
+	/**
+	 * Override for set view model
+	 *
+	 * @return view model instance
+	 */
+	@Override
+	public BaseViewModel getViewModel() {
+		return null;
+	}
+
+	private void prepareLoanData() {
+		Passbook passbook = new Passbook("14/6/2018 ", "Person Name 1", "50,000", "");
+		passbookList.add(passbook);
+		passbook = new Passbook("12/6/2018 ", "Person Name 2", "", "3000");
+		passbookList.add(passbook);
+		passbook = new Passbook("12/6/2018 ", "Person Name 3", "", "4000");
+		passbookList.add(passbook);
+		passbook = new Passbook("12/6/2018 ", "Person Name 1", "1200", "");
+		passbookList.add(passbook);
+		passbook = new Passbook("1/2/2018 ", "Person Name 2", "4000", "");
+		passbookList.add(passbook);
+
+		passbook = new Passbook("10/1/2018 ", "Person Name 3", "", "2000");
+		passbookList.add(passbook);
+
+		passbook = new Passbook("12/1/2018 ", "Person Name 1", "4000", "");
+		passbookList.add(passbook);
+
+
+		// notify adapter about data set changes
+		// so that it will render the list with new data
+		mAdapter.notifyDataSetChanged();
+	}
 
 
 }

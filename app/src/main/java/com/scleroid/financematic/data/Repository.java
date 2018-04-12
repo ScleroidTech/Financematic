@@ -12,9 +12,9 @@ import com.scleroid.financematic.data.local.lab.LocalLoanLab;
  */
 public interface Repository {
 
-    LocalCustomerLab customerData();
+	LocalCustomerLab customerData();
 
-    LocalExpenseLab expenseData();
+	LocalExpenseLab expenseData();
 
-    LocalLoanLab loanData();
+	LocalLoanLab loanData();
 }

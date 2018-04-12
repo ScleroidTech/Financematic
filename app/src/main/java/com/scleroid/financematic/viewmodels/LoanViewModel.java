@@ -7,5 +7,4 @@ package com.scleroid.financematic.viewmodels;
 public interface LoanViewModel {
 
 
-
 }

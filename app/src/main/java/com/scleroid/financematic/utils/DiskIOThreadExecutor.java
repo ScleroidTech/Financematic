@@ -10,14 +10,14 @@ import java.util.concurrent.Executors;
  */
 public class DiskIOThreadExecutor implements Executor {
 
-    private final Executor mDiskIO;
+	private final Executor mDiskIO;
 
-    public DiskIOThreadExecutor() {
-        mDiskIO = Executors.newSingleThreadExecutor();
-    }
+	public DiskIOThreadExecutor() {
+		mDiskIO = Executors.newSingleThreadExecutor();
+	}
 
-    @Override
-    public void execute(@NonNull Runnable command) {
-        mDiskIO.execute(command);
-    }
+	@Override
+	public void execute(@NonNull Runnable command) {
+		mDiskIO.execute(command);
+	}
 }

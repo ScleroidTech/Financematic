@@ -24,41 +24,41 @@ import dagger.android.ContributesAndroidInjector;
  */
 @Module
 public abstract class FragmentBuildersModule {
-    @ContributesAndroidInjector
-    abstract DashboardFragment contributeDashboardFragment();
+	@ContributesAndroidInjector
+	abstract DashboardFragment contributeDashboardFragment();
 
-    @ContributesAndroidInjector
-    abstract CustomerFragment contributeCustomerFragment();
+	@ContributesAndroidInjector
+	abstract CustomerFragment contributeCustomerFragment();
 
-    @ContributesAndroidInjector
-    abstract ExpenseFragment contributeExpenseFragment();
+	@ContributesAndroidInjector
+	abstract ExpenseFragment contributeExpenseFragment();
 
-    @ContributesAndroidInjector
-    abstract LoanDetailsFragment contributeLoanDetailsFragment();
+	@ContributesAndroidInjector
+	abstract LoanDetailsFragment contributeLoanDetailsFragment();
 
-    @ContributesAndroidInjector
-    abstract PassbookFragment contributePassbookFragment();
+	@ContributesAndroidInjector
+	abstract PassbookFragment contributePassbookFragment();
 
-    @ContributesAndroidInjector
-    abstract PeopleFragment contributePeopleFragment();
+	@ContributesAndroidInjector
+	abstract PeopleFragment contributePeopleFragment();
 
-    @ContributesAndroidInjector
-    abstract RegisterCustomerFragment contributeRegisterCustomerFragment();
+	@ContributesAndroidInjector
+	abstract RegisterCustomerFragment contributeRegisterCustomerFragment();
 
-    @ContributesAndroidInjector
-    abstract RegisterMoneyFragment contributeRegisterMoneyFragment();
+	@ContributesAndroidInjector
+	abstract RegisterMoneyFragment contributeRegisterMoneyFragment();
 
-    @ContributesAndroidInjector
-    abstract RegisterReceivedFragment contributeRegisterReceivedFragment();
+	@ContributesAndroidInjector
+	abstract RegisterReceivedFragment contributeRegisterReceivedFragment();
 
-    @ContributesAndroidInjector
-    abstract ReminderFragment contributeReminderFragment();
+	@ContributesAndroidInjector
+	abstract ReminderFragment contributeReminderFragment();
 
-    @ContributesAndroidInjector
-    abstract ReportFragment contributeReportFragment();
+	@ContributesAndroidInjector
+	abstract ReportFragment contributeReportFragment();
 
-    @ContributesAndroidInjector
-    abstract Notification contributeNotification();
+	@ContributesAndroidInjector
+	abstract Notification contributeNotification();
 
 
 }

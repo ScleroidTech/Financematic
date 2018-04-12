@@ -16,6 +16,7 @@
 
 package com.scleroid.financematic.base;
 
+import android.arch.lifecycle.ViewModelProvider;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
@@ -25,6 +26,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -36,127 +39,154 @@ import dagger.android.support.AndroidSupportInjection;
 
 public abstract class BaseFragment<V extends BaseViewModel> extends Fragment {
 
-    private BaseActivity mActivity;
-    private V mViewModel;
-    private Unbinder unbinder;
-    private View rootView;
+	@Inject
+	protected ViewModelProvider.Factory viewModelFactory;
+	private BaseActivity mActivity;
+	private V mViewModel;
+	private Unbinder unbinder;
+	private View rootView;
 
+	@Override
+	public void onAttach(Context context) {
+		super.onAttach(context);
+		if (context instanceof BaseActivity) {
+			BaseActivity activity = (BaseActivity) context;
+			this.mActivity = activity;
+			activity.onFragmentAttached();
+		}
+	}
 
-    /**
-     * @return layout resource id
-     */
-    public abstract
-    @LayoutRes
-    int getLayoutId();
+	@Override
+	public void onCreate(@Nullable Bundle savedInstanceState) {
+		performDependencyInjection();
+		super.onCreate(savedInstanceState);
+		mViewModel = getViewModel();
+		setHasOptionsMenu(false);
+	}
 
-    /**
-     * Called to have the fragment instantiate its user interface view. This is optional, and
-     * non-graphical fragments can return null (which is the default implementation).  This will be
-     * called between {@link #onCreate(Bundle)} and {@link #onActivityCreated(Bundle)}.
-     * <p>
-     * <p>If you return a View from here, you will later be called in {@link #onDestroyView} when
-     * the view is being released.
-     *
-     * @param inflater           The LayoutInflater object that can be used to inflate any views in
-     *                           the fragment,
-     * @param container          If non-null, this is the parent view that the fragment's UI should
-     *                           be attached to.  The fragment should not add the view itself, but
-     *                           this can be used to generate the LayoutParams of the view.
-     * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous
-     *                           saved state as given here.
-     * @return Return the View for the fragment's UI, or null.
-     */
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
-        rootView = inflater.inflate(getLayoutId(), container, false);
-        unbinder = ButterKnife.bind(this, getRootView());
+	/**
+	 * Called to have the fragment instantiate its user interface view. This is optional, and
+	 * non-graphical fragments can return null (which is the default implementation).  This will be
+	 * called between {@link #onCreate(Bundle)} and {@link #onActivityCreated(Bundle)}.
+	 * <p>
+	 * <p>If you return a View from here, you will later be called in {@link #onDestroyView} when
+	 * the view is being released.
+	 *
+	 * @param inflater           The LayoutInflater object that can be used to inflate any views in
+	 *                           the fragment,
+	 * @param container          If non-null, this is the parent view that the fragment's UI should
+	 *                           be attached to.  The fragment should not add the view itself, but
+	 *                           this can be used to generate the LayoutParams of the view.
+	 * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous
+	 *                           saved state as given here.
+	 * @return Return the View for the fragment's UI, or null.
+	 */
+	@Nullable
+	@Override
+	public View onCreateView(@NonNull final LayoutInflater inflater,
+	                         @Nullable final ViewGroup container,
+	                         @Nullable final Bundle savedInstanceState) {
+		rootView = inflater.inflate(getLayoutId(), container, false);
+		unbinder = ButterKnife.bind(this, getRootView());
 
-        return rootView;
-    }
+		return rootView;
+	}
 
+	/**
+	 * @return layout resource id
+	 */
+	public abstract
+	@LayoutRes
+	int getLayoutId();
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof BaseActivity) {
-            BaseActivity activity = (BaseActivity) context;
-            this.mActivity = activity;
-            activity.onFragmentAttached();
-        }
-    }
+	/**
+	 * @return Root View
+	 */
+	public View getRootView() {
+		return rootView;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        performDependencyInjection();
-        super.onCreate(savedInstanceState);
-        mViewModel = getViewModel();
-        setHasOptionsMenu(false);
-    }
+	}
 
-    /**
-     * @return Root View
-     */
-    public View getRootView() {
-        return rootView;
+	@Override
+	public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
 
-    }
+	}
 
-    /**
-     * Override for set view model
-     *
-     * @return view model instance
-     */
-    public abstract V getViewModel();
+	/**
+	 * Called when the fragment's activity has been created and this fragment's view hierarchy
+	 * instantiated.  It can be used to do final initialization once these pieces are in place,
+	 * such
+	 * as retrieving views or restoring state.  It is also useful for fragments that use {@link
+	 * #setRetainInstance(boolean)} to retain their instance, as this callback tells the fragment
+	 * when it is fully associated with the new activity instance.  This is called after {@link
+	 * #onCreateView} and before {@link #onViewStateRestored(Bundle)}.
+	 *
+	 * @param savedInstanceState If the fragment is being re-created from a previous saved state,
+	 *                           this is the state.
+	 */
+	@Override
+	public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		subscribeToLiveData();
+	}
 
-    @Override
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+	/**
+	 * Called when the view previously created by {@link #onCreateView} has been detached from the
+	 * fragment.  The next time the fragment needs to be displayed, a new view will be created.
+	 * This
+	 * is called after {@link #onStop()} and before {@link #onDestroy()}.  It is called
+	 * <em>regardless</em> of whether {@link #onCreateView} returned a non-null view. Internally it
+	 * is called after the view's state has been saved but before it has been removed from its
+	 * parent.
+	 */
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		unbinder.unbind();
+	}
 
-    }
+	@Override
+	public void onDetach() {
+		mActivity = null;
+		super.onDetach();
+	}
 
-    @Override
-    public void onDetach() {
-        mActivity = null;
-        super.onDetach();
-    }
+	/**
+	 * Override so you can observe your viewModel
+	 */
+	protected abstract void subscribeToLiveData();
 
-    private void performDependencyInjection() {
-        AndroidSupportInjection.inject(this);
-    }
+	/**
+	 * Override for set view model
+	 *
+	 * @return view model instance
+	 */
+	public abstract V getViewModel();
 
-    public BaseActivity getBaseActivity() {
-        return mActivity;
-    }
+	private void performDependencyInjection() {
+		AndroidSupportInjection.inject(this);
+	}
 
-    public void hideKeyboard() {
-        if (mActivity != null) {
-            mActivity.hideKeyboard();
-        }
-    }
+	public BaseActivity getBaseActivity() {
+		return mActivity;
+	}
 
-    public boolean isNetworkConnected() {
-        return mActivity != null && mActivity.isNetworkConnected();
-    }
+	public void hideKeyboard() {
+		if (mActivity != null) {
+			mActivity.hideKeyboard();
+		}
+	}
 
-    public interface Callback {
+	public boolean isNetworkConnected() {
+		return mActivity != null && mActivity.isNetworkConnected();
+	}
 
-        void onFragmentAttached();
+	public interface Callback {
 
-        void onFragmentDetached(String tag);
-    }
+		void onFragmentAttached();
 
-    /**
-     * Called when the view previously created by {@link #onCreateView} has been detached from the
-     * fragment.  The next time the fragment needs to be displayed, a new view will be created. This
-     * is called after {@link #onStop()} and before {@link #onDestroy()}.  It is called
-     * <em>regardless</em> of whether {@link #onCreateView} returned a non-null view.  Internally it
-     * is called after the view's state has been saved but before it has been removed from its
-     * parent.
-     */
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
+		void onFragmentDetached(String tag);
+	}
+
 }

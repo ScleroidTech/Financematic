@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Drop Shadow Stack -->
-    <item
-        android:height="30dp">
+    <item android:height="30dp">
 
         <shape>
             <padding
@@ -78,9 +77,6 @@
             <corners android:radius="10dp" />
         </shape>
     </item>
-
-
-
 
 
 </layer-list>

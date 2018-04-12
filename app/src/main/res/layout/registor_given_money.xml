@@ -13,8 +13,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="55dp"
-            android:paddingBottom="75dp"
-            android:background="#fff">
+            android:background="#fff"
+            android:paddingBottom="75dp">
 
 
             <!-- Registration Form -->
@@ -59,30 +59,30 @@
 
                     <TextView
 
-                        android:textColor="#409bbf"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:focusableInTouchMode="true"
                         android:layout_weight=".7"
+                        android:focusableInTouchMode="true"
                         android:text="Loan Amount"
                         android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="#409bbf"
                         android:textSize="18sp" />
 
                     <EditText
-                        android:textColor="#409bbf"
                         android:id="@+id/txloan_amout"
                         android:layout_width="0dp"
-                        android:maxLines="1"
-
-
-       android:layout_height="38dp"
+                        android:layout_height="38dp"
                         android:layout_weight=".7"
 
 
                         android:background="@drawable/shadow"
+                        android:maxLines="1"
+
+
                         android:paddingBottom="6dp"
-                        android:paddingTop="6dp" />
+                        android:paddingTop="6dp"
+                        android:textColor="#409bbf" />
 
                 </LinearLayout>
 
@@ -96,29 +96,29 @@
 
                     <TextView
 
-                        android:textColor="#409bbf"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-
                         android:layout_weight=".7"
+
                         android:text="Start Date"
                         android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="#409bbf"
                         android:textSize="17sp" />
 
                     <EditText
-                        android:textColor="#409bbf"
                         android:id="@+id/txStartDate"
                         android:layout_width="0dp"
                         android:layout_height="38dp"
                         android:layout_weight=".7"
-
                         android:background="@drawable/shadow"
+
                         android:drawableEnd="@drawable/calender_custom"
                         android:drawableRight="@drawable/calender_custom"
                         android:paddingBottom="6dp"
                         android:paddingRight="15dp"
-                        android:paddingTop="6dp" />
+                        android:paddingTop="6dp"
+                        android:textColor="#409bbf" />
 
                 </LinearLayout>
 
@@ -132,29 +132,29 @@
 
                     <TextView
 
-                        android:textColor="#409bbf"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-
                         android:layout_weight=".7"
+
                         android:text="End Date"
                         android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="#409bbf"
                         android:textSize="17sp" />
 
                     <EditText
-                        android:textColor="#409bbf"
                         android:id="@+id/txEndDate"
                         android:layout_width="0dp"
                         android:layout_height="38dp"
                         android:layout_weight=".7"
-
                         android:background="@drawable/shadow"
+
                         android:drawableEnd="@drawable/calender_custom"
                         android:drawableRight="@drawable/calender_custom"
                         android:paddingBottom="6dp"
                         android:paddingRight="15dp"
-                        android:paddingTop="6dp" />
+                        android:paddingTop="6dp"
+                        android:textColor="#409bbf" />
 
                 </LinearLayout>
 
@@ -166,19 +166,18 @@
                     android:paddingRight="10dp">
 
                     <TextView
-                        android:textColor="#409bbf"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="8dp"
-
                         android:layout_weight=".7"
+
                         android:text="Rate of Interest"
                         android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="#409bbf"
                         android:textSize="17sp" />
 
                     <EditText
-                        android:textColor="#409bbf"
                         android:id="@+id/txrateInterest"
                         android:layout_width="0dp"
                         android:layout_height="38dp"
@@ -186,7 +185,8 @@
                         android:layout_weight=".7"
                         android:background="@drawable/shadow"
                         android:paddingBottom="6dp"
-                        android:paddingTop="6dp" />
+                        android:paddingTop="6dp"
+                        android:textColor="#409bbf" />
 
                 </LinearLayout>
 
@@ -200,25 +200,25 @@
                     android:paddingRight="10dp">
 
                     <TextView
-                        android:textColor="#409bbf"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-
                         android:layout_weight=".7"
+
                         android:text="Interest Amount"
                         android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="#409bbf"
                         android:textSize="17sp" />
 
                     <EditText
-                        android:textColor="#409bbf"
                         android:id="@+id/txInterestAmount"
                         android:layout_width="0dp"
                         android:layout_height="38dp"
                         android:layout_weight=".7"
                         android:background="@drawable/shadow"
                         android:paddingBottom="6dp"
-                        android:paddingTop="6dp" />
+                        android:paddingTop="6dp"
+                        android:textColor="#409bbf" />
 
                 </LinearLayout>
 
@@ -231,25 +231,25 @@
                     android:paddingRight="10dp">
 
                     <TextView
-                        android:textColor="#409bbf"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-
                         android:layout_weight=".7"
+
                         android:text="No of Installment"
                         android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="#409bbf"
                         android:textSize="17sp" />
 
                     <EditText
-                        android:textColor="#409bbf"
                         android:id="@+id/txNoofInstallment"
                         android:layout_width="0dp"
                         android:layout_height="38dp"
                         android:layout_weight=".7"
                         android:background="@drawable/shadow"
                         android:paddingBottom="6dp"
-                        android:paddingTop="6dp" />
+                        android:paddingTop="6dp"
+                        android:textColor="#409bbf" />
 
                 </LinearLayout>
 
@@ -262,40 +262,43 @@
                     android:paddingRight="10dp">
 
                     <TextView
-                        android:textColor="#409bbf"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
                         android:layout_weight=".7"
                         android:text="Installment duration "
                         android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="#409bbf"
                         android:textSize="17sp" />
 
                     <LinearLayout
-                        android:layout_weight=".85"                     android:layout_width="0dp"
+                        android:layout_width="0dp"
                         android:layout_height="45dp"
-                        android:gravity="right" android:background="@drawable/shadow7"
-                        android:paddingTop="7dp"
+                        android:layout_weight=".85"
+                        android:background="@drawable/shadow7"
+                        android:gravity="right"
                         android:paddingBottom="5dp"
-                        >
+                        android:paddingTop="7dp">
+
                         <EditText
-                            android:textColor="#409bbf"     android:id="@+id/txInstallmentduration"
+                            android:id="@+id/txInstallmentduration"
                             android:layout_width="45dp"
                             android:layout_height="33dp"
+                            android:layout_gravity="left"
 
-                            android:layout_gravity="left" android:background="@drawable/shadow"
-                            />
+                            android:background="@drawable/shadow"
+                            android:textColor="#409bbf" />
 
 
                         <Spinner
                             android:id="@+id/spinnertx"
-                            android:textColor="#409bbf"    android:layout_width="wrap_content"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="left"
-
                             android:paddingTop="2dp"
-                            ></Spinner>
+
+                            android:textColor="#409bbf"></Spinner>
 
                     </LinearLayout>
 
@@ -311,25 +314,26 @@
                     android:paddingRight="10dp">
 
                     <TextView
-                        android:textColor="#409bbf"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-
                         android:layout_weight=".7"
+
                         android:text="Total Repay Amount"
                         android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="#409bbf"
                         android:textSize="17sp" />
 
                     <EditText
-                        android:textColor="#409bbf"
                         android:id="@+id/txTotalLoanAmount"
                         android:layout_width="0dp"
                         android:layout_height="38dp"
+                        android:layout_marginBottom="10dp"
                         android:layout_weight=".7"
-                        android:layout_marginBottom="10dp" android:background="@drawable/shadow"
+                        android:background="@drawable/shadow"
                         android:paddingBottom="6dp"
-                        android:paddingTop="6dp" />
+                        android:paddingTop="6dp"
+                        android:textColor="#409bbf" />
 
                 </LinearLayout>
 
@@ -343,9 +347,9 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="1dip"
                     android:background="#0fa8bc"
-                    android:textSize="16sp"
                     android:text="Submit"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/displaytx"

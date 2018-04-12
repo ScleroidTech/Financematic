@@ -1,8 +1,7 @@
 package com.scleroid.financematic.di;
 
 /**
- * Copyright (C) 3/9/18
- * Author ganesh
+ * Copyright (C) 3/9/18 Author ganesh
  */
 
 import android.app.Application;
@@ -12,7 +11,8 @@ import dagger.Binds;
 import dagger.Module;
 
 /**
- * This is a Dagger module. We use this to bind our Application class as a Context in the AppComponent
+ * This is a Dagger module. We use this to bind our Application class as a Context in the
+ * AppComponent
  * By using Dagger Android we do not need to pass our Application instance to any module,
  * we simply need to expose our Application as Context.
  * One of the advantages of Dagger.Android is that your
@@ -22,7 +22,7 @@ import dagger.Module;
  */
 @Module
 public abstract class ApplicationModule {
-    //expose Application as an injectable context
-    @Binds
-    abstract Context bindContext(Application application);
+	//expose Application as an injectable context
+	@Binds
+	abstract Context bindContext(Application application);
 }

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_focused="false" android:state_pressed="true"
-        android:drawable="@drawable/ic_date_range_black_24dp"
-        android:gravity="right"
-        android:height="28dp">
+    <item android:height="28dp" android:drawable="@drawable/ic_date_range_black_24dp" android:gravity="right" android:state_focused="false" android:state_pressed="true">
         <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
 
             <solid android:color="@android:color/white" />
@@ -15,8 +12,7 @@
 
     </item>
 
-    <item
-        >
+    <item>
         <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
 
             <solid android:color="@android:color/white" />
@@ -27,7 +23,6 @@
         </shape>
 
     </item>
-
 
 
 </selector>

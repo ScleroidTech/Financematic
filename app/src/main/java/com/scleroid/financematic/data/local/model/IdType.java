@@ -7,5 +7,5 @@ package com.scleroid.financematic.data.local.model;
  * @since 4/6/18
  */
 public enum IdType {
-    //TODO add enums for int types
+	//TODO add enums for int types
 }

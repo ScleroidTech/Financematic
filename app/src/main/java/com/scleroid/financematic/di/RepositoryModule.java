@@ -34,16 +34,16 @@ import timber.log.Timber;
 
 /**
  * Copyright (C)
+ *
+ * @author ganesh This is used by Dagger to inject the required arguments into the {@link }.
  * @since 3/10/18
- * @author ganesh
- * This is used by Dagger to inject the required arguments into the {@link }.
  */
 @Module(includes = ViewModelModule.class)
 abstract public class RepositoryModule {
 
-    private static final int THREAD_COUNT = 3;
+	private static final int THREAD_COUNT = 3;
 
-    //TODO When DataBase Added
+	//TODO When DataBase Added
   /*  @Singleton
     @Binds
     @Local
@@ -55,13 +55,13 @@ abstract public class RepositoryModule {
     abstract LocalDataSource provideTasksRemoteDataSource(FakeTasksRemoteDataSource dataSource);
 
 */
-    @Singleton
-    @Provides
-    static AppDatabase provideDb(Application context) {
+	@Singleton
+	@Provides
+	static AppDatabase provideDb(Application context) {
 
-	    AppDatabase appDatabase =
-			    Room.databaseBuilder(context, AppDatabase.class, "financeMatic.db")
-					    /*TODO
+		AppDatabase appDatabase =
+				Room.databaseBuilder(context, AppDatabase.class, "financeMatic.db")
+						/*TODO
 						.addCallback(new RoomDatabase.Callback() {
 			   /**
 				 * Called when the database is created for the first time.
@@ -77,10 +77,11 @@ abstract public class RepositoryModule {
 								db.execSQL("CREATE TRIGGER");
 							}
 						})*/
-                .build();
-	    Timber.wtf("why we aren't calling this" + appDatabase);
-	    return appDatabase;
-    }
+						.fallbackToDestructiveMigration()
+						.build();
+		Timber.wtf("why we aren't calling this" + appDatabase);
+		return appDatabase;
+	}
 
 	@Singleton
 	@Provides
@@ -88,49 +89,46 @@ abstract public class RepositoryModule {
 		return EventBus.getDefault();
 	}
 
-    @Singleton
-    @Provides
-    static LoanDao provideLoanDao(AppDatabase db) {
-        return db.loanDao();
-    }
+	@Singleton
+	@Provides
+	static LoanDao provideLoanDao(AppDatabase db) {
+		return db.loanDao();
+	}
 
-    @Singleton
-    @Provides
-    static ExpenseDao provideExpenseDao(AppDatabase db) {
-        return db.expenseDao();
-    }
+	@Singleton
+	@Provides
+	static ExpenseDao provideExpenseDao(AppDatabase db) {
+		return db.expenseDao();
+	}
 
-    @Singleton
-    @Provides
-    static CustomerDao provideCustomerDao(AppDatabase db) {
-        return db.customerDao();
-    }
+	@Singleton
+	@Provides
+	static CustomerDao provideCustomerDao(AppDatabase db) {
+		return db.customerDao();
+	}
 
-    @Singleton
-    @Provides
-    static TransactionDao provideTransactionsDao(AppDatabase db) {
-        return db.transactionDao();
-    }
+	@Singleton
+	@Provides
+	static TransactionDao provideTransactionsDao(AppDatabase db) {
+		return db.transactionDao();
+	}
 
-    @Singleton
-    @Provides
-    static InstallmentDao provideInstallmentDao(AppDatabase db) {
-        return db.installmentDao();
-    }
+	@Singleton
+	@Provides
+	static InstallmentDao provideInstallmentDao(AppDatabase db) {
+		return db.installmentDao();
+	}
 
-    @Singleton
-    abstract LoanRepo provideLoanRepo(AppDatabase db);
-
-    @Singleton
-    @Provides
-    static WebService provideWebService() {
-	    return new Retrofit.Builder()
-			    .baseUrl("https://api.github.com/")
+	@Singleton
+	@Provides
+	static WebService provideWebService() {
+		return new Retrofit.Builder()
+				.baseUrl("https://api.github.com/")
 //			    .addConverterFactory(GsonConverterFactory.create())
-			    .addCallAdapterFactory(new LiveDataCallAdapterFactory())
-			    .build()
-			    .create(WebService.class);
-    }
+				.addCallAdapterFactory(new LiveDataCallAdapterFactory())
+				.build()
+				.create(WebService.class);
+	}
 
 	@Singleton
 	@Provides
@@ -139,21 +137,24 @@ abstract public class RepositoryModule {
 	}
 
 	@Singleton
+	@Provides
+	static AppExecutors provideAppExecutors() {
+		return new AppExecutors(new DiskIOThreadExecutor(),
+				Executors.newFixedThreadPool(THREAD_COUNT),
+				new AppExecutors.MainThreadExecutor());
+	}
+
+	@Singleton
+	abstract LoanRepo provideLoanRepo(AppDatabase db);
+
+	@Singleton
 	abstract ExpenseRepo provideExpenseRepo(AppDatabase db);
 
-    @Singleton
-    abstract CustomerRepo provideCustomerRepo(AppDatabase db);
+	@Singleton
+	abstract CustomerRepo provideCustomerRepo(AppDatabase db);
 
-    @Singleton
-    @Provides
-    static AppExecutors provideAppExecutors() {
-        return new AppExecutors(new DiskIOThreadExecutor(),
-                Executors.newFixedThreadPool(THREAD_COUNT),
-                new AppExecutors.MainThreadExecutor());
-    }
-
-    @Singleton
-    abstract InstallmentRepo provideInstallmentRepo(AppDatabase db);
+	@Singleton
+	abstract InstallmentRepo provideInstallmentRepo(AppDatabase db);
 	/*@Provides
 	@Singleton
 	Gson provideGson() {

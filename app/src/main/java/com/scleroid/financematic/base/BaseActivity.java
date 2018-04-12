@@ -29,42 +29,50 @@ import dagger.android.support.HasSupportFragmentInjector;
  */
 
 public abstract class BaseActivity
-        extends AppCompatActivity
-        implements BaseFragment.Callback, HasSupportFragmentInjector {
-
-    // TODO
-    // this can probably depend on isLoading variable of BaseViewModel,
-    // since its going to be common for all the activities
-    private ProgressDialog mProgressDialog;
+		extends AppCompatActivity
+		implements BaseFragment.Callback, HasSupportFragmentInjector {
 
 	EventBus eventBus = GlobalBus.getBus();
-    /**
-     * @return layout resource id
-     */
-    public abstract
-    @LayoutRes
-    int getLayoutId();
+	// TODO
+	// this can probably depend on isLoading variable of BaseViewModel,
+	// since its going to be common for all the activities
+	private ProgressDialog mProgressDialog;
+
+	@Override
+	public void onFragmentAttached() {
+
+	}
+
+	@Override
+	public void onFragmentDetached(String tag) {
+
+	}
+
+	@Override
+	protected void onCreate(@Nullable Bundle savedInstanceState) {
+		performDependencyInjection();
+		super.onCreate(savedInstanceState);
+		setContentView(getLayoutId());
 
 
-    @Override
-    public void onFragmentAttached() {
+	}
 
-    }
+	/**
+	 * @return layout resource id
+	 */
+	public abstract
+	@LayoutRes
+	int getLayoutId();
 
-    @Override
-    public void onFragmentDetached(String tag) {
+	@Override
+	protected void onStop() {
+		super.onStop();
+		eventBus.unregister(this);
+	}
 
-    }
-
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        performDependencyInjection();
-        super.onCreate(savedInstanceState);
-        setContentView(getLayoutId());
-
-
-    }
+	public void performDependencyInjection() {
+		AndroidInjection.inject(this);
+	}
 
 	@Override
 	public void onResume() {
@@ -76,53 +84,44 @@ public abstract class BaseActivity
         }*/
 	}
 
-	@Override
-	protected void onStop() {
-		super.onStop();
-		eventBus.unregister(this);
+	@TargetApi(Build.VERSION_CODES.M)
+	public boolean hasPermission(String permission) {
+		return Build.VERSION.SDK_INT < Build.VERSION_CODES.M ||
+				checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
 	}
 
-	public void performDependencyInjection() {
-        AndroidInjection.inject(this);
-    }
+	public void hideKeyboard() {
+		View view = this.getCurrentFocus();
+		if (view != null) {
+			InputMethodManager imm =
+					(InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+			if (imm != null) {
+				imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+			}
+		}
+	}
 
-    @TargetApi(Build.VERSION_CODES.M)
-    public boolean hasPermission(String permission) {
-        return Build.VERSION.SDK_INT < Build.VERSION_CODES.M ||
-                checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
-    }
+	public boolean isNetworkConnected() {
+		return NetworkUtils.isNetworkConnected(getApplicationContext());
+	}
 
-    public void hideKeyboard() {
-        View view = this.getCurrentFocus();
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            if (imm != null) {
-                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-            }
-        }
-    }
+	@TargetApi(Build.VERSION_CODES.M)
+	public void requestPermissionsSafely(String[] permissions, int requestCode) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+			requestPermissions(permissions, requestCode);
+		}
+	}
 
-    public boolean isNetworkConnected() {
-        return NetworkUtils.isNetworkConnected(getApplicationContext());
-    }
+	public void showLoading() {
+		hideLoading();
+		mProgressDialog = CommonUtils.showLoadingDialog(this);
+	}
 
-    @TargetApi(Build.VERSION_CODES.M)
-    public void requestPermissionsSafely(String[] permissions, int requestCode) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(permissions, requestCode);
-        }
-    }
-
-    public void showLoading() {
-        hideLoading();
-        mProgressDialog = CommonUtils.showLoadingDialog(this);
-    }
-
-    public void hideLoading() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.cancel();
-        }
-    }
+	public void hideLoading() {
+		if (mProgressDialog != null && mProgressDialog.isShowing()) {
+			mProgressDialog.cancel();
+		}
+	}
 
 
 }

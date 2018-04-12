@@ -22,92 +22,91 @@ import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 @Dao
 public interface TransactionDao {
 
-    /**
-     * Select Query
-     *
-     * @return List of all transactionModels in database
-     */
-    @Query("SELECT * FROM TransactionModel")
-    List<TransactionModel> getAll();
+	/**
+	 * Select Query
+	 *
+	 * @return List of all transactionModels in database
+	 */
+	@Query("SELECT * FROM TransactionModel")
+	List<TransactionModel> getAll();
 
-    /**
-     * Returns  list of all transactionModels
-     *
-     * @return LiveData object List of all transactionModels in database
-     */
-    @Query("SELECT * FROM TransactionModel")
-    LiveData<List<TransactionModel>> getAllTransactionsLive();
+	/**
+	 * Returns  list of all transactionModels
+	 *
+	 * @return LiveData object List of all transactionModels in database
+	 */
+	@Query("SELECT * FROM TransactionModel")
+	LiveData<List<TransactionModel>> getAllTransactionsLive();
 
-    /**
-     * Returns a specific value compared to serialNo passed
-     *
-     * @param serialNo the serialNo of object to be found
-     * @return transactionModel object with same serialNo
-     */
-    @Query("SELECT * FROM TransactionModel where transactionId = :serialNo ")
-    LiveData<TransactionModel> getTransaction(int serialNo);
+	/**
+	 * Returns a specific value compared to serialNo passed
+	 *
+	 * @param serialNo the serialNo of object to be found
+	 * @return transactionModel object with same serialNo
+	 */
+	@Query("SELECT * FROM TransactionModel where transactionId = :serialNo ")
+	LiveData<TransactionModel> getTransaction(int serialNo);
 
-    /**
-     * select query to count Number of transactionModel
-     *
-     * @return number of total entries in the table
-     */
-    @Query("SELECT COUNT(*) from TransactionModel")
-    int countTransaction();
+	/**
+	 * select query to count Number of transactionModel
+	 *
+	 * @return number of total entries in the table
+	 */
+	@Query("SELECT COUNT(*) from TransactionModel")
+	int countTransaction();
 
-    /**
-     * Performs insertion operation
-     *
-     * @param transactionModelModel inserts this object in the database
-     */
-    @Insert(onConflict = REPLACE)
-    long[] saveTransactions(List<TransactionModel> transactionModelModel);
+	/**
+	 * Performs insertion operation
+	 *
+	 * @param transactionModelModel inserts this object in the database
+	 */
+	@Insert(onConflict = REPLACE)
+	long[] saveTransactions(List<TransactionModel> transactionModelModel);
 
-    /**
-     * Performs insertion operation
-     *
-     * @param transactionModelModel inserts this object in the database
-     */
-    @Insert(onConflict = REPLACE)
-    long saveTransaction(TransactionModel transactionModelModel);
+	/**
+	 * Performs insertion operation
+	 *
+	 * @param transactionModelModel inserts this object in the database
+	 */
+	@Insert(onConflict = REPLACE)
+	long saveTransaction(TransactionModel transactionModelModel);
 
 
-    /**
-     * Performs insertion operation for multiple values
-     *
-     * @param transactionModel inserts list of transactionModelModel object
-     */
-    @Insert
-    void insertAll(TransactionModel... transactionModel);
+	/**
+	 * Performs insertion operation for multiple values
+	 *
+	 * @param transactionModel inserts list of transactionModelModel object
+	 */
+	@Insert
+	void insertAll(TransactionModel... transactionModel);
 
-    /**
-     * Updates a specified dataset
-     *
-     * @param transactionModel the transactionModelModel which needs to be updated
-     */
-    @Update(onConflict = REPLACE)
-    void update(TransactionModel transactionModel);
+	/**
+	 * Updates a specified dataset
+	 *
+	 * @param transactionModel the transactionModelModel which needs to be updated
+	 */
+	@Update(onConflict = REPLACE)
+	void update(TransactionModel transactionModel);
 
-    /**
-     * Removes a particular dataset from the database
-     *
-     * @param transactionModel the object which needs to be deleted
-     */
-    @Delete
-    void delete(TransactionModel transactionModel);
+	/**
+	 * Removes a particular dataset from the database
+	 *
+	 * @param transactionModel the object which needs to be deleted
+	 */
+	@Delete
+	void delete(TransactionModel transactionModel);
 
-    /**
-     * Let the database be a part of history
-     * I meant, it deletes the whole table
-     */
-    @Query("DELETE FROM TransactionModel")
-    void nukeTable();
+	/**
+	 * Let the database be a part of history I meant, it deletes the whole table
+	 */
+	@Query("DELETE FROM TransactionModel")
+	void nukeTable();
 
-    @Query("SELECT * FROM transactionmodel WHERE loanAcNo=:userId")
-    List<TransactionModel> getTransactionsForLoan(final int userId);
+	@Query("SELECT * FROM transactionmodel WHERE loanAcNo=:userId")
+	List<TransactionModel> getTransactionsForLoan(final int userId);
 
-    @Query("SELECT * FROM transactionmodel WHERE loanAcNo=:userId")
-    LiveData<List<TransactionModel>> getTransactionsForLoanLive(final int userId);
+	@Query("SELECT * FROM transactionmodel WHERE loanAcNo=:userId")
+	LiveData<List<TransactionModel>> getTransactionsForLoanLive(final int userId);
 
 
 }

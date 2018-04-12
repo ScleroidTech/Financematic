@@ -18,15 +18,15 @@ import dagger.Module;
 @Module
 public abstract class UtilsModule {
 
-    @Singleton
-    abstract DateUtils getDateUtils();
+	@Singleton
+	abstract DateUtils getDateUtils();
 
-    @Singleton
-    abstract TextViewUtils getTextViewUtils();
+	@Singleton
+	abstract TextViewUtils getTextViewUtils();
 
-    @Singleton
-    abstract ActivityUtils getActivityUtils();
+	@Singleton
+	abstract ActivityUtils getActivityUtils();
 
-    @Singleton
-    abstract CurrencyStringUtils getCurrencyStringUtils();
+	@Singleton
+	abstract CurrencyStringUtils getCurrencyStringUtils();
 }

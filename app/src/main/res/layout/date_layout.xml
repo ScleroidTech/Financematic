@@ -49,16 +49,16 @@
         android:textAlignment="center"
         android:textColor="#313942"
         android:textSize="12sp" />
-<!--
-    <TextView
-        android:id="@+id/year_text_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#cFcFcF"
-        android:padding="1dp"
-        android:text="2018"
-        android:textAlignment="center"
-        android:textColor="@color/black_text" />-->
+    <!--
+        <TextView
+            android:id="@+id/year_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#cFcFcF"
+            android:padding="1dp"
+            android:text="2018"
+            android:textAlignment="center"
+            android:textColor="@color/black_text" />-->
 
 
 </LinearLayout>

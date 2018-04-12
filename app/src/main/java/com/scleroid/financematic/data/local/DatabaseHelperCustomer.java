@@ -20,15 +20,15 @@ import javax.inject.Inject;
  */
 public class DatabaseHelperCustomer {
 
-    //TODO to use or not to use this
-    private CustomerDao dao;
-    private LoanDao loanDao;
+	//TODO to use or not to use this
+	private CustomerDao dao;
+	private LoanDao loanDao;
 
-    @Inject
-    public DatabaseHelperCustomer(AppDatabase database) {
-        dao = database.customerDao();
-        loanDao = database.loanDao();
-    }
+	@Inject
+	public DatabaseHelperCustomer(AppDatabase database) {
+		dao = database.customerDao();
+		loanDao = database.loanDao();
+	}
 
     /* Adding a livedata implementation of the same method
         Things going fun bitch
@@ -39,8 +39,8 @@ public class DatabaseHelperCustomer {
     }
     */
 
-    public LiveData<Customer> getCustomer(int id) {
-        LiveData<Customer> customerLiveData = dao.getCustomerLive(id);
+	public LiveData<Customer> getCustomer(int id) {
+		LiveData<Customer> customerLiveData = dao.getCustomerLive(id);
         /*customerLiveData = Transformations.switchMap(customerLiveData, inputCustomer -> {
             LiveData<List<Loan>> loanLiveData = loanDao.getLoansLive(inputCustomer.getCustomerId());
             LiveData<Customer> outputLiveData = Transformations.map(loanLiveData, input -> {
@@ -49,27 +49,28 @@ public class DatabaseHelperCustomer {
             });
             return outputLiveData;
         });*/
-        return customerLiveData;
-        //Good Job buddy, now the real challenge is next method
-    }
+		return customerLiveData;
+		//Good Job buddy, now the real challenge is next method
+	}
 
 
-    /* Do whatever I did for previous method, just in the list of list
-     public List<Customer> getCustomers() {
-         List<Customer> customers = dao.getCustomers();
-         for (Customer customer : customers) {
-             customer.setLoans(dao.getLoans(customer.getCustomerId()));
-         }
-         return customers;
-     }*/
-    public LiveData<List<Customer>> getCustomers() {
-        LiveData<List<Customer>> customerLiveData = dao.getAllCustomerLive();
+	/* Do whatever I did for previous method, just in the list of list
+	 public List<Customer> getCustomers() {
+		 List<Customer> customers = dao.getCustomers();
+		 for (Customer customer : customers) {
+			 customer.setLoans(dao.getLoans(customer.getCustomerId()));
+		 }
+		 return customers;
+	 }*/
+	public LiveData<List<Customer>> getCustomers() {
+		LiveData<List<Customer>> customerLiveData = dao.getAllCustomerLive();
 
        /* TODO Test this, if works remove below code, this part has performance issues
        customerLiveData = Transformations.switchMap(customerLiveData, inputCustomers -> {
             MediatorLiveData<List<Customer>> customerMediatorLiveData = new MediatorLiveData<>();
             for (Customer customer : inputCustomers) {
-                customerMediatorLiveData.addSource(dao.getLoansLive(customer.getCustomerId()), loans -> {
+                customerMediatorLiveData.addSource(dao.getLoansLive(customer.getCustomerId()),
+                loans -> {
                     customer.setLoans(loans);
                     customerMediatorLiveData.postValue(inputCustomers);
 
@@ -78,18 +79,19 @@ public class DatabaseHelperCustomer {
             return customerMediatorLiveData;
         });
         return customerLiveData;*/
-        customerLiveData = Transformations.map(customerLiveData, new Function<List<Customer>, List<Customer>>() {
+		customerLiveData = Transformations.map(customerLiveData,
+				new Function<List<Customer>, List<Customer>>() {
 
-            @Override
-            public List<Customer> apply(final List<Customer> inputStates) {
+					@Override
+					public List<Customer> apply(final List<Customer> inputStates) {
                /* for (Customer state : inputStates) {
                     state.setLoans(dao.getLoans(state.getCustomerId()));
                 }*/
-                return inputStates;
-            }
-        });
-        return customerLiveData;
-    }
+						return inputStates;
+					}
+				});
+		return customerLiveData;
+	}
 
    /* public void saveCustomer(Customer customer) {
         dao.saveCustomer(customer);

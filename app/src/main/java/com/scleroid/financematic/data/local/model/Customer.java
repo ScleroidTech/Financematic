@@ -37,6 +37,8 @@ public class Customer {
 	private String city;
 	private String idProofNo;
 	private byte idProofType;
+	@Ignore
+	private List<Loan> loans;
 
 	public Customer(int customerId, String name, String mobileNumber, String address, String city,
 	                String idProofNo, byte idProofType) {
@@ -48,9 +50,6 @@ public class Customer {
 		this.idProofNo = idProofNo;
 		this.idProofType = idProofType;
 	}
-
-	@Ignore
-	private List<Loan> loans;
 
 	public List<Loan> getLoans() {
 		return loans;

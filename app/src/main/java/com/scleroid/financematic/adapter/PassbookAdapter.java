@@ -19,62 +19,60 @@ import java.util.List;
 
 public class PassbookAdapter extends RecyclerView.Adapter<PassbookAdapter.MyViewHolder> {
 
-    private List<Passbook> passbookList;
+	private List<Passbook> passbookList;
 
-    public PassbookAdapter(List<Passbook> passbookList) {
-        this.passbookList = passbookList;
-    }
+	public PassbookAdapter(List<Passbook> passbookList) {
+		this.passbookList = passbookList;
+	}
 
-    @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.recycler_passbook_row, parent, false);
+	@Override
+	public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+		View itemView = LayoutInflater.from(parent.getContext())
+				.inflate(R.layout.recycler_passbook_row, parent, false);
 
-        return new MyViewHolder(itemView);
+		return new MyViewHolder(itemView);
 
-    }
+	}
 
-    @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+	@Override
+	public void onBindViewHolder(MyViewHolder holder, int position) {
 
-        Passbook passbook = passbookList.get(position);
+		Passbook passbook = passbookList.get(position);
 
 
-        holder.passbook_name.setText(passbook .getPassbook_name());
-        holder.passbook_date.setText(passbook .getPassbook_date());
-        holder.passbook_taken_money.setText(passbook.getPassbook_taken_money());
-        holder.passbook_received_money.setText(passbook.getPassbook_received_money());
-        if(position %2 == 1)
-        {
-            holder.itemView.setBackgroundColor(Color.parseColor("#d5e5f0"));
-            //  holder.imageView.setBackgroundColor(Color.parseColor("#FFFFFF"));
-        }
-        else
-        {
-            holder.itemView.setBackgroundColor(Color.parseColor("#FFFAF8FD"));
-            //  holder.imageView.setBackgroundColor(Color.parseColor("#FFFAF8FD"));
-        }
-    }
+		holder.passbook_name.setText(passbook.getPassbook_name());
+		holder.passbook_date.setText(passbook.getPassbook_date());
+		holder.passbook_taken_money.setText(passbook.getPassbook_taken_money());
+		holder.passbook_received_money.setText(passbook.getPassbook_received_money());
+		if (position % 2 == 1) {
+			holder.itemView.setBackgroundColor(Color.parseColor("#d5e5f0"));
+			//  holder.imageView.setBackgroundColor(Color.parseColor("#FFFFFF"));
+		} else {
+			holder.itemView.setBackgroundColor(Color.parseColor("#FFFAF8FD"));
+			//  holder.imageView.setBackgroundColor(Color.parseColor("#FFFAF8FD"));
+		}
+	}
 
-    @Override
-    public int getItemCount() {
-        return passbookList.size();
-    }
+	@Override
+	public int getItemCount() {
+		return passbookList.size();
+	}
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        /* for selecte row and chnage color        implements View.OnClickListener*/
-        public TextView passbook_taken_money, passbook_name, passbook_date, passbook_received_money;
-        private SparseBooleanArray selectedItems = new SparseBooleanArray();
+	public class MyViewHolder extends RecyclerView.ViewHolder {
+		/* for selecte row and chnage color        implements View.OnClickListener*/
+		public TextView passbook_taken_money, passbook_name, passbook_date,
+				passbook_received_money;
+		private SparseBooleanArray selectedItems = new SparseBooleanArray();
 
-        public MyViewHolder(View view) {
-            super(view);
-           /* view.setOnClickListener(this);*/
-            passbook_date = view.findViewById(R.id.passbook_date);
-            passbook_name = view.findViewById(R.id.passbook_name);
-            passbook_taken_money = view.findViewById(R.id.passbook_taken_money);
-            passbook_received_money = view.findViewById(R.id.passbook_received_money);
+		public MyViewHolder(View view) {
+			super(view);
+			/* view.setOnClickListener(this);*/
+			passbook_date = view.findViewById(R.id.passbook_date);
+			passbook_name = view.findViewById(R.id.passbook_name);
+			passbook_taken_money = view.findViewById(R.id.passbook_taken_money);
+			passbook_received_money = view.findViewById(R.id.passbook_received_money);
 
-        }
+		}
 
 
 
@@ -91,5 +89,5 @@ public class PassbookAdapter extends RecyclerView.Adapter<PassbookAdapter.MyView
         }*/
 
 
-    }
+	}
 }

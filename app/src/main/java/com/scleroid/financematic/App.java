@@ -12,8 +12,7 @@ import dagger.android.HasActivityInjector;
 import timber.log.Timber;
 
 /**
- * Copyright (C) 3/9/18
- * Author ganesh
+ * Copyright (C) 3/9/18 Author ganesh
  */
 
 /**
@@ -23,33 +22,33 @@ import timber.log.Timber;
  */
 public class App extends DaggerApplication implements HasActivityInjector {
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
+	@Override
+	public void onCreate() {
+		super.onCreate();
 
-        if (BuildConfig.DEBUG) {
-            Timber.plant(new Timber.DebugTree());
-        }
+		if (BuildConfig.DEBUG) {
+			Timber.plant(new Timber.DebugTree());
+		}
 
-        DaggerAppComponent
-                .builder()
-                .application(this)
-                .build()
-                .inject(this);
-        AppInjector.init(this);
+		DaggerAppComponent
+				.builder()
+				.application(this)
+				.build()
+				.inject(this);
+		AppInjector.init(this);
 
-        //    JobManagerFactory.getJobManager(this);
-    }
+		//    JobManagerFactory.getJobManager(this);
+	}
 
-    @Override
-    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
-        AppComponent appComponent = DaggerAppComponent
-                .builder()
-                .application(this)
-                .build();
-        appComponent.inject(this);
+	@Override
+	protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
+		AppComponent appComponent = DaggerAppComponent
+				.builder()
+				.application(this)
+				.build();
+		appComponent.inject(this);
 
-        return appComponent;
-    }
+		return appComponent;
+	}
 
 }

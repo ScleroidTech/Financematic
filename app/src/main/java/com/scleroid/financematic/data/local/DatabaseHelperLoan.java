@@ -12,14 +12,14 @@ import javax.inject.Inject;
  * @since 4/3/18
  */
 public class DatabaseHelperLoan {
-    private LoanDao dao;
-    private TransactionDao transactionDao;
+	private LoanDao dao;
+	private TransactionDao transactionDao;
 
-    @Inject
-    public DatabaseHelperLoan(AppDatabase database) {
-        dao = database.loanDao();
-        transactionDao = database.transactionDao();
-    }
+	@Inject
+	public DatabaseHelperLoan(AppDatabase database) {
+		dao = database.loanDao();
+		transactionDao = database.transactionDao();
+	}
 
  /*   public Loan getLoanLive(int id) {
         Loan loan = dao.getLoanLive(id);

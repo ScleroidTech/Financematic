@@ -25,23 +25,23 @@ import timber.log.Timber;
  * @since 4/5/18
  */
 public class LocalTransactionsLab implements LocalDataSource<TransactionModel> {
-    private final AppDatabase appDatabase;
-    private final AppExecutors appExecutors;
-    private final TransactionDao transactionDao;
+	private final AppDatabase appDatabase;
+	private final AppExecutors appExecutors;
+	private final TransactionDao transactionDao;
 
-    @Inject
-    LocalTransactionsLab(final AppDatabase appDatabase, final AppExecutors appExecutors) {
-        this.appDatabase = appDatabase;
-        this.appExecutors = appExecutors;
-        this.transactionDao = appDatabase.transactionDao();
-    }
+	@Inject
+	LocalTransactionsLab(final AppDatabase appDatabase, final AppExecutors appExecutors) {
+		this.appDatabase = appDatabase;
+		this.appExecutors = appExecutors;
+		this.transactionDao = appDatabase.transactionDao();
+	}
 
 
-    /**
-     * gets a list of all items
-     */
-    @Override
-    public LiveData<List<TransactionModel>> getItems() {
+	/**
+	 * gets a list of all items
+	 */
+	@Override
+	public LiveData<List<TransactionModel>> getItems() {
         /* Alternate Method for same purpose
         Runnable runnable = () -> {
             final LiveData<List<Transaction>> transactions= transactionDao.getAllTransactionLive();
@@ -56,103 +56,103 @@ public class LocalTransactionsLab implements LocalDataSource<TransactionModel> {
         };
         appExecutors.diskIO().execute(runnable);*/
 
-        Timber.d("getting all transactions");
-        return transactionDao.getAllTransactionsLive();
-    }
+		Timber.d("getting all transactions");
+		return transactionDao.getAllTransactionsLive();
+	}
 
-    /**
-     * gets a single item provided by id
-     *
-     * @param itemId the id of the item to be get
-     */
-    @Override
-    public LiveData<TransactionModel> getItem(final int itemId) {
-        Timber.d("getting transaction with id %d", itemId);
-        return transactionDao.getTransaction(itemId);
-    }
+	/**
+	 * gets a single item provided by id
+	 *
+	 * @param itemId the id of the item to be get
+	 */
+	@Override
+	public LiveData<TransactionModel> getItem(final int itemId) {
+		Timber.d("getting transaction with id %d", itemId);
+		return transactionDao.getTransaction(itemId);
+	}
 
-    /**
-     * Saves item to data source
-     *
-     * @param item item object to be saved
-     */
-    @Override
-    public Single<TransactionModel> saveItem(@NonNull final TransactionModel item) {
-        Timber.d("creating new transaction ");
+	/**
+	 * Saves item to data source
+	 *
+	 * @param item item object to be saved
+	 */
+	@Override
+	public Single<TransactionModel> saveItem(@NonNull final TransactionModel item) {
+		Timber.d("creating new transaction ");
 
-        return Single.fromCallable(() -> {
-            long rowId = transactionDao.saveTransaction(item);
-            Timber.d("transaction stored " + rowId);
-            return item;
-        }).subscribeOn(Schedulers.io());
-    }
+		return Single.fromCallable(() -> {
+			long rowId = transactionDao.saveTransaction(item);
+			Timber.d("transaction stored " + rowId);
+			return item;
+		}).subscribeOn(Schedulers.io());
+	}
 
-    /**
-     * adds a list of objects to the data source
-     *
-     * @param items list of items
-     */
-    @Override
-    public Completable addItems(@NonNull final List<TransactionModel> items) {
-        Timber.d("creating new transaction ");
+	/**
+	 * adds a list of objects to the data source
+	 *
+	 * @param items list of items
+	 */
+	@Override
+	public Completable addItems(@NonNull final List<TransactionModel> items) {
+		Timber.d("creating new transaction ");
 
-	    return Completable.fromRunnable(() -> {
-            long[] rowId = transactionDao.saveTransactions(items);
-            Timber.d("transaction stored " + rowId.length);
-	    }).subscribeOn(Schedulers.io());
-    }
+		return Completable.fromRunnable(() -> {
+			long[] rowId = transactionDao.saveTransactions(items);
+			Timber.d("transaction stored " + rowId.length);
+		}).subscribeOn(Schedulers.io());
+	}
 
-    /**
-     * refreshes the data source
-     */
-    @Override
-    public void refreshItems() {
+	/**
+	 * refreshes the data source
+	 */
+	@Override
+	public void refreshItems() {
 
-    }
+	}
 
-    /**
-     * Deletes all the data source
-     */
-    @Override
-    public Completable deleteAllItems() {
-        Timber.d("Deleting all transactions");
-	    return Completable.fromRunnable(() -> transactionDao.nukeTable())
-			    .subscribeOn(Schedulers.io());
+	/**
+	 * Deletes all the data source
+	 */
+	@Override
+	public Completable deleteAllItems() {
+		Timber.d("Deleting all transactions");
+		return Completable.fromRunnable(() -> transactionDao.nukeTable())
+				.subscribeOn(Schedulers.io());
 
-    }
+	}
 
-    /**
-     * deletes a single item from the database
-     *
-     * @param itemId id of item to be deleted
-     */
-    @Override
-    public Completable deleteItem(final int itemId) {
-        Timber.d("deleting transaction with id %d", itemId);
+	/**
+	 * deletes a single item from the database
+	 *
+	 * @param itemId id of item to be deleted
+	 */
+	@Override
+	public Completable deleteItem(final int itemId) {
+		Timber.d("deleting transaction with id %d", itemId);
 
-	    return Completable.fromRunnable(
-			    () -> transactionDao.delete(transactionDao.getTransaction(itemId).getValue()))
-			    .subscribeOn(Schedulers.io());
-    }
+		return Completable.fromRunnable(
+				() -> transactionDao.delete(transactionDao.getTransaction(itemId).getValue()))
+				.subscribeOn(Schedulers.io());
+	}
 
-    /**
-     * deletes a single item from the database
-     *
-     * @param item item to be deleted
-     */
-    @Override
-    public Completable deleteItem(@NonNull final TransactionModel item) {
-        Timber.d("deleting transaction with id %d", item.getTransactionId());
+	/**
+	 * deletes a single item from the database
+	 *
+	 * @param item item to be deleted
+	 */
+	@Override
+	public Completable deleteItem(@NonNull final TransactionModel item) {
+		Timber.d("deleting transaction with id %d", item.getTransactionId());
 
-	    return Completable.fromRunnable(() -> transactionDao.delete(item))
-			    .subscribeOn(Schedulers.io());
-    }
+		return Completable.fromRunnable(() -> transactionDao.delete(item))
+				.subscribeOn(Schedulers.io());
+	}
 
-    /**
-     * gets a list of all items for a particular value of customer no
-     */
+	/**
+	 * gets a list of all items for a particular value of customer no
+	 */
 
-    public LiveData<List<TransactionModel>> getItemsForLoan(int acNo) {
+	public LiveData<List<TransactionModel>> getItemsForLoan(int acNo) {
         /* Alternate Method for same purpose
         Runnable runnable = () -> {
             final LiveData<List<Transaction>> transactions= transactionDao.getAllTransactionLive();
@@ -167,7 +167,7 @@ public class LocalTransactionsLab implements LocalDataSource<TransactionModel> {
         };
         appExecutors.diskIO().execute(runnable);*/
 
-        Timber.d("getting all transactions");
-        return transactionDao.getTransactionsForLoanLive(acNo);
-    }
+		Timber.d("getting all transactions");
+		return transactionDao.getTransactionsForLoanLive(acNo);
+	}
 }

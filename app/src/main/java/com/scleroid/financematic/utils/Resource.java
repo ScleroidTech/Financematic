@@ -15,8 +15,6 @@ import static com.scleroid.financematic.utils.Status.SUCCESS;
 
 /**
  * A generic class that holds a value with its loading status.
- *
- * @param <T>
  */
 public class Resource<T> {
 

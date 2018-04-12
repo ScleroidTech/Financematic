@@ -25,23 +25,23 @@ import timber.log.Timber;
  * @since 4/5/18
  */
 public class LocalExpenseLab implements LocalDataSource<Expense> {
-    private final AppDatabase appDatabase;
-    private final AppExecutors appExecutors;
-    private final ExpenseDao expenseDao;
+	private final AppDatabase appDatabase;
+	private final AppExecutors appExecutors;
+	private final ExpenseDao expenseDao;
 
-    @Inject
-    LocalExpenseLab(final AppDatabase appDatabase, final AppExecutors appExecutors) {
-        this.appDatabase = appDatabase;
-        this.appExecutors = appExecutors;
-        this.expenseDao = appDatabase.expenseDao();
-    }
+	@Inject
+	LocalExpenseLab(final AppDatabase appDatabase, final AppExecutors appExecutors) {
+		this.appDatabase = appDatabase;
+		this.appExecutors = appExecutors;
+		this.expenseDao = appDatabase.expenseDao();
+	}
 
 
-    /**
-     * gets a list of all items
-     */
-    @Override
-    public LiveData<List<Expense>> getItems() {
+	/**
+	 * gets a list of all items
+	 */
+	@Override
+	public LiveData<List<Expense>> getItems() {
         /* Alternate Method for same purpose
         Runnable runnable = () -> {
             final LiveData<List<Expense>> expenses= expenseDao.getAllExpenseLive();
@@ -56,94 +56,95 @@ public class LocalExpenseLab implements LocalDataSource<Expense> {
         };
         appExecutors.diskIO().execute(runnable);*/
 
-        Timber.d("getting all expenses");
-        return expenseDao.getAllExpenseLive();
-    }
+		Timber.d("getting all expenses");
+		return expenseDao.getAllExpenseLive();
+	}
 
-    /**
-     * gets a single item provided by id
-     *
-     * @param itemId the id of the item to be get
-     */
-    @Override
-    public LiveData<Expense> getItem(final int itemId) {
-        Timber.d("getting expense with id %d", itemId);
-        return expenseDao.getExpense(itemId);
-    }
+	/**
+	 * gets a single item provided by id
+	 *
+	 * @param itemId the id of the item to be get
+	 */
+	@Override
+	public LiveData<Expense> getItem(final int itemId) {
+		Timber.d("getting expense with id %d", itemId);
+		return expenseDao.getExpense(itemId);
+	}
 
-    /**
-     * Saves item to data source
-     *
-     * @param item item object to be saved
-     */
-    @Override
-    public Single<Expense> saveItem(@NonNull final Expense item) {
-        Timber.d("creating new expense ");
+	/**
+	 * Saves item to data source
+	 *
+	 * @param item item object to be saved
+	 */
+	@Override
+	public Single<Expense> saveItem(@NonNull final Expense item) {
+		Timber.d("creating new expense ");
 
-        return Single.fromCallable(() -> {
-            long rowId = expenseDao.saveExpense(item);
-            Timber.d("expense stored " + rowId);
-            return item;
-        }).subscribeOn(Schedulers.io());
-    }
+		return Single.fromCallable(() -> {
+			long rowId = expenseDao.saveExpense(item);
+			Timber.d("expense stored " + rowId);
+			return item;
+		}).subscribeOn(Schedulers.io());
+	}
 
 
-    /**
-     * adds a list of objects to the data source
-     *
-     * @param items list of items
-     */
-    @Override
-    public Completable addItems(@NonNull final List<Expense> items) {
-        Timber.d("creating new expense ");
+	/**
+	 * adds a list of objects to the data source
+	 *
+	 * @param items list of items
+	 */
+	@Override
+	public Completable addItems(@NonNull final List<Expense> items) {
+		Timber.d("creating new expense ");
 
-	    return Completable.fromRunnable(() -> {
-            long[] rowId = expenseDao.saveExpenses(items);
-            Timber.d("expense stored " + rowId.length);
-	    }).subscribeOn(Schedulers.io());
-    }
+		return Completable.fromRunnable(() -> {
+			long[] rowId = expenseDao.saveExpenses(items);
+			Timber.d("expense stored " + rowId.length);
+		}).subscribeOn(Schedulers.io());
+	}
 
-    /**
-     * refreshes the data source
-     */
-    @Override
-    public void refreshItems() {
+	/**
+	 * refreshes the data source
+	 */
+	@Override
+	public void refreshItems() {
 
-    }
+	}
 
-    /**
-     * Deletes all the data source
-     */
-    @Override
-    public Completable deleteAllItems() {
-        Timber.d("Deleting all expenses");
-	    return Completable.fromRunnable(() -> expenseDao.nukeTable()).subscribeOn(Schedulers.io());
+	/**
+	 * Deletes all the data source
+	 */
+	@Override
+	public Completable deleteAllItems() {
+		Timber.d("Deleting all expenses");
+		return Completable.fromRunnable(() -> expenseDao.nukeTable()).subscribeOn(Schedulers.io());
 
-    }
+	}
 
-    /**
-     * deletes a single item from the database
-     *
-     * @param itemId id of item to be deleted
-     */
-    @Override
-    public Completable deleteItem(final int itemId) {
-        Timber.d("deleting expense with id %d", itemId);
+	/**
+	 * deletes a single item from the database
+	 *
+	 * @param itemId id of item to be deleted
+	 */
+	@Override
+	public Completable deleteItem(final int itemId) {
+		Timber.d("deleting expense with id %d", itemId);
 
-	    return Completable.fromRunnable(
-			    () -> expenseDao.delete(expenseDao.getExpense(itemId).getValue()))
-			    .subscribeOn(Schedulers.io());
-    }
+		return Completable.fromRunnable(
+				() -> expenseDao.delete(expenseDao.getExpense(itemId).getValue()))
+				.subscribeOn(Schedulers.io());
+	}
 
-    /**
-     * deletes a single item from the database
-     *
-     * @param item item to be deleted
-     */
-    @Override
-    public Completable deleteItem(@NonNull final Expense item) {
-        Timber.d("deleting expense with id %d", item.getExpenseId());
+	/**
+	 * deletes a single item from the database
+	 *
+	 * @param item item to be deleted
+	 */
+	@Override
+	public Completable deleteItem(@NonNull final Expense item) {
+		Timber.d("deleting expense with id %d", item.getExpenseId());
 
-	    return Completable.fromRunnable(() -> expenseDao.delete(item)).subscribeOn(Schedulers.io());
-    }
+		return Completable.fromRunnable(() -> expenseDao.delete(item)).subscribeOn(Schedulers.io
+				());
+	}
 }

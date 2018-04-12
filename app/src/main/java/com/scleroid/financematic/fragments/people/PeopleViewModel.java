@@ -22,11 +22,6 @@ public class PeopleViewModel extends BaseViewModel implements CustomerViewModel 
 	private final CustomerRepo customerRepo;
 	private final LoanRepo loanRepo;
 	LiveData<List<Customer>> customers;
-    //TODO add  data in it
-    @Override
-    protected LiveData<List> updateItemLiveData() {
-        return null;
-    }
 
 
 	@Inject
@@ -44,6 +39,12 @@ public class PeopleViewModel extends BaseViewModel implements CustomerViewModel 
 		//   setUpcomingInstallmentsTransformed(getTransformedUpcomingData());
 	}
 
+	//TODO add  data in it
+	@Override
+	protected LiveData<List> updateItemLiveData() {
+		return null;
+	}
+
 	@Override
 	protected LiveData<List<Customer>> getItemList() {
 
@@ -54,5 +55,5 @@ public class PeopleViewModel extends BaseViewModel implements CustomerViewModel 
 					.getLocalInstallmentsLab().getItems());*/
 		}
 		return customers;
-    }
+	}
 }

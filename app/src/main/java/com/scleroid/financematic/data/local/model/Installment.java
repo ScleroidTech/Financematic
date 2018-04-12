@@ -22,59 +22,61 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
  * @since 4/9/18
  */
 @Entity(foreignKeys = @ForeignKey(entity = Loan.class,
-        parentColumns = "accountNo",
-        childColumns = "loanAcNo",
-        onDelete = CASCADE),
-        indices = {@Index(value = "installmentId", unique = true)})
+		parentColumns = "accountNo",
+		childColumns = "loanAcNo",
+		onDelete = CASCADE),
+		indices = {@Index(value = "installmentId", unique = true)})
 public class Installment {
-
-    @PrimaryKey(autoGenerate = false)
-    private int installmentId;
-
-    @TypeConverters(DateConverter.class)
-    private Date installmentDate;
-    @TypeConverters(MoneyConverter.class)
-    private BigDecimal expectedAmt;
 
 	@Ignore
 	Loan loan;
+	@PrimaryKey(autoGenerate = false)
+	private int installmentId;
+	@TypeConverters(DateConverter.class)
+	private Date installmentDate;
+	@TypeConverters(MoneyConverter.class)
+	private BigDecimal expectedAmt;
+	private int loanAcNo;
 
-    private int loanAcNo;
+	public Installment(final int installmentId, final Date installmentDate,
+	                   final BigDecimal expectedAmt, final int loanAcNo) {
+		this.installmentId = installmentId;
+		this.installmentDate = installmentDate;
+		this.expectedAmt = expectedAmt;
+		this.loanAcNo = loanAcNo;
+	}
 
-    public Installment(final int installmentId, final Date installmentDate, final BigDecimal expectedAmt, final int loanAcNo) {
-        this.installmentId = installmentId;
-        this.installmentDate = installmentDate;
-        this.expectedAmt = expectedAmt;
-        this.loanAcNo = loanAcNo;
-    }
+	public int getInstallmentId() {
+		return installmentId;
+	}
 
-    public int getInstallmentId() {
-        return installmentId;
-    }
+	public void setInstallmentId(final int installmentId) {
+		this.installmentId = installmentId;
+	}
 
-    public void setInstallmentId(final int installmentId) {
-        this.installmentId = installmentId;
-    }
+	public Date getInstallmentDate() {
+		return installmentDate;
+	}
 
-    public Date getInstallmentDate() {
-        return installmentDate;
-    }
+	public void setInstallmentDate(final Date installmentDate) {
+		this.installmentDate = installmentDate;
+	}
 
-    public void setInstallmentDate(final Date installmentDate) {
-        this.installmentDate = installmentDate;
-    }
+	public BigDecimal getExpectedAmt() {
+		return expectedAmt;
+	}
 
-    public BigDecimal getExpectedAmt() {
-        return expectedAmt;
-    }
+	public void setExpectedAmt(final BigDecimal expectedAmt) {
+		this.expectedAmt = expectedAmt;
+	}
 
-    public void setExpectedAmt(final BigDecimal expectedAmt) {
-        this.expectedAmt = expectedAmt;
-    }
+	public int getLoanAcNo() {
+		return loanAcNo;
+	}
 
-    public int getLoanAcNo() {
-        return loanAcNo;
-    }
+	public void setLoanAcNo(final int loanAcNo) {
+		this.loanAcNo = loanAcNo;
+	}
 
 	@Override
 	public String toString() {
@@ -93,7 +95,4 @@ public class Installment {
 	public void setLoan(final Loan loan) {
 		this.loan = loan;
 	}
-    public void setLoanAcNo(final int loanAcNo) {
-        this.loanAcNo = loanAcNo;
-    }
 }

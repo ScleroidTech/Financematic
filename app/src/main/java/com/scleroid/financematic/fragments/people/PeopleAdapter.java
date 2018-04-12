@@ -34,6 +34,15 @@ import timber.log.Timber;
 
 public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHolder>
 		implements Filterable {
+	public List<Customer> getCustomerList() {
+		return customerList;
+	}
+
+	public void setCustomerList(
+			final List<Customer> customerList) {
+		this.customerList = customerList;
+	}
+
 	public List<Customer> customerList;
 	Context context;
 	CustomFilter filter;

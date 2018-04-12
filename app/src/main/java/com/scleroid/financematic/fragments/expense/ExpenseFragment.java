@@ -39,246 +39,262 @@ import butterknife.Unbinder;
 
 
 public class ExpenseFragment extends BaseFragment {
-    @BindView(R.id.expense_recycler)
-    RecyclerView expenseRecyclerView;
-    @BindView(R.id.room_rent_amt_text_view)
-    TextView roomRentAmtTextViewTextView;
-    @BindView(R.id.light_bill_text_view)
-    TextView lightBillTextView;
-    @BindView(R.id.phone_bill_text_view)
-    TextView phoneBillTextView;
-    @BindView(R.id.salary_text_view)
-    TextView salaryTextView;
-    @BindView(R.id.fuel_text_view)
-    TextView fuelTextView;
-    @BindView(R.id.other_text_view)
-    TextView otherTextView;
-    @BindView(R.id.room_rent_card)
-    LinearLayout roomRentCard;
-    @BindView(R.id.light_bill_card)
-    LinearLayout lightBillCard;
-    @BindView(R.id.phone_bill_card)
-    LinearLayout phoneBillCard;
-    @BindView(R.id.salary_card)
-    LinearLayout salaryCard;
-    @BindView(R.id.fuel_card)
-    LinearLayout fuelCard;
-    @BindView(R.id.other_card)
-    LinearLayout otherCard;
-    @BindView(R.id.pie_chart_expense)
-    PieChart mChart;
-    @BindView(R.id.toaa)
-    TextView toaa;
-    @BindView(R.id.totsss)
-    TextView totsss;
-    ArrayList<PieEntry> values = new ArrayList<>();
-    private List<Expense> expenseList = new ArrayList<>();
-    private ExpenseAdapter mAdapter;
-    private Unbinder unbinder;
+	@BindView(R.id.expense_recycler)
+	RecyclerView expenseRecyclerView;
+	@BindView(R.id.room_rent_amt_text_view)
+	TextView roomRentAmtTextViewTextView;
+	@BindView(R.id.light_bill_text_view)
+	TextView lightBillTextView;
+	@BindView(R.id.phone_bill_text_view)
+	TextView phoneBillTextView;
+	@BindView(R.id.salary_text_view)
+	TextView salaryTextView;
+	@BindView(R.id.fuel_text_view)
+	TextView fuelTextView;
+	@BindView(R.id.other_text_view)
+	TextView otherTextView;
+	@BindView(R.id.room_rent_card)
+	LinearLayout roomRentCard;
+	@BindView(R.id.light_bill_card)
+	LinearLayout lightBillCard;
+	@BindView(R.id.phone_bill_card)
+	LinearLayout phoneBillCard;
+	@BindView(R.id.salary_card)
+	LinearLayout salaryCard;
+	@BindView(R.id.fuel_card)
+	LinearLayout fuelCard;
+	@BindView(R.id.other_card)
+	LinearLayout otherCard;
+	@BindView(R.id.pie_chart_expense)
+	PieChart mChart;
+	@BindView(R.id.toaa)
+	TextView toaa;
+	@BindView(R.id.totsss)
+	TextView totsss;
+	ArrayList<PieEntry> values = new ArrayList<>();
+	private List<Expense> expenseList = new ArrayList<>();
+	private ExpenseAdapter mAdapter;
+	private Unbinder unbinder;
 
-    public ExpenseFragment() {
-        // Required empty public constructor
-    }
+	public ExpenseFragment() {
+		// Required empty public constructor
+	}
 
-    public static ExpenseFragment newInstance(String param1, String param2) {
-        ExpenseFragment fragment = new ExpenseFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
+	public static ExpenseFragment newInstance(String param1, String param2) {
+		ExpenseFragment fragment = new ExpenseFragment();
+		Bundle args = new Bundle();
+		fragment.setArguments(args);
+		return fragment;
+	}
 
-    /**
-     * @return layout resource id
-     */
-    @Override
-    public int getLayoutId() {
-        return R.layout.fragment_expense;
-    }
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+	}
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-        // Inflate the layout for this fragment
-        View view = getRootView();
+	@Override
+	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+	                         Bundle savedInstanceState) {
+		super.onCreateView(inflater, container, savedInstanceState);
+		// Inflate the layout for this fragment
+		View view = getRootView();
 
 
-        //
+		//
 
-        initializeRecyclerView();
-        //      float[] data = {450, 630, 300, 200, 400};
-        //    mChart.setData(data);
-        mChart.setUsePercentValues(true);
-        mChart.getDescription().setEnabled(false);
-        //  mChart.setCenterTextTypeface(mTfLight);
+		initializeRecyclerView();
+		//      float[] data = {450, 630, 300, 200, 400};
+		//    mChart.setData(data);
+		mChart.setUsePercentValues(true);
+		mChart.getDescription().setEnabled(false);
+		//  mChart.setCenterTextTypeface(mTfLight);
 
-        initializeChartData();
-        return view;
-    }
+		initializeChartData();
+		return view;
+	}
 
-    /**
-     * Override for set view model
-     *
-     * @return view model instance
-     */
-    @Override
-    public BaseViewModel getViewModel() {
-        //TODO
-        return null;
-    }
+	/**
+	 * @return layout resource id
+	 */
+	@Override
+	public int getLayoutId() {
+		return R.layout.fragment_expense;
+	}
 
-    private void initializeRecyclerView() {
-        mAdapter = new ExpenseAdapter(expenseList, getContext());
-        /* recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this.getContext()));*/
+	/**
+	 * Override so you can observe your viewModel
+	 */
+	@Override
+	protected void subscribeToLiveData() {
 
-        // vertical RecyclerView
-        // keep movie_list_row.xml width to `match_parent`
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+	}
 
-        // horizontal RecyclerView
-        // keep movie_list_row.xml width to `wrap_content`
-        // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
+	/**
+	 * Override for set view model
+	 *
+	 * @return view model instance
+	 */
+	@Override
+	public BaseViewModel getViewModel() {
+		//TODO
+		return null;
+	}
 
-        expenseRecyclerView.setLayoutManager(mLayoutManager);
+	private void initializeRecyclerView() {
+		mAdapter = new ExpenseAdapter(expenseList, getContext());
+		/* recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this.getContext()));*/
 
+		// vertical RecyclerView
+		// keep movie_list_row.xml width to `match_parent`
+		RecyclerView.LayoutManager mLayoutManager =
+				new LinearLayoutManager(getActivity().getApplicationContext());
 
-        expenseRecyclerView.setItemAnimator(new DefaultItemAnimator());
+		// horizontal RecyclerView
+		// keep movie_list_row.xml width to `wrap_content`
+		// RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager
+		// (getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
 
-        expenseRecyclerView.setAdapter(mAdapter);
-
-        // row click listener
-        expenseRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity().getApplicationContext(), expenseRecyclerView, new RecyclerTouchListener.ClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                Expense expense = expenseList.get(position);
-                // Toast.makeText(getActivity().getApplicationContext(), expense.getExpense_received_money() + " is selected!", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {
-
-            }
-        }));
-        prepareExpenseData();
-    }
-
-    private void prepareExpenseData() {
-        Expense expense = new Expense(new BigDecimal(2000), Expense.LIGHT_BILL, new Date(2018, 6, 1));
-        expenseList.add(expense);
-        expense = new Expense(new BigDecimal(42642), Expense.FUEL, new Date(2018, 3, 12));
-        expenseList.add(expense);
-        expense = new Expense(new BigDecimal(54545), Expense.PAID_SALARIES, new Date(2018, 4, 15));
-        expenseList.add(expense);
-        expense = new Expense(new BigDecimal(2323), Expense.PHONE_BILL, new Date(2018, 7, 25));
-        expenseList.add(expense);
-        expense = new Expense(new BigDecimal(12122), Expense.ROOM_RENT, new Date(2018, 2, 15));
-        expenseList.add(expense);
-        expense = new Expense(new BigDecimal(4500), Expense.OTHER, new Date(2018, 4, 13));
-        expenseList.add(expense);
+		expenseRecyclerView.setLayoutManager(mLayoutManager);
 
 
-        refreshRecyclerView(expenseList);
-    }
+		expenseRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-    private void refreshRecyclerView(List<Expense> expenses) {
-        mAdapter.setExpenses(expenses);
-        mAdapter.notifyDataSetChanged();
-    }
+		expenseRecyclerView.setAdapter(mAdapter);
 
-    private void initializeChartData() {
-        // IMPORTANT: In a PieChart, no values (Entry) should have the same
-        // xIndex (even if from different DataSets), since no values can be
-        // drawn above each other.
-        ArrayList<PieEntry> yvalues = new ArrayList<PieEntry>();
-        yvalues.add(new PieEntry(8f, "Jan"));
-        yvalues.add(new PieEntry(15f, "Feb"));
-        yvalues.add(new PieEntry(12f, "March"));
-        yvalues.add(new PieEntry(25f, "April"));
-        yvalues.add(new PieEntry(23f, "June"));
-        yvalues.add(new PieEntry(17f, "August"));
+		// row click listener
+		expenseRecyclerView.addOnItemTouchListener(
+				new RecyclerTouchListener(getActivity().getApplicationContext(),
+						expenseRecyclerView, new RecyclerTouchListener.ClickListener() {
+					@Override
+					public void onClick(View view, int position) {
+						Expense expense = expenseList.get(position);
+						// Toast.makeText(getActivity().getApplicationContext(), expense
+						// .getExpense_received_money() + " is selected!", Toast.LENGTH_SHORT)
+						// .show();
+					}
 
-        PieDataSet dataSet = new PieDataSet(yvalues, "Election Results");
-        List<String> xVals = new ArrayList<String>();
+					@Override
+					public void onLongClick(View view, int position) {
 
-        xVals.add("January");
-        xVals.add("February");
-        xVals.add("March");
-        xVals.add("April");
-        xVals.add("May");
-        xVals.add("June");
-        //   List<LegendEntry> entries = new ArrayList<>();
+					}
+				}));
+		prepareExpenseData();
+	}
+
+	private void prepareExpenseData() {
+		Expense expense =
+				new Expense(new BigDecimal(2000), Expense.LIGHT_BILL, new Date(2018, 6, 1));
+		expenseList.add(expense);
+		expense = new Expense(new BigDecimal(42642), Expense.FUEL, new Date(2018, 3, 12));
+		expenseList.add(expense);
+		expense = new Expense(new BigDecimal(54545), Expense.PAID_SALARIES, new Date(2018, 4, 15));
+		expenseList.add(expense);
+		expense = new Expense(new BigDecimal(2323), Expense.PHONE_BILL, new Date(2018, 7, 25));
+		expenseList.add(expense);
+		expense = new Expense(new BigDecimal(12122), Expense.ROOM_RENT, new Date(2018, 2, 15));
+		expenseList.add(expense);
+		expense = new Expense(new BigDecimal(4500), Expense.OTHER, new Date(2018, 4, 13));
+		expenseList.add(expense);
+
+
+		refreshRecyclerView(expenseList);
+	}
+
+	private void refreshRecyclerView(List<Expense> expenses) {
+		mAdapter.setExpenses(expenses);
+		mAdapter.notifyDataSetChanged();
+	}
+
+	private void initializeChartData() {
+		// IMPORTANT: In a PieChart, no values (Entry) should have the same
+		// xIndex (even if from different DataSets), since no values can be
+		// drawn above each other.
+		ArrayList<PieEntry> yvalues = new ArrayList<PieEntry>();
+		yvalues.add(new PieEntry(8f, "Jan"));
+		yvalues.add(new PieEntry(15f, "Feb"));
+		yvalues.add(new PieEntry(12f, "March"));
+		yvalues.add(new PieEntry(25f, "April"));
+		yvalues.add(new PieEntry(23f, "June"));
+		yvalues.add(new PieEntry(17f, "August"));
+
+		PieDataSet dataSet = new PieDataSet(yvalues, "Election Results");
+		List<String> xVals = new ArrayList<String>();
+
+		xVals.add("January");
+		xVals.add("February");
+		xVals.add("March");
+		xVals.add("April");
+		xVals.add("May");
+		xVals.add("June");
+		//   List<LegendEntry> entries = new ArrayList<>();
 
    /*     for (int i = 0; i < xVals.size(); i++) {
             LegendEntry entry = new LegendEntry();
             entry.label = xVals.get(i);
             entries.add(entry);
         }*/
-        Legend legend = mChart.getLegend();
-        legend.setEnabled(false);
+		Legend legend = mChart.getLegend();
+		legend.setEnabled(false);
 
-        dataSet.setColors(ColorTemplate.LIBERTY_COLORS);
-        dataSet.setSliceSpace(3f);
-        mChart.setDrawEntryLabels(true);
+		dataSet.setColors(ColorTemplate.LIBERTY_COLORS);
+		dataSet.setSliceSpace(3f);
+		mChart.setDrawEntryLabels(true);
 
 //        mChart.getXAxis().setTextColor(Color.GRAY);
-        mChart.getLegend().setTextColor(Color.DKGRAY);
-        PieData data = new PieData(dataSet);
-        data.setValueTextColor(Color.WHITE);
-        // In percentage Term
-        data.setValueFormatter(new PercentFormatter());
-        mChart.setData(data);
+		mChart.getLegend().setTextColor(Color.DKGRAY);
+		PieData data = new PieData(dataSet);
+		data.setValueTextColor(Color.WHITE);
+		// In percentage Term
+		data.setValueFormatter(new PercentFormatter());
+		mChart.setData(data);
 
 
-        //Disable Hole in the Pie Chart
-        mChart.setDrawHoleEnabled(false);
-        mChart.animateXY(1400, 1400);
+		//Disable Hole in the Pie Chart
+		mChart.setDrawHoleEnabled(false);
+		mChart.animateXY(1400, 1400);
 // Default value
 //data.setValueFormatter(new DefaultValueFormatter(0));
 
-    }
+	}
 
 
-    @OnClick({R.id.room_rent_card, R.id.light_bill_card, R.id.phone_bill_card, R.id.salary_card, R.id.fuel_card, R.id.other_card})
-    public void onViewClicked(View view) {
+	@OnClick({R.id.room_rent_card, R.id.light_bill_card, R.id.phone_bill_card, R.id.salary_card, R
+			.id.fuel_card, R.id.other_card})
+	public void onViewClicked(View view) {
 
-        switch (view.getId()) {
-            case R.id.room_rent_card:
-                filterThenRefresh(1);
-                break;
-            case R.id.light_bill_card:
-                filterThenRefresh(2);
-                break;
-            case R.id.phone_bill_card:
-                filterThenRefresh(3);
-                break;
-            case R.id.salary_card:
-                filterThenRefresh(4);
-                break;
-            case R.id.fuel_card:
-                filterThenRefresh(5);
-                break;
-            case R.id.other_card:
-                filterThenRefresh(0);
-                break;
-        }
+		switch (view.getId()) {
+			case R.id.room_rent_card:
+				filterThenRefresh(1);
+				break;
+			case R.id.light_bill_card:
+				filterThenRefresh(2);
+				break;
+			case R.id.phone_bill_card:
+				filterThenRefresh(3);
+				break;
+			case R.id.salary_card:
+				filterThenRefresh(4);
+				break;
+			case R.id.fuel_card:
+				filterThenRefresh(5);
+				break;
+			case R.id.other_card:
+				filterThenRefresh(0);
+				break;
+		}
 
 
-    }
+	}
 
-    private void filterThenRefresh(int selectedOption) {
-        List<Expense> expenses = filterResults(selectedOption);
-        refreshRecyclerView(expenses);
-    }
+	private void filterThenRefresh(int selectedOption) {
+		List<Expense> expenses = filterResults(selectedOption);
+		refreshRecyclerView(expenses);
+	}
 
-    private List<Expense> filterResults(int selected_type) {
+	private List<Expense> filterResults(int selected_type) {
 
-        return Stream.of(expenseList)
-                .filter(expenseList -> expenseList.getExpenseType() == selected_type)
-                .collect(Collectors.toList());
-    }
+		return Stream.of(expenseList)
+				.filter(expenseList -> expenseList.getExpenseType() == selected_type)
+				.collect(Collectors.toList());
+	}
 }

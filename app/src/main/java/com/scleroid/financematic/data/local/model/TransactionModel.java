@@ -22,22 +22,39 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
  * @since 4/2/18
  */
 @Entity(foreignKeys = @ForeignKey(entity = Loan.class,
-        parentColumns = "accountNo",
-        childColumns = "loanAcNo",
-        onDelete = CASCADE),
-        indices = {@Index(value = "transactionId", unique = true)})
+		parentColumns = "accountNo",
+		childColumns = "loanAcNo",
+		onDelete = CASCADE),
+		indices = {@Index(value = "transactionId", unique = true)})
 public class TransactionModel {
-    @PrimaryKey(autoGenerate = false)
-    private int transactionId;
-    @TypeConverters(DateConverter.class)
-    private Date transactionDate;
-    @TypeConverters(MoneyConverter.class)
-    private BigDecimal lentAmt;
-    @TypeConverters(MoneyConverter.class)
-    private BigDecimal gainedAmt;
+	@PrimaryKey(autoGenerate = false)
+	private int transactionId;
+	@TypeConverters(DateConverter.class)
+	private Date transactionDate;
+	@TypeConverters(MoneyConverter.class)
+	private BigDecimal lentAmt;
+	@TypeConverters(MoneyConverter.class)
+	private BigDecimal gainedAmt;
 
 	@Ignore
 	private Loan loan;
+	@TypeConverters(MoneyConverter.class)
+	private BigDecimal receivedAmt;
+	private String description;
+	private int loanAcNo;
+
+	public TransactionModel(final int transactionId, final Date transactionDate,
+	                        final BigDecimal lentAmt, final BigDecimal gainedAmt,
+	                        final BigDecimal receivedAmt, final String description,
+	                        final int loanAcNo) {
+		this.transactionId = transactionId;
+		this.transactionDate = transactionDate;
+		this.lentAmt = lentAmt;
+		this.gainedAmt = gainedAmt;
+		this.receivedAmt = receivedAmt;
+		this.description = description;
+		this.loanAcNo = loanAcNo;
+	}
 
 	public Loan getLoan() {
 		return loan;
@@ -47,89 +64,73 @@ public class TransactionModel {
 		this.loan = loan;
 	}
 
-    @Override
-    public String toString() {
-        return "TransactionModel{" +
-                "transactionId=" + transactionId +
-                ", transactionDate=" + transactionDate +
-                ", lentAmt=" + lentAmt.intValue() +
-                ", gainedAmt=" + gainedAmt.intValue() +
-                ", receivedAmt=" + receivedAmt.intValue() +
-                ", description='" + description + '\'' +
-                ", loanAcNo=" + loanAcNo +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "TransactionModel{" +
+				"transactionId=" + transactionId +
+				", transactionDate=" + transactionDate +
+				", lentAmt=" + lentAmt.intValue() +
+				", gainedAmt=" + gainedAmt.intValue() +
+				", receivedAmt=" + receivedAmt.intValue() +
+				", description='" + description + '\'' +
+				", loanAcNo=" + loanAcNo +
+				'}';
+	}
 
-    @TypeConverters(MoneyConverter.class)
-    private BigDecimal receivedAmt;
+	public int getTransactionId() {
+		return transactionId;
+	}
 
-    private String description;
-    private int loanAcNo;
+	public void setTransactionId(final int transactionId) {
+		this.transactionId = transactionId;
+	}
 
-    public int getTransactionId() {
-        return transactionId;
-    }
+	public Date getTransactionDate() {
+		return transactionDate;
+	}
 
-    public void setTransactionId(final int transactionId) {
-        this.transactionId = transactionId;
-    }
+	public void setTransactionDate(final Date transactionDate) {
+		this.transactionDate = transactionDate;
+	}
 
-    public Date getTransactionDate() {
-        return transactionDate;
-    }
+	public BigDecimal getLentAmt() {
+		return lentAmt;
+	}
 
-    public void setTransactionDate(final Date transactionDate) {
-        this.transactionDate = transactionDate;
-    }
+	public void setLentAmt(final BigDecimal lentAmt) {
+		this.lentAmt = lentAmt;
+	}
 
-    public BigDecimal getLentAmt() {
-        return lentAmt;
-    }
+	public BigDecimal getGainedAmt() {
+		return gainedAmt;
+	}
 
-    public void setLentAmt(final BigDecimal lentAmt) {
-        this.lentAmt = lentAmt;
-    }
+	public void setGainedAmt(final BigDecimal gainedAmt) {
+		this.gainedAmt = gainedAmt;
+	}
 
-    public BigDecimal getGainedAmt() {
-        return gainedAmt;
-    }
+	public BigDecimal getReceivedAmt() {
+		return receivedAmt;
+	}
 
-    public void setGainedAmt(final BigDecimal gainedAmt) {
-        this.gainedAmt = gainedAmt;
-    }
+	public void setReceivedAmt(final BigDecimal receivedAmt) {
+		this.receivedAmt = receivedAmt;
+	}
 
-    public BigDecimal getReceivedAmt() {
-        return receivedAmt;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public void setReceivedAmt(final BigDecimal receivedAmt) {
-        this.receivedAmt = receivedAmt;
-    }
+	public void setDescription(final String description) {
+		this.description = description;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public int getLoanAcNo() {
+		return loanAcNo;
+	}
 
-    public void setDescription(final String description) {
-        this.description = description;
-    }
-
-    public int getLoanAcNo() {
-        return loanAcNo;
-    }
-
-    public void setLoanAcNo(final int loanAcNo) {
-        this.loanAcNo = loanAcNo;
-    }
-
-    public TransactionModel(final int transactionId, final Date transactionDate, final BigDecimal lentAmt, final BigDecimal gainedAmt, final BigDecimal receivedAmt, final String description, final int loanAcNo) {
-        this.transactionId = transactionId;
-        this.transactionDate = transactionDate;
-        this.lentAmt = lentAmt;
-        this.gainedAmt = gainedAmt;
-        this.receivedAmt = receivedAmt;
-        this.description = description;
-        this.loanAcNo = loanAcNo;
-    }
+	public void setLoanAcNo(final int loanAcNo) {
+		this.loanAcNo = loanAcNo;
+	}
 
 }

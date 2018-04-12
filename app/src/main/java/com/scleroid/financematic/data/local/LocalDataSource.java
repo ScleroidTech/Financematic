@@ -3,7 +3,6 @@ package com.scleroid.financematic.data.local;
 /**
  * Copyright (C) 2018
  *
- * @author Ganesh Kaple
  * @since 4/4/18
  */
 
@@ -25,67 +24,65 @@ import io.reactivex.Single;
  */
 public interface LocalDataSource<T> {
 
-    /**
-     * gets a list of all items
-     *
-     */
-    LiveData<List<T>> getItems();
+	/**
+	 * gets a list of all items
+	 */
+	LiveData<List<T>> getItems();
 
-    /**
-     * gets a single item provided by id
-     *
-     * @param itemId   the id of the item to be get
-
-     */
-    LiveData<T> getItem(int itemId);
+	/**
+	 * gets a single item provided by id
+	 *
+	 * @param itemId the id of the item to be get
+	 */
+	LiveData<T> getItem(int itemId);
 
 
 	/**
-     * Saves item to data source
-     *
-     * @param item item object to be saved
-     */
-    Single<T> saveItem(@NonNull T item);
+	 * Saves item to data source
+	 *
+	 * @param item item object to be saved
+	 */
+	Single<T> saveItem(@NonNull T item);
 
 
-    /**
-     * adds a list of objects to the data source
-     *
-     * @param items list of items
-     */
-    Completable addItems(@NonNull List<T> items);
+	/**
+	 * adds a list of objects to the data source
+	 *
+	 * @param items list of items
+	 */
+	Completable addItems(@NonNull List<T> items);
 
-    /**
-     * refreshes the data source
-     */
-    void refreshItems();
+	/**
+	 * refreshes the data source
+	 */
+	void refreshItems();
 
-    /**
-     * Deletes all the data source
-     */
-    Completable deleteAllItems();
+	/**
+	 * Deletes all the data source
+	 */
+	Completable deleteAllItems();
 
-    /**
-     * deletes a single item from the database
-     *
-     * @param itemId id of item to be deleted
-     */
-    Completable deleteItem(int itemId);
+	/**
+	 * deletes a single item from the database
+	 *
+	 * @param itemId id of item to be deleted
+	 */
+	Completable deleteItem(int itemId);
 
-    /**
-     * deletes a single item from the database
-     *
-     * @param item item to be deleted
-     */
-    Completable deleteItem(@NonNull T item);
+	/**
+	 * deletes a single item from the database
+	 *
+	 * @param item item to be deleted
+	 */
+	Completable deleteItem(@NonNull T item);
 
-    /*Not using Callback anymore
-     *
-     * *//**
-     * Callback for getItems
-     *
-     * @param <T>
-     *//*
+	/*Not using Callback anymore
+	 *
+	 * *//**
+	 * Callback for getItems
+	 *
+	 * @param <T>
+	 *//*
     interface LoadCallback<T> {
 
         void onLoaded(LiveData<List<T>> items);
@@ -95,10 +92,10 @@ public interface LocalDataSource<T> {
 
 
     *//**
-     * CallBack for getItem
-     *
-     * @param <T>
-     *//*
+	 * CallBack for getItem
+	 *
+	 * @param <T>
+	 *//*
     interface GetCallback<T> {
 
         default void onLoaded(LiveData<T> item) {

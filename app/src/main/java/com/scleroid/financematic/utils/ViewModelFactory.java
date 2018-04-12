@@ -74,7 +74,7 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
 			return (T) new LoanDetailsViewModel();
 		} else if (modelClass.isAssignableFrom(PeopleViewModel.class)) {
 			//noinspection unchecked
-			return (T) new PeopleViewModel();
+			return (T) new PeopleViewModel(customerRepo, loanRepo);
 		} else if (modelClass.isAssignableFrom(DashboardViewModel.class)) {
 			//noinspection unchecked
 			return (T) new DashboardViewModel(customerRepo, loanRepo, installmentRepo);

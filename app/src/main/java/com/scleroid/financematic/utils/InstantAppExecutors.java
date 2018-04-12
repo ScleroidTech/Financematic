@@ -20,9 +20,9 @@ package com.scleroid.financematic.utils;
 import java.util.concurrent.Executor;
 
 public class InstantAppExecutors extends AppExecutors {
-    private static Executor instant = Runnable::run;
+	private static Executor instant = Runnable::run;
 
-    public InstantAppExecutors() {
-        super(instant, instant, instant);
-    }
+	public InstantAppExecutors() {
+		super(instant, instant, instant);
+	}
 }

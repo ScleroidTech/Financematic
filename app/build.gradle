@@ -16,13 +16,13 @@ android {
         vectorDrawables.useSupportLibrary = true
         //  multiDexEnabled true
     }
-    dexOptions {
-        incremental true
-        // here heap size give 4g i got this thing from https://groups.google.com/forum/#!topic/adt-dev/P_TLBTyFWVY
-
-        javaMaxHeapSize "4g"
-        preDexLibraries = false
-    }
+    /* dexOptions {
+         incremental true
+         // here heap size give 4g i got this thing from https://groups.google.com/forum/#!topic/adt-dev/P_TLBTyFWVY
+ 
+         javaMaxHeapSize "4g"
+         preDexLibraries = false
+     }*/
     buildTypes {
         release {
             minifyEnabled false
@@ -65,23 +65,23 @@ dependencies {
     implementation 'android.arch.persistence.room:rxjava2:1.1.0-beta2'
 
     // gson Library
-  //  implementation 'com.google.code.gson:gson:2.8.2'
+    //  implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 
     implementation 'com.annimon:stream:1.1.9'
 
     implementation "com.google.guava:guava:$rootProject.guavaVersion"
- //   compileOnly "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+    //   compileOnly "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
 
     // Priority Job Queue
-  //  implementation "com.birbit:android-priority-jobqueue:$project.priorityJobQueueVersion"
+    //  implementation "com.birbit:android-priority-jobqueue:$project.priorityJobQueueVersion"
 
     //GCM Network Manager
     //  implementation "com.google.android.gms:play-services-gcm:$project.playServicesVersion"
 
     // OkHttp Logging Interceptor
-  //  implementation "com.squareup.okhttp3:okhttp:$project.okHttpVersion"
-   // implementation "com.squareup.okhttp3:logging-interceptor:$project.okHttpVersion"
+    //  implementation "com.squareup.okhttp3:okhttp:$project.okHttpVersion"
+    // implementation "com.squareup.okhttp3:logging-interceptor:$project.okHttpVersion"
     // ButterKnife
     implementation "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterKnifeVersion"
@@ -112,7 +112,6 @@ dependencies {
     //  implementation "com.android.support:support-v4:$rootProject.supportLibraryVersion"
     implementation "com.android.support.test.espresso:espresso-idling-resource:$rootProject.espressoVersion"
 
-
     // Dagger dependencies
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
     compileOnly 'org.glassfish:javax.annotation:10.0-b28'
@@ -132,11 +131,6 @@ dependencies {
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
-
-
-
-
 
 
 }

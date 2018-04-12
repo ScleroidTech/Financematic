@@ -31,18 +31,12 @@ import io.reactivex.Single;
 public class CustomerRepo implements Repo<Customer> {
 
 
-	public LocalCustomerLab getLocalCustomerLab() {
-		return localCustomerLab;
-	}
-
 	private final LocalCustomerLab localCustomerLab;
 	private final AppDatabase db;
 	//TODO remove direct access to this
 	private final WebService webService;
 	private final AppExecutors appExecutors;
 	private RateLimiter<String> customerListRateLimit = new RateLimiter<>(10, TimeUnit.MINUTES);
-
-
 	@Inject
 	public CustomerRepo(final AppDatabase db, final LocalCustomerLab localCustomerLab,
 	                    final WebService webService,
@@ -53,8 +47,9 @@ public class CustomerRepo implements Repo<Customer> {
 		this.appExecutors = appExecutors;
 	}
 
-
-
+	public LocalCustomerLab getLocalCustomerLab() {
+		return localCustomerLab;
+	}
 
 	@Override
 	public LiveData<Resource<List<Customer>>> loadItems() {

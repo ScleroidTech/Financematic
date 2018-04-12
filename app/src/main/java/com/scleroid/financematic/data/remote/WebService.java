@@ -20,35 +20,35 @@ import retrofit2.http.Path;
  * @since 4/5/18
  */
 public interface WebService {
-    //TODO Replace with actual api
-    @GET("/users/{customer}")
-    LiveData<ApiResponse<Customer>> getCustomer(@Path("customer") int customerId);
+	//TODO Replace with actual api
+	@GET("/users/{customer}")
+	LiveData<ApiResponse<Customer>> getCustomer(@Path("customer") int customerId);
 
-    @GET("/users/{customer}")
-    LiveData<ApiResponse<List<Customer>>> getCustomers();
+	@GET("/users/{customer}")
+	LiveData<ApiResponse<List<Customer>>> getCustomers();
 
-    @GET("/users/{loan}")
-    LiveData<ApiResponse<Loan>> getLoan(@Path("loan") int loanId);
+	@GET("/users/{loan}")
+	LiveData<ApiResponse<Loan>> getLoan(@Path("loan") int loanId);
 
-    @GET("/users/")
-    LiveData<ApiResponse<List<Loan>>> getLoans();
+	@GET("/users/")
+	LiveData<ApiResponse<List<Loan>>> getLoans();
 
-    @GET("/users/")
-    LiveData<ApiResponse<List<Loan>>> getLoans(int customerId);
+	@GET("/users/")
+	LiveData<ApiResponse<List<Loan>>> getLoans(int customerId);
 
-    LiveData<ApiResponse<List<Expense>>> getExpenses();
+	LiveData<ApiResponse<List<Expense>>> getExpenses();
 
-    LiveData<ApiResponse<Expense>> getExpense(int expenseNo);
+	LiveData<ApiResponse<Expense>> getExpense(int expenseNo);
 
-    LiveData<ApiResponse<List<TransactionModel>>> getTransactionsForLoan(int loanAcNo);
+	LiveData<ApiResponse<List<TransactionModel>>> getTransactionsForLoan(int loanAcNo);
 
-    LiveData<ApiResponse<List<TransactionModel>>> getTransactions();
+	LiveData<ApiResponse<List<TransactionModel>>> getTransactions();
 
-    LiveData<ApiResponse<TransactionModel>> getTransaction(int transactionNo);
+	LiveData<ApiResponse<TransactionModel>> getTransaction(int transactionNo);
 
-    LiveData<ApiResponse<Installment>> getInstallment(int installmentNo);
+	LiveData<ApiResponse<Installment>> getInstallment(int installmentNo);
 
-    LiveData<ApiResponse<List<Installment>>> getInstallments();
+	LiveData<ApiResponse<List<Installment>>> getInstallments();
 
-    LiveData<ApiResponse<List<Installment>>> getInstallmentsForLoan(int loanAcNo);
+	LiveData<ApiResponse<List<Installment>>> getInstallmentsForLoan(int loanAcNo);
 }

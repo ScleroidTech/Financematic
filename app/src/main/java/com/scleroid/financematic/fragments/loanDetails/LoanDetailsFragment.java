@@ -35,140 +35,156 @@ import butterknife.Unbinder;
 public class LoanDetailsFragment extends BaseFragment {
 
 
-    TextViewUtils textViewUtils = new TextViewUtils();
-    @BindView(R.id.total_amount_text_view)
-    TextView totalAmountTextView;
-    @BindView(R.id.duration_text_view)
-    TextView durationTextView;
-    @BindView(R.id.paid_amount_text_view)
-    TextView paidAmountTextView;
-    @BindView(R.id.installment_text_view)
-    TextView installmentTextView;
-    @BindView(R.id.card_view)
-    CardView cardView;
+	TextViewUtils textViewUtils = new TextViewUtils();
+	@BindView(R.id.total_amount_text_view)
+	TextView totalAmountTextView;
+	@BindView(R.id.duration_text_view)
+	TextView durationTextView;
+	@BindView(R.id.paid_amount_text_view)
+	TextView paidAmountTextView;
+	@BindView(R.id.installment_text_view)
+	TextView installmentTextView;
+	@BindView(R.id.card_view)
+	CardView cardView;
 
 
-    @BindView(R.id.pesonal_summery_details_recycler)
-    RecyclerView pesonalSummeryDetailsRecycler;
-    Unbinder unbinder;
-    private List<Personal_summery_loan_details> summeryList = new ArrayList<>();
-    private RecyclerView recyclerView;
-    private SummeryAdapter mAdapter;
-    private ActivityUtils activityUtils = new ActivityUtils();
+	@BindView(R.id.pesonal_summery_details_recycler)
+	RecyclerView pesonalSummeryDetailsRecycler;
+	Unbinder unbinder;
+	private List<Personal_summery_loan_details> summeryList = new ArrayList<>();
+	private RecyclerView recyclerView;
+	private SummeryAdapter mAdapter;
+	private ActivityUtils activityUtils = new ActivityUtils();
 
-    public LoanDetailsFragment() {
-        // Required empty public constructor
-    }
+	public LoanDetailsFragment() {
+		// Required empty public constructor
+	}
 
-    public static LoanDetailsFragment newInstance(String param1, String param2) {
-        LoanDetailsFragment fragment = new LoanDetailsFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
+	public static LoanDetailsFragment newInstance(String param1, String param2) {
+		LoanDetailsFragment fragment = new LoanDetailsFragment();
+		Bundle args = new Bundle();
+		fragment.setArguments(args);
+		return fragment;
+	}
 
-    /**
-     * @return layout resource id
-     */
-    @Override
-    public int getLayoutId() {
-        return R.layout.fragment_loan_details;
-    }
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+	}
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+	                         Bundle savedInstanceState) {
+		super.onCreateView(inflater, container, savedInstanceState);
+		// Inflate the layout for this fragment
+		View rootView = getRootView();
+		/*        View rootView =  inflater.inflate(R.layout.personal_loan_aacount_details,
+		container, false);*/
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-        // Inflate the layout for this fragment
-        View rootView = getRootView();
-        /*        View rootView =  inflater.inflate(R.layout.personal_loan_aacount_details, container, false);*/
-
-        recyclerView = rootView.findViewById(R.id.pesonal_summery_details_recycler);
-        mAdapter = new SummeryAdapter(summeryList);
-        recyclerView.setHasFixedSize(true);
+		recyclerView = rootView.findViewById(R.id.pesonal_summery_details_recycler);
+		mAdapter = new SummeryAdapter(summeryList);
+		recyclerView.setHasFixedSize(true);
 
 
-        // vertical RecyclerView
-        // keep movie_list_row.xml width to `match_parent`
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+		// vertical RecyclerView
+		// keep movie_list_row.xml width to `match_parent`
+		RecyclerView.LayoutManager mLayoutManager =
+				new LinearLayoutManager(getActivity().getApplicationContext());
 
-        // horizontal RecyclerView
-        // keep movie_list_row.xml width to `wrap_content`
-        // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
+		// horizontal RecyclerView
+		// keep movie_list_row.xml width to `wrap_content`
+		// RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager
+		// (getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
 
-        recyclerView.setLayoutManager(mLayoutManager);
-
-
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        recyclerView.setAdapter(mAdapter);
-
-        // row click listener
-        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity().getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                Personal_summery_loan_details loan = summeryList.get(position);
-                Toast.makeText(getActivity().getApplicationContext(), loan.getSummery_amount() + " is selected!", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {
-
-            }
-        }));
-
-        prepareLoanData();
-
-        //  textViewUtils.textViewExperiments(totalAmountTextView);
-        return rootView;
+		recyclerView.setLayoutManager(mLayoutManager);
 
 
-    }
+		recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-    /**
-     * Override for set view model
-     *
-     * @return view model instance
-     */
-    @Override
-    public BaseViewModel getViewModel() {
-        return null;
-    }
+		recyclerView.setAdapter(mAdapter);
 
+		// row click listener
+		recyclerView.addOnItemTouchListener(
+				new RecyclerTouchListener(getActivity().getApplicationContext(), recyclerView,
+						new RecyclerTouchListener.ClickListener() {
+							@Override
+							public void onClick(View view, int position) {
+								Personal_summery_loan_details loan = summeryList.get(position);
+								Toast.makeText(getActivity().getApplicationContext(),
+										loan.getSummery_amount() + " is selected!",
+										Toast.LENGTH_SHORT).show();
+							}
 
-    private void prepareLoanData() {
-        Personal_summery_loan_details loan = new Personal_summery_loan_details("Received", "2000", new Date("1/6/2018"));
-        summeryList.add(loan);
-        loan = new Personal_summery_loan_details("Received", "5000", new Date("12/3/2018"));
-        summeryList.add(loan);
-        loan = new Personal_summery_loan_details("Received", "1000", new Date("4/15/2018"));
-        summeryList.add(loan);
-        loan = new Personal_summery_loan_details("Not Received", "7000", new Date("7/25/2018"));
-        summeryList.add(loan);
-        loan = new Personal_summery_loan_details("Received", "1000", new Date("2/15/2018"));
-        summeryList.add(loan);
-        loan = new Personal_summery_loan_details("Received", "3000", new Date("4/13/2018"));
-        summeryList.add(loan);
-        loan = new Personal_summery_loan_details("Received", "5000", new Date("12/3/2018"));
-        summeryList.add(loan);
-        loan = new Personal_summery_loan_details("Received", "1000", new Date("4/15/2018"));
-        summeryList.add(loan);
-        loan = new Personal_summery_loan_details("Not Received", "7000", new Date("7/25/2018"));
-        summeryList.add(loan);
-        loan = new Personal_summery_loan_details("Received", "1000", new Date("2/15/2018"));
-        summeryList.add(loan);
-        loan = new Personal_summery_loan_details("Received", "3000", new Date("4/13/2018"));
-        summeryList.add(loan);
+							@Override
+							public void onLongClick(View view, int position) {
+
+							}
+						}));
+
+		prepareLoanData();
+
+		//  textViewUtils.textViewExperiments(totalAmountTextView);
+		return rootView;
 
 
-        // notify adapter about data set changes
-        // so that it will render the list with new data
-        mAdapter.notifyDataSetChanged();
-    }
+	}
+
+	/**
+	 * @return layout resource id
+	 */
+	@Override
+	public int getLayoutId() {
+		return R.layout.fragment_loan_details;
+	}
+
+	/**
+	 * Override so you can observe your viewModel
+	 */
+	@Override
+	protected void subscribeToLiveData() {
+
+	}
+
+	/**
+	 * Override for set view model
+	 *
+	 * @return view model instance
+	 */
+	@Override
+	public BaseViewModel getViewModel() {
+		return null;
+	}
+
+
+	private void prepareLoanData() {
+		Personal_summery_loan_details loan =
+				new Personal_summery_loan_details("Received", "2000", new Date("1/6/2018"));
+		summeryList.add(loan);
+		loan = new Personal_summery_loan_details("Received", "5000", new Date("12/3/2018"));
+		summeryList.add(loan);
+		loan = new Personal_summery_loan_details("Received", "1000", new Date("4/15/2018"));
+		summeryList.add(loan);
+		loan = new Personal_summery_loan_details("Not Received", "7000", new Date("7/25/2018"));
+		summeryList.add(loan);
+		loan = new Personal_summery_loan_details("Received", "1000", new Date("2/15/2018"));
+		summeryList.add(loan);
+		loan = new Personal_summery_loan_details("Received", "3000", new Date("4/13/2018"));
+		summeryList.add(loan);
+		loan = new Personal_summery_loan_details("Received", "5000", new Date("12/3/2018"));
+		summeryList.add(loan);
+		loan = new Personal_summery_loan_details("Received", "1000", new Date("4/15/2018"));
+		summeryList.add(loan);
+		loan = new Personal_summery_loan_details("Not Received", "7000", new Date("7/25/2018"));
+		summeryList.add(loan);
+		loan = new Personal_summery_loan_details("Received", "1000", new Date("2/15/2018"));
+		summeryList.add(loan);
+		loan = new Personal_summery_loan_details("Received", "3000", new Date("4/13/2018"));
+		summeryList.add(loan);
+
+
+		// notify adapter about data set changes
+		// so that it will render the list with new data
+		mAdapter.notifyDataSetChanged();
+	}
 
 }

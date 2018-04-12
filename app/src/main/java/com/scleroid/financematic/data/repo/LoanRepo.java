@@ -50,6 +50,10 @@ import io.reactivex.Single;
 public class LoanRepo implements Repo<Loan> {
 
 
+	private final LocalLoanLab localLoanLab;
+	private final WebService webService;
+	private final AppExecutors appExecutors;
+	private RateLimiter<String> loanListRateLimit = new RateLimiter<>(10, TimeUnit.MINUTES);
 
 	@Inject
 	LoanRepo(final LocalLoanLab loanLab, final WebService webService,
@@ -59,14 +63,6 @@ public class LoanRepo implements Repo<Loan> {
 		this.webService = webService;
 		this.appExecutors = appExecutors;
 	}
-
-	private final LocalLoanLab localLoanLab;
-
-	private final WebService webService;
-
-	private final AppExecutors appExecutors;
-
-	private RateLimiter<String> loanListRateLimit = new RateLimiter<>(10, TimeUnit.MINUTES);
 
 	public LocalLoanLab getLocalLoanLab() {
 		return localLoanLab;

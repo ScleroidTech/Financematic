@@ -23,10 +23,10 @@
     <color name="tint_profile">#f95b2a</color>
 
     <color name="report_table">#0fa8bc</color>
-<!--    <color name="Transparent">#00000000</color>-->
+    <!--    <color name="Transparent">#00000000</color>-->
 
 
-    <color name="exp_card1">#424fb5 </color>
+    <color name="exp_card1">#424fb5</color>
     <color name="exp_card2">#f27116</color>
     <color name="exp_card3">#bc14cb</color>
     <color name="exp_card4">#1aaea1</color>
@@ -51,8 +51,6 @@
     <color name="details_item_header">@color/details_name_color</color>
     <color name="details_item_text">#858d92</color>
     <color name="details_item_separator">@color/item_separator_color</color>
-
-
 
 
 </resources>

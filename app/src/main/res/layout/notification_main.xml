@@ -12,38 +12,38 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Notification Example"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:text="Notification Example"
         android:textSize="30dp" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tutorials point "
-        android:textColor="#ff87ff09"
-        android:textSize="30dp"
         android:layout_below="@+id/textView1"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="48dp" />
+        android:layout_marginTop="48dp"
+        android:text="Tutorials point "
+        android:textColor="#ff87ff09"
+        android:textSize="30dp" />
 
     <ImageButton
+        android:id="@+id/imageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageButton"
-        android:src="@drawable/ic_rs10"
         android:layout_below="@+id/textView2"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="42dp" />
+        android:layout_marginTop="42dp"
+        android:src="@drawable/ic_rs10" />
 
     <Button
+        android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Notification"
-        android:id="@+id/button"
-        android:layout_marginTop="62dp"
         android:layout_below="@+id/imageButton"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="62dp"
+        android:text="Notification" />
 
 </RelativeLayout>

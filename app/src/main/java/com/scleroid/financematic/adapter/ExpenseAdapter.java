@@ -26,140 +26,141 @@ import butterknife.ButterKnife;
  */
 
 public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHolder> {
-    List<Expense> expenses;
+	List<Expense> expenses;
 
-    Context context;
+	Context context;
 
-    public ExpenseAdapter(List<Expense> expenses, Context context) {
-        this.expenses = expenses;
-        this.context = context;
-    }
-
-
-    public List<Expense> getExpenses() {
-        return expenses;
-    }
-
-    public void setExpenses(List<Expense> expenses) {
-        this.expenses = expenses;
-    }
-
-    @NonNull
-    @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.recycler_fragment_expense, parent, false);
-        return new ViewHolder(itemView);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
-        holder.setData(context, expenses.get(position));
-
-    }
+	public ExpenseAdapter(List<Expense> expenses, Context context) {
+		this.expenses = expenses;
+		this.context = context;
+	}
 
 
-    @Override
-    public int getItemCount() {
-        //TODO change according to type
-        return expenses.size();
-    }
+	public List<Expense> getExpenses() {
+		return expenses;
+	}
+
+	public void setExpenses(List<Expense> expenses) {
+		this.expenses = expenses;
+	}
+
+	@NonNull
+	@Override
+	public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+		View itemView = LayoutInflater.from(parent.getContext())
+				.inflate(R.layout.recycler_fragment_expense, parent, false);
+		return new ViewHolder(itemView);
+	}
+
+	@Override
+	public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
+		holder.setData(context, expenses.get(position));
+
+	}
 
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
-
-        static DateUtils dateUtils = new DateUtils();
-        static CurrencyStringUtils currencyStringUtils = new CurrencyStringUtils();
-        @BindView(R.id.month_text_view)
-        TextView monthTextView;
-        @BindView(R.id.only_date_text_view)
-        TextView onlyDateTextView;
-        @BindView(R.id.day_text_view)
-        TextView dayTextView;
-
-        @BindView(R.id.expense_image)
-        ImageView expenseImage;
-        @BindView(R.id.expense_type_text_view)
-        TextView expenseTypeTextView;
-        @BindView(R.id.expense_amount_text_view)
-        TextView expenseAmount;
-        @BindView(R.id.card_view)
-        CardView cardView;
-
-        ViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
-
-        public void setData(Context context, Expense expense) {
-            setDate(expense.getExpenseDate());
-            expenseAmount.setText(currencyStringUtils.bindNumber(expense.getExpenseAmount().intValueExact()));
-            byte expenseType = expense.getExpenseType();
-            setExpenseType(expenseType, context);
+	@Override
+	public int getItemCount() {
+		//TODO change according to type
+		return expenses.size();
+	}
 
 
-        }
+	static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private void setExpenseType(byte expenseType, Context context) {
-            String expenseTypeText;
-            int expenseTypeImageSrc;
-            int expenseColor;
+		static DateUtils dateUtils = new DateUtils();
+		static CurrencyStringUtils currencyStringUtils = new CurrencyStringUtils();
+		@BindView(R.id.month_text_view)
+		TextView monthTextView;
+		@BindView(R.id.only_date_text_view)
+		TextView onlyDateTextView;
+		@BindView(R.id.day_text_view)
+		TextView dayTextView;
 
-            switch (expenseType) {
-                case 1:
-                    expenseTypeText = "Room Rent";
-                    expenseTypeImageSrc = R.drawable.ic_home_black_24dp;
-                    expenseColor = context.getResources().getColor(R.color.exp_card1);
+		@BindView(R.id.expense_image)
+		ImageView expenseImage;
+		@BindView(R.id.expense_type_text_view)
+		TextView expenseTypeTextView;
+		@BindView(R.id.expense_amount_text_view)
+		TextView expenseAmount;
+		@BindView(R.id.card_view)
+		CardView cardView;
 
-                    break;
-                case 2:
-                    expenseTypeText = "Light Bill";
-                    expenseTypeImageSrc = R.drawable.ic_lightbulb_outline_black_24dp;
-                    expenseColor = context.getResources().getColor(R.color.exp_card2);
+		ViewHolder(View itemView) {
+			super(itemView);
+			ButterKnife.bind(this, itemView);
+		}
 
-                    break;
-                case 3:
-                    expenseTypeText = "Mobile Bill";
-                    expenseTypeImageSrc = R.drawable.ic_phone_android_black_24dp;
-                    expenseColor = context.getResources().getColor(R.color.exp_card3);
-                    break;
-                case 4:
-                    expenseTypeText = "Paid Salaries";
-                    expenseTypeImageSrc = R.drawable.ic_account_balance_wallet_black_24dp;
-                    expenseColor = context.getResources().getColor(R.color.exp_card4);
-                    break;
-                case 5:
-                    expenseTypeText = "Fuel";
-                    expenseTypeImageSrc = R.drawable.ic_gaspump;
-                    expenseColor = context.getResources().getColor(R.color.exp_card5);
-                    break;
-                case 0:
-                default:
-                    expenseTypeText = "Other";
-                    expenseTypeImageSrc = R.drawable.ic_view_list_black_24dp;
-                    expenseColor = context.getResources().getColor(R.color.exp_card6);
-                    break;
-
-            }
-            expenseTypeTextView.setText(expenseTypeText);
-            expenseImage.setImageResource(expenseTypeImageSrc);
-            expenseImage.setColorFilter(expenseColor);
-        }
-
-        private void setDate(Date date) {
-            CharSequence month = dateUtils.getFormattedDate(date, "MMM. yyyy");
-            CharSequence exactDate = dateUtils.getFormattedDate(date, "dd");
-            CharSequence day = dateUtils.getFormattedDate(date, "EEE");
-            CharSequence year = dateUtils.getFormattedDate(date, "yyyy");
-            monthTextView.setText(month);
-            onlyDateTextView.setText(exactDate);
-            dayTextView.setText(day);
-            //    yearTextView.setText(year);
-        }
+		public void setData(Context context, Expense expense) {
+			setDate(expense.getExpenseDate());
+			expenseAmount.setText(
+					currencyStringUtils.bindNumber(expense.getExpenseAmount().intValueExact()));
+			byte expenseType = expense.getExpenseType();
+			setExpenseType(expenseType, context);
 
 
-    }
+		}
+
+		private void setExpenseType(byte expenseType, Context context) {
+			String expenseTypeText;
+			int expenseTypeImageSrc;
+			int expenseColor;
+
+			switch (expenseType) {
+				case 1:
+					expenseTypeText = "Room Rent";
+					expenseTypeImageSrc = R.drawable.ic_home_black_24dp;
+					expenseColor = context.getResources().getColor(R.color.exp_card1);
+
+					break;
+				case 2:
+					expenseTypeText = "Light Bill";
+					expenseTypeImageSrc = R.drawable.ic_lightbulb_outline_black_24dp;
+					expenseColor = context.getResources().getColor(R.color.exp_card2);
+
+					break;
+				case 3:
+					expenseTypeText = "Mobile Bill";
+					expenseTypeImageSrc = R.drawable.ic_phone_android_black_24dp;
+					expenseColor = context.getResources().getColor(R.color.exp_card3);
+					break;
+				case 4:
+					expenseTypeText = "Paid Salaries";
+					expenseTypeImageSrc = R.drawable.ic_account_balance_wallet_black_24dp;
+					expenseColor = context.getResources().getColor(R.color.exp_card4);
+					break;
+				case 5:
+					expenseTypeText = "Fuel";
+					expenseTypeImageSrc = R.drawable.ic_gaspump;
+					expenseColor = context.getResources().getColor(R.color.exp_card5);
+					break;
+				case 0:
+				default:
+					expenseTypeText = "Other";
+					expenseTypeImageSrc = R.drawable.ic_view_list_black_24dp;
+					expenseColor = context.getResources().getColor(R.color.exp_card6);
+					break;
+
+			}
+			expenseTypeTextView.setText(expenseTypeText);
+			expenseImage.setImageResource(expenseTypeImageSrc);
+			expenseImage.setColorFilter(expenseColor);
+		}
+
+		private void setDate(Date date) {
+			CharSequence month = dateUtils.getFormattedDate(date, "MMM. yyyy");
+			CharSequence exactDate = dateUtils.getFormattedDate(date, "dd");
+			CharSequence day = dateUtils.getFormattedDate(date, "EEE");
+			CharSequence year = dateUtils.getFormattedDate(date, "yyyy");
+			monthTextView.setText(month);
+			onlyDateTextView.setText(exactDate);
+			dayTextView.setText(day);
+			//    yearTextView.setText(year);
+		}
+
+
+	}
 
 
 }

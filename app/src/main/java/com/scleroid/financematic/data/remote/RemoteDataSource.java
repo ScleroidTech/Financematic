@@ -9,5 +9,5 @@ import io.reactivex.Completable;
  * @since 4/6/18
  */
 public interface RemoteDataSource<T> {
-    Completable sync(T t);
+	Completable sync(T t);
 }

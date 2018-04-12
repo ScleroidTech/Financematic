@@ -1,47 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
-    <ScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:fillViewport="true">
+
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" android:background="#fff">
+            android:layout_height="wrap_content"
+            android:background="#fff">
 
 
             <!-- Registration Form -->
-            <LinearLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:orientation="vertical"
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dip"
                 android:layout_margin="7dp"
-                android:background="@drawable/shadow">
+                android:background="@drawable/shadow"
+                android:orientation="vertical"
+                android:padding="5dip">
 
                 <!-- Full Name Label -->
-                <LinearLayout android:id="@+id/header"
+                <LinearLayout
+                    android:id="@+id/header"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:background="#0fa8bc"
-                    android:paddingTop="5dip"
                     android:paddingBottom="5dip"
-                    >
-                    <TextView android:id="@+id/reg_fullname_detaills"
+                    android:paddingTop="5dip">
+
+                    <TextView
+                        android:id="@+id/reg_fullname_detaills"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
 
                         android:singleLine="true"
-                        android:textColor="@color/white"
                         android:text="Expenses"
-                        android:textSize="20sp"
                         android:textAlignment="center"
-                        />
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
                     <!-- Logo Ends -->
                 </LinearLayout>
 
@@ -52,38 +53,38 @@
                     android:layout_marginTop="15dp"
                     android:orientation="horizontal"
                     android:paddingBottom="5dp"
-                    android:paddingRight="5dp"
                     android:paddingLeft="10dp"
+                    android:paddingRight="5dp"
                     android:weightSum="1">
-                    <TextView
-android:layout_gravity="center_vertical"                      android:textColor="#409bbf"                     android:layout_width="0dp"
-                        android:layout_height="wrap_content"
 
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_weight=".5"
+
                         android:text="Enter Amount"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textSize="20sp"
-                        />
+                        android:textColor="#409bbf"
+                        android:textSize="20sp" />
+
                     <EditText
 
-                        android:textColor="#409bbf"                 android:id="@+id/rxEnterAmount"
+                        android:id="@+id/rxEnterAmount"
                         android:layout_width="0dp"
                         android:layout_height="45dp"
-                        android:maxLines="1"
                         android:layout_marginLeft="10dp"
-                        android:drawableLeft="@drawable/ic_rupeeindian"
-                        android:drawableTint="@color/colorPrimaryDark"
                         android:layout_weight=".5"
                         android:background="@drawable/shadow"
+                        android:drawableLeft="@drawable/ic_rupeeindian"
+                        android:drawableTint="@color/colorPrimaryDark"
+                        android:maxLines="1"
                         android:paddingBottom="10dp"
-                        android:paddingTop="10dp" />
-
-
+                        android:paddingTop="10dp"
+                        android:textColor="#409bbf" />
 
 
                 </LinearLayout>
-
-
 
 
                 <LinearLayout
@@ -92,37 +93,36 @@ android:layout_gravity="center_vertical"                      android:textColor=
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal"
                     android:paddingBottom="5dp"
-                    android:paddingRight="5dp"
                     android:paddingLeft="10dp"
+                    android:paddingRight="5dp"
                     android:weightSum="1">
+
                     <TextView
                         android:id="@+id/exp_date11"
-                        android:layout_gravity="center_vertical"                      android:textColor="#409bbf"                     android:layout_width="0dp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-
+                        android:layout_gravity="center_vertical"
                         android:layout_weight=".5"
+
                         android:text="Date"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textSize="20sp"
-                        />
-
-
-
+                        android:textColor="#409bbf"
+                        android:textSize="20sp" />
 
 
                     <EditText
-                        android:textColor="#409bbf"                 android:id="@+id/exp_date"
+                        android:id="@+id/exp_date"
                         android:layout_width="0dp"
-                        android:maxLines="1"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:drawableRight="@drawable/ic_calendarclocktime"
-                        android:drawableTint="@color/colorPrimaryDark" android:layout_height="wrap_content"
                         android:layout_weight=".5"
                         android:background="@drawable/shadow"
+                        android:drawableRight="@drawable/ic_calendarclocktime"
+                        android:drawableTint="@color/colorPrimaryDark"
+                        android:maxLines="1"
                         android:paddingBottom="10dp"
-                        android:paddingTop="10dp" />
-
-
+                        android:paddingTop="10dp"
+                        android:textColor="#409bbf" />
 
 
                 </LinearLayout>
@@ -134,66 +134,57 @@ android:layout_gravity="center_vertical"                      android:textColor=
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal"
                     android:paddingBottom="5dp"
-                    android:paddingRight="5dp"
                     android:paddingLeft="10dp"
+                    android:paddingRight="5dp"
                     android:weightSum="1">
-                    <TextView
-                        android:layout_gravity="center_vertical"                      android:textColor="#409bbf"                     android:layout_width="0dp"
-                        android:layout_height="wrap_content"
 
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_weight=".5"
+
                         android:text="Category"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textSize="20sp"
-                        />
-
-
+                        android:textColor="#409bbf"
+                        android:textSize="20sp" />
 
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight=".5"
                         android:background="@drawable/shadow5"
                         android:paddingLeft="10dp"
-                        android:paddingTop="10dp"
-                        android:layout_weight=".5"
-                        >
+                        android:paddingTop="10dp">
+
                         <Spinner
                             android:id="@+id/spinnerexp"
-                            android:textColor="#409bbf"    android:layout_width="wrap_content"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"
+                            android:textColor="#409bbf"
 
                             ></Spinner>
 
                     </LinearLayout>
 
 
-
-
                 </LinearLayout>
 
 
-
-
-
-
-
-
-
-
-
-                <Button android:id="@+id/btn_customer_name1"
+                <Button
+                    android:id="@+id/btn_customer_name1"
                     android:layout_width="fill_parent"
                     android:layout_height="37dp"
-android:textSize="18sp"
-                    android:text="Submit"
-                    android:textColor="@color/white"
+                    android:layout_marginBottom="15dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-android:layout_marginTop="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:background="#0fa8bc" />
+                    android:layout_marginTop="15dp"
+                    android:background="#0fa8bc"
+                    android:text="Submit"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/display1"

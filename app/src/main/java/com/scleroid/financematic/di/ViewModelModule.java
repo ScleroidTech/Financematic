@@ -24,37 +24,37 @@ import dagger.multibindings.IntoMap;
 
 @Module
 public abstract class ViewModelModule {
-    @Binds
-    @IntoMap
-    @ViewModelKey(CustomerViewModel.class)
-    abstract ViewModel bindCustomerViewModel(CustomerViewModel userViewModel);
+	@Binds
+	@IntoMap
+	@ViewModelKey(CustomerViewModel.class)
+	abstract ViewModel bindCustomerViewModel(CustomerViewModel userViewModel);
 
-    @Binds
-    @IntoMap
-    @ViewModelKey(ExpenseViewModel.class)
-    abstract ViewModel bindExpenseViewModel(ExpenseViewModel expenseViewModel);
+	@Binds
+	@IntoMap
+	@ViewModelKey(ExpenseViewModel.class)
+	abstract ViewModel bindExpenseViewModel(ExpenseViewModel expenseViewModel);
 
-    @Binds
-    @IntoMap
-    @ViewModelKey(LoanDetailsViewModel.class)
-    abstract ViewModel bindLoanDetailsViewModel(LoanDetailsViewModel loanDetailsViewModel);
+	@Binds
+	@IntoMap
+	@ViewModelKey(LoanDetailsViewModel.class)
+	abstract ViewModel bindLoanDetailsViewModel(LoanDetailsViewModel loanDetailsViewModel);
 
-    @Binds
-    @IntoMap
-    @ViewModelKey(PeopleViewModel.class)
-    abstract ViewModel bindPeopleViewModel(PeopleViewModel peopleViewModel);
+	@Binds
+	@IntoMap
+	@ViewModelKey(PeopleViewModel.class)
+	abstract ViewModel bindPeopleViewModel(PeopleViewModel peopleViewModel);
 
-    @Binds
-    @IntoMap
-    @ViewModelKey(DashboardViewModel.class)
-    abstract ViewModel bindDashboardViewModel(DashboardViewModel dashboardViewModel);
+	@Binds
+	@IntoMap
+	@ViewModelKey(DashboardViewModel.class)
+	abstract ViewModel bindDashboardViewModel(DashboardViewModel dashboardViewModel);
 
-    @Binds
-    @IntoMap
-    @ViewModelKey(PassbookViewModel.class)
-    abstract ViewModel bindPassbookViewModel(PassbookViewModel passbookViewModel);
+	@Binds
+	@IntoMap
+	@ViewModelKey(PassbookViewModel.class)
+	abstract ViewModel bindPassbookViewModel(PassbookViewModel passbookViewModel);
 
 
-    @Binds
-    abstract ViewModelProvider.Factory bindViewModelFactory(ViewModelFactory factory);
+	@Binds
+	abstract ViewModelProvider.Factory bindViewModelFactory(ViewModelFactory factory);
 }

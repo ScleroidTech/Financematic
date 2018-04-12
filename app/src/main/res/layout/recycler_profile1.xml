@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="116dp"
-    >
+    android:layout_height="116dp">
 
     <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -12,9 +11,9 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:elevation="5dp"
-
         android:layout_marginTop="1dp"
+
+        android:elevation="5dp"
 
         app:cardBackgroundColor="@color/white"
 
@@ -92,9 +91,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                android:background="@color/colorPrimaryDark"
                 android:layout_marginBottom="0dp"
                 android:layout_marginTop="13dp"
+                android:background="@color/colorPrimaryDark"
 
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -109,10 +108,11 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_alignParentTop="true"
+                    android:layout_marginBottom="8dp"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:backgroundTint="@color/white"    android:background="@drawable/ic_account_balance_black_24dp"
+                    android:background="@drawable/ic_account_balance_black_24dp"
+                    android:backgroundTint="@color/white"
 
                     app:layout_constraintStart_toStartOf="parent"
                     tools:layout_editor_absoluteY="67dp" />
@@ -123,10 +123,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:layout_marginEnd="2dp"
-                    android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="2dp"
                     android:layout_marginStart="1dp"
+                    android:layout_marginTop="8dp"
 
                     android:text="Total Loan Rs 20,000"
                     android:textAlignment="viewStart"
@@ -136,26 +136,31 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.322"
                     app:layout_constraintStart_toStartOf="parent" />
+
                 <ImageView
                     android:id="@+id/imageView222"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_alignParentTop="true"
+                    android:layout_marginBottom="8dp"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp" android:backgroundTint="@color/white"    android:background="@drawable/ic_trending_up_black_24dp"
+                    android:background="@drawable/ic_trending_up_black_24dp"
+                    android:backgroundTint="@color/white"
 
                     app:layout_constraintStart_toStartOf="parent"
                     tools:layout_editor_absoluteY="67dp" />
+
                 <TextView
                     android:id="@+id/amount_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/customer_name_text_view"
 
+                    android:layout_marginBottom="8dp"
                     android:layout_marginEnd="1dp"
                     android:layout_marginStart="1dp"
-                    android:layout_marginTop="8dp"                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"
 
                     android:text="Received Rs 100"
                     android:textAlignment="center"
@@ -192,8 +197,6 @@
                        android:textColor="@color/colorPrimary"
                        android:textStyle="bold" />-->
             </LinearLayout>
-
-
 
 
         </android.support.constraint.ConstraintLayout>

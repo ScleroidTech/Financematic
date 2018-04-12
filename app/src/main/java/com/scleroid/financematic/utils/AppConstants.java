@@ -8,5 +8,5 @@ package com.scleroid.financematic.utils;
  */
 class AppConstants {
 
-    public static final String TIMESTAMP_FORMAT = "yyyyMMdd_HHmmss";
+	public static final String TIMESTAMP_FORMAT = "yyyyMMdd_HHmmss";
 }

@@ -22,91 +22,91 @@ import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 @Dao
 public interface InstallmentDao {
 
-    /**
-     * Select Query
-     *
-     * @return List of all installments in database
-     */
-    @Query("SELECT * FROM installment")
-    List<Installment> getAll();
+	/**
+	 * Select Query
+	 *
+	 * @return List of all installments in database
+	 */
+	@Query("SELECT * FROM installment")
+	List<Installment> getAll();
 
-    /**
-     * Returns  list of all installments
-     *
-     * @return LiveData object List of all installments in database
-     */
-    @Query("SELECT * FROM Installment")
-    LiveData<List<Installment>> getAllInstallmentsLive();
+	/**
+	 * Returns  list of all installments
+	 *
+	 * @return LiveData object List of all installments in database
+	 */
+	@Query("SELECT * FROM Installment")
+	LiveData<List<Installment>> getAllInstallmentsLive();
 
-    /**
-     * Returns a specific value compared to serialNo passed
-     *
-     * @param serialNo the serialNo of object to be found
-     * @return installment object with same serialNo
-     */
-    @Query("SELECT * FROM Installment where installmentId = :serialNo ")
-    LiveData<Installment> getInstallment(int serialNo);
+	/**
+	 * Returns a specific value compared to serialNo passed
+	 *
+	 * @param serialNo the serialNo of object to be found
+	 * @return installment object with same serialNo
+	 */
+	@Query("SELECT * FROM Installment where installmentId = :serialNo ")
+	LiveData<Installment> getInstallment(int serialNo);
 
-    /**
-     * select query to count Number of installment
-     *
-     * @return number of total entries in the table
-     */
-    @Query("SELECT COUNT(*) from Installment")
-    int countInstallment();
+	/**
+	 * select query to count Number of installment
+	 *
+	 * @return number of total entries in the table
+	 */
+	@Query("SELECT COUNT(*) from Installment")
+	int countInstallment();
 
-    /**
-     * Performs insertion operation
-     *
-     * @param installmentModel inserts this object in the database
-     */
-    @Insert(onConflict = REPLACE)
-    long[] saveInstallments(List<Installment> installmentModel);
+	/**
+	 * Performs insertion operation
+	 *
+	 * @param installmentModel inserts this object in the database
+	 */
+	@Insert(onConflict = REPLACE)
+	long[] saveInstallments(List<Installment> installmentModel);
 
-    /**
-     * Performs insertion operation
-     *
-     * @param installmentModel inserts this object in the database
-     */
-    @Insert(onConflict = REPLACE)
-    long saveInstallment(Installment installmentModel);
+	/**
+	 * Performs insertion operation
+	 *
+	 * @param installmentModel inserts this object in the database
+	 */
+	@Insert(onConflict = REPLACE)
+	long saveInstallment(Installment installmentModel);
 
 
-    /**
-     * Performs insertion operation for multiple values
-     *
-     * @param installment inserts list of installmentModel object
-     */
-    @Insert
-    void insertAll(Installment... installment);
+	/**
+	 * Performs insertion operation for multiple values
+	 *
+	 * @param installment inserts list of installmentModel object
+	 */
+	@Insert
+	void insertAll(Installment... installment);
 
-    /**
-     * Updates a specified dataset
-     *
-     * @param installment the installmentModel which needs to be updated
-     */
-    @Update(onConflict = REPLACE)
-    void update(Installment installment);
+	/**
+	 * Updates a specified dataset
+	 *
+	 * @param installment the installmentModel which needs to be updated
+	 */
+	@Update(onConflict = REPLACE)
+	void update(Installment installment);
 
-    /**
-     * Removes a particular dataset from the database
-     *
-     * @param installment the object which needs to be deleted
-     */
-    @Delete
-    void delete(Installment installment);
+	/**
+	 * Removes a particular dataset from the database
+	 *
+	 * @param installment the object which needs to be deleted
+	 */
+	@Delete
+	void delete(Installment installment);
 
-    /**
-     * Let the database be a part of history I meant, it deletes the whole table
-     */
-    @Query("DELETE FROM Installment")
-    void nukeTable();
+	/**
+	 * Let the database be a part of history I meant, it deletes the whole table
+	 */
+	@Query("DELETE FROM Installment")
+	void nukeTable();
 
-    @Query("SELECT * FROM installment WHERE loanAcNo=:userId")
-    List<Installment> getInstallmentsForLoan(final int userId);
+	@Query("SELECT * FROM installment WHERE loanAcNo=:userId")
+	List<Installment> getInstallmentsForLoan(final int userId);
 
-    @Query("SELECT * FROM installment WHERE loanAcNo=:userId")
-    LiveData<List<Installment>> getInstallmentsForLoanLive(final int userId);
+	@Query("SELECT * FROM installment WHERE loanAcNo=:userId")
+	LiveData<List<Installment>> getInstallmentsForLoanLive(final int userId);
 
 
 }

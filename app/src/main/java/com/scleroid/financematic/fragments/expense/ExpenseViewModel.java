@@ -12,15 +12,16 @@ import java.util.List;
  * @author Ganesh Kaple
  * @since 4/9/18
  */
-public class ExpenseViewModel extends BaseViewModel implements com.scleroid.financematic.viewmodels.ExpenseViewModel {
-    //TODO add  data in it
-    @Override
-    protected LiveData<List> updateItemLiveData() {
-        return null;
-    }
+public class ExpenseViewModel extends BaseViewModel
+		implements com.scleroid.financematic.viewmodels.ExpenseViewModel {
+	//TODO add  data in it
+	@Override
+	protected LiveData<List> updateItemLiveData() {
+		return null;
+	}
 
-    @Override
-    protected LiveData<List> getItemList() {
-        return null;
-    }
+	@Override
+	protected LiveData<List> getItemList() {
+		return null;
+	}
 }

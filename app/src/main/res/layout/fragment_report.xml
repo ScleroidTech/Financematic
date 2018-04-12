@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -120,6 +121,7 @@
             android:background="@color/report_table"
 
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -129,6 +131,7 @@
 
 
                 >
+
                 <TextView
                     android:id="@+id/accNo"
                     android:layout_width="0dp"
@@ -140,6 +143,7 @@
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="@color/white"
                     android:textSize="15sp" />
+
                 <TextView
                     android:id="@+id/installmentDate"
                     android:layout_width="0dp"
@@ -151,6 +155,7 @@
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="@color/white"
                     android:textSize="15sp" />
+
                 <TextView
                     android:id="@+id/expectedAmt"
                     android:layout_width="0dp"
@@ -175,6 +180,7 @@
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="@color/white"
                     android:textSize="15sp" />
+
                 <TextView
                     android:id="@+id/balanceAmt"
                     android:layout_width="0dp"
@@ -187,6 +193,7 @@
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="@color/white"
                     android:textSize="15sp" />
+
                 <TextView
                     android:id="@+id/report_balence"
                     android:layout_width="0dp"
@@ -202,6 +209,7 @@
 
             </LinearLayout>
         </LinearLayout>
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/report_recycler_view"
             android:layout_width="match_parent"
@@ -212,81 +220,79 @@
             />
 
 
+        <!--  <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/report_table"
+
+              android:orientation="vertical">
+              <LinearLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginBottom="5dp"
+                  android:layout_marginTop="5dp"
+                  android:orientation="horizontal"
 
 
-      <!--  <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/report_table"
+                  >
+                  <TextView
+                      android:id="@+id/report_exp_Acc_no"
+                      android:layout_width="0dp"
+                      android:layout_height="wrap_content"
+                      android:layout_weight=".7"
+                      android:background="@drawable/borderright1"
+                      android:text="Acc.No"
 
-            android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal"
+                      android:textAppearance="?android:attr/textAppearanceLarge"
+                      android:textColor="@color/white"
+                      android:textSize="15sp" />
+                  <TextView
+                      android:id="@+id/report_exp_date"
+                      android:layout_width="0dp"
+                      android:layout_height="wrap_content"
+                      android:layout_weight=".9"
+                      android:background="@drawable/borderright1"
+                      android:text="Date"
+                      android:textAlignment="center"
+                      android:textAppearance="?android:attr/textAppearanceLarge"
+                      android:textColor="@color/white"
+                      android:textSize="15sp" />
+                  <TextView
+                      android:id="@+id/report_type"
+                      android:layout_width="0dp"
+                      android:layout_height="wrap_content"
+                      android:layout_weight=".9"
+                      android:background="@drawable/borderright1"
+                      android:text="Lent"
+                      android:textAlignment="center"
+                      android:textAppearance="?android:attr/textAppearanceLarge"
+                      android:textColor="@color/white"
+                      android:textSize="15sp" />
 
+                  <TextView
+                      android:id="@+id/report_exp_amount"
+                      android:layout_width="0dp"
+                      android:layout_height="wrap_content"
+                      android:layout_weight=".9"
+                      android:background="@drawable/borderright1"
+                      android:text="Earned"
+                      android:textAlignment="center"
 
-                >
-                <TextView
-                    android:id="@+id/report_exp_Acc_no"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".7"
-                    android:background="@drawable/borderright1"
-                    android:text="Acc.No"
-
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/white"
-                    android:textSize="15sp" />
-                <TextView
-                    android:id="@+id/report_exp_date"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".9"
-                    android:background="@drawable/borderright1"
-                    android:text="Date"
-                    android:textAlignment="center"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/white"
-                    android:textSize="15sp" />
-                <TextView
-                    android:id="@+id/report_type"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".9"
-                    android:background="@drawable/borderright1"
-                    android:text="Lent"
-                    android:textAlignment="center"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/white"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/report_exp_amount"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".9"
-                    android:background="@drawable/borderright1"
-                    android:text="Earned"
-                    android:textAlignment="center"
-
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/white"
-                    android:textSize="15sp" />
+                      android:textAppearance="?android:attr/textAppearanceLarge"
+                      android:textColor="@color/white"
+                      android:textSize="15sp" />
 
 
-            </LinearLayout>
-        </LinearLayout>
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/report_recycler_expendi"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:scrollbars="vertical"
+              </LinearLayout>
+          </LinearLayout>
+          <android.support.v7.widget.RecyclerView
+              android:id="@+id/report_recycler_expendi"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="10dp"
+              android:scrollbars="vertical"
 
-            />-->
+              />-->
 
 
     </LinearLayout>

@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import com.scleroid.financematic.data.local.AppDatabase;
 import com.scleroid.financematic.data.local.LocalDataSource;
 import com.scleroid.financematic.data.local.dao.CustomerDao;
+import com.scleroid.financematic.data.local.dao.LoanDao;
 import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.utils.AppExecutors;
@@ -33,9 +34,8 @@ public class LocalCustomerLab implements LocalDataSource<Customer> {
 	private final AppExecutors appExecutors;
 	private final CustomerDao customerDao;
 	@Inject
-	LocalLoanLab loanLab;
-	@Inject
-	private Loan loanDao;
+	LoanDao loanDao;
+
 
 	@Inject
 	LocalCustomerLab(final AppDatabase appDatabase, final AppExecutors appExecutors) {
@@ -177,7 +177,7 @@ public class LocalCustomerLab implements LocalDataSource<Customer> {
 			List<Loan> loans = new ArrayList<>();
 			for (Customer customer : inputCustomers) {
 				customerMediatorLiveData.addSource(
-						loanLab.getItemWithCustomerId(customer.getCustomerId()), loan -> {
+						loanDao.getLoanByCustomerIdLive(customer.getCustomerId()), loan -> {
 							loans.add(loan);
 							customer.setLoans(loans);
 							customerMediatorLiveData.postValue(inputCustomers);
@@ -201,7 +201,7 @@ public class LocalCustomerLab implements LocalDataSource<Customer> {
 		customerLiveData = Transformations.switchMap(customerLiveData, inputCustomer -> {
 			MediatorLiveData<Customer> mediatorLiveData = new MediatorLiveData<>();
 			List<Loan> loans = new ArrayList<>();
-			mediatorLiveData.addSource(loanLab.getItemWithCustomerId(inputCustomer.getCustomerId
+			mediatorLiveData.addSource(loanDao.getLoanByCustomerIdLive(inputCustomer.getCustomerId
 							()),
 					loan -> {
 						loans.add(loan);
