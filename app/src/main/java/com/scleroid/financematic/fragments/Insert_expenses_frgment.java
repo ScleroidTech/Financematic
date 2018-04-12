@@ -131,16 +131,15 @@ public class Insert_expenses_frgment extends Fragment implements
 			}
 		});
 
-		b = rootView.findViewById(R.id.btn_customer_name);
+		b = rootView.findViewById(R.id.btn_customer_name1);
 
-		tv = rootView.findViewById(R.id.displayrx);
+		tv = rootView.findViewById(R.id.display1);
 		b.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 
 
-				tv.setText("Your Input: \n" + etrxDate.getText()
-						.toString() + "\n" + spin.getSelectedItem()
+				tv.setText("Your Input: \n" + etrxDate.getText().toString() + "\n" + spin.getSelectedItem()
 						.toString() + "\n" + etrxReceivedAmount.getText().toString() + "\nEnd.");
 			}
 		});

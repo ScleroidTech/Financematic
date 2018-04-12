@@ -25,6 +25,7 @@ import com.scleroid.financematic.data.repo.ExpenseRepo;
 import com.scleroid.financematic.data.repo.InstallmentRepo;
 import com.scleroid.financematic.data.repo.LoanRepo;
 import com.scleroid.financematic.data.repo.TransactionsRepo;
+import com.scleroid.financematic.fragments.Delay_fragment;
 import com.scleroid.financematic.fragments.RegisterCustomerFragment;
 import com.scleroid.financematic.fragments.ReportFragment;
 import com.scleroid.financematic.fragments.dashboard.DashboardFragment;
@@ -379,7 +380,7 @@ public class MainActivity extends BaseActivity
 		// user is in notifications fragment
 		// and selected 'Mark all as Read'
 		if (id == R.id.action_notification) {
-			Notification fragment = new Notification();
+			Delay_fragment fragment = new Delay_fragment();
 
 			loadFragment(fragment);
 		}

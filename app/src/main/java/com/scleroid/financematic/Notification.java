@@ -56,6 +56,11 @@ public class Notification extends BaseFragment {
     }
 
     @Override
+    protected void subscribeToLiveData() {
+
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
