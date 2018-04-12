@@ -10,10 +10,8 @@ import com.scleroid.financematic.data.local.LocalDataSource;
 import com.scleroid.financematic.data.local.dao.CustomerDao;
 import com.scleroid.financematic.data.local.dao.LoanDao;
 import com.scleroid.financematic.data.local.model.Customer;
-import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.utils.AppExecutors;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -174,12 +172,13 @@ public class LocalCustomerLab implements LocalDataSource<Customer> {
 		// TODO Test this, if works remove below code, this part has performance issues
 		customerLiveData = Transformations.switchMap(customerLiveData, inputCustomers -> {
 			MediatorLiveData<List<Customer>> customerMediatorLiveData = new MediatorLiveData<>();
-			List<Loan> loans = new ArrayList<>();
+
 			for (Customer customer : inputCustomers) {
+
 				customerMediatorLiveData.addSource(
 						loanDao.getLoanByCustomerIdLive(customer.getCustomerId()), loan -> {
-							loans.add(loan);
-							customer.setLoans(loans);
+
+							customer.setLoans(loan);
 							customerMediatorLiveData.postValue(inputCustomers);
 
 						});
@@ -200,13 +199,10 @@ public class LocalCustomerLab implements LocalDataSource<Customer> {
 		LiveData<Customer> customerLiveData = customerDao.getCustomerLive(id);
 		customerLiveData = Transformations.switchMap(customerLiveData, inputCustomer -> {
 			MediatorLiveData<Customer> mediatorLiveData = new MediatorLiveData<>();
-			List<Loan> loans = new ArrayList<>();
+			//List<Loan> loans = new ArrayList<>();
 			mediatorLiveData.addSource(loanDao.getLoanByCustomerIdLive(inputCustomer.getCustomerId
 							()),
-					loan -> {
-						loans.add(loan);
-						inputCustomer.setLoans(loans);
-					});
+					inputCustomer::setLoans);
 
 			return mediatorLiveData;
 		});

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.base.BaseFragment;
@@ -95,9 +96,9 @@ public class PeopleFragment extends BaseFragment {
 							@Override
 							public void onClick(View view, int position) {
 								Customer loan = customers.get(position);
-								/*Toast.makeText(getActivity(),
-										loan.getReceivedAmt() + " is selected!",
-										Toast.LENGTH_SHORT).show();*/
+								Toast.makeText(getActivity(),
+										"adsdadasdasd is selected!",
+										Toast.LENGTH_SHORT).show();
 
 
 							}
@@ -107,8 +108,7 @@ public class PeopleFragment extends BaseFragment {
 
 							}
 						});
-		//peopleRecyclerView.addOnItemTouchListener(
-		//			recyclerTouchListener);
+		//	peopleRecyclerView.addOnItemTouchListener(recyclerTouchListener);
 
       /*  //SET ITS PROPERTIES
         peopleRecyclerView.setLayoutManager(new LinearLayoutManager(this));

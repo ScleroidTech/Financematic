@@ -2,12 +2,14 @@ package com.scleroid.financematic.fragments.people;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.annimon.stream.Stream;
@@ -34,6 +36,8 @@ import timber.log.Timber;
 
 public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHolder>
 		implements Filterable {
+
+
 	public List<Customer> getCustomerList() {
 		return customerList;
 	}
@@ -41,6 +45,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 	public void setCustomerList(
 			final List<Customer> customerList) {
 		this.customerList = customerList;
+		notifyDataSetChanged();
 	}
 
 	public List<Customer> customerList;
@@ -65,6 +70,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 	public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		View itemView = LayoutInflater.from(parent.getContext())
 				.inflate(R.layout.list_item_people, parent, false);
+		itemView.bringToFront();
 
 		return new MyViewHolder(itemView);
 	}
@@ -72,9 +78,26 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 	@Override
 	public void onBindViewHolder(MyViewHolder holder, int position) {
 		Customer passbook = customerList.get(position);
-		if (passbook.getLoans() == null) return;
+		holder.itemView.setTag(passbook);
+		if (passbook.getLoans() == null) {
+			Timber.w(passbook.toString() + " didn't make it far");
+			return;
+		}
 		// holder.setPassbook(passbook);
 		holder.setData(passbook);
+
+		holder.peopleItemCardView.setOnClickListener(v -> {
+			Timber.wtf("It's clicked dadadad");
+			Events.openFragment openFragment = new Events.openFragment(passbook.getCustomerId());
+			GlobalBus.getBus().post(openFragment);
+		});
+		holder.callButton.setOnClickListener(v -> {
+			String phone = passbook.getMobileNumber();
+			Timber.d(phone + " of person " + passbook.getName());
+			Events.placeCall makeACall = new Events.placeCall(phone);
+
+			GlobalBus.getBus().post(makeACall);
+		});
 
 
 	}
@@ -94,10 +117,10 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 		return filter;
 	}
 
+
 	public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-		public TextView list_person_name;
-		public RupeeTextView list_total_loan, list_received_amount;
+
 		@BindView(R.id.payment_circle_view)
 		CircleCustomView paymentCircleView;
 		@BindView(R.id.person_name_text_view)
@@ -113,14 +136,17 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 		@BindView(R.id.percentage_pie_chart_text_view)
 		TextView percentagePieChartTextView;
 		private Customer customer;
+		private final View itemView;
+		@BindView(R.id.callButton)
+		ImageView callButton;
+		@BindView(R.id.people_item_card_view)
+		CardView peopleItemCardView;
 
 		public MyViewHolder(View view) {
 			super(view);
-			ButterKnife.bind(this, view);
-			list_person_name = view.findViewById(R.id.person_name_text_view);
-			list_total_loan = view.findViewById(R.id.total_loan_text_view);
-			list_received_amount = view.findViewById(R.id.received_amount_text_view);
-
+			itemView = view;
+			ButterKnife.setDebug(true);
+			ButterKnife.bind(this, itemView);
 			//for tryintend
 
 
@@ -131,9 +157,10 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 			personNameTextView.setText(customer.getName());
 			final int receivedAmt = calculateReceivedAmt(customer.getLoans());
 			final int totalAmt = calculateTotalAmt(customer.getLoans());
-			totalLoanTextView.setText(String.format("%d", receivedAmt));
+			totalLoanTextView.setText(String.format("%d", totalAmt));
 
-			receivedAmountTextView.setText(String.format("%d", totalAmt));
+			receivedAmountTextView.setText(String.format("%d", receivedAmt));
+
 
 			drawCircle(receivedAmt, totalAmt);
 		}
@@ -157,14 +184,18 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 		}
 
 		private int calculateTotalAmt(final List<Loan> loans) {
-			return Stream.of(loans).mapToInt(loan ->
+			int sum = Stream.of(loans).mapToInt(loan ->
 					loan.getLoanAmt().intValue()).sum();
+			Timber.wtf("sum of Total Amt" + sum);
+			return sum;
 		}
 
 		private int calculateReceivedAmt(final List<Loan> loans) {
 
-			return Stream.of(loans).mapToInt(loan ->
+			int sum = Stream.of(loans).mapToInt(loan ->
 					loan.getReceivedAmt().intValue()).sum();
+			Timber.wtf("sum of received Amt" + sum);
+			return sum;
 		}
 
 		@OnClick({R.id.callButton, R.id.people_item_card_view})

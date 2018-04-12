@@ -4,178 +4,165 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout
+    <android.support.v7.widget.CardView
+        android:id="@+id/people_item_card_view"
         android:layout_width="match_parent"
-        android:layout_height="98dp"
-        android:layout_marginBottom="2dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="2dp"
-        android:background="#ddd"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="8dp"
+
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:elevation="5dp"
+        app:cardBackgroundColor="#fcf8f8"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/people_item_card_view"
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="1dp"
-            android:layout_marginLeft="1dp"
-            android:layout_marginRight="1dp"
-            android:layout_marginTop="1dp"
+            android:layout_height="match_parent">
 
-            android:elevation="5dp"
-            app:cardBackgroundColor="#fcf8f8">
+            <com.scleroid.financematic.utils.ui.CircleCustomView
+                android:id="@+id/payment_circle_view"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <android.support.constraint.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <com.scleroid.financematic.utils.ui.CircleCustomView
-                    android:id="@+id/payment_circle_view"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/person_name_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="8dp"
-                    android:text="Sachin Tendulkar"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="18sp"
-                    app:layout_constraintStart_toEndOf="@+id/payment_circle_view"
-                    app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/person_name_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="8dp"
+                android:text="Sachin Tendulkar"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@+id/payment_circle_view"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
-                <TextView
-                    android:id="@+id/total_amount_title_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/person_name_text_view"
-                    android:layout_marginBottom="3dp"
-                    android:layout_marginStart="6dp"
-                    android:text="Total loan"
-                    android:textColor="#4f4e50"
-                    android:textSize="12sp"
-                    app:layout_constraintBottom_toTopOf="@+id/total_loan_text_view"
-                    app:layout_constraintStart_toEndOf="@+id/imageView5" />
+            <TextView
+                android:id="@+id/total_amount_title_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/person_name_text_view"
+                android:layout_marginBottom="3dp"
+                android:layout_marginStart="6dp"
+                android:text="Total loan"
+                android:textColor="#4f4e50"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@+id/total_loan_text_view"
+                app:layout_constraintStart_toEndOf="@+id/imageView5" />
 
-                <com.scleroid.financematic.utils.ui.RupeeTextView
-                    android:id="@+id/total_loan_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/total_amount_title_text_view"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginStart="45dp"
-                    android:text="200000"
-                    android:textSize="17sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/received_amount_text_view" />
+            <com.scleroid.financematic.utils.ui.RupeeTextView
+                android:id="@+id/total_loan_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/total_amount_title_text_view"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="45dp"
+                android:text="200000"
+                android:textSize="17sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/received_amount_text_view" />
 
-                <TextView
-                    android:id="@+id/received_amount_title_text_view"
-                    android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/received_amount_title_text_view"
+                android:layout_width="wrap_content"
 
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@+id/person_name_text_view"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginStart="8dp"
-                    android:text="Received"
-                    android:textColor="#4f4e50"
-                    android:textSize="12sp"
-                    app:layout_constraintBottom_toTopOf="@+id/received_amount_text_view"
-                    app:layout_constraintStart_toEndOf="@+id/imageButton" />
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/person_name_text_view"
+                android:layout_marginBottom="4dp"
+                android:layout_marginStart="8dp"
+                android:text="Received"
+                android:textColor="#4f4e50"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@+id/received_amount_text_view"
+                app:layout_constraintStart_toEndOf="@+id/imageButton" />
 
-                <com.scleroid.financematic.utils.ui.RupeeTextView
-                    android:id="@+id/received_amount_text_view"
+            <com.scleroid.financematic.utils.ui.RupeeTextView
+                android:id="@+id/received_amount_text_view"
 
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
 
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginStart="20dp"
-                    android:text="20000"
-                    android:textSize="17sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/payment_circle_view" />
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="20dp"
+                android:text="20000"
+                android:textSize="17sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/payment_circle_view" />
 
-                <ImageView
-                    android:id="@+id/imageButton"
-                    android:layout_width="25dp"
-                    android:layout_height="22dp"
-                    android:layout_marginBottom="32dp"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/ic_trending_up_black_24dp"
-                    android:backgroundTint="@color/green"
-                    app:layout_constraintBottom_toBottomOf="parent"
+            <ImageView
+                android:id="@+id/imageButton"
+                android:layout_width="25dp"
+                android:layout_height="22dp"
+                android:layout_marginBottom="32dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/ic_trending_up_black_24dp"
+                android:backgroundTint="@color/green"
+                app:layout_constraintBottom_toBottomOf="parent"
 
-                    app:layout_constraintStart_toEndOf="@+id/payment_circle_view"
-                    app:layout_constraintTop_toBottomOf="@+id/callButton"
-
-
-                    app:layout_constraintVertical_bias="1.0" />
-
-                <ImageView
-                    android:id="@+id/imageView5"
-                    android:layout_width="20dp"
-                    android:layout_height="18dp"
-                    android:layout_marginBottom="32dp"
-
-                    android:layout_marginStart="24dp"
-                    android:background="@drawable/ic_account_balance_black_24dp"
-                    android:backgroundTint="@color/colorPrimaryDark"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/received_amount_title_text_view" />
-
-                <TextView
-                    android:id="@+id/percentage_pie_chart_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:text="46%"
-                    android:textAlignment="center"
-                    android:textColor="@color/green"
-                    app:layout_constraintBottom_toBottomOf="@+id/payment_circle_view"
-                    app:layout_constraintEnd_toEndOf="@+id/payment_circle_view"
-                    app:layout_constraintStart_toStartOf="@+id/payment_circle_view"
-                    app:layout_constraintTop_toTopOf="@+id/payment_circle_view" />
-
-                <ImageView
-                    android:id="@+id/callButton"
-                    android:layout_width="40dp"
-                    android:layout_height="35dp"
-
-                    android:layout_marginEnd="12dp"
-                    android:layout_marginTop="24dp"
-                    android:background="@drawable/ic_phone_black_24dp"
-                    android:backgroundTint="@color/colorPrimaryDark"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toEndOf="@+id/payment_circle_view"
+                app:layout_constraintTop_toBottomOf="@+id/callButton"
 
 
-            </android.support.constraint.ConstraintLayout>
+                app:layout_constraintVertical_bias="1.0" />
 
-        </android.support.v7.widget.CardView>
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="20dp"
+                android:layout_height="18dp"
+                android:layout_marginBottom="32dp"
 
-    </LinearLayout>
+                android:layout_marginStart="24dp"
+                android:background="@drawable/ic_account_balance_black_24dp"
+                android:backgroundTint="@color/colorPrimaryDark"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/received_amount_title_text_view" />
+
+            <TextView
+                android:id="@+id/percentage_pie_chart_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="46%"
+                android:textAlignment="center"
+                android:textColor="@color/green"
+                app:layout_constraintBottom_toBottomOf="@+id/payment_circle_view"
+                app:layout_constraintEnd_toEndOf="@+id/payment_circle_view"
+                app:layout_constraintStart_toStartOf="@+id/payment_circle_view"
+                app:layout_constraintTop_toTopOf="@+id/payment_circle_view" />
+
+            <ImageView
+                android:id="@+id/callButton"
+                android:layout_width="40dp"
+                android:layout_height="35dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/ic_phone_black_24dp"
+                android:backgroundTint="@color/colorPrimaryDark"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>
+
 
 </android.support.constraint.ConstraintLayout>

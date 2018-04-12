@@ -64,7 +64,7 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
 	public <T extends ViewModel> T create(Class<T> modelClass) {
 		if (modelClass.isAssignableFrom(CustomerViewModel.class)) {
 			//noinspection unchecked
-			return (T) new CustomerViewModel();
+			return (T) new CustomerViewModel(customerRepo, loanRepo);
 		} else if (modelClass.isAssignableFrom(ExpenseViewModel.class)) {
 			//noinspection unchecked
 			return (T) new ExpenseViewModel();

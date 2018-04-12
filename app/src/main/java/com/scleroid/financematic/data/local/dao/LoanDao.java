@@ -68,7 +68,7 @@ public interface LoanDao {
 	 * @return loan object with same serialNo
 	 */
 	@Query("SELECT * FROM Loan where custId  = :serialNo ")
-	LiveData<Loan> getLoanByCustomerIdLive(int serialNo);
+	LiveData<List<Loan>> getLoanByCustomerIdLive(int serialNo);
 
 
 	/**

@@ -15,15 +15,13 @@ public class Events {
 
 
 	// Event used to send message from activity to fragment.
-	public static class ActivityFragmentMessage {
-		private String message;
+	public static class openFragment {
+		private int customerId;
 
-		public ActivityFragmentMessage(String message) {
-			this.message = message;
-		}
+		public openFragment(final int customerId) {this.customerId = customerId;}
 
-		public String getMessage() {
-			return message;
+		public int getCustomerId() {
+			return customerId;
 		}
 	}
 

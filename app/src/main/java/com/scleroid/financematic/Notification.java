@@ -55,15 +55,18 @@ public class Notification extends BaseFragment {
         return R.layout.notification_tray;
     }
 
-    @Override
-    protected void subscribeToLiveData() {
-
-    }
-
-    @Override
+	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
+	/**
+	 * Override so you can observe your viewModel
+	 */
+	@Override
+	protected void subscribeToLiveData() {
+
+	}
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override

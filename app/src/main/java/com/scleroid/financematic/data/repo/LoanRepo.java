@@ -89,7 +89,7 @@ public class LoanRepo implements Repo<Loan> {
 			@NonNull
 			@Override
 			protected LiveData<List<Loan>> loadFromDb() {
-				return localLoanLab.getItemsForCustomer(customerId);
+				return localLoanLab.getItemWithCustomerId(customerId);
 			}
 
 			@NonNull
