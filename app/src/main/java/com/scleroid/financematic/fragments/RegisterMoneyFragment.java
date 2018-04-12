@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -98,25 +97,19 @@ public class RegisterMoneyFragment extends Fragment implements
 
 		/*        final String text = spin.getSelectedItem().toString();*/
 		//Creating the ArrayAdapter instance having the filterSuggestions list
-		ArrayAdapter aa = new ArrayAdapter(getActivity().getApplicationContext(),
+		ArrayAdapter<String> aa = new ArrayAdapter<>(getActivity().getApplicationContext(),
 				android.R.layout.simple_spinner_item, country);
 		aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		//Setting the ArrayAdapter data on the Spinner
 		spin.setAdapter(aa);
 
 
-		final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-
-			@Override
-			public void onDateSet(DatePicker view, int year, int monthOfYear,
-			                      int dayOfMonth) {
-				// TODO Auto-generated method stub
-				myCalendar.set(Calendar.YEAR, year);
-				myCalendar.set(Calendar.MONTH, monthOfYear);
-				myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-				updateLabel();
-			}
-
+		final DatePickerDialog.OnDateSetListener date = (view, year, monthOfYear, dayOfMonth) -> {
+			// TODO Auto-generated method stub
+			myCalendar.set(Calendar.YEAR, year);
+			myCalendar.set(Calendar.MONTH, monthOfYear);
+			myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+			updateLabel();
 		};
 		ettxStartDate = rootView.findViewById(R.id.txStartDate);
 		ettxStartDate.setOnClickListener(v -> {
@@ -133,15 +126,11 @@ public class RegisterMoneyFragment extends Fragment implements
 			updateLabel1();
 		};
 		ettxEndDate = rootView.findViewById(R.id.txEndDate);
-		ettxEndDate.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				new DatePickerDialog(getActivity(), date1, myCalendar1
-						.get(Calendar.YEAR), myCalendar1.get(Calendar.MONTH),
-						myCalendar1.get(Calendar.DAY_OF_MONTH)).show();
-			}
+		ettxEndDate.setOnClickListener(v -> {
+			// TODO Auto-generated method stub
+			new DatePickerDialog(getActivity(), date1, myCalendar1
+					.get(Calendar.YEAR), myCalendar1.get(Calendar.MONTH),
+					myCalendar1.get(Calendar.DAY_OF_MONTH)).show();
 		});
 		ettxloan_amout = rootView.findViewById(R.id.txloan_amout);
 		ettxrateInterest = rootView.findViewById(R.id.txrateInterest);
@@ -256,17 +245,17 @@ public class RegisterMoneyFragment extends Fragment implements
 				}
 
 
-				tv.setText("Your Input: \n" + ettxloan_amout.getText()
-						.toString() + "\n" + ettxStartDate.getText().toString() + "\n" +
-						ettxEndDate
+				tv.setText(String.format("Your Input: \n%s\n%s\n%s\n%s\n%s\n%s\n%s%s\n%s\n\nEnd.",
+						ettxloan_amout.getText()
+								.toString(), ettxStartDate.getText().toString(), ettxEndDate
 								.getText()
-								.toString() + "\n" + ettxrateInterest.getText()
-						.toString() + "\n" + ettxInterestAmount.getText()
-						.toString() + "\n" + ettxNoofInstallment.getText()
-						.toString() + "\n" + ettxInstallmentduration.getText()
-						.toString() + spin.getSelectedItem()
-						.toString() + "\n" + etTotalLoanAmount.getText()
-						.toString() + "\n" + "\nEnd.");
+								.toString(), ettxrateInterest.getText()
+								.toString(), ettxInterestAmount.getText()
+								.toString(), ettxNoofInstallment.getText()
+								.toString(), ettxInstallmentduration.getText()
+								.toString(), spin.getSelectedItem()
+								.toString(), etTotalLoanAmount.getText()
+								.toString()));
 			}
 		});
 		return rootView;

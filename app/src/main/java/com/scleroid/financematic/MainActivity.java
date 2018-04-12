@@ -27,6 +27,7 @@ import com.scleroid.financematic.data.repo.LoanRepo;
 import com.scleroid.financematic.data.repo.TransactionsRepo;
 import com.scleroid.financematic.fragments.RegisterCustomerFragment;
 import com.scleroid.financematic.fragments.ReportFragment;
+import com.scleroid.financematic.fragments.customer.CustomerFragment;
 import com.scleroid.financematic.fragments.dashboard.DashboardFragment;
 import com.scleroid.financematic.fragments.expense.ExpenseFragment;
 import com.scleroid.financematic.fragments.loanDetails.LoanDetailsFragment;
@@ -379,8 +380,8 @@ public class MainActivity extends BaseActivity
 		// user is in notifications fragment
 		// and selected 'Mark all as Read'
 		if (id == R.id.action_notification) {
-			Notification fragment = new Notification();
-
+			//	Notification fragment = new Notification();
+			CustomerFragment fragment = new CustomerFragment();
 			loadFragment(fragment);
 		}
 
@@ -497,6 +498,16 @@ public class MainActivity extends BaseActivity
 		String mobileNumber = phoneNumberCarrier.getNumber();
 
 		activityUtils.callIntent(this, mobileNumber);
+
+
+	}
+
+	@Subscribe
+	public void onFragmentOpen(Events.openFragment customerBundle) {
+		int customerId = customerBundle.getCustomerId();
+		CustomerFragment fragment = CustomerFragment.newInstance(customerId);
+
+		activityUtils.loadFragment(fragment, getSupportFragmentManager());
 
 
 	}

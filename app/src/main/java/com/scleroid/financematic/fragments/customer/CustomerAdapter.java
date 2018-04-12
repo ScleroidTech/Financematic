@@ -1,4 +1,4 @@
-package com.scleroid.financematic.adapter;
+package com.scleroid.financematic.fragments.customer;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -8,8 +8,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.scleroid.financematic.R;
-import com.scleroid.financematic.data.tempModels.Profile;
+import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.utils.ui.CurrencyStringUtils;
+import com.scleroid.financematic.utils.ui.DateUtils;
 
 import java.util.List;
 
@@ -18,18 +19,27 @@ import java.util.List;
  */
 
 
-public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.MyViewHolder> {
+public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.MyViewHolder> {
 
 	private final CurrencyStringUtils currencyStringUtils = new CurrencyStringUtils();
+	private final DateUtils dateUtils = new DateUtils();
+	private List<Loan> loanList;
 
-	private List<Profile> loanList2;
+	public CustomerAdapter(List<Loan> loanList) {
+		this.loanList = loanList;
+	}
+
+	public List<Loan> getLoanList() {
+		return loanList;
+	}
 /*TODO Work in Progress ,Add this & remove other constructor
     public DashboardAdapter(List<Loan> loanList) {
         this.loanList = loanList;
     }*/
 
-	public ProfileAdapter(List<Profile> loanList) {
-		this.loanList2 = loanList;
+	public void setLoanList(final List<Loan> loanList) {
+		this.loanList = loanList;
+		notifyDataSetChanged();
 	}
 
 	@NonNull
@@ -43,18 +53,22 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.MyViewHo
 
 	@Override
 	public void onBindViewHolder(MyViewHolder holder, int position) {
-		Profile loan = loanList2.get(position);
-		holder.title.setText(loan.getTitle());
-		holder.Total_loan.setText(currencyStringUtils.bindNumber(loan.getTotal_loan()));
-		holder.endDate1.setText(loan.getEndDate1());
-		holder.startDate1.setText(loan.getStartDate1());
-		holder.ReceivedAmt.setText(currencyStringUtils.bindNumber(loan.getReceivedAmt()));
+		Loan loan = loanList.get(position);
+		holder.title.setText(String.format("Loan  No. %d", position + 1));
+		holder.Total_loan.setText(currencyStringUtils.bindNumber(loan.getLoanAmt().intValue()));
+		holder.endDate1.setText(dateUtils.getFormattedDate(loan.getEndDate()));
+		holder.startDate1.setText(dateUtils.getFormattedDate(loan.getStartDate()));
+		holder.ReceivedAmt.setText(
+				currencyStringUtils.bindNumber(loan.getReceivedAmt().intValue()));
+		holder.itemView.setOnClickListener(v -> {
+
+		});
 	}
 
 
 	@Override
 	public int getItemCount() {
-		return loanList2.size();
+		return loanList.size();
 	}
 
 	static class MyViewHolder extends RecyclerView.ViewHolder {

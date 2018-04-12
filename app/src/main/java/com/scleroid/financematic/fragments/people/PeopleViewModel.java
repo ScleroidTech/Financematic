@@ -45,16 +45,19 @@ public class PeopleViewModel extends BaseViewModel implements CustomerViewModel 
 
 		//TODO Everything is local currently, put it on remote later
 		if (customers.getValue() == null || customers.getValue().isEmpty()) {
-			customers = customerRepo.getLocalCustomerLab()
-					.getCustomersWithLoans(); /*filterResults(installmentRepo
+			 /*filterResults(installmentRepo
 					.getLocalInstallmentsLab().getItems());*/
+			customers = updateItemLiveData();
 		}
 		return customers;
 	}
 
 	//TODO add  data in it
 	@Override
-	protected LiveData<List> updateItemLiveData() {
-		return null;
+	protected LiveData<List<Customer>> updateItemLiveData() {
+		customers = customerRepo.getLocalCustomerLab()
+				.getCustomersWithLoans();
+
+		return customers;
 	}
 }

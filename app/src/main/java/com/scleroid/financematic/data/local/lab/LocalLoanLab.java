@@ -159,33 +159,11 @@ public class LocalLoanLab implements LocalDataSource<Loan> {
 	 * @param itemId the id of the item to be get
 	 */
 
-	public LiveData<Loan> getItemWithCustomerId(final int itemId) {
+	public LiveData<List<Loan>> getItemWithCustomerId(final int itemId) {
 		Timber.d("getting loan with customer id %d", itemId);
 		return loanDao.getLoanByCustomerIdLive(itemId);
 	}
 
-	/**
-	 * gets a list of all items for a particular value of customer no
-	 */
-
-	public LiveData<List<Loan>> getItemsForCustomer(int custNo) {
-        /* Alternate Method for same purpose
-        Runnable runnable = () -> {
-            final LiveData<List<Loan>> loans= loanDao.getAllLoanLive();
-            appExecutors.mainThread().execute(() -> {
-                if (loans.getValue().isEmpty()){
-                    callback.onDataNotAvailable();
-                }
-                else callback.onLoaded(loans);
-            });
-
-
-        };
-        appExecutors.diskIO().execute(runnable);*/
-
-		Timber.d("getting all loans");
-		return loanDao.getLoansForCustomerLive(custNo);
-	}
 
 	public Single<Loan> getRxItem(final int itemId) {
 		Timber.d("getting loan with id %d", itemId);
@@ -239,8 +217,9 @@ public class LocalLoanLab implements LocalDataSource<Loan> {
 		return loansLive;*/
 	}
 
-	public LiveData<Loan> getLoanWithCustomer(int id) {
-		LiveData<Loan> loanLiveData = loanDao.getLoanLive(id);
+/*
+	public LiveData<List<Loan>> getLoanWithCustomer(int id) {
+		LiveData<List< Loan>> loanLiveData = loanDao.getLoanLive(id);
 		final LiveData<Loan> finalLoanLiveData = loanLiveData;
 
 		loanLiveData = Transformations.switchMap(loanLiveData, (Loan loan) -> {
@@ -251,6 +230,7 @@ public class LocalLoanLab implements LocalDataSource<Loan> {
 		return loanLiveData;
 		//Good Job buddy, now the real challenge is next method
 	}
+*/
 
 	public LiveData<Loan> loadLoanDetails(int loanId) {
 		LiveData<Loan> loanLiveData = loanDao.getLoanLive(loanId);
