@@ -1,5 +1,6 @@
 package com.scleroid.financematic.fragments.loanDetails;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -12,20 +13,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.scleroid.financematic.R;
-import com.scleroid.financematic.adapter.SummeryAdapter;
 import com.scleroid.financematic.base.BaseFragment;
 import com.scleroid.financematic.base.BaseViewModel;
-import com.scleroid.financematic.data.tempModels.Personal_summery_loan_details;
+import com.scleroid.financematic.data.local.model.Loan;
+import com.scleroid.financematic.data.local.model.TransactionModel;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.RecyclerTouchListener;
+import com.scleroid.financematic.utils.ui.RupeeTextView;
 import com.scleroid.financematic.utils.ui.TextViewUtils;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.Unbinder;
+import butterknife.ButterKnife;
 
 
 /**
@@ -35,34 +36,45 @@ import butterknife.Unbinder;
 public class LoanDetailsFragment extends BaseFragment {
 
 
+	private static final String ACCOUNT_NO = "account_no";
 	TextViewUtils textViewUtils = new TextViewUtils();
 	@BindView(R.id.total_amount_text_view)
-	TextView totalAmountTextView;
+	RupeeTextView totalAmountTextView;
 	@BindView(R.id.duration_text_view)
 	TextView durationTextView;
-	@BindView(R.id.paid_amount_text_view)
-	TextView paidAmountTextView;
-	@BindView(R.id.installment_text_view)
-	TextView installmentTextView;
+
 	@BindView(R.id.card_view)
 	CardView cardView;
 
 
 	@BindView(R.id.pesonal_summery_details_recycler)
 	RecyclerView pesonalSummeryDetailsRecycler;
-	Unbinder unbinder;
-	private List<Personal_summery_loan_details> summeryList = new ArrayList<>();
+
+	@BindView(R.id.interest_text_view)
+	TextView interestTextView;
+
+	@BindView(R.id.card_loan)
+	View cardLoan;
+
+
+	private List<TransactionModel> transactionList = new ArrayList<>();
 	private RecyclerView recyclerView;
-	private SummeryAdapter mAdapter;
+	private LoanAdapter mAdapter;
 	private ActivityUtils activityUtils = new ActivityUtils();
+	private int accountNo;
+	private LoanDetailsViewModel loanViewModel;
+	private Loan theLoan;
+	private CardHolder cardHolder;
+
 
 	public LoanDetailsFragment() {
 		// Required empty public constructor
 	}
 
-	public static LoanDetailsFragment newInstance(String param1, String param2) {
+	public static LoanDetailsFragment newInstance(int accountNo) {
 		LoanDetailsFragment fragment = new LoanDetailsFragment();
 		Bundle args = new Bundle();
+		args.putInt(ACCOUNT_NO, accountNo);
 		fragment.setArguments(args);
 		return fragment;
 	}
@@ -78,11 +90,16 @@ public class LoanDetailsFragment extends BaseFragment {
 		super.onCreateView(inflater, container, savedInstanceState);
 		// Inflate the layout for this fragment
 		View rootView = getRootView();
+		cardHolder = new CardHolder();
+		ButterKnife.bind(cardHolder, cardLoan);
 		/*        View rootView =  inflater.inflate(R.layout.personal_loan_aacount_details,
 		container, false);*/
 
+		Bundle bundle = getArguments();
+		if (bundle != null) accountNo = bundle.getInt(ACCOUNT_NO);
+		loanViewModel.setCurrentAccountNo(accountNo);
 		recyclerView = rootView.findViewById(R.id.pesonal_summery_details_recycler);
-		mAdapter = new SummeryAdapter(summeryList);
+		mAdapter = new LoanAdapter(transactionList);
 		recyclerView.setHasFixedSize(true);
 
 
@@ -109,9 +126,9 @@ public class LoanDetailsFragment extends BaseFragment {
 						new RecyclerTouchListener.ClickListener() {
 							@Override
 							public void onClick(View view, int position) {
-								Personal_summery_loan_details loan = summeryList.get(position);
+								TransactionModel loan = transactionList.get(position);
 								Toast.makeText(getActivity().getApplicationContext(),
-										loan.getSummery_amount() + " is selected!",
+										loan.getTransactionId() + " is selected!",
 										Toast.LENGTH_SHORT).show();
 							}
 
@@ -121,9 +138,9 @@ public class LoanDetailsFragment extends BaseFragment {
 							}
 						}));
 
-		prepareLoanData();
 
 		//  textViewUtils.textViewExperiments(totalAmountTextView);
+
 		return rootView;
 
 
@@ -142,7 +159,25 @@ public class LoanDetailsFragment extends BaseFragment {
 	 */
 	@Override
 	protected void subscribeToLiveData() {
+		loanViewModel.getTransactionList().observe(this, items -> {
+			transactionList = items;
+			mAdapter.setTransactionList(transactionList);
+			//updateTotalLoanAmt();
 
+		});
+
+		loanViewModel.getLoanLiveData().observe(this, item -> {
+			theLoan = item;
+			updateUi();
+		});
+	}
+
+	private void updateUi() {
+		totalAmountTextView.setText(theLoan.getLoanAmt().intValue());
+		interestTextView.setText(String.format("%s %%", theLoan.getRateOfInterest()));
+		durationTextView.setText(String.format("%d Months", theLoan.getDuration()));
+		cardHolder.paidAmountTextView.setText(theLoan.getReceivedAmt().intValue());
+		cardHolder.installmentTextView.setText(theLoan.getAmtOfInterest().intValue());
 	}
 
 	/**
@@ -152,39 +187,20 @@ public class LoanDetailsFragment extends BaseFragment {
 	 */
 	@Override
 	public BaseViewModel getViewModel() {
-		return null;
+		loanViewModel =
+				ViewModelProviders.of(this, viewModelFactory).get(LoanDetailsViewModel.class);
+
+		return loanViewModel;
+	}
+
+	static class CardHolder {
+
+		@BindView(R.id.paid_amount_text_view)
+		RupeeTextView paidAmountTextView;
+		@BindView(R.id.installment_text_view)
+		RupeeTextView installmentTextView;
 	}
 
 
-	private void prepareLoanData() {
-		Personal_summery_loan_details loan =
-				new Personal_summery_loan_details("Received", "2000", new Date("1/6/2018"));
-		summeryList.add(loan);
-		loan = new Personal_summery_loan_details("Received", "5000", new Date("12/3/2018"));
-		summeryList.add(loan);
-		loan = new Personal_summery_loan_details("Received", "1000", new Date("4/15/2018"));
-		summeryList.add(loan);
-		loan = new Personal_summery_loan_details("Not Received", "7000", new Date("7/25/2018"));
-		summeryList.add(loan);
-		loan = new Personal_summery_loan_details("Received", "1000", new Date("2/15/2018"));
-		summeryList.add(loan);
-		loan = new Personal_summery_loan_details("Received", "3000", new Date("4/13/2018"));
-		summeryList.add(loan);
-		loan = new Personal_summery_loan_details("Received", "5000", new Date("12/3/2018"));
-		summeryList.add(loan);
-		loan = new Personal_summery_loan_details("Received", "1000", new Date("4/15/2018"));
-		summeryList.add(loan);
-		loan = new Personal_summery_loan_details("Not Received", "7000", new Date("7/25/2018"));
-		summeryList.add(loan);
-		loan = new Personal_summery_loan_details("Received", "1000", new Date("2/15/2018"));
-		summeryList.add(loan);
-		loan = new Personal_summery_loan_details("Received", "3000", new Date("4/13/2018"));
-		summeryList.add(loan);
-
-
-		// notify adapter about data set changes
-		// so that it will render the list with new data
-		mAdapter.notifyDataSetChanged();
-	}
 
 }

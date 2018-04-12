@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import timber.log.Timber;
 
@@ -127,17 +126,13 @@ public class CustomerFragment extends BaseFragment {
 		//	recyclerView.addOnItemTouchListener(listener);
 
 
-		unbinder = ButterKnife.bind(this, rootView);
+		//unbinder = ButterKnife.bind(this, rootView);
 		return rootView;
 
 
 	}
 
-	@Override
-	public void onDestroyView() {
-		super.onDestroyView();
-		unbinder.unbind();
-	}
+
 
 	/**
 	 * @return layout resource id
@@ -152,7 +147,7 @@ public class CustomerFragment extends BaseFragment {
 	 */
 	@Override
 	protected void subscribeToLiveData() {
-		customerViewModel.getItemList().observe(this, items -> {
+		customerViewModel.getLoanList().observe(this, items -> {
 			loanList = items;
 			mAdapter.setLoanList(loanList);
 			updateTotalLoanAmt();

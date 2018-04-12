@@ -88,8 +88,9 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 
 		holder.peopleItemCardView.setOnClickListener(v -> {
 			Timber.wtf("It's clicked dadadad");
-			Events.openFragment openFragment = new Events.openFragment(passbook.getCustomerId());
-			GlobalBus.getBus().post(openFragment);
+			Events.openCustomerFragment openCustomerFragment =
+					new Events.openCustomerFragment(passbook.getCustomerId());
+			GlobalBus.getBus().post(openCustomerFragment);
 		});
 		holder.callButton.setOnClickListener(v -> {
 			String phone = passbook.getMobileNumber();

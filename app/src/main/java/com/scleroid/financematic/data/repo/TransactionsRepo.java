@@ -51,6 +51,10 @@ public class TransactionsRepo implements Repo<TransactionModel> {
 
 	private final AppDatabase db;
 
+	public LocalTransactionsLab getLocalTransactionsLab() {
+		return localTransactionsLab;
+	}
+
 	private final LocalTransactionsLab localTransactionsLab;
 
 	private final WebService webService;

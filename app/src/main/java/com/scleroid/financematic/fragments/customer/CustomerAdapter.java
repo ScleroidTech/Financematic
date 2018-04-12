@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.data.local.model.Loan;
+import com.scleroid.financematic.utils.eventBus.Events;
+import com.scleroid.financematic.utils.eventBus.GlobalBus;
 import com.scleroid.financematic.utils.ui.CurrencyStringUtils;
 import com.scleroid.financematic.utils.ui.DateUtils;
 
@@ -61,7 +63,9 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.MyView
 		holder.ReceivedAmt.setText(
 				currencyStringUtils.bindNumber(loan.getReceivedAmt().intValue()));
 		holder.itemView.setOnClickListener(v -> {
-
+			Events.openLoanDetailsFragment openCustomerFragment =
+					new Events.openLoanDetailsFragment(loan.getAccountNo());
+			GlobalBus.getBus().post(openCustomerFragment);
 		});
 	}
 

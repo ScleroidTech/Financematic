@@ -15,16 +15,27 @@ public class Events {
 
 
 	// Event used to send message from activity to fragment.
-	public static class openFragment {
+	public static class openCustomerFragment {
 		private int customerId;
 
-		public openFragment(final int customerId) {this.customerId = customerId;}
+		public openCustomerFragment(final int customerId) {this.customerId = customerId;}
 
 		public int getCustomerId() {
 			return customerId;
 		}
 	}
 
+	public static class openLoanDetailsFragment {
+		private int accountNo;
+
+		public openLoanDetailsFragment(final int accountNo) {
+			this.accountNo = accountNo;
+		}
+
+		public int getAccountNo() {
+			return accountNo;
+		}
+	}
 	/**
 	 *
 	 */
