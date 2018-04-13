@@ -9,8 +9,8 @@ import android.widget.TextView;
 
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.data.local.model.TransactionModel;
-import com.scleroid.financematic.utils.ui.CurrencyStringUtils;
 import com.scleroid.financematic.utils.ui.DateUtils;
+import com.scleroid.financematic.utils.ui.RupeeTextView;
 import com.scleroid.financematic.utils.ui.TextViewUtils;
 
 import java.util.Date;
@@ -40,12 +40,13 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> 
 	public void setTransactionList(
 			final List<TransactionModel> transactionList) {
 		this.transactionList = transactionList;
+		notifyDataSetChanged();
 	}
 
 	@Override
 	public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		View itemView = LayoutInflater.from(parent.getContext())
-				.inflate(R.layout.recycler_personal_summery_details, parent, false);
+				.inflate(R.layout.recycler_loan_details, parent, false);
 
 		return new MyViewHolder(itemView);
 	}
@@ -65,7 +66,7 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> 
 	public static class MyViewHolder extends RecyclerView.ViewHolder {
 		static DateUtils dateUtils = new DateUtils();
 		static TextViewUtils textViewUtils = new TextViewUtils();
-		static CurrencyStringUtils currencyStringUtils = new CurrencyStringUtils();
+		//	static CurrencyStringUtils currencyStringUtils = new CurrencyStringUtils();
 		@BindView(R.id.month_text_view)
 		TextView monthTextView;
 		@BindView(R.id.only_date_text_view)
@@ -78,7 +79,7 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> 
 		@BindView(R.id.summery_description)
 		TextView summeryDescpription;
 		@BindView(R.id.summery_amount)
-		TextView summeryAmount;
+		RupeeTextView summeryAmount;
 		@BindView(R.id.Btn_paid_rx_summery)
 		Button BtnPaidRxSummery;
 
@@ -93,7 +94,7 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> 
 			//  holder.summery_date.setText(passbook.getSummery_date());
 			summeryDescpription.setText(passbook.getDescription());
 			summeryAmount.setText(
-					currencyStringUtils.bindNumber(passbook.getReceivedAmt().intValue()));
+					String.valueOf(passbook.getReceivedAmt().intValue()));
 			setDate(passbook.getTransactionDate());
 			textViewUtils.textViewExperiments(summeryAmount);
 

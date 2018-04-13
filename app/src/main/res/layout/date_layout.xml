@@ -17,7 +17,7 @@
     card_view:layout_constraintBottom_toBottomOf="parent"
     card_view:layout_constraintStart_toStartOf="parent"
     card_view:layout_constraintTop_toTopOf="parent"
-    tools:showIn="@layout/recycler_personal_summery_details">
+    tools:showIn="@layout/recycler_loan_details">
 
     <TextView
         android:id="@+id/month_text_view"

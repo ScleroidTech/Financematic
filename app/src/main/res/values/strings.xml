@@ -77,6 +77,7 @@
     <string name="dm_friend_notification_body">%1$s: What\'s up?</string>
     <string name="dm_coworker_notification_body">%1$s: Have you finished the report?</string>
     <string name="error_click">Unknown click event.</string>
+    <string name="amount">10000</string>
 
     <!-- Names -->
     <string-array name="names_array">

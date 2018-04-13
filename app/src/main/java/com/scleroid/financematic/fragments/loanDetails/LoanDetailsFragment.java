@@ -2,7 +2,6 @@ package com.scleroid.financematic.fragments.loanDetails;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,6 +24,8 @@ import com.scleroid.financematic.utils.ui.TextViewUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -37,14 +38,13 @@ public class LoanDetailsFragment extends BaseFragment {
 
 
 	private static final String ACCOUNT_NO = "account_no";
-	TextViewUtils textViewUtils = new TextViewUtils();
+	@Inject
+	TextViewUtils textViewUtils;
+
 	@BindView(R.id.total_amount_text_view)
 	RupeeTextView totalAmountTextView;
 	@BindView(R.id.duration_text_view)
 	TextView durationTextView;
-
-	@BindView(R.id.card_view)
-	CardView cardView;
 
 
 	@BindView(R.id.pesonal_summery_details_recycler)
@@ -173,11 +173,14 @@ public class LoanDetailsFragment extends BaseFragment {
 	}
 
 	private void updateUi() {
-		totalAmountTextView.setText(theLoan.getLoanAmt().intValue());
+		if (theLoan == null) return;
+		totalAmountTextView.setText(String.valueOf(theLoan.getLoanAmt().intValue()));
 		interestTextView.setText(String.format("%s %%", theLoan.getRateOfInterest()));
 		durationTextView.setText(String.format("%d Months", theLoan.getDuration()));
-		cardHolder.paidAmountTextView.setText(theLoan.getReceivedAmt().intValue());
-		cardHolder.installmentTextView.setText(theLoan.getAmtOfInterest().intValue());
+		cardHolder.paidAmountTextView.setText(
+				String.valueOf(theLoan.getReceivedAmt().intValue()));
+		cardHolder.installmentTextView.setText(
+				String.valueOf(theLoan.getAmtOfInterest().intValue()));
 	}
 
 	/**

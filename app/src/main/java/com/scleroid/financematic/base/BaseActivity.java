@@ -64,10 +64,20 @@ public abstract class BaseActivity
 	@LayoutRes
 	int getLayoutId();
 
+
+	/**
+	 * Dispatch onPause() to fragments.
+	 */
+	@Override
+	protected void onPause() {
+		super.onPause();
+		eventBus.unregister(this);
+	}
+
 	@Override
 	protected void onStop() {
 		super.onStop();
-		eventBus.unregister(this);
+
 	}
 
 	public void performDependencyInjection() {

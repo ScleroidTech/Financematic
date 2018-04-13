@@ -11,8 +11,8 @@ import com.scleroid.financematic.R;
 import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.utils.eventBus.Events;
 import com.scleroid.financematic.utils.eventBus.GlobalBus;
-import com.scleroid.financematic.utils.ui.CurrencyStringUtils;
 import com.scleroid.financematic.utils.ui.DateUtils;
+import com.scleroid.financematic.utils.ui.RupeeTextView;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ import java.util.List;
 
 public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.MyViewHolder> {
 
-	private final CurrencyStringUtils currencyStringUtils = new CurrencyStringUtils();
+	//private final CurrencyStringUtils currencyStringUtils = new CurrencyStringUtils();
 	private final DateUtils dateUtils = new DateUtils();
 	private List<Loan> loanList;
 
@@ -57,11 +57,11 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.MyView
 	public void onBindViewHolder(MyViewHolder holder, int position) {
 		Loan loan = loanList.get(position);
 		holder.title.setText(String.format("Loan  No. %d", position + 1));
-		holder.Total_loan.setText(currencyStringUtils.bindNumber(loan.getLoanAmt().intValue()));
+		holder.Total_loan.setText(String.valueOf(loan.getLoanAmt().intValue()));
 		holder.endDate1.setText(dateUtils.getFormattedDate(loan.getEndDate()));
 		holder.startDate1.setText(dateUtils.getFormattedDate(loan.getStartDate()));
 		holder.ReceivedAmt.setText(
-				currencyStringUtils.bindNumber(loan.getReceivedAmt().intValue()));
+				String.valueOf(loan.getReceivedAmt().intValue()));
 		holder.itemView.setOnClickListener(v -> {
 			Events.openLoanDetailsFragment openCustomerFragment =
 					new Events.openLoanDetailsFragment(loan.getAccountNo());
@@ -76,7 +76,8 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.MyView
 	}
 
 	static class MyViewHolder extends RecyclerView.ViewHolder {
-		TextView title, endDate1, startDate1, Total_loan, ReceivedAmt;
+		TextView title, endDate1, startDate1;
+		RupeeTextView Total_loan, ReceivedAmt;
 
 		MyViewHolder(View view) {
 			super(view);
