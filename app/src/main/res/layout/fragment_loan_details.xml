@@ -79,7 +79,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
-                        android:text="@string/amount_with_symbol"
+                        android:text="@string/amount"
                         android:textAlignment="center"
                         android:textColor="@color/white"
                         android:textSize="33dp" />
@@ -137,15 +137,17 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="94dp"
-                android:layout_weight=".27"
+
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
 
                 >
 
                 <include
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
                     android:id="@+id/card_loan"
                     layout="@layout/personal_details_cardview" />
 
@@ -154,8 +156,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1.9"
+                android:layout_height="wrap_content"
+
                 android:orientation="vertical"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
@@ -168,7 +170,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:scrollbars="vertical"
-                    tools:listitem="@layout/recycler_personal_summery_details" />
+                    tools:listitem="@layout/recycler_loan_details" />
 
             </LinearLayout>
 
