@@ -8,8 +8,11 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,11 +35,15 @@ import java.util.regex.Pattern;
  * @since 2/3/18
  */
 
-public class RegisterCustomerFragment extends Fragment {
+public class RegisterCustomerFragment extends Fragment implements
+		AdapterView.OnItemSelectedListener{
+	Spinner spin;
+	private Spinner spinner;
 	TextView tv;
 	Button firstFragment;
 	private Button b;
-	private EditText etname, etmobile, etAddress, etLoan_number, etIDproofno;
+	private EditText etname, etmobile, etAddress, etIDproofno;
+	String[] selectidtype = {"Voter Card", "Pan Card", "Aadhar Card", "Other"};
 
 	private ActivityUtils activityUtils = new ActivityUtils();
 
@@ -62,13 +69,24 @@ public class RegisterCustomerFragment extends Fragment {
 		// Inflate the layout for this fragment
 		final View rootView = inflater.inflate(R.layout.reg_new_customer, container, false);
 
+		final Spinner spin = rootView.findViewById(R.id.spinneridtype);
+		spin.setOnItemSelectedListener(this);
+
+		/*        final String text = spin.getSelectedItem().toString();*/
+		//Creating the ArrayAdapter instance having the filterSuggestions list
+		ArrayAdapter<String> aa = new ArrayAdapter<>(getActivity().getApplicationContext(),
+				android.R.layout.simple_spinner_item, selectidtype);
+		aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		//Setting the ArrayAdapter data on the Spinner
+		spin.setAdapter(aa);
+
 //Intend
 		firstFragment = rootView.findViewById(R.id.btn_new_customer_Register1);
 
 		etname = rootView.findViewById(R.id.coustomer_Name_EditText);
 		etmobile = rootView.findViewById(R.id.Mobile_Number_EditText);
 		etAddress = rootView.findViewById(R.id.Address_EditText);
-		etLoan_number = rootView.findViewById(R.id.Loan_number_EditText);
+
 		etIDproofno = rootView.findViewById(R.id.IDproofno);
 		etname.addTextChangedListener(new TextValidator(etname) {
 			@Override
@@ -200,6 +218,14 @@ return;
 		}
 
 		public abstract void validate(TextView textView, String text);
+	}
+	@Override
+	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+	}
+
+	@Override
+	public void onNothingSelected(AdapterView<?> arg0) {
 	}
 
 
