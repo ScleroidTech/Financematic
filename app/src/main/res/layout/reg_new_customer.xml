@@ -59,7 +59,7 @@
                         android:backgroundTint="#409bbf" android:background="@drawable/ic_account_circle_black_24dp"/>
 
                     <TextView
-
+                        android:layout_gravity="center_vertical"
 
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
                         android:id="@+id/coustomer_Name_EditText"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight=".7"
+                        android:layout_weight=".6"
                         android:autoLink="web"
                         android:background="@drawable/shadow"
                         android:maxLines="1"
@@ -106,7 +106,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:layout_weight=".6"
-
+                        android:layout_gravity="center_vertical"
                         android:text="Mobile Number"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="#409bbf"
@@ -145,7 +145,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:layout_weight=".6"
-
+                        android:layout_gravity="center_vertical"
                         android:text="Id Proof Type"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="#409bbf"
@@ -189,7 +189,7 @@
                     <TextView
                         android:layout_width="0dp"
 
-                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:layout_weight=".6"
 
@@ -226,7 +226,7 @@
                     <TextView
 
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"   android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:layout_weight=".6"
 
