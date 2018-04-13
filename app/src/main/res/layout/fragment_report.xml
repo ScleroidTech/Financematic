@@ -183,7 +183,7 @@
                     android:textSize="15sp" />
 
                 <TextView
-                    android:id="@+id/balanceAmt"
+                    android:id="@+id/receivedAmt"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".8"

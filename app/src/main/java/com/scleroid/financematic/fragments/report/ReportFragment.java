@@ -15,6 +15,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.annimon.stream.Collectors;
+import com.annimon.stream.Stream;
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.base.BaseFragment;
 import com.scleroid.financematic.data.local.model.TransactionModel;
@@ -23,6 +25,7 @@ import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.DateUtils;
 import com.scleroid.financematic.utils.ui.RecyclerTouchListener;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -54,7 +57,7 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 	Calendar myCalendar1 = Calendar.getInstance();
 
 	String[] filterSuggestions =
-			{"All Amount", "Received Amount", "Lent Amount"};
+			{"All Amount", "Received Amount", "Lent Amount", "Earned Amount"};
 	Spinner spin;
 	@BindView(R.id.from_date_text_view)
 	TextView fromDateTextView;
@@ -65,15 +68,28 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 	RecyclerView reportRecyclerView;
 	@BindView(R.id.spinnerr)
 	Spinner spinnerFilter;
-	@BindView(R.id.balanceAmt)
-	TextView reportBalance;
+
 	ActivityUtils activityUtils = new ActivityUtils();
+	@BindView(R.id.accNo)
+	TextView accNo;
+	@BindView(R.id.installmentDate)
+	TextView installmentDate;
+	@BindView(R.id.expectedAmt)
+	TextView expectedAmt;
+	@BindView(R.id.earnedAmt)
+	TextView earnedAmt;
+
+
+	@BindView(R.id.receivedAmt)
+	TextView receivedAmt;
 	private List<TransactionModel> transactionsList = new ArrayList<>();
 	private ReportAdapter mAdapter;
 
 	private ReportViewModel reportViewModel;
 	private Date startDate;
 	private Date endDate;
+	private List<TransactionModel> filteredList;
+	private ReportFilterType reportFilterType = ReportFilterType.ALL_TRANSACTIONS;
 
 	public ReportFragment() {
 		// Required empty public constructor
@@ -125,6 +141,7 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 		// keep movie_list_row.xml width to `match_parent`
 		setupRecyclerView();
 		setupSpinner();
+
 		return rootView;
 
 
@@ -143,10 +160,13 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 	 */
 	@Override
 	protected void subscribeToLiveData() {
-		reportViewModel.getTransactionLiveData().observe(this, transactions -> {
-			transactionsList = transactions;
-			mAdapter.setReportList(transactionsList);
-		});
+		reportViewModel.getTransactionLiveData().observe(this, this::updateListData);
+	}
+
+	private void updateListData(final List<TransactionModel> transactions) {
+		transactionsList = transactions;
+		mAdapter.setReportList(transactionsList);
+		mAdapter.setFilterType(reportFilterType);
 	}
 
 	/**
@@ -172,11 +192,12 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 			@Override
 			public void onItemSelected(final AdapterView<?> parent, final View view,
 			                           final int position, final long id) {
-
+				List<TransactionModel> tempList;
+				reportFilterType = getSuggestion(position);
 				if (startDate == null && endDate == null) {
-					filterWithoutDate(filterSuggestions[position]);
-				}
-				filterWithDate(startDate, endDate, filterSuggestions[position]);
+					tempList = filterWithoutDate(reportFilterType);
+				} else {tempList = filterWithDate(startDate, endDate, reportFilterType); }
+				updateListData(tempList);
 			}
 
 			@Override
@@ -189,13 +210,99 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 
 	}
 
-	private void filterWithDate(final Date startDate, final Date endDate,
-	                            final String filterSuggestion) {
+	private ReportFilterType getSuggestion(final int filterSuggestion) {
+		switch (filterSuggestion) {
+			case 0:
+				return ReportFilterType.ALL_TRANSACTIONS;
+			case 1:
+				return ReportFilterType.RECEIVED_AMOUNT;
+			case 2:
+				return ReportFilterType.LENT_AMOUNT;
+			case 3:
+				return ReportFilterType.EARNED_AMOUNT;
+			default:
+				return ReportFilterType.ALL_TRANSACTIONS;
+
+		}
 
 	}
 
-	private void filterWithoutDate(final String filterSuggestion) {
+	private List<TransactionModel> filterWithDate(final Date startDate, final Date endDate,
+	                                              final ReportFilterType filterSuggestion) {
+		List<TransactionModel> transactionModels = filterWithoutDate(filterSuggestion);
+		return Stream.of(transactionModels)
+				.filter(expenseList -> expenseList.getTransactionDate()
+						.after(startDate) && expenseList.getTransactionDate().before(endDate))
+				.collect(Collectors.toList());
 
+	}
+
+	private List<TransactionModel> filterWithoutDate(final ReportFilterType filterSuggestion) {
+		List<TransactionModel> listToShow = new ArrayList<>();
+
+		switch (filterSuggestion) {
+			case ALL_TRANSACTIONS:
+				allTransactionFilter(listToShow);
+				break;
+			case RECEIVED_AMOUNT:
+				listToShow = applyReceivedFilter();
+				updateUI(receivedAmt);
+				break;
+			case LENT_AMOUNT:
+				listToShow = applyLentFilter();
+				updateUI(expectedAmt);
+				break;
+			case EARNED_AMOUNT:
+				listToShow = applyEarnedFilter();
+				updateUI(earnedAmt);
+				break;
+			default:
+				allTransactionFilter(listToShow);
+				break;
+
+		}
+		return listToShow;
+
+	}
+
+	private void updateUI(final TextView amt) {
+		//First Enable any previously disabled views
+		visibilityToggle();
+		amt.setVisibility(View.VISIBLE);
+
+	}
+
+	private void visibilityToggle() {
+		receivedAmt.setVisibility(View.GONE);
+		expectedAmt.setVisibility(View.GONE);
+		earnedAmt.setVisibility(View.GONE);
+	}
+
+
+	private List<TransactionModel> applyReceivedFilter() {
+		return Stream.of(transactionsList)
+				.filter(expenseList -> expenseList.getReceivedAmt() != null)
+				.collect(Collectors.toList());
+	}
+
+	private List<TransactionModel> applyEarnedFilter() {
+		return Stream.of(transactionsList)
+				.filter(expenseList -> expenseList.getGainedAmt() != null)
+				.collect(Collectors.toList());
+	}
+
+	private List<TransactionModel> applyLentFilter() {
+		return Stream.of(transactionsList)
+				.filter(expenseList -> expenseList.getLentAmt() != null)
+				.collect(Collectors.toList());
+	}
+
+	private List<TransactionModel> allTransactionFilter(final List<TransactionModel> listToShow) {
+		listToShow.addAll(transactionsList);
+		receivedAmt.setVisibility(View.VISIBLE);
+		expectedAmt.setVisibility(View.VISIBLE);
+		earnedAmt.setVisibility(View.VISIBLE);
+		return listToShow;
 	}
 
 	private void setupRecyclerView() {
@@ -235,6 +342,12 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 		//	reportRecyclerView.addOnItemTouchListener(recyclerTouchListener);
 	}
 
+	private List<TransactionModel> filterApply(final BigDecimal amt) {
+		return Stream.of(transactionsList)
+				.filter(expenseList -> amt != null)
+				.collect(Collectors.toList());
+
+	}
 
 	@OnClick({R.id.from_date_text_view, R.id.to_date_text_view})
 	public void onViewClicked(View view) {
@@ -253,4 +366,5 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 		activityUtils.loadDialogFragment(DatePickerFragment.newInstance(), this,
 				getFragmentManager(), requestDate, DIALOG_DATE);
 	}
+
 }

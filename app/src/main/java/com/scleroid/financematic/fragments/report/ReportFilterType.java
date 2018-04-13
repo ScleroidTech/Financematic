@@ -19,7 +19,7 @@ package com.scleroid.financematic.fragments.report;
 /**
  * Used with the filter spinner in the tasks list.
  */
-public enum TasksFilterType {
+public enum ReportFilterType {
 	/**
 	 * Do not filter tasks.
 	 */
@@ -33,5 +33,10 @@ public enum TasksFilterType {
 	/**
 	 * Filters only the completed tasks.
 	 */
-	LENT_AMOUNT
+	LENT_AMOUNT,
+
+	/**
+	 * Filters only the completed tasks.
+	 */
+	EARNED_AMOUNT
 }

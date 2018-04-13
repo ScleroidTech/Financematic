@@ -2,9 +2,7 @@ package com.scleroid.financematic.fragments.report;
 
 import android.graphics.Color;
 import android.support.annotation.NonNull;
-import android.support.v7.util.SortedList;
 import android.support.v7.widget.RecyclerView;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +14,7 @@ import com.scleroid.financematic.utils.eventBus.Events;
 import com.scleroid.financematic.utils.eventBus.GlobalBus;
 import com.scleroid.financematic.utils.ui.DateUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -26,10 +25,20 @@ import butterknife.OnClick;
 public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHolder> {
 
 
-	private SortedList<TransactionModel> reportList;
+	private List<TransactionModel> reportList = new ArrayList<>();
 
-	public ReportAdapter() {
-		this.reportList = new SortedList<TransactionModel>(TransactionModel.class,
+	private ReportFilterType filterType;
+
+	public ReportFilterType getFilterType() {
+		return filterType;
+	}
+
+	public void setFilterType(final ReportFilterType filterType) {
+		this.filterType = filterType;
+	}
+
+	ReportAdapter() {
+		/*this.reportList = new SortedList<TransactionModel>(TransactionModel.class,
 				new SortedList.Callback<TransactionModel>() {
 					@Override
 					public int compare(final TransactionModel o1, final TransactionModel o2) {
@@ -68,14 +77,14 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
 					public void onMoved(final int fromPosition, final int toPosition) {
 						notifyItemMoved(fromPosition, toPosition);
 					}
-				});
+				});*/
 	}
 
 	public void setReportList(
 			final List<TransactionModel> reportList) {
-		//this.reportList = reportList;
-		addAll(reportList);
-		//notifyDataSetChanged();
+		this.reportList = reportList;
+		//addAll(reportList);
+		notifyDataSetChanged();
 	}
 
 	@NonNull
@@ -88,7 +97,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
 
 	}
 
-	//conversation helpers
+	/*//conversation helpers
 	public void addAll(List<TransactionModel> countries) {
 		reportList.beginBatchedUpdates();
 		for (int i = 0; i < countries.size(); i++) {
@@ -96,13 +105,14 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
 		}
 		reportList.endBatchedUpdates();
 	}
-
+*/
 	@Override
 	public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
 		TransactionModel report = reportList.get(position);
-
+		holder.setFilterType(filterType);
 		holder.setData(report);
+
 
 		if (position % 2 == 1) {
 			holder.itemView.setBackgroundColor(Color.parseColor("#d5e5f0"));
@@ -117,14 +127,14 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
 		return reportList.get(position);
 	}
 
-	public void clear() {
+	/*public void clear() {
 		reportList.beginBatchedUpdates();
 		//remove items at end, to avoid unnecessary array shifting
 		while (reportList.size() > 0) {
 			reportList.removeItemAt(reportList.size() - 1);
 		}
 		reportList.endBatchedUpdates();
-	}
+	}*/
 
 	@Override
 	public int getItemCount() {
@@ -134,28 +144,8 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
 
 	public class MyViewHolder extends RecyclerView.ViewHolder {
 		DateUtils dateUtils = new DateUtils();
-		/* for selecte row and chnage color        implements View.OnClickListener*/
-		@BindView(R.id.acc_no_text_view)
-		TextView accNoTextView;
-		@BindView(R.id.transactionDate)
-		TextView transactionDate;
-		@BindView(R.id.lentAmt)
-		TextView reportLent;
-		@BindView(R.id.earnedAmt)
-		TextView reportEarned;
-		@BindView(R.id.receivedAmt)
-		TextView receivedAmt;
-		private SparseBooleanArray selectedItems = new SparseBooleanArray();
-		private TransactionModel report;
 
-		public MyViewHolder(View view) {
-			super(view);
-			/* view.setOnClickListener(this);*/
-			ButterKnife.bind(this, view);
-
-
-		}
-
+		ReportFilterType filterType = ReportFilterType.ALL_TRANSACTIONS;
 
 		private void setData(TransactionModel report) {
 			this.report = report;
@@ -169,8 +159,80 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
 			receivedAmt.setText(String.valueOf(
 					report.getReceivedAmt() != null ? report.getReceivedAmt().intValue() : " "));
 			accNoTextView.setTextColor(Color.parseColor("#5432ff"));
+			filterData(getFilterType());
+
 			//reportBalance.setText(String.valueOf( report));
 		}
+
+		public ReportFilterType getFilterType() {
+			return filterType;
+		}
+		/* for selected row and change color        implements View.OnClickListener*/
+		@BindView(R.id.acc_no_text_view)
+		TextView accNoTextView;
+		@BindView(R.id.transactionDate)
+		TextView transactionDate;
+		@BindView(R.id.lentAmt)
+		TextView reportLent;
+		@BindView(R.id.earnedAmt)
+		TextView reportEarned;
+		@BindView(R.id.receivedAmt)
+		TextView receivedAmt;
+		//private SparseBooleanArray selectedItems = new SparseBooleanArray();
+		private TransactionModel report;
+
+		public MyViewHolder(View view) {
+			super(view);
+			/* view.setOnClickListener(this);*/
+			ButterKnife.bind(this, view);
+
+
+		}
+
+		public void setFilterType(final ReportFilterType filterType) {
+			this.filterType = filterType;
+		}
+
+		private void filterData(final ReportFilterType filterType) {
+			switch (filterType) {
+				case ALL_TRANSACTIONS:
+					makeItVisible();
+					break;
+				case RECEIVED_AMOUNT:
+					updateUI(receivedAmt);
+					break;
+				case LENT_AMOUNT:
+					updateUI(reportLent);
+					break;
+				case EARNED_AMOUNT:
+					updateUI(reportEarned);
+					break;
+				default:
+					makeItVisible();
+					break;
+
+			}
+		}
+
+		private void makeItVisible() {
+			receivedAmt.setVisibility(View.VISIBLE);
+			reportLent.setVisibility(View.VISIBLE);
+			reportEarned.setVisibility(View.VISIBLE);
+		}
+
+		private void updateUI(final TextView amt) {
+			//First Enable any previously disabled views
+			visibilityToggle();
+			amt.setVisibility(View.VISIBLE);
+
+		}
+
+		private void visibilityToggle() {
+			receivedAmt.setVisibility(View.GONE);
+			reportLent.setVisibility(View.GONE);
+			reportEarned.setVisibility(View.GONE);
+		}
+
 
 		@OnClick(R.id.acc_no_text_view)
 		public void onViewClicked() {
