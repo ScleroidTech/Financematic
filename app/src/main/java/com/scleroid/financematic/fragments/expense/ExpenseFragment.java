@@ -6,9 +6,11 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -26,6 +28,9 @@ import com.scleroid.financematic.adapter.ExpenseAdapter;
 import com.scleroid.financematic.base.BaseFragment;
 import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.local.model.Expense;
+import com.scleroid.financematic.fragments.Insert_expenses_frgment;
+import com.scleroid.financematic.fragments.RegisterMoneyFragment;
+import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.RecyclerTouchListener;
 
 import java.math.BigDecimal;
@@ -73,8 +78,10 @@ public class ExpenseFragment extends BaseFragment {
 	TextView totsss;
 	ArrayList<PieEntry> values = new ArrayList<>();
 	private List<Expense> expenseList = new ArrayList<>();
+	private ActivityUtils activityUtils = new ActivityUtils();
 	private ExpenseAdapter mAdapter;
 	private Unbinder unbinder;
+	Button firstFragment;
 
 	public ExpenseFragment() {
 		// Required empty public constructor
@@ -141,6 +148,7 @@ public class ExpenseFragment extends BaseFragment {
 	}
 
 	private void initializeRecyclerView() {
+
 		mAdapter = new ExpenseAdapter(expenseList, getContext());
 		/* recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this.getContext()));*/
 
@@ -160,6 +168,15 @@ public class ExpenseFragment extends BaseFragment {
 		expenseRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
 		expenseRecyclerView.setAdapter(mAdapter);
+		firstFragment = getRootView().findViewById(R.id.add_exp_call_button);
+		firstFragment.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+				activityUtils.loadFragment(new Insert_expenses_frgment(), getFragmentManager
+						());
+			}
+		});
 
 		// row click listener
 		expenseRecyclerView.addOnItemTouchListener(

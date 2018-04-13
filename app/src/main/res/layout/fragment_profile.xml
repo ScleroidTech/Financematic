@@ -313,6 +313,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="55dp"
+            android:paddingBottom="50dp"
             android:scrollbars="vertical"
             app:layout_constraintLeft_toLeftOf="@+id/card"
             app:layout_constraintRight_toRightOf="parent"
