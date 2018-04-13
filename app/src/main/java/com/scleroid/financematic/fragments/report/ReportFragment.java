@@ -15,6 +15,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.annimon.stream.Collectors;
+import com.annimon.stream.Stream;
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.base.BaseFragment;
 import com.scleroid.financematic.data.local.model.TransactionModel;
@@ -23,6 +25,7 @@ import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.DateUtils;
 import com.scleroid.financematic.utils.ui.RecyclerTouchListener;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -54,7 +57,7 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 	Calendar myCalendar1 = Calendar.getInstance();
 
 	String[] filterSuggestions =
-			{"All Amount", "Received Amount", "Lent Amount"};
+			{"All Amount", "Received Amount", "Lent Amount", "Earned Amount"};
 	Spinner spin;
 	@BindView(R.id.from_date_text_view)
 	TextView fromDateTextView;
@@ -74,6 +77,7 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 	private ReportViewModel reportViewModel;
 	private Date startDate;
 	private Date endDate;
+	private List<TransactionModel> filteredList;
 
 	public ReportFragment() {
 		// Required empty public constructor
@@ -144,9 +148,13 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 	@Override
 	protected void subscribeToLiveData() {
 		reportViewModel.getTransactionLiveData().observe(this, transactions -> {
-			transactionsList = transactions;
-			mAdapter.setReportList(transactionsList);
+			updateListData(transactions);
 		});
+	}
+
+	private void updateListData(final List<TransactionModel> transactions) {
+		transactionsList = transactions;
+		mAdapter.setReportList(transactionsList);
 	}
 
 	/**
@@ -174,7 +182,7 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 			                           final int position, final long id) {
 
 				if (startDate == null && endDate == null) {
-					filterWithoutDate(filterSuggestions[position]);
+					filterWithoutDate(getSuggestion(position));
 				}
 				filterWithDate(startDate, endDate, filterSuggestions[position]);
 			}
@@ -189,12 +197,90 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 
 	}
 
+	private ReportFilterType getSuggestion(final int filterSuggestion) {
+		switch (filterSuggestion) {
+			case 0:
+				return ReportFilterType.ALL_TRANSACTIONS;
+			case 1:
+				return ReportFilterType.RECEIVED_AMOUNT;
+			case 2:
+				return ReportFilterType.LENT_AMOUNT;
+			case 3:
+				return ReportFilterType.EARNED_AMOUNT;
+			default:
+				return ReportFilterType.ALL_TRANSACTIONS;
+
+		}
+
+	}
+
 	private void filterWithDate(final Date startDate, final Date endDate,
 	                            final String filterSuggestion) {
 
 	}
 
-	private void filterWithoutDate(final String filterSuggestion) {
+	private List<TransactionModel> filterWithoutDate(final ReportFilterType filterSuggestion) {
+		List<TransactionModel> listToShow = new ArrayList<>();
+
+		switch (filterSuggestion) {
+			case ALL_TRANSACTIONS:
+				allTransactionFilter(listToShow);
+				break;
+			case RECEIVED_AMOUNT:
+				listToShow = applyReceivedFilter();
+				updateUI(1);
+				break;
+			case LENT_AMOUNT:
+				listToShow = applyLentFilter();
+				break;
+			case EARNED_AMOUNT:
+				listToShow = applyEarnedFilter();
+				break;
+			default:
+				allTransactionFilter(listToShow);
+				break;
+
+		}
+		return listToShow;
+
+	}
+
+	private void updateUI(final int i) {
+
+	}
+
+	private List<TransactionModel> applyReceivedFilter() {
+		return Stream.of(transactionsList)
+				.filter(expenseList -> expenseList.getReceivedAmt() != null)
+				.collect(Collectors.toList());
+	}
+
+	private List<TransactionModel> applyEarnedFilter() {
+		return Stream.of(transactionsList)
+				.filter(expenseList -> expenseList.getGainedAmt() != null)
+				.collect(Collectors.toList());
+	}
+
+	private List<TransactionModel> applyLentFilter() {
+		return Stream.of(transactionsList)
+				.filter(expenseList -> expenseList.getLentAmt() != null)
+				.collect(Collectors.toList());
+	}
+
+	private List<TransactionModel> allTransactionFilter(final List<TransactionModel> listToShow) {
+		listToShow.addAll(transactionsList);
+		return listToShow;
+	}
+
+	private List<TransactionModel> filterResults(ReportFilterType selected_type) {
+
+
+	}
+
+	private List<TransactionModel> filterApply(final BigDecimal amt) {
+		return Stream.of(transactionsList)
+				.filter(expenseList -> amt != null)
+				.collect(Collectors.toList());
 
 	}
 

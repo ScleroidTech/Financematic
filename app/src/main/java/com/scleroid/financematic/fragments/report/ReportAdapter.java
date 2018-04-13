@@ -2,9 +2,7 @@ package com.scleroid.financematic.fragments.report;
 
 import android.graphics.Color;
 import android.support.annotation.NonNull;
-import android.support.v7.util.SortedList;
 import android.support.v7.widget.RecyclerView;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +14,7 @@ import com.scleroid.financematic.utils.eventBus.Events;
 import com.scleroid.financematic.utils.eventBus.GlobalBus;
 import com.scleroid.financematic.utils.ui.DateUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -26,10 +25,10 @@ import butterknife.OnClick;
 public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHolder> {
 
 
-	private SortedList<TransactionModel> reportList;
+	private List<TransactionModel> reportList = new ArrayList<>();
 
-	public ReportAdapter() {
-		this.reportList = new SortedList<TransactionModel>(TransactionModel.class,
+	ReportAdapter() {
+		/*this.reportList = new SortedList<TransactionModel>(TransactionModel.class,
 				new SortedList.Callback<TransactionModel>() {
 					@Override
 					public int compare(final TransactionModel o1, final TransactionModel o2) {
@@ -68,14 +67,14 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
 					public void onMoved(final int fromPosition, final int toPosition) {
 						notifyItemMoved(fromPosition, toPosition);
 					}
-				});
+				});*/
 	}
 
 	public void setReportList(
 			final List<TransactionModel> reportList) {
-		//this.reportList = reportList;
-		addAll(reportList);
-		//notifyDataSetChanged();
+		this.reportList = reportList;
+		//addAll(reportList);
+		notifyDataSetChanged();
 	}
 
 	@NonNull
@@ -88,7 +87,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
 
 	}
 
-	//conversation helpers
+	/*//conversation helpers
 	public void addAll(List<TransactionModel> countries) {
 		reportList.beginBatchedUpdates();
 		for (int i = 0; i < countries.size(); i++) {
@@ -96,7 +95,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
 		}
 		reportList.endBatchedUpdates();
 	}
-
+*/
 	@Override
 	public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
@@ -117,14 +116,14 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
 		return reportList.get(position);
 	}
 
-	public void clear() {
+	/*public void clear() {
 		reportList.beginBatchedUpdates();
 		//remove items at end, to avoid unnecessary array shifting
 		while (reportList.size() > 0) {
 			reportList.removeItemAt(reportList.size() - 1);
 		}
 		reportList.endBatchedUpdates();
-	}
+	}*/
 
 	@Override
 	public int getItemCount() {
@@ -134,7 +133,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
 
 	public class MyViewHolder extends RecyclerView.ViewHolder {
 		DateUtils dateUtils = new DateUtils();
-		/* for selecte row and chnage color        implements View.OnClickListener*/
+		/* for selected row and change color        implements View.OnClickListener*/
 		@BindView(R.id.acc_no_text_view)
 		TextView accNoTextView;
 		@BindView(R.id.transactionDate)
@@ -145,7 +144,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
 		TextView reportEarned;
 		@BindView(R.id.receivedAmt)
 		TextView receivedAmt;
-		private SparseBooleanArray selectedItems = new SparseBooleanArray();
+		//private SparseBooleanArray selectedItems = new SparseBooleanArray();
 		private TransactionModel report;
 
 		public MyViewHolder(View view) {

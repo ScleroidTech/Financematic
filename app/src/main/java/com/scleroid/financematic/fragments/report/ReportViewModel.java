@@ -32,7 +32,7 @@ public class ReportViewModel extends BaseViewModel<TransactionModel> implements 
 		return transactionLiveData;
 	}
 
-	public LiveData<List<TransactionModel>> setTransactionLiveData() {
+	private LiveData<List<TransactionModel>> setTransactionLiveData() {
 
 		return transactionsRepo.getLocalTransactionsLab().getItems();
 	}

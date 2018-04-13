@@ -3,9 +3,9 @@ package com.scleroid.financematic.fragments;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,11 +53,12 @@ public class DatePickerFragment extends DialogFragment {
 
 	}
 
+	@NonNull
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		Date date = (Date) getArguments().getSerializable(ARG_DATE);
 		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
+		if (date != null) { calendar.setTime(date); }
 
 		int year = calendar.get(Calendar.YEAR);
 		int month = calendar.get(Calendar.MONTH);
@@ -69,15 +70,12 @@ public class DatePickerFragment extends DialogFragment {
 
 		return new AlertDialog.Builder(getActivity()).setTitle(R.string.date_picker_title)
 				.setView(v)
-				.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						int year = mDatePicker.getYear();
-						int month = mDatePicker.getMonth();
-						int day = mDatePicker.getDayOfMonth();
-						Date date = new GregorianCalendar(year, month, day).getTime();
-						sendResult(Activity.RESULT_OK, date);
-					}
+				.setPositiveButton(android.R.string.ok, (dialog, which) -> {
+					int year1 = mDatePicker.getYear();
+					int month1 = mDatePicker.getMonth();
+					int day1 = mDatePicker.getDayOfMonth();
+					Date date1 = new GregorianCalendar(year1, month1, day1).getTime();
+					sendResult(Activity.RESULT_OK, date1);
 				})
 				.create();
 	}
