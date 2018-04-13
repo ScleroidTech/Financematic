@@ -196,6 +196,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
 		private void filterData(final ReportFilterType filterType) {
 			switch (filterType) {
 				case ALL_TRANSACTIONS:
+					makeItVisible();
 					break;
 				case RECEIVED_AMOUNT:
 					updateUI(receivedAmt);
@@ -207,22 +208,29 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
 					updateUI(reportEarned);
 					break;
 				default:
+					makeItVisible();
 					break;
 
 			}
 		}
 
+		private void makeItVisible() {
+			receivedAmt.setVisibility(View.VISIBLE);
+			reportLent.setVisibility(View.VISIBLE);
+			reportEarned.setVisibility(View.VISIBLE);
+		}
+
 		private void updateUI(final TextView amt) {
 			//First Enable any previously disabled views
 			visibilityToggle();
-			amt.setVisibility(View.GONE);
+			amt.setVisibility(View.VISIBLE);
 
 		}
 
 		private void visibilityToggle() {
-			receivedAmt.setVisibility(View.VISIBLE);
-			reportLent.setVisibility(View.VISIBLE);
-			reportEarned.setVisibility(View.VISIBLE);
+			receivedAmt.setVisibility(View.GONE);
+			reportLent.setVisibility(View.GONE);
+			reportEarned.setVisibility(View.GONE);
 		}
 
 

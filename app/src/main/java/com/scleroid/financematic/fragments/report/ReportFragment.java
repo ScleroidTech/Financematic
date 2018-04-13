@@ -268,14 +268,14 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 	private void updateUI(final TextView amt) {
 		//First Enable any previously disabled views
 		visibilityToggle();
-		amt.setVisibility(View.GONE);
+		amt.setVisibility(View.VISIBLE);
 
 	}
 
 	private void visibilityToggle() {
-		receivedAmt.setVisibility(View.VISIBLE);
-		expectedAmt.setVisibility(View.VISIBLE);
-		earnedAmt.setVisibility(View.VISIBLE);
+		receivedAmt.setVisibility(View.GONE);
+		expectedAmt.setVisibility(View.GONE);
+		earnedAmt.setVisibility(View.GONE);
 	}
 
 
@@ -299,6 +299,9 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 
 	private List<TransactionModel> allTransactionFilter(final List<TransactionModel> listToShow) {
 		listToShow.addAll(transactionsList);
+		receivedAmt.setVisibility(View.VISIBLE);
+		expectedAmt.setVisibility(View.VISIBLE);
+		earnedAmt.setVisibility(View.VISIBLE);
 		return listToShow;
 	}
 
