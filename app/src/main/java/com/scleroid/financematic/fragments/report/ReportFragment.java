@@ -68,8 +68,7 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 	RecyclerView reportRecyclerView;
 	@BindView(R.id.spinnerr)
 	Spinner spinnerFilter;
-	@BindView(R.id.balanceAmt)
-	TextView reportBalance;
+
 	ActivityUtils activityUtils = new ActivityUtils();
 	@BindView(R.id.accNo)
 	TextView accNo;
