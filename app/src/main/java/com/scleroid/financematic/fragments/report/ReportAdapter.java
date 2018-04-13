@@ -27,6 +27,16 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
 
 	private List<TransactionModel> reportList = new ArrayList<>();
 
+	private ReportFilterType filterType;
+
+	public ReportFilterType getFilterType() {
+		return filterType;
+	}
+
+	public void setFilterType(final ReportFilterType filterType) {
+		this.filterType = filterType;
+	}
+
 	ReportAdapter() {
 		/*this.reportList = new SortedList<TransactionModel>(TransactionModel.class,
 				new SortedList.Callback<TransactionModel>() {
@@ -100,8 +110,9 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
 	public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
 		TransactionModel report = reportList.get(position);
-
+		holder.setFilterType(filterType);
 		holder.setData(report);
+
 
 		if (position % 2 == 1) {
 			holder.itemView.setBackgroundColor(Color.parseColor("#d5e5f0"));
@@ -133,6 +144,29 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
 
 	public class MyViewHolder extends RecyclerView.ViewHolder {
 		DateUtils dateUtils = new DateUtils();
+
+		ReportFilterType filterType = ReportFilterType.ALL_TRANSACTIONS;
+
+		private void setData(TransactionModel report) {
+			this.report = report;
+			accNoTextView.setText(String.valueOf(report.getLoanAcNo()));
+			transactionDate.setText(
+					dateUtils.getFormattedDateDigitsOnly(report.getTransactionDate()));
+			reportLent.setText(String.valueOf(
+					report.getLentAmt() != null ? report.getLentAmt().intValue() : " "));
+			reportEarned.setText(String.valueOf(
+					report.getGainedAmt() != null ? report.getGainedAmt().intValue() : " "));
+			receivedAmt.setText(String.valueOf(
+					report.getReceivedAmt() != null ? report.getReceivedAmt().intValue() : " "));
+			accNoTextView.setTextColor(Color.parseColor("#5432ff"));
+			filterData(getFilterType());
+
+			//reportBalance.setText(String.valueOf( report));
+		}
+
+		public ReportFilterType getFilterType() {
+			return filterType;
+		}
 		/* for selected row and change color        implements View.OnClickListener*/
 		@BindView(R.id.acc_no_text_view)
 		TextView accNoTextView;
@@ -155,21 +189,42 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
 
 		}
 
-
-		private void setData(TransactionModel report) {
-			this.report = report;
-			accNoTextView.setText(String.valueOf(report.getLoanAcNo()));
-			transactionDate.setText(
-					dateUtils.getFormattedDateDigitsOnly(report.getTransactionDate()));
-			reportLent.setText(String.valueOf(
-					report.getLentAmt() != null ? report.getLentAmt().intValue() : " "));
-			reportEarned.setText(String.valueOf(
-					report.getGainedAmt() != null ? report.getGainedAmt().intValue() : " "));
-			receivedAmt.setText(String.valueOf(
-					report.getReceivedAmt() != null ? report.getReceivedAmt().intValue() : " "));
-			accNoTextView.setTextColor(Color.parseColor("#5432ff"));
-			//reportBalance.setText(String.valueOf( report));
+		public void setFilterType(final ReportFilterType filterType) {
+			this.filterType = filterType;
 		}
+
+		private void filterData(final ReportFilterType filterType) {
+			switch (filterType) {
+				case ALL_TRANSACTIONS:
+					break;
+				case RECEIVED_AMOUNT:
+					updateUI(receivedAmt);
+					break;
+				case LENT_AMOUNT:
+					updateUI(reportLent);
+					break;
+				case EARNED_AMOUNT:
+					updateUI(reportEarned);
+					break;
+				default:
+					break;
+
+			}
+		}
+
+		private void updateUI(final TextView amt) {
+			//First Enable any previously disabled views
+			visibilityToggle();
+			amt.setVisibility(View.GONE);
+
+		}
+
+		private void visibilityToggle() {
+			receivedAmt.setVisibility(View.VISIBLE);
+			reportLent.setVisibility(View.VISIBLE);
+			reportEarned.setVisibility(View.VISIBLE);
+		}
+
 
 		@OnClick(R.id.acc_no_text_view)
 		public void onViewClicked() {
