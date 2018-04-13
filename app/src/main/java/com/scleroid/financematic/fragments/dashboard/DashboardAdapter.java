@@ -99,8 +99,8 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
 			return;
 		}
 		holder.setData(dashBoardModel);
-		/*TODO NO longer needed i guess
-		localLoanLab
+
+	/*	localLoanLab
 				.getRxItem(dashBoardModel.getLoanAcNo())
 				.subscribeOn(Schedulers.computation())
 				.subscribe(loan -> {

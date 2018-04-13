@@ -12,6 +12,7 @@ import com.scleroid.financematic.utils.roomConverters.MoneyConverter;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Objects;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
@@ -133,4 +134,24 @@ public class TransactionModel {
 		this.loanAcNo = loanAcNo;
 	}
 
+	@Override
+	public int hashCode() {
+
+		return Objects.hash(transactionId, transactionDate, lentAmt, gainedAmt, receivedAmt,
+				description, loanAcNo);
+	}
+
+	@Override
+	public boolean equals(final Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		final TransactionModel that = (TransactionModel) o;
+		return transactionId == that.transactionId &&
+				loanAcNo == that.loanAcNo &&
+				Objects.equals(transactionDate, that.transactionDate) &&
+				Objects.equals(lentAmt, that.lentAmt) &&
+				Objects.equals(gainedAmt, that.gainedAmt) &&
+				Objects.equals(receivedAmt, that.receivedAmt) &&
+				Objects.equals(description, that.description);
+	}
 }

@@ -182,6 +182,7 @@ public class CustomerFragment extends BaseFragment {
 	}
 
 	private void updateUi() {
+		if (theCustomer == null) return;
 		nameTextView.setText(theCustomer.getName());
 		mobileTextView.setText(theCustomer.getMobileNumber());
 		addressTextView.setText(theCustomer.getAddress());

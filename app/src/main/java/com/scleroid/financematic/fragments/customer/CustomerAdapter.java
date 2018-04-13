@@ -56,7 +56,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.MyView
 	@Override
 	public void onBindViewHolder(MyViewHolder holder, int position) {
 		Loan loan = loanList.get(position);
-		holder.title.setText(String.format("Loan  No. %d", position + 1));
+		holder.title.setText(String.format("Loan A/c No. %d", loan.getAccountNo()));
 		holder.Total_loan.setText(String.valueOf(loan.getLoanAmt().intValue()));
 		holder.endDate1.setText(dateUtils.getFormattedDate(loan.getEndDate()));
 		holder.startDate1.setText(dateUtils.getFormattedDate(loan.getStartDate()));

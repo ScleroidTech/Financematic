@@ -22,6 +22,7 @@ import com.scleroid.financematic.fragments.expense.ExpenseViewModel;
 import com.scleroid.financematic.fragments.loanDetails.LoanDetailsViewModel;
 import com.scleroid.financematic.fragments.passbook.PassbookViewModel;
 import com.scleroid.financematic.fragments.people.PeopleViewModel;
+import com.scleroid.financematic.fragments.report.ReportViewModel;
 
 import javax.inject.Inject;
 
@@ -81,6 +82,9 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
 		} else if (modelClass.isAssignableFrom(PassbookViewModel.class)) {
 			//noinspection unchecked
 			return (T) new PassbookViewModel();
+		} else if (modelClass.isAssignableFrom(ReportViewModel.class)) {
+			//noinspection unchecked
+			return (T) new ReportViewModel(transactionsRepo);
 		}
 		throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
 	}
