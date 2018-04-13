@@ -2,6 +2,8 @@ package com.scleroid.financematic.fragments.customer;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +18,8 @@ import com.scleroid.financematic.base.BaseFragment;
 import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.local.model.Loan;
+import com.scleroid.financematic.fragments.RegisterMoneyFragment;
+import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.RecyclerTouchListener;
 import com.scleroid.financematic.utils.ui.RupeeTextView;
 
@@ -32,6 +36,7 @@ import timber.log.Timber;
 
 
 public class CustomerFragment extends BaseFragment {
+	private ActivityUtils activityUtils = new ActivityUtils();
 	private static final String CUSTOMER_ID = "customer_id";
 	@BindView(R.id.name_text_view)
 	TextView nameTextView;
@@ -127,6 +132,22 @@ public class CustomerFragment extends BaseFragment {
 
 
 		//unbinder = ButterKnife.bind(this, rootView);
+
+
+		//add floating button
+		FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
+		fab.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				activityUtils.loadFragment(new RegisterMoneyFragment(), getFragmentManager());
+			}
+		});
+
+
+
+
+
+
 		return rootView;
 
 
