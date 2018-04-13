@@ -78,12 +78,13 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 	@Override
 	public void onBindViewHolder(MyViewHolder holder, int position) {
 		Customer passbook = customerList.get(position);
-		holder.itemView.setTag(passbook);
+
 		if (passbook.getLoans() == null) {
 			Timber.w(passbook.toString() + " didn't make it far");
 			return;
 		}
 		// holder.setPassbook(passbook);
+		holder.itemView.setTag(passbook);
 		holder.setData(passbook);
 
 		holder.peopleItemCardView.setOnClickListener(v -> {

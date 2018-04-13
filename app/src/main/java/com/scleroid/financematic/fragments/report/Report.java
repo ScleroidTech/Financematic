@@ -1,4 +1,4 @@
-package com.scleroid.financematic.data.tempModels;
+package com.scleroid.financematic.fragments.report;
 
 
 /**

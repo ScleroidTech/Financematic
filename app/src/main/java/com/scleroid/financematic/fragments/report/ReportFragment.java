@@ -1,8 +1,8 @@
-package com.scleroid.financematic.fragments;
+package com.scleroid.financematic.fragments.report;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,26 +16,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.scleroid.financematic.R;
-import com.scleroid.financematic.adapter.ReportAdapter;
-import com.scleroid.financematic.data.tempModels.Report;
+import com.scleroid.financematic.base.BaseFragment;
+import com.scleroid.financematic.data.local.model.TransactionModel;
+import com.scleroid.financematic.fragments.DatePickerFragment;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.DateUtils;
 import com.scleroid.financematic.utils.ui.RecyclerTouchListener;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 
 /**
@@ -45,8 +42,7 @@ import butterknife.Unbinder;
  * @since 2/3/18
  */
 
-public class ReportFragment extends Fragment implements
-                                             AdapterView.OnItemSelectedListener {
+public class ReportFragment extends BaseFragment<ReportViewModel> {
 	private static final String DIALOG_DATE = "DIALOG_DATE";
 	private static final int REQUEST_DATE_FROM = 1;
 	private static final int REQUEST_DATE_TO = 2;
@@ -58,7 +54,7 @@ public class ReportFragment extends Fragment implements
 	Calendar myCalendar1 = Calendar.getInstance();
 
 	String[] filterSuggestions =
-			{"All Amount", "Received Amount", "Lent Amount", "Expenditure", "Interest Earned"};
+			{"All Amount", "Received Amount", "Lent Amount"};
 	Spinner spin;
 	@BindView(R.id.from_date_text_view)
 	TextView fromDateTextView;
@@ -72,9 +68,12 @@ public class ReportFragment extends Fragment implements
 	@BindView(R.id.balanceAmt)
 	TextView reportBalance;
 	ActivityUtils activityUtils = new ActivityUtils();
-	private List<Report> reportList = new ArrayList<>();
+	private List<TransactionModel> transactionsList = new ArrayList<>();
 	private ReportAdapter mAdapter;
-	private Unbinder unbinder;
+
+	private ReportViewModel reportViewModel;
+	private Date startDate;
+	private Date endDate;
 
 	public ReportFragment() {
 		// Required empty public constructor
@@ -87,29 +86,17 @@ public class ReportFragment extends Fragment implements
 		return fragment;
 	}
 
-	private void updateLabel() {
-		String myFormat = "dd/MM/yy"; //In which you need put here
-		SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
-		fromDateTextView.setText(sdf.format(myCalendar.getTime()));
-	}
-
-	private void updateLabel1() {
-		String myFormat = "dd/MM/yy"; //In which you need put here
-		SimpleDateFormat sdf1 = new SimpleDateFormat(myFormat, Locale.US);
-		toDateTextView.setText(sdf1.format(myCalendar1.getTime()));
-	}
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
 
 		if (requestCode == REQUEST_DATE_FROM) {
-			Date date = (Date) intent.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
-			fromDateTextView.setText(dateUtils.getFormattedDate(date));
+			startDate = (Date) intent.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
+			fromDateTextView.setText(dateUtils.getFormattedDate(startDate));
 		} else if (requestCode == REQUEST_DATE_TO) {
-			Date date = (Date) intent.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
-			toDateTextView.setText(dateUtils.getFormattedDate(date));
+			endDate = (Date) intent.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
+			toDateTextView.setText(dateUtils.getFormattedDate(endDate));
 		}
 
 	}
@@ -122,12 +109,12 @@ public class ReportFragment extends Fragment implements
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
+		super.onCreateView(inflater, container, savedInstanceState);
 		// Inflate the layout for this fragment
-		View rootView = inflater.inflate(R.layout.fragment_report, container, false);
-		unbinder = ButterKnife.bind(this, rootView);
+		View rootView = getRootView();
 
 
-		mAdapter = new ReportAdapter(reportList);
+		mAdapter = new ReportAdapter();
 
 		reportRecyclerView.setHasFixedSize(true);
 
@@ -138,21 +125,76 @@ public class ReportFragment extends Fragment implements
 		// keep movie_list_row.xml width to `match_parent`
 		setupRecyclerView();
 		setupSpinner();
-
-		prepareLoanData();
-
 		return rootView;
 
 
 	}
 
+	/**
+	 * @return layout resource id
+	 */
+	@Override
+	public int getLayoutId() {
+		return R.layout.fragment_report;
+	}
+
+	/**
+	 * Override so you can observe your viewModel
+	 */
+	@Override
+	protected void subscribeToLiveData() {
+		reportViewModel.getTransactionLiveData().observe(this, transactions -> {
+			transactionsList = transactions;
+			mAdapter.setReportList(transactionsList);
+		});
+	}
+
+	/**
+	 * Override for set view model
+	 *
+	 * @return view model instance
+	 */
+	@Override
+	public ReportViewModel getViewModel() {
+		reportViewModel =
+				ViewModelProviders.of(Objects.requireNonNull(getActivity()), viewModelFactory)
+						.get(ReportViewModel.class);
+		return reportViewModel;
+	}
+
 	private void setupSpinner() {
 		ArrayAdapter<? extends String> spinnerList =
-				new ArrayAdapter<>(Objects.requireNonNull(getActivity()).getApplicationContext(),
+				new ArrayAdapter<>(Objects.requireNonNull(getActivity()),
 						android.R.layout.simple_spinner_item, filterSuggestions);
 		spinnerList.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+		spinnerFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(final AdapterView<?> parent, final View view,
+			                           final int position, final long id) {
+
+				if (startDate == null && endDate == null) {
+					filterWithoutDate(filterSuggestions[position]);
+				}
+				filterWithDate(startDate, endDate, filterSuggestions[position]);
+			}
+
+			@Override
+			public void onNothingSelected(final AdapterView<?> parent) {
+
+			}
+		});
+
 		spinnerFilter.setAdapter(spinnerList);
 
+	}
+
+	private void filterWithDate(final Date startDate, final Date endDate,
+	                            final String filterSuggestion) {
+
+	}
+
+	private void filterWithoutDate(final String filterSuggestion) {
 
 	}
 
@@ -173,15 +215,15 @@ public class ReportFragment extends Fragment implements
 		reportRecyclerView.setAdapter(mAdapter);
 
 		// row click listener
-		reportRecyclerView.addOnItemTouchListener(
+		RecyclerTouchListener recyclerTouchListener =
 				new RecyclerTouchListener(getActivity().getApplicationContext(),
 						reportRecyclerView,
 						new RecyclerTouchListener.ClickListener() {
 							@Override
 							public void onClick(View view, int position) {
-								Report report = reportList.get(position);
+								TransactionModel report = transactionsList.get(position);
 								Toast.makeText(getActivity().getApplicationContext(),
-										report.getBalanceAmt() + " is Available Balance",
+										report.getReceivedAmt() + " is Available Balance",
 										Toast.LENGTH_SHORT).show();
 							}
 
@@ -189,40 +231,10 @@ public class ReportFragment extends Fragment implements
 							public void onLongClick(View view, int position) {
 
 							}
-						}));
+						});
+		//	reportRecyclerView.addOnItemTouchListener(recyclerTouchListener);
 	}
 
-
-	@Override
-	public void onDestroyView() {
-		super.onDestroyView();
-		unbinder.unbind();
-	}
-
-	private void prepareLoanData() {
-		Report report = new Report("10225 ", "25000", new Date(2018, 3, 2), "3000", "15000");
-		reportList.add(report);
-		report = new Report("20225 ", "45000", new Date(2018, 3, 1), "2000", "5000");
-		reportList.add(report);
-		report = new Report("10225 ", "25000", new Date(2017, 2, 5), "2000", "5000");
-		reportList.add(report);
-		report = new Report("10325 ", "35000", new Date(2017, 2, 1), "2500", "1000");
-		reportList.add(report);
-
-
-		// notify adapter about data set changes
-		// so that it will render the list with new data
-		mAdapter.notifyDataSetChanged();
-	}
-
-	@Override
-	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-	}
-
-	@Override
-	public void onNothingSelected(AdapterView<?> arg0) {
-	}
 
 	@OnClick({R.id.from_date_text_view, R.id.to_date_text_view})
 	public void onViewClicked(View view) {

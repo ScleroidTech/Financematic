@@ -54,6 +54,10 @@ public class DateUtils {
 		return DateFormat.format("MMM dd, yyyy", parcelDate);
 	}
 
+	public CharSequence getFormattedDateDigitsOnly(Date parcelDate) {
+		return DateFormat.format("dd/MM/yyyy", parcelDate);
+	}
+
 	public CharSequence getFormattedDate(Date date, String format) {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
 		return simpleDateFormat.format(date);
