@@ -380,8 +380,8 @@ public class MainActivity extends BaseActivity
 		// user is in notifications fragment
 		// and selected 'Mark all as Read'
 		if (id == R.id.action_notification) {
-			//	Notification fragment = new Notification();
-			CustomerFragment fragment = new CustomerFragment();
+			Notification3 fragment = new Notification3();
+			/*CustomerFragment fragment = new CustomerFragment();*/
 			loadFragment(fragment);
 		}
 

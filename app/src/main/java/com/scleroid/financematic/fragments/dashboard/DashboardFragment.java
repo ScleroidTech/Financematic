@@ -19,6 +19,7 @@ import com.scleroid.financematic.data.local.lab.LocalCustomerLab;
 import com.scleroid.financematic.data.local.lab.LocalLoanLab;
 import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.fragments.passbook.PassbookFragment;
+import com.scleroid.financematic.fragments.report.ReportFragment;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.RecyclerTouchListener;
 import com.scleroid.financematic.utils.ui.TextViewUtils;
@@ -92,7 +93,14 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 //Intent
 		firstFragment = rootView.findViewById(R.id.total_amount_text_view);
 		firstFragment.setOnClickListener(
-				v -> activityUtils.loadFragment(new PassbookFragment(), getFragmentManager()));
+				v -> activityUtils.loadFragment(new ReportFragment(), getFragmentManager()));
+		remainingAmountTextView = rootView.findViewById(R.id.remaining_amount_text_view);
+		remainingAmountTextView.setOnClickListener(
+				v -> activityUtils.loadFragment(new ReportFragment(), getFragmentManager()));
+		lentAmountTextView = rootView.findViewById(R.id.lent_amount_text_view);
+		lentAmountTextView.setOnClickListener(
+				v -> activityUtils.loadFragment(new ReportFragment(), getFragmentManager()));
+
 
 		// recyclerView = rootView.findViewById(R.id.recycler_view_dashboard);
 

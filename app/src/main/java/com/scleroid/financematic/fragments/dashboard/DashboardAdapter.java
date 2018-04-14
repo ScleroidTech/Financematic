@@ -1,6 +1,7 @@
 package com.scleroid.financematic.fragments.dashboard;
 
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +15,13 @@ import com.scleroid.financematic.R;
 import com.scleroid.financematic.data.local.lab.LocalCustomerLab;
 import com.scleroid.financematic.data.local.lab.LocalLoanLab;
 import com.scleroid.financematic.data.local.model.Installment;
+import com.scleroid.financematic.data.local.model.TransactionModel;
 import com.scleroid.financematic.data.repo.CustomerRepo;
 import com.scleroid.financematic.data.repo.LoanRepo;
+import com.scleroid.financematic.fragments.passbook.PassbookFragment;
 import com.scleroid.financematic.utils.eventBus.Events;
 import com.scleroid.financematic.utils.eventBus.GlobalBus;
+import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.CurrencyStringUtils;
 import com.scleroid.financematic.utils.ui.DateUtils;
 
@@ -43,6 +47,10 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
 	@Inject
 	DateUtils dateUtils = new DateUtils();
 	private List<Installment> installmentList;
+
+//add manoj
+	@Inject
+	ActivityUtils activityUtils;
 
 
 	public DashboardAdapter(List<Installment> installmentList, LocalLoanLab localLoanLab,
@@ -84,6 +92,10 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
 	public void onBindViewHolder(MyViewHolder holder, int position) {
 		Installment dashBoardModel = installmentList.get(position);
 		holder.itemView.setTag(dashBoardModel);
+
+
+
+
 		if (dashBoardModel.getLoan() == null) {
 			Timber.wtf(" loan is empty for " + dashBoardModel.toString());
 			return;
@@ -99,6 +111,19 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
 			return;
 		}
 		holder.setData(dashBoardModel);
+
+
+
+
+		//add manoj
+		holder.dashboarditemcardview.setOnClickListener(v -> {
+			Timber.wtf("It's clicked dadadad");
+			Events.openCustomerFragment openCustomerFragment =
+					new Events.openCustomerFragment( dashBoardModel.getLoanAcNo());
+			GlobalBus.getBus().post(openCustomerFragment);
+		});
+
+
 
 	/*	localLoanLab
 				.getRxItem(dashBoardModel.getLoanAcNo())
@@ -130,6 +155,10 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
 
 
 	static class MyViewHolder extends RecyclerView.ViewHolder {
+
+
+
+
 		Installment installment;
 		@Inject
 		DateUtils dateUtils = new DateUtils();
@@ -151,6 +180,11 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
 		Button callButton;
 		@BindView(R.id.delay_button)
 		Button delayButton;
+		//add manoj
+		@BindView(R.id.dashboard_item_cardview)
+		CardView dashboarditemcardview;
+
+
 
 		MyViewHolder(View view) {
 			super(view);
@@ -196,6 +230,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
 					handleCallClick();
 					break;
 				case R.id.delay_button:
+
 					break;
 				case R.id.dashboard_item_cardview:
 					break;
@@ -209,5 +244,8 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
 
 			GlobalBus.getBus().post(makeACall);
 		}
+
+
+
 	}
 }

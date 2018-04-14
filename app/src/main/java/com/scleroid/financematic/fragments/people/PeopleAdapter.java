@@ -21,9 +21,12 @@ import com.scleroid.financematic.utils.eventBus.GlobalBus;
 import com.scleroid.financematic.utils.ui.CircleCustomView;
 import com.scleroid.financematic.utils.ui.CustomFilter;
 import com.scleroid.financematic.utils.ui.RupeeTextView;
+import com.scleroid.financematic.utils.ui.TextViewUtils;
 
 import java.text.DecimalFormat;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -150,7 +153,6 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 			ButterKnife.setDebug(true);
 			ButterKnife.bind(this, itemView);
 			//for tryintend
-
 
 		}
 

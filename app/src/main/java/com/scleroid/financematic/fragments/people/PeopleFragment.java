@@ -17,6 +17,7 @@ import com.scleroid.financematic.base.BaseFragment;
 import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.RecyclerTouchListener;
+import com.scleroid.financematic.utils.ui.TextViewUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,10 @@ import butterknife.Unbinder;
  */
 
 public class PeopleFragment extends BaseFragment {
+
+
+
+
 	@Inject
 	ActivityUtils activityUtils;
 

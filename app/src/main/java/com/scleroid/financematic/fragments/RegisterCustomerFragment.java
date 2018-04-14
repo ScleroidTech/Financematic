@@ -171,7 +171,7 @@ return;
 	}
 
 	private boolean isValidEmail(String nameval) {
-		String EMAIL_PATTERN = "[a-zA-Z]+\\.?";//only number 10
+		String EMAIL_PATTERN = "^[A-Za-z\\s]{1,}[\\.]{0,1}[A-Za-z\\s]{0,}$";//aplha and space ^[a-zA-Z\\s]*$
 
 		Pattern pattern = Pattern.compile(EMAIL_PATTERN);
 		Matcher matcher = pattern.matcher(nameval);

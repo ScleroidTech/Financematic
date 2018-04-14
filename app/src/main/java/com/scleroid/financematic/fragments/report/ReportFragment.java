@@ -2,6 +2,7 @@ package com.scleroid.financematic.fragments.report;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,6 +18,13 @@ import android.widget.Toast;
 
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.base.BaseFragment;
 import com.scleroid.financematic.data.local.model.TransactionModel;
@@ -24,6 +32,7 @@ import com.scleroid.financematic.fragments.DatePickerFragment;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.DateUtils;
 import com.scleroid.financematic.utils.ui.RecyclerTouchListener;
+import com.scleroid.financematic.utils.ui.TextViewUtils;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -50,6 +59,8 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 	private static final int REQUEST_DATE_FROM = 1;
 	private static final int REQUEST_DATE_TO = 2;
 
+
+
 	@Inject
 	DateUtils dateUtils;
 
@@ -59,6 +70,10 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 	String[] filterSuggestions =
 			{"All Amount", "Received Amount", "Lent Amount", "Earned Amount"};
 	Spinner spin;
+
+	@BindView(R.id.pie_chart_expense)
+	PieChart mChart;
+
 	@BindView(R.id.from_date_text_view)
 	TextView fromDateTextView;
 	@BindView(R.id.to_date_text_view)
@@ -141,6 +156,15 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 		// keep movie_list_row.xml width to `match_parent`
 		setupRecyclerView();
 		setupSpinner();
+
+
+
+		mChart.setUsePercentValues(true);
+		mChart.getDescription().setEnabled(false);
+		//  mChart.setCenterTextTypeface(mTfLight);
+
+		initializeChartData();
+
 
 		return rootView;
 
@@ -366,5 +390,58 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 		activityUtils.loadDialogFragment(DatePickerFragment.newInstance(), this,
 				getFragmentManager(), requestDate, DIALOG_DATE);
 	}
+
+	private void initializeChartData() {
+		// IMPORTANT: In a PieChart, no values (Entry) should have the same
+		// xIndex (even if from different DataSets), since no values can be
+		// drawn above each other.
+		ArrayList<PieEntry> yvalues = new ArrayList<PieEntry>();
+		yvalues.add(new PieEntry(8f, "Jan"));
+		yvalues.add(new PieEntry(15f, "Feb"));
+		yvalues.add(new PieEntry(12f, "March"));
+		yvalues.add(new PieEntry(25f, "April"));
+		yvalues.add(new PieEntry(23f, "June"));
+		yvalues.add(new PieEntry(17f, "August"));
+
+		PieDataSet dataSet = new PieDataSet(yvalues, "Election Results");
+		List<String> xVals = new ArrayList<String>();
+
+		xVals.add("January");
+		xVals.add("February");
+		xVals.add("March");
+		xVals.add("April");
+		xVals.add("May");
+		xVals.add("June");
+		//   List<LegendEntry> entries = new ArrayList<>();
+
+   /*     for (int i = 0; i < xVals.size(); i++) {
+            LegendEntry entry = new LegendEntry();
+            entry.label = xVals.get(i);
+            entries.add(entry);
+        }*/
+		Legend legend = mChart.getLegend();
+		legend.setEnabled(false);
+
+		dataSet.setColors(ColorTemplate.LIBERTY_COLORS);
+		dataSet.setSliceSpace(3f);
+		mChart.setDrawEntryLabels(true);
+
+//        mChart.getXAxis().setTextColor(Color.GRAY);
+		mChart.getLegend().setTextColor(Color.DKGRAY);
+		PieData data = new PieData(dataSet);
+		data.setValueTextColor(Color.WHITE);
+		// In percentage Term
+		data.setValueFormatter(new PercentFormatter());
+		mChart.setData(data);
+
+
+		//Disable Hole in the Pie Chart
+		mChart.setDrawHoleEnabled(false);
+		mChart.animateXY(1400, 1400);
+// Default value
+//data.setValueFormatter(new DefaultValueFormatter(0));
+
+	}
+
 
 }

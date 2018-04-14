@@ -52,8 +52,11 @@ public class Notification extends BaseFragment {
      */
     @Override
     public int getLayoutId() {
-        return R.layout.notification_tray;
+        return R.layout.notification;
     }
+/*    public int getLayoutId() {
+        return R.layout.notification_tray;
+    }*/
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
