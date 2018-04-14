@@ -102,7 +102,7 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 				v -> activityUtils.loadFragment(new ReportFragment(), getFragmentManager()));
 
 
-		// recyclerView = rootView.findViewById(R.id.recycler_view_dashboard);
+		// recyclerView = rootView.findViewById(R.id.recycler_view_dashboard);11
 
 		// prepareTempDashBoardModelData();
 
