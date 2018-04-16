@@ -4,8 +4,6 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
-import android.os.Parcel;
-import android.os.Parcelable;
 
 import java.util.List;
 
@@ -16,7 +14,7 @@ import java.util.List;
  * @since 4/2/18
  */
 @Entity(indices = {@Index(value = "customerId", unique = true)})
-public class Customer implements Parcelable {
+public class Customer {
 
 
 	@Ignore
@@ -41,30 +39,6 @@ public class Customer implements Parcelable {
 		this.city = city;
 		this.idProofNo = idProofNo;
 		this.idProofType = idProofType;
-	}
-
-	@Ignore
-	public static final Creator<Customer> CREATOR = new Creator<Customer>() {
-		@Override
-		public Customer createFromParcel(Parcel in) {
-			return new Customer(in);
-		}
-
-		@Override
-		public Customer[] newArray(int size) {
-			return new Customer[size];
-		}
-	};
-
-	@Ignore
-	protected Customer(Parcel in) {
-		customerId = in.readInt();
-		name = in.readString();
-		mobileNumber = in.readString();
-		address = in.readString();
-		city = in.readString();
-		idProofNo = in.readString();
-		idProofType = in.readString();
 	}
 
 	public List<Loan> getLoans() {
@@ -146,35 +120,5 @@ public class Customer implements Parcelable {
 		this.idProofType = idProofType;
 	}
 
-	/**
-	 * Describe the kinds of special objects contained in this Parcelable instance's marshaled
-	 * representation. For example, if the object will include a file descriptor in the output of
-	 * {@link #writeToParcel(Parcel, int)}, the return value of this method must include the {@link
-	 * #CONTENTS_FILE_DESCRIPTOR} bit.
-	 *
-	 * @return a bitmask indicating the set of special object types marshaled by this Parcelable
-	 * object instance.
-	 */
-	@Override
-	public int describeContents() {
-		return 0;
-	}
 
-	/**
-	 * Flatten this object in to a Parcel.
-	 *
-	 * @param dest  The Parcel in which the object should be written.
-	 * @param flags Additional flags about how the object should be written. May be 0 or {@link
-	 *              #PARCELABLE_WRITE_RETURN_VALUE}.
-	 */
-	@Override
-	public void writeToParcel(final Parcel dest, final int flags) {
-		dest.writeInt(customerId);
-		dest.writeString(name);
-		dest.writeString(mobileNumber);
-		dest.writeString(address);
-		dest.writeString(city);
-		dest.writeString(idProofNo);
-		dest.writeString(idProofType);
-	}
 }

@@ -176,7 +176,7 @@ public class CustomerFragment extends BaseFragment {
 
 	@OnClick(R.id.fab)
 	public void onViewClicked() {
-		activityUtils.loadFragment(RegisterMoneyFragment.newInstance(theCustomer),
+		activityUtils.loadFragment(RegisterMoneyFragment.newInstance(customerId),
 				getFragmentManager());
 	}
 }

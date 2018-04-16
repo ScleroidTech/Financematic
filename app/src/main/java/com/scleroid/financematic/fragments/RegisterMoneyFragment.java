@@ -16,7 +16,6 @@ import com.scleroid.financematic.R;
 import com.scleroid.financematic.base.BaseFragment;
 import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.local.lab.LocalCustomerLab;
-import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.data.local.model.LoanDurationType;
 import com.scleroid.financematic.data.repo.LoanRepo;
@@ -36,6 +35,8 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 /**
@@ -46,7 +47,7 @@ import timber.log.Timber;
 public class RegisterMoneyFragment extends BaseFragment {
 
 	private static final int REQUEST_DATE = 1;
-	private static final String CUSTOMER = "customer";
+	private static final String CUSTOMER_ID = "customer_id";
 
 	private static final String DIALOG_DATE = "DIALOG_DATE";
 	private static final int REQUEST_DATE_FROM = 1;
@@ -78,7 +79,7 @@ public class RegisterMoneyFragment extends BaseFragment {
 	private String durationType = LoanDurationType.MONTHLY;
 	private Date startDate;
 	private Date endDate;
-	private Customer customer;
+	private int customerId;
 	private Loan loan;
 
 
@@ -86,10 +87,10 @@ public class RegisterMoneyFragment extends BaseFragment {
 		// Required empty public constructor
 	}
 
-	public static RegisterMoneyFragment newInstance(Customer customer_id) {
+	public static RegisterMoneyFragment newInstance(int customer_id) {
 		RegisterMoneyFragment fragment = new RegisterMoneyFragment();
 		Bundle args = new Bundle();
-		args.putParcelable(CUSTOMER, customer_id);
+		args.putInt(CUSTOMER_ID, customer_id);
 		fragment.setArguments(args);
 		return fragment;
 	}
@@ -110,17 +111,7 @@ public class RegisterMoneyFragment extends BaseFragment {
 		TextView customerNameTextView = rootView.findViewById(R.id.reg_fullname_detaills);
 		Bundle bundle = getArguments();
 		if (bundle != null) {
-			customer = bundle.getParcelable(CUSTOMER);
-
-			customerLab
-					.getRxItem(customer.getCustomerId())
-					.subscribe(customer -> {
-								Timber.d("data received, displaying");
-								customerNameTextView.setText("Got Reply");
-							},
-							throwable -> Timber.d("Not gonna show up")
-					).dispose();
-			customerNameTextView.setText(customer.getName());
+			setCustomerName(customerNameTextView, bundle);
 		}
 		final Spinner spin = rootView.findViewById(R.id.spinnertx);
 		spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -268,13 +259,38 @@ public class RegisterMoneyFragment extends BaseFragment {
 			loan = new Loan(CommonUtils.getRandomInt(), new BigDecimal(loanAmt), startDate,
 					endDate, Float.valueOf(rateOfInterest), new BigDecimal(interestAmt),
 					Integer.valueOf(noOfInstallments), Integer.valueOf(duration), durationType,
-					new BigDecimal(totatLoanAmt), customer.getCustomerId());
+					new BigDecimal(totatLoanAmt), customerId);
 			saveLoan(loan);
 		});
 
 
 		unbinder = ButterKnife.bind(this, rootView);
 		return rootView;
+	}
+
+	private void setCustomerName(final TextView customerNameTextView, final Bundle bundle) {
+		customerId = bundle.getInt(CUSTOMER_ID);
+
+		/*Observable.just(customerLab.getRxItem(customerId))
+				.subscribeOn(Schedulers.io())
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe(customer -> {
+							Timber.d("data received, displaying");
+							customerNameTextView.setText(customer.g);
+						},
+						throwable -> Timber.d("Not gonna show up")
+				);*/
+		customerLab
+				.getRxItem(customerId)
+				.subscribeOn(Schedulers.io())
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe(customer -> {
+							Timber.d("data received, displaying");
+							customerNameTextView.setText("Got Reply");
+						},
+						throwable -> Timber.d("Not gonna show up " + throwable.getMessage())
+				).dispose();
+		//	customerNameTextView.setText(customer.getName());
 	}
 
 	private void saveLoan(final Loan loan) {
