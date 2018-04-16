@@ -35,6 +35,7 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
@@ -46,7 +47,7 @@ import timber.log.Timber;
 public class RegisterMoneyFragment extends BaseFragment {
 
 	private static final int REQUEST_DATE = 1;
-	private static final String CUSTOMER_ID = "customerId";
+	private static final String CUSTOMER_ID = "customer_id";
 
 	private static final String DIALOG_DATE = "DIALOG_DATE";
 	private static final int REQUEST_DATE_FROM = 1;
@@ -74,10 +75,12 @@ public class RegisterMoneyFragment extends BaseFragment {
 	private TextView ettxloan_amout, startDateTextView, endDateTextView, ettxrateInterest,
 			ettxInterestAmount, ettxInstallmentduration, etTotalLoanAmount, ettxNoofInstallment,
 			tv;
-	private int customerId;
+
 	private String durationType = LoanDurationType.MONTHLY;
 	private Date startDate;
 	private Date endDate;
+	private int customerId;
+	private Loan loan;
 
 
 	public RegisterMoneyFragment() {
@@ -107,14 +110,9 @@ public class RegisterMoneyFragment extends BaseFragment {
 
 		TextView customerNameTextView = rootView.findViewById(R.id.reg_fullname_detaills);
 		Bundle bundle = getArguments();
-		if (bundle != null) customerId = bundle.getInt(CUSTOMER_ID);
-
-		customerLab
-				.getRxItem(customerId)
-				.subscribeOn(Schedulers.io())
-				.subscribe(customer -> customerNameTextView.setText(customer.getName())).dispose();
-
-
+		if (bundle != null) {
+			setCustomerName(customerNameTextView, bundle);
+		}
 		final Spinner spin = rootView.findViewById(R.id.spinnertx);
 		spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
@@ -258,22 +256,52 @@ public class RegisterMoneyFragment extends BaseFragment {
 					loanAmt, startDateStr, endDateStr, rateOfInterest, interestAmt,
 					noOfInstallments, duration, spin.getSelectedItem()
 							.toString(), totatLoanAmt));
-			Loan loan = new Loan(CommonUtils.getRandomInt(), new BigDecimal(loanAmt), startDate,
+			loan = new Loan(CommonUtils.getRandomInt(), new BigDecimal(loanAmt), startDate,
 					endDate, Float.valueOf(rateOfInterest), new BigDecimal(interestAmt),
 					Integer.valueOf(noOfInstallments), Integer.valueOf(duration), durationType,
 					new BigDecimal(totatLoanAmt), customerId);
-			loanRepo.saveItem(loan).subscribe(loan1 -> {
-				Timber.d("Loan Data Saved " + loan1.toString());
-			}, throwable -> {
-				Timber.d(
-						"Loan Data not Saved " + throwable.getMessage() + " errors are " + loan
-								.toString());
-			});
+			saveLoan(loan);
 		});
 
 
 		unbinder = ButterKnife.bind(this, rootView);
 		return rootView;
+	}
+
+	private void setCustomerName(final TextView customerNameTextView, final Bundle bundle) {
+		customerId = bundle.getInt(CUSTOMER_ID);
+
+		/*Observable.just(customerLab.getRxItem(customerId))
+				.subscribeOn(Schedulers.io())
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe((Single<Customer> customer) -> {
+					customer.subscribe(customer1 ->customerNameTextView.setText(customer1.getName
+					()) );
+							Timber.d("data received, displaying");
+							//customerNameTextView.setText(customer.g);
+						},
+						throwable -> Timber.d("Not gonna show up")
+				);*/
+		customerLab
+				.getRxItem(customerId)
+				.subscribeOn(Schedulers.io())
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe(customer -> {
+							Timber.d("data received, displaying " + customer.toString());
+							customerNameTextView.setText("Customer Name : " + customer.getName());
+						},
+						throwable -> Timber.d("Not gonna show up " + throwable.getMessage()));
+		//	customerNameTextView.setText(customer.getName());
+	}
+
+	private void saveLoan(final Loan loan) {
+		loanRepo.saveItem(loan).subscribe(loan1 -> {
+			Timber.d("Loan Data Saved " + loan1.toString());
+		}, throwable -> {
+			Timber.d(
+					"Loan Data not Saved " + throwable.getMessage() + " errors are " + loan
+							.toString());
+		});
 	}
 
 	/**

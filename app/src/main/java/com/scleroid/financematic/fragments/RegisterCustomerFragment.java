@@ -83,7 +83,8 @@ public class RegisterCustomerFragment extends BaseFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
-		final View rootView = inflater.inflate(R.layout.reg_new_customer, container, false);
+		super.onCreateView(inflater, container, savedInstanceState);
+		final View rootView = getRootView();
 
 		final Spinner spin = rootView.findViewById(R.id.spinneridtype);
 
@@ -179,7 +180,7 @@ public class RegisterCustomerFragment extends BaseFragment {
 							cityName, etIDproofno.getText().toString(), proofType
 					);
 			saveCustomer(customer);
-			activityUtils.loadFragment(new RegisterMoneyFragment(), getFragmentManager());
+
 			Toast.makeText(getActivity().getApplicationContext(),
 					"successfully created Customer info", Toast.LENGTH_LONG).show();
 
@@ -205,6 +206,9 @@ return;
 		customerRepo.saveItem(customer).subscribe(customer1 -> {
 			// handle completion
 			Timber.d("Item Saved" + customer1.toString());
+			activityUtils.loadFragment(RegisterMoneyFragment.newInstance(customer1.getCustomerId
+							()),
+					getFragmentManager());
 			//		Toasty.success(context, "Customers Added");
 		}, throwable -> {
 			// handle error
