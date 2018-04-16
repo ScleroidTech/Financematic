@@ -31,6 +31,7 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Random;
 
 import es.dmoral.toasty.Toasty;
 
@@ -88,5 +89,9 @@ public final class CommonUtils {
 		if (type.equals("error")) {toast = Toasty.error(null, message);}
 //TODO Add Other types of toasts here.
 		toast.show();
+	}
+
+	public static int getRandomInt() {
+		return new Random().nextInt(Integer.MAX_VALUE);
 	}
 }

@@ -137,7 +137,7 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
 					break;
 				case 0:
 				default:
-					expenseTypeText = "Other";
+					expenseTypeText = "OTHER";
 					expenseTypeImageSrc = R.drawable.ic_view_list_black_24dp;
 					expenseColor = context.getResources().getColor(R.color.exp_card6);
 					break;

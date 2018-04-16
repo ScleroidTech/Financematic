@@ -40,7 +40,7 @@ public class RegisterReceivedFragment extends Fragment implements
 	Context context;
 	EditText edittext;
 	Calendar myCalendar = Calendar.getInstance();
-	String[] country = {"Received", "Late payment", "Less amount", "Other"};
+	String[] country = {"Received", "Late payment", "Less amount", "OTHER"};
 	private Button b;
 	private TextView etrxDate, etrxTotalInterestAmount, etrxReceivedAmount, tv;
 

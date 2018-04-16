@@ -29,24 +29,6 @@ public class Loan {
 	 */
 
 	@Ignore
-	public static final byte DAILY = 0;
-	@Ignore
-	public static final byte WEEKLY = 1;
-	@Ignore
-	public static final byte BIWEEKLY = 2;
-	@Ignore
-	public static final byte MONTHLY = 3;
-	@Ignore
-	public static final byte BIMONTHLY = 4;
-	@Ignore
-	public static final byte QUARTERLY = 5;
-	@Ignore
-	public static final byte HALF_YEALY = 6;
-	@Ignore
-	public static final byte YEARLY = 7;
-	@Ignore
-	public static final byte ONE_TIME = 8;
-	@Ignore
 	private Customer customer;
 	@TypeConverters(MoneyConverter.class)
 	private BigDecimal receivedAmt;
@@ -61,7 +43,7 @@ public class Loan {
 	private BigDecimal amtOfInterest;
 	private int noOfInstallments;
 	private int duration;
-	private byte installmentType;
+	private String installmentType;
 	@TypeConverters(MoneyConverter.class)
 	private BigDecimal repayAmt;
 	@PrimaryKey
@@ -69,11 +51,12 @@ public class Loan {
 	private int custId;
 
 
-	public Loan(final BigDecimal loanAmt, final Date startDate, final Date endDate,
+	public Loan(final int accountNo, final BigDecimal loanAmt, final Date startDate,
+	            final Date endDate,
 	            final float rateOfInterest,
 	            final BigDecimal amtOfInterest, final int noOfInstallments, final int duration,
-	            final byte installmentType,
-	            final BigDecimal repayAmt, final int accountNo,
+	            final String installmentType,
+	            final BigDecimal repayAmt,
 	            final int custId, final BigDecimal receivedAmt) {
 		this.loanAmt = loanAmt;
 		this.startDate = startDate;
@@ -90,9 +73,11 @@ public class Loan {
 	}
 
 	@Ignore
-	public Loan(BigDecimal loanAmt, Date startDate, Date endDate, float rateOfInterest,
-	            BigDecimal amtOfInterest, int noOfInstallments, int duration, byte installmentType,
-	            BigDecimal repayAmt, int accountNo, int custId) {
+	public Loan(int accountNo, BigDecimal loanAmt, Date startDate, Date endDate,
+	            float rateOfInterest,
+	            BigDecimal amtOfInterest, int noOfInstallments, int duration,
+	            String installmentType,
+	            BigDecimal repayAmt, int custId) {
 		this.loanAmt = loanAmt;
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -209,11 +194,11 @@ public class Loan {
 		this.duration = duration;
 	}
 
-	public byte getInstallmentType() {
+	public String getInstallmentType() {
 		return installmentType;
 	}
 
-	public void setInstallmentType(byte installmentType) {
+	public void setInstallmentType(String installmentType) {
 		this.installmentType = installmentType;
 	}
 

@@ -15,18 +15,8 @@ import java.util.List;
  */
 @Entity(indices = {@Index(value = "customerId", unique = true)})
 public class Customer {
-	@Ignore
-	public static final byte AADHAR = 0;
-	@Ignore
-	public static final byte PAN = 1;
-	@Ignore
-	public static final byte PASSPORT = 2;
-	@Ignore
-	public static final byte RATION_CARD = 3;
-	@Ignore
-	public static final byte VOTER_ID = 4;
-	@Ignore
-	public static final byte SEVEN_TWELVE_CERTIFICATE = 5;
+
+
 	@Ignore
 	List<Loan> loanList;
 	@PrimaryKey(autoGenerate = false)
@@ -36,12 +26,12 @@ public class Customer {
 	private String address;
 	private String city;
 	private String idProofNo;
-	private byte idProofType;
+	private String idProofType;
 	@Ignore
 	private List<Loan> loans;
 
 	public Customer(int customerId, String name, String mobileNumber, String address, String city,
-	                String idProofNo, byte idProofType) {
+	                String idProofNo, String idProofType) {
 		this.customerId = customerId;
 		this.name = name;
 		this.mobileNumber = mobileNumber;
@@ -121,14 +111,12 @@ public class Customer {
 		this.idProofNo = idProofNo;
 	}
 
-	public byte getIdProofType() {
+	public String getIdProofType() {
 		return idProofType;
 	}
 
-	public void setIdProofType(byte idProofType) {
-		if (idProofType > 6 && idProofType < 0) {
-			throw new IllegalStateException("The value is not permitted");
-		}
+	public void setIdProofType(String idProofType) {
+
 		this.idProofType = idProofType;
 	}
 

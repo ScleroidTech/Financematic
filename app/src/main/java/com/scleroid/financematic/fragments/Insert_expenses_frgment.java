@@ -44,7 +44,7 @@ public class Insert_expenses_frgment extends Fragment implements
 	Context context;
 	EditText edittext;
 	Calendar myCalendar = Calendar.getInstance();
-	String[] country = {"Light Bill", "MOBILE", "PAID SALARIES", "ROOM RENT", "FUEL", "Other"};
+	String[] country = {"Light Bill", "MOBILE", "PAID SALARIES", "ROOM RENT", "FUEL", "OTHER"};
 	private Button b;
 	private TextView etrxDate, etrxTotalInterestAmount, etrxReceivedAmount, tv;
 
