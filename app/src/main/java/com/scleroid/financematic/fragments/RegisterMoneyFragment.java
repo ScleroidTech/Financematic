@@ -274,9 +274,11 @@ public class RegisterMoneyFragment extends BaseFragment {
 		/*Observable.just(customerLab.getRxItem(customerId))
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe(customer -> {
+				.subscribe((Single<Customer> customer) -> {
+					customer.subscribe(customer1 ->customerNameTextView.setText(customer1.getName
+					()) );
 							Timber.d("data received, displaying");
-							customerNameTextView.setText(customer.g);
+							//customerNameTextView.setText(customer.g);
 						},
 						throwable -> Timber.d("Not gonna show up")
 				);*/
@@ -285,11 +287,10 @@ public class RegisterMoneyFragment extends BaseFragment {
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(customer -> {
-							Timber.d("data received, displaying");
-							customerNameTextView.setText("Got Reply");
+							Timber.d("data received, displaying " + customer.toString());
+							customerNameTextView.setText("Customer Name : " + customer.getName());
 						},
-						throwable -> Timber.d("Not gonna show up " + throwable.getMessage())
-				).dispose();
+						throwable -> Timber.d("Not gonna show up " + throwable.getMessage()));
 		//	customerNameTextView.setText(customer.getName());
 	}
 
