@@ -38,7 +38,7 @@
             >
 
             <TextView
-                android:id="@+id/toaa"
+                android:id="@+id/total_expense_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -54,15 +54,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/totsss"
+            <com.scleroid.financematic.utils.ui.RupeeTextView
+                android:id="@+id/total_expense_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_marginBottom="10dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
-                android:text="Rs 20,000.00"
+                android:text="52000"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="33sp"
@@ -124,12 +124,12 @@
                         />
                 </LinearLayout>
 
-                <TextView
+                <com.scleroid.financematic.utils.ui.RupeeTextView
                     android:id="@+id/room_rent_amt_text_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="1dp"
-                    android:text="RS 2400"
+                    android:text="2400"
                     android:textAlignment="center"
                     android:textColor="#488711"
                     android:textSize="18sp" />
@@ -179,12 +179,12 @@
                         />
                 </LinearLayout>
 
-                <TextView
+                <com.scleroid.financematic.utils.ui.RupeeTextView
                     android:id="@+id/light_bill_text_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="1dp"
-                    android:text="RS 2400"
+                    android:text="2400"
                     android:textAlignment="center"
                     android:textColor="#488711"
                     android:textSize="18sp" />
@@ -234,12 +234,12 @@
                         />
                 </LinearLayout>
 
-                <TextView
+                <com.scleroid.financematic.utils.ui.RupeeTextView
                     android:id="@+id/phone_bill_text_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="1dp"
-                    android:text="RS 2400"
+                    android:text="2400"
                     android:textAlignment="center"
                     android:textColor="#488711"
                     android:textSize="18sp" />
@@ -298,12 +298,12 @@
                         />
                 </LinearLayout>
 
-                <TextView
+                <com.scleroid.financematic.utils.ui.RupeeTextView
                     android:id="@+id/salary_text_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="1dp"
-                    android:text="RS 2400"
+                    android:text="2400"
                     android:textAlignment="center"
                     android:textColor="#488711"
                     android:textSize="18sp" />
@@ -353,12 +353,12 @@
                         />
                 </LinearLayout>
 
-                <TextView
+                <com.scleroid.financematic.utils.ui.RupeeTextView
                     android:id="@+id/fuel_text_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="1dp"
-                    android:text="RS 2400"
+                    android:text="2400"
                     android:textAlignment="center"
                     android:textColor="#488711"
                     android:textSize="18sp" />
@@ -408,12 +408,12 @@
                         />
                 </LinearLayout>
 
-                <TextView
+                <com.scleroid.financematic.utils.ui.RupeeTextView
                     android:id="@+id/other_text_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="1dp"
-                    android:text="RS 2400"
+                    android:text="400"
                     android:textAlignment="center"
                     android:textColor="#488711"
                     android:textSize="18sp" />

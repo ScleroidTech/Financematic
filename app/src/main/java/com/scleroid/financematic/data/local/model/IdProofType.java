@@ -8,20 +8,20 @@ package com.scleroid.financematic.data.local.model;
  */
 public interface IdProofType {
 
-	String AADHAR = "aadhar";
+	String AADHAR = "Aadhar Card";
 
-	String PAN = "pan";
+	String PAN = "Pan Card";
 
-	String PASSPORT = "passport";
+	String PASSPORT = "Passport";
 
-	String RATION_CARD = "ration_card";
+	String RATION_CARD = "Ration Card";
 
-	String VOTER_ID = "voter_id";
+	String VOTER_ID = "Voter Id";
 
-	String SEVEN_TWELVE_CERTIFICATE = "7/12";
+	String SEVEN_TWELVE_CERTIFICATE = "7/12 Certificate";
 
 
-	String OTHER = "other";
+	String OTHER = "Other";
 
 
 }

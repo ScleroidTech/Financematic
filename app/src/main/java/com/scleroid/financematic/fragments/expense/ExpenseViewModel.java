@@ -1,10 +1,15 @@
 package com.scleroid.financematic.fragments.expense;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 
 import com.scleroid.financematic.base.BaseViewModel;
+import com.scleroid.financematic.data.local.model.Expense;
+import com.scleroid.financematic.data.repo.ExpenseRepo;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 /**
  * Copyright (C) 2018
@@ -14,14 +19,29 @@ import java.util.List;
  */
 public class ExpenseViewModel extends BaseViewModel
 		implements com.scleroid.financematic.viewmodels.ExpenseViewModel {
-	//TODO add  data in it
-	@Override
-	protected LiveData<List> updateItemLiveData() {
-		return null;
+	private final ExpenseRepo expenseRepo;
+
+	private LiveData<List<Expense>> expenseList = new MutableLiveData<>();
+
+	@Inject
+	public ExpenseViewModel(final ExpenseRepo expenseRepo) {
+		this.expenseRepo = expenseRepo;
+
+		expenseList = getItemList();
 	}
 
 	@Override
-	protected LiveData<List> getItemList() {
-		return null;
+	protected LiveData<List<Expense>> updateItemLiveData() {
+		expenseList = expenseRepo.getLocalExpenseLab().getItems();
+
+		return expenseList;
+	}
+
+	@Override
+	protected LiveData<List<Expense>> getItemList() {
+		if (expenseList.getValue() == null || expenseList.getValue().isEmpty()) {
+			expenseList = updateItemLiveData();
+		}
+		return expenseList;
 	}
 }

@@ -143,11 +143,6 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 		super.onCreateView(inflater, container, savedInstanceState);
 		// Inflate the layout for this fragment
 		View rootView = getRootView();
-		Bundle bundle = getArguments();
-		if (bundle != null) {
-			reportFilterType = (ReportFilterType) bundle.get(FILTER_TYPE);
-			if (reportFilterType != null) { filterWithoutDate(reportFilterType); }
-		}
 
 
 		mAdapter = new ReportAdapter();
@@ -163,17 +158,33 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 		setupSpinner();
 
 
-
 		mChart.setUsePercentValues(true);
 		mChart.getDescription().setEnabled(false);
 		//  mChart.setCenterTextTypeface(mTfLight);
 
 		initializeChartData();
 
+		handleClickFromDashboard();
 
 		return rootView;
 
 
+	}
+
+	private void handleClickFromDashboard() {
+		Bundle bundle = getArguments();
+		if (bundle != null) {
+			reportFilterType = (ReportFilterType) bundle.get(FILTER_TYPE);
+			if (reportFilterType != null) {
+				if (reportFilterType == ReportFilterType.RECEIVED_AMOUNT) {
+					spinnerFilter.setSelection(1);
+				} else if (reportFilterType == ReportFilterType.LENT_AMOUNT) {
+					spinnerFilter.setSelection(2);
+				}
+				final List<TransactionModel> tempList = filterWithoutDate(reportFilterType);
+				updateListData(tempList);
+			}
+		}
 	}
 
 	/**
@@ -192,12 +203,6 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 		reportViewModel.getTransactionLiveData().observe(this, this::updateListData);
 	}
 
-	private void updateListData(final List<TransactionModel> transactions) {
-		transactionsList = transactions;
-		mAdapter.setReportList(transactionsList);
-		mAdapter.setFilterType(reportFilterType);
-	}
-
 	/**
 	 * Override for set view model
 	 *
@@ -209,6 +214,12 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 				ViewModelProviders.of(Objects.requireNonNull(getActivity()), viewModelFactory)
 						.get(ReportViewModel.class);
 		return reportViewModel;
+	}
+
+	private void updateListData(final List<TransactionModel> transactions) {
+		transactionsList = transactions;
+		mAdapter.setReportList(transactionsList);
+		mAdapter.setFilterType(reportFilterType);
 	}
 
 	private void setupSpinner() {

@@ -12,9 +12,11 @@ import android.widget.TextView;
 
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.data.local.model.Expense;
+import com.scleroid.financematic.data.local.model.ExpenseCategory;
 import com.scleroid.financematic.utils.ui.CurrencyStringUtils;
 import com.scleroid.financematic.utils.ui.DateUtils;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -93,49 +95,51 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
 		}
 
 		public void setData(Context context, Expense expense) {
+			BigDecimal expenseAmount = expense.getExpenseAmount();
+			if (expenseAmount == null) return;
+			this.expenseAmount.setText(String.valueOf(expenseAmount.intValueExact()));
 			setDate(expense.getExpenseDate());
-			expenseAmount.setText(
-					currencyStringUtils.bindNumber(expense.getExpenseAmount().intValueExact()));
-			byte expenseType = expense.getExpenseType();
+
+			String expenseType = expense.getExpenseType();
 			setExpenseType(expenseType, context);
 
 
 		}
 
-		private void setExpenseType(byte expenseType, Context context) {
+		private void setExpenseType(String expenseType, Context context) {
 			String expenseTypeText;
 			int expenseTypeImageSrc;
 			int expenseColor;
 
 			switch (expenseType) {
-				case 1:
+				case ExpenseCategory.ROOM_RENT:
 					expenseTypeText = "Room Rent";
 					expenseTypeImageSrc = R.drawable.ic_home_black_24dp;
 					expenseColor = context.getResources().getColor(R.color.exp_card1);
 
 					break;
-				case 2:
+				case ExpenseCategory.LIGHT_BILL:
 					expenseTypeText = "Light Bill";
 					expenseTypeImageSrc = R.drawable.ic_lightbulb_outline_black_24dp;
 					expenseColor = context.getResources().getColor(R.color.exp_card2);
 
 					break;
-				case 3:
+				case ExpenseCategory.PHONE_BILL:
 					expenseTypeText = "Mobile Bill";
 					expenseTypeImageSrc = R.drawable.ic_phone_android_black_24dp;
 					expenseColor = context.getResources().getColor(R.color.exp_card3);
 					break;
-				case 4:
+				case ExpenseCategory.PAID_SALARIES:
 					expenseTypeText = "Paid Salaries";
 					expenseTypeImageSrc = R.drawable.ic_account_balance_wallet_black_24dp;
 					expenseColor = context.getResources().getColor(R.color.exp_card4);
 					break;
-				case 5:
+				case ExpenseCategory.FUEL:
 					expenseTypeText = "Fuel";
 					expenseTypeImageSrc = R.drawable.ic_gaspump;
 					expenseColor = context.getResources().getColor(R.color.exp_card5);
 					break;
-				case 0:
+				case ExpenseCategory.OTHER:
 				default:
 					expenseTypeText = "OTHER";
 					expenseTypeImageSrc = R.drawable.ic_view_list_black_24dp;

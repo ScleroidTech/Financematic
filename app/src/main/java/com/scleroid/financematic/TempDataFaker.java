@@ -2,6 +2,7 @@ package com.scleroid.financematic;
 
 import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.local.model.Expense;
+import com.scleroid.financematic.data.local.model.ExpenseCategory;
 import com.scleroid.financematic.data.local.model.IdProofType;
 import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.data.local.model.Loan;
@@ -121,7 +122,7 @@ public class TempDataFaker {
 
 		return new Expense(
 				faker.commerce.price(),
-				(byte) faker.number.between(0, 5),
+				ExpenseCategory.PHONE_BILL,
 				faker.date.backward()
 		);
 	}

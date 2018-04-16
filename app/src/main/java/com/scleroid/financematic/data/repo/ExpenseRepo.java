@@ -51,6 +51,10 @@ public class ExpenseRepo implements Repo<Expense> {
 
 	private final AppDatabase db;
 
+	public LocalExpenseLab getLocalExpenseLab() {
+		return localExpenseLab;
+	}
+
 	private final LocalExpenseLab localExpenseLab;
 
 	private final WebService webService;

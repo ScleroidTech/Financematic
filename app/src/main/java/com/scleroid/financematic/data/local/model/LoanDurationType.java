@@ -8,20 +8,20 @@ package com.scleroid.financematic.data.local.model;
  */
 public interface LoanDurationType {
 
-	String DAILY = "daily";
+	String DAILY = "Daily";
 
-	String WEEKLY = "monthly";
+	String WEEKLY = "Weekly";
 
-	String BIWEEKLY = "biweekly";
-	String MONTHLY = "monthly";
+	String BIWEEKLY = "Bi-Weekly";
+	String MONTHLY = "Monthly";
 
-	String BIMONTHLY = "bimonthly";
+	String BIMONTHLY = "Bi-Monthly";
 
-	String QUARTERLY = "quarterly";
+	String QUARTERLY = "Quarterly";
 
-	String HALF_YEARLY = "half_yearly";
+	String HALF_YEARLY = "Half Yearly";
 
-	String YEARLY = "yearly";
+	String YEARLY = "Yearly";
 
-	String ONE_TIME = "one_time";
+	String ONE_TIME = "One Time";
 }

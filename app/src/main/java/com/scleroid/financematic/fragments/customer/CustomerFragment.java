@@ -154,9 +154,15 @@ public class CustomerFragment extends BaseFragment {
 	}
 
 	private void updateTotalLoanAmt() {
-		for (Loan loan : loanList) {
+	/*	for (Loan loan : loanList) {
 			totalLoan += loan.getLoanAmt().intValue();
 		}
+		totalLoanTextView.setText(totalLoan + "");*/
+
+		totalLoan = loanList.stream()
+				.filter(o -> o.getLoanAmt() != null)
+				.mapToInt(o -> o.getLoanAmt().intValue())
+				.sum();
 		totalLoanTextView.setText(totalLoan + "");
 	}
 
