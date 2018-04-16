@@ -1,5 +1,6 @@
 package com.scleroid.financematic.fragments.expense;
 
+import android.annotation.SuppressLint;
 import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -240,6 +241,7 @@ public class ExpenseFragment extends BaseFragment {
 
 	}
 
+	@SuppressLint("NewApi")
 	private int getTotalLoan(final List<Expense> items) {
 		return items.stream()
 				.filter(o -> o.getExpenseAmount() != null)
@@ -247,6 +249,7 @@ public class ExpenseFragment extends BaseFragment {
 				.sum();
 	}
 
+	@SuppressLint("NewApi")
 	private int getTotalCategoryAmt(final List<Expense> items, String expenseCategory) {
 		return items.stream()
 				.filter(o -> o.getExpenseAmount() != null && o.getExpenseType()
