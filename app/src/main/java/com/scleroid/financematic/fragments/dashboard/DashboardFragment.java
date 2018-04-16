@@ -11,17 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.base.BaseFragment;
 import com.scleroid.financematic.data.local.lab.LocalCustomerLab;
 import com.scleroid.financematic.data.local.lab.LocalLoanLab;
 import com.scleroid.financematic.data.local.model.Installment;
-import com.scleroid.financematic.fragments.passbook.PassbookFragment;
+import com.scleroid.financematic.fragments.report.ReportFilterType;
 import com.scleroid.financematic.fragments.report.ReportFragment;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
-import com.scleroid.financematic.utils.ui.RecyclerTouchListener;
 import com.scleroid.financematic.utils.ui.TextViewUtils;
 
 import java.util.ArrayList;
@@ -31,8 +29,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
-import es.dmoral.toasty.Toasty;
+import butterknife.OnClick;
 
 
 public class DashboardFragment extends BaseFragment<DashboardViewModel> {
@@ -52,7 +49,7 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 	TextView upcomingEventsTextView;
 	@BindView(R.id.recycler_view_dashboard)
 	RecyclerView recyclerViewDashboard;
-	Unbinder unbinder;
+
 	@Inject
 	ActivityUtils activityUtils;
 
@@ -60,6 +57,13 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 	LocalCustomerLab localCustomerLab;
 	@Inject
 	LocalLoanLab localLoanLab;
+
+	@BindView(R.id.total_amount_title_text_view)
+	TextView totalAmountTitleTextView;
+
+	@BindView(R.id.lent_amount_title_text_view)
+	TextView lentAmountTitleTextView;
+
 	private DashboardAdapter mAdapter;
 	private DashboardViewModel dashBoardViewModel;
 	private List<Installment> installments = new ArrayList<>();
@@ -87,20 +91,6 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 		ButterKnife.setDebug(true);
 		// Inflate the layout for this fragment
 		View rootView = getRootView();
-		// unbinder = ButterKnife.bind(this, rootView);
-
-
-//Intent
-		firstFragment = rootView.findViewById(R.id.total_amount_text_view);
-		firstFragment.setOnClickListener(
-				v -> activityUtils.loadFragment(new ReportFragment(), getFragmentManager()));
-		remainingAmountTextView = rootView.findViewById(R.id.remaining_amount_text_view);
-		remainingAmountTextView.setOnClickListener(
-				v -> activityUtils.loadFragment(new ReportFragment(), getFragmentManager()));
-		lentAmountTextView = rootView.findViewById(R.id.lent_amount_text_view);
-		lentAmountTextView.setOnClickListener(
-				v -> activityUtils.loadFragment(new ReportFragment(), getFragmentManager()));
-
 
 		// recyclerView = rootView.findViewById(R.id.recycler_view_dashboard);11
 
@@ -111,6 +101,7 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 		textViewUtils.textViewExperiments(upcomingEventsTextView);
 		textViewUtils.textViewExperiments(totalAmountTextView);
 
+
 		return rootView;
 	}
 
@@ -119,7 +110,7 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 	 */
 	@Override
 	public int getLayoutId() {
-		return R.layout.dashboard;
+		return R.layout.fragment_dashboard;
 	}
 
 	/**
@@ -163,26 +154,6 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 
 
 		// row click listener
-		RecyclerTouchListener recyclerTouchListener =
-				new RecyclerTouchListener(getActivity().getApplicationContext(),
-						recyclerViewDashboard, new RecyclerTouchListener.ClickListener() {
-					@Override
-					public void onClick(View view, int position) {
-						if (installments.isEmpty()) {
-							Toasty.error(getActivity(), "THe list is empty, something wrong here")
-									.show();
-						}
-						Installment loan = installments.get(position);
-						Toast.makeText(getActivity().getApplicationContext(),
-								loan.getLoan().getCustomer().getName() + " is selected!",
-								Toast.LENGTH_SHORT).show();
-					}
-
-					@Override
-					public void onLongClick(View view, int position) {
-
-					}
-				});
 		// TODO not needed, should be removed recyclerViewDashboard.addOnItemTouchListener
 		// (recyclerTouchListener);
 	}
@@ -198,4 +169,30 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 	}
 
 
+	@OnClick({R.id.total_amount_text_view, R.id.total_amount_title_text_view, R.id
+			.remaining_amount_text_view, R.id.lent_amount_text_view, R.id
+			.lent_amount_title_text_view, R.id.available_amount_text_view})
+	public void onViewClicked(View view) {
+		switch (view.getId()) {
+			case R.id.total_amount_text_view:
+			case R.id.total_amount_title_text_view:
+				activityUtils.loadFragment(
+						ReportFragment.newInstance(ReportFilterType.ALL_TRANSACTIONS),
+						getFragmentManager());
+				break;
+			case R.id.remaining_amount_text_view:
+			case R.id.available_amount_text_view:
+				activityUtils.loadFragment(
+						ReportFragment.newInstance(ReportFilterType.RECEIVED_AMOUNT),
+						getFragmentManager());
+				break;
+			case R.id.lent_amount_text_view:
+			case R.id.lent_amount_title_text_view:
+				activityUtils.loadFragment(ReportFragment.newInstance(ReportFilterType
+								.LENT_AMOUNT),
+						getFragmentManager());
+				break;
+
+		}
+	}
 }

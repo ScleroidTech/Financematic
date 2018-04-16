@@ -32,7 +32,6 @@ import com.scleroid.financematic.fragments.DatePickerFragment;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.DateUtils;
 import com.scleroid.financematic.utils.ui.RecyclerTouchListener;
-import com.scleroid.financematic.utils.ui.TextViewUtils;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -58,7 +57,7 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 	private static final String DIALOG_DATE = "DIALOG_DATE";
 	private static final int REQUEST_DATE_FROM = 1;
 	private static final int REQUEST_DATE_TO = 2;
-
+	private static final String FILTER_TYPE = "filter_type";
 
 
 	@Inject
@@ -110,9 +109,10 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 		// Required empty public constructor
 	}
 
-	public static ReportFragment newInstance(String param1, String param2) {
+	public static ReportFragment newInstance(ReportFilterType filterType) {
 		ReportFragment fragment = new ReportFragment();
 		Bundle args = new Bundle();
+		args.putSerializable(FILTER_TYPE, filterType);
 		fragment.setArguments(args);
 		return fragment;
 	}
@@ -143,6 +143,11 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 		super.onCreateView(inflater, container, savedInstanceState);
 		// Inflate the layout for this fragment
 		View rootView = getRootView();
+		Bundle bundle = getArguments();
+		if (bundle != null) {
+			reportFilterType = (ReportFilterType) bundle.get(FILTER_TYPE);
+			if (reportFilterType != null) { filterWithoutDate(reportFilterType); }
+		}
 
 
 		mAdapter = new ReportAdapter();

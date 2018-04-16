@@ -15,10 +15,8 @@ import com.scleroid.financematic.R;
 import com.scleroid.financematic.data.local.lab.LocalCustomerLab;
 import com.scleroid.financematic.data.local.lab.LocalLoanLab;
 import com.scleroid.financematic.data.local.model.Installment;
-import com.scleroid.financematic.data.local.model.TransactionModel;
 import com.scleroid.financematic.data.repo.CustomerRepo;
 import com.scleroid.financematic.data.repo.LoanRepo;
-import com.scleroid.financematic.fragments.passbook.PassbookFragment;
 import com.scleroid.financematic.utils.eventBus.Events;
 import com.scleroid.financematic.utils.eventBus.GlobalBus;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
@@ -119,7 +117,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
 		holder.dashboarditemcardview.setOnClickListener(v -> {
 			Timber.wtf("It's clicked dadadad");
 			Events.openCustomerFragment openCustomerFragment =
-					new Events.openCustomerFragment( dashBoardModel.getLoanAcNo());
+					new Events.openCustomerFragment(dashBoardModel.getLoan().getCustId());
 			GlobalBus.getBus().post(openCustomerFragment);
 		});
 

@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.base.BaseFragment;
@@ -19,7 +18,6 @@ import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.fragments.RegisterMoneyFragment;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
-import com.scleroid.financematic.utils.ui.RecyclerTouchListener;
 import com.scleroid.financematic.utils.ui.RupeeTextView;
 
 import java.util.ArrayList;
@@ -114,27 +112,6 @@ public class CustomerFragment extends BaseFragment {
 
 		recyclerView.setAdapter(mAdapter);
 
-		// row click listener
-		RecyclerTouchListener listener =
-				new RecyclerTouchListener(getActivity().getApplicationContext(), recyclerView,
-						new RecyclerTouchListener.ClickListener() {
-							@Override
-							public void onClick(View view, int position) {
-								Loan profile = loanList.get(position);
-								Toast.makeText(getActivity().getApplicationContext(),
-										profile.getCustId() + " is selected!", Toast.LENGTH_SHORT)
-										.show();
-							}
-
-							@Override
-							public void onLongClick(View view, int position) {
-
-							}
-						});
-		//	recyclerView.addOnItemTouchListener(listener);
-
-
-		//unbinder = ButterKnife.bind(this, rootView);
 
 
 		return rootView;
@@ -196,15 +173,10 @@ public class CustomerFragment extends BaseFragment {
 		return customerViewModel;
 	}
 
-	@Override
-	public void onDestroyView() {
-		super.onDestroyView();
-		unbinder1.unbind();
-	}
 
 	@OnClick(R.id.fab)
 	public void onViewClicked() {
-		activityUtils.loadFragment(RegisterMoneyFragment.newInstance(customerId),
+		activityUtils.loadFragment(RegisterMoneyFragment.newInstance(theCustomer),
 				getFragmentManager());
 	}
 }

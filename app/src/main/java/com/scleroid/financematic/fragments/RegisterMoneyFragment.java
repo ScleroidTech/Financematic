@@ -16,6 +16,7 @@ import com.scleroid.financematic.R;
 import com.scleroid.financematic.base.BaseFragment;
 import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.local.lab.LocalCustomerLab;
+import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.data.local.model.LoanDurationType;
 import com.scleroid.financematic.data.repo.LoanRepo;
@@ -35,7 +36,6 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 /**
@@ -46,7 +46,7 @@ import timber.log.Timber;
 public class RegisterMoneyFragment extends BaseFragment {
 
 	private static final int REQUEST_DATE = 1;
-	private static final String CUSTOMER_ID = "customerId";
+	private static final String CUSTOMER = "customer";
 
 	private static final String DIALOG_DATE = "DIALOG_DATE";
 	private static final int REQUEST_DATE_FROM = 1;
@@ -74,20 +74,22 @@ public class RegisterMoneyFragment extends BaseFragment {
 	private TextView ettxloan_amout, startDateTextView, endDateTextView, ettxrateInterest,
 			ettxInterestAmount, ettxInstallmentduration, etTotalLoanAmount, ettxNoofInstallment,
 			tv;
-	private int customerId;
+
 	private String durationType = LoanDurationType.MONTHLY;
 	private Date startDate;
 	private Date endDate;
+	private Customer customer;
+	private Loan loan;
 
 
 	public RegisterMoneyFragment() {
 		// Required empty public constructor
 	}
 
-	public static RegisterMoneyFragment newInstance(int customer_id) {
+	public static RegisterMoneyFragment newInstance(Customer customer_id) {
 		RegisterMoneyFragment fragment = new RegisterMoneyFragment();
 		Bundle args = new Bundle();
-		args.putInt(CUSTOMER_ID, customer_id);
+		args.putParcelable(CUSTOMER, customer_id);
 		fragment.setArguments(args);
 		return fragment;
 	}
@@ -107,14 +109,19 @@ public class RegisterMoneyFragment extends BaseFragment {
 
 		TextView customerNameTextView = rootView.findViewById(R.id.reg_fullname_detaills);
 		Bundle bundle = getArguments();
-		if (bundle != null) customerId = bundle.getInt(CUSTOMER_ID);
+		if (bundle != null) {
+			customer = bundle.getParcelable(CUSTOMER);
 
-		customerLab
-				.getRxItem(customerId)
-				.subscribeOn(Schedulers.io())
-				.subscribe(customer -> customerNameTextView.setText(customer.getName())).dispose();
-
-
+			customerLab
+					.getRxItem(customer.getCustomerId())
+					.subscribe(customer -> {
+								Timber.d("data received, displaying");
+								customerNameTextView.setText("Got Reply");
+							},
+							throwable -> Timber.d("Not gonna show up")
+					).dispose();
+			customerNameTextView.setText(customer.getName());
+		}
 		final Spinner spin = rootView.findViewById(R.id.spinnertx);
 		spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
@@ -258,22 +265,26 @@ public class RegisterMoneyFragment extends BaseFragment {
 					loanAmt, startDateStr, endDateStr, rateOfInterest, interestAmt,
 					noOfInstallments, duration, spin.getSelectedItem()
 							.toString(), totatLoanAmt));
-			Loan loan = new Loan(CommonUtils.getRandomInt(), new BigDecimal(loanAmt), startDate,
+			loan = new Loan(CommonUtils.getRandomInt(), new BigDecimal(loanAmt), startDate,
 					endDate, Float.valueOf(rateOfInterest), new BigDecimal(interestAmt),
 					Integer.valueOf(noOfInstallments), Integer.valueOf(duration), durationType,
-					new BigDecimal(totatLoanAmt), customerId);
-			loanRepo.saveItem(loan).subscribe(loan1 -> {
-				Timber.d("Loan Data Saved " + loan1.toString());
-			}, throwable -> {
-				Timber.d(
-						"Loan Data not Saved " + throwable.getMessage() + " errors are " + loan
-								.toString());
-			});
+					new BigDecimal(totatLoanAmt), customer.getCustomerId());
+			saveLoan(loan);
 		});
 
 
 		unbinder = ButterKnife.bind(this, rootView);
 		return rootView;
+	}
+
+	private void saveLoan(final Loan loan) {
+		loanRepo.saveItem(loan).subscribe(loan1 -> {
+			Timber.d("Loan Data Saved " + loan1.toString());
+		}, throwable -> {
+			Timber.d(
+					"Loan Data not Saved " + throwable.getMessage() + " errors are " + loan
+							.toString());
+		});
 	}
 
 	/**

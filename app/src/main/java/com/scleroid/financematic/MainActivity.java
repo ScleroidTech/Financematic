@@ -506,7 +506,6 @@ public class MainActivity extends BaseActivity
 	public void onCustomerFragmentOpen(Events.openCustomerFragment customerBundle) {
 		int customerId = customerBundle.getCustomerId();
 		CustomerFragment fragment = CustomerFragment.newInstance(customerId);
-
 		activityUtils.loadFragment(fragment, getSupportFragmentManager());
 
 
