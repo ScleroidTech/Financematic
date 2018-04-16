@@ -48,6 +48,7 @@ import es.dmoral.toasty.Toasty;
 import io.bloco.faker.Faker;
 import timber.log.Timber;
 
+import static com.scleroid.financematic.AlarmReceiver.NOTIFY;
 import static com.scleroid.financematic.utils.CommonUtils.makeToast;
 
 public class MainActivity extends BaseActivity
@@ -231,6 +232,13 @@ public class MainActivity extends BaseActivity
 			CURRENT_TAG = TAG_DASHBOARD;
 			loadFragmentFromNavigationDrawers();
 		}
+		boolean frag = getIntent().getBooleanExtra(NOTIFY, false);
+		if (frag) {
+			CURRENT_TAG = TAG_NOTIFICATION;
+			loadFragmentFromNavigationDrawers();
+		}
+
+
 		((GarlandApp) getApplication()).addListener(this);
 
 	}

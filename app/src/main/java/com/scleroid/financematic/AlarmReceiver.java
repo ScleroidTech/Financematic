@@ -18,13 +18,16 @@ import static android.app.NotificationManager.IMPORTANCE_DEFAULT;
 
 public class AlarmReceiver extends BroadcastReceiver{
     private static final String CHANNEL_ID = "com.scleroid.financematic.channelId";
+	public static final String NOTIFY = "notification_fragment";
 
-    @Override
+	@Override
     public void onReceive(Context context, Intent intent) {
-        Intent notificationIntent = new Intent(context, NotificationActivity.class);
+
+		Intent notificationIntent = new Intent(context, MainActivity.class);
+		notificationIntent.putExtra(NOTIFY, true);
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-        stackBuilder.addParentStack(NotificationActivity.class);
+		stackBuilder.addParentStack(MainActivity.class);
         stackBuilder.addNextIntent(notificationIntent);
 
         PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
