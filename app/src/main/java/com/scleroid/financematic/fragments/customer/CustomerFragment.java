@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import timber.log.Timber;
 
@@ -35,6 +36,9 @@ import timber.log.Timber;
 
 
 public class CustomerFragment extends BaseFragment {
+	@BindView(R.id.fab)
+	FloatingActionButton fab;
+	Unbinder unbinder1;
 	private ActivityUtils activityUtils = new ActivityUtils();
 	private static final String CUSTOMER_ID = "customer_id";
 	@BindView(R.id.name_text_view)
@@ -133,22 +137,10 @@ public class CustomerFragment extends BaseFragment {
 		//unbinder = ButterKnife.bind(this, rootView);
 
 
-		//add floating button
-		FloatingActionButton fab = rootView.findViewById(R.id.fab);
-		fab.setOnClickListener(
-				view -> activityUtils.loadFragment(new RegisterMoneyFragment(),
-						getFragmentManager()));
-
-
-
-
-
-
 		return rootView;
 
 
 	}
-
 
 
 	/**
@@ -202,5 +194,17 @@ public class CustomerFragment extends BaseFragment {
 				ViewModelProviders.of(this, viewModelFactory).get(CustomerViewModel.class);
 
 		return customerViewModel;
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		unbinder1.unbind();
+	}
+
+	@OnClick(R.id.fab)
+	public void onViewClicked() {
+		activityUtils.loadFragment(RegisterMoneyFragment.newInstance(customerId),
+				getFragmentManager());
 	}
 }
