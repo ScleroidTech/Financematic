@@ -14,11 +14,11 @@ import java.util.List;
 public class LoansWithCustomer {
 	//TODO add later
 	@Embedded
-	public Customer customer;
+	public IdProofType idProofType;
 
 	@Relation(parentColumn = "customerId",
 			entityColumn = "custId")
-	public List<Loan> loanList;
+	public List<LoanDurationType> loanList;
 
 	@Relation(parentColumn = "accountNo",
 			entityColumn = "loanAcNo")

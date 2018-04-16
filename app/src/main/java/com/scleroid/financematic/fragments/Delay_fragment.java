@@ -38,7 +38,7 @@ public class Delay_fragment extends Fragment {
     Context context;
     EditText edittext;
     Calendar myCalendar = Calendar.getInstance();
-    String[] country = {"Not now money", "",  "Other"};
+	String[] country = {"Not now money", "", "OTHER"};
     private Button b;
     private TextView etrxDate,etrxReceivedAmount1, etrxReceivedAmount, tv;
 

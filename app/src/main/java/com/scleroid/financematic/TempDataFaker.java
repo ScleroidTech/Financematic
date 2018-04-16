@@ -2,8 +2,10 @@ package com.scleroid.financematic;
 
 import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.local.model.Expense;
+import com.scleroid.financematic.data.local.model.IdProofType;
 import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.data.local.model.Loan;
+import com.scleroid.financematic.data.local.model.LoanDurationType;
 import com.scleroid.financematic.data.local.model.TransactionModel;
 
 import java.util.ArrayList;
@@ -68,23 +70,23 @@ public class TempDataFaker {
 				faker.address.streetAddress(),
 				faker.address.city(),
 				(faker.number.hexadecimal(12)) + "",
-				(byte) faker.number.between(0, 6)
+				IdProofType.AADHAR
 
 		);
 	}
 
 	Loan createLoanData(Faker faker, int customerId, int accountNo) {
 
-		return new Loan(
+		return new Loan(accountNo,
 				faker.commerce.price(5000, 1000000),
 				faker.date.backward(),
 				faker.date.forward(),
 				faker.number.between(1, 100),
 				faker.commerce.price(0, 2000),
 				faker.number.between(1, 20), faker.number.between(0, 20),
-				(byte) faker.number.between(0, 9),
+				LoanDurationType.MONTHLY,
 				faker.commerce.price(6000, 1100000),
-				accountNo,
+
 				customerId,
 				faker.commerce.price(6000, 100000)
 

@@ -38,7 +38,7 @@ public class TransactionModel {
 	private BigDecimal gainedAmt;
 
 	@Ignore
-	private Loan loan;
+	private LoanDurationType loan;
 	@TypeConverters(MoneyConverter.class)
 	private BigDecimal receivedAmt;
 	private String description;
@@ -57,11 +57,11 @@ public class TransactionModel {
 		this.loanAcNo = loanAcNo;
 	}
 
-	public Loan getLoan() {
+	public LoanDurationType getLoan() {
 		return loan;
 	}
 
-	public void setLoan(final Loan loan) {
+	public void setLoan(final LoanDurationType loan) {
 		this.loan = loan;
 	}
 

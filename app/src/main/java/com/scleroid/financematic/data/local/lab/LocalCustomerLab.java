@@ -161,9 +161,9 @@ public class LocalCustomerLab implements LocalDataSource<Customer> {
 	 * @param itemId the id of the item to be get
 	 */
 
-	public Customer getRxItem(final int itemId) {
+	public Single<Customer> getRxItem(final int itemId) {
 		Timber.d("getting customer with id %d", itemId);
-		return customerDao.getCustomer(itemId);
+		return customerDao.getRxCustomer(itemId);
 	}
 
 	public LiveData<List<Customer>> getCustomersWithLoans() {
