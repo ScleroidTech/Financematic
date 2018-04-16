@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-        <TextView android:text="Notification" android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+    <TextView android:text="Notification Details Here..." android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </android.support.constraint.ConstraintLayout>
-

@@ -45,6 +45,7 @@ dependencies {
 
     // App's dependencies, including test
     implementation 'com.android.support:multidex:1.0.3'
+    compile 'com.android.support:support-v4:27.1.1'
 
     //noinspection GradleCompatible
     // implementation "com.android.support:support-v4:$rootProject.supportLibraryVersion"
