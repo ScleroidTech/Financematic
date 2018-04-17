@@ -23,7 +23,7 @@ public class AlarmReceiver extends BroadcastReceiver{
 	@Override
     public void onReceive(Context context, Intent intent) {
 
-		Intent notificationIntent = new Intent(context, MainActivity.class);
+		Intent notificationIntent = new Intent(context,MainActivity.class);
 		notificationIntent.putExtra(NOTIFY, true);
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
@@ -34,10 +34,10 @@ public class AlarmReceiver extends BroadcastReceiver{
 
         Notification.Builder builder = new Notification.Builder(context);
 
-        Notification notification = builder.setContentTitle("App Notification")
-                .setContentText("New Notification From Financematic..")
+        Notification notification = builder.setContentTitle("Customer Name")
+                .setContentText("RS 2000 Due in 2 day's")
                 .setTicker("New Message Alert!")
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.ic_calendarclocktime)
                 .setContentIntent(pendingIntent).build();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -49,7 +49,7 @@ public class AlarmReceiver extends BroadcastReceiver{
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(
                     CHANNEL_ID,
-                    "NotificationDemo",
+                    "Notification",
                     IMPORTANCE_DEFAULT
             );
             notificationManager.createNotificationChannel(channel);

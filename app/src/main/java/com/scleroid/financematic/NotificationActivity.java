@@ -69,7 +69,7 @@ public class NotificationActivity extends Fragment {
         // Inflate the layout for this fragment
         View rootView =  inflater.inflate(R.layout.notification_activity, container, false);
 
-;
+
 
         return rootView;
 

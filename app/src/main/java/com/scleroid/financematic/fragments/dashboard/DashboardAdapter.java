@@ -89,7 +89,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
 	@Override
 	public void onBindViewHolder(MyViewHolder holder, int position) {
 		Installment dashBoardModel = installmentList.get(position);
-		holder.itemView.setTag(dashBoardModel);
+
 
 
 
@@ -109,7 +109,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
 			return;
 		}
 		holder.setData(dashBoardModel);
-
+		holder.itemView.setTag(dashBoardModel);
 
 
 

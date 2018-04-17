@@ -77,7 +77,7 @@ public class Notification extends Fragment {
            PendingIntent broadcast = PendingIntent.getBroadcast(this.getActivity(), 100, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             Calendar cal = Calendar.getInstance();
-            cal.add(Calendar.SECOND, 5);
+            cal.add(Calendar.SECOND, 3);
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), broadcast);
 
 
