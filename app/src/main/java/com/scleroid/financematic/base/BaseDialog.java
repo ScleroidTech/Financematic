@@ -34,8 +34,10 @@ import dagger.android.support.AndroidSupportInjection;
  */
 
 public abstract class BaseDialog extends DialogFragment {
-
+	/*@Inject
+	DispatchingAndroidInjector<Fragment> childFragmentInjector;*/
 	private BaseActivity mActivity;
+
 
 	@Override
 	public void onAttach(Context context) {
@@ -52,10 +54,6 @@ public abstract class BaseDialog extends DialogFragment {
 	public void onDetach() {
 		mActivity = null;
 		super.onDetach();
-	}
-
-	private void performDependencyInjection() {
-		AndroidSupportInjection.inject(this);
 	}
 
 	@NonNull
@@ -80,6 +78,10 @@ public abstract class BaseDialog extends DialogFragment {
 		dialog.setCanceledOnTouchOutside(false);
 
 		return dialog;
+	}
+
+	private void performDependencyInjection() {
+		AndroidSupportInjection.inject(this);
 	}
 
 	public void dismissDialog(String tag) {
@@ -113,4 +115,5 @@ public abstract class BaseDialog extends DialogFragment {
 			mActivity.showLoading();
 		}
 	}
+
 }

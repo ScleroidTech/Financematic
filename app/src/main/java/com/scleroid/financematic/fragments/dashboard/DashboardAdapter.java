@@ -238,7 +238,8 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
 		private void handleDelay() {
 			Timber.d("delay of Payment" + installment.getLoan().getCustomer().getName());
 			Events.openDelayFragment delayFragment =
-					new Events.openDelayFragment(installment.getInstallmentId());
+					new Events.openDelayFragment(installment.getInstallmentId(),
+							installment.getLoanAcNo());
 
 			GlobalBus.getBus().post(delayFragment);
 		}

@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import com.scleroid.financematic.data.local.AppDatabase;
 import com.scleroid.financematic.data.local.lab.LocalExpenseLab;
 import com.scleroid.financematic.data.local.model.Expense;
+import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.data.remote.ApiResponse;
 import com.scleroid.financematic.data.remote.WebService;
 import com.scleroid.financematic.utils.AppExecutors;
@@ -145,6 +146,11 @@ public class ExpenseRepo implements Repo<Expense> {
 	@Override
 	public Single<Expense> saveItem(final Expense expense) {
 		return localExpenseLab.saveItem(expense);
+	}
+
+	@Override
+	public Single<Installment> updateItem(final Expense expense) {
+		return null;
 	}
 
 

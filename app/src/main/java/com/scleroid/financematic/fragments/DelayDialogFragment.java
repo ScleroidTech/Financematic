@@ -30,6 +30,10 @@ import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
+import es.dmoral.toasty.Toasty;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import timber.log.Timber;
+
 /**
  * Created by scleroid on 12/4/18.
  */
@@ -139,19 +143,33 @@ public class DelayDialogFragment extends BaseDialog {
 
 		return new MaterialStyledDialog.Builder(getActivity()).setTitle(R.string.delay_view)
 				.setCustomView(rootView)
-				.setStyle(Style.HEADER_WITH_TITLE)
+				.setStyle(Style.HEADER_WITH_ICON)
 				.withIconAnimation(true)
-				//.setIcon(R.drawable.delay)
+				.setIcon(R.drawable.ic_stopwatch)
 				.setPositiveText(R.string.submit)
 				.onPositive((dialog, which) -> {
-					Installment installment = new Installment(installationId, delayedDate,
-							new BigDecimal(etrxReceivedAmount.getText().toString()), )
-
-					tv.setText(
+					Timber.d(
 							"Your Input: \n" + etrxDate.getText().toString() + "\n" +
 									reasonEditText
-									.getText().toString() + "\n" + etrxReceivedAmount.getText()
+											.getText()
+											.toString() + "\n" + etrxReceivedAmount.getText()
 									.toString() + "\nEnd.");
+					Installment installment = new Installment(installationId, delayedDate,
+							new BigDecimal(etrxReceivedAmount.getText().toString()), accountNo);
+					installmentRepo.updateItem(installment).observeOn(
+							AndroidSchedulers.mainThread()).subscribe(installment1 -> {
+								Toasty.success(getContext(), "Details Updated Successfully")
+										.show();
+								Timber.d("data updated for Installment " + installment1.toString
+										());
+							}, throwable -> {
+								Toasty.error(getContext(), "Details Not Updated, Try again Later")
+										.show();
+								Timber.e("data  not updated for " + installment.toString());
+							}
+					);
+
+
 				})
 				.show();
 
@@ -174,6 +192,8 @@ public class DelayDialogFragment extends BaseDialog {
 		delayedDate = myCalendar.getTime();
 		etrxDate.setText(sdf.format(delayedDate));
 	}
+
+
 
 /*
     @Override

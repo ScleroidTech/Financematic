@@ -1,6 +1,7 @@
 package com.scleroid.financematic.di;
 
 import com.scleroid.financematic.Notification;
+import com.scleroid.financematic.fragments.DelayDialogFragment;
 import com.scleroid.financematic.fragments.RegisterCustomerFragment;
 import com.scleroid.financematic.fragments.RegisterMoneyFragment;
 import com.scleroid.financematic.fragments.RegisterReceivedFragment;
@@ -59,6 +60,9 @@ public abstract class FragmentBuildersModule {
 
 	@ContributesAndroidInjector
 	abstract Notification contributeNotification();
+
+	@ContributesAndroidInjector
+	abstract DelayDialogFragment contributeDelayDialog();
 
 
 }

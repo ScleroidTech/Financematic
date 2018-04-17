@@ -337,7 +337,7 @@ public class RegisterMoneyFragment extends BaseFragment {
 	}
 
 	private boolean isNotValidAmt(String loan_amountval) {
-		String EMAIL_PATTERN = "(?:\\\\d+(?:\\\\.\\\\d+)?|\\\\.\\\\d+)";
+		String EMAIL_PATTERN = "((\\\\d{1,4})(((\\\\.)(\\\\d{0,2})){0,1}))";
 
 		Pattern pattern = Pattern.compile(EMAIL_PATTERN);
 		Matcher matcher = pattern.matcher(loan_amountval);

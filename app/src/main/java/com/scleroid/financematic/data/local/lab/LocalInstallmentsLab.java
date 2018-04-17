@@ -92,6 +92,22 @@ public class LocalInstallmentsLab implements LocalDataSource<Installment> {
 		}).subscribeOn(Schedulers.io());
 	}
 
+
+	/**
+	 * Saves item to data source
+	 *
+	 * @param item item object to be saved
+	 */
+
+	public Single<Installment> updateItem(@NonNull final Installment item) {
+		Timber.d("creating new installment ");
+
+		return Single.fromCallable(() -> {
+			long rowId = installmentDao.update(item);
+			Timber.d("installment stored " + rowId);
+			return item;
+		}).subscribeOn(Schedulers.io());
+	}
 	/**
 	 * adds a list of objects to the data source
 	 *
