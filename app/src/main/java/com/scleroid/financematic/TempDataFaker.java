@@ -32,9 +32,9 @@ public class TempDataFaker {
 		loans = new ArrayList<Loan>();
 		installments = new ArrayList<Installment>();
 		transactions = new ArrayList<TransactionModel>();
-		expenses = new ArrayList<Expense>();
-		int customerId = faker.number.positive();
-		int accountNo = faker.number.between();
+		expenses = new ArrayList<>();
+		int customerId = faker.number.positive(10000, 99999);
+		int accountNo = faker.number.between(1000, 9999);
 		Customer customerData = createCustomerData(faker, customerId);
 		Timber.d(customerData.toString());
 		customers.add(customerData);
@@ -56,7 +56,7 @@ public class TempDataFaker {
 				expenses.add(expenseData);
 			}
 
-			accountNo = faker.number.between();
+			accountNo = faker.number.between(1000, 9999);
 
 		}
 
@@ -97,7 +97,7 @@ public class TempDataFaker {
 	TransactionModel createTransactionData(Faker faker, int accountNo) {
 
 		return new TransactionModel(
-				faker.number.positive(),
+				faker.number.positive(100000, 999999),
 				faker.date.backward(),
 				faker.commerce.price(),
 				faker.commerce.price(),
@@ -111,7 +111,7 @@ public class TempDataFaker {
 	Installment createInstallmentData(Faker faker, int accountNo) {
 
 		return new Installment(
-				faker.number.positive(),
+				faker.number.positive(100000, 999999),
 				faker.date.forward(),
 				faker.commerce.price(),
 				accountNo

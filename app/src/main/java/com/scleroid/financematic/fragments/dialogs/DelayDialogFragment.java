@@ -1,4 +1,4 @@
-package com.scleroid.financematic.fragments;
+package com.scleroid.financematic.fragments.dialogs;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -150,7 +150,7 @@ public class DelayDialogFragment extends BaseDialog {
 				.onPositive((dialog, which) -> {
 					if (etrxReceivedAmount.getText() == null || delayedDate == null ||
 							reasonEditText
-							.getText() == null) {
+									.getText() == null) {
 						Toasty.error(getContext(), "You haven't filled all data").show();
 						return;
 					}

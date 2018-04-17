@@ -2,6 +2,7 @@ package com.scleroid.financematic.fragments.people;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,8 +18,6 @@ import com.scleroid.financematic.base.BaseFragment;
 import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.RecyclerTouchListener;
-import com.scleroid.financematic.utils.ui.RupeeTextView;
-import com.scleroid.financematic.utils.ui.TextViewUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -137,10 +136,14 @@ public class PeopleFragment extends BaseFragment {
 			}
 		});
 
-
+		setTitle();
 		return rootView;
 
 
+	}
+
+	private void setTitle() {
+		activityUtils.setTitle((AppCompatActivity) getActivity(), "List of Customers");
 	}
 
 	/**

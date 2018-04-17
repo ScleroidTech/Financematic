@@ -25,6 +25,26 @@ public class Events {
 		}
 	}
 
+	// Event used to send message from activity to fragment.
+	public static class openReceiveMoneyFragment {
+		private int accountNo, installmentId;
+
+		public openReceiveMoneyFragment(final int accountNo, final int installmentId) {
+			this.accountNo = accountNo;
+			this.installmentId = installmentId;
+		}
+
+		public int getAccountNo() {
+
+			return accountNo;
+		}
+
+		public int getInstallmentId() {
+			return installmentId;
+		}
+	}
+
+
 	public static class openLoanDetailsFragment {
 		private int accountNo;
 

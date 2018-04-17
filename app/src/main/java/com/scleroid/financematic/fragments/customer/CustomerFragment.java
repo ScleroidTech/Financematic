@@ -3,6 +3,7 @@ package com.scleroid.financematic.fragments.customer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -151,6 +152,12 @@ public class CustomerFragment extends BaseFragment {
 		nameTextView.setText(theCustomer.getName());
 		mobileTextView.setText(theCustomer.getMobileNumber());
 		addressTextView.setText(theCustomer.getAddress());
+		setTitle();
+	}
+
+	private void setTitle() {
+		activityUtils.setTitle((AppCompatActivity) getActivity(),
+				"Customer Id." + theCustomer.getCustomerId());
 	}
 
 	private void updateTotalLoanAmt() {

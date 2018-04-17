@@ -7,7 +7,10 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 
+import com.scleroid.financematic.MainActivity;
 import com.scleroid.financematic.R;
 
 import javax.inject.Inject;
@@ -67,5 +70,33 @@ public class ActivityUtils {
 		activity.startActivity(intent);
 	}
 
+	public void useUpButton(MainActivity activity, boolean value) {
+		ActionBar actionBar = activity.getSupportActionBar();
+		// Code here will be triggered once the drawer open as we dont want anything to
+// happen so we leave this blank
+//Used to change the z index of a custom drawer,
+//Hack when navigation drawer doesn't listen to click events
+// Code here will be triggered once the drawer closes as we dont want anything to
+// happen so we leave this blank
+
+
+		if (value) {
+
+			activity.getToggle().setDrawerIndicatorEnabled(false);
+			actionBar.setDisplayHomeAsUpEnabled(true);
+			actionBar.setDisplayShowHomeEnabled(true);
+			activity.getToggle()
+					.setToolbarNavigationClickListener(v -> activity.onBackPressed());
+		} else {
+			actionBar.setDisplayHomeAsUpEnabled(false);
+			activity.getToggle().setDrawerIndicatorEnabled(true);
+			activity.getToggle().setToolbarNavigationClickListener(null);
+		}
+	}
+
+	public void setTitle(AppCompatActivity activity, String msg) {
+		ActionBar actionBar = activity.getSupportActionBar();
+		actionBar.setTitle(msg);
+	}
 
 }

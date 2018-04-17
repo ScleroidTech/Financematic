@@ -1,4 +1,4 @@
-package com.scleroid.financematic.fragments;
+package com.scleroid.financematic.fragments.dialogs;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -90,7 +90,6 @@ public class InsertExpenseDialogFragment extends BaseDialog {
 		etrxReceivedAmount = rootView.findViewById(R.id.amount_edit_text);
 
 
-
 		final Spinner spin = rootView.findViewById(R.id.spinnerexp);
 		ArrayAdapter aa = new ArrayAdapter(getActivity().getApplicationContext(),
 				android.R.layout.simple_spinner_item, country);
@@ -115,17 +114,17 @@ public class InsertExpenseDialogFragment extends BaseDialog {
 
 		etrxReceivedAmount.addTextChangedListener(
 				new com.scleroid.financematic.utils.ui.TextValidator(etrxReceivedAmount) {
-			@Override
-			public void validate(TextView textView, String text) {
+					@Override
+					public void validate(TextView textView, String text) {
 
-				final String email = etrxReceivedAmount.getText().toString();
-				if (!isValidEmail(email)) {
-					etrxReceivedAmount.setError("Enter Valid Amount");
-				}
+						final String email = etrxReceivedAmount.getText().toString();
+						if (!isValidEmail(email)) {
+							etrxReceivedAmount.setError("Enter Valid Amount");
+						}
 
 
-			}
-		});
+					}
+				});
 
 		final DatePickerDialog.OnDateSetListener date = (view, year, monthOfYear, dayOfMonth) -> {
 			// TODO Auto-generated method stub
@@ -202,7 +201,6 @@ public class InsertExpenseDialogFragment extends BaseDialog {
 		expenseDate = myCalendar.getTime();
 		etrxDate.setText(sdf.format(expenseDate));
 	}
-
 
 
 }

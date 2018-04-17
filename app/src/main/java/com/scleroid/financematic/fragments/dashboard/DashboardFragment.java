@@ -1,8 +1,10 @@
 package com.scleroid.financematic.fragments.dashboard;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,6 +25,8 @@ import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.TextViewUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -101,10 +105,13 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 		textViewUtils.textViewExperiments(upcomingEventsTextView);
 		textViewUtils.textViewExperiments(totalAmountTextView);
 
-
+		setTitle();
 		return rootView;
 	}
 
+	private void setTitle() {
+		activityUtils.setTitle((AppCompatActivity) getActivity(), "DashBoard");
+	}
 	/**
 	 * @return layout resource id
 	 */
@@ -163,11 +170,20 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 	protected void subscribeToLiveData() {
 		dashBoardViewModel.getUpcomingInstallments().observe(this,
 				items -> {
+					sort(items);
 					mAdapter.setInstallmentList(items);
 					installments = items;
 				});
 	}
 
+	private void sort(final List<Installment> transactions) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+			transactions.sort(Comparator.comparing(Installment::getInstallmentDate));
+		} else {
+			Collections.sort(transactions,
+					(m1, m2) -> m1.getInstallmentDate().compareTo(m2.getInstallmentDate()));
+		}
+	}
 
 	@OnClick({R.id.total_amount_text_view, R.id.total_amount_title_text_view, R.id
 			.remaining_amount_text_view, R.id.lent_amount_text_view, R.id

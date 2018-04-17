@@ -94,4 +94,12 @@ public final class CommonUtils {
 	public static int getRandomInt() {
 		return new Random().nextInt(Integer.MAX_VALUE);
 	}
+	/*public static  List<TransactionModel> sortItOut(List<TransactionModel> list) {
+		return list.stream().sorted((o1, o2)->o1.getTransactionDate().
+				compareTo(o2.getTransactionDate())).
+				collect(Collectors.toList());
+
+	}*/
+
+
 }

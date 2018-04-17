@@ -49,7 +49,7 @@ public class RegisterReceivedFragment extends Fragment implements
 		// Required empty public constructor
 	}
 
-	public static RegisterReceivedFragment newInstance(String param1, String param2) {
+	public static RegisterReceivedFragment newInstance() {
 		RegisterReceivedFragment fragment = new RegisterReceivedFragment();
 		Bundle args = new Bundle();
 		fragment.setArguments(args);

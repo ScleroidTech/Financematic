@@ -3,7 +3,9 @@ package com.scleroid.financematic.fragments.report;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,14 +30,15 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.base.BaseFragment;
 import com.scleroid.financematic.data.local.model.TransactionModel;
-import com.scleroid.financematic.fragments.DatePickerDialogFragment;
+import com.scleroid.financematic.fragments.dialogs.DatePickerDialogFragment;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.DateUtils;
 import com.scleroid.financematic.utils.ui.RecyclerTouchListener;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -123,26 +126,6 @@ public class ReportFragment extends BaseFragment<ReportViewModel>{
 		return fragment;
 	}
 
-
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-		super.onActivityResult(requestCode, resultCode, intent);
-
-		if (requestCode == REQUEST_DATE_FROM) {
-			startDate = (Date) intent.getSerializableExtra(DatePickerDialogFragment.EXTRA_DATE);
-			fromDateTextView.setText(dateUtils.getFormattedDate(startDate));
-		} else if (requestCode == REQUEST_DATE_TO) {
-			endDate = (Date) intent.getSerializableExtra(DatePickerDialogFragment.EXTRA_DATE);
-			toDateTextView.setText(dateUtils.getFormattedDate(endDate));
-		}
-
-	}
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-	}
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
@@ -217,10 +200,33 @@ public class ReportFragment extends BaseFragment<ReportViewModel>{
 		initializeChartData();
 
 		handleClickFromDashboard();
-
+		setTitle();
 		return rootView;
 
 
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+		super.onActivityResult(requestCode, resultCode, intent);
+
+		if (requestCode == REQUEST_DATE_FROM) {
+			startDate = (Date) intent.getSerializableExtra(DatePickerDialogFragment.EXTRA_DATE);
+			fromDateTextView.setText(dateUtils.getFormattedDate(startDate));
+		} else if (requestCode == REQUEST_DATE_TO) {
+			endDate = (Date) intent.getSerializableExtra(DatePickerDialogFragment.EXTRA_DATE);
+			toDateTextView.setText(dateUtils.getFormattedDate(endDate));
+		}
+
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+	}
+
+	private void setTitle() {
+		activityUtils.setTitle((AppCompatActivity) getActivity(), "Report");
 	}
 
 	private void handleClickFromDashboard() {
@@ -256,9 +262,19 @@ public class ReportFragment extends BaseFragment<ReportViewModel>{
 	}
 
 	private void updateListData(final List<TransactionModel> transactions) {
+		sort(transactions);
 		transactionsList = transactions;
 		mAdapter.setReportList(transactionsList);
 		mAdapter.setFilterType(reportFilterType);
+	}
+
+	private void sort(final List<TransactionModel> transactions) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+			transactions.sort(Comparator.comparing(TransactionModel::getTransactionDate));
+		} else {
+			Collections.sort(transactions,
+					(m1, m2) -> m1.getTransactionDate().compareTo(m2.getTransactionDate()));
+		}
 	}
 
 	/**
@@ -434,12 +450,6 @@ public class ReportFragment extends BaseFragment<ReportViewModel>{
 		//	reportRecyclerView.addOnItemTouchListener(recyclerTouchListener);
 	}
 
-	private List<TransactionModel> filterApply(final BigDecimal amt) {
-		return Stream.of(transactionsList)
-				.filter(expenseList -> amt != null)
-				.collect(Collectors.toList());
-
-	}
 
 	@OnClick({R.id.from_date_text_view, R.id.to_date_text_view})
 	public void onViewClicked(View view) {

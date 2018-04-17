@@ -3,8 +3,10 @@ package com.scleroid.financematic.fragments.expense;
 import android.annotation.SuppressLint;
 import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,11 +31,13 @@ import com.scleroid.financematic.base.BaseFragment;
 import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.local.model.Expense;
 import com.scleroid.financematic.data.local.model.ExpenseCategory;
-import com.scleroid.financematic.fragments.InsertExpenseDialogFragment;
+import com.scleroid.financematic.fragments.dialogs.InsertExpenseDialogFragment;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.RupeeTextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -127,9 +131,13 @@ public class ExpenseFragment extends BaseFragment {
 
 		initializeChartData();
 		unbinder = ButterKnife.bind(this, view);
+		setTitle();
 		return view;
 	}
 
+	private void setTitle() {
+		activityUtils.setTitle((AppCompatActivity) getActivity(), "Expenses");
+	}
 	/**
 	 * @return layout resource id
 	 */
@@ -212,12 +220,21 @@ public class ExpenseFragment extends BaseFragment {
 	@Override
 	protected void subscribeToLiveData() {
 		expenseViewModel.getItemList().observe(this, items -> {
+			sort(items);
 			expenseList = items;
 			updateUi(items);
 			refreshRecyclerView(expenseList);
 		});
 	}
 
+	private void sort(final List<Expense> transactions) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+			transactions.sort(Comparator.comparing(Expense::getExpenseDate));
+		} else {
+			Collections.sort(transactions,
+					(m1, m2) -> m1.getExpenseDate().compareTo(m2.getExpenseDate()));
+		}
+	}
 	private void updateUi(final List<Expense> items) {
 		totalLoan = getTotalLoan(items);
 		totalExpenseTextView.setText(String.valueOf(totalLoan));

@@ -1,4 +1,4 @@
-package com.scleroid.financematic.fragments;
+package com.scleroid.financematic.fragments.dialogs;
 
 import android.app.Activity;
 import android.app.AlertDialog;

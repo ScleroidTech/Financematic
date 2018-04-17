@@ -4,8 +4,10 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 
 import com.scleroid.financematic.base.BaseViewModel;
+import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.data.local.model.TransactionModel;
+import com.scleroid.financematic.data.repo.InstallmentRepo;
 import com.scleroid.financematic.data.repo.LoanRepo;
 import com.scleroid.financematic.data.repo.TransactionsRepo;
 import com.scleroid.financematic.utils.Resource;
@@ -23,15 +25,19 @@ public class LoanDetailsViewModel extends BaseViewModel<TransactionModel> implem
 
 	private final TransactionsRepo transactionRepo;
 	private final LoanRepo loanRepo;
+	private final InstallmentRepo installmentRepo;
 	LiveData<List<TransactionModel>>
 			transactionLiveData = new MutableLiveData<>();
 	LiveData<Loan> loanLiveData = new MutableLiveData<>();
 	int currentAccountNo = 0;
+	private LiveData<List<Installment>> installmentLiveData = new MutableLiveData<>();
 
 	public LoanDetailsViewModel(final TransactionsRepo transactionRepo,
-	                            final LoanRepo loanRepo) {
+	                            final LoanRepo loanRepo,
+	                            final InstallmentRepo installmentRepo) {
 		this.transactionRepo = transactionRepo;
 		this.loanRepo = loanRepo;
+		this.installmentRepo = installmentRepo;
 	}
 
 	public LiveData<Loan> getLoanLiveData() {
@@ -52,6 +58,19 @@ public class LoanDetailsViewModel extends BaseViewModel<TransactionModel> implem
 		this.currentAccountNo = currentAccountNo;
 	}
 
+	protected LiveData<List<Installment>> getInstallmentList() {
+		if (installmentLiveData.getValue() == null || installmentLiveData.getValue().isEmpty()) {
+			installmentLiveData = updateInstallmentLiveData();
+		}
+		return installmentLiveData;
+	}
+
+	protected LiveData<List<Installment>> updateInstallmentLiveData() {
+		installmentLiveData =
+				installmentRepo.getLocalInstallmentsLab().getItemsForLoan(currentAccountNo);
+		return installmentLiveData;
+	}
+
 	protected LiveData<List<TransactionModel>> getTransactionList() {
 		if (transactionLiveData.getValue() == null || transactionLiveData.getValue().isEmpty()) {
 			transactionLiveData = updateTransactionLiveData();
@@ -64,6 +83,7 @@ public class LoanDetailsViewModel extends BaseViewModel<TransactionModel> implem
 				transactionRepo.getLocalTransactionsLab().getItemsForLoan(currentAccountNo);
 		return transactionLiveData;
 	}
+
 
 	@Override
 	protected LiveData<Resource<List<TransactionModel>>> updateItemLiveData() {

@@ -18,6 +18,7 @@ package com.scleroid.financematic.base;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -115,5 +116,11 @@ public abstract class BaseDialog extends DialogFragment {
 			mActivity.showLoading();
 		}
 	}
+
+	@Override
+	public void onDismiss(final DialogInterface dialog) {
+		super.onDismiss(dialog);
+	}
+
 
 }

@@ -26,10 +26,11 @@ import com.scleroid.financematic.data.repo.ExpenseRepo;
 import com.scleroid.financematic.data.repo.InstallmentRepo;
 import com.scleroid.financematic.data.repo.LoanRepo;
 import com.scleroid.financematic.data.repo.TransactionsRepo;
-import com.scleroid.financematic.fragments.DelayDialogFragment;
 import com.scleroid.financematic.fragments.RegisterCustomerFragment;
+import com.scleroid.financematic.fragments.RegisterReceivedFragment;
 import com.scleroid.financematic.fragments.customer.CustomerFragment;
 import com.scleroid.financematic.fragments.dashboard.DashboardFragment;
+import com.scleroid.financematic.fragments.dialogs.DelayDialogFragment;
 import com.scleroid.financematic.fragments.expense.ExpenseFragment;
 import com.scleroid.financematic.fragments.loanDetails.LoanDetailsFragment;
 import com.scleroid.financematic.fragments.people.PeopleFragment;
@@ -80,6 +81,7 @@ public class MainActivity extends BaseActivity
 	ActivityUtils activityUtils;
 	@Inject
 	AppExecutors appExecutors;
+	private ActionBarDrawerToggle toggle;
 
 
 	public CustomerRepo getCustomerRepo() {
@@ -181,6 +183,14 @@ public class MainActivity extends BaseActivity
 	}
 
 
+	public ActionBarDrawerToggle getToggle() {
+		return toggle;
+	}
+
+	public void setToggle(final ActionBarDrawerToggle toggle) {
+		this.toggle = toggle;
+	}
+
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
@@ -191,7 +201,18 @@ public class MainActivity extends BaseActivity
 
 
 		drawer = findViewById(R.id.drawer_layout);
-		ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+
+
+		navigationView = findViewById(R.id.nav_view);
+		navigationView.setNavigationItemSelectedListener(this);
+
+		// load toolbar titles from string resources
+		activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
+
+		/*bottom navigation*/
+
+
+		setToggle(new ActionBarDrawerToggle(
 				this, drawer, toolbar, R.string.navigation_drawer_open,
 				R.string.navigation_drawer_close) {
 
@@ -212,20 +233,10 @@ public class MainActivity extends BaseActivity
 				// happen so we leave this blank
 				super.onDrawerClosed(drawerView);
 			}
-		};
+		});
+
 		drawer.addDrawerListener(toggle);
 		toggle.syncState();
-
-		navigationView = findViewById(R.id.nav_view);
-		navigationView.setNavigationItemSelectedListener(this);
-
-		// load toolbar titles from string resources
-		activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
-
-		/*bottom navigation*/
-
-		/*    toolbar = getSupportActionBar();*/
-
 		final BottomNavigationView bottomNavigationView = findViewById(R.id.navigation);
 		bottomNavigationView.setOnNavigationItemSelectedListener
 				(mOnNavigationItemSelectedListener);
@@ -248,12 +259,20 @@ public class MainActivity extends BaseActivity
 		boolean frag = getIntent().getBooleanExtra(NOTIFY, false);
 		if (frag) {
 			CURRENT_TAG = TAG_NOTIFICATION;
-			loadFragmentFromNavigationDrawers();
+			loadFragment(NotificationActivity.newInstance());
 		}
 
 
 		((GarlandApp) getApplication()).addListener(this);
 
+	}
+
+	public DrawerLayout getDrawer() {
+		return drawer;
+	}
+
+	public void setDrawer(final DrawerLayout drawer) {
+		this.drawer = drawer;
 	}
 
 	/***
@@ -536,6 +555,16 @@ public class MainActivity extends BaseActivity
 		int acNo = customerBundle.getLoanAccountNo();
 		DelayDialogFragment fragment = DelayDialogFragment.newInstance(delayId, acNo);
 		activityUtils.loadDialogFragment(fragment, getSupportFragmentManager(), DIALOG_DELAY);
+
+
+	}
+
+	@Subscribe
+	public void onRecieveMoneyFragmentOpen(Events.openReceiveMoneyFragment customerBundle) {
+		int delayId = customerBundle.getInstallmentId();
+		int acNo = customerBundle.getAccountNo();
+		RegisterReceivedFragment fragment = RegisterReceivedFragment.newInstance();
+		activityUtils.loadFragment(fragment, getSupportFragmentManager());
 
 
 	}
