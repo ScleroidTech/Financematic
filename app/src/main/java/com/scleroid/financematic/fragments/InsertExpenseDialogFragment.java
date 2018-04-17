@@ -155,6 +155,11 @@ public class InsertExpenseDialogFragment extends BaseDialog {
 				.setIcon(R.drawable.ic_stopwatch)
 				.setPositiveText(R.string.submit)
 				.onPositive((dialog, which) -> {
+					if (etrxReceivedAmount.getText() == null || expenseDate == null || expenseType
+							== null) {
+						Toasty.error(getContext(), "You haven't filled all data").show();
+						return;
+					}
 					Timber.d(
 							"Your Input: \n" + etrxDate.getText()
 									.toString() + "\n" + "\n" + etrxReceivedAmount.getText()
