@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 
 import com.scleroid.financematic.data.local.AppDatabase;
 import com.scleroid.financematic.data.local.lab.LocalTransactionsLab;
-import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.data.local.model.TransactionModel;
 import com.scleroid.financematic.data.remote.ApiResponse;
 import com.scleroid.financematic.data.remote.WebService;
@@ -183,7 +182,7 @@ public class TransactionsRepo implements Repo<TransactionModel> {
 	}
 
 	@Override
-	public Single<Installment> updateItem(final TransactionModel transactionModel) {
+	public Single<TransactionModel> updateItem(final TransactionModel transactionModel) {
 		return null;
 	}
 

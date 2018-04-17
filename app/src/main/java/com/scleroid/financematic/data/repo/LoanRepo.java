@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.scleroid.financematic.data.local.lab.LocalLoanLab;
-import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.data.remote.ApiResponse;
 import com.scleroid.financematic.data.remote.WebService;
@@ -175,7 +174,7 @@ public class LoanRepo implements Repo<Loan> {
 	}
 
 	@Override
-	public Single<Installment> updateItem(final Loan loan) {
+	public Single<Loan> updateItem(final Loan loan) {
 		return null;
 	}
 

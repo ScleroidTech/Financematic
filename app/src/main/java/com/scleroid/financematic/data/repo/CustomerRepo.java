@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import com.scleroid.financematic.data.local.AppDatabase;
 import com.scleroid.financematic.data.local.lab.LocalCustomerLab;
 import com.scleroid.financematic.data.local.model.Customer;
-import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.data.remote.ApiResponse;
 import com.scleroid.financematic.data.remote.WebService;
 import com.scleroid.financematic.utils.AppExecutors;
@@ -136,7 +135,7 @@ public class CustomerRepo implements Repo<Customer> {
 	}
 
 	@Override
-	public Single<Installment> updateItem(final Customer customer) {
+	public Single<Customer> updateItem(final Customer customer) {
 		return null;
 	}
 }

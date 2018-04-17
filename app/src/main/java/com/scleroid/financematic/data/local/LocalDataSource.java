@@ -76,6 +76,8 @@ public interface LocalDataSource<T> {
 	 */
 	Completable deleteItem(@NonNull T item);
 
+	Single<T> updateItem(T t);
+
 	/*Not using Callback anymore
 	 *
 	 * *//**

@@ -87,7 +87,7 @@ public interface ExpenseDao {
 	 * @param expense the expense which needs to be updated
 	 */
 	@Update(onConflict = REPLACE)
-	void update(Expense expense);
+	int update(Expense expense);
 
 	/**
 	 * Removes a particular dataset from the database

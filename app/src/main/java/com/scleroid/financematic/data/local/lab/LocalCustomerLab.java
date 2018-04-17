@@ -155,6 +155,11 @@ public class LocalCustomerLab implements LocalDataSource<Customer> {
 				.subscribeOn(Schedulers.io());
 	}
 
+	@Override
+	public Single<Customer> updateItem(final Customer customer) {
+		return null;
+	}
+
 	/**
 	 * gets a single item provided by id
 	 *

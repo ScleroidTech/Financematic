@@ -148,6 +148,11 @@ public class LocalTransactionsLab implements LocalDataSource<TransactionModel> {
 				.subscribeOn(Schedulers.io());
 	}
 
+	@Override
+	public Single<TransactionModel> updateItem(final TransactionModel transactionModel) {
+		return null;
+	}
+
 	/**
 	 * gets a list of all items for a particular value of customer no
 	 */

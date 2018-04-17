@@ -153,6 +153,11 @@ public class LocalLoanLab implements LocalDataSource<Loan> {
 		return Completable.fromRunnable(() -> loanDao.delete(item)).subscribeOn(Schedulers.io());
 	}
 
+	@Override
+	public Single<Loan> updateItem(final Loan loan) {
+		return null;
+	}
+
 	/**
 	 * gets a single item provided by id
 	 *

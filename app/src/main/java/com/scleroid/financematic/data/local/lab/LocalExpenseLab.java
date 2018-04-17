@@ -147,4 +147,15 @@ public class LocalExpenseLab implements LocalDataSource<Expense> {
 		return Completable.fromRunnable(() -> expenseDao.delete(item)).subscribeOn(Schedulers.io
 				());
 	}
+
+	@Override
+	public Single<Expense> updateItem(final Expense expense) {
+		Timber.d("creating new installment ");
+
+		return Single.fromCallable(() -> {
+			int rowId = expenseDao.update(expense);
+			Timber.d("installment stored " + rowId);
+			return expense;
+		}).subscribeOn(Schedulers.io());
+	}
 }

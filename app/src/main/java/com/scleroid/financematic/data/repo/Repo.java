@@ -2,7 +2,6 @@ package com.scleroid.financematic.data.repo;
 
 import android.arch.lifecycle.LiveData;
 
-import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.utils.Resource;
 
 import java.util.List;
@@ -27,5 +26,5 @@ public interface Repo<T> {
 	Single<T> saveItem(T t);
 
 
-	Single<Installment> updateItem(T t);
+	Single<T> updateItem(T t);
 }
