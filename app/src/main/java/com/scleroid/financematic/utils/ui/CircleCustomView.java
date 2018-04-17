@@ -50,8 +50,8 @@ public class CircleCustomView extends View {
 		mCircleYellow.setStrokeWidth(15 * getResources().getDisplayMetrics().density);
 		mCircleYellow.setStrokeCap(Paint.Cap.SQUARE);
 		// mEyeAndMouthPaint.setColor(getResources().getColor(R.color.colorAccent));
-		mCircleYellow.setColor(Color.parseColor("#32A612"));
-
+		mCircleYellow.setColor(Color.parseColor("#4693c5"));
+	/*	mCircleYellow.setColor(Color.parseColor("#fbab00"));4693c5 yellow*/
 		mCircleGray = new Paint(Paint.ANTI_ALIAS_FLAG);
 		mCircleGray.setStyle(Paint.Style.FILL);
 		mCircleGray.setColor(Color.GRAY);
@@ -59,7 +59,8 @@ public class CircleCustomView extends View {
 		mCircleGray.setStrokeWidth(15 * getResources().getDisplayMetrics().density);
 		mCircleGray.setStrokeCap(Paint.Cap.SQUARE);
 		// mEyeAndMouthPaint.setColor(getResources().getColor(R.color.colorAccent));
-		mCircleGray.setColor(Color.parseColor("#76787a"));
+		mCircleGray.setColor(Color.parseColor("#d8d8d8"));
+		/*mCircleGray.setColor(Color.parseColor("#76787a"));*/
 
 	}
 

@@ -127,7 +127,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 	public static class MyViewHolder extends RecyclerView.ViewHolder {
 
 
-		TextViewUtils textViewUtils= new TextViewUtils();
+	/*	TextViewUtils textViewUtils= new TextViewUtils();*/
 
 		@BindView(R.id.payment_circle_view)
 		CircleCustomView paymentCircleView;
@@ -157,7 +157,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 			ButterKnife.bind(this, itemView);
 			//for tryintend
 
-			textViewUtils.textViewExperiments(personNameTextView);
+			/*textViewUtils.textViewExperiments(personNameTextView);*/
 		}
 
 		private void setData(final Customer customer) {
