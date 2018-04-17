@@ -108,7 +108,7 @@ public class ReportFragment extends BaseFragment<ReportViewModel>{
 	private ReportViewModel reportViewModel;
 	private Date startDate;
 	private Date endDate;
-	private List<TransactionModel> filteredList;
+	private List<TransactionModel> filteredList = new ArrayList<>();
 	private ReportFilterType reportFilterType = ReportFilterType.ALL_TRANSACTIONS;
 
 	public ReportFragment() {
@@ -193,11 +193,7 @@ public class ReportFragment extends BaseFragment<ReportViewModel>{
 			}
 		});*/
 
-		Bundle bundle = getArguments();
-		if (bundle != null) {
-			reportFilterType = (ReportFilterType) bundle.get(FILTER_TYPE);
-			if (reportFilterType != null) { filterWithoutDate(reportFilterType); }
-		}
+
 
 
 		mAdapter = new ReportAdapter();
@@ -220,10 +216,27 @@ public class ReportFragment extends BaseFragment<ReportViewModel>{
 
 		initializeChartData();
 
+		handleClickFromDashboard();
 
 		return rootView;
 
 
+	}
+
+	private void handleClickFromDashboard() {
+		Bundle bundle = getArguments();
+		if (bundle != null) {
+			reportFilterType = (ReportFilterType) bundle.get(FILTER_TYPE);
+			if (reportFilterType != null) {
+				if (reportFilterType == ReportFilterType.RECEIVED_AMOUNT) {
+					spinnerFilter.setSelection(1);
+				} else if (reportFilterType == ReportFilterType.LENT_AMOUNT) {
+					spinnerFilter.setSelection(2);
+				}
+				final List<TransactionModel> tempList = filterWithoutDate(reportFilterType);
+				updateListData(tempList);
+			}
+		}
 	}
 
 	/**
@@ -497,17 +510,6 @@ public class ReportFragment extends BaseFragment<ReportViewModel>{
 //data.setValueFormatter(new DefaultValueFormatter(0));
 
 	}
-
-
-	/*@Override
-	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-	}
-
-	@Override
-	public void onNothingSelected(AdapterView<?> arg0) {
-	}
-*/
 
 
 }

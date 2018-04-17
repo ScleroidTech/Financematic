@@ -86,7 +86,7 @@ public interface InstallmentDao {
 	 * @param installment the installmentModel which needs to be updated
 	 */
 	@Update(onConflict = REPLACE)
-	long update(Installment installment);
+	int update(Installment installment);
 
 	/**
 	 * Removes a particular dataset from the database

@@ -29,7 +29,7 @@ import com.scleroid.financematic.base.BaseFragment;
 import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.local.model.Expense;
 import com.scleroid.financematic.data.local.model.ExpenseCategory;
-import com.scleroid.financematic.fragments.Insert_expenses_frgment;
+import com.scleroid.financematic.fragments.InsertExpenseFragment;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.RupeeTextView;
 
@@ -299,7 +299,7 @@ public class ExpenseFragment extends BaseFragment {
 		expenseRecyclerView.setAdapter(mAdapter);
 		firstFragment = getRootView().findViewById(R.id.add_exp_call_button);
 		firstFragment.setOnClickListener(
-				v -> activityUtils.loadFragment(new Insert_expenses_frgment(), getFragmentManager
+				v -> activityUtils.loadFragment(new InsertExpenseFragment(), getFragmentManager
 						()));
 
 

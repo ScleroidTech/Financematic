@@ -103,7 +103,7 @@ public class LocalInstallmentsLab implements LocalDataSource<Installment> {
 		Timber.d("creating new installment ");
 
 		return Single.fromCallable(() -> {
-			long rowId = installmentDao.update(item);
+			int rowId = installmentDao.update(item);
 			Timber.d("installment stored " + rowId);
 			return item;
 		}).subscribeOn(Schedulers.io());

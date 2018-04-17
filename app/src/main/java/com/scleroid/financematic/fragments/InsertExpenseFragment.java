@@ -33,7 +33,7 @@ import java.util.regex.Pattern;
  * Created by scleroid on 9/3/18.
  */
 
-public class Insert_expenses_frgment extends Fragment implements
+public class InsertExpenseFragment extends Fragment implements
                                                       AdapterView.OnItemSelectedListener {
 
 
@@ -49,12 +49,12 @@ public class Insert_expenses_frgment extends Fragment implements
 	private TextView etrxDate, etrxTotalInterestAmount, etrxReceivedAmount, tv;
 
 
-	public Insert_expenses_frgment() {
+	public InsertExpenseFragment() {
 		// Required empty public constructor
 	}
 
-	public static Insert_expenses_frgment newInstance(String param1, String param2) {
-		Insert_expenses_frgment fragment = new Insert_expenses_frgment();
+	public static InsertExpenseFragment newInstance(String param1, String param2) {
+		InsertExpenseFragment fragment = new InsertExpenseFragment();
 		Bundle args = new Bundle();
 		fragment.setArguments(args);
 		return fragment;

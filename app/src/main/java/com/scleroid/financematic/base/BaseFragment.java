@@ -63,9 +63,9 @@ public abstract class BaseFragment<V extends BaseViewModel> extends Fragment {
 
 
 		mViewModel = getViewModel();
-		//setHasOptionsMenu(false);
-		setHasOptionsMenu(true);
-		getBaseActivity().getActionBarBase().setDisplayHomeAsUpEnabled(true);
+		setHasOptionsMenu(false);
+		//setHasOptionsMenu(true);
+		//getBaseActivity().getActionBarBase().setDisplayHomeAsUpEnabled(true);
 	}
 
 	/**
