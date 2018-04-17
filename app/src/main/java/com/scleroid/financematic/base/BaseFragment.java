@@ -60,8 +60,12 @@ public abstract class BaseFragment<V extends BaseViewModel> extends Fragment {
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		performDependencyInjection();
 		super.onCreate(savedInstanceState);
+
+
 		mViewModel = getViewModel();
-		setHasOptionsMenu(false);
+		//setHasOptionsMenu(false);
+		setHasOptionsMenu(true);
+		getBaseActivity().getActionBarBase().setDisplayHomeAsUpEnabled(true);
 	}
 
 	/**

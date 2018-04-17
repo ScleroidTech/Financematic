@@ -5,49 +5,50 @@
     android:layout_marginTop="70dp">
 
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:fillViewport="true">
-
-        <RelativeLayout
+    <!--
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="#fff">
+            android:layout_height="fill_parent"
+            android:fillViewport="true">
 
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff">
+
+    -->
 
             <!-- Registration Form -->
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
-                android:background="@drawable/shadow"
                 android:orientation="vertical"
                 android:padding="5dip">
 
-                <!-- Full Name Label -->
-                <LinearLayout
-                    android:id="@+id/header"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#0fa8bc"
-                    android:paddingBottom="5dip"
-                    android:paddingTop="5dip">
+                <!--          &lt;!&ndash; Full Name Label &ndash;&gt;
+                          <LinearLayout
+                              android:id="@+id/header"
+                              android:layout_width="fill_parent"
+                              android:layout_height="wrap_content"
+                              android:background="#0fa8bc"
+                              android:paddingBottom="5dip"
+                              android:paddingTop="5dip">
 
-                    <TextView
-                        android:id="@+id/reg_fullname_detaills"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
+                              <TextView
+                                  android:id="@+id/reg_fullname_detaills"
+                                  android:layout_width="fill_parent"
+                                  android:layout_height="wrap_content"
 
-                        android:singleLine="true"
-                        android:text="Date Delay"
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
-                        android:textSize="20sp" />
-                    <!-- Logo Ends -->
-                </LinearLayout>
+                                  android:singleLine="true"
+                                  android:text="Date Delay"
+                                  android:textAlignment="center"
+                                  android:textColor="@color/white"
+                                  android:textSize="20sp" />
+                              &lt;!&ndash; Logo Ends &ndash;&gt;
+                          </LinearLayout>
 
-
+          -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -72,7 +73,7 @@
                     <EditText
                         android:paddingLeft="10dp"
                         android:textSize="18sp"
-                        android:id="@+id/rxEnterAmount"
+                        android:id="@+id/amount_edit_text"
                         android:layout_width="0dp"
                         android:layout_height="45dp"
                         android:layout_marginLeft="10dp"
@@ -158,7 +159,7 @@
 
                     <EditText
                         android:paddingLeft="10dp"
-                        android:id="@+id/del_desp"
+                        android:id="@+id/reason_edit_text"
                         android:layout_width="0dp"
                         android:layout_height="45dp"
                         android:layout_marginLeft="10dp"
@@ -174,33 +175,31 @@
                 </LinearLayout>
 
 
-                <Button
-                    android:id="@+id/btn_customer_name1"
-                    android:layout_width="fill_parent"
-                    android:layout_height="37dp"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="15dp"
-                    android:background="#0fa8bc"
-                    android:text="Submit"
-                    android:textColor="@color/white"
-                    android:textSize="18sp" />
+                <!--        <Button
+                            android:id="@+id/btn_customer_name1"
+                            android:layout_width="fill_parent"
+                            android:layout_height="37dp"
+                            android:layout_marginBottom="15dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="15dp"
+                            android:background="#0fa8bc"
+                            android:text="Submit"
+                            android:textColor="@color/white"
+                            android:textSize="18sp" />
 
-                <TextView
-                    android:id="@+id/display1"
+                        <TextView
+                            android:id="@+id/display1"
 
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:scrollbars="vertical"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textSize="18sp" />
-
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:scrollbars="vertical"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:textSize="18sp" />
+        -->
             </LinearLayout>
             <!-- Registration Form Ends -->
-        </RelativeLayout>
-    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

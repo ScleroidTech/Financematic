@@ -28,7 +28,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.base.BaseFragment;
 import com.scleroid.financematic.data.local.model.TransactionModel;
-import com.scleroid.financematic.fragments.DatePickerFragment;
+import com.scleroid.financematic.fragments.DatePickerDialogFragment;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.DateUtils;
 import com.scleroid.financematic.utils.ui.RecyclerTouchListener;
@@ -123,10 +123,10 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 		super.onActivityResult(requestCode, resultCode, intent);
 
 		if (requestCode == REQUEST_DATE_FROM) {
-			startDate = (Date) intent.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
+			startDate = (Date) intent.getSerializableExtra(DatePickerDialogFragment.EXTRA_DATE);
 			fromDateTextView.setText(dateUtils.getFormattedDate(startDate));
 		} else if (requestCode == REQUEST_DATE_TO) {
-			endDate = (Date) intent.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
+			endDate = (Date) intent.getSerializableExtra(DatePickerDialogFragment.EXTRA_DATE);
 			toDateTextView.setText(dateUtils.getFormattedDate(endDate));
 		}
 
@@ -403,7 +403,7 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 	}
 
 	private void loadDialogFragment(int requestDate) {
-		activityUtils.loadDialogFragment(DatePickerFragment.newInstance(), this,
+		activityUtils.loadDialogFragment(DatePickerDialogFragment.newInstance(), this,
 				getFragmentManager(), requestDate, DIALOG_DATE);
 	}
 

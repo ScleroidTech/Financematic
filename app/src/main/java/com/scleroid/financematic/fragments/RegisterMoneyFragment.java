@@ -349,10 +349,10 @@ public class RegisterMoneyFragment extends BaseFragment {
 		super.onActivityResult(requestCode, resultCode, intent);
 
 		if (requestCode == REQUEST_DATE_FROM) {
-			startDate = (Date) intent.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
+			startDate = (Date) intent.getSerializableExtra(DatePickerDialogFragment.EXTRA_DATE);
 			startDateTextView.setText(dateUtils.getFormattedDate(startDate));
 		} else if (requestCode == REQUEST_DATE_TO) {
-			endDate = (Date) intent.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
+			endDate = (Date) intent.getSerializableExtra(DatePickerDialogFragment.EXTRA_DATE);
 			endDateTextView.setText(dateUtils.getFormattedDate(endDate));
 		}
 
@@ -372,7 +372,7 @@ public class RegisterMoneyFragment extends BaseFragment {
 	}
 
 	private void loadDialogFragment(int requestDate) {
-		activityUtils.loadDialogFragment(DatePickerFragment.newInstance(), this,
+		activityUtils.loadDialogFragment(DatePickerDialogFragment.newInstance(), this,
 				getFragmentManager(), requestDate, DIALOG_DATE);
 	}
 }

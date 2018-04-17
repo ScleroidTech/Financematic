@@ -78,6 +78,8 @@
     <string name="dm_coworker_notification_body">%1$s: Have you finished the report?</string>
     <string name="error_click">Unknown click event.</string>
     <string name="amount">10000</string>
+    <string name="delay_view">Delay Payment</string>
+    <string name="submit">Submit</string>
 
     <!-- Names -->
     <string-array name="names_array">

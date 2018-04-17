@@ -228,11 +228,19 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
 					handleCallClick();
 					break;
 				case R.id.delay_button:
-
+					handleDelay();
 					break;
 				case R.id.dashboard_item_cardview:
 					break;
 			}
+		}
+
+		private void handleDelay() {
+			Timber.d("delay of Payment" + installment.getLoan().getCustomer().getName());
+			Events.openDelayFragment delayFragment =
+					new Events.openDelayFragment(installment.getInstallmentId());
+
+			GlobalBus.getBus().post(delayFragment);
 		}
 
 		private void handleCallClick() {

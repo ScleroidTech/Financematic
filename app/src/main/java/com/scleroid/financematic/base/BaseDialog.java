@@ -27,6 +27,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.RelativeLayout;
 
+import dagger.android.support.AndroidSupportInjection;
+
 /**
  * Created by amitshekhar on 10/07/17.
  */
@@ -37,6 +39,7 @@ public abstract class BaseDialog extends DialogFragment {
 
 	@Override
 	public void onAttach(Context context) {
+		performDependencyInjection();
 		super.onAttach(context);
 		if (context instanceof BaseActivity) {
 			BaseActivity mActivity = (BaseActivity) context;
@@ -49,6 +52,10 @@ public abstract class BaseDialog extends DialogFragment {
 	public void onDetach() {
 		mActivity = null;
 		super.onDetach();
+	}
+
+	private void performDependencyInjection() {
+		AndroidSupportInjection.inject(this);
 	}
 
 	@NonNull

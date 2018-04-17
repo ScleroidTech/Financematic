@@ -133,6 +133,12 @@ public abstract class BaseActivity
 		}
 	}
 
+	/**
+	 * @return actionBar
+	 */
+	public abstract android.support.v7.app.ActionBar getActionBarBase();
+
+
 
 }
 

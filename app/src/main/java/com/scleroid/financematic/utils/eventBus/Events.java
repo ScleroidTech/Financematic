@@ -36,6 +36,24 @@ public class Events {
 			return accountNo;
 		}
 	}
+
+	public static class openDelayFragment {
+		private int installmentId;
+		private int loanAccountNo;
+
+		public openDelayFragment(final int customerId, final int loanAccountNo) {
+			this.installmentId = customerId;
+			this.loanAccountNo = loanAccountNo;
+		}
+
+		public int getInstallmentId() {
+			return installmentId;
+		}
+
+		public int getLoanAccountNo() {
+			return loanAccountNo;
+		}
+	}
 	/**
 	 *
 	 */

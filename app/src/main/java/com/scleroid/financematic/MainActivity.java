@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -25,6 +26,7 @@ import com.scleroid.financematic.data.repo.ExpenseRepo;
 import com.scleroid.financematic.data.repo.InstallmentRepo;
 import com.scleroid.financematic.data.repo.LoanRepo;
 import com.scleroid.financematic.data.repo.TransactionsRepo;
+import com.scleroid.financematic.fragments.DelayDialogFragment;
 import com.scleroid.financematic.fragments.RegisterCustomerFragment;
 import com.scleroid.financematic.fragments.customer.CustomerFragment;
 import com.scleroid.financematic.fragments.dashboard.DashboardFragment;
@@ -64,6 +66,8 @@ public class MainActivity extends BaseActivity
 	private static final String TAG_SETTINGS = "settings";
 	private static final String TAG_NOTIFICATION = "notification";
 	private static final int THREAD_COUNT = 3;
+	private static final int REQUEST_DELAY = 45;
+	private static final String DIALOG_DELAY = "Delay Payment";
 	// index to identify current nav menu item
 	public static int navItemIndex = 0;
 	public static String CURRENT_TAG = TAG_DASHBOARD;
@@ -167,6 +171,15 @@ public class MainActivity extends BaseActivity
 	public int getLayoutId() {
 		return R.layout.activity_main;
 	}
+
+	/**
+	 * @return actionBar
+	 */
+	@Override
+	public ActionBar getActionBarBase() {
+		return getSupportActionBar();
+	}
+
 
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -515,9 +528,18 @@ public class MainActivity extends BaseActivity
 		int customerId = customerBundle.getCustomerId();
 		CustomerFragment fragment = CustomerFragment.newInstance(customerId);
 		activityUtils.loadFragment(fragment, getSupportFragmentManager());
+	}
+
+	@Subscribe
+	public void onDelayFragmentOpen(Events.openDelayFragment customerBundle) {
+		int delayId = customerBundle.getInstallmentId();
+		int acNo = customerBundle.getLoanAccountNo();
+		DelayDialogFragment fragment = DelayDialogFragment.newInstance(delayId, acNo);
+		activityUtils.loadDialogFragment(fragment, getSupportFragmentManager(), DIALOG_DELAY);
 
 
 	}
+
 
 	@Subscribe
 	public void onLoanFragmentOpen(Events.openLoanDetailsFragment loanBundle) {

@@ -25,28 +25,28 @@ import java.util.GregorianCalendar;
  * @author Ganesh Kaple
  * @since 09-01-2016
  */
-public class DatePickerFragment extends DialogFragment {
+public class DatePickerDialogFragment extends DialogFragment {
 	public static final String EXTRA_DATE = "com.example.ganesh.criminalintent.date";
 	private static final String ARG_DATE = "crime_date";
 	private DatePicker mDatePicker;
 
 
-	public static DatePickerFragment newInstance(Date date) {
+	public static DatePickerDialogFragment newInstance(Date date) {
 		Bundle bundle = new Bundle();
 		bundle.putSerializable(ARG_DATE, date);
 
-		DatePickerFragment fragment = new DatePickerFragment();
+		DatePickerDialogFragment fragment = new DatePickerDialogFragment();
 		fragment.setArguments(bundle);
 		return fragment;
 
 
 	}
 
-	public static DatePickerFragment newInstance() {
+	public static DatePickerDialogFragment newInstance() {
 		Bundle bundle = new Bundle();
 		//  bundle.putSerializable(ARG_DATE, date);
 
-		DatePickerFragment fragment = new DatePickerFragment();
+		DatePickerDialogFragment fragment = new DatePickerDialogFragment();
 		fragment.setArguments(bundle);
 		return fragment;
 

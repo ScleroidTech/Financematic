@@ -97,6 +97,8 @@ dependencies {
     //Awesome Validation
     //implementation 'com.basgeekball:awesome-validation:2.0'
 
+    //Material Style Dialog
+    implementation 'com.github.javiersantos:MaterialStyledDialogs:2.1'
     //Toasty
     implementation 'com.github.GrenderG:Toasty:1.2.5'
 

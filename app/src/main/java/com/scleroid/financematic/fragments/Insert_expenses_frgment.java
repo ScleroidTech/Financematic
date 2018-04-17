@@ -86,7 +86,7 @@ public class Insert_expenses_frgment extends Fragment implements
 
 
 		etrxDate = rootView.findViewById(R.id.exp_date);
-		etrxReceivedAmount = rootView.findViewById(R.id.rxEnterAmount);
+		etrxReceivedAmount = rootView.findViewById(R.id.amount_edit_text);
 
 
 		etrxReceivedAmount.addTextChangedListener(new TextValidator(etrxReceivedAmount) {
