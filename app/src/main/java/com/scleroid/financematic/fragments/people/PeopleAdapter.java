@@ -18,6 +18,7 @@ import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.utils.eventBus.Events;
 import com.scleroid.financematic.utils.eventBus.GlobalBus;
+import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.CircleCustomView;
 import com.scleroid.financematic.utils.ui.CustomFilter;
 import com.scleroid.financematic.utils.ui.RupeeTextView;
@@ -126,6 +127,8 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 	public static class MyViewHolder extends RecyclerView.ViewHolder {
 
 
+		TextViewUtils textViewUtils= new TextViewUtils();
+
 		@BindView(R.id.payment_circle_view)
 		CircleCustomView paymentCircleView;
 		@BindView(R.id.person_name_text_view)
@@ -154,6 +157,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 			ButterKnife.bind(this, itemView);
 			//for tryintend
 
+			textViewUtils.textViewExperiments(personNameTextView);
 		}
 
 		private void setData(final Customer customer) {

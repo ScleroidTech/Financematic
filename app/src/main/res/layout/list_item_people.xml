@@ -45,12 +45,13 @@
                 android:layout_marginTop="8dp"
                 android:text="Sachin Tendulkar"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 app:layout_constraintStart_toEndOf="@+id/payment_circle_view"
                 app:layout_constraintTop_toTopOf="parent" />
 
 
             <TextView
+                android:textColor="#441953"
                 android:id="@+id/total_amount_title_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -58,7 +59,7 @@
                 android:layout_marginBottom="3dp"
                 android:layout_marginStart="6dp"
                 android:text="Total loan"
-                android:textColor="#4f4e50"
+
                 android:textSize="12sp"
                 app:layout_constraintBottom_toTopOf="@+id/total_loan_text_view"
                 app:layout_constraintStart_toEndOf="@+id/imageView5" />
@@ -78,14 +79,14 @@
             <TextView
                 android:id="@+id/received_amount_title_text_view"
                 android:layout_width="wrap_content"
-
+                android:textColor="#441953"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/person_name_text_view"
                 android:layout_marginBottom="4dp"
                 android:layout_marginStart="8dp"
                 android:text="Received"
-                android:textColor="#4f4e50"
+
                 android:textSize="12sp"
                 app:layout_constraintBottom_toTopOf="@+id/received_amount_text_view"
                 app:layout_constraintStart_toEndOf="@+id/imageButton" />
@@ -153,8 +154,8 @@
                 android:id="@+id/callButton"
                 android:layout_width="40dp"
                 android:layout_height="35dp"
-                android:layout_marginEnd="12dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginEnd="7dp"
+                android:layout_marginTop="27dp"
                 android:background="@drawable/ic_phone_black_24dp"
                 android:backgroundTint="@color/colorPrimaryDark"
                 app:layout_constraintEnd_toEndOf="parent"

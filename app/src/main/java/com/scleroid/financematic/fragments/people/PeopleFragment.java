@@ -17,6 +17,7 @@ import com.scleroid.financematic.base.BaseFragment;
 import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.RecyclerTouchListener;
+import com.scleroid.financematic.utils.ui.RupeeTextView;
 import com.scleroid.financematic.utils.ui.TextViewUtils;
 
 import java.util.ArrayList;
@@ -34,10 +35,10 @@ import butterknife.Unbinder;
 public class PeopleFragment extends BaseFragment {
 
 
-
-
 	@Inject
 	ActivityUtils activityUtils;
+
+
 
 	TextView firstFragment;
 	@BindView(R.id.simpleSearchView)
@@ -67,7 +68,6 @@ public class PeopleFragment extends BaseFragment {
 		// Inflate the layout for this fragment
 		super.onCreateView(inflater, container, savedInstanceState);
 		View rootView = getRootView();
-
 
 		//Intend
      /*   firstFragment = rootView.findViewById(R.id.button_list);

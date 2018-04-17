@@ -53,7 +53,7 @@ import butterknife.OnClick;
  * @since 2/3/18
  */
 
-public class ReportFragment extends BaseFragment<ReportViewModel> {
+public class ReportFragment extends BaseFragment<ReportViewModel>{
 	private static final String DIALOG_DATE = "DIALOG_DATE";
 	private static final int REQUEST_DATE_FROM = 1;
 	private static final int REQUEST_DATE_TO = 2;
@@ -68,7 +68,10 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 
 	String[] filterSuggestions =
 			{"All Amount", "Received Amount", "Lent Amount", "Earned Amount"};
+	String[] shortSuggestions =
+			{"Date modified", "Total Outstanding"};
 	Spinner spin;
+	Spinner spin1;
 
 	@BindView(R.id.pie_chart_expense)
 	PieChart mChart;
@@ -82,6 +85,9 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 	RecyclerView reportRecyclerView;
 	@BindView(R.id.spinnerr)
 	Spinner spinnerFilter;
+	@BindView(R.id.spinnershortdate)
+	Spinner spinnershort;
+
 
 	ActivityUtils activityUtils = new ActivityUtils();
 	@BindView(R.id.accNo)
@@ -145,6 +151,55 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 		View rootView = getRootView();
 
 
+//add manoj
+		final Spinner spin1 = rootView.findViewById(R.id.spinnershortdate);
+	/*	spin1.setOnItemSelectedListener(this);*/
+	ArrayAdapter<String> aa = new ArrayAdapter<>(getActivity(),
+				android.R.layout.simple_spinner_item, shortSuggestions);
+		aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		//Setting the ArrayAdapter data on the Spinner
+		spin1.setAdapter(aa);
+
+
+		spin1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(final AdapterView<?> parent, final View view,
+									   final int position, final long id) {
+		/*		List<TransactionModel> tempList;
+				reportFilterType = getSuggestion(position);
+				if (startDate == null && endDate == null) {
+					tempList = filterWithoutDate(reportFilterType);
+				} else {tempList = filterWithDate(startDate, endDate, reportFilterType); }
+				updateListData(tempList);*/
+			}
+
+			@Override
+			public void onNothingSelected(final AdapterView<?> parent) {
+
+			}
+		});
+
+
+	/*		spin1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(final AdapterView<?> parent, final View view,
+									   final int position, final long id) {
+				durationType = country[position];
+			}
+
+			@Override
+			public void onNothingSelected(final AdapterView<?> parent) {
+
+			}
+		});*/
+
+		Bundle bundle = getArguments();
+		if (bundle != null) {
+			reportFilterType = (ReportFilterType) bundle.get(FILTER_TYPE);
+			if (reportFilterType != null) { filterWithoutDate(reportFilterType); }
+		}
+
+
 		mAdapter = new ReportAdapter();
 
 		reportRecyclerView.setHasFixedSize(true);
@@ -158,33 +213,17 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 		setupSpinner();
 
 
+
 		mChart.setUsePercentValues(true);
 		mChart.getDescription().setEnabled(false);
 		//  mChart.setCenterTextTypeface(mTfLight);
 
 		initializeChartData();
 
-		handleClickFromDashboard();
 
 		return rootView;
 
 
-	}
-
-	private void handleClickFromDashboard() {
-		Bundle bundle = getArguments();
-		if (bundle != null) {
-			reportFilterType = (ReportFilterType) bundle.get(FILTER_TYPE);
-			if (reportFilterType != null) {
-				if (reportFilterType == ReportFilterType.RECEIVED_AMOUNT) {
-					spinnerFilter.setSelection(1);
-				} else if (reportFilterType == ReportFilterType.LENT_AMOUNT) {
-					spinnerFilter.setSelection(2);
-				}
-				final List<TransactionModel> tempList = filterWithoutDate(reportFilterType);
-				updateListData(tempList);
-			}
-		}
 	}
 
 	/**
@@ -203,6 +242,12 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 		reportViewModel.getTransactionLiveData().observe(this, this::updateListData);
 	}
 
+	private void updateListData(final List<TransactionModel> transactions) {
+		transactionsList = transactions;
+		mAdapter.setReportList(transactionsList);
+		mAdapter.setFilterType(reportFilterType);
+	}
+
 	/**
 	 * Override for set view model
 	 *
@@ -214,12 +259,6 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 				ViewModelProviders.of(Objects.requireNonNull(getActivity()), viewModelFactory)
 						.get(ReportViewModel.class);
 		return reportViewModel;
-	}
-
-	private void updateListData(final List<TransactionModel> transactions) {
-		transactionsList = transactions;
-		mAdapter.setReportList(transactionsList);
-		mAdapter.setFilterType(reportFilterType);
 	}
 
 	private void setupSpinner() {
@@ -458,6 +497,17 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 //data.setValueFormatter(new DefaultValueFormatter(0));
 
 	}
+
+
+	/*@Override
+	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+	}
+
+	@Override
+	public void onNothingSelected(AdapterView<?> arg0) {
+	}
+*/
 
 
 }
