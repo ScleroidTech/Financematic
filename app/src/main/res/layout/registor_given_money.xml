@@ -211,13 +211,13 @@
                         android:layout_marginLeft="10dp"
                         android:layout_weight=".7"
 
-                        android:text="Interest Amount"
+                        android:text="Installment Amount"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="#409bbf"
                         android:textSize="17sp" />
 
                     <EditText
-                        android:id="@+id/txInterestAmount"
+                        android:id="@+id/txInstallmentAmount"
                         android:layout_width="0dp"
                         android:layout_height="40dp"
                         android:layout_weight=".7"

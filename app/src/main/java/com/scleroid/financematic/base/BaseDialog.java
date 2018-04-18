@@ -17,7 +17,6 @@
 package com.scleroid.financematic.base;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -40,8 +39,10 @@ public abstract class BaseDialog extends DialogFragment {
 	DispatchingAndroidInjector<Fragment> childFragmentInjector;*/
 	private BaseActivity mActivity;
 	private View rootView;
+	private boolean dialogDismissed;
 
 
+/*
 	@Override
 	public void onAttach(Context context) {
 		performDependencyInjection();
@@ -52,6 +53,7 @@ public abstract class BaseDialog extends DialogFragment {
 			mActivity.onFragmentAttached();
 		}
 	}
+*/
 
 	@Override
 	public void onDetach() {
@@ -130,6 +132,7 @@ public abstract class BaseDialog extends DialogFragment {
 	@Override
 	public void onDismiss(final DialogInterface dialog) {
 		super.onDismiss(dialog);
+		dialogDismissed = true;
 	}
 
 

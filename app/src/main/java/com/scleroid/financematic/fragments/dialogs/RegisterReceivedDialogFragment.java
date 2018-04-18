@@ -3,6 +3,7 @@ package com.scleroid.financematic.fragments.dialogs;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -89,6 +90,12 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 		fragment.setArguments(args);
 		return fragment;
 	}
+
+	@Override
+	public void onDismiss(final DialogInterface dialog) {
+		super.onDismiss(dialog);
+	}
+
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

@@ -18,7 +18,7 @@ import com.scleroid.financematic.base.BaseFragment;
 import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.local.model.Loan;
-import com.scleroid.financematic.fragments.RegisterMoneyFragment;
+import com.scleroid.financematic.fragments.RegisterLoanFragment;
 import com.scleroid.financematic.utils.eventBus.Events;
 import com.scleroid.financematic.utils.eventBus.GlobalBus;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
@@ -208,7 +208,7 @@ public class CustomerFragment extends BaseFragment {
 
 	@OnClick(R.id.fab)
 	public void onViewClicked() {
-		activityUtils.loadFragment(RegisterMoneyFragment.newInstance(customerId),
+		activityUtils.loadFragment(RegisterLoanFragment.newInstance(customerId),
 				getFragmentManager());
 	}
 
@@ -217,7 +217,7 @@ public class CustomerFragment extends BaseFragment {
 	public void onViewClicked(View view) {
 		switch (view.getId()) {
 			case R.id.fab:
-				activityUtils.loadFragment(RegisterMoneyFragment.newInstance(customerId),
+				activityUtils.loadFragment(RegisterLoanFragment.newInstance(customerId),
 						getFragmentManager());
 			case R.id.mobile_text_view:
 				handleCallClick();

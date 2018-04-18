@@ -23,5 +23,4 @@ public interface LoanDurationType {
 
 	String YEARLY = "Yearly";
 
-	String ONE_TIME = "One Time";
 }

@@ -212,7 +212,8 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
 			}
 			dueDateTextView.setText(
 					dateUtils.getFormattedDate(installment.getInstallmentDate()));
-			long differenceOfDates = dateUtils.differenceOfDates(installment.getInstallmentDate());
+			long differenceOfDates =
+					dateUtils.differenceWithCurrentDate(installment.getInstallmentDate());
 			String diff;
 			if (differenceOfDates != 0) {
 				diff = String.format("%d day(s) to go", differenceOfDates);

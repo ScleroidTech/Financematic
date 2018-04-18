@@ -93,7 +93,7 @@ public class DateUtils {
 
 	}
 
-	public long differenceOfDates(Date date) {
+	public long differenceWithCurrentDate(Date date) {
 
 		//  SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
 		// sdf.setLenient(false);
@@ -121,5 +121,37 @@ public class DateUtils {
 
 	}
 
+	public long differenceOfDates(Date date1, Date date2) {
 
+		//  SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+		// sdf.setLenient(false);
+
+
+		// if not valid, it will throw ParseException
+		// Date date = sdf.parse(dateToValidate);
+
+		// current date after 3 months
+
+
+		String diff = "";
+		long timeDiff = Math.abs(date1.getTime() - date2.getTime());
+		//long days = TimeUnit.MILLISECONDS.toDays(timeDiff);
+
+		return timeDiff;
+		//ChronoUnit.DAYS.between(firstDate, secondDate);
+		//ok everything is fine, date in range
+
+
+	}
+
+
+	public Date findDate(final Date startDate, final long durationType) {
+
+		Calendar dateProvided = Calendar.getInstance();
+		dateProvided.setTime(startDate);
+
+		dateProvided.add(Calendar.DATE, Math.toIntExact(durationType));
+		Date newDate = dateProvided.getTime();
+		return newDate;
+	}
 }
