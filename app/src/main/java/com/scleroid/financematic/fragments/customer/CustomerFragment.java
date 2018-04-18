@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -76,6 +77,18 @@ public class CustomerFragment extends BaseFragment {
 		super.onCreate(savedInstanceState);
 	}
 
+	@BindView(R.id.empty_card)
+	CardView emptyCard;
+
+
+	/**
+	 * @return layout resource id
+	 */
+	@Override
+	public int getLayoutId() {
+		return R.layout.fragment_profile;
+	}
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
@@ -115,19 +128,11 @@ public class CustomerFragment extends BaseFragment {
 		recyclerView.setAdapter(mAdapter);
 
 
+		updateView(loanList);
 
 		return rootView;
 
 
-	}
-
-
-	/**
-	 * @return layout resource id
-	 */
-	@Override
-	public int getLayoutId() {
-		return R.layout.fragment_profile;
 	}
 
 	/**
@@ -136,9 +141,7 @@ public class CustomerFragment extends BaseFragment {
 	@Override
 	protected void subscribeToLiveData() {
 		customerViewModel.getLoanList().observe(this, items -> {
-			loanList = items;
-			mAdapter.setLoanList(loanList);
-			updateTotalLoanAmt();
+			updateView(items);
 
 		});
 
@@ -146,6 +149,21 @@ public class CustomerFragment extends BaseFragment {
 			theCustomer = item;
 			updateUi();
 		});
+	}
+
+	private void updateView(final List<Loan> items) {
+		if (items == null || items.isEmpty()) {
+			emptyCard.setVisibility(View.VISIBLE);
+			recyclerView.setVisibility(View.GONE);
+		} else {
+			emptyCard.setVisibility(View.GONE);
+			recyclerView.setVisibility(View.VISIBLE);
+
+			loanList = items;
+			mAdapter.setLoanList(loanList);
+			updateTotalLoanAmt();
+
+		}
 	}
 
 	private void updateUi() {

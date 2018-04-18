@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -92,6 +93,21 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 		super.onCreate(savedInstanceState);
 	}
 
+	@BindView(R.id.empty_card)
+	CardView emptyCard;
+
+	private void setTitle() {
+		activityUtils.setTitle((AppCompatActivity) getActivity(), "DashBoard");
+	}
+
+	/**
+	 * @return layout resource id
+	 */
+	@Override
+	public int getLayoutId() {
+		return R.layout.fragment_dashboard;
+	}
+
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
@@ -110,20 +126,9 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 		textViewUtils.textViewExperiments(totalAmountTextView);
 
 		setTitle();
+		updateView(installments);
 		return rootView;
 	}
-
-	private void setTitle() {
-		activityUtils.setTitle((AppCompatActivity) getActivity(), "DashBoard");
-	}
-	/**
-	 * @return layout resource id
-	 */
-	@Override
-	public int getLayoutId() {
-		return R.layout.fragment_dashboard;
-	}
-
 	/**
 	 * Override for set view model
 	 *
@@ -169,20 +174,31 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 		// (recyclerTouchListener);
 	}
 
-
 	@Override
 	protected void subscribeToLiveData() {
 		dashBoardViewModel.getUpcomingInstallments().observe(this,
 				items -> {
-					sort(items);
-					mAdapter.setInstallmentList(items);
-					installments = items;
+					updateView(items);
 				});
 
 		dashBoardViewModel.getLoans().observe(this, items -> {
 			loanList = items;
 			updateUi();
 		});
+	}
+
+	private void updateView(final List<Installment> items) {
+		if (items == null || items.isEmpty()) {
+			emptyCard.setVisibility(View.VISIBLE);
+			recyclerViewDashboard.setVisibility(View.GONE);
+		} else {
+			emptyCard.setVisibility(View.GONE);
+			recyclerViewDashboard.setVisibility(View.VISIBLE);
+			sort(items);
+			mAdapter.setInstallmentList(items);
+			installments = items;
+		}
+
 	}
 
 	private void updateUi() {
@@ -197,12 +213,20 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 	}
 
 	private void sort(final List<Installment> transactions) {
+
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+			//	transactions.removeIf(transaction -> transaction.getLoan() == null || transaction
+			// .getLoan().getCustomer() == null);
 			transactions.sort(Comparator.comparing(Installment::getInstallmentDate));
 		} else {
+
 			Collections.sort(transactions,
 					(m1, m2) -> m1.getInstallmentDate().compareTo(m2.getInstallmentDate()));
 		}
+	}
+
+	private boolean predicate(final Installment next) {
+		return next.getLoan() == null || next.getLoan().getCustomer() == null;
 	}
 
 	private int calculateTotalAmt(final List<Loan> loans) {

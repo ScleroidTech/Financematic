@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -62,6 +63,8 @@ public class ReportFragment extends BaseFragment<ReportViewModel>{
 	private static final int REQUEST_DATE_TO = 2;
 	private static final String FILTER_TYPE = "filter_type";
 
+	@BindView(R.id.empty_card)
+	CardView emptyCard;
 
 	@Inject
 	DateUtils dateUtils;
@@ -262,11 +265,19 @@ public class ReportFragment extends BaseFragment<ReportViewModel>{
 	}
 
 	private void updateListData(final List<TransactionModel> transactions) {
-		sort(transactions);
-		transactionsList = transactions;
-		mAdapter.setReportList(transactionsList);
-		mAdapter.setFilterType(reportFilterType);
+		if (transactions == null || transactions.isEmpty()) {
+			emptyCard.setVisibility(View.VISIBLE);
+			reportRecyclerView.setVisibility(View.GONE);
+		} else {
+			emptyCard.setVisibility(View.GONE);
+			reportRecyclerView.setVisibility(View.VISIBLE);
+			sort(transactions);
+			transactionsList = transactions;
+			mAdapter.setReportList(transactionsList);
+			mAdapter.setFilterType(reportFilterType);
+		}
 	}
+
 
 	private void sort(final List<TransactionModel> transactions) {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

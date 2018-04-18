@@ -81,7 +81,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 
 		if (passbook.getLoans() == null) {
 			Timber.w(passbook.toString() + " didn't make it far");
-			removeItemFromList(position, passbook);
+
 			return;
 		}
 		// holder.setPassbook(passbook);
@@ -105,10 +105,6 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 
 	}
 
-	private void removeItemFromList(final int position, final Customer dashBoardModel) {
-		customerList.remove(dashBoardModel);
-		notifyItemRemoved(position);
-	}
 
 	@Override
 	public int getItemCount() {

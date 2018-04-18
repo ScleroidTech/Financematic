@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -61,7 +62,8 @@ public class LoanDetailsFragment extends BaseFragment {
 	@BindView(R.id.card_loan)
 	View cardLoan;
 
-
+	@BindView(R.id.empty_card)
+	CardView emptyCard;
 	private List<TransactionModel> transactionList = new ArrayList<>();
 	private RecyclerView recyclerView;
 	private LoanAdapter mAdapter;
@@ -166,17 +168,14 @@ public class LoanDetailsFragment extends BaseFragment {
 	@Override
 	protected void subscribeToLiveData() {
 		loanViewModel.getTransactionList().observe(this, items -> {
-			sortMe(items);
-			transactionList = items;
-			mAdapter.setTransactionList(transactionList);
+			updateView(installmentList, items);
 			//updateTotalLoanAmt();
 
 		});
 
 		loanViewModel.getInstallmentList().observe(this, items -> {
-			sort(items);
-			installmentList = items;
-			mAdapter.setInstallmentList(items);
+			updateView(items, transactionList);
+
 			//updateTotalLoanAmt();
 
 		});
@@ -187,12 +186,32 @@ public class LoanDetailsFragment extends BaseFragment {
 		});
 	}
 
-	private void sortMe(final List<TransactionModel> transactions) {
+	private void updateView(final List<Installment> items, List<TransactionModel>
+			transactionList) {
+		if (items == null || items.isEmpty() || transactionList == null || transactionList.isEmpty
+				()) {
+			emptyCard.setVisibility(View.VISIBLE);
+			recyclerView.setVisibility(View.GONE);
+		} else {
+			emptyCard.setVisibility(View.GONE);
+			recyclerView.setVisibility(View.VISIBLE);
+			sort(items);
+			sortReverse(transactionList);
+			mAdapter.setInstallmentList(items);
+			mAdapter.setTransactionList(transactionList);
+			installmentList = items;
+			this.transactionList = transactionList;
+		}
+
+	}
+
+	private void sortReverse(final List<TransactionModel> transactions) {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-			transactions.sort(Comparator.comparing(TransactionModel::getTransactionDate));
+			transactions.sort(
+					Comparator.comparing(TransactionModel::getTransactionDate).reversed());
 		} else {
 			Collections.sort(transactions,
-					(m1, m2) -> m1.getTransactionDate().compareTo(m2.getTransactionDate()));
+					(m1, m2) -> m2.getTransactionDate().compareTo(m1.getTransactionDate()));
 		}
 	}
 
