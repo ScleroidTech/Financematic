@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.base.BaseFragment;
@@ -21,7 +20,6 @@ import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.data.local.model.TransactionModel;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
-import com.scleroid.financematic.utils.ui.RecyclerTouchListener;
 import com.scleroid.financematic.utils.ui.RupeeTextView;
 import com.scleroid.financematic.utils.ui.TextViewUtils;
 
@@ -129,22 +127,6 @@ public class LoanDetailsFragment extends BaseFragment {
 		recyclerView.setAdapter(mAdapter);
 
 		// row click listener
-		recyclerView.addOnItemTouchListener(
-				new RecyclerTouchListener(getActivity().getApplicationContext(), recyclerView,
-						new RecyclerTouchListener.ClickListener() {
-							@Override
-							public void onClick(View view, int position) {
-								TransactionModel loan = transactionList.get(position);
-								Toast.makeText(getActivity().getApplicationContext(),
-										loan.getTransactionId() + " is selected!",
-										Toast.LENGTH_SHORT).show();
-							}
-
-							@Override
-							public void onLongClick(View view, int position) {
-
-							}
-						}));
 
 
 		//  textViewUtils.textViewExperiments(totalAmountTextView);
@@ -188,8 +170,7 @@ public class LoanDetailsFragment extends BaseFragment {
 
 	private void updateView(final List<Installment> items, List<TransactionModel>
 			transactionList) {
-		if (items == null || items.isEmpty() || transactionList == null || transactionList.isEmpty
-				()) {
+		if (items == null || items.isEmpty()) {
 			emptyCard.setVisibility(View.VISIBLE);
 			recyclerView.setVisibility(View.GONE);
 		} else {

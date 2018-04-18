@@ -76,7 +76,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 	}
 
 	@Override
-	public void onBindViewHolder(MyViewHolder holder, int position) {
+	public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 		Customer passbook = customerList.get(position);
 
 		if (passbook.getLoans() == null) {
