@@ -96,11 +96,13 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
 
 		if (dashBoardModel.getLoan() == null) {
 			Timber.wtf(" loan is empty for " + dashBoardModel.toString());
+			removeItemFromList(position, dashBoardModel);
 			return;
 		}
 
 		if (dashBoardModel.getLoan().getCustomer() == null) {
 			Timber.wtf(" customer is empty for " + dashBoardModel.getLoan().toString());
+			removeItemFromList(position, dashBoardModel);
 			return;
 		}
 		if (
@@ -135,6 +137,11 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
 				.dispose();*/
 
 
+	}
+
+	private void removeItemFromList(final int position, final Installment dashBoardModel) {
+		installmentList.remove(dashBoardModel);
+		notifyItemRemoved(position);
 	}
 
 	@Override
@@ -209,8 +216,13 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
 			}
 			dueDateTextView.setText(
 					dateUtils.getFormattedDate(installment.getInstallmentDate()));
+			long differenceOfDates = dateUtils.differenceOfDates(installment.getInstallmentDate());
+			String diff;
+			if (differenceOfDates != 0) {
+				diff = String.format("%d day(s) to go", differenceOfDates);
+			} else { diff = String.format("Today"); }
 			timeRemainingTextView.setText(
-					dateUtils.differenceOfDates(installment.getInstallmentDate()));
+					diff);
 			if (installment.getLoan().getCustomer().getMobileNumber() == null) {
 				callButton.setEnabled(false);
 				Events.showToast showToast =

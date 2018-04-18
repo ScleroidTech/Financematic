@@ -10,6 +10,7 @@ import com.annimon.stream.Stream;
 import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.local.dao.InstallmentDao;
 import com.scleroid.financematic.data.local.model.Installment;
+import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.data.repo.CustomerRepo;
 import com.scleroid.financematic.data.repo.InstallmentRepo;
 import com.scleroid.financematic.data.repo.LoanRepo;
@@ -42,6 +43,8 @@ public class DashboardViewModel extends BaseViewModel<Installment> implements Cu
 	DateUtils dateUtils;
 	@Inject
 	AppExecutors appExecutors;
+
+	private LiveData<List<Loan>> loanListLiveData = new MutableLiveData<>();
 	private LiveData<Resource<List<Installment>>> installments;
 	// private LiveData<List<DashBoardModel>> upcomingInstallmentsTransformed;
 	private LiveData<List<Installment>> upcomingInstallments = new MutableLiveData<>();
@@ -74,22 +77,39 @@ public class DashboardViewModel extends BaseViewModel<Installment> implements Cu
 		upcomingInstallments = getUpcomingInstallments();
 		//   Timber.d(upcomingInstallments.getValue().isEmpty() + "" );
 		//   setUpcomingInstallmentsTransformed(getTransformedUpcomingData());
+		loanListLiveData = getLoans();
 	}
 
-	//TODO make it MutableLiveData
+
 	public LiveData<List<Installment>> getUpcomingInstallments() {
 		if (upcomingInstallments.getValue() == null || upcomingInstallments.getValue().isEmpty()) {
-			upcomingInstallments = installmentRepo.getLocalInstallmentsLab()
-					.getInstallmentWithCustomers(); /*filterResults(installmentRepo
+			upcomingInstallments = setUpcomingInstallments();  /*filterResults(installmentRepo
 					.getLocalInstallmentsLab().getItems());*/
 		}
 		return upcomingInstallments;
 	}
 
-	public void setUpcomingInstallments(
-			final MutableLiveData<List<Installment>> upcomingInstallments) {
-		this.upcomingInstallments = upcomingInstallments;
+	public LiveData<List<Installment>> setUpcomingInstallments() {
+		upcomingInstallments = installmentRepo.getLocalInstallmentsLab()
+				.getInstallmentWithCustomers();
+		return upcomingInstallments;
 	}
+
+	public LiveData<List<Loan>> getLoans() {
+		if (loanListLiveData.getValue() == null || loanListLiveData.getValue().isEmpty()) {
+			loanListLiveData = setLoans(); /*filterResults(installmentRepo
+					.getLocalInstallmentsLab().getItems());*/
+		}
+		return loanListLiveData;
+	}
+
+	public LiveData<List<Loan>> setLoans(
+	) {
+		return
+				loanRepo.getLocalLoanLab()
+						.getItems();
+	}
+
 
 	//There's a copy of this code in adapter too,
 	private List<Installment> filterResults(List<Installment> installments) {

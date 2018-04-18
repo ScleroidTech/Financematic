@@ -18,16 +18,12 @@ import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.utils.eventBus.Events;
 import com.scleroid.financematic.utils.eventBus.GlobalBus;
-import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.CircleCustomView;
 import com.scleroid.financematic.utils.ui.CustomFilter;
 import com.scleroid.financematic.utils.ui.RupeeTextView;
-import com.scleroid.financematic.utils.ui.TextViewUtils;
 
 import java.text.DecimalFormat;
 import java.util.List;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -85,6 +81,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 
 		if (passbook.getLoans() == null) {
 			Timber.w(passbook.toString() + " didn't make it far");
+			removeItemFromList(position, passbook);
 			return;
 		}
 		// holder.setPassbook(passbook);
@@ -106,6 +103,11 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 		});
 
 
+	}
+
+	private void removeItemFromList(final int position, final Customer dashBoardModel) {
+		customerList.remove(dashBoardModel);
+		notifyItemRemoved(position);
 	}
 
 	@Override
@@ -193,7 +195,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 
 		private int calculateTotalAmt(final List<Loan> loans) {
 			int sum = Stream.of(loans).mapToInt(loan ->
-					loan.getLoanAmt().intValue()).sum();
+					loan.getLoanAmt() != null ? loan.getLoanAmt().intValue() : 0).sum();
 			Timber.wtf("sum of Total Amt" + sum);
 			return sum;
 		}
@@ -201,7 +203,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 		private int calculateReceivedAmt(final List<Loan> loans) {
 
 			int sum = Stream.of(loans).mapToInt(loan ->
-					loan.getReceivedAmt().intValue()).sum();
+					loan.getReceivedAmt() != null ? loan.getReceivedAmt().intValue() : 0).sum();
 			Timber.wtf("sum of received Amt" + sum);
 			return sum;
 		}

@@ -93,7 +93,7 @@ public class DateUtils {
 
 	}
 
-	public String differenceOfDates(Date date) {
+	public long differenceOfDates(Date date) {
 
 		//  SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
 		// sdf.setLenient(false);
@@ -112,8 +112,9 @@ public class DateUtils {
 
 		String diff = "";
 		long timeDiff = Math.abs(date.getTime() - currentDateTime.getTime());
-		diff = String.format("%d day(s) to go", TimeUnit.MILLISECONDS.toDays(timeDiff));
-		return diff;
+		long days = TimeUnit.MILLISECONDS.toDays(timeDiff);
+
+		return days;
 		//ChronoUnit.DAYS.between(firstDate, secondDate);
 		//ok everything is fine, date in range
 
