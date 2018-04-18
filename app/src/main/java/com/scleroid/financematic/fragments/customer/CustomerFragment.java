@@ -18,6 +18,8 @@ import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.fragments.RegisterMoneyFragment;
+import com.scleroid.financematic.utils.eventBus.Events;
+import com.scleroid.financematic.utils.eventBus.GlobalBus;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.RupeeTextView;
 
@@ -26,7 +28,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 import timber.log.Timber;
 
 /**
@@ -37,7 +38,7 @@ import timber.log.Timber;
 public class CustomerFragment extends BaseFragment {
 	@BindView(R.id.fab)
 	FloatingActionButton fab;
-	Unbinder unbinder1;
+
 	private ActivityUtils activityUtils = new ActivityUtils();
 	private static final String CUSTOMER_ID = "customer_id";
 	@BindView(R.id.name_text_view)
@@ -46,7 +47,7 @@ public class CustomerFragment extends BaseFragment {
 	TextView mobileTextView;
 	@BindView(R.id.address_text_view)
 	TextView addressTextView;
-	Unbinder unbinder;
+
 	@BindView(R.id.total_loan_text_view)
 	RupeeTextView totalLoanTextView;
 	private List<Loan> loanList = new ArrayList<>();
@@ -191,5 +192,37 @@ public class CustomerFragment extends BaseFragment {
 	public void onViewClicked() {
 		activityUtils.loadFragment(RegisterMoneyFragment.newInstance(customerId),
 				getFragmentManager());
+	}
+
+
+	@OnClick({R.id.fab, R.id.mobile_text_view, R.id.address_text_view})
+	public void onViewClicked(View view) {
+		switch (view.getId()) {
+			case R.id.fab:
+				activityUtils.loadFragment(RegisterMoneyFragment.newInstance(customerId),
+						getFragmentManager());
+			case R.id.mobile_text_view:
+				handleCallClick();
+				break;
+			case R.id.address_text_view:
+				handleAddressClick();
+				break;
+		}
+	}
+
+	private void handleCallClick() {
+		String phone = theCustomer.getMobileNumber();
+		Timber.d(phone + " of person " + theCustomer.getName());
+		Events.placeCall makeACall = new Events.placeCall(phone);
+
+		GlobalBus.getBus().post(makeACall);
+	}
+
+	private void handleAddressClick() {
+		String phone = theCustomer.getAddress();
+		Timber.d(phone + " of person " + theCustomer.getName());
+		Events.goToAddress makeACall = new Events.goToAddress(phone);
+
+		GlobalBus.getBus().post(makeACall);
 	}
 }

@@ -99,4 +99,13 @@ public class ActivityUtils {
 		actionBar.setTitle(msg);
 	}
 
+	public void addressIntent(final Activity activity, final String address) {
+		String drivingMode = "&mode=d";
+		Uri gmmIntentUri = Uri.parse("google.navigation:0,0?q=" + address + drivingMode);
+
+		Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+		mapIntent.setPackage("com.google.android.apps.maps");
+
+		activity.startActivity(mapIntent);
+	}
 }
