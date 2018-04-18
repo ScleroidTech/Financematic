@@ -178,5 +178,10 @@ public class LoanRepo implements Repo<Loan> {
 		return null;
 	}
 
+	@Override
+	public Completable deleteItem(final Loan loan) {
+		return null;
+	}
+
 
 }

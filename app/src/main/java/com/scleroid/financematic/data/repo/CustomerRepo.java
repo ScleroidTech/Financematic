@@ -138,4 +138,9 @@ public class CustomerRepo implements Repo<Customer> {
 	public Single<Customer> updateItem(final Customer customer) {
 		return null;
 	}
+
+	@Override
+	public Completable deleteItem(final Customer customer) {
+		return null;
+	}
 }

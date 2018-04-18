@@ -186,6 +186,11 @@ public class TransactionsRepo implements Repo<TransactionModel> {
 		return null;
 	}
 
+	@Override
+	public Completable deleteItem(final TransactionModel transactionModel) {
+		return null;
+	}
+
 
 }
 

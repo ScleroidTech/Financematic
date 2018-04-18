@@ -131,20 +131,6 @@ public class LocalCustomerLab implements LocalDataSource<Customer> {
 	/**
 	 * deletes a single item from the database
 	 *
-	 * @param itemId id of item to be deleted
-	 */
-	@Override
-	public Completable deleteItem(final int itemId) {
-		Timber.d("deleting customer with id %d", itemId);
-
-		return Completable.fromRunnable(
-				() -> customerDao.delete(customerDao.getCustomerLive(itemId).getValue()))
-				.subscribeOn(Schedulers.io());
-	}
-
-	/**
-	 * deletes a single item from the database
-	 *
 	 * @param item item to be deleted
 	 */
 	@Override

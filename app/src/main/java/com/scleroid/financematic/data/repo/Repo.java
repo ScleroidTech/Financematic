@@ -27,4 +27,6 @@ public interface Repo<T> {
 
 
 	Single<T> updateItem(T t);
+
+	Completable deleteItem(T t);
 }

@@ -65,13 +65,6 @@ public interface LocalDataSource<T> {
 	/**
 	 * deletes a single item from the database
 	 *
-	 * @param itemId id of item to be deleted
-	 */
-	Completable deleteItem(int itemId);
-
-	/**
-	 * deletes a single item from the database
-	 *
 	 * @param item item to be deleted
 	 */
 	Completable deleteItem(@NonNull T item);

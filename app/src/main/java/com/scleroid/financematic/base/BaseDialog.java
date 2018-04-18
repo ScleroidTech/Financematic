@@ -24,6 +24,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.RelativeLayout;
@@ -38,6 +39,7 @@ public abstract class BaseDialog extends DialogFragment {
 	/*@Inject
 	DispatchingAndroidInjector<Fragment> childFragmentInjector;*/
 	private BaseActivity mActivity;
+	private View rootView;
 
 
 	@Override
@@ -79,6 +81,14 @@ public abstract class BaseDialog extends DialogFragment {
 		dialog.setCanceledOnTouchOutside(false);
 
 		return dialog;
+	}
+
+	/**
+	 * @return Root View
+	 */
+	public View getRootView() {
+		return rootView;
+
 	}
 
 	private void performDependencyInjection() {

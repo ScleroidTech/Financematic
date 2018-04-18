@@ -39,7 +39,7 @@
 
                 android:layout_marginBottom="8dp"
                 android:layout_marginStart="8dp"
-                android:text="Received on time"
+
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/gray_text"
                 android:textSize="15sp"
@@ -55,7 +55,7 @@
                 android:layout_gravity="center_horizontal"
 
                 android:layout_marginStart="8dp"
-                android:text="@string/amount"
+
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="32sp"
                 card_view:layout_constraintStart_toEndOf="@+id/include2"
@@ -69,8 +69,8 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/button_rounded_green"
-                android:text="Paid"
+
+
                 android:textColor="@color/white"
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintEnd_toEndOf="parent"

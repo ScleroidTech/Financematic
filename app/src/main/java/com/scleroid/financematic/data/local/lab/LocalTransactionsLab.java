@@ -124,20 +124,6 @@ public class LocalTransactionsLab implements LocalDataSource<TransactionModel> {
 	/**
 	 * deletes a single item from the database
 	 *
-	 * @param itemId id of item to be deleted
-	 */
-	@Override
-	public Completable deleteItem(final int itemId) {
-		Timber.d("deleting transaction with id %d", itemId);
-
-		return Completable.fromRunnable(
-				() -> transactionDao.delete(transactionDao.getTransaction(itemId).getValue()))
-				.subscribeOn(Schedulers.io());
-	}
-
-	/**
-	 * deletes a single item from the database
-	 *
 	 * @param item item to be deleted
 	 */
 	@Override

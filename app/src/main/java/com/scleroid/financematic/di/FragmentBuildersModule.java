@@ -3,11 +3,11 @@ package com.scleroid.financematic.di;
 import com.scleroid.financematic.Notification;
 import com.scleroid.financematic.fragments.RegisterCustomerFragment;
 import com.scleroid.financematic.fragments.RegisterMoneyFragment;
-import com.scleroid.financematic.fragments.RegisterReceivedFragment;
 import com.scleroid.financematic.fragments.ReminderFragment;
 import com.scleroid.financematic.fragments.customer.CustomerFragment;
 import com.scleroid.financematic.fragments.dashboard.DashboardFragment;
 import com.scleroid.financematic.fragments.dialogs.DelayDialogFragment;
+import com.scleroid.financematic.fragments.dialogs.RegisterReceivedDialogFragment;
 import com.scleroid.financematic.fragments.expense.ExpenseFragment;
 import com.scleroid.financematic.fragments.loanDetails.LoanDetailsFragment;
 import com.scleroid.financematic.fragments.passbook.PassbookFragment;
@@ -50,7 +50,7 @@ public abstract class FragmentBuildersModule {
 	abstract RegisterMoneyFragment contributeRegisterMoneyFragment();
 
 	@ContributesAndroidInjector
-	abstract RegisterReceivedFragment contributeRegisterReceivedFragment();
+	abstract RegisterReceivedDialogFragment contributeRegisterReceivedFragment();
 
 	@ContributesAndroidInjector
 	abstract ReminderFragment contributeReminderFragment();

@@ -27,10 +27,10 @@ import com.scleroid.financematic.data.repo.InstallmentRepo;
 import com.scleroid.financematic.data.repo.LoanRepo;
 import com.scleroid.financematic.data.repo.TransactionsRepo;
 import com.scleroid.financematic.fragments.RegisterCustomerFragment;
-import com.scleroid.financematic.fragments.RegisterReceivedFragment;
 import com.scleroid.financematic.fragments.customer.CustomerFragment;
 import com.scleroid.financematic.fragments.dashboard.DashboardFragment;
 import com.scleroid.financematic.fragments.dialogs.DelayDialogFragment;
+import com.scleroid.financematic.fragments.dialogs.RegisterReceivedDialogFragment;
 import com.scleroid.financematic.fragments.expense.ExpenseFragment;
 import com.scleroid.financematic.fragments.loanDetails.LoanDetailsFragment;
 import com.scleroid.financematic.fragments.people.PeopleFragment;
@@ -69,6 +69,7 @@ public class MainActivity extends BaseActivity
 	private static final int THREAD_COUNT = 3;
 	private static final int REQUEST_DELAY = 45;
 	private static final String DIALOG_DELAY = "Delay Payment";
+	private static final String DIALOG_MONEY_RECEIVED = "Received Payment";
 	// index to identify current nav menu item
 	public static int navItemIndex = 0;
 	public static String CURRENT_TAG = TAG_DASHBOARD;
@@ -560,11 +561,13 @@ public class MainActivity extends BaseActivity
 	}
 
 	@Subscribe
-	public void onRecieveMoneyFragmentOpen(Events.openReceiveMoneyFragment customerBundle) {
+	public void onReceiveMoneyFragmentOpen(Events.openReceiveMoneyFragment customerBundle) {
 		int delayId = customerBundle.getInstallmentId();
 		int acNo = customerBundle.getAccountNo();
-		RegisterReceivedFragment fragment = RegisterReceivedFragment.newInstance();
-		activityUtils.loadFragment(fragment, getSupportFragmentManager());
+		RegisterReceivedDialogFragment fragment =
+				RegisterReceivedDialogFragment.newInstance(acNo, delayId);
+		activityUtils.loadDialogFragment(fragment, getSupportFragmentManager(),
+				DIALOG_MONEY_RECEIVED);
 
 
 	}
