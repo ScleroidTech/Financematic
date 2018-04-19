@@ -28,7 +28,7 @@ import com.scleroid.financematic.utils.ui.DateUtils;
 import com.scleroid.financematic.utils.ui.TextValidator;
 
 import java.math.BigDecimal;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -78,7 +78,6 @@ public class RegisterLoanFragment extends BaseFragment {
 	private TextView endDateTextView;
 	private TextView ettxrateInterest;
 	private TextView ettxInterestAmount;
-	private TextView ettxInstallmentduration;
 	private TextView etTotalLoanAmount;
 	private TextView ettxNoofInstallment;
 
@@ -90,6 +89,8 @@ public class RegisterLoanFragment extends BaseFragment {
 	private int noOfInstallments1;
 	private int duration1;
 	private BigDecimal amtOfInterest;
+	private TextView customerNameTextView;
+	private long durationDivided;
 
 
 	public RegisterLoanFragment() {
@@ -116,8 +117,7 @@ public class RegisterLoanFragment extends BaseFragment {
 		// Inflate the layout for this fragment
 		super.onCreateView(inflater, container, savedInstanceState);
 		final View rootView = getRootView();
-
-		TextView customerNameTextView = rootView.findViewById(R.id.reg_fullname_detaills);
+		initializeAllViews(rootView);
 		Bundle bundle = getArguments();
 		if (bundle != null) {
 			setCustomerName(customerNameTextView, bundle);
@@ -145,17 +145,7 @@ public class RegisterLoanFragment extends BaseFragment {
 		spin.setAdapter(aa);
 
 
-		startDateTextView = rootView.findViewById(R.id.txStartDate);
 
-
-		endDateTextView = rootView.findViewById(R.id.txEndDate);
-
-		ettxloan_amout = rootView.findViewById(R.id.txloan_amout);
-		ettxrateInterest = rootView.findViewById(R.id.txrateInterest);
-		ettxInterestAmount = rootView.findViewById(R.id.txInstallmentAmount);
-		ettxNoofInstallment = rootView.findViewById(R.id.txNoofInstallment);
-		ettxInstallmentduration = rootView.findViewById(R.id.txInstallmentduration);
-		etTotalLoanAmount = rootView.findViewById(R.id.txTotalLoanAmount);
 
 		ettxloan_amout.addTextChangedListener(
 				new TextValidator(ettxloan_amout) {
@@ -179,8 +169,7 @@ public class RegisterLoanFragment extends BaseFragment {
 						}
 					}
 				});
-		final String interestAmt = ettxInterestAmount.getText()
-				.toString();
+
 		ettxInterestAmount.addTextChangedListener(
 				new TextValidator(ettxInterestAmount) {
 					@Override
@@ -203,16 +192,6 @@ public class RegisterLoanFragment extends BaseFragment {
 					}
 				});
 
-		ettxInstallmentduration.addTextChangedListener(
-				new TextValidator(ettxInstallmentduration) {
-					@Override
-					public void validate(TextView textView, String text) {
-
-						if (isNotValidAmt(text)) {
-							ettxInstallmentduration.setError("Valid Installment Duration ");
-						}
-					}
-				});
 
 		etTotalLoanAmount.addTextChangedListener(
 				new TextValidator(etTotalLoanAmount) {
@@ -228,12 +207,13 @@ public class RegisterLoanFragment extends BaseFragment {
 
 		b = rootView.findViewById(R.id.btn_givenmoney);
 		b.setOnClickListener(v -> {
+			final String interestAmt = ettxInterestAmount.getText()
+					.toString();
 			final String loanAmt = ettxloan_amout.getText()
 					.toString();
 			final String noOfInstallments = ettxNoofInstallment.getText()
 					.toString();
-			final String duration = ettxInstallmentduration.getText()
-					.toString();
+
 			final String totatLoanAmt = etTotalLoanAmount.getText()
 					.toString();
 			final String rateOfInterest = ettxrateInterest.getText()
@@ -255,9 +235,7 @@ public class RegisterLoanFragment extends BaseFragment {
 			if (TextUtils.isEmpty(noOfInstallments)) {
 				ettxNoofInstallment.setError("Enter No of Installment");
 			}
-			if (TextUtils.isEmpty(duration)) {
-				ettxInstallmentduration.setError("Installment duration");
-			}
+
 			if (TextUtils.isEmpty(startDateStr)) { startDateTextView.setError("Start Date");}
 			if (TextUtils.isEmpty(endDateStr)) {endDateTextView.setError("End Date");}
 			if (TextUtils.isEmpty(totatLoanAmt)) {
@@ -271,13 +249,28 @@ public class RegisterLoanFragment extends BaseFragment {
 			Float rateOfInterest1 = Float.valueOf(rateOfInterest);
 			amtOfInterest = new BigDecimal(interestAmt);
 			noOfInstallments1 = Integer.valueOf(noOfInstallments);
-			duration1 = Integer.valueOf(duration);
+
 			BigDecimal repayAmt = new BigDecimal(totatLoanAmt);
 			addData(accountNo, loanAmt1, rateOfInterest1, repayAmt);
 		});
 
 
 		return rootView;
+	}
+
+	private void initializeAllViews(final View rootView) {
+		startDateTextView = rootView.findViewById(R.id.txStartDate);
+
+
+		endDateTextView = rootView.findViewById(R.id.txEndDate);
+
+		ettxloan_amout = rootView.findViewById(R.id.txloan_amout);
+		ettxrateInterest = rootView.findViewById(R.id.txrateInterest);
+		ettxInterestAmount = rootView.findViewById(R.id.txInstallmentAmount);
+		ettxNoofInstallment = rootView.findViewById(R.id.txNoofInstallment);
+
+		etTotalLoanAmount = rootView.findViewById(R.id.txTotalLoanAmount);
+		customerNameTextView = rootView.findViewById(R.id.reg_fullname_detaills);
 	}
 
 	private void addData(final int accountNo, final BigDecimal loanAmt1,
@@ -287,15 +280,15 @@ public class RegisterLoanFragment extends BaseFragment {
 		loan = new Loan(accountNo, loanAmt1, startDate,
 				endDate, rateOfInterest1, amtOfInterest,
 
-				noOfInstallments1, duration1, durationType,
+				noOfInstallments1, durationType,
 
 				repayAmt, customerId);
 		saveData(loan, installments);
 	}
 
 	private List<Installment> createInstallments() {
-		List<Date> dates = calculateInstallmentsDates();
-		List<Installment> installments = Collections.EMPTY_LIST;
+		List<Date> dates = calculateDates(startDate, durationDivided);
+		List<Installment> installments = new ArrayList<>();
 		for (Date date : dates) {
 			Installment installment =
 					new Installment(CommonUtils.getRandomInt(), date, amtOfInterest,
@@ -305,22 +298,31 @@ public class RegisterLoanFragment extends BaseFragment {
 		return installments;
 	}
 
-	private List<Date> calculateInstallmentsDates() {
-		List<Date> dates = Collections.emptyList();
-		Date installmentDate = startDate;
-		final long totalDuration;
-		totalDuration = dateUtils.differenceOfDates(startDate, endDate);
+	private List<Date> calculateDates(Date installmentDate, final long durationDivided) {
 		long durationTypeDivider = durationConverter(durationType);
-		final long durationDivided = convertTime(totalDuration);
-		for (int i = 1; i < durationDivided; i++) {
+		List<Date> dates = new ArrayList<>();
+		for (int i = 0; i < durationDivided; i++) {
 
 
 			installmentDate = dateUtils.findDate(installmentDate, durationTypeDivider);
 			dates.add(installmentDate);
 		}
 		return dates;
+	}
 
+	private void saveData(final Loan loan,
+	                      final List<Installment> installments) {
+		Disposable subscribe = loanRepo.saveItem(loan)
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe(loan1 -> {
+					Timber.d("Loan Data Saved " + loan1.toString());
+					installmentRepo.saveItems(installments)
+							.observeOn(AndroidSchedulers.mainThread())
+							.subscribe(() -> Timber.d("Installments Created " + loan1.toString()));
 
+				}, throwable -> Timber.d(
+						"Loan Data not Saved " + throwable.getMessage() + " errors are " + loan
+								.toString()));
 	}
 
 
@@ -364,17 +366,12 @@ public class RegisterLoanFragment extends BaseFragment {
 		return divider;
 	}
 
-	private void saveData(final Loan loan,
-	                      final List<Installment> installments) {
-		loanRepo.saveItem(loan).observeOn(AndroidSchedulers.mainThread()).subscribe(loan1 -> {
-			Timber.d("Loan Data Saved " + loan1.toString());
-			installmentRepo.saveItems(installments)
-					.observeOn(AndroidSchedulers.mainThread())
-					.subscribe(() -> Timber.d("Installments Created " + loan1.toString()));
+	private boolean isNotValidAmt(String loan_amountval) {
+		String EMAIL_PATTERN = "^[0-9_.-]*$";
 
-		}, throwable -> Timber.d(
-				"Loan Data not Saved " + throwable.getMessage() + " errors are " + loan
-						.toString()));
+		Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+		Matcher matcher = pattern.matcher(loan_amountval);
+		return !matcher.matches();
 	}
 
 	private void setCustomerName(final TextView customerNameTextView, final Bundle bundle) {
@@ -430,14 +427,6 @@ public class RegisterLoanFragment extends BaseFragment {
 		return null;
 	}
 
-	private boolean isNotValidAmt(String loan_amountval) {
-		String EMAIL_PATTERN ="^[a-zA-Z0-9_.-]*$";
-
-		Pattern pattern = Pattern.compile(EMAIL_PATTERN);
-		Matcher matcher = pattern.matcher(loan_amountval);
-		return !matcher.matches();
-	}
-
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
@@ -449,6 +438,22 @@ public class RegisterLoanFragment extends BaseFragment {
 			endDate = (Date) intent.getSerializableExtra(DatePickerDialogFragment.EXTRA_DATE);
 			endDateTextView.setText(dateUtils.getFormattedDate(endDate));
 		}
+		calculateNoOfInstallments();
+
+	}
+
+	private void calculateNoOfInstallments() {
+		if (startDate == null || endDate == null) return;
+
+		final long totalDuration;
+
+		totalDuration = dateUtils.differenceOfDates(startDate, endDate);
+
+		durationDivided = convertTime(totalDuration);
+		ettxNoofInstallment.setText(String.valueOf(durationDivided));
+
+		Timber.d(" installment calculation " + totalDuration + " " + durationDivided);
+
 
 	}
 

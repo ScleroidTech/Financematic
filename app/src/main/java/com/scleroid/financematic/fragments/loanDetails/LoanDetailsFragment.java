@@ -20,6 +20,7 @@ import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.data.local.model.TransactionModel;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
+import com.scleroid.financematic.utils.ui.DateUtils;
 import com.scleroid.financematic.utils.ui.RupeeTextView;
 import com.scleroid.financematic.utils.ui.TextViewUtils;
 
@@ -27,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -204,13 +206,20 @@ public class LoanDetailsFragment extends BaseFragment {
 					(m1, m2) -> m1.getInstallmentDate().compareTo(m2.getInstallmentDate()));
 		}
 	}
+
+	@Inject
+	DateUtils dateUtils;
 	private void updateUi() {
 		if (theLoan == null) return;
 		totalAmountTextView.setText(theLoan.getLoanAmt().toString());
 		interestTextView.setText(String.format("%s %%", theLoan.getRateOfInterest()));
-		durationTextView.setText(String.format("%d Months", theLoan.getDuration()));
+		final long duration =
+				dateUtils.differenceOfDates(theLoan.getStartDate(), theLoan.getEndDate());
+		long months = TimeUnit.MILLISECONDS.toDays(duration) / 30;
+		durationTextView.setText(String.format("%d Months",
+				months));
 		cardHolder.paidAmountTextView.setText(theLoan.getReceivedAmt().toString());
-		cardHolder.installmentTextView.setText(theLoan.getAmtOfInterest().toString());
+		cardHolder.installmentTextView.setText(theLoan.getInstallmentAmt().toString());
 		setTitle();
 		//	activityUtils.useUpButton((MainActivity) getActivity(),true);
 

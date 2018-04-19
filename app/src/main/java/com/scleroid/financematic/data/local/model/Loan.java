@@ -40,9 +40,8 @@ public class Loan {
 	private Date endDate;
 	private float rateOfInterest;
 	@TypeConverters(MoneyConverter.class)
-	private BigDecimal amtOfInterest;
+	private BigDecimal installmentAmt;
 	private int noOfInstallments;
-	private int duration;
 	private String installmentType;
 	@TypeConverters(MoneyConverter.class)
 	private BigDecimal repayAmt;
@@ -51,10 +50,21 @@ public class Loan {
 	private int custId;
 
 
+	@Ignore
+	public Loan(int accountNo, BigDecimal loanAmt, Date startDate, Date endDate,
+	            float rateOfInterest,
+	            BigDecimal installmentAmt, int noOfInstallments,
+	            String installmentType,
+	            BigDecimal repayAmt, int custId) {
+		this(accountNo, loanAmt, startDate, endDate, rateOfInterest, installmentAmt,
+				noOfInstallments, installmentType, repayAmt, custId, null);
+
+	}
+
 	public Loan(final int accountNo, final BigDecimal loanAmt, final Date startDate,
 	            final Date endDate,
 	            final float rateOfInterest,
-	            final BigDecimal amtOfInterest, final int noOfInstallments, final int duration,
+	            final BigDecimal installmentAmt, final int noOfInstallments,
 	            final String installmentType,
 	            final BigDecimal repayAmt,
 	            final int custId, final BigDecimal receivedAmt) {
@@ -62,9 +72,8 @@ public class Loan {
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.rateOfInterest = rateOfInterest;
-		this.amtOfInterest = amtOfInterest;
+		this.installmentAmt = installmentAmt;
 		this.noOfInstallments = noOfInstallments;
-		this.duration = duration;
 		this.installmentType = installmentType;
 		this.repayAmt = repayAmt;
 		this.receivedAmt = receivedAmt;
@@ -72,16 +81,6 @@ public class Loan {
 		this.custId = custId;
 	}
 
-	@Ignore
-	public Loan(int accountNo, BigDecimal loanAmt, Date startDate, Date endDate,
-	            float rateOfInterest,
-	            BigDecimal amtOfInterest, int noOfInstallments, int duration,
-	            String installmentType,
-	            BigDecimal repayAmt, int custId) {
-		this(accountNo, loanAmt, startDate, endDate, rateOfInterest, amtOfInterest,
-				noOfInstallments, duration, installmentType, repayAmt, custId, null);
-
-	}
 
 	public Customer getCustomer() {
 		return customer;
@@ -98,9 +97,9 @@ public class Loan {
 				", startDate=" + startDate +
 				", endDate=" + endDate +
 				", rateOfInterest=" + rateOfInterest +
-				", amtOfInterest=" + amtOfInterest.intValue() +
+				", installmentAmt=" + installmentAmt.intValue() +
 				", noOfInstallments=" + noOfInstallments +
-				", duration=" + duration +
+
 				", installmentType=" + installmentType +
 				", repayAmt=" + repayAmt.intValue() +
 				", accountNo=" + accountNo +
@@ -162,12 +161,12 @@ public class Loan {
 		this.rateOfInterest = rateOfInterest;
 	}
 
-	public BigDecimal getAmtOfInterest() {
-		return amtOfInterest;
+	public BigDecimal getInstallmentAmt() {
+		return installmentAmt;
 	}
 
-	public void setAmtOfInterest(BigDecimal amtOfInterest) {
-		this.amtOfInterest = amtOfInterest;
+	public void setInstallmentAmt(BigDecimal installmentAmt) {
+		this.installmentAmt = installmentAmt;
 	}
 
 	public int getNoOfInstallments() {
@@ -176,14 +175,6 @@ public class Loan {
 
 	public void setNoOfInstallments(int noOfInstallments) {
 		this.noOfInstallments = noOfInstallments;
-	}
-
-	public int getDuration() {
-		return duration;
-	}
-
-	public void setDuration(int duration) {
-		this.duration = duration;
 	}
 
 	public String getInstallmentType() {
