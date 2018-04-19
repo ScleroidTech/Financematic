@@ -63,8 +63,11 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 
 	String[] filterSuggestions =
 			{"All Amount", "Received Amount", "Lent Amount", "Earned Amount"};
-	String[] shortSuggestions =
-			{"Date modified", "Total Outstanding"};
+
+	/*String[] shortSuggestions =
+			{"Date modified", "Total Outstanding"};*/
+	Spinner spin;
+	/*Spinner spin1;*/
 
 
 	@BindView(R.id.from_date_text_view)
@@ -76,9 +79,9 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 	RecyclerView reportRecyclerView;
 	@BindView(R.id.spinnerr)
 	Spinner spinnerFilter;
-	@BindView(R.id.spinnershortdate)
+	/*@BindView(R.id.spinnershortdate)
 	Spinner spinnershort;
-
+*/
 
 	ActivityUtils activityUtils = new ActivityUtils();
 	@BindView(R.id.accNo)
@@ -141,32 +144,24 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 
 
 //add manoj
-		final Spinner spin1 = rootView.findViewById(R.id.spinnershortdate);
-		/*	spin1.setOnItemSelectedListener(this);*/
-		ArrayAdapter<String> aa = new ArrayAdapter<>(getActivity(),
+		/*final Spinner spin1 = rootView.findViewById(R.id.spinnershortdate);
+	ArrayAdapter<String> aa = new ArrayAdapter<>(getActivity(),
 				android.R.layout.simple_spinner_item, shortSuggestions);
 		aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		//Setting the ArrayAdapter data on the Spinner
 		spin1.setAdapter(aa);
-
-
 		spin1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(final AdapterView<?> parent, final View view,
-			                           final int position, final long id) {
-		/*		List<TransactionModel> tempList;
-				reportFilterType = getSuggestion(position);
-				if (startDate == null && endDate == null) {
-					tempList = filterWithoutDate(reportFilterType);
-				} else {tempList = filterWithDate(startDate, endDate, reportFilterType); }
-				updateListData(tempList);*/
+									   final int position, final long id) {
+
 			}
 
 			@Override
 			public void onNothingSelected(final AdapterView<?> parent) {
 
 			}
-		});
+		});*/
 
 
 	/*		spin1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
