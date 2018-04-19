@@ -257,17 +257,22 @@
                         android:textColor="#409bbf"
                         android:textSize="17sp" />
 
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_weight=".7"
+                        android:background="@drawable/shadow">
 
                     <Spinner
                         android:id="@+id/spinnertx"
-                        android:layout_width="0dp"
-                        android:layout_height="45dp"
-                        android:layout_gravity="left"
-                        android:layout_weight=".7"
-                        android:background="@drawable/shadow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+
+
                         android:paddingTop="2dp"
                         android:textColor="#409bbf" />
-
+                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -289,14 +294,14 @@
                         android:textColor="#409bbf"
                         android:textSize="17sp" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/txNoofInstallment"
                         android:layout_width="0dp"
                         android:layout_height="40dp"
                         android:layout_weight=".7"
                         android:background="@drawable/shadow"
                         android:inputType="number"
-                        android:maxLength="2"
+                        android:maxLength="4"
                         android:paddingBottom="6dp"
                         android:paddingLeft="10dp"
                         android:paddingTop="6dp"

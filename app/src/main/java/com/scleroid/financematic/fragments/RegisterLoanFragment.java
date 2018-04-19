@@ -128,6 +128,7 @@ public class RegisterLoanFragment extends BaseFragment {
 			public void onItemSelected(final AdapterView<?> parent, final View view,
 			                           final int position, final long id) {
 				durationType = country[position];
+				calculateNoOfInstallments();
 			}
 
 			@Override
