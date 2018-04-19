@@ -219,6 +219,7 @@ public class CustomerFragment extends BaseFragment {
 			case R.id.fab:
 				activityUtils.loadFragment(RegisterLoanFragment.newInstance(customerId),
 						getFragmentManager());
+				break;
 			case R.id.mobile_text_view:
 				handleCallClick();
 				break;
