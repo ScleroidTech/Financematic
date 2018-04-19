@@ -1,7 +1,10 @@
 package com.scleroid.financematic.fragments.loanDetails;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,19 +12,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.base.BaseFragment;
 import com.scleroid.financematic.base.BaseViewModel;
+import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.data.local.model.TransactionModel;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
-import com.scleroid.financematic.utils.ui.RecyclerTouchListener;
 import com.scleroid.financematic.utils.ui.RupeeTextView;
 import com.scleroid.financematic.utils.ui.TextViewUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -56,7 +60,8 @@ public class LoanDetailsFragment extends BaseFragment {
 	@BindView(R.id.card_loan)
 	View cardLoan;
 
-
+	@BindView(R.id.empty_card)
+	CardView emptyCard;
 	private List<TransactionModel> transactionList = new ArrayList<>();
 	private RecyclerView recyclerView;
 	private LoanAdapter mAdapter;
@@ -65,6 +70,7 @@ public class LoanDetailsFragment extends BaseFragment {
 	private LoanDetailsViewModel loanViewModel;
 	private Loan theLoan;
 	private CardHolder cardHolder;
+	private List<Installment> installmentList = new ArrayList<>();
 
 
 	public LoanDetailsFragment() {
@@ -99,7 +105,7 @@ public class LoanDetailsFragment extends BaseFragment {
 		if (bundle != null) accountNo = bundle.getInt(ACCOUNT_NO);
 		loanViewModel.setCurrentAccountNo(accountNo);
 		recyclerView = rootView.findViewById(R.id.pesonal_summery_details_recycler);
-		mAdapter = new LoanAdapter(transactionList);
+		mAdapter = new LoanAdapter(transactionList, installmentList);
 		recyclerView.setHasFixedSize(true);
 
 
@@ -121,22 +127,6 @@ public class LoanDetailsFragment extends BaseFragment {
 		recyclerView.setAdapter(mAdapter);
 
 		// row click listener
-		recyclerView.addOnItemTouchListener(
-				new RecyclerTouchListener(getActivity().getApplicationContext(), recyclerView,
-						new RecyclerTouchListener.ClickListener() {
-							@Override
-							public void onClick(View view, int position) {
-								TransactionModel loan = transactionList.get(position);
-								Toast.makeText(getActivity().getApplicationContext(),
-										loan.getTransactionId() + " is selected!",
-										Toast.LENGTH_SHORT).show();
-							}
-
-							@Override
-							public void onLongClick(View view, int position) {
-
-							}
-						}));
 
 
 		//  textViewUtils.textViewExperiments(totalAmountTextView);
@@ -160,8 +150,14 @@ public class LoanDetailsFragment extends BaseFragment {
 	@Override
 	protected void subscribeToLiveData() {
 		loanViewModel.getTransactionList().observe(this, items -> {
-			transactionList = items;
-			mAdapter.setTransactionList(transactionList);
+			updateView(installmentList, items);
+			//updateTotalLoanAmt();
+
+		});
+
+		loanViewModel.getInstallmentList().observe(this, items -> {
+			updateView(items, transactionList);
+
 			//updateTotalLoanAmt();
 
 		});
@@ -172,6 +168,42 @@ public class LoanDetailsFragment extends BaseFragment {
 		});
 	}
 
+	private void updateView(final List<Installment> items, List<TransactionModel>
+			transactionList) {
+		if (items == null || items.isEmpty()) {
+			emptyCard.setVisibility(View.VISIBLE);
+			recyclerView.setVisibility(View.GONE);
+		} else {
+			emptyCard.setVisibility(View.GONE);
+			recyclerView.setVisibility(View.VISIBLE);
+			sort(items);
+			sortReverse(transactionList);
+			mAdapter.setInstallmentList(items);
+			mAdapter.setTransactionList(transactionList);
+			installmentList = items;
+			this.transactionList = transactionList;
+		}
+
+	}
+
+	private void sortReverse(final List<TransactionModel> transactions) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+			transactions.sort(
+					Comparator.comparing(TransactionModel::getTransactionDate).reversed());
+		} else {
+			Collections.sort(transactions,
+					(m1, m2) -> m2.getTransactionDate().compareTo(m1.getTransactionDate()));
+		}
+	}
+
+	private void sort(final List<Installment> transactions) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+			transactions.sort(Comparator.comparing(Installment::getInstallmentDate));
+		} else {
+			Collections.sort(transactions,
+					(m1, m2) -> m1.getInstallmentDate().compareTo(m2.getInstallmentDate()));
+		}
+	}
 	private void updateUi() {
 		if (theLoan == null) return;
 		totalAmountTextView.setText(String.valueOf(theLoan.getLoanAmt().intValue()));
@@ -181,7 +213,17 @@ public class LoanDetailsFragment extends BaseFragment {
 				String.valueOf(theLoan.getReceivedAmt().intValue()));
 		cardHolder.installmentTextView.setText(
 				String.valueOf(theLoan.getAmtOfInterest().intValue()));
+		setTitle();
+		//	activityUtils.useUpButton((MainActivity) getActivity(),true);
+
+		setHasOptionsMenu(true);
 	}
+
+	private void setTitle() {
+		activityUtils.setTitle((AppCompatActivity) getActivity(),
+				"A/c No." + theLoan.getAccountNo());
+	}
+
 
 	/**
 	 * Override for set view model

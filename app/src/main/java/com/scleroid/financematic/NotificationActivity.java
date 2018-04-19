@@ -1,42 +1,14 @@
 package com.scleroid.financematic;
 
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
-import com.scleroid.financematic.adapter.PassbookAdapter;
-import com.scleroid.financematic.data.tempModels.Passbook;
-import com.scleroid.financematic.fragments.passbook.PassbookFragment;
-import com.scleroid.financematic.utils.ui.RecyclerTouchListener;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by scleroid on 16/4/18.
  */
-
-
-        import android.os.Bundle;
-        import android.support.v4.app.Fragment;
-        import android.support.v7.widget.DefaultItemAnimator;
-        import android.support.v7.widget.LinearLayoutManager;
-        import android.support.v7.widget.RecyclerView;
-        import android.view.LayoutInflater;
-        import android.view.View;
-        import android.view.ViewGroup;
-        import android.widget.Toast;
-
-        import com.scleroid.financematic.R;
-        import com.scleroid.financematic.adapter.PassbookAdapter;
-
-        import java.util.ArrayList;
-        import java.util.List;
 
 
 /**
@@ -51,7 +23,7 @@ public class NotificationActivity extends Fragment {
         // Required empty public constructor
     }
 
-    public static NotificationActivity newInstance(String param1, String param2) {
+	public static NotificationActivity newInstance() {
         NotificationActivity fragment = new NotificationActivity();
         Bundle args = new Bundle();
         fragment.setArguments(args);

@@ -38,12 +38,33 @@ public class Installment {
 	private BigDecimal expectedAmt;
 	private int loanAcNo;
 
+	private String delayReason;
+
+	public Installment(final int installmentId, final Date installmentDate,
+	                   final BigDecimal expectedAmt, final int loanAcNo,
+	                   final String delayReason) {
+		this.installmentId = installmentId;
+		this.installmentDate = installmentDate;
+		this.expectedAmt = expectedAmt;
+		this.loanAcNo = loanAcNo;
+		this.delayReason = delayReason;
+	}
+
+	@Ignore
 	public Installment(final int installmentId, final Date installmentDate,
 	                   final BigDecimal expectedAmt, final int loanAcNo) {
 		this.installmentId = installmentId;
 		this.installmentDate = installmentDate;
 		this.expectedAmt = expectedAmt;
 		this.loanAcNo = loanAcNo;
+	}
+
+	public String getDelayReason() {
+		return delayReason;
+	}
+
+	public void setDelayReason(final String delayReason) {
+		this.delayReason = delayReason;
 	}
 
 	public int getInstallmentId() {

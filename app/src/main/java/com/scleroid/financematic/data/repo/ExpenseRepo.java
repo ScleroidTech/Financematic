@@ -147,6 +147,16 @@ public class ExpenseRepo implements Repo<Expense> {
 		return localExpenseLab.saveItem(expense);
 	}
 
+	@Override
+	public Single<Expense> updateItem(final Expense expense) {
+		return localExpenseLab.updateItem(expense);
+	}
+
+	@Override
+	public Completable deleteItem(final Expense expense) {
+		return null;
+	}
+
 
 }
 

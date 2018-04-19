@@ -2,10 +2,11 @@ package com.scleroid.financematic.utils.ui;
 
 import android.widget.Filter;
 
+import com.annimon.stream.Collectors;
+import com.annimon.stream.Stream;
 import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.fragments.people.PeopleAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,26 +19,26 @@ import java.util.List;
 public class CustomFilter extends Filter {
 
 	PeopleAdapter adapter;
-	ArrayList<Customer> filterList;
+	List<Customer> filterList;
 
 
 	public CustomFilter(List<Customer> filterList, PeopleAdapter adapter) {
 		this.adapter = adapter;
-		this.filterList = (ArrayList<Customer>) filterList;
+		this.filterList = filterList;
 
 	}
 
 	//FILTERING OCURS
 	@Override
 	protected FilterResults performFiltering(CharSequence constraint) {
-		FilterResults results = new FilterResults();
+		FilterResults results = new FilterResults();/*
 
 		//CHECK CONSTRAINT VALIDITY
 		if (constraint != null && constraint.length() > 0) {
 			//CHANGE TO UPPER
 			constraint = constraint.toString().toUpperCase();
 			//STORE OUR FILTERED PLAYERS
-			ArrayList<Customer> filteredPlayers = new ArrayList<>();
+			List<Customer> filteredPlayers = new ArrayList<>();
 
 			for (int i = 0; i < filterList.size(); i++) {
 				//CHECK
@@ -53,7 +54,14 @@ public class CustomFilter extends Filter {
 			results.count = filterList.size();
 			results.values = filterList;
 
-		}
+		}*/
+		final CharSequence finalConstraint = constraint;
+		List<Customer> collect = Stream.of(filterList)
+				.filter(expenseList -> expenseList.getName().equalsIgnoreCase(
+						String.valueOf(finalConstraint)))
+				.collect(Collectors.toList());
+		results.values = collect;
+		results.count = collect.size();
 
 
 		return results;
@@ -62,9 +70,8 @@ public class CustomFilter extends Filter {
 	@Override
 	protected void publishResults(CharSequence constraint, FilterResults results) {
 
-		adapter.customerList = (ArrayList<Customer>) results.values;
+		adapter.setCustomerList((List<Customer>) results.values);
 
-		//REFRESH
-		adapter.notifyDataSetChanged();
+
 	}
 }

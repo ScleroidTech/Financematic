@@ -26,4 +26,7 @@ public interface Repo<T> {
 	Single<T> saveItem(T t);
 
 
+	Single<T> updateItem(T t);
+
+	Completable deleteItem(T t);
 }

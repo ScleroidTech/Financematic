@@ -8,16 +8,23 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.scleroid.financematic.R;
+import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.data.local.model.TransactionModel;
+import com.scleroid.financematic.utils.eventBus.Events;
+import com.scleroid.financematic.utils.eventBus.GlobalBus;
+import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.DateUtils;
 import com.scleroid.financematic.utils.ui.RupeeTextView;
 import com.scleroid.financematic.utils.ui.TextViewUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import timber.log.Timber;
 
 /**
  * Created by scleroid on 6/3/18.
@@ -27,10 +34,13 @@ import butterknife.ButterKnife;
 public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> {
 
 
-	private List<TransactionModel> transactionList;
+	private List<TransactionModel> transactionList = new ArrayList<>();
+	private List<Installment> installmentList = new ArrayList<>();
 
-	public LoanAdapter(List<TransactionModel> transactionList) {
+	public LoanAdapter(List<TransactionModel> transactionList,
+	                   final List<Installment> installmentList) {
 		this.transactionList = transactionList;
+		this.installmentList = installmentList;
 	}
 
 	public List<TransactionModel> getTransactionList() {
@@ -53,19 +63,34 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> 
 
 	@Override
 	public void onBindViewHolder(MyViewHolder holder, int position) {
-		TransactionModel passbook = transactionList.get(position);
-		holder.setData(passbook);
-
+		if (position < installmentList.size()) {
+			Timber.e(position + "  " + installmentList.size() + "");
+			Installment installment = installmentList.get(position);
+			holder.setInstallment(installment);
+		} else {
+			Timber.e(position + "  " + transactionList.size() + "");
+			TransactionModel passbook = transactionList.get(position - installmentList.size());
+			holder.setData(passbook);
+		}
 	}
 
 	@Override
 	public int getItemCount() {
-		return transactionList.size();
+		return transactionList.size() + installmentList.size();
+	}
+
+	public List<Installment> getInstallmentList() {
+		return installmentList;
+	}
+
+	void setInstallmentList(final List<Installment> installmentList) {
+		this.installmentList = installmentList;
 	}
 
 	public static class MyViewHolder extends RecyclerView.ViewHolder {
 		static DateUtils dateUtils = new DateUtils();
 		static TextViewUtils textViewUtils = new TextViewUtils();
+		static ActivityUtils activityUtils = new ActivityUtils();
 		//	static CurrencyStringUtils currencyStringUtils = new CurrencyStringUtils();
 		@BindView(R.id.month_text_view)
 		TextView monthTextView;
@@ -82,6 +107,7 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> 
 		RupeeTextView summeryAmount;
 		@BindView(R.id.Btn_paid_rx_summery)
 		Button BtnPaidRxSummery;
+		private Installment installment;
 
 		public MyViewHolder(View view) {
 			super(view);
@@ -92,11 +118,14 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> 
 
 		public void setData(TransactionModel passbook) {
 			//  holder.summery_date.setText(passbook.getSummery_date());
+			itemView.setTag(passbook);
 			summeryDescpription.setText(passbook.getDescription());
 			summeryAmount.setText(
 					String.valueOf(passbook.getReceivedAmt().intValue()));
 			setDate(passbook.getTransactionDate());
 			textViewUtils.textViewExperiments(summeryAmount);
+			BtnPaidRxSummery.setBackgroundResource(R.drawable.button_rounded_green);
+			BtnPaidRxSummery.setText("Paid");
 
 		}
 
@@ -110,5 +139,33 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> 
 			dayTextView.setText(day);
 			//    yearTextView.setText(year);
 		}
+
+		private void setInstallment(final Installment passbook) {
+			installment = passbook;
+			itemView.setTag(passbook);
+			if (passbook.getDelayReason() != null) {
+				summeryDescpription.setText(passbook.getDelayReason());
+			} else {
+				summeryDescpription.setText("Yet to come");
+			}
+			summeryAmount.setText(
+					String.valueOf(passbook.getExpectedAmt().intValue()));
+			setDate(passbook.getInstallmentDate());
+			textViewUtils.textViewExperiments(summeryAmount);
+			BtnPaidRxSummery.setBackgroundResource(R.drawable.button_rounded_red);
+			BtnPaidRxSummery.setText("Pay");
+		}
+
+		@OnClick(R.id.Btn_paid_rx_summery)
+		public void onViewClicked() {
+			if (BtnPaidRxSummery.getText().toString().equals("Pay")) {
+				Events.openReceiveMoneyFragment openCustomerFragment =
+						new Events.openReceiveMoneyFragment(installment.getLoanAcNo(),
+								installment.getInstallmentId());
+				GlobalBus.getBus().post(openCustomerFragment);
+			}
+
+		}
+
 	}
 }

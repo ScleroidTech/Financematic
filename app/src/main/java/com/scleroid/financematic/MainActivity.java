@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -28,6 +29,8 @@ import com.scleroid.financematic.data.repo.TransactionsRepo;
 import com.scleroid.financematic.fragments.RegisterCustomerFragment;
 import com.scleroid.financematic.fragments.customer.CustomerFragment;
 import com.scleroid.financematic.fragments.dashboard.DashboardFragment;
+import com.scleroid.financematic.fragments.dialogs.DelayDialogFragment;
+import com.scleroid.financematic.fragments.dialogs.RegisterReceivedDialogFragment;
 import com.scleroid.financematic.fragments.expense.ExpenseFragment;
 import com.scleroid.financematic.fragments.loanDetails.LoanDetailsFragment;
 import com.scleroid.financematic.fragments.people.PeopleFragment;
@@ -64,6 +67,9 @@ public class MainActivity extends BaseActivity
 	private static final String TAG_SETTINGS = "settings";
 	private static final String TAG_NOTIFICATION = "notification";
 	private static final int THREAD_COUNT = 3;
+	private static final int REQUEST_DELAY = 45;
+	private static final String DIALOG_DELAY = "Delay Payment";
+	private static final String DIALOG_MONEY_RECEIVED = "Received Payment";
 	// index to identify current nav menu item
 	public static int navItemIndex = 0;
 	public static String CURRENT_TAG = TAG_DASHBOARD;
@@ -76,6 +82,7 @@ public class MainActivity extends BaseActivity
 	ActivityUtils activityUtils;
 	@Inject
 	AppExecutors appExecutors;
+	private ActionBarDrawerToggle toggle;
 
 
 	public CustomerRepo getCustomerRepo() {
@@ -168,6 +175,23 @@ public class MainActivity extends BaseActivity
 		return R.layout.activity_main;
 	}
 
+	/**
+	 * @return actionBar
+	 */
+	@Override
+	public ActionBar getActionBarBase() {
+		return getSupportActionBar();
+	}
+
+
+	public ActionBarDrawerToggle getToggle() {
+		return toggle;
+	}
+
+	public void setToggle(final ActionBarDrawerToggle toggle) {
+		this.toggle = toggle;
+	}
+
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
@@ -178,7 +202,18 @@ public class MainActivity extends BaseActivity
 
 
 		drawer = findViewById(R.id.drawer_layout);
-		ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+
+
+		navigationView = findViewById(R.id.nav_view);
+		navigationView.setNavigationItemSelectedListener(this);
+
+		// load toolbar titles from string resources
+		activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
+
+		/*bottom navigation*/
+
+
+		setToggle(new ActionBarDrawerToggle(
 				this, drawer, toolbar, R.string.navigation_drawer_open,
 				R.string.navigation_drawer_close) {
 
@@ -199,20 +234,10 @@ public class MainActivity extends BaseActivity
 				// happen so we leave this blank
 				super.onDrawerClosed(drawerView);
 			}
-		};
+		});
+
 		drawer.addDrawerListener(toggle);
 		toggle.syncState();
-
-		navigationView = findViewById(R.id.nav_view);
-		navigationView.setNavigationItemSelectedListener(this);
-
-		// load toolbar titles from string resources
-		activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
-
-		/*bottom navigation*/
-
-		/*    toolbar = getSupportActionBar();*/
-
 		final BottomNavigationView bottomNavigationView = findViewById(R.id.navigation);
 		bottomNavigationView.setOnNavigationItemSelectedListener
 				(mOnNavigationItemSelectedListener);
@@ -235,12 +260,20 @@ public class MainActivity extends BaseActivity
 		boolean frag = getIntent().getBooleanExtra(NOTIFY, false);
 		if (frag) {
 			CURRENT_TAG = TAG_NOTIFICATION;
-			loadFragmentFromNavigationDrawers();
+			loadFragment(NotificationActivity.newInstance());
 		}
 
 
 		((GarlandApp) getApplication()).addListener(this);
 
+	}
+
+	public DrawerLayout getDrawer() {
+		return drawer;
+	}
+
+	public void setDrawer(final DrawerLayout drawer) {
+		this.drawer = drawer;
 	}
 
 	/***
@@ -511,13 +544,45 @@ public class MainActivity extends BaseActivity
 	}
 
 	@Subscribe
+	public void onAddressClick(Events.goToAddress addressCarrier) {
+
+		String address = addressCarrier.getAddress();
+
+		activityUtils.addressIntent(this, address);
+
+
+	}
+
+
+	@Subscribe
 	public void onCustomerFragmentOpen(Events.openCustomerFragment customerBundle) {
 		int customerId = customerBundle.getCustomerId();
 		CustomerFragment fragment = CustomerFragment.newInstance(customerId);
 		activityUtils.loadFragment(fragment, getSupportFragmentManager());
+	}
+
+	@Subscribe
+	public void onDelayFragmentOpen(Events.openDelayFragment customerBundle) {
+		int delayId = customerBundle.getInstallmentId();
+		int acNo = customerBundle.getLoanAccountNo();
+		DelayDialogFragment fragment = DelayDialogFragment.newInstance(delayId, acNo);
+		activityUtils.loadDialogFragment(fragment, getSupportFragmentManager(), DIALOG_DELAY);
 
 
 	}
+
+	@Subscribe
+	public void onReceiveMoneyFragmentOpen(Events.openReceiveMoneyFragment customerBundle) {
+		int delayId = customerBundle.getInstallmentId();
+		int acNo = customerBundle.getAccountNo();
+		RegisterReceivedDialogFragment fragment =
+				RegisterReceivedDialogFragment.newInstance(acNo, delayId);
+		activityUtils.loadDialogFragment(fragment, getSupportFragmentManager(),
+				DIALOG_MONEY_RECEIVED);
+
+
+	}
+
 
 	@Subscribe
 	public void onLoanFragmentOpen(Events.openLoanDetailsFragment loanBundle) {

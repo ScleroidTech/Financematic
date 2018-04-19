@@ -25,6 +25,26 @@ public class Events {
 		}
 	}
 
+	// Event used to send message from activity to fragment.
+	public static class openReceiveMoneyFragment {
+		private int accountNo, installmentId;
+
+		public openReceiveMoneyFragment(final int accountNo, final int installmentId) {
+			this.accountNo = accountNo;
+			this.installmentId = installmentId;
+		}
+
+		public int getAccountNo() {
+
+			return accountNo;
+		}
+
+		public int getInstallmentId() {
+			return installmentId;
+		}
+	}
+
+
 	public static class openLoanDetailsFragment {
 		private int accountNo;
 
@@ -34,6 +54,24 @@ public class Events {
 
 		public int getAccountNo() {
 			return accountNo;
+		}
+	}
+
+	public static class openDelayFragment {
+		private int installmentId;
+		private int loanAccountNo;
+
+		public openDelayFragment(final int customerId, final int loanAccountNo) {
+			this.installmentId = customerId;
+			this.loanAccountNo = loanAccountNo;
+		}
+
+		public int getInstallmentId() {
+			return installmentId;
+		}
+
+		public int getLoanAccountNo() {
+			return loanAccountNo;
 		}
 	}
 	/**
@@ -92,6 +130,18 @@ public class Events {
 		}
 	}
 
+
+	public static class goToAddress {
+		private String address;
+
+		public goToAddress(final String address) {
+			this.address = address;
+		}
+
+		public String getAddress() {
+			return address;
+		}
+	}
 	// Event used to show toast
 	public static class showToast {
 		private String message;

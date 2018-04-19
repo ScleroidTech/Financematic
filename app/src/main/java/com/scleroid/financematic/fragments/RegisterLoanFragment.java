@@ -16,9 +16,12 @@ import com.scleroid.financematic.R;
 import com.scleroid.financematic.base.BaseFragment;
 import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.local.lab.LocalCustomerLab;
+import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.data.local.model.LoanDurationType;
+import com.scleroid.financematic.data.repo.InstallmentRepo;
 import com.scleroid.financematic.data.repo.LoanRepo;
+import com.scleroid.financematic.fragments.dialogs.DatePickerDialogFragment;
 import com.scleroid.financematic.utils.CommonUtils;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.DateUtils;
@@ -26,16 +29,19 @@ import com.scleroid.financematic.utils.ui.TextValidator;
 
 import java.math.BigDecimal;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
@@ -44,7 +50,7 @@ import timber.log.Timber;
  */
 
 
-public class RegisterMoneyFragment extends BaseFragment {
+public class RegisterLoanFragment extends BaseFragment {
 
 	private static final int REQUEST_DATE = 1;
 	private static final String CUSTOMER_ID = "customer_id";
@@ -61,13 +67,15 @@ public class RegisterMoneyFragment extends BaseFragment {
 	String[] country =
 			{LoanDurationType.MONTHLY, LoanDurationType.DAILY, LoanDurationType.WEEKLY,
 					LoanDurationType.BIWEEKLY, LoanDurationType.BIMONTHLY, LoanDurationType
-					.QUARTERLY, LoanDurationType.HALF_YEARLY, LoanDurationType.YEARLY,
-					LoanDurationType.ONE_TIME};
+					.QUARTERLY, LoanDurationType.HALF_YEARLY, LoanDurationType.YEARLY};
 	Unbinder unbinder;
 	@Inject
 	LocalCustomerLab customerLab;
 	@Inject
 	LoanRepo loanRepo;
+
+	@Inject
+	InstallmentRepo installmentRepo;
 	@Inject
 	ActivityUtils activityUtils;
 	private Button b;
@@ -81,14 +89,17 @@ public class RegisterMoneyFragment extends BaseFragment {
 	private Date endDate;
 	private int customerId;
 	private Loan loan;
+	private int noOfInstallments1;
+	private int duration1;
+	private BigDecimal amtOfInterest;
 
 
-	public RegisterMoneyFragment() {
+	public RegisterLoanFragment() {
 		// Required empty public constructor
 	}
 
-	public static RegisterMoneyFragment newInstance(int customer_id) {
-		RegisterMoneyFragment fragment = new RegisterMoneyFragment();
+	public static RegisterLoanFragment newInstance(int customer_id) {
+		RegisterLoanFragment fragment = new RegisterLoanFragment();
 		Bundle args = new Bundle();
 		args.putInt(CUSTOMER_ID, customer_id);
 		fragment.setArguments(args);
@@ -143,7 +154,7 @@ public class RegisterMoneyFragment extends BaseFragment {
 
 		ettxloan_amout = rootView.findViewById(R.id.txloan_amout);
 		ettxrateInterest = rootView.findViewById(R.id.txrateInterest);
-		ettxInterestAmount = rootView.findViewById(R.id.txInterestAmount);
+		ettxInterestAmount = rootView.findViewById(R.id.txInstallmentAmount);
 		ettxNoofInstallment = rootView.findViewById(R.id.txNoofInstallment);
 		ettxInstallmentduration = rootView.findViewById(R.id.txInstallmentduration);
 		etTotalLoanAmount = rootView.findViewById(R.id.txTotalLoanAmount);
@@ -252,20 +263,115 @@ public class RegisterMoneyFragment extends BaseFragment {
 			}
 
 
-			tv.setText(String.format("Your Input: \n%s\n%s\n%s\n%s\n%s\n%s\n%s%s\n%s\n\nEnd.",
-					loanAmt, startDateStr, endDateStr, rateOfInterest, interestAmt,
-					noOfInstallments, duration, spin.getSelectedItem()
-							.toString(), totatLoanAmt));
-			loan = new Loan(CommonUtils.getRandomInt(), new BigDecimal(loanAmt), startDate,
-					endDate, Float.valueOf(rateOfInterest), new BigDecimal(interestAmt),
-					Integer.valueOf(noOfInstallments), Integer.valueOf(duration), durationType,
-					new BigDecimal(totatLoanAmt), customerId);
-			saveLoan(loan);
+			int accountNo = CommonUtils.getRandomInt();
+			BigDecimal loanAmt1 = new BigDecimal(loanAmt);
+			Float rateOfInterest1 = Float.valueOf(rateOfInterest);
+			amtOfInterest = new BigDecimal(interestAmt);
+			noOfInstallments1 = Integer.valueOf(noOfInstallments);
+			duration1 = Integer.valueOf(duration);
+			BigDecimal repayAmt = new BigDecimal(totatLoanAmt);
+			addData(accountNo, loanAmt1, rateOfInterest1, repayAmt);
 		});
 
 
-		unbinder = ButterKnife.bind(this, rootView);
 		return rootView;
+	}
+
+	private void addData(final int accountNo, final BigDecimal loanAmt1,
+	                     final Float rateOfInterest1, final BigDecimal repayAmt) {
+		final List<Installment> installments = createInstallments();
+
+		loan = new Loan(accountNo, loanAmt1, startDate,
+				endDate, rateOfInterest1, amtOfInterest,
+
+				noOfInstallments1, duration1, durationType,
+
+				repayAmt, customerId);
+		saveData(loan, installments);
+	}
+
+	private List<Installment> createInstallments() {
+		List<Date> dates = calculateInstallmentsDates();
+		List<Installment> installments = Collections.EMPTY_LIST;
+		for (Date date : dates) {
+			Installment installment =
+					new Installment(CommonUtils.getRandomInt(), date, amtOfInterest,
+							loan.getAccountNo());
+			installments.add(installment);
+		}
+		return installments;
+	}
+
+	private List<Date> calculateInstallmentsDates() {
+		List<Date> dates = Collections.emptyList();
+		Date installmentDate = startDate;
+		final long totalDuration;
+		totalDuration = dateUtils.differenceOfDates(startDate, endDate);
+		long durationTypeDivider = durationConverter(durationType);
+		final long durationDivided = convertTime(totalDuration);
+		for (int i = 1; i < durationDivided; i++) {
+
+
+			installmentDate = dateUtils.findDate(installmentDate, durationTypeDivider);
+			dates.add(installmentDate);
+		}
+		return dates;
+
+
+	}
+
+
+	private long convertTime(long timeDiff) {
+
+		long divider = durationConverter(durationType);
+
+
+		return (TimeUnit.MILLISECONDS.toDays(timeDiff) / divider);
+	}
+
+	private long durationConverter(final String durationType) {
+		long divider = 0;
+		switch (durationType) {
+			case LoanDurationType.MONTHLY:
+				divider = 30;
+				break;
+			case LoanDurationType.DAILY:
+				divider = 1;
+				break;
+			case LoanDurationType.WEEKLY:
+				divider = 7;
+				break;
+			case LoanDurationType.BIWEEKLY:
+				divider = 15;
+				break;
+			case LoanDurationType.BIMONTHLY:
+				divider = 60;
+				break;
+			case LoanDurationType.QUARTERLY:
+				divider = 90;
+				break;
+			case LoanDurationType.HALF_YEARLY:
+				divider = 180;
+				break;
+			case LoanDurationType.YEARLY:
+				divider = 365;
+				break;
+
+		}
+		return divider;
+	}
+
+	private void saveData(final Loan loan,
+	                      final List<Installment> installments) {
+		loanRepo.saveItem(loan).observeOn(AndroidSchedulers.mainThread()).subscribe(loan1 -> {
+			Timber.d("Loan Data Saved " + loan1.toString());
+			installmentRepo.saveItems(installments)
+					.observeOn(AndroidSchedulers.mainThread())
+					.subscribe(() -> Timber.d("Installments Created " + loan1.toString()));
+
+		}, throwable -> Timber.d(
+				"Loan Data not Saved " + throwable.getMessage() + " errors are " + loan
+						.toString()));
 	}
 
 	private void setCustomerName(final TextView customerNameTextView, final Bundle bundle) {
@@ -282,7 +388,7 @@ public class RegisterMoneyFragment extends BaseFragment {
 						},
 						throwable -> Timber.d("Not gonna show up")
 				);*/
-		customerLab
+		Disposable subscribe = customerLab
 				.getRxItem(customerId)
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread())
@@ -294,16 +400,6 @@ public class RegisterMoneyFragment extends BaseFragment {
 		//	customerNameTextView.setText(customer.getName());
 	}
 
-	private void saveLoan(final Loan loan) {
-		loanRepo.saveItem(loan).subscribe(loan1 -> {
-			Timber.d("Loan Data Saved " + loan1.toString());
-		}, throwable -> {
-			Timber.d(
-					"Loan Data not Saved " + throwable.getMessage() + " errors are " + loan
-							.toString());
-		});
-	}
-
 	/**
 	 * @return layout resource id
 	 */
@@ -312,11 +408,6 @@ public class RegisterMoneyFragment extends BaseFragment {
 		return R.layout.registor_given_money;
 	}
 
-	@Override
-	public void onDestroyView() {
-		super.onDestroyView();
-		unbinder.unbind();
-	}
 
 	/**
 	 * Override so you can observe your viewModel
@@ -337,7 +428,7 @@ public class RegisterMoneyFragment extends BaseFragment {
 	}
 
 	private boolean isNotValidAmt(String loan_amountval) {
-		String EMAIL_PATTERN = "(?:\\\\d+(?:\\\\.\\\\d+)?|\\\\.\\\\d+)";
+		String EMAIL_PATTERN = "((\\\\d{1,4})(((\\\\.)(\\\\d{0,2})){0,1}))";
 
 		Pattern pattern = Pattern.compile(EMAIL_PATTERN);
 		Matcher matcher = pattern.matcher(loan_amountval);
@@ -349,10 +440,10 @@ public class RegisterMoneyFragment extends BaseFragment {
 		super.onActivityResult(requestCode, resultCode, intent);
 
 		if (requestCode == REQUEST_DATE_FROM) {
-			startDate = (Date) intent.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
+			startDate = (Date) intent.getSerializableExtra(DatePickerDialogFragment.EXTRA_DATE);
 			startDateTextView.setText(dateUtils.getFormattedDate(startDate));
 		} else if (requestCode == REQUEST_DATE_TO) {
-			endDate = (Date) intent.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
+			endDate = (Date) intent.getSerializableExtra(DatePickerDialogFragment.EXTRA_DATE);
 			endDateTextView.setText(dateUtils.getFormattedDate(endDate));
 		}
 
@@ -372,7 +463,7 @@ public class RegisterMoneyFragment extends BaseFragment {
 	}
 
 	private void loadDialogFragment(int requestDate) {
-		activityUtils.loadDialogFragment(DatePickerFragment.newInstance(), this,
+		activityUtils.loadDialogFragment(DatePickerDialogFragment.newInstance(), this,
 				getFragmentManager(), requestDate, DIALOG_DATE);
 	}
 }

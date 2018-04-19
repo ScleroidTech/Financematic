@@ -181,6 +181,16 @@ public class TransactionsRepo implements Repo<TransactionModel> {
 		return localTransactionsLab.saveItem(transactionModel);
 	}
 
+	@Override
+	public Single<TransactionModel> updateItem(final TransactionModel transactionModel) {
+		return null;
+	}
+
+	@Override
+	public Completable deleteItem(final TransactionModel transactionModel) {
+		return null;
+	}
+
 
 }
 

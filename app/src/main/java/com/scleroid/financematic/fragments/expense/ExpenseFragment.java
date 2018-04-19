@@ -3,8 +3,11 @@ package com.scleroid.financematic.fragments.expense;
 import android.annotation.SuppressLint;
 import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,18 +32,19 @@ import com.scleroid.financematic.base.BaseFragment;
 import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.local.model.Expense;
 import com.scleroid.financematic.data.local.model.ExpenseCategory;
-import com.scleroid.financematic.fragments.Insert_expenses_frgment;
+import com.scleroid.financematic.fragments.dialogs.InsertExpenseDialogFragment;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.RupeeTextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
+import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.OnClick;
 
 
 public class ExpenseFragment extends BaseFragment {
@@ -76,10 +80,13 @@ public class ExpenseFragment extends BaseFragment {
 	RupeeTextView totalExpenseTextView;
 	@BindView(R.id.add_exp_call_button)
 	Button addExpCallButton;
-	Unbinder unbinder;
+	@BindView(R.id.empty_card)
+	CardView emptyCard;
+
 
 	private List<Expense> expenseList = new ArrayList<>();
-	private ActivityUtils activityUtils = new ActivityUtils();
+	@Inject
+	ActivityUtils activityUtils;
 	private ExpenseAdapter mAdapter;
 
 	Button firstFragment;
@@ -126,8 +133,15 @@ public class ExpenseFragment extends BaseFragment {
 		//  mChart.setCenterTextTypeface(mTfLight);
 
 		initializeChartData();
-		unbinder = ButterKnife.bind(this, view);
+
+		setTitle();
+		updateView(expenseList);
+
 		return view;
+	}
+
+	private void setTitle() {
+		activityUtils.setTitle((AppCompatActivity) getActivity(), "Expenses");
 	}
 
 	/**
@@ -200,11 +214,6 @@ public class ExpenseFragment extends BaseFragment {
 		return (float) amt / totalLoan * 100;
 	}
 
-	@Override
-	public void onDestroyView() {
-		super.onDestroyView();
-		unbinder.unbind();
-	}
 
 	/**
 	 * Override so you can observe your viewModel
@@ -212,10 +221,31 @@ public class ExpenseFragment extends BaseFragment {
 	@Override
 	protected void subscribeToLiveData() {
 		expenseViewModel.getItemList().observe(this, items -> {
+			updateView(items);
+		});
+	}
+
+	private void updateView(final List<Expense> items) {
+		if (items == null || items.isEmpty()) {
+			emptyCard.setVisibility(View.VISIBLE);
+			expenseRecyclerView.setVisibility(View.GONE);
+		} else {
+			emptyCard.setVisibility(View.GONE);
+			expenseRecyclerView.setVisibility(View.VISIBLE);
+			sort(items);
 			expenseList = items;
 			updateUi(items);
 			refreshRecyclerView(expenseList);
-		});
+		}
+	}
+
+	private void sort(final List<Expense> transactions) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+			transactions.sort(Comparator.comparing(Expense::getExpenseDate));
+		} else {
+			Collections.sort(transactions,
+					(m1, m2) -> m1.getExpenseDate().compareTo(m2.getExpenseDate()));
+		}
 	}
 
 	private void updateUi(final List<Expense> items) {
@@ -284,7 +314,7 @@ public class ExpenseFragment extends BaseFragment {
 		// vertical RecyclerView
 		// keep movie_list_row.xml width to `match_parent`
 		RecyclerView.LayoutManager mLayoutManager =
-				new LinearLayoutManager(getActivity().getApplicationContext());
+				new LinearLayoutManager(getActivity());
 
 		// horizontal RecyclerView
 		// keep movie_list_row.xml width to `wrap_content`
@@ -299,8 +329,9 @@ public class ExpenseFragment extends BaseFragment {
 		expenseRecyclerView.setAdapter(mAdapter);
 		firstFragment = getRootView().findViewById(R.id.add_exp_call_button);
 		firstFragment.setOnClickListener(
-				v -> activityUtils.loadFragment(new Insert_expenses_frgment(), getFragmentManager
-						()));
+				v -> activityUtils.loadFragment(new InsertExpenseDialogFragment(),
+						getFragmentManager
+								()));
 
 
 	}
@@ -344,4 +375,6 @@ public class ExpenseFragment extends BaseFragment {
 				.filter(expenseList -> expenseList.getExpenseType().equals(selected_type))
 				.collect(Collectors.toList());
 	}
+
+
 }

@@ -17,26 +17,35 @@
 package com.scleroid.financematic.base;
 
 import android.app.Dialog;
-import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.RelativeLayout;
+
+import dagger.android.support.AndroidSupportInjection;
 
 /**
  * Created by amitshekhar on 10/07/17.
  */
 
 public abstract class BaseDialog extends DialogFragment {
-
+	/*@Inject
+	DispatchingAndroidInjector<Fragment> childFragmentInjector;*/
 	private BaseActivity mActivity;
+	private View rootView;
+	private boolean dialogDismissed;
 
+
+/*
 	@Override
 	public void onAttach(Context context) {
+		performDependencyInjection();
 		super.onAttach(context);
 		if (context instanceof BaseActivity) {
 			BaseActivity mActivity = (BaseActivity) context;
@@ -44,6 +53,7 @@ public abstract class BaseDialog extends DialogFragment {
 			mActivity.onFragmentAttached();
 		}
 	}
+*/
 
 	@Override
 	public void onDetach() {
@@ -73,6 +83,18 @@ public abstract class BaseDialog extends DialogFragment {
 		dialog.setCanceledOnTouchOutside(false);
 
 		return dialog;
+	}
+
+	/**
+	 * @return Root View
+	 */
+	public View getRootView() {
+		return rootView;
+
+	}
+
+	private void performDependencyInjection() {
+		AndroidSupportInjection.inject(this);
 	}
 
 	public void dismissDialog(String tag) {
@@ -106,4 +128,12 @@ public abstract class BaseDialog extends DialogFragment {
 			mActivity.showLoading();
 		}
 	}
+
+	@Override
+	public void onDismiss(final DialogInterface dialog) {
+		super.onDismiss(dialog);
+		dialogDismissed = true;
+	}
+
+
 }

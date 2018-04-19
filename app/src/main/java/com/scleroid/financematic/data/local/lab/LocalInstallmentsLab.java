@@ -92,6 +92,22 @@ public class LocalInstallmentsLab implements LocalDataSource<Installment> {
 		}).subscribeOn(Schedulers.io());
 	}
 
+
+	/**
+	 * Saves item to data source
+	 *
+	 * @param item item object to be saved
+	 */
+
+	public Single<Installment> updateItem(@NonNull final Installment item) {
+		Timber.d("creating new installment ");
+
+		return Single.fromCallable(() -> {
+			int rowId = installmentDao.update(item);
+			Timber.d("installment stored " + rowId);
+			return item;
+		}).subscribeOn(Schedulers.io());
+	}
 	/**
 	 * adds a list of objects to the data source
 	 *
@@ -124,20 +140,6 @@ public class LocalInstallmentsLab implements LocalDataSource<Installment> {
 		return Completable.fromRunnable(() -> installmentDao.nukeTable())
 				.subscribeOn(Schedulers.io());
 
-	}
-
-	/**
-	 * deletes a single item from the database
-	 *
-	 * @param itemId id of item to be deleted
-	 */
-	@Override
-	public Completable deleteItem(final int itemId) {
-		Timber.d("deleting installment with id %d", itemId);
-
-		return Completable.fromRunnable(
-				() -> installmentDao.delete(installmentDao.getInstallment(itemId).getValue()))
-				.subscribeOn(Schedulers.io());
 	}
 
 	/**

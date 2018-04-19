@@ -124,20 +124,6 @@ public class LocalExpenseLab implements LocalDataSource<Expense> {
 	/**
 	 * deletes a single item from the database
 	 *
-	 * @param itemId id of item to be deleted
-	 */
-	@Override
-	public Completable deleteItem(final int itemId) {
-		Timber.d("deleting expense with id %d", itemId);
-
-		return Completable.fromRunnable(
-				() -> expenseDao.delete(expenseDao.getExpense(itemId).getValue()))
-				.subscribeOn(Schedulers.io());
-	}
-
-	/**
-	 * deletes a single item from the database
-	 *
 	 * @param item item to be deleted
 	 */
 	@Override
@@ -146,5 +132,16 @@ public class LocalExpenseLab implements LocalDataSource<Expense> {
 
 		return Completable.fromRunnable(() -> expenseDao.delete(item)).subscribeOn(Schedulers.io
 				());
+	}
+
+	@Override
+	public Single<Expense> updateItem(final Expense expense) {
+		Timber.d("creating new installment ");
+
+		return Single.fromCallable(() -> {
+			int rowId = expenseDao.update(expense);
+			Timber.d("installment stored " + rowId);
+			return expense;
+		}).subscribeOn(Schedulers.io());
 	}
 }

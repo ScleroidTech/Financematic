@@ -174,5 +174,14 @@ public class InstallmentRepo implements Repo<Installment> {
 		return localInstallmentsLab.saveItem(installment);
 	}
 
+	@Override
+	public Single<Installment> updateItem(final Installment installment) {
+		return localInstallmentsLab.updateItem(installment);
+	}
+
+	@Override
+	public Completable deleteItem(final Installment installment) {
+		return localInstallmentsLab.deleteItem(installment);
+	}
 
 }

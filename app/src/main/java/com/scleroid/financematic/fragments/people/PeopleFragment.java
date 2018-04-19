@@ -1,7 +1,10 @@
 package com.scleroid.financematic.fragments.people;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,10 +20,9 @@ import com.scleroid.financematic.base.BaseFragment;
 import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.RecyclerTouchListener;
-import com.scleroid.financematic.utils.ui.RupeeTextView;
-import com.scleroid.financematic.utils.ui.TextViewUtils;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -137,10 +139,14 @@ public class PeopleFragment extends BaseFragment {
 			}
 		});
 
-
+		setTitle();
 		return rootView;
 
 
+	}
+
+	private void setTitle() {
+		activityUtils.setTitle((AppCompatActivity) getActivity(), "List of Customers");
 	}
 
 	/**
@@ -151,13 +157,52 @@ public class PeopleFragment extends BaseFragment {
 		return R.layout.fragment_people;
 	}
 
+	@BindView(R.id.empty_card)
+	CardView emptyCard;
+
 	@Override
 	protected void subscribeToLiveData() {
 		peopleViewModel.getItemList().observe(this,
 				items -> {
-					mAdapter.setCustomerList(items);
-					customers = items;
+					//	sort(items);
+					updateView(items);
 				});
+	}
+
+	private void updateView(final List<Customer> items) {
+		if (items == null || items.isEmpty()) {
+			emptyCard.setVisibility(View.VISIBLE);
+			peopleRecyclerView.setVisibility(View.GONE);
+		} else {
+			emptyCard.setVisibility(View.GONE);
+			peopleRecyclerView.setVisibility(View.VISIBLE);
+			mAdapter.setCustomerList(items);
+			customers = items;
+		}
+	}
+
+	private void sort(final List<Customer> transactions) {
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+			transactions.removeIf(
+					transaction -> transaction.getLoans() == null || transaction.getLoans()
+							.isEmpty());
+			//	transactions.sort(Comparator.comparing(Installment::getInstallmentDate));
+		} else {
+			for (Iterator it = transactions.iterator(); it.hasNext(); ) {
+
+				if (predicate((Customer) it.next())) {
+
+					it.remove();
+
+				}
+
+			}
+		}
+	}
+
+	private boolean predicate(final Customer next) {
+		return next.getLoans() == null || next.getLoans().isEmpty();
 	}
 
 	/**

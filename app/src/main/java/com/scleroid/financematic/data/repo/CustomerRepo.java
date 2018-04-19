@@ -133,4 +133,14 @@ public class CustomerRepo implements Repo<Customer> {
 		return localCustomerLab.saveItem(customer);
 
 	}
+
+	@Override
+	public Single<Customer> updateItem(final Customer customer) {
+		return null;
+	}
+
+	@Override
+	public Completable deleteItem(final Customer customer) {
+		return null;
+	}
 }

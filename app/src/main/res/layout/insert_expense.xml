@@ -40,7 +40,7 @@
 
                     <EditText
 
-                        android:id="@+id/rxEnterAmount"
+                        android:id="@+id/amount_edit_text"
                         android:layout_width="0dp"
                         android:layout_height="45dp"
                         android:layout_marginLeft="10dp"

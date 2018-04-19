@@ -173,5 +173,15 @@ public class LoanRepo implements Repo<Loan> {
 		return localLoanLab.saveItem(loan);
 	}
 
+	@Override
+	public Single<Loan> updateItem(final Loan loan) {
+		return null;
+	}
+
+	@Override
+	public Completable deleteItem(final Loan loan) {
+		return null;
+	}
+
 
 }
