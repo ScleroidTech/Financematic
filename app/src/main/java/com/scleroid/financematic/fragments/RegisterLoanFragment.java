@@ -71,6 +71,7 @@ public class RegisterLoanFragment extends BaseFragment {
 	InstallmentRepo installmentRepo;
 	@Inject
 	ActivityUtils activityUtils;
+
 	private Button b;
 	private TextView ettxloan_amout;
 	private TextView startDateTextView;
@@ -467,4 +468,6 @@ public class RegisterLoanFragment extends BaseFragment {
 		activityUtils.loadDialogFragment(DatePickerDialogFragment.newInstance(), this,
 				getFragmentManager(), requestDate, DIALOG_DATE);
 	}
+
+
 }

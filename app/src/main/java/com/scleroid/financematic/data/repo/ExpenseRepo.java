@@ -48,10 +48,6 @@ import io.reactivex.Single;
 public class ExpenseRepo implements Repo<Expense> {
 
 
-	public LocalExpenseLab getLocalExpenseLab() {
-		return localExpenseLab;
-	}
-
 	private final LocalExpenseLab localExpenseLab;
 
 	private final WebService webService;
@@ -66,6 +62,10 @@ public class ExpenseRepo implements Repo<Expense> {
 		this.localExpenseLab = localExpenseLab;
 		this.webService = webService;
 		this.appExecutors = appExecutors;
+	}
+
+	public LocalExpenseLab getLocalExpenseLab() {
+		return localExpenseLab;
 	}
 
 
