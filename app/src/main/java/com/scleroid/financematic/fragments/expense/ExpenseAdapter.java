@@ -2,7 +2,6 @@ package com.scleroid.financematic.fragments.expense;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.data.local.model.Expense;
 import com.scleroid.financematic.data.local.model.ExpenseCategory;
-import com.scleroid.financematic.utils.ui.CurrencyStringUtils;
 import com.scleroid.financematic.utils.ui.DateUtils;
 
 import java.math.BigDecimal;
@@ -72,7 +70,6 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
 	static class ViewHolder extends RecyclerView.ViewHolder {
 
 		static DateUtils dateUtils = new DateUtils();
-		static CurrencyStringUtils currencyStringUtils = new CurrencyStringUtils();
 		@BindView(R.id.month_text_view)
 		TextView monthTextView;
 		@BindView(R.id.only_date_text_view)
@@ -86,8 +83,6 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
 		TextView expenseTypeTextView;
 		@BindView(R.id.expense_amount_text_view)
 		TextView expenseAmount;
-		@BindView(R.id.card_view)
-		CardView cardView;
 
 		ViewHolder(View itemView) {
 			super(itemView);
@@ -156,7 +151,6 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
 			CharSequence month = dateUtils.getFormattedDate(date, "MMM. yyyy");
 			CharSequence exactDate = dateUtils.getFormattedDate(date, "dd");
 			CharSequence day = dateUtils.getFormattedDate(date, "EEE");
-			CharSequence year = dateUtils.getFormattedDate(date, "yyyy");
 			monthTextView.setText(month);
 			onlyDateTextView.setText(exactDate);
 			dayTextView.setText(day);

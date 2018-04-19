@@ -11,7 +11,6 @@ import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.local.dao.InstallmentDao;
 import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.data.local.model.Loan;
-import com.scleroid.financematic.data.repo.CustomerRepo;
 import com.scleroid.financematic.data.repo.InstallmentRepo;
 import com.scleroid.financematic.data.repo.LoanRepo;
 import com.scleroid.financematic.utils.AppExecutors;
@@ -62,7 +61,7 @@ public class DashboardViewModel extends BaseViewModel<Installment> implements Cu
 */
 
 	@Inject
-	public DashboardViewModel(CustomerRepo customerRepo, LoanRepo loanRepo,
+	public DashboardViewModel(LoanRepo loanRepo,
 	                          InstallmentRepo installmentRepo) {
 
 		super();

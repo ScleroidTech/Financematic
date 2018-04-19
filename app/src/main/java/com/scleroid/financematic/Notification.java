@@ -4,43 +4,23 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.scleroid.financematic.base.BaseFragment;
-import com.scleroid.financematic.base.BaseViewModel;
-
-/**
- * Created by scleroid on 11/4/18.
- */
-
-
-    import android.os.Bundle;
-        import android.support.v4.app.Fragment;
-        import android.support.v7.widget.DefaultItemAnimator;
-        import android.support.v7.widget.LinearLayoutManager;
-        import android.support.v7.widget.RecyclerView;
-        import android.view.LayoutInflater;
-        import android.view.View;
-        import android.view.ViewGroup;
-        import android.widget.Toast;
-
-        import com.scleroid.financematic.R;
-        import com.scleroid.financematic.adapter.PassbookAdapter;
 import com.scleroid.financematic.data.tempModels.Passbook;
-import com.scleroid.financematic.utils.ui.RecyclerTouchListener;
+import com.scleroid.financematic.fragments.passbook.PassbookAdapter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+/**
+ * Created by scleroid on 11/4/18.
+ */
 
 
     /**

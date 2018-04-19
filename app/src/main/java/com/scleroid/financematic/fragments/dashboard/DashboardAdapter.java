@@ -65,7 +65,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
 		if (installments == null) return new ArrayList<>();
 		return Stream.of(installments)
 				.filter(installment -> dateUtils.isThisDateWithinRange(
-						installment.getInstallmentDate(), FILTER_DAYS) == true)
+						installment.getInstallmentDate(), FILTER_DAYS))
 				.collect(Collectors.toList());
 	}
 

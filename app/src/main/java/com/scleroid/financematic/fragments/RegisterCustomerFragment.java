@@ -227,8 +227,10 @@ return;
 	 * Override so you can observe your viewModel
 	 */
 	@Override
+	@Deprecated
 	protected void subscribeToLiveData() {
-
+		//No use here,
+		//Stub
 	}
 
 	/**

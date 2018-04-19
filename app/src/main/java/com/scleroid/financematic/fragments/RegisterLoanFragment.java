@@ -162,7 +162,7 @@ public class RegisterLoanFragment extends BaseFragment {
 					@Override
 					public void validate(TextView textView, String text) {
 
-						if (isNotValidAmt(loanAmt)) {
+						if (isNotValidAmt(text)) {
 							ettxloan_amout.setError("Valid total given money");
 						}
 					}
@@ -175,7 +175,7 @@ public class RegisterLoanFragment extends BaseFragment {
 					@Override
 					public void validate(TextView textView, String text) {
 
-						if (isNotValidAmt(rateOfInterest)) {
+						if (isNotValidAmt(text)) {
 							ettxrateInterest.setError("Valid valid Rate in %");
 						}
 					}
@@ -187,7 +187,7 @@ public class RegisterLoanFragment extends BaseFragment {
 					@Override
 					public void validate(TextView textView, String text) {
 
-						if (isNotValidAmt(interestAmt)) {
+						if (isNotValidAmt(text)) {
 							ettxInterestAmount.setError("Valid Interest Amount");
 						}
 					}
@@ -199,7 +199,7 @@ public class RegisterLoanFragment extends BaseFragment {
 					@Override
 					public void validate(TextView textView, String text) {
 
-						if (isNotValidAmt(noOfInstallments)) {
+						if (isNotValidAmt(text)) {
 							ettxNoofInstallment.setError("valid No of Installment");
 						}
 					}
@@ -211,7 +211,7 @@ public class RegisterLoanFragment extends BaseFragment {
 					@Override
 					public void validate(TextView textView, String text) {
 
-						if (isNotValidAmt(duration)) {
+						if (isNotValidAmt(text)) {
 							ettxInstallmentduration.setError("Valid Installment Duration ");
 						}
 					}
@@ -223,7 +223,7 @@ public class RegisterLoanFragment extends BaseFragment {
 					@Override
 					public void validate(TextView textView, String text) {
 
-						if (isNotValidAmt(totatLoanAmt)) {
+						if (isNotValidAmt(text)) {
 							etTotalLoanAmount.setError("Valid Total Amount");
 						}
 					}
