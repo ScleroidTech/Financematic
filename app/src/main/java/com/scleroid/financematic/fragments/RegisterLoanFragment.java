@@ -155,8 +155,7 @@ public class RegisterLoanFragment extends BaseFragment {
 		ettxNoofInstallment = rootView.findViewById(R.id.txNoofInstallment);
 		ettxInstallmentduration = rootView.findViewById(R.id.txInstallmentduration);
 		etTotalLoanAmount = rootView.findViewById(R.id.txTotalLoanAmount);
-		final String loanAmt = ettxloan_amout.getText()
-				.toString();
+
 		ettxloan_amout.addTextChangedListener(
 				new TextValidator(ettxloan_amout) {
 					@Override
@@ -168,8 +167,7 @@ public class RegisterLoanFragment extends BaseFragment {
 					}
 				});
 
-		final String rateOfInterest = ettxrateInterest.getText()
-				.toString();
+
 		ettxrateInterest.addTextChangedListener(
 				new TextValidator(ettxrateInterest) {
 					@Override
@@ -192,8 +190,7 @@ public class RegisterLoanFragment extends BaseFragment {
 						}
 					}
 				});
-		final String noOfInstallments = ettxNoofInstallment.getText()
-				.toString();
+
 		ettxNoofInstallment.addTextChangedListener(
 				new TextValidator(ettxNoofInstallment) {
 					@Override
@@ -204,8 +201,7 @@ public class RegisterLoanFragment extends BaseFragment {
 						}
 					}
 				});
-		final String duration = ettxInstallmentduration.getText()
-				.toString();
+
 		ettxInstallmentduration.addTextChangedListener(
 				new TextValidator(ettxInstallmentduration) {
 					@Override
@@ -216,8 +212,7 @@ public class RegisterLoanFragment extends BaseFragment {
 						}
 					}
 				});
-		final String totatLoanAmt = etTotalLoanAmount.getText()
-				.toString();
+
 		etTotalLoanAmount.addTextChangedListener(
 				new TextValidator(etTotalLoanAmount) {
 					@Override
@@ -232,6 +227,16 @@ public class RegisterLoanFragment extends BaseFragment {
 
 		b = rootView.findViewById(R.id.btn_givenmoney);
 		b.setOnClickListener(v -> {
+			final String loanAmt = ettxloan_amout.getText()
+					.toString();
+			final String noOfInstallments = ettxNoofInstallment.getText()
+					.toString();
+			final String duration = ettxInstallmentduration.getText()
+					.toString();
+			final String totatLoanAmt = etTotalLoanAmount.getText()
+					.toString();
+			final String rateOfInterest = ettxrateInterest.getText()
+					.toString();
 			String startDateStr = startDateTextView.getText().toString();
 			String endDateStr = endDateTextView
 					.getText()
