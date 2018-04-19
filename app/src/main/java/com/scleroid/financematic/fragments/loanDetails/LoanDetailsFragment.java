@@ -206,13 +206,11 @@ public class LoanDetailsFragment extends BaseFragment {
 	}
 	private void updateUi() {
 		if (theLoan == null) return;
-		totalAmountTextView.setText(String.valueOf(theLoan.getLoanAmt().intValue()));
+		totalAmountTextView.setText(theLoan.getLoanAmt().toString());
 		interestTextView.setText(String.format("%s %%", theLoan.getRateOfInterest()));
 		durationTextView.setText(String.format("%d Months", theLoan.getDuration()));
-		cardHolder.paidAmountTextView.setText(
-				String.valueOf(theLoan.getReceivedAmt().intValue()));
-		cardHolder.installmentTextView.setText(
-				String.valueOf(theLoan.getAmtOfInterest().intValue()));
+		cardHolder.paidAmountTextView.setText(theLoan.getReceivedAmt().toString());
+		cardHolder.installmentTextView.setText(theLoan.getAmtOfInterest().toString());
 		setTitle();
 		//	activityUtils.useUpButton((MainActivity) getActivity(),true);
 

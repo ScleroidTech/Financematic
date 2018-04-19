@@ -2,7 +2,7 @@ package com.scleroid.financematic.data.repo;
 
 import android.arch.lifecycle.LiveData;
 
-import com.scleroid.financematic.utils.Resource;
+import com.scleroid.financematic.utils.network.Resource;
 
 import java.util.List;
 

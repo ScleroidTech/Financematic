@@ -45,7 +45,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
+            <com.scleroid.financematic.utils.ui.RupeeTextView
                 android:id="@+id/amount_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
                 android:layout_marginStart="8dp"
                 android:paddingEnd="10dp"
                 android:paddingTop="5dp"
-                android:text="@string/amount_with_symbol"
+                android:text="@string/amount"
                 android:textAlignment="center"
                 android:textColor="#441953"
                 android:textSize="20sp"

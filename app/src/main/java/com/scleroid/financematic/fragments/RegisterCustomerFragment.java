@@ -105,8 +105,7 @@ public class RegisterCustomerFragment extends BaseFragment {
 			@Override
 			public void validate(TextView textView, String text) {
 
-				final String nameval = text.toString();
-				if (!isValidEmail(nameval)) {
+				if (!isValidEmail(text)) {
 					etname.setError("Enter Valid Full name");
 				}
 			}
@@ -116,8 +115,7 @@ public class RegisterCustomerFragment extends BaseFragment {
 			@Override
 			public void validate(TextView textView, String text) {
 
-				final String mobileval = text.toString();
-				if (!isValidMobile(mobileval)) {
+				if (!isValidMobile(text)) {
 					etmobile.setError("Enter Valid 10 digit no");
 				}
 			}
@@ -127,8 +125,7 @@ public class RegisterCustomerFragment extends BaseFragment {
 			@Override
 			public void validate(TextView textView, String text) {
 
-				final String addressval = text.toString();
-				if (!isValidAddress(addressval)) {
+				if (!isValidAddress(text)) {
 					etAddress.setError("Enter Valid address");
 				}
 			}
@@ -220,7 +217,7 @@ return;
 	 */
 	@Override
 	public int getLayoutId() {
-		return R.layout.reg_new_customer;
+		return R.layout.fragment_register_new_customer;
 	}
 
 	/**

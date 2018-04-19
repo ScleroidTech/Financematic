@@ -1,4 +1,4 @@
-package com.scleroid.financematic.utils;
+package com.scleroid.financematic.utils.multithread;
 
 /*
  * Copyright (C) 2017 The Android Open Source Project

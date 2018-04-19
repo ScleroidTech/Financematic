@@ -6,7 +6,7 @@ import android.arch.lifecycle.MutableLiveData;
 import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.local.model.TransactionModel;
 import com.scleroid.financematic.data.repo.TransactionsRepo;
-import com.scleroid.financematic.utils.Resource;
+import com.scleroid.financematic.utils.network.Resource;
 import com.scleroid.financematic.viewmodels.LoanViewModel;
 
 import java.util.List;

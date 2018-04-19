@@ -80,6 +80,7 @@
     <string name="amount">10000</string>
     <string name="delay_view">Delay Payment</string>
     <string name="submit">Submit</string>
+    <string name="expense_type_image">Expense Type Image</string>
 
     <!-- Names -->
     <string-array name="names_array">

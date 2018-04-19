@@ -15,9 +15,9 @@ import com.scleroid.financematic.data.repo.ExpenseRepo;
 import com.scleroid.financematic.data.repo.InstallmentRepo;
 import com.scleroid.financematic.data.repo.LoanRepo;
 import com.scleroid.financematic.data.repo.TransactionsRepo;
-import com.scleroid.financematic.utils.AppExecutors;
-import com.scleroid.financematic.utils.DiskIOThreadExecutor;
-import com.scleroid.financematic.utils.LiveDataCallAdapterFactory;
+import com.scleroid.financematic.utils.multithread.AppExecutors;
+import com.scleroid.financematic.utils.multithread.DiskIOThreadExecutor;
+import com.scleroid.financematic.utils.network.livedata.LiveDataCallAdapterFactory;
 import com.scleroid.financematic.utils.rx.AppSchedulerProvider;
 import com.scleroid.financematic.utils.rx.SchedulerProvider;
 

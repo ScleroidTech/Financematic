@@ -1,7 +1,6 @@
 package com.scleroid.financematic.di;
 
 import com.scleroid.financematic.utils.ui.ActivityUtils;
-import com.scleroid.financematic.utils.ui.CurrencyStringUtils;
 import com.scleroid.financematic.utils.ui.DateUtils;
 import com.scleroid.financematic.utils.ui.TextViewUtils;
 
@@ -27,6 +26,5 @@ public abstract class UtilsModule {
 	@Singleton
 	abstract ActivityUtils getActivityUtils();
 
-	@Singleton
-	abstract CurrencyStringUtils getCurrencyStringUtils();
+
 }

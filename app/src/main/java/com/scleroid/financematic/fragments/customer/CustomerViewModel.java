@@ -8,7 +8,7 @@ import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.data.repo.CustomerRepo;
 import com.scleroid.financematic.data.repo.LoanRepo;
-import com.scleroid.financematic.utils.Resource;
+import com.scleroid.financematic.utils.network.Resource;
 
 import java.util.List;
 

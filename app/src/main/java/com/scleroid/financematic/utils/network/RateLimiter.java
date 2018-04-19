@@ -1,4 +1,4 @@
-package com.scleroid.financematic.utils;
+package com.scleroid.financematic.utils.network;
 
 /**
  * Copyright (C) 2018

@@ -8,10 +8,10 @@ import com.scleroid.financematic.data.local.lab.LocalExpenseLab;
 import com.scleroid.financematic.data.local.model.Expense;
 import com.scleroid.financematic.data.remote.ApiResponse;
 import com.scleroid.financematic.data.remote.WebService;
-import com.scleroid.financematic.utils.AppExecutors;
-import com.scleroid.financematic.utils.NetworkBoundResource;
-import com.scleroid.financematic.utils.RateLimiter;
-import com.scleroid.financematic.utils.Resource;
+import com.scleroid.financematic.utils.multithread.AppExecutors;
+import com.scleroid.financematic.utils.network.NetworkBoundResource;
+import com.scleroid.financematic.utils.network.RateLimiter;
+import com.scleroid.financematic.utils.network.Resource;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -48,10 +48,6 @@ import io.reactivex.Single;
 public class ExpenseRepo implements Repo<Expense> {
 
 
-	public LocalExpenseLab getLocalExpenseLab() {
-		return localExpenseLab;
-	}
-
 	private final LocalExpenseLab localExpenseLab;
 
 	private final WebService webService;
@@ -66,6 +62,10 @@ public class ExpenseRepo implements Repo<Expense> {
 		this.localExpenseLab = localExpenseLab;
 		this.webService = webService;
 		this.appExecutors = appExecutors;
+	}
+
+	public LocalExpenseLab getLocalExpenseLab() {
+		return localExpenseLab;
 	}
 
 

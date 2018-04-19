@@ -78,17 +78,9 @@ public class Loan {
 	            BigDecimal amtOfInterest, int noOfInstallments, int duration,
 	            String installmentType,
 	            BigDecimal repayAmt, int custId) {
-		this.loanAmt = loanAmt;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.rateOfInterest = rateOfInterest;
-		this.amtOfInterest = amtOfInterest;
-		this.noOfInstallments = noOfInstallments;
-		this.duration = duration;
-		this.installmentType = installmentType;
-		this.repayAmt = repayAmt;
-		this.accountNo = accountNo;
-		this.custId = custId;
+		this(accountNo, loanAmt, startDate, endDate, rateOfInterest, amtOfInterest,
+				noOfInstallments, duration, installmentType, repayAmt, custId, null);
+
 	}
 
 	public Customer getCustomer() {
