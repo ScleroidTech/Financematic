@@ -57,7 +57,7 @@ public class Loan {
 	            String installmentType,
 	            BigDecimal repayAmt, int custId) {
 		this(accountNo, loanAmt, startDate, endDate, rateOfInterest, installmentAmt,
-				noOfInstallments, installmentType, repayAmt, custId, null);
+				noOfInstallments, installmentType, repayAmt, custId, new BigDecimal(0));
 
 	}
 
@@ -104,7 +104,7 @@ public class Loan {
 				", repayAmt=" + repayAmt.intValue() +
 				", accountNo=" + accountNo +
 				", custId=" + custId +
-				", receivedAmt=" + receivedAmt.intValue() +
+				", receivedAmt=" + receivedAmt.toString() +
 				'}';
 	}
 

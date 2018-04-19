@@ -21,6 +21,7 @@ import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.data.local.model.LoanDurationType;
 import com.scleroid.financematic.data.repo.InstallmentRepo;
 import com.scleroid.financematic.data.repo.LoanRepo;
+import com.scleroid.financematic.fragments.customer.CustomerFragment;
 import com.scleroid.financematic.fragments.dialogs.DatePickerDialogFragment;
 import com.scleroid.financematic.utils.CommonUtils;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
@@ -38,6 +39,7 @@ import java.util.regex.Pattern;
 import javax.inject.Inject;
 
 import butterknife.OnClick;
+import es.dmoral.toasty.Toasty;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -223,7 +225,10 @@ public class RegisterLoanFragment extends BaseFragment {
 			String endDateStr = endDateTextView
 					.getText()
 					.toString();
-
+			Timber.d(
+					"Printing all values " + interestAmt + "  " + loanAmt + "  " +
+							noOfInstallments + " " + totatLoanAmt + " " + rateOfInterest + " " +
+							startDateStr + " " + endDateStr);
 			if (TextUtils.isEmpty(loanAmt)) {
 				ettxloan_amout.setError("Enter Loan Amount");
 			}
@@ -246,13 +251,20 @@ public class RegisterLoanFragment extends BaseFragment {
 
 
 			int accountNo = CommonUtils.getRandomInt();
-			BigDecimal loanAmt1 = new BigDecimal(loanAmt);
+			BigDecimal loanAmt1 = new BigDecimal(loanAmt.trim());
 			Float rateOfInterest1 = Float.valueOf(rateOfInterest);
-			amtOfInterest = new BigDecimal(interestAmt);
+
+
+			try {
+				amtOfInterest = new BigDecimal(interestAmt.trim());
+			} catch (NumberFormatException nFe) {
+				amtOfInterest = new BigDecimal(Double.valueOf(interestAmt.trim()));
+			}
 			noOfInstallments1 = Integer.valueOf(noOfInstallments);
 
-			BigDecimal repayAmt = new BigDecimal(totatLoanAmt);
+			BigDecimal repayAmt = new BigDecimal(totatLoanAmt.trim());
 			addData(accountNo, loanAmt1, rateOfInterest1, repayAmt);
+
 		});
 
 
@@ -276,7 +288,6 @@ public class RegisterLoanFragment extends BaseFragment {
 
 	private void addData(final int accountNo, final BigDecimal loanAmt1,
 	                     final Float rateOfInterest1, final BigDecimal repayAmt) {
-		final List<Installment> installments = createInstallments();
 
 		loan = new Loan(accountNo, loanAmt1, startDate,
 				endDate, rateOfInterest1, amtOfInterest,
@@ -284,6 +295,8 @@ public class RegisterLoanFragment extends BaseFragment {
 				noOfInstallments1, durationType,
 
 				repayAmt, customerId);
+		final List<Installment> installments = createInstallments();
+
 		saveData(loan, installments);
 	}
 
@@ -317,13 +330,25 @@ public class RegisterLoanFragment extends BaseFragment {
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(loan1 -> {
 					Timber.d("Loan Data Saved " + loan1.toString());
+					Toasty.success(getBaseActivity(), "Loan Created successfully").show();
 					installmentRepo.saveItems(installments)
 							.observeOn(AndroidSchedulers.mainThread())
-							.subscribe(() -> Timber.d("Installments Created " + loan1.toString()));
+							.subscribe(() -> {
+										Timber.d("Installments Created " + loan1.toString());
+										activityUtils.loadFragment(
+												CustomerFragment.newInstance(loan.getCustId()),
+												getFragmentManager());
+									}
+							);
 
-				}, throwable -> Timber.d(
-						"Loan Data not Saved " + throwable.getMessage() + " errors are " + loan
-								.toString()));
+				}, throwable -> {
+					Timber.d(
+							"Loan Data not Saved " + throwable.getMessage() + " errors are " + loan
+									.toString());
+					Toasty.success(getBaseActivity(),
+							"Loan Data not Saved " + throwable.getMessage() + " errors are " + loan
+									.toString()).show();
+				});
 	}
 
 
