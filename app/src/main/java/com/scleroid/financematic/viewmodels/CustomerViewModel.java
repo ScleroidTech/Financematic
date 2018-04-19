@@ -1,5 +1,6 @@
 package com.scleroid.financematic.viewmodels;
 
+@Deprecated
 public interface CustomerViewModel {
 
 

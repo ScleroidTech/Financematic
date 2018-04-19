@@ -142,7 +142,7 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 	}
 
 	private void setupRecyclerView() {
-		mAdapter = new DashboardAdapter(new ArrayList<>(), localLoanLab, localCustomerLab);
+		mAdapter = new DashboardAdapter(new ArrayList<>());
 
 		recyclerViewDashboard.setHasFixedSize(true);
 

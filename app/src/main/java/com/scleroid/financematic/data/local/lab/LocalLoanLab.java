@@ -11,7 +11,6 @@ import com.scleroid.financematic.data.local.dao.CustomerDao;
 import com.scleroid.financematic.data.local.dao.LoanDao;
 import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.local.model.Loan;
-import com.scleroid.financematic.utils.AppExecutors;
 
 import java.util.List;
 
@@ -29,8 +28,6 @@ import timber.log.Timber;
  * @since 4/5/18
  */
 public class LocalLoanLab implements LocalDataSource<Loan> {
-	private final AppDatabase appDatabase;
-	private final AppExecutors appExecutors;
 	private final LoanDao loanDao;
 
 	@Inject
@@ -38,9 +35,7 @@ public class LocalLoanLab implements LocalDataSource<Loan> {
 
 
 	@Inject
-	LocalLoanLab(final AppDatabase appDatabase, final AppExecutors appExecutors) {
-		this.appDatabase = appDatabase;
-		this.appExecutors = appExecutors;
+	LocalLoanLab(final AppDatabase appDatabase) {
 		this.loanDao = appDatabase.loanDao();
 	}
 

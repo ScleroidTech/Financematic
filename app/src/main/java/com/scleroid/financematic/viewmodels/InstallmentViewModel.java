@@ -6,5 +6,6 @@ package com.scleroid.financematic.viewmodels;
  * @author Ganesh Kaple
  * @since 4/9/18
  */
+@Deprecated
 public interface InstallmentViewModel {
 }

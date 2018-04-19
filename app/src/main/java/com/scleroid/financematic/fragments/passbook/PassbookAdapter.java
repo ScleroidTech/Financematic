@@ -1,4 +1,4 @@
-package com.scleroid.financematic.adapter;
+package com.scleroid.financematic.fragments.passbook;
 
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by scleroid on 5/3/18.
  */
-
+@Deprecated
 public class PassbookAdapter extends RecyclerView.Adapter<PassbookAdapter.MyViewHolder> {
 
 	private List<Passbook> passbookList;

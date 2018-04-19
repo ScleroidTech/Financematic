@@ -29,7 +29,6 @@ import com.scleroid.financematic.utils.ui.DateUtils;
 import com.scleroid.financematic.utils.ui.RecyclerTouchListener;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -49,7 +48,7 @@ import butterknife.OnClick;
  * @since 2/3/18
  */
 
-public class ReportFragment extends BaseFragment<ReportViewModel>{
+public class ReportFragment extends BaseFragment<ReportViewModel> {
 	private static final String DIALOG_DATE = "DIALOG_DATE";
 	private static final int REQUEST_DATE_FROM = 1;
 	private static final int REQUEST_DATE_TO = 2;
@@ -61,15 +60,11 @@ public class ReportFragment extends BaseFragment<ReportViewModel>{
 	@Inject
 	DateUtils dateUtils;
 
-	Calendar myCalendar = Calendar.getInstance();
-	Calendar myCalendar1 = Calendar.getInstance();
 
 	String[] filterSuggestions =
 			{"All Amount", "Received Amount", "Lent Amount", "Earned Amount"};
 	String[] shortSuggestions =
 			{"Date modified", "Total Outstanding"};
-	Spinner spin;
-	Spinner spin1;
 
 
 	@BindView(R.id.from_date_text_view)
@@ -104,7 +99,6 @@ public class ReportFragment extends BaseFragment<ReportViewModel>{
 	private ReportViewModel reportViewModel;
 	private Date startDate;
 	private Date endDate;
-	private List<TransactionModel> filteredList = new ArrayList<>();
 	private ReportFilterType reportFilterType = ReportFilterType.ALL_TRANSACTIONS;
 
 	public ReportFragment() {
@@ -120,6 +114,25 @@ public class ReportFragment extends BaseFragment<ReportViewModel>{
 	}
 
 	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+		super.onActivityResult(requestCode, resultCode, intent);
+
+		if (requestCode == REQUEST_DATE_FROM) {
+			startDate = (Date) intent.getSerializableExtra(DatePickerDialogFragment.EXTRA_DATE);
+			fromDateTextView.setText(dateUtils.getFormattedDate(startDate));
+		} else if (requestCode == REQUEST_DATE_TO) {
+			endDate = (Date) intent.getSerializableExtra(DatePickerDialogFragment.EXTRA_DATE);
+			toDateTextView.setText(dateUtils.getFormattedDate(endDate));
+		}
+
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+	}
+
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
@@ -129,8 +142,8 @@ public class ReportFragment extends BaseFragment<ReportViewModel>{
 
 //add manoj
 		final Spinner spin1 = rootView.findViewById(R.id.spinnershortdate);
-	/*	spin1.setOnItemSelectedListener(this);*/
-	ArrayAdapter<String> aa = new ArrayAdapter<>(getActivity(),
+		/*	spin1.setOnItemSelectedListener(this);*/
+		ArrayAdapter<String> aa = new ArrayAdapter<>(getActivity(),
 				android.R.layout.simple_spinner_item, shortSuggestions);
 		aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		//Setting the ArrayAdapter data on the Spinner
@@ -140,7 +153,7 @@ public class ReportFragment extends BaseFragment<ReportViewModel>{
 		spin1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(final AdapterView<?> parent, final View view,
-									   final int position, final long id) {
+			                           final int position, final long id) {
 		/*		List<TransactionModel> tempList;
 				reportFilterType = getSuggestion(position);
 				if (startDate == null && endDate == null) {
@@ -170,8 +183,6 @@ public class ReportFragment extends BaseFragment<ReportViewModel>{
 		});*/
 
 
-
-
 		mAdapter = new ReportAdapter();
 
 		reportRecyclerView.setHasFixedSize(true);
@@ -198,23 +209,33 @@ public class ReportFragment extends BaseFragment<ReportViewModel>{
 
 	}
 
+	/**
+	 * @return layout resource id
+	 */
 	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-		super.onActivityResult(requestCode, resultCode, intent);
-
-		if (requestCode == REQUEST_DATE_FROM) {
-			startDate = (Date) intent.getSerializableExtra(DatePickerDialogFragment.EXTRA_DATE);
-			fromDateTextView.setText(dateUtils.getFormattedDate(startDate));
-		} else if (requestCode == REQUEST_DATE_TO) {
-			endDate = (Date) intent.getSerializableExtra(DatePickerDialogFragment.EXTRA_DATE);
-			toDateTextView.setText(dateUtils.getFormattedDate(endDate));
-		}
-
+	public int getLayoutId() {
+		return R.layout.fragment_report;
 	}
 
+	/**
+	 * Override so you can observe your viewModel
+	 */
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	protected void subscribeToLiveData() {
+		reportViewModel.getTransactionLiveData().observe(this, this::updateListData);
+	}
+
+	/**
+	 * Override for set view model
+	 *
+	 * @return view model instance
+	 */
+	@Override
+	public ReportViewModel getViewModel() {
+		reportViewModel =
+				ViewModelProviders.of(Objects.requireNonNull(getActivity()), viewModelFactory)
+						.get(ReportViewModel.class);
+		return reportViewModel;
 	}
 
 	private void setTitle() {
@@ -237,22 +258,6 @@ public class ReportFragment extends BaseFragment<ReportViewModel>{
 		}
 	}
 
-	/**
-	 * @return layout resource id
-	 */
-	@Override
-	public int getLayoutId() {
-		return R.layout.fragment_report;
-	}
-
-	/**
-	 * Override so you can observe your viewModel
-	 */
-	@Override
-	protected void subscribeToLiveData() {
-		reportViewModel.getTransactionLiveData().observe(this, this::updateListData);
-	}
-
 	private void updateListData(final List<TransactionModel> transactions) {
 		if (transactions == null || transactions.isEmpty()) {
 			emptyCard.setVisibility(View.VISIBLE);
@@ -267,7 +272,6 @@ public class ReportFragment extends BaseFragment<ReportViewModel>{
 		}
 	}
 
-
 	private void sort(final List<TransactionModel> transactions) {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 			transactions.sort(Comparator.comparing(TransactionModel::getTransactionDate));
@@ -275,19 +279,6 @@ public class ReportFragment extends BaseFragment<ReportViewModel>{
 			Collections.sort(transactions,
 					(m1, m2) -> m1.getTransactionDate().compareTo(m2.getTransactionDate()));
 		}
-	}
-
-	/**
-	 * Override for set view model
-	 *
-	 * @return view model instance
-	 */
-	@Override
-	public ReportViewModel getViewModel() {
-		reportViewModel =
-				ViewModelProviders.of(Objects.requireNonNull(getActivity()), viewModelFactory)
-						.get(ReportViewModel.class);
-		return reportViewModel;
 	}
 
 	private void setupSpinner() {
@@ -468,8 +459,6 @@ public class ReportFragment extends BaseFragment<ReportViewModel>{
 		activityUtils.loadDialogFragment(DatePickerDialogFragment.newInstance(), this,
 				getFragmentManager(), requestDate, DIALOG_DATE);
 	}
-
-
 
 
 }

@@ -11,6 +11,7 @@ import javax.inject.Inject;
  * @author Ganesh Kaple
  * @since 4/3/18
  */
+@Deprecated
 public class DatabaseHelperLoan {
 	private LoanDao dao;
 	private TransactionDao transactionDao;

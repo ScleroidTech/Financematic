@@ -18,6 +18,7 @@ import javax.inject.Inject;
  * @author Ganesh Kaple
  * @since 4/3/18
  */
+@Deprecated
 public class DatabaseHelperCustomer {
 
 	//TODO to use or not to use this

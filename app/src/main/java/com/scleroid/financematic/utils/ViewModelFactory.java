@@ -6,8 +6,6 @@ package com.scleroid.financematic.utils;
  * @since 4/4/18
  */
 
-import android.annotation.SuppressLint;
-import android.app.Application;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 
@@ -34,10 +32,6 @@ import javax.inject.Inject;
  */
 public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
 
-	@SuppressLint("StaticFieldLeak")
-	private static volatile ViewModelFactory INSTANCE;
-
-	private final Application mApplication;
 	private CustomerRepo customerRepo;
 	private LoanRepo loanRepo;
 
@@ -48,11 +42,10 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
 	private ExpenseRepo expenseRepo;
 
 	@Inject
-	public ViewModelFactory(final Application mApplication, final CustomerRepo customerRepo,
+	public ViewModelFactory(final CustomerRepo customerRepo,
 	                        final LoanRepo loanRepo, final InstallmentRepo installmentRepo,
 	                        final TransactionsRepo transactionsRepo,
 	                        final ExpenseRepo expenseRepo) {
-		this.mApplication = mApplication;
 		this.customerRepo = customerRepo;
 		this.loanRepo = loanRepo;
 		this.installmentRepo = installmentRepo;
@@ -75,7 +68,7 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
 			return (T) new LoanDetailsViewModel(transactionsRepo, loanRepo, installmentRepo);
 		} else if (modelClass.isAssignableFrom(PeopleViewModel.class)) {
 			//noinspection unchecked
-			return (T) new PeopleViewModel(customerRepo, loanRepo);
+			return (T) new PeopleViewModel(customerRepo);
 		} else if (modelClass.isAssignableFrom(DashboardViewModel.class)) {
 			//noinspection unchecked
 			return (T) new DashboardViewModel(customerRepo, loanRepo, installmentRepo);

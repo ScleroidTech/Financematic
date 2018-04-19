@@ -2,7 +2,6 @@ package com.scleroid.financematic.fragments.dialogs;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,8 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -53,14 +50,8 @@ import timber.log.Timber;
 public class RegisterReceivedDialogFragment extends BaseDialog {
 
 
-	private static final String DIALOG_DATE = "DIALOG_DATE";
-	private static final int REQUEST_DATE = 0;
 	private static final String INSTALLMENT_ID = "installment_id";
 	private static final String ACCOUNT_NO = "account_no";
-	String interesting;
-	Spinner spin;
-	Context context;
-	EditText edittext;
 	Calendar myCalendar = Calendar.getInstance();
 	String[] country = {"Received on Time", "Delayed payment", "Less amount", "Other"};
 	@Inject
@@ -70,8 +61,8 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 
 	@Inject
 	TransactionsRepo transactionsRepo;
-	private Button b;
-	private TextView etrxDate, etrxTotalInterestAmount, etrxReceivedAmount, tv;
+	private TextView etrxDate;
+	private TextView etrxReceivedAmount;
 	private int accountNo;
 	private int installmentId;
 	private Date paymentDate;

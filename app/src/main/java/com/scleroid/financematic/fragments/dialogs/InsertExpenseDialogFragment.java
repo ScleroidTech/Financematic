@@ -2,15 +2,12 @@ package com.scleroid.financematic.fragments.dialogs;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -49,16 +46,12 @@ public class InsertExpenseDialogFragment extends BaseDialog {
 
 	@Inject
 	ExpenseRepo expenseRepo;
-	String interesting;
-	Spinner spin;
-	Context context;
-	EditText edittext;
 	Calendar myCalendar = Calendar.getInstance();
 	String[] country =
 			{ExpenseCategory.ROOM_RENT, ExpenseCategory.LIGHT_BILL, ExpenseCategory.PHONE_BILL,
 					ExpenseCategory.PAID_SALARIES, ExpenseCategory.FUEL, ExpenseCategory.OTHER};
-	private Button b;
-	private TextView etrxDate, etrxTotalInterestAmount, etrxReceivedAmount, tv;
+	private TextView etrxDate;
+	private TextView etrxReceivedAmount;
 	private String expenseType;
 	private Date expenseDate;
 
@@ -67,7 +60,7 @@ public class InsertExpenseDialogFragment extends BaseDialog {
 		// Required empty public constructor
 	}
 
-	public static InsertExpenseDialogFragment newInstance(String param1, String param2) {
+	public static InsertExpenseDialogFragment newInstance() {
 		InsertExpenseDialogFragment fragment = new InsertExpenseDialogFragment();
 		Bundle args = new Bundle();
 		fragment.setArguments(args);

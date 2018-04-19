@@ -4,7 +4,6 @@ import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.scleroid.financematic.data.local.AppDatabase;
 import com.scleroid.financematic.data.local.lab.LocalCustomerLab;
 import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.remote.ApiResponse;
@@ -32,17 +31,15 @@ public class CustomerRepo implements Repo<Customer> {
 
 
 	private final LocalCustomerLab localCustomerLab;
-	private final AppDatabase db;
 	//TODO remove direct access to this
 	private final WebService webService;
 	private final AppExecutors appExecutors;
 	private RateLimiter<String> customerListRateLimit = new RateLimiter<>(10, TimeUnit.MINUTES);
 	@Inject
-	public CustomerRepo(final AppDatabase db, final LocalCustomerLab localCustomerLab,
+	public CustomerRepo(final LocalCustomerLab localCustomerLab,
 	                    final WebService webService,
 	                    final AppExecutors appExecutors) {
 		this.localCustomerLab = localCustomerLab;
-		this.db = db;
 		this.webService = webService;
 		this.appExecutors = appExecutors;
 	}

@@ -7,7 +7,6 @@ import com.scleroid.financematic.data.local.AppDatabase;
 import com.scleroid.financematic.data.local.LocalDataSource;
 import com.scleroid.financematic.data.local.dao.ExpenseDao;
 import com.scleroid.financematic.data.local.model.Expense;
-import com.scleroid.financematic.utils.AppExecutors;
 
 import java.util.List;
 
@@ -25,14 +24,10 @@ import timber.log.Timber;
  * @since 4/5/18
  */
 public class LocalExpenseLab implements LocalDataSource<Expense> {
-	private final AppDatabase appDatabase;
-	private final AppExecutors appExecutors;
 	private final ExpenseDao expenseDao;
 
 	@Inject
-	LocalExpenseLab(final AppDatabase appDatabase, final AppExecutors appExecutors) {
-		this.appDatabase = appDatabase;
-		this.appExecutors = appExecutors;
+	LocalExpenseLab(final AppDatabase appDatabase) {
 		this.expenseDao = appDatabase.expenseDao();
 	}
 

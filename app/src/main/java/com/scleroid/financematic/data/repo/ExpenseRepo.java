@@ -4,7 +4,6 @@ import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.scleroid.financematic.data.local.AppDatabase;
 import com.scleroid.financematic.data.local.lab.LocalExpenseLab;
 import com.scleroid.financematic.data.local.model.Expense;
 import com.scleroid.financematic.data.remote.ApiResponse;
@@ -49,8 +48,6 @@ import io.reactivex.Single;
 public class ExpenseRepo implements Repo<Expense> {
 
 
-	private final AppDatabase db;
-
 	public LocalExpenseLab getLocalExpenseLab() {
 		return localExpenseLab;
 	}
@@ -64,9 +61,8 @@ public class ExpenseRepo implements Repo<Expense> {
 	private RateLimiter<String> expenseListRateLimit = new RateLimiter<>(10, TimeUnit.MINUTES);
 
 	@Inject
-	ExpenseRepo(final AppDatabase db, final LocalExpenseLab localExpenseLab,
+	ExpenseRepo(final LocalExpenseLab localExpenseLab,
 	            final WebService webService, final AppExecutors appExecutors) {
-		this.db = db;
 		this.localExpenseLab = localExpenseLab;
 		this.webService = webService;
 		this.appExecutors = appExecutors;

@@ -6,7 +6,6 @@ import android.arch.lifecycle.MutableLiveData;
 import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.repo.CustomerRepo;
-import com.scleroid.financematic.data.repo.LoanRepo;
 import com.scleroid.financematic.viewmodels.CustomerViewModel;
 
 import java.util.List;
@@ -21,16 +20,14 @@ import javax.inject.Inject;
  */
 public class PeopleViewModel extends BaseViewModel implements CustomerViewModel {
 	private final CustomerRepo customerRepo;
-	private final LoanRepo loanRepo;
 	LiveData<List<Customer>> customers = new MutableLiveData<>();
 
 
 	@Inject
-	public PeopleViewModel(CustomerRepo customerRepo, LoanRepo loanRepo) {
+	public PeopleViewModel(CustomerRepo customerRepo) {
 
 		super();
 		this.customerRepo = customerRepo;
-		this.loanRepo = loanRepo;
 		//	this.installmentRepo = installmentRepo;
 
 		// installments = ;

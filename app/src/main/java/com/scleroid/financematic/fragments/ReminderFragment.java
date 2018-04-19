@@ -16,6 +16,8 @@ import com.scleroid.financematic.R;
  * Created by scleroid on 2/3/18.
  * <p>
  * Created by scleroid on 2/3/18.
+ * <p>
+ * Created by scleroid on 2/3/18.
  */
 /**
  * Created by scleroid on 2/3/18.
@@ -24,14 +26,14 @@ import com.scleroid.financematic.R;
 /**
  * Created by scleroid on 2/3/18.
  */
-
+@Deprecated
 public class ReminderFragment extends Fragment {
 
 	public ReminderFragment() {
 		// Required empty public constructor
 	}
 
-	public static ReminderFragment newInstance(String param1, String param2) {
+	public static ReminderFragment newInstance() {
 		ReminderFragment fragment = new ReminderFragment();
 		Bundle args = new Bundle();
 		fragment.setArguments(args);

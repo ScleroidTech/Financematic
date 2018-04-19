@@ -2,14 +2,10 @@ package com.scleroid.financematic.fragments.dialogs;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
@@ -42,21 +38,15 @@ import timber.log.Timber;
 public class DelayDialogFragment extends BaseDialog {
 
 
-	private static final String DIALOG_DATE = "DIALOG_DATE";
-	private static final int REQUEST_DATE = 0;
 	private static final String INSTALLMENT_ID = "installment_id";
 	private static final String LOAN_AC_NO = "ac_no";
 
 	@Inject
 	InstallmentRepo installmentRepo;
-	String interesting;
-	Spinner spin;
-	Context context;
-	EditText edittext;
 	Calendar myCalendar = Calendar.getInstance();
-	String[] country = {"Not now money", "", "OTHER"};
-	private Button b;
-	private TextView etrxDate, reasonEditText, etrxReceivedAmount, tv;
+	private TextView etrxDate;
+	private TextView reasonEditText;
+	private TextView etrxReceivedAmount;
 	private Date delayedDate;
 
 

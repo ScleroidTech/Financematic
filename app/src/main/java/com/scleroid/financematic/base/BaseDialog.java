@@ -23,7 +23,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.RelativeLayout;
@@ -38,8 +37,6 @@ public abstract class BaseDialog extends DialogFragment {
 	/*@Inject
 	DispatchingAndroidInjector<Fragment> childFragmentInjector;*/
 	private BaseActivity mActivity;
-	private View rootView;
-	private boolean dialogDismissed;
 
 
 /*
@@ -85,13 +82,6 @@ public abstract class BaseDialog extends DialogFragment {
 		return dialog;
 	}
 
-	/**
-	 * @return Root View
-	 */
-	public View getRootView() {
-		return rootView;
-
-	}
 
 	private void performDependencyInjection() {
 		AndroidSupportInjection.inject(this);
@@ -132,7 +122,6 @@ public abstract class BaseDialog extends DialogFragment {
 	@Override
 	public void onDismiss(final DialogInterface dialog) {
 		super.onDismiss(dialog);
-		dialogDismissed = true;
 	}
 
 

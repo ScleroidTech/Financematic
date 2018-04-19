@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.scleroid.financematic.R;
-import com.scleroid.financematic.adapter.PassbookAdapter;
 import com.scleroid.financematic.base.BaseFragment;
 import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.tempModels.Passbook;
@@ -26,7 +25,7 @@ import java.util.List;
  * @author Ganesh Kaple
  * @since 2/3/18
  */
-
+@Deprecated
 public class PassbookFragment extends BaseFragment {
 	private List<Passbook> passbookList = new ArrayList<>();
 	private RecyclerView recyclerView;

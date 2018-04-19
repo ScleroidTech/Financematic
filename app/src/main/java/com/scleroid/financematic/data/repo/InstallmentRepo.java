@@ -4,7 +4,6 @@ import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.scleroid.financematic.data.local.AppDatabase;
 import com.scleroid.financematic.data.local.lab.LocalInstallmentsLab;
 import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.data.remote.ApiResponse;
@@ -48,16 +47,14 @@ import io.reactivex.Single;
  */
 public class InstallmentRepo implements Repo<Installment> {
 
-	private final AppDatabase db;
 	private final LocalInstallmentsLab localInstallmentsLab;
 	private final WebService webService;
 	private final AppExecutors appExecutors;
 	private RateLimiter<String> installmentListRateLimit = new RateLimiter<>(10, TimeUnit.MINUTES);
 
 	@Inject
-	InstallmentRepo(final AppDatabase db, final LocalInstallmentsLab installmentsLab,
+	InstallmentRepo(final LocalInstallmentsLab installmentsLab,
 	                final WebService webService, final AppExecutors appExecutors) {
-		this.db = db;
 		this.localInstallmentsLab = installmentsLab;
 		this.webService = webService;
 		this.appExecutors = appExecutors;

@@ -7,7 +7,6 @@ import com.scleroid.financematic.data.local.AppDatabase;
 import com.scleroid.financematic.data.local.LocalDataSource;
 import com.scleroid.financematic.data.local.dao.TransactionDao;
 import com.scleroid.financematic.data.local.model.TransactionModel;
-import com.scleroid.financematic.utils.AppExecutors;
 
 import java.util.List;
 
@@ -25,14 +24,10 @@ import timber.log.Timber;
  * @since 4/5/18
  */
 public class LocalTransactionsLab implements LocalDataSource<TransactionModel> {
-	private final AppDatabase appDatabase;
-	private final AppExecutors appExecutors;
 	private final TransactionDao transactionDao;
 
 	@Inject
-	LocalTransactionsLab(final AppDatabase appDatabase, final AppExecutors appExecutors) {
-		this.appDatabase = appDatabase;
-		this.appExecutors = appExecutors;
+	LocalTransactionsLab(final AppDatabase appDatabase) {
 		this.transactionDao = appDatabase.transactionDao();
 	}
 
@@ -107,7 +102,7 @@ public class LocalTransactionsLab implements LocalDataSource<TransactionModel> {
 	 */
 	@Override
 	public void refreshItems() {
-
+		//TODO implement later
 	}
 
 	/**

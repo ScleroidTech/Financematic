@@ -1,4 +1,4 @@
-package com.scleroid.financematic.adapter;
+package com.scleroid.financematic.fragments.expense;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

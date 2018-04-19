@@ -4,7 +4,6 @@ import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.scleroid.financematic.data.local.AppDatabase;
 import com.scleroid.financematic.data.local.lab.LocalTransactionsLab;
 import com.scleroid.financematic.data.local.model.TransactionModel;
 import com.scleroid.financematic.data.remote.ApiResponse;
@@ -49,27 +48,21 @@ import io.reactivex.Single;
 
 public class TransactionsRepo implements Repo<TransactionModel> {
 
-	private final AppDatabase db;
-
-	public LocalTransactionsLab getLocalTransactionsLab() {
-		return localTransactionsLab;
-	}
-
 	private final LocalTransactionsLab localTransactionsLab;
-
 	private final WebService webService;
-
 	private final AppExecutors appExecutors;
-
 	private RateLimiter<String> transactionListRateLimit = new RateLimiter<>(10, TimeUnit.MINUTES);
 
 	@Inject
-	TransactionsRepo(final AppDatabase db, final LocalTransactionsLab transactionsLab,
+	TransactionsRepo(final LocalTransactionsLab transactionsLab,
 	                 final WebService webService, final AppExecutors appExecutors) {
-		this.db = db;
 		this.localTransactionsLab = transactionsLab;
 		this.webService = webService;
 		this.appExecutors = appExecutors;
+	}
+
+	public LocalTransactionsLab getLocalTransactionsLab() {
+		return localTransactionsLab;
 	}
 
 	public LiveData<Resource<List<TransactionModel>>> loadTransactionsForLoan(int loanAcNo) {

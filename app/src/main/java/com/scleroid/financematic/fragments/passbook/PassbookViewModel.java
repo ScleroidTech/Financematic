@@ -12,6 +12,7 @@ import java.util.List;
  * @author Ganesh Kaple
  * @since 4/9/18
  */
+@Deprecated
 public class PassbookViewModel extends BaseViewModel
 		implements com.scleroid.financematic.viewmodels.TransactionViewModel {
 	//TODO add  data in it

@@ -28,7 +28,6 @@ import com.scleroid.financematic.utils.ui.DateUtils;
 import com.scleroid.financematic.utils.ui.TextValidator;
 
 import java.math.BigDecimal;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -39,7 +38,6 @@ import java.util.regex.Pattern;
 import javax.inject.Inject;
 
 import butterknife.OnClick;
-import butterknife.Unbinder;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -52,7 +50,6 @@ import timber.log.Timber;
 
 public class RegisterLoanFragment extends BaseFragment {
 
-	private static final int REQUEST_DATE = 1;
 	private static final String CUSTOMER_ID = "customer_id";
 
 	private static final String DIALOG_DATE = "DIALOG_DATE";
@@ -61,14 +58,10 @@ public class RegisterLoanFragment extends BaseFragment {
 
 	@Inject
 	DateUtils dateUtils;
-	Spinner spin;
-	Calendar myCalendar = Calendar.getInstance();
-	Calendar myCalendar1 = Calendar.getInstance();
 	String[] country =
 			{LoanDurationType.MONTHLY, LoanDurationType.DAILY, LoanDurationType.WEEKLY,
 					LoanDurationType.BIWEEKLY, LoanDurationType.BIMONTHLY, LoanDurationType
 					.QUARTERLY, LoanDurationType.HALF_YEARLY, LoanDurationType.YEARLY};
-	Unbinder unbinder;
 	@Inject
 	LocalCustomerLab customerLab;
 	@Inject
@@ -79,10 +72,14 @@ public class RegisterLoanFragment extends BaseFragment {
 	@Inject
 	ActivityUtils activityUtils;
 	private Button b;
-	private Spinner spinner;
-	private TextView ettxloan_amout, startDateTextView, endDateTextView, ettxrateInterest,
-			ettxInterestAmount, ettxInstallmentduration, etTotalLoanAmount, ettxNoofInstallment,
-			tv;
+	private TextView ettxloan_amout;
+	private TextView startDateTextView;
+	private TextView endDateTextView;
+	private TextView ettxrateInterest;
+	private TextView ettxInterestAmount;
+	private TextView ettxInstallmentduration;
+	private TextView etTotalLoanAmount;
+	private TextView ettxNoofInstallment;
 
 	private String durationType = LoanDurationType.MONTHLY;
 	private Date startDate;
@@ -234,7 +231,6 @@ public class RegisterLoanFragment extends BaseFragment {
 
 
 		b = rootView.findViewById(R.id.btn_givenmoney);
-		tv = rootView.findViewById(R.id.displaytx);
 		b.setOnClickListener(v -> {
 			String startDateStr = startDateTextView.getText().toString();
 			String endDateStr = endDateTextView

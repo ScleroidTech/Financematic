@@ -12,8 +12,6 @@ import android.widget.TextView;
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 import com.scleroid.financematic.R;
-import com.scleroid.financematic.data.local.lab.LocalCustomerLab;
-import com.scleroid.financematic.data.local.lab.LocalLoanLab;
 import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.data.repo.CustomerRepo;
 import com.scleroid.financematic.data.repo.LoanRepo;
@@ -34,28 +32,22 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import timber.log.Timber;
 
-import static com.scleroid.financematic.fragments.dashboard.DashboardViewModel.RANGE;
+import static com.scleroid.financematic.fragments.dashboard.DashboardViewModel.FILTER_DAYS;
 
 
 public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyViewHolder> {
 
 
-	private final LocalLoanLab localLoanLab;
-	private final LocalCustomerLab localCustomerLab;
 	@Inject
 	DateUtils dateUtils = new DateUtils();
-	private List<Installment> installmentList;
-
-//add manoj
+	//add manoj
 	@Inject
 	ActivityUtils activityUtils;
+	private List<Installment> installmentList;
 
 
-	public DashboardAdapter(List<Installment> installmentList, LocalLoanLab localLoanLab,
-	                        LocalCustomerLab localCustomerLab) {
+	DashboardAdapter(List<Installment> installmentList) {
 		this.installmentList = installmentList;
-		this.localLoanLab = localLoanLab;
-		this.localCustomerLab = localCustomerLab;
 		//this.filteredInstallments = filterResults(installmentList);
 	}
 
@@ -73,7 +65,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
 		if (installments == null) return new ArrayList<>();
 		return Stream.of(installments)
 				.filter(installment -> dateUtils.isThisDateWithinRange(
-						installment.getInstallmentDate(), RANGE) == true)
+						installment.getInstallmentDate(), FILTER_DAYS) == true)
 				.collect(Collectors.toList());
 	}
 
@@ -89,9 +81,6 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
 	@Override
 	public void onBindViewHolder(MyViewHolder holder, int position) {
 		Installment dashBoardModel = installmentList.get(position);
-
-
-
 
 
 		if (dashBoardModel.getLoan() == null) {
@@ -112,7 +101,6 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
 		}
 		holder.setData(dashBoardModel);
 		holder.itemView.setTag(dashBoardModel);
-
 
 
 		//add manoj
@@ -158,8 +146,6 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
 	static class MyViewHolder extends RecyclerView.ViewHolder {
 
 
-
-
 		Installment installment;
 		@Inject
 		DateUtils dateUtils = new DateUtils();
@@ -184,7 +170,6 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
 		//add manoj
 		@BindView(R.id.dashboard_item_cardview)
 		CardView dashboarditemcardview;
-
 
 
 		MyViewHolder(View view) {
@@ -260,7 +245,6 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
 
 			GlobalBus.getBus().post(makeACall);
 		}
-
 
 
 	}

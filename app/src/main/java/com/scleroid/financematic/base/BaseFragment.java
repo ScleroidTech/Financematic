@@ -42,7 +42,6 @@ public abstract class BaseFragment<V extends BaseViewModel> extends Fragment {
 	@Inject
 	protected ViewModelProvider.Factory viewModelFactory;
 	private BaseActivity mActivity;
-	private V mViewModel;
 	private Unbinder unbinder;
 	private View rootView;
 
@@ -62,7 +61,7 @@ public abstract class BaseFragment<V extends BaseViewModel> extends Fragment {
 		super.onCreate(savedInstanceState);
 
 
-		mViewModel = getViewModel();
+		final V mViewModel = getViewModel();
 		setHasOptionsMenu(false);
 		//setHasOptionsMenu(true);
 		//getBaseActivity().getActionBarBase().setDisplayHomeAsUpEnabled(true);

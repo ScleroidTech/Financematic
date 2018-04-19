@@ -31,12 +31,10 @@ import javax.inject.Inject;
  * @since 4/9/18
  */
 public class DashboardViewModel extends BaseViewModel<Installment> implements CustomerViewModel {
-	public static final int RANGE = 100;
-	private final CustomerRepo customerRepo;
+	public static final int FILTER_DAYS = 100;
 	private final LoanRepo loanRepo;
 	private final InstallmentRepo installmentRepo;
 
-	private final int FILTER_DAYS = 30;
 	@Inject
 	InstallmentDao installmentDao;
 	@Inject
@@ -68,7 +66,6 @@ public class DashboardViewModel extends BaseViewModel<Installment> implements Cu
 	                          InstallmentRepo installmentRepo) {
 
 		super();
-		this.customerRepo = customerRepo;
 		this.loanRepo = loanRepo;
 		this.installmentRepo = installmentRepo;
 
@@ -117,7 +114,7 @@ public class DashboardViewModel extends BaseViewModel<Installment> implements Cu
 		if (installments == null) return new ArrayList<>();
 		return Stream.of(installments)
 				.filter(installment -> dateUtils.isThisDateWithinRange(
-						installment.getInstallmentDate(), RANGE))
+						installment.getInstallmentDate(), FILTER_DAYS))
 				.collect(Collectors.toList());
 	}
 
@@ -125,7 +122,7 @@ public class DashboardViewModel extends BaseViewModel<Installment> implements Cu
 
 		if (installments == null) return false;
 		return dateUtils.isThisDateWithinRange(
-				installment.getInstallmentDate(), RANGE);
+				installment.getInstallmentDate(), FILTER_DAYS);
 
 	}
 

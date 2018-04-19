@@ -45,11 +45,7 @@ import timber.log.Timber;
  */
 
 public class RegisterCustomerFragment extends BaseFragment {
-	Spinner spin;
-	private Spinner spinner;
-	TextView tv;
 	Button firstFragment;
-	private Button b;
 	private EditText etname, etmobile, etAddress, etIDproofno;
 	String[] selectidtype =
 			{IdProofType.AADHAR, IdProofType.PAN, IdProofType.RATION_CARD, IdProofType
@@ -67,7 +63,7 @@ public class RegisterCustomerFragment extends BaseFragment {
 		// Required empty public constructor
 	}
 
-	public static RegisterCustomerFragment newInstance(String param1, String param2) {
+	public static RegisterCustomerFragment newInstance() {
 		RegisterCustomerFragment fragment = new RegisterCustomerFragment();
 		Bundle args = new Bundle();
 		fragment.setArguments(args);

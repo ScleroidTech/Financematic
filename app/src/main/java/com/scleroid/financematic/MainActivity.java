@@ -64,10 +64,7 @@ public class MainActivity extends BaseActivity
 	private static final String TAG_REPORT = "report";
 	private static final String TAG_EXPENSES = "expenses";
 	private static final String TAG_SUMMERY = "Customer_Summery";
-	private static final String TAG_SETTINGS = "settings";
 	private static final String TAG_NOTIFICATION = "notification";
-	private static final int THREAD_COUNT = 3;
-	private static final int REQUEST_DELAY = 45;
 	private static final String DIALOG_DELAY = "Delay Payment";
 	private static final String DIALOG_MONEY_RECEIVED = "Received Payment";
 	// index to identify current nav menu item
@@ -82,29 +79,6 @@ public class MainActivity extends BaseActivity
 	ActivityUtils activityUtils;
 	@Inject
 	AppExecutors appExecutors;
-	private ActionBarDrawerToggle toggle;
-
-
-	public CustomerRepo getCustomerRepo() {
-		return customerRepo;
-	}
-
-	public LoanRepo getLoanRepo() {
-		return loanRepo;
-	}
-
-	public TransactionsRepo getTransactionsRepo() {
-		return transactionsRepo;
-	}
-
-	public InstallmentRepo getInstallmentRepo() {
-		return installmentRepo;
-	}
-
-	public ExpenseRepo getExpenseRepo() {
-		return expenseRepo;
-	}
-
 	@Inject
 	LoanRepo loanRepo;
 	@Inject
@@ -117,6 +91,7 @@ public class MainActivity extends BaseActivity
 	DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
 	@Inject
 	Context context;
+	private ActionBarDrawerToggle toggle;
 	private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
 			= item -> {
 		Fragment fragment;
@@ -158,31 +133,31 @@ public class MainActivity extends BaseActivity
 	private DrawerLayout drawer;
 	private NavigationView navigationView;
 	private String[] activityTitles;
-	private int layoutMain;
-
 
 	@NonNull
 	public static Intent newIntent(Context activity) {
 		return new Intent(activity, MainActivity.class);
 	}
 
-
-	/**
-	 * @return layout resource id
-	 */
-	@Override
-	public int getLayoutId() {
-		return R.layout.activity_main;
+	public CustomerRepo getCustomerRepo() {
+		return customerRepo;
 	}
 
-	/**
-	 * @return actionBar
-	 */
-	@Override
-	public ActionBar getActionBarBase() {
-		return getSupportActionBar();
+	public LoanRepo getLoanRepo() {
+		return loanRepo;
 	}
 
+	public TransactionsRepo getTransactionsRepo() {
+		return transactionsRepo;
+	}
+
+	public InstallmentRepo getInstallmentRepo() {
+		return installmentRepo;
+	}
+
+	public ExpenseRepo getExpenseRepo() {
+		return expenseRepo;
+	}
 
 	public ActionBarDrawerToggle getToggle() {
 		return toggle;
@@ -268,12 +243,20 @@ public class MainActivity extends BaseActivity
 
 	}
 
-	public DrawerLayout getDrawer() {
-		return drawer;
+	/**
+	 * @return layout resource id
+	 */
+	@Override
+	public int getLayoutId() {
+		return R.layout.activity_main;
 	}
 
-	public void setDrawer(final DrawerLayout drawer) {
-		this.drawer = drawer;
+	/**
+	 * @return actionBar
+	 */
+	@Override
+	public ActionBar getActionBarBase() {
+		return getSupportActionBar();
 	}
 
 	/***
@@ -322,6 +305,14 @@ public class MainActivity extends BaseActivity
 
 	}
 
+	private void selectNavMenu() {
+		navigationView.getMenu().getItem(navItemIndex).setChecked(true);
+	}
+
+	private void setToolbarTitle() {
+		getSupportActionBar().setTitle(activityTitles[navItemIndex]);
+	}
+
 
 
 /*
@@ -335,14 +326,6 @@ public class MainActivity extends BaseActivity
 
 
 	/*bottom navigation*/
-
-	private void selectNavMenu() {
-		navigationView.getMenu().getItem(navItemIndex).setChecked(true);
-	}
-
-	private void setToolbarTitle() {
-		getSupportActionBar().setTitle(activityTitles[navItemIndex]);
-	}
 
 	private Fragment getCurrentFragment() {
 		switch (navItemIndex) {
@@ -381,6 +364,14 @@ public class MainActivity extends BaseActivity
 
 	private void loadFragment(Fragment fragment) {
 		activityUtils.loadFragment(fragment, getSupportFragmentManager());
+	}
+
+	public DrawerLayout getDrawer() {
+		return drawer;
+	}
+
+	public void setDrawer(final DrawerLayout drawer) {
+		this.drawer = drawer;
 	}
 
 	@Override
