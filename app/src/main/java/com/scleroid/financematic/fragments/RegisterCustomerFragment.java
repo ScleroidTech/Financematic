@@ -220,7 +220,7 @@ return;
 	 */
 	@Override
 	public int getLayoutId() {
-		return R.layout.reg_new_customer;
+		return R.layout.fragment_register_new_customer;
 	}
 
 	/**

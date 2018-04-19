@@ -42,6 +42,7 @@
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintHorizontal_bias="0.678"
                 card_view:layout_constraintStart_toEndOf="@+id/expense_amount_text_view"
+                android:contentDescription="@string/expense_type_image"
                 card_view:layout_constraintTop_toTopOf="parent" />
 
 
