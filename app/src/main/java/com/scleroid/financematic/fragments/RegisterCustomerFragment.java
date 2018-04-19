@@ -169,7 +169,7 @@ public class RegisterCustomerFragment extends BaseFragment {
 				etAddress.setError("Enter Loan Amount");
 				return;
 			}
-			/*   activityUtils.loadFragment(new RegisterMoneyFragment(), getFragmentManager
+			/*   activityUtils.loadFragment(new RegisterLoanFragment(), getFragmentManager
 			() );
 			 */
 
@@ -206,7 +206,7 @@ return;
 		customerRepo.saveItem(customer).subscribe(customer1 -> {
 			// handle completion
 			Timber.d("Item Saved" + customer1.toString());
-			activityUtils.loadFragment(RegisterMoneyFragment.newInstance(customer1.getCustomerId
+			activityUtils.loadFragment(RegisterLoanFragment.newInstance(customer1.getCustomerId
 							()),
 					getFragmentManager());
 			//		Toasty.success(context, "Customers Added");

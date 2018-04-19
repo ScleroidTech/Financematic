@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -17,19 +17,6 @@
         android:layout_marginTop="60dp"
         >
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-
-
-            >
-            <com.github.mikephil.charting.charts.PieChart
-                android:id="@+id/pie_chart_expense"
-                android:layout_width="match_parent"
-                android:layout_height="160dp" />
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -88,27 +75,28 @@
 
             android:paddingBottom="5dp"
             android:paddingRight="10dp">
-
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight=".6"
-                android:layout_marginLeft="5dp"
-                android:background="@drawable/drawable_report_shadow"
-                android:paddingLeft="10dp"
-                android:paddingTop="5dp"
-                android:textColor="@color/colorPrimary"
 
+                android:layout_weight=".3"
                 >
-                <Spinner
-                    android:id="@+id/spinnershortdate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
 
-                    android:layout_gravity="right"
+       <TextView
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="Filter"
+           android:textAlignment="viewEnd"
+           android:layout_marginEnd="15dp"
+           android:textSize="17dp"
+           android:paddingTop="3dp"
+           android:textColor="@color/colorPrimary"
 
-                    android:textColor="@color/colorPrimary" />
+
+          />
+
             </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -130,6 +118,34 @@
 
                     android:textColor="@color/colorPrimary" />
 
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+android:layout_marginEnd="10dp"
+                android:layout_marginLeft="5dp"
+                android:paddingLeft="10dp"
+                >
+                <Button
+                    android:id="@+id/call_button"
+                    android:layout_width="70dp"
+                    android:layout_height="28dp"
+
+
+                    android:textSize="17dp" android:background="@drawable/button_rounded_border"
+                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:text="Go"
+                    android:textColor="@color/white"
+                    />
+
+                <!--  <Spinner
+                      android:id="@+id/spinnershortdate"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+
+                      android:layout_gravity="right"
+
+                      android:textColor="@color/colorPrimary" />-->
             </LinearLayout>
         </LinearLayout>
 
@@ -230,7 +246,49 @@
         </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/empty_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/simpleSearchView"
+            android:visibility="gone">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/no_address_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="80dp"
+                    android:text="Not Enough Data"
+                    android:textSize="30sp"
+
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/no_address_subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Make some transactions first"
+                    android:textSize="15sp"
+
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/no_address_title" />
+            </android.support.constraint.ConstraintLayout>
+        </android.support.v7.widget.CardView>
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/report_recycler_view"
             android:layout_width="match_parent"

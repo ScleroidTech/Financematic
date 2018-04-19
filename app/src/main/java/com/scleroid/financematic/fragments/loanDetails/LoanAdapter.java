@@ -145,6 +145,8 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> 
 			itemView.setTag(passbook);
 			if (passbook.getDelayReason() != null) {
 				summeryDescpription.setText(passbook.getDelayReason());
+			} else {
+				summeryDescpription.setText("Yet to come");
 			}
 			summeryAmount.setText(
 					String.valueOf(passbook.getExpectedAmt().intValue()));

@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,7 +18,9 @@ import com.scleroid.financematic.base.BaseFragment;
 import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.local.model.Loan;
-import com.scleroid.financematic.fragments.RegisterMoneyFragment;
+import com.scleroid.financematic.fragments.RegisterLoanFragment;
+import com.scleroid.financematic.utils.eventBus.Events;
+import com.scleroid.financematic.utils.eventBus.GlobalBus;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.RupeeTextView;
 
@@ -26,7 +29,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 import timber.log.Timber;
 
 /**
@@ -37,7 +39,7 @@ import timber.log.Timber;
 public class CustomerFragment extends BaseFragment {
 	@BindView(R.id.fab)
 	FloatingActionButton fab;
-	Unbinder unbinder1;
+
 	private ActivityUtils activityUtils = new ActivityUtils();
 	private static final String CUSTOMER_ID = "customer_id";
 	@BindView(R.id.name_text_view)
@@ -46,7 +48,7 @@ public class CustomerFragment extends BaseFragment {
 	TextView mobileTextView;
 	@BindView(R.id.address_text_view)
 	TextView addressTextView;
-	Unbinder unbinder;
+
 	@BindView(R.id.total_loan_text_view)
 	RupeeTextView totalLoanTextView;
 	private List<Loan> loanList = new ArrayList<>();
@@ -73,6 +75,18 @@ public class CustomerFragment extends BaseFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+	}
+
+	@BindView(R.id.empty_card)
+	CardView emptyCard;
+
+
+	/**
+	 * @return layout resource id
+	 */
+	@Override
+	public int getLayoutId() {
+		return R.layout.fragment_profile;
 	}
 
 	@Override
@@ -114,19 +128,11 @@ public class CustomerFragment extends BaseFragment {
 		recyclerView.setAdapter(mAdapter);
 
 
+		updateView(loanList);
 
 		return rootView;
 
 
-	}
-
-
-	/**
-	 * @return layout resource id
-	 */
-	@Override
-	public int getLayoutId() {
-		return R.layout.fragment_profile;
 	}
 
 	/**
@@ -135,9 +141,7 @@ public class CustomerFragment extends BaseFragment {
 	@Override
 	protected void subscribeToLiveData() {
 		customerViewModel.getLoanList().observe(this, items -> {
-			loanList = items;
-			mAdapter.setLoanList(loanList);
-			updateTotalLoanAmt();
+			updateView(items);
 
 		});
 
@@ -145,6 +149,21 @@ public class CustomerFragment extends BaseFragment {
 			theCustomer = item;
 			updateUi();
 		});
+	}
+
+	private void updateView(final List<Loan> items) {
+		if (items == null || items.isEmpty()) {
+			emptyCard.setVisibility(View.VISIBLE);
+			recyclerView.setVisibility(View.GONE);
+		} else {
+			emptyCard.setVisibility(View.GONE);
+			recyclerView.setVisibility(View.VISIBLE);
+
+			loanList = items;
+			mAdapter.setLoanList(loanList);
+			updateTotalLoanAmt();
+
+		}
 	}
 
 	private void updateUi() {
@@ -189,7 +208,39 @@ public class CustomerFragment extends BaseFragment {
 
 	@OnClick(R.id.fab)
 	public void onViewClicked() {
-		activityUtils.loadFragment(RegisterMoneyFragment.newInstance(customerId),
+		activityUtils.loadFragment(RegisterLoanFragment.newInstance(customerId),
 				getFragmentManager());
+	}
+
+
+	@OnClick({R.id.fab, R.id.mobile_text_view, R.id.address_text_view})
+	public void onViewClicked(View view) {
+		switch (view.getId()) {
+			case R.id.fab:
+				activityUtils.loadFragment(RegisterLoanFragment.newInstance(customerId),
+						getFragmentManager());
+			case R.id.mobile_text_view:
+				handleCallClick();
+				break;
+			case R.id.address_text_view:
+				handleAddressClick();
+				break;
+		}
+	}
+
+	private void handleCallClick() {
+		String phone = theCustomer.getMobileNumber();
+		Timber.d(phone + " of person " + theCustomer.getName());
+		Events.placeCall makeACall = new Events.placeCall(phone);
+
+		GlobalBus.getBus().post(makeACall);
+	}
+
+	private void handleAddressClick() {
+		String phone = theCustomer.getAddress();
+		Timber.d(phone + " of person " + theCustomer.getName());
+		Events.goToAddress makeACall = new Events.goToAddress(phone);
+
+		GlobalBus.getBus().post(makeACall);
 	}
 }

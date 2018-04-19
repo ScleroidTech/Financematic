@@ -544,6 +544,17 @@ public class MainActivity extends BaseActivity
 	}
 
 	@Subscribe
+	public void onAddressClick(Events.goToAddress addressCarrier) {
+
+		String address = addressCarrier.getAddress();
+
+		activityUtils.addressIntent(this, address);
+
+
+	}
+
+
+	@Subscribe
 	public void onCustomerFragmentOpen(Events.openCustomerFragment customerBundle) {
 		int customerId = customerBundle.getCustomerId();
 		CustomerFragment fragment = CustomerFragment.newInstance(customerId);

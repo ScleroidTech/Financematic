@@ -35,8 +35,10 @@ import com.scleroid.financematic.base.BaseViewModel;
 
         import com.scleroid.financematic.R;
         import com.scleroid.financematic.adapter.PassbookAdapter;
+import com.scleroid.financematic.data.tempModels.Passbook;
+import com.scleroid.financematic.utils.ui.RecyclerTouchListener;
 
-        import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -47,6 +49,11 @@ import java.util.List;
      * @since 2/3/18
      */
 public class Notification extends Fragment {
+
+        private List<Passbook> passbookList = new ArrayList<>();
+        private RecyclerView recyclerView;
+        private PassbookAdapter mAdapter;
+
 
         public Notification() {
             // Required empty public constructor
@@ -81,10 +88,86 @@ public class Notification extends Fragment {
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), broadcast);
 
 
+
+            recyclerView = rootView.findViewById(R.id.passbook_my_recycler);
+
+            mAdapter = new PassbookAdapter(passbookList);
+
+            recyclerView.setHasFixedSize(true);
+
+       /* recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this.getContext()));*/
+
+            // vertical RecyclerView
+            // keep movie_list_row.xml width to `match_parent`
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+
+            // horizontal RecyclerView
+            // keep movie_list_row.xml width to `wrap_content`
+            // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
+
+            recyclerView.setLayoutManager(mLayoutManager);
+
+
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+            recyclerView.setAdapter(mAdapter);
+
+            // row click listener
+            recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity().getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
+                @Override
+                public void onClick(View view, int position) {
+                    Passbook passbook = passbookList.get(position);
+                    Toast.makeText(getActivity().getApplicationContext(), passbook.getPassbook_received_money() + " is selected!", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onLongClick(View view, int position) {
+
+                }
+            }));
+
+            prepareLoanData();
+
             return rootView;
 
 
+
+
+
         }
+
+
+
+        private void prepareLoanData() {
+            Passbook passbook = new Passbook("14/6/2018 ", "Person Name 1", "50,000","");
+            passbookList.add(passbook);
+            passbook = new Passbook("12/6/2018 ", "Person Name 2", "","3000");
+            passbookList.add(passbook);
+            passbook = new Passbook("12/6/2018 ", "Person Name 3", "","4000");
+            passbookList.add(passbook);
+            passbook = new Passbook("12/6/2018 ", "Person Name 1", "1200","");
+            passbookList.add(passbook);
+            passbook = new Passbook("1/2/2018 ", "Person Name 2", "4000","");
+            passbookList.add(passbook);
+
+            passbook = new Passbook("10/1/2018 ", "Person Name 3", "","2000");
+            passbookList.add(passbook);
+
+            passbook = new Passbook("12/1/2018 ", "Person Name 1", "4000","");
+            passbookList.add(passbook);
+
+
+
+
+
+            // notify adapter about data set changes
+            // so that it will render the list with new data
+            mAdapter.notifyDataSetChanged();
+        }
+
+
+
+
 
 
     }

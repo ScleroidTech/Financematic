@@ -130,6 +130,18 @@ public class Events {
 		}
 	}
 
+
+	public static class goToAddress {
+		private String address;
+
+		public goToAddress(final String address) {
+			this.address = address;
+		}
+
+		public String getAddress() {
+			return address;
+		}
+	}
 	// Event used to show toast
 	public static class showToast {
 		private String message;
