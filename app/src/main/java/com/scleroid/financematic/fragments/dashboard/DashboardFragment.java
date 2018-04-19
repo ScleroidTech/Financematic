@@ -45,7 +45,6 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 
 	@Inject
 	TextViewUtils textViewUtils;
-	TextView firstFragment;
 	@BindView(R.id.total_amount_text_view)
 	RupeeTextView totalAmountTextView;
 	@BindView(R.id.remaining_amount_text_view)

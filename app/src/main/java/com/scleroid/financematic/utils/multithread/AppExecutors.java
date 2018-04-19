@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.scleroid.financematic.utils;
+package com.scleroid.financematic.utils.multithread;
 
 import android.os.Handler;
 import android.os.Looper;

@@ -13,8 +13,8 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.scleroid.financematic.utils.CommonUtils;
-import com.scleroid.financematic.utils.NetworkUtils;
 import com.scleroid.financematic.utils.eventBus.GlobalBus;
+import com.scleroid.financematic.utils.network.NetworkUtils;
 
 import org.greenrobot.eventbus.EventBus;
 

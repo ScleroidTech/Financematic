@@ -8,10 +8,10 @@ import com.scleroid.financematic.data.local.lab.LocalLoanLab;
 import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.data.remote.ApiResponse;
 import com.scleroid.financematic.data.remote.WebService;
-import com.scleroid.financematic.utils.AppExecutors;
-import com.scleroid.financematic.utils.NetworkBoundResource;
-import com.scleroid.financematic.utils.RateLimiter;
-import com.scleroid.financematic.utils.Resource;
+import com.scleroid.financematic.utils.multithread.AppExecutors;
+import com.scleroid.financematic.utils.network.NetworkBoundResource;
+import com.scleroid.financematic.utils.network.RateLimiter;
+import com.scleroid.financematic.utils.network.Resource;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;

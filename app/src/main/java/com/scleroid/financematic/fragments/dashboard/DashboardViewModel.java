@@ -13,8 +13,8 @@ import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.data.repo.InstallmentRepo;
 import com.scleroid.financematic.data.repo.LoanRepo;
-import com.scleroid.financematic.utils.AppExecutors;
-import com.scleroid.financematic.utils.Resource;
+import com.scleroid.financematic.utils.multithread.AppExecutors;
+import com.scleroid.financematic.utils.network.Resource;
 import com.scleroid.financematic.utils.ui.DateUtils;
 import com.scleroid.financematic.viewmodels.CustomerViewModel;
 

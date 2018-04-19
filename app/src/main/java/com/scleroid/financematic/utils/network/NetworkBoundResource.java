@@ -1,4 +1,4 @@
-package com.scleroid.financematic.utils;
+package com.scleroid.financematic.utils.network;
 
 /*
  * Copyright (C) 2017 The Android Open Source Project
@@ -24,6 +24,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.WorkerThread;
 
 import com.scleroid.financematic.data.remote.ApiResponse;
+import com.scleroid.financematic.utils.multithread.AppExecutors;
 
 import java.util.Objects;
 

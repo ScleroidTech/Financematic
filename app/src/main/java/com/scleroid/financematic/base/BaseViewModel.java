@@ -3,7 +3,7 @@ package com.scleroid.financematic.base;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 
-import com.scleroid.financematic.utils.Resource;
+import com.scleroid.financematic.utils.network.Resource;
 
 import java.util.List;
 

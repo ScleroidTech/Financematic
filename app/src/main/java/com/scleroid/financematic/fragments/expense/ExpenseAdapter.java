@@ -92,7 +92,7 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
 		public void setData(Context context, Expense expense) {
 			BigDecimal expenseAmount = expense.getExpenseAmount();
 			if (expenseAmount == null) return;
-			this.expenseAmount.setText(String.valueOf(expenseAmount.intValueExact()));
+			this.expenseAmount.setText(expenseAmount.toString());
 			setDate(expense.getExpenseDate());
 
 			String expenseType = expense.getExpenseType();

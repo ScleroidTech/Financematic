@@ -14,7 +14,7 @@
  *  limitations under the License
  */
 
-package com.scleroid.financematic.utils;
+package com.scleroid.financematic.utils.network;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

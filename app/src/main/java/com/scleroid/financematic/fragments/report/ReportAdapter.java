@@ -152,12 +152,12 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
 			accNoTextView.setText(String.valueOf(report.getLoanAcNo()));
 			transactionDate.setText(
 					dateUtils.getFormattedDateDigitsOnly(report.getTransactionDate()));
-			reportLent.setText(String.valueOf(
-					report.getLentAmt() != null ? report.getLentAmt().intValue() : " "));
-			reportEarned.setText(String.valueOf(
-					report.getGainedAmt() != null ? report.getGainedAmt().intValue() : " "));
-			receivedAmt.setText(String.valueOf(
-					report.getReceivedAmt() != null ? report.getReceivedAmt().intValue() : " "));
+			reportLent.setText(
+					report.getLentAmt() != null ? report.getLentAmt().toString() : " ");
+			reportEarned.setText(
+					report.getGainedAmt() != null ? report.getGainedAmt().toString() : " ");
+			receivedAmt.setText(
+					report.getReceivedAmt() != null ? report.getReceivedAmt().toString() : " ");
 			accNoTextView.setTextColor(Color.parseColor("#5432ff"));
 			filterData(getFilterType());
 

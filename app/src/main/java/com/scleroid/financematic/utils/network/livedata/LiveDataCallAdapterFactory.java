@@ -1,4 +1,4 @@
-package com.scleroid.financematic.utils;
+package com.scleroid.financematic.utils.network.livedata;
 
 import android.arch.lifecycle.LiveData;
 

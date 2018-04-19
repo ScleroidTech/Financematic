@@ -1,4 +1,4 @@
-package com.scleroid.financematic.utils;
+package com.scleroid.financematic.utils.multithread;
 
 import android.support.annotation.NonNull;
 

@@ -1,4 +1,4 @@
-package com.scleroid.financematic.utils;
+package com.scleroid.financematic.utils.network;
 
 /**
  * Copyright (C) 2018
@@ -9,9 +9,9 @@ package com.scleroid.financematic.utils;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import static com.scleroid.financematic.utils.Status.ERROR;
-import static com.scleroid.financematic.utils.Status.LOADING;
-import static com.scleroid.financematic.utils.Status.SUCCESS;
+import static com.scleroid.financematic.utils.network.Status.ERROR;
+import static com.scleroid.financematic.utils.network.Status.LOADING;
+import static com.scleroid.financematic.utils.network.Status.SUCCESS;
 
 /**
  * A generic class that holds a value with its loading status.
