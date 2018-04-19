@@ -241,6 +241,7 @@ public class RegisterLoanFragment extends BaseFragment {
 			String endDateStr = endDateTextView
 					.getText()
 					.toString();
+
 			if (TextUtils.isEmpty(loanAmt)) {
 				ettxloan_amout.setError("Enter Loan Amount");
 			}
@@ -429,7 +430,7 @@ public class RegisterLoanFragment extends BaseFragment {
 	}
 
 	private boolean isNotValidAmt(String loan_amountval) {
-		String EMAIL_PATTERN = "((\\\\d{1,4})(((\\\\.)(\\\\d{0,2})){0,1}))";
+		String EMAIL_PATTERN ="^[a-zA-Z0-9_.-]*$";
 
 		Pattern pattern = Pattern.compile(EMAIL_PATTERN);
 		Matcher matcher = pattern.matcher(loan_amountval);
