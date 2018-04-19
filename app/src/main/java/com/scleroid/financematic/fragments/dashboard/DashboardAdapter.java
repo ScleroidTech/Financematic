@@ -18,8 +18,8 @@ import com.scleroid.financematic.data.repo.LoanRepo;
 import com.scleroid.financematic.utils.eventBus.Events;
 import com.scleroid.financematic.utils.eventBus.GlobalBus;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
-import com.scleroid.financematic.utils.ui.CurrencyStringUtils;
 import com.scleroid.financematic.utils.ui.DateUtils;
+import com.scleroid.financematic.utils.ui.RupeeTextView;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -147,10 +147,9 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
 
 
 		Installment installment;
-		@Inject
+
 		DateUtils dateUtils = new DateUtils();
-		@Inject
-		CurrencyStringUtils currencyStringUtils = new CurrencyStringUtils();
+
 		@Inject
 		CustomerRepo customerRepo;
 		@Inject
@@ -158,7 +157,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
 		@BindView(R.id.customer_name_text_view)
 		TextView customerNameTextView;
 		@BindView(R.id.amount_text_view)
-		TextView amountTextView;
+		RupeeTextView amountTextView;
 		@BindView(R.id.due_date_text_view)
 		TextView dueDateTextView;
 		@BindView(R.id.time_remaining_text_view)
@@ -192,8 +191,8 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
 				amountTextView.setText("fetching");
 			} else {
 				amountTextView.setText(
-						currencyStringUtils.bindNumber(
-								expectedAmt.intValueExact()));
+
+						expectedAmt.toString());
 			}
 			dueDateTextView.setText(
 					dateUtils.getFormattedDate(installment.getInstallmentDate()));

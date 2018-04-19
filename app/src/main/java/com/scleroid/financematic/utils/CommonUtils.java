@@ -84,9 +84,9 @@ public final class CommonUtils {
 		return progressDialog;
 	}
 
-	public static void makeToast(final String message, final String type) {
-		Toast toast = Toasty.info(null, "Nothing is Happening, We're just having fun here");
-		if (type.equals("error")) {toast = Toasty.error(null, message);}
+	public static void makeToast(final String message, final String type, Context context) {
+		Toast toast = Toasty.info(context, "Nothing is Happening, We're just having fun here");
+		if ("error".equals(type)) {toast = Toasty.error(context, message);}
 //TODO Add Other types of toasts here.
 		toast.show();
 	}

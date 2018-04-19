@@ -4,7 +4,7 @@ package com.scleroid.financematic.data.tempModels;
  * Created by scleroid on 5/3/18.
  */
 
-
+@Deprecated
 public class Passbook {
     private String passbook_date, passbook_name, passbook_taken_money, passbook_received_money;
 

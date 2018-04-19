@@ -12,12 +12,12 @@ import java.math.BigDecimal;
  */
 public class MoneyConverter {
 	@TypeConverter
-	public static BigDecimal toBigDecimal(double number) {
-		return number == 0 ? null : new BigDecimal(number);
+	public static BigDecimal toBigDecimal(String number) {
+		return number == null ? null : new BigDecimal(number);
 	}
 
 	@TypeConverter
-	public static double toDouble(BigDecimal number) {
-		return number == null ? 0 : number.doubleValue();
+	public static String toString(BigDecimal number) {
+		return number == null ? null : number.toString();
 	}
 }
