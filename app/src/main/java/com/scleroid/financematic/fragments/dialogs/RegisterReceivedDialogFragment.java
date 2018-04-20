@@ -123,7 +123,7 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 
 		/*        final String text = spin.getSelectedItem().toString();*/
 		//Creating the ArrayAdapter instance having the filterSuggestions list
-		ArrayAdapter aa = new ArrayAdapter(getActivity().getApplicationContext(),
+		ArrayAdapter<String> aa = new ArrayAdapter<>(getActivity(),
 				android.R.layout.simple_spinner_item, country);
 		aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		//Setting the ArrayAdapter data on the Spinner
@@ -208,7 +208,10 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 									null,
 									receivedAmt, description, accountNo);
 					loan.setReceivedAmt(loan.getReceivedAmt().add(receivedAmt));
-					installmentRepo.deleteItem(expense).observeOn(
+					transactionsRepo.saveItem(transaction).observeOn(AndroidSchedulers
+							.mainThread())
+							.subscribe(transactionModel -> installmentRepo.deleteItem(expense)
+									.observeOn(
 							AndroidSchedulers.mainThread()).subscribe(() -> {
 								Toasty.success(
 										Objects.requireNonNull(
@@ -227,7 +230,7 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 										.show();
 								Timber.e("data  not updated for " + expense.toString());
 							}
-					);
+									));
 
 				})
 				.show();
