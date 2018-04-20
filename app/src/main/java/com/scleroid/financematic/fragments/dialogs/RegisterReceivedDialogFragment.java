@@ -208,41 +208,52 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 									null,
 									receivedAmt, description, accountNo);
 					loan.setReceivedAmt(loan.getReceivedAmt().add(receivedAmt));
-					loanRepo.updateItem(loan);
-					transactionsRepo.saveItem(transaction).observeOn(AndroidSchedulers
-							.mainThread())
-							.subscribe(transactionModel -> {
-								Toasty.success(
-										Objects.requireNonNull(
-												RegisterReceivedDialogFragment.this
-														.getContext()),
-										"Transaction has been recorded")
-										.show();
-								//	Timber.d(
-								//			"data added transaction " + transactionModel);
-								installmentRepo.deleteItem(expense)
-									.observeOn(
-							AndroidSchedulers.mainThread()).subscribe(() -> {
-								Toasty.success(
-										Objects.requireNonNull(
-												RegisterReceivedDialogFragment.this
-														.getContext()),
-										"Installment has been paid Successfully")
-										.show();
+					loanRepo.updateItem(loan)
+							.observeOn(AndroidSchedulers.mainThread())
+							.subscribe(loan1 -> {
 								Timber.d(
-										"data removed for Installment ");
-								transactionsRepo.saveItem(transaction);
+										"data updated for loan ");
+
+								transactionsRepo.saveItem(transaction).observeOn(AndroidSchedulers
+										.mainThread())
+										.subscribe(transactionModel -> {
+											Toasty.success(
+													Objects.requireNonNull(
+															RegisterReceivedDialogFragment.this
+																	.getContext()),
+													"Transaction has been recorded")
+													.show();
+											Timber.d(
+													"data added transaction ");
+											installmentRepo.deleteItem(expense)
+													.observeOn(
+															AndroidSchedulers.mainThread())
+													.subscribe(() -> {
+																Toasty.success(
+																		Objects.requireNonNull(
+																				RegisterReceivedDialogFragment.this
+																						.getContext()),
+																		"Installment has been paid" +
+																				" Successfully")
+																		.show();
+																Timber.d(
+																		"data removed for Installment ");
+																transactionsRepo.saveItem(transaction);
 
 
-										}, throwable -> {
-												Toasty.error(getBaseActivity(),
-														"Details Not Updated, Try again" +
-										" Later")
-										.show();
-											//		Timber.e("data  not updated for " + expense
-											// .toString());
-							}
-								);
+															}, throwable -> {
+																Toasty.error(getBaseActivity(),
+																		"Details Not Updated, Try" +
+																				" " +
+																				"again" +
+																				" Later")
+																		.show();
+																Timber.e("data  not updated for " + expense
+																);
+															}
+													);
+										});
+
 							});
 
 				})
