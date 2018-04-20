@@ -32,6 +32,7 @@ public class Installment {
 	Loan loan;
 	@PrimaryKey(autoGenerate = false)
 	private int installmentId;
+
 	@TypeConverters(DateConverter.class)
 	private Date installmentDate;
 	@TypeConverters(MoneyConverter.class)

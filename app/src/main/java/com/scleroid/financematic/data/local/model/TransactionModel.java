@@ -70,9 +70,9 @@ public class TransactionModel {
 		return "TransactionModel{" +
 				"transactionId=" + transactionId +
 				", transactionDate=" + transactionDate +
-				", lentAmt=" + lentAmt.intValue() +
-				", gainedAmt=" + gainedAmt.intValue() +
-				", receivedAmt=" + receivedAmt.intValue() +
+				", lentAmt=" + lentAmt == null ? null : lentAmt.toPlainString() +
+				", gainedAmt=" + gainedAmt == null ? null : gainedAmt.toPlainString() +
+				", receivedAmt=" + receivedAmt == null ? null : receivedAmt.toPlainString() +
 				", description='" + description + '\'' +
 				", loanAcNo=" + loanAcNo +
 				'}';

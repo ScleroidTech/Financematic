@@ -217,8 +217,8 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 														.getContext()),
 										"Transaction has been recorded")
 										.show();
-								Timber.d(
-										"data added transaction " + transactionModel);
+								//	Timber.d(
+								//			"data added transaction " + transactionModel);
 								installmentRepo.deleteItem(expense)
 									.observeOn(
 							AndroidSchedulers.mainThread()).subscribe(() -> {
@@ -238,7 +238,8 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 														"Details Not Updated, Try again" +
 										" Later")
 										.show();
-								Timber.e("data  not updated for " + expense.toString());
+											//		Timber.e("data  not updated for " + expense
+											// .toString());
 							}
 								);
 							});
