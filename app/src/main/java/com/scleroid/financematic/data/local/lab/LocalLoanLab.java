@@ -139,7 +139,7 @@ public class LocalLoanLab implements LocalDataSource<Loan> {
 		Timber.d("updating loan ");
 
 		return Single.fromCallable(() -> {
-			long rowId = loanDao.update(loan);
+			int rowId = loanDao.update(loan);
 			Timber.d("loan stored " + rowId);
 			return loan;
 		}).subscribeOn(Schedulers.io());

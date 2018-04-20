@@ -113,7 +113,7 @@ public interface LoanDao {
 	 * @param loan the loan which needs to be updated
 	 */
 	@Update(onConflict = REPLACE)
-	long update(Loan loan);
+	int update(Loan loan);
 
 	/**
 	 * Removes a particular dataset from the database
