@@ -15,7 +15,7 @@ import timber.log.Timber;
  */
 
 public class DateConverter {
-	private static DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
+	private static DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
 	@TypeConverter
 	public static Date toDate(String timestamp) {
 		Date date = null;
@@ -26,6 +26,11 @@ public class DateConverter {
 					"Exception occurred while parsing date" + timestamp + " error is " + e
 							.getMessage() + " " + e
 							.getErrorOffset());
+		} catch (ArrayIndexOutOfBoundsException e) {
+			Timber.e(
+					"Exception occurred while parsing date Out of Bound" + timestamp + " error is " +
+							"" + e
+							.getMessage() + " ");
 		}
 		return date;
 	}
