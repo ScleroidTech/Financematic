@@ -97,7 +97,7 @@ public class DelayDialogFragment extends BaseDialog {
 
 			}
 		});
-		reasonEditText.addTextChangedListener(new TextValidator(reasonEditText) {
+/*		reasonEditText.addTextChangedListener(new TextValidator(reasonEditText) {
 			@Override
 			public void validate(TextView textView, String text) {
 
@@ -108,7 +108,7 @@ public class DelayDialogFragment extends BaseDialog {
 
 
 			}
-		});
+		});*/
 
 		final DatePickerDialog.OnDateSetListener date = (view, year, monthOfYear, dayOfMonth) -> {
 			// TODO Auto-generated method stub
