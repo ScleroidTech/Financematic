@@ -1,11 +1,5 @@
 package com.scleroid.financematic.data.local;
 
-/**
- * Copyright (C) 2018
- *
- * @since 4/2/18
- */
-
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;
 
@@ -36,21 +30,13 @@ import com.scleroid.financematic.data.local.model.TransactionModel;
  */
 
 @Database(entities = {Customer.class, Loan.class, TransactionModel.class, Expense.class,
-		Installment.class}, version = 9, exportSchema = false)
+		Installment.class}, version = 10, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
-	/**
-	 * Holds the instance of the database
-	 *//*
+	/*
 
     private static AppDatabase instance;
 
-    *//**
-	 * Returns the instance of AppDatabase class, creates a new one if doesn't exists,
-	 * & returns that
-	 *
-	 * @param context Context of Application or current activity needs to be passed
-	 * @return AppDatabase returns the instance of Appdatabase
-	 *//*
+    *//*
     public static AppDatabase getAppDatabase(Context context) {
         *//*
            creates a new database if instance doesn't exists
@@ -68,10 +54,7 @@ public abstract class AppDatabase extends RoomDatabase {
         return instance;
     }
 
-    *//**
-	 * Destroys the instance of the database, doesn't actually destroy the database, just the
-	 * pointer to it,
-	 *//*
+    *//*
     public static void destroyInstance() {
 
         instance = null;
