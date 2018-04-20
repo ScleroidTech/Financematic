@@ -111,7 +111,7 @@ public class LocalTransactionsLab implements LocalDataSource<TransactionModel> {
 	@Override
 	public Completable deleteAllItems() {
 		Timber.d("Deleting all transactions");
-		return Completable.fromRunnable(() -> transactionDao.nukeTable())
+		return Completable.fromRunnable(transactionDao::nukeTable)
 				.subscribeOn(Schedulers.io());
 
 	}
