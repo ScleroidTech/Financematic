@@ -210,7 +210,16 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 					loan.setReceivedAmt(loan.getReceivedAmt().add(receivedAmt));
 					transactionsRepo.saveItem(transaction).observeOn(AndroidSchedulers
 							.mainThread())
-							.subscribe(transactionModel -> installmentRepo.deleteItem(expense)
+							.subscribe(transactionModel -> {
+								Toasty.success(
+										Objects.requireNonNull(
+												RegisterReceivedDialogFragment.this
+														.getContext()),
+										"Transaction has been recorded")
+										.show();
+								Timber.d(
+										"data added transaction " + transactionModel);
+								installmentRepo.deleteItem(expense)
 									.observeOn(
 							AndroidSchedulers.mainThread()).subscribe(() -> {
 								Toasty.success(
@@ -231,7 +240,8 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 										.show();
 								Timber.e("data  not updated for " + expense.toString());
 							}
-									));
+								);
+							});
 
 				})
 				.show();
