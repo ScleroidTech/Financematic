@@ -9,7 +9,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="50dp">
+        android:layout_marginTop="50dp"
+        android:paddingBottom="110dp">
 
 
         <LinearLayout
@@ -50,7 +51,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="7dp"
                         android:paddingStart="8dp"
-                        android:text="12%"
+
                         android:textAlignment="textStart"
                         android:textColor="#bfff"
                         android:textSize="20sp" />
@@ -60,7 +61,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
 
-                    android:layout_weight="1.5"
+                    android:layout_weight="1.6"
                     android:orientation="vertical">
 
                     <TextView
@@ -80,10 +81,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
-                        android:text="@string/amount"
+
                         android:textAlignment="center"
                         android:textColor="@color/white"
-                        android:textSize="33sp" />
+                        android:textSize="30sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -111,7 +112,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="7dp"
                         android:paddingEnd="8dp"
-                        android:text="6 Months"
+
                         android:textAlignment="textEnd"
                         android:textColor="#bfff"
                         android:textSize="20sp" />
