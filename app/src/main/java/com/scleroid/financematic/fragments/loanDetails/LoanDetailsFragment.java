@@ -172,7 +172,7 @@ public class LoanDetailsFragment extends BaseFragment {
 
 	private void updateView(final List<Installment> items, List<TransactionModel>
 			transactionList) {
-		if (items == null || items.isEmpty()) {
+		if (items.isEmpty() && transactionList.isEmpty()) {
 			emptyCard.setVisibility(View.VISIBLE);
 			recyclerView.setVisibility(View.GONE);
 		} else {

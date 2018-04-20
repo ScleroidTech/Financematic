@@ -13,11 +13,13 @@ import java.math.BigDecimal;
 public class MoneyConverter {
 	@TypeConverter
 	public static BigDecimal toBigDecimal(String number) {
-		return number == null ? null : new BigDecimal(number);
+		return number == null ? null : new BigDecimal(number).setScale(2,
+				BigDecimal.ROUND_HALF_EVEN);
 	}
 
 	@TypeConverter
 	public static String toString(BigDecimal number) {
-		return number == null ? null : number.toString();
+		return number == null ? null : number.setScale(2, BigDecimal.ROUND_HALF_EVEN)
+				.toPlainString();
 	}
 }
