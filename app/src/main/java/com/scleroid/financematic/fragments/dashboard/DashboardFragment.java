@@ -212,6 +212,7 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 	}
 
 	private void sort(final List<Installment> transactions) {
+		if (transactions == null) return;
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 			//	transactions.removeIf(transaction -> transaction.getLoan() == null || transaction

@@ -158,7 +158,7 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 
 		etrxDate.setOnClickListener(v -> {
 
-			new DatePickerDialog(getContext(), dateSetListener, myCalendar
+			new DatePickerDialog(getBaseActivity(), dateSetListener, myCalendar
 					.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
 					myCalendar.get(Calendar.DAY_OF_MONTH)).show();
 /*  FragmentManager fragmentManager = getActivity().getFragmentManager();
@@ -190,7 +190,7 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 				.onPositive((MaterialDialog dialog, DialogAction which) -> {
 					if (etrxReceivedAmount.getText() == null || paymentDate == null || description
 							== null) {
-						Toasty.error(getContext(), "You haven't filled all data").show();
+						Toasty.error(getBaseActivity(), "You haven't filled all data").show();
 						return;
 					}
 					Timber.d(
@@ -225,7 +225,8 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 								loanRepo.updateItem(loan);
 
 							}, throwable -> {
-								Toasty.error(getContext(), "Details Not Updated, Try again" +
+												Toasty.error(getBaseActivity(),
+														"Details Not Updated, Try again" +
 										" Later")
 										.show();
 								Timber.e("data  not updated for " + expense.toString());
