@@ -175,7 +175,7 @@ public class LoanRepo implements Repo<Loan> {
 
 	@Override
 	public Single<Loan> updateItem(final Loan loan) {
-		return null;
+		return localLoanLab.updateItem(loan);
 	}
 
 	@Override

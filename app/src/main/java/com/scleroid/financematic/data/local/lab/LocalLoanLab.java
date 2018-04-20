@@ -136,9 +136,14 @@ public class LocalLoanLab implements LocalDataSource<Loan> {
 
 	@Override
 	public Single<Loan> updateItem(final Loan loan) {
-		return null;
-	}
+		Timber.d("updating loan ");
 
+		return Single.fromCallable(() -> {
+			long rowId = loanDao.update(loan);
+			Timber.d("loan stored " + rowId);
+			return loan;
+		}).subscribeOn(Schedulers.io());
+	}
 	/**
 	 * gets a single item provided by id
 	 *

@@ -208,6 +208,7 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 									null,
 									receivedAmt, description, accountNo);
 					loan.setReceivedAmt(loan.getReceivedAmt().add(receivedAmt));
+					loanRepo.updateItem(loan);
 					transactionsRepo.saveItem(transaction).observeOn(AndroidSchedulers
 							.mainThread())
 							.subscribe(transactionModel -> {
@@ -231,9 +232,9 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 								Timber.d(
 										"data removed for Installment ");
 								transactionsRepo.saveItem(transaction);
-								loanRepo.updateItem(loan);
 
-							}, throwable -> {
+
+										}, throwable -> {
 												Toasty.error(getBaseActivity(),
 														"Details Not Updated, Try again" +
 										" Later")
