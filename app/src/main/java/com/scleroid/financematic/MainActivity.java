@@ -66,6 +66,7 @@ public class MainActivity extends BaseActivity
 	private static final String TAG_NOTIFICATION = "notification";
 	private static final String DIALOG_DELAY = "Delay Payment";
 	private static final String DIALOG_MONEY_RECEIVED = "Received Payment";
+	private static final String TAG_PEOPLE = "People";
 	// index to identify current nav menu item
 	public static int navItemIndex = 0;
 	public static String CURRENT_TAG = TAG_DASHBOARD;
@@ -95,40 +96,11 @@ public class MainActivity extends BaseActivity
 			= item -> {
 		Fragment fragment;
 
-		switch (item.getItemId()) {
-
-			case R.id.navigation_home:
-				/* toolbar.setCustomerName("Customer");*/
-				fragment = new DashboardFragment();
-				loadFragment(fragment);
-
-				return true;
-			case R.id.navigation_list:
-				/* toolbar.setCustomerName("Loan Details");*/
-				fragment = new PeopleFragment();
-				loadFragment(fragment);
-				return true;
-			case R.id.person_details:
-				/*    toolbar.setCustomerName("Report");*/
-				fragment = new ReportFragment();
-				loadFragment(fragment);
-
-				return true;
-			/* case R.id.navigation_person_loan_details:
-			 *//*  toolbar.setCustomerName("Person Details");*//*
-                        fragment = new RegisterCustomerFragment();
-                        loadFragment(fragment);
-                        return true;
-                    case R.id.navigation_reminders:
-                    *//*  toolbar.setCustomerName("Reminder");*//*
-                        fragment = new ReminderFragment();
-                        loadFragment(fragment);
-                        return true;
-
-    */
-		}
-		return false;
+		return handliBottomClick(item);
 	};
+
+
+
 	private DrawerLayout drawer;
 	private NavigationView navigationView;
 	private String[] activityTitles;
@@ -450,6 +422,7 @@ public class MainActivity extends BaseActivity
 		//Check to see which item was being clicked and perform appropriate action
 		switch (item.getItemId()) {
 			//Replacing the main content with ContentFragment Which is our Inbox View;
+			case R.id.navigation_home:
 			case R.id.nav_dashboard:
 				navItemIndex = 0;
 				CURRENT_TAG = TAG_DASHBOARD;
@@ -458,6 +431,7 @@ public class MainActivity extends BaseActivity
 				navItemIndex = 1;
 				CURRENT_TAG = TAG_NEW_CUSTOMER;
 				break;
+			case R.id.navigation_report:
 			case R.id.nav_report:
 				navItemIndex = 2;
 				CURRENT_TAG = TAG_REPORT;
@@ -470,6 +444,13 @@ public class MainActivity extends BaseActivity
 				navItemIndex = 4;
 				CURRENT_TAG = TAG_SUMMERY;
 				break;
+
+			case R.id.navigation_list:
+				navItemIndex = 5;
+				CURRENT_TAG = TAG_PEOPLE;
+				break;
+
+
 
           /* case R.id.nav_settings:
                 navItemIndex = 5;
@@ -499,6 +480,42 @@ public class MainActivity extends BaseActivity
 		drawer.closeDrawer(GravityCompat.START);
 	}
 
+	private boolean handliBottomClick(final MenuItem item) {
+		final Fragment fragment;
+		switch (item.getItemId()) {
+
+			case R.id.navigation_home:
+				/* toolbar.setCustomerName("Customer");*/
+				fragment = new DashboardFragment();
+				loadFragment(fragment);
+
+				return true;
+			case R.id.navigation_list:
+				/* toolbar.setCustomerName("Loan Details");*/
+				fragment = new PeopleFragment();
+				loadFragment(fragment);
+				return true;
+			case R.id.navigation_report:
+				/*    toolbar.setCustomerName("Report");*/
+				fragment = new ReportFragment();
+				loadFragment(fragment);
+
+				return true;
+			/* case R.id.navigation_person_loan_details:
+			 *//*  toolbar.setCustomerName("Person Details");*//*
+                        fragment = new RegisterCustomerFragment();
+                        loadFragment(fragment);
+                        return true;
+                    case R.id.navigation_reminders:
+                    *//*  toolbar.setCustomerName("Reminder");*//*
+                        fragment = new ReminderFragment();
+                        loadFragment(fragment);
+                        return true;
+
+    */
+		}
+		return false;
+	}
 	@Override
 	public void onFakerReady(Faker faker) {
 		Timber.wtf("is this called?");
