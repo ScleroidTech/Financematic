@@ -68,6 +68,7 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 	private Date paymentDate;
 	private String description;
 	private Loan loan;
+	private Installment installment;
 
 	public RegisterReceivedDialogFragment() {
 		// Required empty public constructor
@@ -107,7 +108,7 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 		if (bundle != null) {
 			accountNo = bundle.getInt(ACCOUNT_NO);
 			installmentId = bundle.getInt(INSTALLMENT_ID);
-
+			getInstallment();
 		}
 		final Spinner spin = rootView.findViewById(R.id.spinnerrx);
 		spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -199,6 +200,23 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 				})
 				.show();
 
+	}
+
+	private void getInstallment() {
+		installmentRepo.getLocalInstallmentsLab()
+				.getRxItem(accountNo)
+				.subscribeOn(Schedulers.io())
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe(customer -> {
+							installment = customer;
+							Timber.d("data received, displaying " + customer.toString());
+							final String installmentAmt = installment.getExpectedAmt()
+									.toPlainString();
+							//Set text to textview or hint to edittext here
+
+
+						},
+						throwable -> Timber.d("Not gonna show up " + throwable.getMessage()));
 	}
 
 	private void updateTitle(final MaterialStyledDialog.Builder builder) {

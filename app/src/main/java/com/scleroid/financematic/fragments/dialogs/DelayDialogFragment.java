@@ -92,6 +92,7 @@ public class DelayDialogFragment extends BaseDialog {
 							installmentAmount = installment.getExpectedAmt().toPlainString();
 							//TODO set TextView here, or edittext hint
 
+
 						},
 						throwable -> Timber.d("Not gonna show up " + throwable.getMessage()));
 
