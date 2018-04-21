@@ -18,12 +18,12 @@ package com.scleroid.financematic.base;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.RelativeLayout;
@@ -38,7 +38,17 @@ public abstract class BaseDialog extends DialogFragment {
 	/*@Inject
 	DispatchingAndroidInjector<Fragment> childFragmentInjector;*/
 	private BaseActivity mActivity;
+	private boolean dialogDismissed;
+	private Dialog dialog;
 
+/*	@Override
+	public void onResume() {
+		super.onResume();
+//...
+		if (dialogDismissed && dialog != null) {
+			dialog.dismiss();
+		}
+	}*/
 
 	@Override
 	public void onAttach(Context context) {
@@ -58,28 +68,12 @@ public abstract class BaseDialog extends DialogFragment {
 		super.onDetach();
 	}
 
-	@NonNull
+
 	@Override
-	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		// the content
-		final RelativeLayout root = new RelativeLayout(getActivity());
-		root.setLayoutParams(new ViewGroup.LayoutParams(
-				ViewGroup.LayoutParams.MATCH_PARENT,
-				ViewGroup.LayoutParams.WRAP_CONTENT));
-
-		// creating the fullscreen dialog
-		final Dialog dialog = new Dialog(getContext());
-		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		dialog.setContentView(root);
-		if (dialog.getWindow() != null) {
-			dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-			dialog.getWindow().setLayout(
-					ViewGroup.LayoutParams.MATCH_PARENT,
-					ViewGroup.LayoutParams.WRAP_CONTENT);
-		}
-		dialog.setCanceledOnTouchOutside(false);
-
-		return dialog;
+	public void show(final FragmentManager fragmentManager, final String tagName) {
+		//super.show(manar, tag);
+		if (fragmentManager.isStateSaved()) return;
+		super.show(fragmentManager, tagName);
 	}
 
 
@@ -119,20 +113,44 @@ public abstract class BaseDialog extends DialogFragment {
 		}
 	}
 
+	@NonNull
 	@Override
+	public Dialog onCreateDialog(Bundle savedInstanceState) {
+		// the content
+		final RelativeLayout root = new RelativeLayout(getActivity());
+		root.setLayoutParams(new ViewGroup.LayoutParams(
+				ViewGroup.LayoutParams.MATCH_PARENT,
+				ViewGroup.LayoutParams.WRAP_CONTENT));
+
+		// creating the fullscreen dialog
+		dialog = new Dialog(getContext());
+		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		dialog.setContentView(root);
+		if (dialog.getWindow() != null) {
+			dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+			dialog.getWindow().setLayout(
+					ViewGroup.LayoutParams.MATCH_PARENT,
+					ViewGroup.LayoutParams.WRAP_CONTENT);
+		}
+		dialog.setCanceledOnTouchOutside(false);
+
+		return dialog;
+	}
+/*	@Override
 	public void onDismiss(final DialogInterface dialog) {
 		super.onDismiss(dialog);
+		dialogDismissed = true;
 		dismiss();
 	}
 
-	/**
+	*//**
 	 * Dismiss the fragment and its dialog.  If the fragment was added to the back stack, all back
 	 * stack state up to and including this entry will be popped.  Otherwise, a new transaction
 	 * will
 	 * be committed to remove the fragment.
-	 */
+	 *//*
 	@Override
 	public void dismiss() {
 		super.dismiss();
-	}
+	}*/
 }

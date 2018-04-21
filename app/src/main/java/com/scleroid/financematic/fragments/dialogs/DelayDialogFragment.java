@@ -37,22 +37,29 @@ import timber.log.Timber;
 
 
 public class DelayDialogFragment extends BaseDialog {
-
-
 	private static final String INSTALLMENT_ID = "installment_id";
-	private static final String LOAN_AC_NO = "ac_no";
 
+
+	/*
+		@Override
+		public void onStop() {
+			this.dismiss();
+			super.onStop();
+
+		}
+
+	*/
+	private static final String LOAN_AC_NO = "ac_no";
 	@Inject
 	InstallmentRepo installmentRepo;
 	Calendar myCalendar = Calendar.getInstance();
+	private String installmentAmount;
 	private TextView etrxDate;
 	private TextView reasonEditText;
 	private TextView etrxReceivedAmount;
 	private Date delayedDate;
 	private Installment installment;
 	private Date installmentDate;
-
-
 	public DelayDialogFragment() {
 		// Required empty public constructor
 	}
@@ -66,12 +73,6 @@ public class DelayDialogFragment extends BaseDialog {
 		fragment.setArguments(args);
 		return fragment;
 	}
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-	}
-
 
 	@NonNull
 	@Override
@@ -88,6 +89,8 @@ public class DelayDialogFragment extends BaseDialog {
 				.subscribe(customer -> {
 							installment = customer;
 							installmentDate = installment.getInstallmentDate();
+							installmentAmount = installment.getExpectedAmt().toPlainString();
+							//TODO set TextView here, or edittext hint
 
 						},
 						throwable -> Timber.d("Not gonna show up " + throwable.getMessage()));
@@ -146,44 +149,70 @@ public class DelayDialogFragment extends BaseDialog {
 		});
 
 
-		return new MaterialStyledDialog.Builder(getActivity()).setTitle(R.string.delay_view)
-				.setCustomView(rootView)
-				.setStyle(Style.HEADER_WITH_ICON)
-				.withIconAnimation(true)
-				.setIcon(R.drawable.ic_stopwatch)
-				.setPositiveText(R.string.submit)
-				.onPositive((dialog, which) -> {
-					if (etrxReceivedAmount.getText() == null || delayedDate == null ||
-							reasonEditText
-									.getText() == null) {
-						Toasty.error(getContext(), "You haven't filled all data").show();
-						return;
-					}
-					Timber.d(
-							"Your Input: \n" + etrxDate.getText().toString() + "\n" +
+		return
+				new MaterialStyledDialog.Builder(getActivity()).setTitle(R.string.delay_view)
+						.setCustomView(rootView)
+						.setStyle(Style.HEADER_WITH_ICON)
+						.withIconAnimation(true).setCancelable(true)
+						.setIcon(R.drawable.ic_stopwatch)
+						.setCancelable(true)
+						.setPositiveText(R.string.submit)
+						.onPositive((dialog, which) -> {
+							if (etrxReceivedAmount.getText() == null || delayedDate == null ||
 									reasonEditText
-											.getText()
-											.toString() + "\n" + etrxReceivedAmount.getText()
-									.toString() + "\nEnd.");
-					Installment installment = new Installment(installationId, delayedDate,
-							new BigDecimal(etrxReceivedAmount.getText().toString()), accountNo);
-					installmentRepo.updateItem(installment).observeOn(
-							AndroidSchedulers.mainThread()).subscribe(installment1 -> {
-								Toasty.success(getContext(), "Details Updated Successfully")
-										.show();
-								Timber.d("data updated for Installment " + installment1.toString
-										());
-							}, throwable -> {
-								Toasty.error(getContext(), "Details Not Updated, Try again Later")
-										.show();
-								Timber.e("data  not updated for " + installment.toString());
+											.getText() == null) {
+								Toasty.error(getContext(), "You haven't filled all data").show();
+								return;
 							}
-					);
+							Timber.d(
+									"Your Input: \n" + etrxDate.getText().toString() + "\n" +
+											reasonEditText
+													.getText()
+													.toString() + "\n" + etrxReceivedAmount
+											.getText()
+											.toString() + "\nEnd.");
+							Installment installment = new Installment(installationId, delayedDate,
+									new BigDecimal(etrxReceivedAmount.getText().toString()),
+									accountNo);
+							installmentRepo.updateItem(installment).observeOn(
+									AndroidSchedulers.mainThread()).subscribe(installment1 -> {
+										Toasty.success(getContext(), "Details Updated " +
+												"Successfully")
+												.show();
+										Timber.d("data updated for Installment " +
+												installment1.toString
+														());
+										this.dismiss();
+									}, throwable -> {
+										Toasty.error(getContext(), "Details Not Updated, Try " +
+												"again" +
+												" Later")
+												.show();
+										Timber.e("data  not updated for " + installment.toString
+												());
+									}
+							);
+
+						})
+						.show();
 
 
-				})
-				.show();
+	}
 
+	/**
+	 * Dismiss the fragment and its dialog.  If the fragment was added to the back stack, all back
+	 * stack state up to and including this entry will be popped.  Otherwise, a new transaction
+	 * will
+	 * be committed to remove the fragment.
+	 */
+	@Override
+	public void dismiss() {
+		super.dismissAllowingStateLoss();
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 	}
 
 

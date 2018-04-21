@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.scleroid.financematic.MainActivity;
 import com.scleroid.financematic.R;
+import com.scleroid.financematic.base.BaseDialog;
 
 import javax.inject.Inject;
 
@@ -45,7 +46,7 @@ public class ActivityUtils {
 	}
 
 
-	public void loadDialogFragment(DialogFragment fragment, Fragment targetFragment,
+	public void loadDialogFragment(BaseDialog fragment, Fragment targetFragment,
 	                               FragmentManager fm, int requestValue, String dialogValue) {
 
 		// FragmentTransaction fragmentTransaction = fm.beginTransaction();
@@ -57,6 +58,7 @@ public class ActivityUtils {
 		// fragmentTransaction.commit(); // save the changes
 
 		fragment.setTargetFragment(targetFragment, requestValue);
+
 		fragment.show(fm, dialogValue);
 		// load fragment
 	}

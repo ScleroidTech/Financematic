@@ -6,12 +6,12 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
 
 import com.scleroid.financematic.R;
+import com.scleroid.financematic.base.BaseDialog;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -25,7 +25,7 @@ import java.util.GregorianCalendar;
  * @author Ganesh Kaple
  * @since 09-01-2016
  */
-public class DatePickerDialogFragment extends DialogFragment {
+public class DatePickerDialogFragment extends BaseDialog {
 	public static final String EXTRA_DATE = "com.example.ganesh.criminalintent.date";
 	private static final String ARG_DATE = "crime_date";
 	private DatePicker mDatePicker;
