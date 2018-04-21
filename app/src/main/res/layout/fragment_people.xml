@@ -15,6 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="55dp"
+            android:paddingBottom="100dp"
 
             android:background="#f9f7f7"
             android:orientation="vertical">
@@ -79,16 +80,7 @@
                 android:layout_marginRight="5dp"
                 android:scrollbars="vertical"
                 tools:listitem="@layout/list_item_people" />
-            <!--    <Button
-                    android:id="@+id/button_list"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/list_all_peoples_recycler"
 
-
-
-
-                    android:text="person summery" />-->
         </RelativeLayout>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>
