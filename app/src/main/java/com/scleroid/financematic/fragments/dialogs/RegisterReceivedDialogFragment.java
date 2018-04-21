@@ -1,5 +1,6 @@
 package com.scleroid.financematic.fragments.dialogs;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
@@ -202,6 +203,7 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 
 	}
 
+	@SuppressLint("CheckResult")
 	private void getInstallment() {
 		installmentRepo.getLocalInstallmentsLab()
 				.getRxItem(accountNo)
@@ -212,7 +214,7 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 							Timber.d("data received, displaying " + customer.toString());
 							final String installmentAmt = installment.getExpectedAmt()
 									.toPlainString();
-							//Set text to textview or hint to edittext here
+							//TODO Set text to textview or hint to edittext here
 
 
 						},
