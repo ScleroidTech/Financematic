@@ -47,7 +47,6 @@ import javax.inject.Inject;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
-import es.dmoral.toasty.Toasty;
 import io.bloco.faker.Faker;
 import timber.log.Timber;
 
@@ -342,9 +341,7 @@ public class MainActivity extends BaseActivity
 			case 3:
 				// Expenses fragment
 				return new ExpenseFragment();
-			case 4:
-				// Expenses fragment
-				return new LoanDetailsFragment();
+
 
           /*
            TODO
@@ -441,11 +438,15 @@ public class MainActivity extends BaseActivity
 	@Override
 	public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 		Fragment fragment;
-		Toasty.error(getBaseContext(), item.getTitle() + " clicked", Toast.LENGTH_SHORT).show();
+		//	Toasty.error(getBaseContext(), item.getTitle() + " clicked", Toast.LENGTH_SHORT)
+		// .show();
+		handleUiClick(item);
 
-		// Handle navigation view item clicks here.
-		int id = item.getItemId();
 
+		return true;
+	}
+
+	private void handleUiClick(final @NonNull MenuItem item) {
 		//Check to see which item was being clicked and perform appropriate action
 		switch (item.getItemId()) {
 			//Replacing the main content with ContentFragment Which is our Inbox View;
@@ -496,8 +497,6 @@ public class MainActivity extends BaseActivity
 
 		loadFragmentFromNavigationDrawers();
 		drawer.closeDrawer(GravityCompat.START);
-
-		return true;
 	}
 
 	@Override
