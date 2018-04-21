@@ -72,6 +72,16 @@ public class LocalInstallmentsLab implements LocalDataSource<Installment> {
 	}
 
 	/**
+	 * gets a single item provided by id
+	 *
+	 * @param itemId the id of the item to be get
+	 */
+	public Single<Installment> getRxItem(final int itemId) {
+		Timber.d("getting installment with id %d", itemId);
+		return installmentDao.getRxInstallment(itemId);
+	}
+
+	/**
 	 * Saves item to data source
 	 *
 	 * @param item item object to be saved

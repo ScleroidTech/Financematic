@@ -11,6 +11,8 @@ import com.scleroid.financematic.data.local.model.Installment;
 
 import java.util.List;
 
+import io.reactivex.Single;
+
 import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 
 /**
@@ -46,6 +48,16 @@ public interface InstallmentDao {
 	 */
 	@Query("SELECT * FROM Installment where installmentId = :serialNo ")
 	LiveData<Installment> getInstallment(int serialNo);
+
+	/**
+	 * Returns a specific value compared to serialNo passed
+	 *
+	 * @param serialNo the serialNo of object to be found
+	 * @return installment object with same serialNo
+	 */
+	@Query("SELECT * FROM Installment where installmentId = :serialNo ")
+	Single<Installment> getRxInstallment(int serialNo);
+
 
 	/**
 	 * select query to count Number of installment

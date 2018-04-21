@@ -28,6 +28,7 @@ import javax.inject.Inject;
 
 import es.dmoral.toasty.Toasty;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 /**
@@ -48,6 +49,8 @@ public class DelayDialogFragment extends BaseDialog {
 	private TextView reasonEditText;
 	private TextView etrxReceivedAmount;
 	private Date delayedDate;
+	private Installment installment;
+	private Date installmentDate;
 
 
 	public DelayDialogFragment() {
@@ -78,7 +81,16 @@ public class DelayDialogFragment extends BaseDialog {
 		View rootView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_delay, null);
 		int installationId = getArguments().getInt(INSTALLMENT_ID);
 		int accountNo = getArguments().getInt(LOAN_AC_NO);
+		installmentRepo.getLocalInstallmentsLab()
+				.getRxItem(installationId)
+				.subscribeOn(Schedulers.io())
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe(customer -> {
+							installment = customer;
+							installmentDate = installment.getInstallmentDate();
 
+						},
+						throwable -> Timber.d("Not gonna show up " + throwable.getMessage()));
 
 		etrxDate = rootView.findViewById(R.id.exp_date);
 		etrxReceivedAmount = rootView.findViewById(R.id.amount_edit_text);
@@ -120,9 +132,12 @@ public class DelayDialogFragment extends BaseDialog {
 
 		etrxDate.setOnClickListener(v -> {
 
-			new DatePickerDialog(getContext(), date, myCalendar
+
+			DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), date, myCalendar
 					.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-					myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+					myCalendar.get(Calendar.DAY_OF_MONTH));
+			datePickerDialog.getDatePicker().setMinDate(installmentDate.getDate());
+			datePickerDialog.show();
           /*  FragmentManager fragmentManager = getActivity().getFragmentManager();
             DialogFragment dialogFragment = new Fragment_datepicker_all();
           *//*  dialogFragment.setTargetFragment(fragmentManager.findFragmentByTag

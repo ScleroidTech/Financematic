@@ -148,8 +148,6 @@ public class RegisterLoanFragment extends BaseFragment {
 		spin.setAdapter(aa);
 
 
-
-
 		ettxloan_amout.addTextChangedListener(
 				new TextValidator(ettxloan_amout) {
 					@Override
@@ -351,47 +349,6 @@ public class RegisterLoanFragment extends BaseFragment {
 				});
 	}
 
-
-	private long convertTime(long timeDiff) {
-
-		long divider = durationConverter(durationType);
-
-
-		return (TimeUnit.MILLISECONDS.toDays(timeDiff) / divider);
-	}
-
-	private long durationConverter(final String durationType) {
-		long divider = 0;
-		switch (durationType) {
-			case LoanDurationType.MONTHLY:
-				divider = 30;
-				break;
-			case LoanDurationType.DAILY:
-				divider = 1;
-				break;
-			case LoanDurationType.WEEKLY:
-				divider = 7;
-				break;
-			case LoanDurationType.BIWEEKLY:
-				divider = 15;
-				break;
-			case LoanDurationType.BIMONTHLY:
-				divider = 60;
-				break;
-			case LoanDurationType.QUARTERLY:
-				divider = 90;
-				break;
-			case LoanDurationType.HALF_YEARLY:
-				divider = 180;
-				break;
-			case LoanDurationType.YEARLY:
-				divider = 365;
-				break;
-
-		}
-		return divider;
-	}
-
 	private boolean isNotValidAmt(String loan_amountval) {
 		String EMAIL_PATTERN = "^[0-9_.-]*$";
 
@@ -434,7 +391,6 @@ public class RegisterLoanFragment extends BaseFragment {
 		return R.layout.registor_given_money;
 	}
 
-
 	/**
 	 * Override so you can observe your viewModel
 	 */
@@ -453,21 +409,6 @@ public class RegisterLoanFragment extends BaseFragment {
 		return null;
 	}
 
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-		super.onActivityResult(requestCode, resultCode, intent);
-
-		if (requestCode == REQUEST_DATE_FROM) {
-			startDate = (Date) intent.getSerializableExtra(DatePickerDialogFragment.EXTRA_DATE);
-			startDateTextView.setText(dateUtils.getFormattedDate(startDate));
-		} else if (requestCode == REQUEST_DATE_TO) {
-			endDate = (Date) intent.getSerializableExtra(DatePickerDialogFragment.EXTRA_DATE);
-			endDateTextView.setText(dateUtils.getFormattedDate(endDate));
-		}
-		calculateNoOfInstallments();
-
-	}
-
 	private void calculateNoOfInstallments() {
 		if (startDate == null || endDate == null) return;
 
@@ -480,6 +421,61 @@ public class RegisterLoanFragment extends BaseFragment {
 
 		Timber.d(" installment calculation " + totalDuration + " " + durationDivided);
 
+
+	}
+
+	private long convertTime(long timeDiff) {
+
+		long divider = durationConverter(durationType);
+
+
+		return (TimeUnit.MILLISECONDS.toDays(timeDiff) / divider);
+	}
+
+	private long durationConverter(final String durationType) {
+		long divider = 0;
+		switch (durationType) {
+			case LoanDurationType.MONTHLY:
+				divider = 30;
+				break;
+			case LoanDurationType.DAILY:
+				divider = 1;
+				break;
+			case LoanDurationType.WEEKLY:
+				divider = 7;
+				break;
+			case LoanDurationType.BIWEEKLY:
+				divider = 15;
+				break;
+			case LoanDurationType.BIMONTHLY:
+				divider = 60;
+				break;
+			case LoanDurationType.QUARTERLY:
+				divider = 90;
+				break;
+			case LoanDurationType.HALF_YEARLY:
+				divider = 180;
+				break;
+			case LoanDurationType.YEARLY:
+				divider = 365;
+				break;
+
+		}
+		return divider;
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+		super.onActivityResult(requestCode, resultCode, intent);
+
+		if (requestCode == REQUEST_DATE_FROM) {
+			startDate = (Date) intent.getSerializableExtra(DatePickerDialogFragment.EXTRA_DATE);
+			startDateTextView.setText(dateUtils.getFormattedDate(startDate));
+		} else if (requestCode == REQUEST_DATE_TO) {
+			endDate = (Date) intent.getSerializableExtra(DatePickerDialogFragment.EXTRA_DATE);
+			endDateTextView.setText(dateUtils.getFormattedDate(endDate));
+		}
+		calculateNoOfInstallments();
 
 	}
 
