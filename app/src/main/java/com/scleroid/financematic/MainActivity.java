@@ -92,18 +92,13 @@ public class MainActivity extends BaseActivity
 	@Inject
 	Context context;
 	private ActionBarDrawerToggle toggle;
-	private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-			= item -> {
-		Fragment fragment;
-
-		return handliBottomClick(item);
-	};
 
 
 
 	private DrawerLayout drawer;
 	private NavigationView navigationView;
 	private String[] activityTitles;
+	private BottomNavigationView bottomNavigationView;
 
 	@NonNull
 	public static Intent newIntent(Context activity) {
@@ -184,9 +179,12 @@ public class MainActivity extends BaseActivity
 
 		drawer.addDrawerListener(toggle);
 		toggle.syncState();
-		final BottomNavigationView bottomNavigationView = findViewById(R.id.navigation);
+		bottomNavigationView = findViewById(R.id.navigation);
 		bottomNavigationView.setOnNavigationItemSelectedListener
-				(mOnNavigationItemSelectedListener);
+				(item -> {
+					handleUiClick(item);
+					return true;
+				});
 		BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
 
 		// attaching bottom sheet behaviour - hide / show on scroll
@@ -238,6 +236,8 @@ public class MainActivity extends BaseActivity
 		// selecting appropriate nav menu item
 		selectNavMenu();
 
+		//selecting appropriate bottom navigation menu item
+		if (navItemIndex < 3) { selectBottomNavMenu(); }
 		// set toolbar title
 		setToolbarTitle();
 
@@ -280,6 +280,10 @@ public class MainActivity extends BaseActivity
 		navigationView.getMenu().getItem(navItemIndex).setChecked(true);
 	}
 
+	private void selectBottomNavMenu() {
+		MenuItem item = bottomNavigationView.getMenu().getItem(navItemIndex);
+		if (item != null) { item.setChecked(true); }
+	}
 	private void setToolbarTitle() {
 		getSupportActionBar().setTitle(activityTitles[navItemIndex]);
 	}
@@ -305,15 +309,17 @@ public class MainActivity extends BaseActivity
 				// dashboard
 				return new DashboardFragment();
 			case 1:
-				// new Customers fragment
-				return new RegisterCustomerFragment();
+				return new PeopleFragment();
+
 			case 2:
 				// Report fragment
 				return new ReportFragment();
 			case 3:
+				// new Customers fragment
+				return new RegisterCustomerFragment();
+			case 4:
 				// Expenses fragment
 				return new ExpenseFragment();
-
 
           /*
            TODO
@@ -335,13 +341,6 @@ public class MainActivity extends BaseActivity
 		activityUtils.loadFragmentWithoutBackStack(fragment, getSupportFragmentManager());
 	}
 
-	public DrawerLayout getDrawer() {
-		return drawer;
-	}
-
-	public void setDrawer(final DrawerLayout drawer) {
-		this.drawer = drawer;
-	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -428,7 +427,7 @@ public class MainActivity extends BaseActivity
 				CURRENT_TAG = TAG_DASHBOARD;
 				break;
 			case R.id.nav_new_customer:
-				navItemIndex = 1;
+				navItemIndex = 3;
 				CURRENT_TAG = TAG_NEW_CUSTOMER;
 				break;
 			case R.id.navigation_report:
@@ -437,16 +436,12 @@ public class MainActivity extends BaseActivity
 				CURRENT_TAG = TAG_REPORT;
 				break;
 			case R.id.nav_expenses:
-				navItemIndex = 3;
+				navItemIndex = 4;
 				CURRENT_TAG = TAG_EXPENSES;
 				break;
-			case R.id.summery_details:
-				navItemIndex = 4;
-				CURRENT_TAG = TAG_SUMMERY;
-				break;
 
-			case R.id.navigation_list:
-				navItemIndex = 5;
+			case R.id.navigation_list_people:
+				navItemIndex = 1;
 				CURRENT_TAG = TAG_PEOPLE;
 				break;
 
@@ -480,42 +475,7 @@ public class MainActivity extends BaseActivity
 		drawer.closeDrawer(GravityCompat.START);
 	}
 
-	private boolean handliBottomClick(final MenuItem item) {
-		final Fragment fragment;
-		switch (item.getItemId()) {
 
-			case R.id.navigation_home:
-				/* toolbar.setCustomerName("Customer");*/
-				fragment = new DashboardFragment();
-				loadFragment(fragment);
-
-				return true;
-			case R.id.navigation_list:
-				/* toolbar.setCustomerName("Loan Details");*/
-				fragment = new PeopleFragment();
-				loadFragment(fragment);
-				return true;
-			case R.id.navigation_report:
-				/*    toolbar.setCustomerName("Report");*/
-				fragment = new ReportFragment();
-				loadFragment(fragment);
-
-				return true;
-			/* case R.id.navigation_person_loan_details:
-			 *//*  toolbar.setCustomerName("Person Details");*//*
-                        fragment = new RegisterCustomerFragment();
-                        loadFragment(fragment);
-                        return true;
-                    case R.id.navigation_reminders:
-                    *//*  toolbar.setCustomerName("Reminder");*//*
-                        fragment = new ReminderFragment();
-                        loadFragment(fragment);
-                        return true;
-
-    */
-		}
-		return false;
-	}
 	@Override
 	public void onFakerReady(Faker faker) {
 		Timber.wtf("is this called?");

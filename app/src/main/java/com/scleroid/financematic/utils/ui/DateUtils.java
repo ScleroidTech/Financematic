@@ -9,8 +9,6 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
-import timber.log.Timber;
-
 public class DateUtils {
 	private Date date, time;
 
@@ -83,7 +81,7 @@ public class DateUtils {
 
 		long timeDiff = date.getTime() - currentDateTime.getTime();
 		long days = TimeUnit.MILLISECONDS.toDays(timeDiff);
-		Timber.d("time Difference" + days);
+		//	Timber.d("time Difference" + days);
 		return days <= range && days >= 0;
 
 		//ok everything is fine, date in range
@@ -150,8 +148,7 @@ public class DateUtils {
 		Calendar dateProvided = Calendar.getInstance();
 		dateProvided.setTime(startDate);
 
-		dateProvided.add(Calendar.DATE, Math.toIntExact(durationType));
-		Date newDate = dateProvided.getTime();
-		return newDate;
+		dateProvided.add(Calendar.DATE, Long.valueOf(durationType).intValue());
+		return dateProvided.getTime();
 	}
 }
