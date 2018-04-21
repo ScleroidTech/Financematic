@@ -194,6 +194,13 @@ public class InsertExpenseDialogFragment extends BaseDialog {
 		expenseDate = myCalendar.getTime();
 		etrxDate.setText(sdf.format(expenseDate));
 	}
+/*
+	@Override
+	public void onDismiss(final DialogInterface dialog) {
+		super.onDismiss(dialog);
+	}
+
+*/
 
 
 }

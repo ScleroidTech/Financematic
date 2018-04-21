@@ -188,19 +188,15 @@ public class DelayDialogFragment extends BaseDialog {
 		delayedDate = myCalendar.getTime();
 		etrxDate.setText(sdf.format(delayedDate));
 	}
-
-
-
 /*
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-    }
+	@Override
+	public void onDismiss(final DialogInterface dialog) {
+		super.onDismiss(dialog);
+	}
 
-    @Override
-    public void onNothingSelected(AdapterView<?> arg0) {
-    }
 */
+
 
 
 }

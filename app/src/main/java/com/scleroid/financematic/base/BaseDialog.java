@@ -122,7 +122,17 @@ public abstract class BaseDialog extends DialogFragment {
 	@Override
 	public void onDismiss(final DialogInterface dialog) {
 		super.onDismiss(dialog);
+		dismiss();
 	}
 
-
+	/**
+	 * Dismiss the fragment and its dialog.  If the fragment was added to the back stack, all back
+	 * stack state up to and including this entry will be popped.  Otherwise, a new transaction
+	 * will
+	 * be committed to remove the fragment.
+	 */
+	@Override
+	public void dismiss() {
+		super.dismiss();
+	}
 }

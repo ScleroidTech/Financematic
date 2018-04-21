@@ -115,16 +115,7 @@ public class PeopleFragment extends BaseFragment {
 
 							}
 						});
-		//	peopleRecyclerView.addOnItemTouchListener(recyclerTouchListener);
 
-      /*  //SET ITS PROPERTIES
-        peopleRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        peopleRecyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        //ADAPTER
-        final PeopleAdapter adapter=new PeopleAdapter(this,getPlayers());
-        peopleRecyclerView.setAdapter(adapter);*/
-		//SEARCH
 		simpleSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 			@Override
 			public boolean onQueryTextSubmit(String query) {

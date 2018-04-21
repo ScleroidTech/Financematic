@@ -86,4 +86,13 @@ public class DatePickerDialogFragment extends DialogFragment {
 		intent.putExtra(EXTRA_DATE, date);
 		getTargetFragment().onActivityResult(getTargetRequestCode(), ResultCode, intent);
 	}
+
+/*
+	@Override
+	public void onDismiss(final DialogInterface dialog) {
+		super.onDismiss(dialog);
+	}
+*/
+
+
 }

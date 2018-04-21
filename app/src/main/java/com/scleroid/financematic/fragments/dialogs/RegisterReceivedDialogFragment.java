@@ -2,7 +2,6 @@ package com.scleroid.financematic.fragments.dialogs;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -40,6 +39,7 @@ import javax.inject.Inject;
 
 import es.dmoral.toasty.Toasty;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
@@ -82,10 +82,12 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 		return fragment;
 	}
 
+/*
 	@Override
 	public void onDismiss(final DialogInterface dialog) {
 		super.onDismiss(dialog);
 	}
+*/
 
 
 	@Override
@@ -168,17 +170,7 @@ DialogFragment dialogFragment = new Fragment_datepicker_all();
 dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 		});
 		MaterialStyledDialog.Builder builder = new MaterialStyledDialog.Builder(getActivity());
-		loanRepo.getLocalLoanLab()
-				.getRxItem(accountNo)
-				.subscribeOn(Schedulers.io())
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe(customer -> {
-							loan = customer;
-							Timber.d("data received, displaying " + customer.toString());
-							builder.setTitle("Receive Payment for " + customer.getAccountNo());
-
-						},
-						throwable -> Timber.d("Not gonna show up " + throwable.getMessage()));
+		updateTitle(builder);
 
 
 		return builder
@@ -199,66 +191,106 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 									.toString() + "\nEnd.");
 					BigDecimal receivedAmt =
 							new BigDecimal(etrxReceivedAmount.getText().toString());
-					Installment expense =
-							new Installment(installmentId, paymentDate,
-									receivedAmt,
-									accountNo);
-					TransactionModel transaction =
-							new TransactionModel(CommonUtils.getRandomInt(), paymentDate, null,
-									null,
-									receivedAmt, description, accountNo);
-					loan.setReceivedAmt(loan.getReceivedAmt().add(receivedAmt));
-					loanRepo.updateItem(loan)
-							.observeOn(AndroidSchedulers.mainThread())
-							.subscribe(loan1 -> {
-								Timber.d(
-										"data updated for loan ");
-
-								transactionsRepo.saveItem(transaction).observeOn(AndroidSchedulers
-										.mainThread())
-										.subscribe(transactionModel -> {
-											Toasty.success(
-													Objects.requireNonNull(
-															RegisterReceivedDialogFragment.this
-																	.getContext()),
-													"Transaction has been recorded")
-													.show();
-											Timber.d(
-													"data added transaction ");
-											installmentRepo.deleteItem(expense)
-													.observeOn(
-															AndroidSchedulers.mainThread())
-													.subscribe(() -> {
-																Toasty.success(
-																		Objects.requireNonNull(
-																				RegisterReceivedDialogFragment.this
-																						.getContext()),
-																		"Installment has been paid" +
-																				" Successfully")
-																		.show();
-																Timber.d(
-																		"data removed for Installment ");
-																transactionsRepo.saveItem(transaction);
-
-
-															}, throwable -> {
-																Toasty.error(getBaseActivity(),
-																		"Details Not Updated, Try" +
-																				" " +
-																				"again" +
-																				" Later")
-																		.show();
-																Timber.e("data  not updated for " + expense
-																);
-															}
-													);
-										});
-
-							});
+					Installment expense = createInstallment(receivedAmt);
+					TransactionModel transaction = createTransaction(receivedAmt);
+					updateReceivedAmount(receivedAmt);
+					updateLoan(expense, transaction);
 
 				})
 				.show();
 
+	}
+
+	private void updateTitle(final MaterialStyledDialog.Builder builder) {
+		loanRepo.getLocalLoanLab()
+				.getRxItem(accountNo)
+				.subscribeOn(Schedulers.io())
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe(customer -> {
+							loan = customer;
+							Timber.d("data received, displaying " + customer.toString());
+							builder.setTitle("Receive Payment for " + customer.getAccountNo());
+
+						},
+						throwable -> Timber.d("Not gonna show up " + throwable.getMessage()));
+	}
+
+	private void updateReceivedAmount(final BigDecimal receivedAmt) {
+		loan.setReceivedAmt(loan.getReceivedAmt().add(receivedAmt));
+	}
+
+	@NonNull
+	private TransactionModel createTransaction(final BigDecimal receivedAmt) {
+		return new TransactionModel(CommonUtils.getRandomInt(), paymentDate, null,
+				null,
+				receivedAmt, description, accountNo);
+	}
+
+	@NonNull
+	private Installment createInstallment(final BigDecimal receivedAmt) {
+		return new Installment(installmentId, paymentDate,
+				receivedAmt,
+				accountNo);
+	}
+
+	private void updateLoan(final Installment expense, final TransactionModel transaction) {
+		loanRepo.updateItem(loan)
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe(loan1 -> {
+					Timber.d(
+							"data updated for loan ");
+
+					saveTransaction(expense, transaction);
+
+				});
+	}
+
+	@NonNull
+	private Disposable saveTransaction(final Installment expense,
+	                                   final TransactionModel transaction) {
+		return transactionsRepo.saveItem(transaction).observeOn(AndroidSchedulers
+				.mainThread())
+				.subscribe(transactionModel -> {
+					Toasty.success(
+							Objects.requireNonNull(
+									RegisterReceivedDialogFragment.this
+											.getContext()),
+							"Transaction has been recorded")
+							.show();
+					Timber.d(
+							"data added transaction ");
+					deleteInstallment(expense, transaction);
+				});
+	}
+
+	private void deleteInstallment(final Installment expense, final TransactionModel transaction) {
+		installmentRepo.deleteItem(expense)
+				.observeOn(
+						AndroidSchedulers.mainThread())
+				.subscribe(() -> {
+							Toasty.success(
+									Objects.requireNonNull(
+											RegisterReceivedDialogFragment.this
+													.getContext()),
+									"Installment has been paid" +
+											" Successfully")
+									.show();
+							Timber.d(
+									"data removed for Installment ");
+							transactionsRepo.saveItem(transaction);
+
+
+						}, throwable -> {
+							Toasty.error(getBaseActivity(),
+									"Details Not Updated, Try" +
+											" " +
+											"again" +
+											" Later")
+									.show();
+							Timber.e("data  not updated for " + expense
+							);
+						}
+				);
 	}
 
 	private boolean isValidEmail(String email) {

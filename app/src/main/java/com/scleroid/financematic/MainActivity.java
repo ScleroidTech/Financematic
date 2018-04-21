@@ -363,7 +363,7 @@ public class MainActivity extends BaseActivity
 	}
 
 	private void loadFragment(Fragment fragment) {
-		activityUtils.loadFragment(fragment, getSupportFragmentManager());
+		activityUtils.loadFragmentWithoutBackStack(fragment, getSupportFragmentManager());
 	}
 
 	public DrawerLayout getDrawer() {
