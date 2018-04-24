@@ -7,8 +7,8 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/summery_date"
-    android:layout_width="90dp"
-    android:layout_height="wrap_content"
+    android:layout_width="80dp"
+    android:layout_height="80dp"
 
     android:background="@drawable/shadow7"
     android:orientation="vertical"
@@ -17,7 +17,7 @@
     card_view:layout_constraintBottom_toBottomOf="parent"
     card_view:layout_constraintStart_toStartOf="parent"
     card_view:layout_constraintTop_toTopOf="parent"
-    tools:showIn="@layout/recycler_fragment_expense">
+    tools:showIn="@layout/list_item_expense">
 
     <TextView
         android:id="@+id/month_text_view"

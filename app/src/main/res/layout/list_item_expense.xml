@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="90dp">
 
     <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="88dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
         card_view:cardBackgroundColor="@color/white"
         card_view:cardCornerRadius="15dp"
         card_view:cardElevation="2dp"
@@ -15,14 +17,14 @@
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal">
 
             <include
                 android:id="@+id/include2"
                 layout="@layout/date_layout_expense"
-                android:layout_width="90dp"
-                android:layout_height="wrap_content"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_marginStart="16dp"
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintStart_toStartOf="parent"
@@ -38,24 +40,24 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="4dp"
+                android:contentDescription="@string/expense_type_image"
                 card_view:layout_constraintBottom_toTopOf="@+id/expense_type_text_view"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintHorizontal_bias="0.678"
                 card_view:layout_constraintStart_toEndOf="@+id/expense_amount_text_view"
-                android:contentDescription="@string/expense_type_image"
                 card_view:layout_constraintTop_toTopOf="parent" />
 
 
             <TextView
                 android:id="@+id/expense_type_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
 
 
+                android:layout_height="0dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
+
                 android:layout_marginStart="8dp"
-                android:text="Room Rent"
                 android:textAlignment="center"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/gray_text"
@@ -68,14 +70,14 @@
 
             <com.scleroid.financematic.utils.ui.RupeeTextView
                 android:id="@+id/expense_amount_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_gravity="center_horizontal"
 
                 android:layout_marginBottom="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="@string/amount"
+
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="32sp"
                 card_view:layout_constraintBottom_toBottomOf="parent"
@@ -83,26 +85,8 @@
                 card_view:layout_constraintTop_toTopOf="parent" />
 
 
-            <!--        <Button
-                android:id="@+id/Btn_paid_rx_summery"
-                android:layout_width="wrap_content"
-                android:layout_height="31dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/button_rounded_green"
-                android:text="Paid"
-                android:textColor="@color/white"
-                card_view:layout_constraintBottom_toBottomOf="parent"
-                card_view:layout_constraintEnd_toEndOf="parent"
-                card_view:layout_constraintTop_toTopOf="parent" />-->
-
         </android.support.constraint.ConstraintLayout>
-        <!--
-                <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="2dp"
-                    android:background="#c4bebe" />-->
+
     </android.support.v7.widget.CardView>
 
-</android.support.constraint.ConstraintLayout>
+</FrameLayout>

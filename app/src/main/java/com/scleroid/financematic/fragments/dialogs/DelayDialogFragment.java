@@ -134,7 +134,7 @@ public class DelayDialogFragment extends BaseDialog {
 			DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), date, myCalendar
 					.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
 					myCalendar.get(Calendar.DAY_OF_MONTH));
-			datePickerDialog.getDatePicker().setMinDate(installmentDate.getDate());
+			datePickerDialog.getDatePicker().setMinDate(installmentDate.getTime());
 			datePickerDialog.show();
           /*  FragmentManager fragmentManager = getActivity().getFragmentManager();
             DialogFragment dialogFragment = new Fragment_datepicker_all();
@@ -200,10 +200,6 @@ public class DelayDialogFragment extends BaseDialog {
 	 * will
 	 * be committed to remove the fragment.
 	 */
-	@Override
-	public void dismiss() {
-		super.dismissAllowingStateLoss();
-	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

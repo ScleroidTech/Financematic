@@ -511,7 +511,7 @@ android:layout_gravity="end"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="vertical"
-            tools:listitem="@layout/recycler_fragment_expense" />
+        tools:listitem="@layout/list_item_expense" />
 </LinearLayout>
 
 
