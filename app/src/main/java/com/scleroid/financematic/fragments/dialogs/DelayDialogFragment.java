@@ -40,15 +40,7 @@ public class DelayDialogFragment extends BaseDialog {
 	private static final String INSTALLMENT_ID = "installment_id";
 
 
-	/*
-		@Override
-		public void onStop() {
-			this.dismiss();
-			super.onStop();
 
-		}
-
-	*/
 	private static final String LOAN_AC_NO = "ac_no";
 	@Inject
 	InstallmentRepo installmentRepo;
