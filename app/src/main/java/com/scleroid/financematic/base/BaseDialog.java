@@ -23,7 +23,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.RelativeLayout;
@@ -69,13 +68,18 @@ public abstract class BaseDialog extends DialogFragment {
 	}
 
 
+	/* A hack that didn't work
 	@Override
 	public void show(final FragmentManager fragmentManager, final String tagName) {
 		//super.show(manar, tag);
 		if (fragmentManager.isStateSaved()) return;
-		super.show(fragmentManager, tagName);
-	}
 
+		FragmentTransaction ft = fragmentManager.beginTransaction();
+		ft.add(this, tagName);
+		ft.disallowAddToBackStack();
+		ft.commitAllowingStateLoss();
+	}
+*/
 
 	private void performDependencyInjection() {
 		AndroidSupportInjection.inject(this);
@@ -136,6 +140,15 @@ public abstract class BaseDialog extends DialogFragment {
 
 		return dialog;
 	}
+
+
+	@Override
+	public void onStop() {
+		this.dismiss();
+		super.onStop();
+
+	}
+
 /*	@Override
 	public void onDismiss(final DialogInterface dialog) {
 		super.onDismiss(dialog);
@@ -148,9 +161,10 @@ public abstract class BaseDialog extends DialogFragment {
 	 * stack state up to and including this entry will be popped.  Otherwise, a new transaction
 	 * will
 	 * be committed to remove the fragment.
-	 *//*
+	 */
 	@Override
 	public void dismiss() {
+		this.dismissAllowingStateLoss();
 		super.dismiss();
-	}*/
+	}
 }
