@@ -212,7 +212,7 @@ public class DelayDialogFragment extends BaseDialog {
 
 
 	private boolean isValidEmail(String email) {
-		String EMAIL_PATTERN = "^[0-9]*$";
+		String EMAIL_PATTERN = "^[0-9_.]*$";
 
 		Pattern pattern = Pattern.compile(EMAIL_PATTERN);
 		Matcher matcher = pattern.matcher(email);

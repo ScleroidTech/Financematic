@@ -206,7 +206,7 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 	@SuppressLint("CheckResult")
 	private void getInstallment() {
 		installmentRepo.getLocalInstallmentsLab()
-				.getRxItem(accountNo)
+				.getRxItem(installmentId)
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(customer -> {
@@ -215,7 +215,8 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 							final String installmentAmt = installment.getExpectedAmt()
 									.toPlainString();
 							//TODO Set text to textview or hint to edittext here
-
+						
+							etrxReceivedAmount .setText(installmentAmt);
 
 						},
 						throwable -> Timber.d("Not gonna show up " + throwable.getMessage()));
@@ -314,7 +315,7 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 	}
 
 	private boolean isValidEmail(String email) {
-		String EMAIL_PATTERN = "^[0-9]*$";
+		String EMAIL_PATTERN = "^[0-9_.]*$";
 
 		Pattern pattern = Pattern.compile(EMAIL_PATTERN);
 		Matcher matcher = pattern.matcher(email);
