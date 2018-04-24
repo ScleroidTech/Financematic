@@ -158,7 +158,8 @@
                         android:maxLines="2"
                         android:paddingBottom="10dp"
                         android:paddingTop="10dp"
-                        android:textColor="#409bbf" />
+                        android:textColor="#409bbf"
+                        android:maxLength="22"/>
 
 
                 </LinearLayout>
