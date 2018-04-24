@@ -6,6 +6,7 @@ import com.scleroid.financematic.fragments.RegisterLoanFragment;
 import com.scleroid.financematic.fragments.ReminderFragment;
 import com.scleroid.financematic.fragments.customer.CustomerFragment;
 import com.scleroid.financematic.fragments.dashboard.DashboardFragment;
+import com.scleroid.financematic.fragments.dialogs.DatePickerDialogFragment;
 import com.scleroid.financematic.fragments.dialogs.DelayDialogFragment;
 import com.scleroid.financematic.fragments.dialogs.RegisterReceivedDialogFragment;
 import com.scleroid.financematic.fragments.expense.ExpenseFragment;
@@ -16,6 +17,7 @@ import com.scleroid.financematic.fragments.report.ReportFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
+import io.bloco.faker.components.Date;
 
 /**
  * Copyright (C) 2018
@@ -64,5 +66,7 @@ public abstract class FragmentBuildersModule {
 	@ContributesAndroidInjector
 	abstract DelayDialogFragment contributeDelayDialog();
 
+	@ContributesAndroidInjector
+	abstract DatePickerDialogFragment contributeDatePickerDialogFragment();
 
 }

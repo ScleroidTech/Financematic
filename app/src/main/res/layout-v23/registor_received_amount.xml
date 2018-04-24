@@ -21,7 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
-                android:background="@drawable/shadow"
+
                 android:orientation="vertical">
 
                 <!-- Full Name Label -->
@@ -32,36 +32,37 @@
                     android:layout_marginTop="15dp"
                     android:orientation="horizontal"
                     android:paddingBottom="5dp"
-                    android:paddingRight="10dp">
+                    android:paddingRight="5dp">
 
                     <TextView
 
-
+android:gravity="center_vertical"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="10dp"
-                        android:layout_weight=".7"
+                        android:layout_weight=".55"
 
                         android:text="Paid Date"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="#409bbf"
-                        android:textSize="20sp" />
+                        android:textSize="16sp" />
 
                     <EditText
+                        android:gravity="center_vertical"
                         android:id="@+id/rxDate"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight=".7"
+                        android:layout_weight=".5"
                         android:background="@drawable/shadow"
-
+                        android:textSize="16sp"
                         android:clickable="true"
                         android:drawableEnd="@drawable/ic_date_range_black_24dp"
                         android:drawableRight="@drawable/ic_date_range_black_24dp"
                         android:drawableTint="@color/colorPrimaryDark"
                         android:editable="false"
                         android:focusable="true"
-                        android:hint="selecte Date"
+
 
 
                         android:paddingBottom="9dp"
@@ -78,22 +79,22 @@
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal"
                     android:paddingBottom="5dp"
-                    android:paddingRight="10dp"
-                    android:weightSum="1">
+                    android:paddingRight="5dp"
+              >
 
                     <TextView
 
-
+android:gravity="center_vertical"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="10dp"
-                        android:layout_weight=".5"
+                        android:layout_weight=".55"
 
                         android:text="Received Amount"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="#409bbf"
-                        android:textSize="20sp" />
+                        android:textSize="16sp" />
 
                     <EditText
                         android:id="@+id/rxReceivedAmount"
@@ -106,7 +107,8 @@
                         android:maxLines="1"
                         android:paddingBottom="10dp"
                         android:paddingTop="10dp"
-                        android:textColor="#409bbf" />
+                        android:textColor="#409bbf"
+                        android:textSize="16sp"/>
 
                 </LinearLayout>
 
@@ -117,7 +119,7 @@
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal"
                     android:paddingBottom="5dp"
-                    android:paddingRight="10dp">
+                    android:paddingRight="5dp">
 
                     <TextView
 
@@ -130,7 +132,7 @@
                         android:text="description"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="#409bbf"
-                        android:textSize="20sp" />
+                        android:textSize="15sp" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -144,6 +146,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"
+                            android:textSize="15sp"
                             android:layout_weight=".7"
                             android:textColor="#409bbf"></Spinner>
 
