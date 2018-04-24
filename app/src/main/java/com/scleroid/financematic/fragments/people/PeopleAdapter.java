@@ -88,22 +88,20 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 		holder.itemView.setTag(passbook);
 		holder.setData(passbook);
 
-		holder.peopleItemCardView.setOnClickListener(v -> {
-			Timber.wtf("It's clicked dadadad");
-			Events.openCustomerFragment openCustomerFragment =
-					new Events.openCustomerFragment(passbook.getCustomerId());
-			GlobalBus.getBus().post(openCustomerFragment);
-		});
-		holder.callButton.setOnClickListener(v -> {
+	/*	holder.peopleItemCardView.setOnClickListener(v -> {
+			openCustomerPageOnClick(passbook);
+		});*/
+		/*holder.callButton.setOnClickListener(v -> {
 			String phone = passbook.getMobileNumber();
 			Timber.d(phone + " of person " + passbook.getName());
 			Events.placeCall makeACall = new Events.placeCall(phone);
 
 			GlobalBus.getBus().post(makeACall);
-		});
+		});*/
 
 
 	}
+
 
 
 	@Override
@@ -208,10 +206,11 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 		public void onViewClicked(View view) {
 			switch (view.getId()) {
 				case R.id.call_button:
-					handleCallClick();
-					break;
+					//	handleCallClick();
+
 
 				case R.id.people_item_card_view:
+					openCustomerPageOnClick();
 					break;
 			}
 
@@ -224,6 +223,14 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 
 			GlobalBus.getBus().post(makeACall);
 		}
+
+		private void openCustomerPageOnClick() {
+			Timber.wtf("It's clicked dadadad");
+			Events.openCustomerFragment openCustomerFragment =
+					new Events.openCustomerFragment(customer.getCustomerId());
+			GlobalBus.getBus().post(openCustomerFragment);
+		}
+
 	}
 
 }

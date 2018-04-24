@@ -39,11 +39,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.schedulers.Schedulers;
 
 
 public class ExpenseFragment extends BaseFragment {
@@ -81,14 +84,11 @@ public class ExpenseFragment extends BaseFragment {
 	Button addExpCallButton;
 	@BindView(R.id.empty_card)
 	CardView emptyCard;
-
-
-	private List<Expense> expenseList = new ArrayList<>();
 	@Inject
 	ActivityUtils activityUtils;
-	private ExpenseAdapter mAdapter;
-
 	Button firstFragment;
+	private List<Expense> expenseList = new ArrayList<>();
+	private ExpenseAdapter mAdapter;
 	private ExpenseViewModel expenseViewModel;
 	private int totalRoomRentAmt;
 	private int totalFuelAmt;
@@ -131,10 +131,10 @@ public class ExpenseFragment extends BaseFragment {
 		mChart.getDescription().setEnabled(false);
 		//  mChart.setCenterTextTypeface(mTfLight);
 
-		initializeChartData();
+		//	initializeChartData();
 
 		setTitle();
-		updateView(expenseList);
+		//	updateView(expenseList);
 
 		return view;
 	}
@@ -151,6 +151,57 @@ public class ExpenseFragment extends BaseFragment {
 		return R.layout.fragment_expense;
 	}
 
+	/**
+	 * Override so you can observe your viewModel
+	 */
+	@Override
+	protected void subscribeToLiveData() {
+		expenseViewModel.getItemList().observe(this, items -> {
+			updateView(items);
+		});
+	}
+
+	private void updateView(final List<Expense> items) {
+		if (items == null || items.isEmpty()) {
+			emptyCard.setVisibility(View.VISIBLE);
+			expenseRecyclerView.setVisibility(View.GONE);
+		} else {
+			emptyCard.setVisibility(View.GONE);
+			expenseRecyclerView.setVisibility(View.VISIBLE);
+			sort(items);
+			expenseList = items;
+			updateUi(items);
+			refreshRecyclerView(expenseList);
+		}
+	}
+
+	private void sort(final List<Expense> transactions) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+			transactions.sort(Comparator.comparing(Expense::getExpenseDate));
+		} else {
+			Collections.sort(transactions,
+					(m1, m2) -> m1.getExpenseDate().compareTo(m2.getExpenseDate()));
+		}
+	}
+
+	private void refreshRecyclerView(List<Expense> expenses) {
+		mAdapter.setExpenses(expenses);
+		mAdapter.notifyDataSetChanged();
+	}
+
+	private void updateUi(final List<Expense> items) {
+		getTotalLoan(items);
+
+		getTotalCategoryAmt(items, ExpenseCategory.LIGHT_BILL);
+		getTotalCategoryAmt(items, ExpenseCategory.PHONE_BILL);
+		getTotalCategoryAmt(items, ExpenseCategory.OTHER);
+		getTotalCategoryAmt(items, ExpenseCategory.PAID_SALARIES);
+		getTotalCategoryAmt(items, ExpenseCategory.FUEL);
+		getTotalCategoryAmt(items, ExpenseCategory.ROOM_RENT);
+		initializeChartData();
+
+	}
+
 	private void initializeChartData() {
 		// IMPORTANT: In a PieChart, no values (Entry) should have the same
 		// xIndex (even if from different DataSets), since no values can be
@@ -161,7 +212,7 @@ public class ExpenseFragment extends BaseFragment {
 		float other = getPercentage(totalOtherAmt);
 		float fuel = getPercentage(totalFuelAmt);
 		float salaries = getPercentage(totalPaidSalaryAmt);
-		ArrayList<PieEntry> yvalues = new ArrayList<PieEntry>();
+		ArrayList<PieEntry> yvalues = new ArrayList<>();
 		yvalues.add(new PieEntry(roomRent, ExpenseCategory.ROOM_RENT));
 		yvalues.add(new PieEntry(phoneBill, ExpenseCategory.PHONE_BILL));
 		yvalues.add(new PieEntry(lightBill, ExpenseCategory.LIGHT_BILL));
@@ -170,7 +221,7 @@ public class ExpenseFragment extends BaseFragment {
 		yvalues.add(new PieEntry(other, ExpenseCategory.OTHER));
 
 		PieDataSet dataSet = new PieDataSet(yvalues, "Expenses");
-		List<String> xVals = new ArrayList<String>();
+		List<String> xVals = new ArrayList<>();
 
 		xVals.add(ExpenseCategory.ROOM_RENT);
 		xVals.add(ExpenseCategory.PHONE_BILL);
@@ -213,83 +264,78 @@ public class ExpenseFragment extends BaseFragment {
 		return (float) amt / totalLoan * 100;
 	}
 
-
-	/**
-	 * Override so you can observe your viewModel
-	 */
-	@Override
-	protected void subscribeToLiveData() {
-		expenseViewModel.getItemList().observe(this, items -> {
-			updateView(items);
-		});
-	}
-
-	private void updateView(final List<Expense> items) {
-		if (items == null || items.isEmpty()) {
-			emptyCard.setVisibility(View.VISIBLE);
-			expenseRecyclerView.setVisibility(View.GONE);
-		} else {
-			emptyCard.setVisibility(View.GONE);
-			expenseRecyclerView.setVisibility(View.VISIBLE);
-			sort(items);
-			expenseList = items;
-			updateUi(items);
-			refreshRecyclerView(expenseList);
-		}
-	}
-
-	private void sort(final List<Expense> transactions) {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-			transactions.sort(Comparator.comparing(Expense::getExpenseDate));
-		} else {
-			Collections.sort(transactions,
-					(m1, m2) -> m1.getExpenseDate().compareTo(m2.getExpenseDate()));
-		}
-	}
-
-	private void updateUi(final List<Expense> items) {
-		totalLoan = getTotalLoan(items);
-		totalExpenseTextView.setText(String.valueOf(totalLoan));
-		totalLightBillAmt = getTotalCategoryAmt(items, ExpenseCategory.LIGHT_BILL);
-		lightBillTextView.setText(String.valueOf(
-				totalLightBillAmt));
-		totalPhoneBillAmt = getTotalCategoryAmt(items, ExpenseCategory.PHONE_BILL);
-		phoneBillTextView.setText(String.valueOf(
-				totalPhoneBillAmt));
-		totalOtherAmt = getTotalCategoryAmt(items, ExpenseCategory.OTHER);
-		otherTextView.setText(String.valueOf(totalOtherAmt));
-		totalPaidSalaryAmt = getTotalCategoryAmt(items, ExpenseCategory.PAID_SALARIES);
-		salaryTextView.setText(String.valueOf(
-				totalPaidSalaryAmt));
-		totalFuelAmt = getTotalCategoryAmt(items, ExpenseCategory.FUEL);
-		fuelTextView.setText(String.valueOf(totalFuelAmt));
-		totalRoomRentAmt = getTotalCategoryAmt(items, ExpenseCategory.ROOM_RENT);
-		roomRentAmtTextView.setText(String.valueOf(
-				totalRoomRentAmt));
-		initializeChartData();
-
-	}
-
 	@SuppressLint("NewApi")
-	private int getTotalLoan(final List<Expense> items) {
-		return items.stream()
+	private void getTotalLoan(final List<Expense> items) {
+		//	Observable<Integer> sourceObservable = Observable.range(1, 20);
+		Observable<Integer> observable = Observable.fromIterable(items).subscribeOn(
+				Schedulers.newThread())
+				.filter(o -> o.getExpenseAmount() != null)
+				.map(o -> o.getExpenseAmount().intValue());
+		observable.subscribeOn(Schedulers.newThread()).subscribe(value -> {
+			totalLoan += value;
+			totalExpenseTextView.setText(String.valueOf(totalLoan));
+
+		});
+
+
+		/*return items.stream()
 				.filter(o -> o.getExpenseAmount() != null)
 				.mapToInt(o -> o.getExpenseAmount().intValue())
-				.sum();
+				.sum();*/
 	}
 
-	@SuppressLint("NewApi")
-	private int getTotalCategoryAmt(final List<Expense> items, String expenseCategory) {
+	@SuppressLint({"NewApi", "CheckResult"})
+	private void getTotalCategoryAmt(final List<Expense> items, String expenseCategory) {
+		final AtomicInteger temp = new AtomicInteger();
+		Observable<Integer> observable = Observable.fromIterable(items).subscribeOn(
+				Schedulers.newThread())
+				.filter(o -> o.getExpenseAmount() != null && o.getExpenseType()
+						.equals(expenseCategory))
+				.map(o -> o.getExpenseAmount().intValue());
+
+		observable.subscribeOn(Schedulers.newThread()).subscribe(value -> {
+
+			temp.addAndGet(value);
+			switch (expenseCategory) {
+
+				case ExpenseCategory.ROOM_RENT:
+					totalRoomRentAmt = temp.get();
+					roomRentAmtTextView.setText(String.valueOf(
+							totalRoomRentAmt));
+					break;
+				case ExpenseCategory.LIGHT_BILL:
+					totalLightBillAmt = temp.get();
+					lightBillTextView.setText(String.valueOf(
+							totalLightBillAmt));
+					break;
+				case ExpenseCategory.PHONE_BILL:
+					totalPhoneBillAmt = temp.get();
+					phoneBillTextView.setText(String.valueOf(
+							totalPhoneBillAmt));
+					break;
+				case ExpenseCategory.PAID_SALARIES:
+					totalPaidSalaryAmt = temp.get();
+					salaryTextView.setText(String.valueOf(
+							totalPaidSalaryAmt));
+					break;
+				case ExpenseCategory.FUEL:
+					totalFuelAmt = temp.get();
+					fuelTextView.setText(String.valueOf(totalFuelAmt));
+					break;
+				case ExpenseCategory.OTHER:
+					totalOtherAmt = temp.get();
+					otherTextView.setText(String.valueOf(totalOtherAmt));
+					break;
+			}
+
+		});
+
+/*
 		return items.stream()
 				.filter(o -> o.getExpenseAmount() != null && o.getExpenseType()
 						.equals(expenseCategory))
 				.mapToInt(o -> o.getExpenseAmount().intValue())
-				.sum();
-	}
-
-	private void refreshRecyclerView(List<Expense> expenses) {
-		mAdapter.setExpenses(expenses);
-		mAdapter.notifyDataSetChanged();
+				.sum();*/
 	}
 
 	/**
@@ -314,6 +360,7 @@ public class ExpenseFragment extends BaseFragment {
 		// keep movie_list_row.xml width to `match_parent`
 		RecyclerView.LayoutManager mLayoutManager =
 				new LinearLayoutManager(getActivity());
+		mLayoutManager.setAutoMeasureEnabled(false);
 
 		// horizontal RecyclerView
 		// keep movie_list_row.xml width to `wrap_content`
@@ -326,11 +373,13 @@ public class ExpenseFragment extends BaseFragment {
 		expenseRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
 		expenseRecyclerView.setAdapter(mAdapter);
+		expenseRecyclerView.setHasFixedSize(true);
 		firstFragment = getRootView().findViewById(R.id.add_exp_call_button);
 		firstFragment.setOnClickListener(
 				v -> activityUtils.loadFragment(new InsertExpenseDialogFragment(),
 						getFragmentManager
 								()));
+
 		expenseRecyclerView.setNestedScrollingEnabled(false);
 
 	}
