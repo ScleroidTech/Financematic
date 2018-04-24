@@ -331,7 +331,7 @@ public class ExpenseFragment extends BaseFragment {
 				v -> activityUtils.loadFragment(new InsertExpenseDialogFragment(),
 						getFragmentManager
 								()));
-
+		expenseRecyclerView.setNestedScrollingEnabled(false);
 
 	}
 

@@ -69,7 +69,7 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 	private Date paymentDate;
 	private String description;
 	private Loan loan;
-	private Installment installment;
+	private Installment currentInstallment;
 
 	public RegisterReceivedDialogFragment() {
 		// Required empty public constructor
@@ -206,13 +206,13 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 	@SuppressLint("CheckResult")
 	private void getInstallment() {
 		installmentRepo.getLocalInstallmentsLab()
-				.getRxItem(accountNo)
+				.getRxItem(installmentId)
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(customer -> {
-							installment = customer;
+							currentInstallment = customer;
 							Timber.d("data received, displaying " + customer.toString());
-							final String installmentAmt = installment.getExpectedAmt()
+							final String installmentAmt = currentInstallment.getExpectedAmt()
 									.toPlainString();
 							//TODO Set text to textview or hint to edittext here
 
@@ -284,33 +284,39 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 	}
 
 	private void deleteInstallment(final Installment expense, final TransactionModel transaction) {
-		installmentRepo.deleteItem(expense)
-				.observeOn(
-						AndroidSchedulers.mainThread())
-				.subscribe(() -> {
-							Toasty.success(
-									Objects.requireNonNull(
-											RegisterReceivedDialogFragment.this
-													.getContext()),
-									"Installment has been paid" +
-											" Successfully")
-									.show();
-							Timber.d(
-									"data removed for Installment ");
-							transactionsRepo.saveItem(transaction);
+		if (expense.getExpectedAmt().equals(currentInstallment.getExpectedAmt()))
+			installmentRepo.deleteItem(expense)
+					.observeOn(
+							AndroidSchedulers.mainThread())
+					.subscribe(() -> {
+								Toasty.success(
+										Objects.requireNonNull(
+												RegisterReceivedDialogFragment.this
+														.getContext()),
+										"Installment has been paid" +
+												" Successfully")
+										.show();
+								Timber.d(
+										"data removed for Installment ");
+								transactionsRepo.saveItem(transaction);
 
 
-						}, throwable -> {
-							Toasty.error(getBaseActivity(),
-									"Details Not Updated, Try" +
-											" " +
-											"again" +
-											" Later")
-									.show();
-							Timber.e("data  not updated for " + expense
-							);
-						}
-				);
+							}, throwable -> {
+								Toasty.error(getBaseActivity(),
+										"Details Not Updated, Try" +
+												" " +
+												"again" +
+												" Later")
+										.show();
+								Timber.e("data  not updated for " + expense
+								);
+							}
+					);
+		else {
+			currentInstallment.setDelayReason("Less amount");
+			currentInstallment.setExpectedAmt(
+					currentInstallment.getExpectedAmt().subtract(expense.getExpectedAmt()));
+		}
 	}
 
 	private boolean isValidEmail(String email) {

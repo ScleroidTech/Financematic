@@ -198,10 +198,6 @@ public class DelayDialogFragment extends BaseDialog {
 	 * will
 	 * be committed to remove the fragment.
 	 */
-	@Override
-	public void dismiss() {
-		super.dismissAllowingStateLoss();
-	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

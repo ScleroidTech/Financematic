@@ -48,7 +48,7 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
 	@Override
 	public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 		View itemView = LayoutInflater.from(parent.getContext())
-				.inflate(R.layout.recycler_fragment_expense, parent, false);
+				.inflate(R.layout.list_item_expense, parent, false);
 		return new ViewHolder(itemView);
 	}
 
