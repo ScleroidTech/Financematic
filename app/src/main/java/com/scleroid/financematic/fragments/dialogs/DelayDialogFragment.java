@@ -82,6 +82,7 @@ public class DelayDialogFragment extends BaseDialog {
 		View rootView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_delay, null);
 		int installationId = getArguments().getInt(INSTALLMENT_ID);
 		int accountNo = getArguments().getInt(LOAN_AC_NO);
+		etrxReceivedAmount = rootView.findViewById(R.id.amount_edit_text);
 		installmentRepo.getLocalInstallmentsLab()
 				.getRxItem(installationId)
 				.subscribeOn(Schedulers.io())
@@ -91,13 +92,14 @@ public class DelayDialogFragment extends BaseDialog {
 							installmentDate = installment.getInstallmentDate();
 							installmentAmount = installment.getExpectedAmt().toPlainString();
 							//TODO set TextView here, or edittext hint
-
+							etrxReceivedAmount .setText(String.valueOf(installmentAmount));
 
 						},
 						throwable -> Timber.d("Not gonna show up " + throwable.getMessage()));
 
 		etrxDate = rootView.findViewById(R.id.exp_date);
-		etrxReceivedAmount = rootView.findViewById(R.id.amount_edit_text);
+
+
 		reasonEditText = rootView.findViewById(R.id.reason_edit_text);
 
 

@@ -34,20 +34,10 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!--  <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/details_image_gradient"
-                app:layout_constraintBottom_toBottomOf="@+id/header_cover"
-                app:layout_constraintLeft_toLeftOf="@+id/header_cover"
-                app:layout_constraintRight_toRightOf="@+id/header_cover"
-                app:layout_constraintTop_toTopOf="@+id/frameLayout" />-->
-
         <View
             android:id="@+id/card"
-            android:layout_width="317dp"
-            android:layout_height="215dp"
+            android:layout_width="350dp"
+            android:layout_height="220dp"
             android:layout_marginLeft="32dp"
             android:layout_marginRight="32dp"
             android:layout_marginTop="120dp"
@@ -97,14 +87,15 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="32dp"
             android:layout_marginRight="32dp"
+            android:layout_marginTop="8dp"
             android:ellipsize="end"
             android:enabled="false"
-            android:gravity="center"
+            android:gravity="center_horizontal"
             android:maxLines="1"
             android:text="Customer Name"
             android:textColor="@color/colorPrimary"
-            android:textSize="24sp"
 
+            android:textSize="24sp"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="@+id/card"
             app:layout_constraintRight_toRightOf="@+id/card"
@@ -382,17 +373,6 @@ android:backgroundTint="@color/white"
 android:background="@android:drawable/ic_input_add"
          android:focusable="true"
          app:srcCompat="@android:drawable/ic_input_add" />
-<!--   <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="66dp"
-            android:clickable="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-       android:backgroundTint="@color/white"
-            app:srcCompat="@android:drawable/ic_input_add" />-->
 
 
     </android.support.constraint.ConstraintLayout>
