@@ -32,6 +32,7 @@ import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.local.model.Expense;
 import com.scleroid.financematic.data.local.model.ExpenseCategory;
 import com.scleroid.financematic.fragments.dialogs.InsertExpenseDialogFragment;
+import com.scleroid.financematic.utils.multithread.AppExecutors;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.RupeeTextView;
 
@@ -39,14 +40,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.reactivex.Observable;
-import io.reactivex.schedulers.Schedulers;
 
 
 public class
@@ -184,7 +182,7 @@ ExpenseFragment extends BaseFragment {
 		}
 	}
 
-	private void updateUi(final List<Expense> items) {
+	/*private void updateUi(final List<Expense> items) {
 		getTotalLoan(items);
 
 		getTotalCategoryAmt(items, ExpenseCategory.LIGHT_BILL);
@@ -196,14 +194,11 @@ ExpenseFragment extends BaseFragment {
 		initializeChartData();
 
 	}
-
-	/*	@Inject
-		AppExecutors appExecutors;
+*/
+	@Inject
+	AppExecutors appExecutors;
 		private void updateUi(final List<Expense> items) {
-		*//*	Runnable pendingRunnable = () -> {
-			// update the main content by replacing fragments
 
-*//*
 
 				totalLoan =
 
@@ -233,15 +228,7 @@ ExpenseFragment extends BaseFragment {
 
 				getTotalCategoryAmt(items, ExpenseCategory.ROOM_RENT);
 			initializeChartData();
-				*//*if (getActivity() != null)
-					getActivity().runOnUiThread(() -> {
 
-					});*//*
-	 *//*
-
-		};
-		appExecutors.diskIO().execute(pendingRunnable);
-*//*
 
 	//	Timber.d("THis thing runs, yeah");
 
@@ -258,10 +245,7 @@ ExpenseFragment extends BaseFragment {
 				totalRoomRentAmt));
 
 
-
-
-
-	}*/
+		}
 	private void initializeChartData() {
 		// IMPORTANT: In a PieChart, no values (Entry) should have the same
 		// xIndex (even if from different DataSets), since no values can be
@@ -325,34 +309,36 @@ ExpenseFragment extends BaseFragment {
 	}
 
 	@SuppressLint("NewApi")
-	private void getTotalLoan(final List<Expense> items) {
+	private int getTotalLoan(final List<Expense> items) {
 		//	Observable<Integer> sourceObservable = Observable.range(1, 20);
-		Observable<Integer> observable = Observable.fromIterable(items).subscribeOn(
+		/*Observable<Integer> observable = Observable.fromIterable(items).subscribeOn(
 				Schedulers.newThread())
 				.filter(o -> o.getExpenseAmount() != null)
 				.map(o -> o.getExpenseAmount().intValue());
-		observable.subscribeOn(Schedulers.newThread()).subscribe(value -> {
+		observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
+		.subscribe(value -> {
 			totalLoan += value;
 			totalExpenseTextView.setText(String.valueOf(totalLoan));
 
 		});
-
-	/*	return items.stream()
+*/
+		return items.stream()
 				.filter(o -> o.getExpenseAmount() != null)
 				.mapToInt(o -> o.getExpenseAmount().intValue())
-				.sum();*/
+				.sum();
 	}
 
 	@SuppressLint({"NewApi", "CheckResult"})
-	private void getTotalCategoryAmt(final List<Expense> items, String expenseCategory) {
-		final AtomicInteger temp = new AtomicInteger(0);
+	private int getTotalCategoryAmt(final List<Expense> items, String expenseCategory) {
+		/*final AtomicInteger temp = new AtomicInteger(0);
 		Observable<Integer> observable = Observable.fromIterable(items).subscribeOn(
 				Schedulers.newThread())
 				.filter(o -> o.getExpenseAmount() != null && o.getExpenseType()
 						.equals(expenseCategory))
 				.map(o -> o.getExpenseAmount().intValue());
 
-		observable.subscribeOn(Schedulers.newThread()).subscribe(value -> {
+		observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
+		.subscribe(value -> {
 
 			temp.addAndGet(value);
 			switch (expenseCategory) {
@@ -388,14 +374,14 @@ ExpenseFragment extends BaseFragment {
 			}
 			initializeChartData();
 
-		});
+		});*/
 
 
-	/*	return items.stream()
+		return items.stream()
 				.filter(o -> o.getExpenseAmount() != null && o.getExpenseType()
 						.equals(expenseCategory))
 				.mapToInt(o -> o.getExpenseAmount().intValue())
-				.sum();*/
+				.sum();
 	}
 
 	/**
