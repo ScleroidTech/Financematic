@@ -343,7 +343,7 @@ public class RegisterLoanFragment extends BaseFragment {
 					Timber.d(
 							"Loan Data not Saved " + throwable.getMessage() + " errors are " + loan
 									.toString());
-					Toasty.success(getBaseActivity(),
+					Toasty.error(getBaseActivity(),
 							"Loan Data not Saved " + throwable.getMessage() + " errors are " + loan
 									.toString()).show();
 				});

@@ -194,7 +194,7 @@ public class MainActivity extends BaseActivity
 
 		// load the store fragment by default
 		/* toolbar.setCustomerName("Finance Matic");*/
-		// loadFragment(new DashboardFragment());
+		// loadFragmentRunnable(new DashboardFragment());
 		//     appExecutors = new InstantAppExecutors();
 		if (savedInstanceState == null) {
 			navItemIndex = 4;
@@ -204,7 +204,7 @@ public class MainActivity extends BaseActivity
 		boolean frag = getIntent().getBooleanExtra(NOTIFY, false);
 		if (frag) {
 			CURRENT_TAG = TAG_NOTIFICATION;
-			loadFragment(NotificationActivity.newInstance());
+			loadFragmentRunnable(NotificationActivity.newInstance());
 		}
 
 
@@ -253,17 +253,8 @@ public class MainActivity extends BaseActivity
 		// when switching between navigation menus
 		// So using runnable, the fragment is loaded with cross fade effect
 		// This effect can be seen in GMail app
-
-		Runnable pendingRunnable = () -> {
-			// update the main content by replacing fragments
-
-			Fragment fragment = getCurrentFragment();
-			loadFragment(fragment);
-		};
-
-		// If pendingRunnable is not null, then add to the message queue
-		// boolean post = handler.post(pendingRunnable);
-		appExecutors.diskIO().execute(pendingRunnable);
+		Fragment fragment = getCurrentFragment();
+		loadFragmentRunnable(fragment);
 
 		// show or hide the fab button
 
@@ -274,6 +265,39 @@ public class MainActivity extends BaseActivity
 		// refresh toolbar menu
 		invalidateOptionsMenu();
 
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+
+		//noinspection SimplifiableIfStatement
+		if (id == R.id.action_create_new_loan) {
+
+			RegisterCustomerFragment fragment = new RegisterCustomerFragment();
+			loadFragmentRunnable(fragment);
+			return true;
+		}
+
+		// user is in notifications fragment
+		// and selected 'Mark all as Read'
+		if (id == R.id.action_notification) {
+			Notification fragment = new Notification();
+			/*CustomerFragment fragment = new CustomerFragment();*/
+			loadFragmentRunnable(fragment);
+		}
+
+		// user is in notifications fragment
+		// and selected 'Clear All'
+		if (id == R.id.action_settings) {
+			Toast.makeText(getApplicationContext(), "Clear all notifications!", Toast.LENGTH_LONG)
+					.show();
+		}
+
+		return super.onOptionsItemSelected(item);
 	}
 
 	private void selectNavMenu() {
@@ -362,37 +386,17 @@ public class MainActivity extends BaseActivity
 		item.setIcon(wrapDrawable);
 	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
+	private void loadFragmentRunnable(final Fragment fragment) {
+		Runnable pendingRunnable = () -> {
+			// update the main content by replacing fragments
 
-		//noinspection SimplifiableIfStatement
-		if (id == R.id.action_create_new_loan) {
 
-			RegisterCustomerFragment fragment = new RegisterCustomerFragment();
 			loadFragment(fragment);
-			return true;
-		}
+		};
 
-		// user is in notifications fragment
-		// and selected 'Mark all as Read'
-		if (id == R.id.action_notification) {
-			Notification fragment = new Notification();
-			/*CustomerFragment fragment = new CustomerFragment();*/
-			loadFragment(fragment);
-		}
-
-		// user is in notifications fragment
-		// and selected 'Clear All'
-		if (id == R.id.action_settings) {
-			Toast.makeText(getApplicationContext(), "Clear all notifications!", Toast.LENGTH_LONG)
-					.show();
-		}
-
-		return super.onOptionsItemSelected(item);
+		// If pendingRunnable is not null, then add to the message queue
+		// boolean post = handler.post(pendingRunnable);
+		appExecutors.diskIO().execute(pendingRunnable);
 	}
 
 	/*sidebar navigation*/

@@ -156,9 +156,7 @@ public class ExpenseFragment extends BaseFragment {
 	 */
 	@Override
 	protected void subscribeToLiveData() {
-		expenseViewModel.getItemList().observe(this, items -> {
-			updateView(items);
-		});
+		expenseViewModel.getItemList().observe(this, this::updateView);
 	}
 
 	private void updateView(final List<Expense> items) {
@@ -166,12 +164,13 @@ public class ExpenseFragment extends BaseFragment {
 			emptyCard.setVisibility(View.VISIBLE);
 			expenseRecyclerView.setVisibility(View.GONE);
 		} else {
-			emptyCard.setVisibility(View.GONE);
-			expenseRecyclerView.setVisibility(View.VISIBLE);
+
 			sort(items);
 			expenseList = items;
 			updateUi(items);
 			refreshRecyclerView(expenseList);
+			emptyCard.setVisibility(View.GONE);
+			expenseRecyclerView.setVisibility(View.VISIBLE);
 		}
 	}
 
@@ -182,11 +181,6 @@ public class ExpenseFragment extends BaseFragment {
 			Collections.sort(transactions,
 					(m1, m2) -> m1.getExpenseDate().compareTo(m2.getExpenseDate()));
 		}
-	}
-
-	private void refreshRecyclerView(List<Expense> expenses) {
-		mAdapter.setExpenses(expenses);
-		mAdapter.notifyDataSetChanged();
 	}
 
 	private void updateUi(final List<Expense> items) {
@@ -202,6 +196,71 @@ public class ExpenseFragment extends BaseFragment {
 
 	}
 
+	/*	@Inject
+		AppExecutors appExecutors;
+		private void updateUi(final List<Expense> items) {
+		*//*	Runnable pendingRunnable = () -> {
+			// update the main content by replacing fragments
+
+*//*
+
+				totalLoan =
+
+				getTotalLoan(items);
+
+				totalLightBillAmt =
+
+				getTotalCategoryAmt(items, ExpenseCategory.LIGHT_BILL);
+
+				totalPhoneBillAmt =
+
+				getTotalCategoryAmt(items, ExpenseCategory.PHONE_BILL);
+
+				totalOtherAmt =
+
+				getTotalCategoryAmt(items, ExpenseCategory.OTHER);
+
+				totalPaidSalaryAmt =
+
+				getTotalCategoryAmt(items, ExpenseCategory.PAID_SALARIES);
+
+				totalFuelAmt =
+
+				getTotalCategoryAmt(items, ExpenseCategory.FUEL);
+
+				totalRoomRentAmt =
+
+				getTotalCategoryAmt(items, ExpenseCategory.ROOM_RENT);
+			initializeChartData();
+				*//*if (getActivity() != null)
+					getActivity().runOnUiThread(() -> {
+
+					});*//*
+	 *//*
+
+		};
+		appExecutors.diskIO().execute(pendingRunnable);
+*//*
+
+	//	Timber.d("THis thing runs, yeah");
+
+		totalExpenseTextView.setText(String.valueOf(totalLoan));
+		lightBillTextView.setText(String.valueOf(
+				totalLightBillAmt));
+		phoneBillTextView.setText(String.valueOf(
+				totalPhoneBillAmt));
+		otherTextView.setText(String.valueOf(totalOtherAmt));
+		salaryTextView.setText(String.valueOf(
+				totalPaidSalaryAmt));
+		fuelTextView.setText(String.valueOf(totalFuelAmt));
+		roomRentAmtTextView.setText(String.valueOf(
+				totalRoomRentAmt));
+
+
+
+
+
+	}*/
 	private void initializeChartData() {
 		// IMPORTANT: In a PieChart, no values (Entry) should have the same
 		// xIndex (even if from different DataSets), since no values can be
@@ -254,7 +313,7 @@ public class ExpenseFragment extends BaseFragment {
 
 		//Disable Hole in the Pie Chart
 		mChart.setDrawHoleEnabled(false);
-		mChart.animateXY(1400, 1400);
+//		mChart.animateXY(1400, 1400);
 // Default value
 //data.setValueFormatter(new DefaultValueFormatter(0));
 
@@ -277,8 +336,7 @@ public class ExpenseFragment extends BaseFragment {
 
 		});
 
-
-		/*return items.stream()
+	/*	return items.stream()
 				.filter(o -> o.getExpenseAmount() != null)
 				.mapToInt(o -> o.getExpenseAmount().intValue())
 				.sum();*/
@@ -286,7 +344,7 @@ public class ExpenseFragment extends BaseFragment {
 
 	@SuppressLint({"NewApi", "CheckResult"})
 	private void getTotalCategoryAmt(final List<Expense> items, String expenseCategory) {
-		final AtomicInteger temp = new AtomicInteger();
+		final AtomicInteger temp = new AtomicInteger(0);
 		Observable<Integer> observable = Observable.fromIterable(items).subscribeOn(
 				Schedulers.newThread())
 				.filter(o -> o.getExpenseAmount() != null && o.getExpenseType()
@@ -327,11 +385,12 @@ public class ExpenseFragment extends BaseFragment {
 					otherTextView.setText(String.valueOf(totalOtherAmt));
 					break;
 			}
+			initializeChartData();
 
 		});
 
-/*
-		return items.stream()
+
+	/*	return items.stream()
 				.filter(o -> o.getExpenseAmount() != null && o.getExpenseType()
 						.equals(expenseCategory))
 				.mapToInt(o -> o.getExpenseAmount().intValue())
@@ -383,6 +442,14 @@ public class ExpenseFragment extends BaseFragment {
 		expenseRecyclerView.setNestedScrollingEnabled(false);
 
 	}
+
+
+	private void refreshRecyclerView(List<Expense> expenses) {
+		mAdapter.setExpenses(expenses);
+		mAdapter.notifyDataSetChanged();
+	}
+
+
 
 	@OnClick({R.id.room_rent_card, R.id.light_bill_card, R.id.phone_bill_card, R.id.salary_card, R
 			.id.fuel_card, R.id.other_card})
