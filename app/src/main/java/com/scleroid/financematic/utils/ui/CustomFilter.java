@@ -7,6 +7,7 @@ import com.annimon.stream.Stream;
 import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.fragments.people.PeopleAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,7 +32,7 @@ public class CustomFilter extends Filter {
 	//FILTERING OCURS
 	@Override
 	protected FilterResults performFiltering(CharSequence constraint) {
-		FilterResults results = new FilterResults();/*
+		FilterResults results = new FilterResults();
 
 		//CHECK CONSTRAINT VALIDITY
 		if (constraint != null && constraint.length() > 0) {
@@ -54,14 +55,14 @@ public class CustomFilter extends Filter {
 			results.count = filterList.size();
 			results.values = filterList;
 
-		}*/
-		final CharSequence finalConstraint = constraint;
+		}
+	/*	final CharSequence finalConstraint = constraint;
 		List<Customer> collect = Stream.of(filterList)
-				.filter(expenseList -> expenseList.getName().equalsIgnoreCase(
+				.filter(human -> human.getName().equalsIgnoreCase(
 						String.valueOf(finalConstraint)))
 				.collect(Collectors.toList());
 		results.values = collect;
-		results.count = collect.size();
+		results.count = collect.size();*/
 
 
 		return results;
