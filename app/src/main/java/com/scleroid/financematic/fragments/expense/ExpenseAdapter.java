@@ -143,8 +143,8 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
 
 			}
 			expenseTypeTextView.setText(expenseTypeText);
-			expenseImage.setImageResource(expenseTypeImageSrc);
-			expenseImage.setColorFilter(expenseColor);
+			//	expenseImage.setImageResource(expenseTypeImageSrc);
+			//	expenseImage.setColorFilter(expenseColor);
 		}
 
 		private void setDate(Date date) {

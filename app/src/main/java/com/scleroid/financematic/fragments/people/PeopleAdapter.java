@@ -51,6 +51,13 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 	public List<Customer> customerList;
 	Context context;
 	CustomFilter filter;
+
+	public void setFilterList(
+			final java.util.List<com.scleroid.financematic.data.local.model.Customer> filterList) {
+		this.filterList = filterList;
+		notifyDataSetChanged();
+	}
+
 	private List<Customer> filterList;
 
 	public PeopleAdapter(Context context, List<Customer> customerList) {
