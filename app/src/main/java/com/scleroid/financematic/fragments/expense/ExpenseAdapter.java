@@ -29,9 +29,9 @@ import butterknife.ButterKnife;
 public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHolder> {
 	List<Expense> expenses;
 
-	Context context;
+	private Context context;
 
-	public ExpenseAdapter(List<Expense> expenses, Context context) {
+	ExpenseAdapter(List<Expense> expenses, Context context) {
 		this.expenses = expenses;
 		this.context = context;
 	}
@@ -89,15 +89,15 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
 			ButterKnife.bind(this, itemView);
 		}
 
-		public void setData(Context context, Expense expense) {
+		void setData(Context context, Expense expense) {
 			BigDecimal expenseAmount = expense.getExpenseAmount();
 			if (expenseAmount == null) return;
-			this.expenseAmount.setText(expenseAmount.toString());
+			this.expenseAmount.setText(expenseAmount.toPlainString());
 			setDate(expense.getExpenseDate());
 
 			String expenseType = expense.getExpenseType();
 			expenseTypeTextView.setText(expenseType);
-			//setExpenseType(expenseType, context);
+			setExpenseType(expenseType, context);
 
 
 		}

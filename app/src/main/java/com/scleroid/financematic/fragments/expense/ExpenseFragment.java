@@ -119,16 +119,12 @@ ExpenseFragment extends BaseFragment {
 		// Inflate the layout for this fragment
 		View view = getRootView();
 
-
-		//
-
 		initializeRecyclerView();
 		//      float[] data = {450, 630, 300, 200, 400};
 		//    mChart.setData(data);
 		mChart.setUsePercentValues(true);
 		mChart.getDescription().setEnabled(false);
 		//  mChart.setCenterTextTypeface(mTfLight);
-
 		//	initializeChartData();
 
 		setTitle();
@@ -157,28 +153,50 @@ ExpenseFragment extends BaseFragment {
 		expenseViewModel.getItemList().observe(this, this::updateView);
 	}
 
-	private void updateView(final List<Expense> items) {
-		if (items == null || items.isEmpty()) {
-			emptyCard.setVisibility(View.VISIBLE);
-			expenseRecyclerView.setVisibility(View.GONE);
-		} else {
+	/**
+	 * Override for set view model
+	 *
+	 * @return view model instance
+	 */
+	@Override
+	public BaseViewModel getViewModel() {
+		expenseViewModel =
+				ViewModelProviders.of(this, viewModelFactory).get(ExpenseViewModel.class);
 
-			//	sort(items);
-			expenseList = items;
-			updateUi(items);
-			refreshRecyclerView(expenseList);
-			emptyCard.setVisibility(View.GONE);
-			expenseRecyclerView.setVisibility(View.VISIBLE);
-		}
+		return expenseViewModel;
 	}
 
-	private void sort(final List<Expense> transactions) {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-			transactions.sort(Comparator.comparing(Expense::getExpenseDate));
-		} else {
-			Collections.sort(transactions,
-					(m1, m2) -> m1.getExpenseDate().compareTo(m2.getExpenseDate()));
-		}
+	private void initializeRecyclerView() {
+
+		mAdapter = new ExpenseAdapter(expenseList, getContext());
+		/* recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this.getContext()));*/
+
+		// vertical RecyclerView
+		// keep movie_list_row.xml width to `match_parent`
+		RecyclerView.LayoutManager mLayoutManager =
+				new LinearLayoutManager(getActivity());
+		mLayoutManager.setAutoMeasureEnabled(false);
+
+		// horizontal RecyclerView
+		// keep movie_list_row.xml width to `wrap_content`
+		// RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager
+		// (getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
+
+		expenseRecyclerView.setLayoutManager(mLayoutManager);
+
+
+		expenseRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
+		expenseRecyclerView.setAdapter(mAdapter);
+		expenseRecyclerView.setHasFixedSize(true);
+		firstFragment = getRootView().findViewById(R.id.add_exp_call_button);
+		firstFragment.setOnClickListener(
+				v -> activityUtils.loadFragment(new InsertExpenseDialogFragment(),
+						getFragmentManager
+								()));
+
+		expenseRecyclerView.setNestedScrollingEnabled(false);
+
 	}
 
 	/*private void updateUi(final List<Expense> items) {
@@ -195,40 +213,35 @@ ExpenseFragment extends BaseFragment {
 	}
 */
 
+	private void updateView(final List<Expense> items) {
+		if (items == null || items.isEmpty()) {
+			emptyCard.setVisibility(View.VISIBLE);
+			expenseRecyclerView.setVisibility(View.GONE);
+		} else {
+			emptyCard.setVisibility(View.GONE);
+			expenseRecyclerView.setVisibility(View.VISIBLE);
+			//	sort(items);
+			expenseList = items;
+			updateUi(items);
+			refreshRecyclerView(expenseList);
+
+		}
+	}
+
 	private void updateUi(final List<Expense> items) {
 
 
-				totalLoan =
+		totalLoan = getTotalLoan(items);
 
-				getTotalLoan(items);
+		totalLightBillAmt = getTotalCategoryAmt(items, ExpenseCategory.LIGHT_BILL);
+		totalPhoneBillAmt = getTotalCategoryAmt(items, ExpenseCategory.PHONE_BILL);
+		totalOtherAmt = getTotalCategoryAmt(items, ExpenseCategory.OTHER);
+		totalPaidSalaryAmt = getTotalCategoryAmt(items, ExpenseCategory.PAID_SALARIES);
+		totalFuelAmt = getTotalCategoryAmt(items, ExpenseCategory.FUEL);
+		totalRoomRentAmt = getTotalCategoryAmt(items, ExpenseCategory.ROOM_RENT);
+		initializeChartData();
 
-				totalLightBillAmt =
-
-				getTotalCategoryAmt(items, ExpenseCategory.LIGHT_BILL);
-
-				totalPhoneBillAmt =
-
-				getTotalCategoryAmt(items, ExpenseCategory.PHONE_BILL);
-
-				totalOtherAmt =
-
-				getTotalCategoryAmt(items, ExpenseCategory.OTHER);
-
-				totalPaidSalaryAmt =
-
-				getTotalCategoryAmt(items, ExpenseCategory.PAID_SALARIES);
-
-				totalFuelAmt =
-
-				getTotalCategoryAmt(items, ExpenseCategory.FUEL);
-
-				totalRoomRentAmt =
-
-				getTotalCategoryAmt(items, ExpenseCategory.ROOM_RENT);
-			initializeChartData();
-
-
-	//	Timber.d("THis thing runs, yeah");
+		//	Timber.d("THis thing runs, yeah");
 
 		totalExpenseTextView.setText(String.valueOf(totalLoan));
 		lightBillTextView.setText(String.valueOf(
@@ -243,7 +256,8 @@ ExpenseFragment extends BaseFragment {
 				totalRoomRentAmt));
 
 
-		}
+	}
+
 	private void initializeChartData() {
 		// IMPORTANT: In a PieChart, no values (Entry) should have the same
 		// xIndex (even if from different DataSets), since no values can be
@@ -382,59 +396,19 @@ ExpenseFragment extends BaseFragment {
 				.sum();
 	}
 
-	/**
-	 * Override for set view model
-	 *
-	 * @return view model instance
-	 */
-	@Override
-	public BaseViewModel getViewModel() {
-		expenseViewModel =
-				ViewModelProviders.of(this, viewModelFactory).get(ExpenseViewModel.class);
-
-		return expenseViewModel;
-	}
-
-	private void initializeRecyclerView() {
-
-		mAdapter = new ExpenseAdapter(expenseList, getContext());
-		/* recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this.getContext()));*/
-
-		// vertical RecyclerView
-		// keep movie_list_row.xml width to `match_parent`
-		RecyclerView.LayoutManager mLayoutManager =
-				new LinearLayoutManager(getActivity());
-		mLayoutManager.setAutoMeasureEnabled(false);
-
-		// horizontal RecyclerView
-		// keep movie_list_row.xml width to `wrap_content`
-		// RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager
-		// (getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
-
-		expenseRecyclerView.setLayoutManager(mLayoutManager);
-
-
-		expenseRecyclerView.setItemAnimator(new DefaultItemAnimator());
-
-		expenseRecyclerView.setAdapter(mAdapter);
-		expenseRecyclerView.setHasFixedSize(true);
-		firstFragment = getRootView().findViewById(R.id.add_exp_call_button);
-		firstFragment.setOnClickListener(
-				v -> activityUtils.loadFragment(new InsertExpenseDialogFragment(),
-						getFragmentManager
-								()));
-
-		expenseRecyclerView.setNestedScrollingEnabled(false);
-
-	}
-
-
 	private void refreshRecyclerView(List<Expense> expenses) {
 		mAdapter.setExpenses(expenses);
 		mAdapter.notifyDataSetChanged();
 	}
 
-
+	private void sort(final List<Expense> transactions) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+			transactions.sort(Comparator.comparing(Expense::getExpenseDate));
+		} else {
+			Collections.sort(transactions,
+					(m1, m2) -> m1.getExpenseDate().compareTo(m2.getExpenseDate()));
+		}
+	}
 
 	@OnClick({R.id.room_rent_card, R.id.light_bill_card, R.id.phone_bill_card, R.id.salary_card, R
 			.id.fuel_card, R.id.other_card})
