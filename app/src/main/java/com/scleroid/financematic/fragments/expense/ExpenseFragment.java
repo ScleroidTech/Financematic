@@ -32,7 +32,6 @@ import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.local.model.Expense;
 import com.scleroid.financematic.data.local.model.ExpenseCategory;
 import com.scleroid.financematic.fragments.dialogs.InsertExpenseDialogFragment;
-import com.scleroid.financematic.utils.multithread.AppExecutors;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.RupeeTextView;
 
@@ -164,7 +163,7 @@ ExpenseFragment extends BaseFragment {
 			expenseRecyclerView.setVisibility(View.GONE);
 		} else {
 
-			sort(items);
+			//	sort(items);
 			expenseList = items;
 			updateUi(items);
 			refreshRecyclerView(expenseList);
@@ -195,9 +194,8 @@ ExpenseFragment extends BaseFragment {
 
 	}
 */
-	@Inject
-	AppExecutors appExecutors;
-		private void updateUi(final List<Expense> items) {
+
+	private void updateUi(final List<Expense> items) {
 
 
 				totalLoan =

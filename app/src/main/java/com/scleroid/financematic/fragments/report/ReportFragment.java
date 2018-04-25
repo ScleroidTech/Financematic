@@ -441,18 +441,18 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 	public void onViewClicked(View view) {
 		switch (view.getId()) {
 			case R.id.from_date_text_view:
-				loadDialogFragment();
+				loadDialogFragment(REQUEST_DATE_FROM);
 				break;
 			case R.id.to_date_text_view:
-				loadDialogFragment();
+				loadDialogFragment(REQUEST_DATE_TO);
 				break;
 
 		}
 	}
 
-	private void loadDialogFragment() {
-		activityUtils.loadDialogFragment(DatePickerDialogFragment.newInstance(),
-				getFragmentManager(), DIALOG_DATE);
+	private void loadDialogFragment(int msg) {
+		activityUtils.loadDialogFragment(DatePickerDialogFragment.newInstance(), this,
+				getFragmentManager(), msg, DIALOG_DATE);
 	}
 
 
