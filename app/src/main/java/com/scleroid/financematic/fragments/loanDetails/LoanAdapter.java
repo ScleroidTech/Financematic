@@ -140,18 +140,20 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> 
 		}
 
 		private void setInstallment(final Installment passbook) {
+			BtnPaidRxSummery.setBackgroundResource(R.drawable.button_rounded_red);
+			BtnPaidRxSummery.setText("Pay");
 			installment = passbook;
 			itemView.setTag(passbook);
 			if (passbook.getDelayReason() != null) {
 				summeryDescpription.setText(passbook.getDelayReason());
+				BtnPaidRxSummery.setBackgroundResource(R.drawable.button_rounded_yellow);
 			} else {
 				summeryDescpription.setText("Yet to come");
 			}
 			summeryAmount.setText(passbook.getExpectedAmt().toString());
 			setDate(passbook.getInstallmentDate());
 			textViewUtils.textViewExperiments(summeryAmount);
-			BtnPaidRxSummery.setBackgroundResource(R.drawable.button_rounded_red);
-			BtnPaidRxSummery.setText("Pay");
+
 		}
 
 		@OnClick(R.id.Btn_paid_rx_summery)
