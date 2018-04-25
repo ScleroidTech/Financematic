@@ -49,19 +49,13 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 	}
 
 	public List<Customer> customerList;
-	Context context;
+	private Context context;
 	CustomFilter filter;
-	private List<Customer> filterList;
 
-	public PeopleAdapter(Context context, List<Customer> customerList) {
-		this.context = context;
-		this.customerList = customerList;
-		this.filterList = customerList;
-	}
+
 
 	public PeopleAdapter(List<Customer> customerList) {
 		this.customerList = customerList;
-		this.filterList = customerList;
 	}
 
 
@@ -113,7 +107,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 	@Override
 	public Filter getFilter() {
 		if (filter == null) {
-			filter = new CustomFilter(filterList, this);
+			filter = new CustomFilter(customerList, this);
 		}
 
 		return filter;
