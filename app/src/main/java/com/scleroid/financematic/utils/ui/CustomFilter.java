@@ -2,6 +2,8 @@ package com.scleroid.financematic.utils.ui;
 
 import android.widget.Filter;
 
+import com.annimon.stream.Collectors;
+import com.annimon.stream.Stream;
 import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.fragments.people.PeopleAdapter;
 
@@ -72,7 +74,7 @@ public class CustomFilter extends Filter {
 	@Override
 	protected void publishResults(CharSequence constraint, FilterResults results) {
 
-		adapter.setFilterList((List<Customer>) results.values);
+		adapter.setCustomerList((List<Customer>) results.values);
 
 
 	}
