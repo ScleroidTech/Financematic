@@ -197,7 +197,7 @@ public class MainActivity extends BaseActivity
 		// loadFragmentRunnable(new DashboardFragment());
 		//     appExecutors = new InstantAppExecutors();
 		if (savedInstanceState == null) {
-			navItemIndex = 4;
+			navItemIndex = 0;
 			CURRENT_TAG = TAG_DASHBOARD;
 			loadFragmentFromNavigationDrawers();
 		}
