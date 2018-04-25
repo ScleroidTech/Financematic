@@ -47,7 +47,8 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 
-public class ExpenseFragment extends BaseFragment {
+public class
+ExpenseFragment extends BaseFragment {
 	@BindView(R.id.expense_recycler)
 	RecyclerView expenseRecyclerView;
 	@BindView(R.id.room_rent_amt_text_view)
