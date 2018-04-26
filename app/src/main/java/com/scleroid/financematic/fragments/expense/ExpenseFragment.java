@@ -48,6 +48,7 @@ import butterknife.OnClick;
 
 public class
 ExpenseFragment extends BaseFragment {
+	private static final String DIALOG_EXPENSE_ADD = "add_new_expense";
 	@BindView(R.id.expense_recycler)
 	RecyclerView expenseRecyclerView;
 	@BindView(R.id.room_rent_amt_text_view)
@@ -122,13 +123,12 @@ ExpenseFragment extends BaseFragment {
 		initializeRecyclerView();
 		//      float[] data = {450, 630, 300, 200, 400};
 		//    mChart.setData(data);
-		mChart.setUsePercentValues(true);
-		mChart.getDescription().setEnabled(false);
+
 		//  mChart.setCenterTextTypeface(mTfLight);
 		//	initializeChartData();
 
 		setTitle();
-		//	updateView(expenseList);
+		updateView(expenseList);
 
 		return view;
 	}
@@ -188,12 +188,12 @@ ExpenseFragment extends BaseFragment {
 		expenseRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
 		expenseRecyclerView.setAdapter(mAdapter);
-		expenseRecyclerView.setHasFixedSize(true);
+		//	expenseRecyclerView.setHasFixedSize(true);
 		firstFragment = getRootView().findViewById(R.id.add_exp_call_button);
 		firstFragment.setOnClickListener(
-				v -> activityUtils.loadFragment(new InsertExpenseDialogFragment(),
+				v -> activityUtils.loadDialogFragment(InsertExpenseDialogFragment.newInstance(),
 						getFragmentManager
-								()));
+								(), DIALOG_EXPENSE_ADD));
 
 		expenseRecyclerView.setNestedScrollingEnabled(false);
 
@@ -222,7 +222,7 @@ ExpenseFragment extends BaseFragment {
 			expenseRecyclerView.setVisibility(View.VISIBLE);
 			//	sort(items);
 			expenseList = items;
-			updateUi(items);
+			//	updateUi(items);
 			refreshRecyclerView(expenseList);
 
 		}
@@ -298,7 +298,8 @@ ExpenseFragment extends BaseFragment {
 		dataSet.setColors(ColorTemplate.LIBERTY_COLORS);
 		dataSet.setSliceSpace(3f);
 		mChart.setDrawEntryLabels(true);
-
+		mChart.setUsePercentValues(true);
+		mChart.getDescription().setEnabled(false);
 //        mChart.getXAxis().setTextColor(Color.GRAY);
 		mChart.getLegend().setTextColor(Color.DKGRAY);
 		PieData data = new PieData(dataSet);

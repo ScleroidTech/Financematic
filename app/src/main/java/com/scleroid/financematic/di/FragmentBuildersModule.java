@@ -17,7 +17,6 @@ import com.scleroid.financematic.fragments.report.ReportFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
-import io.bloco.faker.components.Date;
 
 /**
  * Copyright (C) 2018
@@ -68,5 +67,10 @@ public abstract class FragmentBuildersModule {
 
 	@ContributesAndroidInjector
 	abstract DatePickerDialogFragment contributeDatePickerDialogFragment();
+
+	@ContributesAndroidInjector
+	abstract com.scleroid.financematic.fragments.dialogs.InsertExpenseDialogFragment
+	contributeInserDialogFragment();
+
 
 }
