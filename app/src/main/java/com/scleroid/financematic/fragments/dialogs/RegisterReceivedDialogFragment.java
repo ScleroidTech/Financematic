@@ -317,6 +317,32 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 			currentInstallment.setDelayReason("Less amount");
 			currentInstallment.setExpectedAmt(
 					currentInstallment.getExpectedAmt().subtract(expense.getExpectedAmt()));
+			installmentRepo.updateItem(currentInstallment)
+					.observeOn(AndroidSchedulers.mainThread())
+					.subscribe(item -> {
+								Toasty.success(
+										Objects.requireNonNull(
+												RegisterReceivedDialogFragment.this
+														.getContext()),
+										"Installment has been paid" +
+												" Successfully")
+										.show();
+								Timber.d(
+										"data updated for Installment " + item.toString());
+								transactionsRepo.saveItem(transaction);
+
+
+							}, throwable -> {
+								Toasty.error(getBaseActivity(),
+										"Details Not Updated, Try" +
+												" " +
+												"again" +
+												" Later")
+										.show();
+								Timber.e("data  not updated for " + expense
+								);
+							}
+					);
 		}
 	}
 

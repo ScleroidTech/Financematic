@@ -140,7 +140,7 @@ public class InsertExpenseDialogFragment extends BaseDialog {
 		});
 
 
-		return new MaterialStyledDialog.Builder(getActivity()).setTitle(R.string.delay_view)
+		return new MaterialStyledDialog.Builder(getActivity()).setTitle("Add new Expense")
 				.setCustomView(rootView)
 				.setStyle(Style.HEADER_WITH_ICON)
 				.withIconAnimation(true)

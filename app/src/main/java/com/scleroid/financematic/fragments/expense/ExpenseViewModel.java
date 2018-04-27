@@ -32,9 +32,9 @@ public class ExpenseViewModel extends BaseViewModel
 
 	@Override
 	protected LiveData<List<Expense>> updateItemLiveData() {
-		expenseList = expenseRepo.getLocalExpenseLab().getItems();
 
-		return expenseList;
+
+		return expenseRepo.getLocalExpenseLab().getItems();
 	}
 
 	@Override
