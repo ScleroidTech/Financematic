@@ -222,7 +222,7 @@ ExpenseFragment extends BaseFragment {
 			expenseRecyclerView.setVisibility(View.VISIBLE);
 			//	sort(items);
 			expenseList = items;
-			//	updateUi(items);
+			updateUi(items);
 			refreshRecyclerView(expenseList);
 
 		}
@@ -306,11 +306,13 @@ ExpenseFragment extends BaseFragment {
 		data.setValueTextColor(Color.WHITE);
 		// In percentage Term
 		data.setValueFormatter(new PercentFormatter());
+		mChart.invalidate();
 		mChart.setData(data);
 
 
 		//Disable Hole in the Pie Chart
 		mChart.setDrawHoleEnabled(false);
+
 //		mChart.animateXY(1400, 1400);
 // Default value
 //data.setValueFormatter(new DefaultValueFormatter(0));

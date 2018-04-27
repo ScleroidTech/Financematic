@@ -1,507 +1,520 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="30dp"
-    android:layout_marginTop="60dp"
-    android:orientation="vertical">
+    android:fillViewport="true">
 
-
-    <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/pie_chart_expense"
-        android:layout_width="match_parent"
-        android:layout_height="200dp" />
-
-    <LinearLayout
-
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/shadow6"
-        android:orientation="vertical"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="60dp"
+        android:orientation="vertical">
 
-        >
 
-        <TextView
-            android:id="@+id/total_expense_label"
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pie_chart_expense"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="200dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="10dp"
-            android:text="Total Expense "
-
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="15sp"
-
+            android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.scleroid.financematic.utils.ui.RupeeTextView
-            android:id="@+id/total_expense_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginBottom="10dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:text="0"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="33sp"
-            android:textStyle="bold" />
+        <LinearLayout
 
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-
-
-        >
-
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/room_rent_card"
 
-            android:layout_width="0dp"
+            android:id="@+id/linearLayout4"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight=".3"
-            android:background="@drawable/shadow"
+
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/shadow6"
             android:orientation="vertical"
-            card_view:layout_constraintBottom_toBottomOf="parent"
-            card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toTopOf="parent">
+            card_view:layout_constraintEnd_toEndOf="@+id/pie_chart_expense"
+            card_view:layout_constraintStart_toStartOf="@+id/pie_chart_expense"
+            card_view:layout_constraintTop_toBottomOf="@+id/pie_chart_expense">
 
             <TextView
-
+                android:id="@+id/total_expense_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:paddingBottom="1dp"
-                android:text="Room Rent"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="10dp"
+                android:text="Total Expense "
+
                 android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="15sp"
 
-                android:textSize="18sp" />
-
-            <LinearLayout
-                android:layout_width="60dp"
-                android:layout_height="50dp"
-
-                android:layout_gravity="center">
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/ic_home_black_24dp"
-                    android:backgroundTint="@color/exp_card1"
-
-                    />
-            </LinearLayout>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.scleroid.financematic.utils.ui.RupeeTextView
-                android:id="@+id/room_rent_amt_text_view"
+                android:id="@+id/total_expense_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="1dp"
+
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
                 android:text="0"
                 android:textAlignment="center"
-                android:textColor="#488711"
-                android:textSize="18sp" />
+                android:textColor="@color/white"
+                android:textSize="33sp"
+                android:textStyle="bold" />
+
+
         </LinearLayout>
 
-        <LinearLayout xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/light_bill_card"
 
-            android:layout_width="0dp"
+        <GridLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+
             android:layout_height="wrap_content"
-            android:layout_weight=".3"
+            android:alignmentMode="alignBounds"
+            android:columnCount="3"
+            android:rowCount="2"
+            android:rowOrderPreserved="true"
+            android:useDefaultMargins="true"
+            app:layout_constraintEnd_toEndOf="@+id/linearLayout4"
+            app:layout_constraintStart_toStartOf="@+id/linearLayout4"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
 
-            android:background="@drawable/shadow"
-            android:orientation="vertical"
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/room_rent_card"
+
+                android:background="@drawable/shadow"
+                android:orientation="vertical"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:layout_rowWeight="1"
+                android:gravity="fill"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:paddingBottom="1dp"
+                    android:text="Room Rent"
+                    android:textAlignment="center"
+
+                    android:textSize="18sp" />
+
+                <LinearLayout
+                    android:layout_width="60dp"
+                    android:layout_height="50dp"
+
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:background="@drawable/ic_home_black_24dp"
+                        android:backgroundTint="@color/exp_card1"
+
+                        />
+                </LinearLayout>
+
+                <com.scleroid.financematic.utils.ui.RupeeTextView
+                    android:id="@+id/room_rent_amt_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="1dp"
+                    android:text="0"
+                    android:textAlignment="center"
+                    android:textColor="#488711"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/light_bill_card"
+
+                android:background="@drawable/shadow"
+                android:orientation="vertical"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:layout_rowWeight="1"
+                android:gravity="fill"
+
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:paddingBottom="1dp"
+                    android:text="Light Bill"
+                    android:textAlignment="center"
+
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:layout_width="60dp"
+                    android:layout_height="50dp"
+
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="6dp"
+                        android:background="@drawable/ic_lightbulb_outline_black_24dp"
+                        android:backgroundTint="@color/exp_card2"
+
+                        />
+                </LinearLayout>
+
+                <com.scleroid.financematic.utils.ui.RupeeTextView
+                    android:id="@+id/light_bill_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="1dp"
+                    android:text="0"
+                    android:textAlignment="center"
+                    android:textColor="#488711"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/phone_bill_card"
 
 
-            card_view:layout_constraintBottom_toBottomOf="parent"
-            card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toTopOf="parent">
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:layout_rowWeight="1"
+                android:gravity="fill"
+                android:background="@drawable/shadow"
+                android:orientation="vertical"
+
+
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:paddingBottom="1dp"
+                    android:text="Mobile Bill"
+                    android:textAlignment="center"
+
+                    android:textSize="18sp" />
+
+                <LinearLayout
+                    android:layout_width="60dp"
+                    android:layout_height="50dp"
+
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="6dp"
+                        android:background="@drawable/ic_phone_android_black_24dp"
+                        android:backgroundTint="@color/exp_card3"
+
+                        />
+                </LinearLayout>
+
+                <com.scleroid.financematic.utils.ui.RupeeTextView
+                    android:id="@+id/phone_bill_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="1dp"
+                    android:text="0"
+                    android:textAlignment="center"
+                    android:textColor="#488711"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/salary_card"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:layout_rowWeight="1"
+                android:gravity="fill"
+                android:background="@drawable/shadow"
+                android:orientation="vertical"
+
+
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:paddingBottom="1dp"
+                    android:text="Paid Salaries"
+                    android:textAlignment="center"
+
+                    android:textSize="17sp" />
+
+                <LinearLayout
+                    android:layout_width="60dp"
+                    android:layout_height="50dp"
+
+
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="6dp"
+                        android:background="@drawable/ic_account_balance_wallet_black_24dp"
+                        android:backgroundTint="@color/exp_card4"
+
+                        />
+                </LinearLayout>
+
+                <com.scleroid.financematic.utils.ui.RupeeTextView
+                    android:id="@+id/salary_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="1dp"
+                    android:text="0"
+                    android:textAlignment="center"
+                    android:textColor="#488711"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/fuel_card"
+
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:layout_rowWeight="1"
+                android:gravity="fill"
+
+                android:background="@drawable/shadow"
+                android:orientation="vertical"
+
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:paddingBottom="1dp"
+                    android:text="Fuel"
+                    android:textAlignment="center"
+
+                    android:textSize="18sp" />
+
+                <LinearLayout
+                    android:layout_width="60dp"
+                    android:layout_height="50dp"
+
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="6dp"
+                        android:background="@drawable/ic_gaspump"
+                        android:backgroundTint="@color/exp_card5"
+
+                        />
+                </LinearLayout>
+
+                <com.scleroid.financematic.utils.ui.RupeeTextView
+                    android:id="@+id/fuel_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="1dp"
+                    android:text="0"
+                    android:textAlignment="center"
+                    android:textColor="#488711"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/other_card"
+
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:layout_rowWeight="1"
+                android:gravity="fill"
+
+                android:background="@drawable/shadow"
+                android:orientation="vertical"
+
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:paddingBottom="1dp"
+                    android:text="Other"
+                    android:textAlignment="center"
+
+                    android:textSize="18sp" />
+
+                <LinearLayout
+                    android:layout_width="60dp"
+                    android:layout_height="50dp"
+
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="6dp"
+                        android:background="@drawable/ic_view_list_black_24dp"
+                        android:backgroundTint="@color/exp_card6"
+
+                        />
+                </LinearLayout>
+
+                <com.scleroid.financematic.utils.ui.RupeeTextView
+                    android:id="@+id/other_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="1dp"
+                    android:text="0"
+                    android:textAlignment="center"
+                    android:textColor="#488711"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+        </GridLayout>
+
+
+        <LinearLayout
+            android:id="@+id/linear_layout_expense_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="1dp"
+            android:orientation="horizontal"
+            android:paddingTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:paddingBottom="1dp"
-                android:text="Light Bill"
-                android:textAlignment="center"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                android:text="Transaction"
+                android:textSize="18sp" />
 
+
+            <Button
+                android:id="@+id/add_exp_call_button"
+                android:layout_width="150dp"
+                android:layout_height="36dp"
+                android:layout_gravity="end"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/button_rounded_border"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:text="Add Expenses"
+                android:textColor="@color/white"
                 android:textSize="16sp" />
 
-            <LinearLayout
-                android:layout_width="60dp"
-                android:layout_height="50dp"
+            <!--  <ImageView
+                  android:layout_width="0dp"
+                  android:layout_height="wrap_content"
+                  android:layout_marginRight="20dp"
+                  android:layout_weight=".1"
+                  android:background="@drawable/ic_search_black_24dp"
+                  android:textAlignment="viewEnd" />-->
 
-                android:layout_gravity="center">
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="6dp"
-                    android:background="@drawable/ic_lightbulb_outline_black_24dp"
-                    android:backgroundTint="@color/exp_card2"
-
-                    />
-            </LinearLayout>
-
-            <com.scleroid.financematic.utils.ui.RupeeTextView
-                android:id="@+id/light_bill_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="1dp"
-                android:text="0"
-                android:textAlignment="center"
-                android:textColor="#488711"
-                android:textSize="18sp" />
         </LinearLayout>
 
-        <LinearLayout xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/phone_bill_card"
-
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight=".3"
-
-            android:background="@drawable/shadow"
-            android:orientation="vertical"
-
-
-            card_view:layout_constraintBottom_toBottomOf="parent"
-            card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:paddingBottom="1dp"
-                android:text="Mobile Bill"
-                android:textAlignment="center"
-
-                android:textSize="18sp" />
-
-            <LinearLayout
-                android:layout_width="60dp"
-                android:layout_height="50dp"
-
-                android:layout_gravity="center">
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="6dp"
-                    android:background="@drawable/ic_phone_android_black_24dp"
-                    android:backgroundTint="@color/exp_card3"
-
-                    />
-            </LinearLayout>
-
-            <com.scleroid.financematic.utils.ui.RupeeTextView
-                android:id="@+id/phone_bill_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="1dp"
-                android:text="0"
-                android:textAlignment="center"
-                android:textColor="#488711"
-                android:textSize="18sp" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
-
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/salary_card"
-
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight=".3"
-            android:background="@drawable/shadow"
-            android:orientation="vertical"
-
-
-            card_view:layout_constraintBottom_toBottomOf="parent"
-            card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:paddingBottom="1dp"
-                android:text="Paid Salaries"
-                android:textAlignment="center"
-
-                android:textSize="17sp" />
-
-            <LinearLayout
-                android:layout_width="60dp"
-                android:layout_height="50dp"
-
-
-                android:layout_gravity="center">
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="6dp"
-                    android:background="@drawable/ic_account_balance_wallet_black_24dp"
-                    android:backgroundTint="@color/exp_card4"
-
-                    />
-            </LinearLayout>
-
-            <com.scleroid.financematic.utils.ui.RupeeTextView
-                android:id="@+id/salary_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="1dp"
-                android:text="0"
-                android:textAlignment="center"
-                android:textColor="#488711"
-                android:textSize="18sp" />
-        </LinearLayout>
-
-        <LinearLayout xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/fuel_card"
-
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight=".3"
-
-            android:background="@drawable/shadow"
-            android:orientation="vertical"
-
-
-            card_view:layout_constraintBottom_toBottomOf="parent"
-            card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:paddingBottom="1dp"
-                android:text="Fuel"
-                android:textAlignment="center"
-
-                android:textSize="18sp" />
-
-            <LinearLayout
-                android:layout_width="60dp"
-                android:layout_height="50dp"
-
-                android:layout_gravity="center">
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="6dp"
-                    android:background="@drawable/ic_gaspump"
-                    android:backgroundTint="@color/exp_card5"
-
-                    />
-            </LinearLayout>
-
-            <com.scleroid.financematic.utils.ui.RupeeTextView
-                android:id="@+id/fuel_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="1dp"
-                android:text="0"
-                android:textAlignment="center"
-                android:textColor="#488711"
-                android:textSize="18sp" />
-        </LinearLayout>
-
-        <LinearLayout xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/other_card"
-
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight=".3"
-
-            android:background="@drawable/shadow"
-            android:orientation="vertical"
-
-
-            card_view:layout_constraintBottom_toBottomOf="parent"
-            card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:paddingBottom="1dp"
-                android:text="Other"
-                android:textAlignment="center"
-
-                android:textSize="18sp" />
-
-            <LinearLayout
-                android:layout_width="60dp"
-                android:layout_height="50dp"
-
-                android:layout_gravity="center">
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="6dp"
-                    android:background="@drawable/ic_view_list_black_24dp"
-                    android:backgroundTint="@color/exp_card6"
-
-                    />
-            </LinearLayout>
-
-            <com.scleroid.financematic.utils.ui.RupeeTextView
-                android:id="@+id/other_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="1dp"
-                android:text="0"
-                android:textAlignment="center"
-                android:textColor="#488711"
-                android:textSize="18sp" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        android:orientation="horizontal"
-        android:paddingTop="10dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="15dp"
-            android:layout_weight="1"
-            android:text="Transaction"
-            android:textSize="18sp" />
-
-
-        <Button
-            android:id="@+id/add_exp_call_button"
-            android:layout_width="150dp"
-            android:layout_height="36dp"
-            android:layout_gravity="end"
-            android:layout_marginEnd="15dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/button_rounded_border"
-            android:backgroundTint="@color/colorPrimaryDark"
-            android:text="Add Expenses"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
-
-        <!--  <ImageView
-              android:layout_width="0dp"
-              android:layout_height="wrap_content"
-              android:layout_marginRight="20dp"
-              android:layout_weight=".1"
-              android:background="@drawable/ic_search_black_24dp"
-              android:textAlignment="viewEnd" />-->
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="10dp"
-        android:orientation="vertical">
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/empty_card"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone">
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/linear_layout_expense_add"
+            android:orientation="vertical">
 
-            <android.support.constraint.ConstraintLayout
+            <android.support.v7.widget.CardView
+                android:id="@+id/empty_card"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:visibility="gone">
 
-                <TextView
-                    android:id="@+id/no_address_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="80dp"
-                    android:text="No Expenses found"
-                    android:textSize="30sp"
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    <TextView
+                        android:id="@+id/no_address_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="80dp"
+                        android:text="No Expenses found"
+                        android:textSize="30sp"
 
-                <TextView
-                    android:id="@+id/no_address_subtitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:text="Please Add a new expense first"
-                    android:textSize="15sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
 
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/no_address_title" />
-            </android.support.constraint.ConstraintLayout>
-        </android.support.v7.widget.CardView>
+                    <TextView
+                        android:id="@+id/no_address_subtitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Please Add a new expense first"
+                        android:textSize="15sp"
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/expense_recycler"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbars="vertical"
-            tools:listitem="@layout/list_item_expense" />
-    </LinearLayout>
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/no_address_title" />
+                </android.support.constraint.ConstraintLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/expense_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical"
+                tools:listitem="@layout/list_item_expense" />
+        </LinearLayout>
 
 
-</LinearLayout>
+    </android.support.constraint.ConstraintLayout>
 
+</ScrollView>
