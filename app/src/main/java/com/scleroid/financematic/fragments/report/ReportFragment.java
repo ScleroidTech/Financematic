@@ -191,6 +191,8 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 
 		reportRecyclerView.setHasFixedSize(true);
 
+		reportRecyclerView.setNestedScrollingEnabled(false);
+
 		/* reportRecyclerView.addItemDecoration(new SimpleDividerItemDecoration(this.getContext())
 		);*/
 
