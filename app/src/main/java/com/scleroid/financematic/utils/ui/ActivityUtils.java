@@ -35,6 +35,7 @@ public class ActivityUtils {
 	}
 
 	public void loadFragmentWithoutBackStack(Fragment fragment, FragmentManager fm) {
+		fm.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
 		FragmentTransaction fragmentTransaction = fm.beginTransaction();
 		// replace the FrameLayout with new Fragment
