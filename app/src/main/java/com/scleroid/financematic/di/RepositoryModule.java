@@ -30,6 +30,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import timber.log.Timber;
 
 /**
@@ -124,7 +125,7 @@ abstract public class RepositoryModule {
 	static WebService provideWebService() {
 		return new Retrofit.Builder()
 				.baseUrl("https://api.github.com/")
-//			    .addConverterFactory(GsonConverterFactory.create())
+				.addConverterFactory(GsonConverterFactory.create())
 				.addCallAdapterFactory(new LiveDataCallAdapterFactory())
 				.build()
 				.create(WebService.class);

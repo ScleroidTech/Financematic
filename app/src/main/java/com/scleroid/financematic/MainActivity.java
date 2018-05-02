@@ -425,9 +425,7 @@ public class MainActivity extends BaseActivity
 
 	@Override
 	public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-		Fragment fragment;
-		//	Toasty.error(getBaseContext(), item.getTitle() + " clicked", Toast.LENGTH_SHORT)
-		// .show();
+
 		handleUiClick(item);
 
 
