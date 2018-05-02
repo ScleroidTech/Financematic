@@ -37,7 +37,8 @@ public class App extends DaggerApplication implements HasActivityInjector {
 				.inject(this);
 		AppInjector.init(this);
 
-		//    JobManagerFactory.getJobManager(this);
+		//final JobManager jobManager = component.getJobManager();
+		//JobManagerFactory.getJobManager(this);
 	}
 
 	@Override

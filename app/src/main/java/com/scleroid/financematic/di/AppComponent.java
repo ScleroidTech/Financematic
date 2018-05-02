@@ -4,6 +4,7 @@ package com.scleroid.financematic.di;
 import android.app.Application;
 
 import com.scleroid.financematic.App;
+import com.scleroid.financematic.base.BaseJob;
 
 import javax.inject.Singleton;
 
@@ -39,6 +40,9 @@ public interface AppComponent extends AndroidInjector<DaggerApplication> {
 
 	@Override
 	void inject(DaggerApplication instance);
+
+	void inject(BaseJob baseJob);
+
 
 
 	// Gives us syntactic sugar. we can then do DaggerAppComponent.builder().application(this)

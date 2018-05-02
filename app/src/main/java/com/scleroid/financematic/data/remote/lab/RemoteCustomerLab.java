@@ -2,6 +2,8 @@ package com.scleroid.financematic.data.remote.lab;
 
 import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.remote.RemoteDataSource;
+import com.scleroid.financematic.data.remote.services.jobs.SyncCustomerJob;
+import com.scleroid.financematic.data.remote.services.jobs.utils.JobManagerFactory;
 
 import io.reactivex.Completable;
 
@@ -17,6 +19,8 @@ public class RemoteCustomerLab implements RemoteDataSource<Customer> {
 	public Completable sync(final Customer customer) {
       /*  return Completable.fromAction(()->
         JobManagerFactory.getJobManager().addJobInBackground(new SyncCustomerJob(customer)));*/
-		return null;
+		return Completable.fromAction(() ->
+				JobManagerFactory.getJobManager()
+						.addJobInBackground(new SyncCustomerJob(customer)));
 	}
 }

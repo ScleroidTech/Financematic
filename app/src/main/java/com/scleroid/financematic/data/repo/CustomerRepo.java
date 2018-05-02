@@ -117,8 +117,7 @@ public class CustomerRepo implements Repo<Customer> {
 		//TODO save this onRemote Source later
 		//Observable.fromCallable(() -> customerDao.saveCustomers(items));
 
-		return
-				localCustomerLab.addItems(items);
+		return localCustomerLab.addItems(items);
 
 
 	}

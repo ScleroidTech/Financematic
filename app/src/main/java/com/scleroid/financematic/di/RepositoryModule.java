@@ -3,6 +3,9 @@ package com.scleroid.financematic.di;
 import android.app.Application;
 import android.arch.persistence.room.Room;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.scleroid.financematic.BuildConfig;
 import com.scleroid.financematic.data.local.AppDatabase;
 import com.scleroid.financematic.data.local.dao.CustomerDao;
 import com.scleroid.financematic.data.local.dao.ExpenseDao;
@@ -10,6 +13,7 @@ import com.scleroid.financematic.data.local.dao.InstallmentDao;
 import com.scleroid.financematic.data.local.dao.LoanDao;
 import com.scleroid.financematic.data.local.dao.TransactionDao;
 import com.scleroid.financematic.data.remote.WebService;
+import com.scleroid.financematic.data.remote.services.networking.RemotePostEndpoint;
 import com.scleroid.financematic.data.repo.CustomerRepo;
 import com.scleroid.financematic.data.repo.ExpenseRepo;
 import com.scleroid.financematic.data.repo.InstallmentRepo;
@@ -29,6 +33,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import timber.log.Timber;
@@ -39,7 +44,7 @@ import timber.log.Timber;
  * @author ganesh This is used by Dagger to inject the required arguments into the {@link }.
  * @since 3/10/18
  */
-@Module(includes = ViewModelModule.class)
+@Module(includes = {ViewModelModule.class, JobManagerModule.class})
 abstract public class RepositoryModule {
 
 	private static final int THREAD_COUNT = 3;
@@ -124,13 +129,25 @@ abstract public class RepositoryModule {
 	@Provides
 	static WebService provideWebService() {
 		return new Retrofit.Builder()
-				.baseUrl("https://api.github.com/")
+				.baseUrl(BuildConfig.API_BASE_URL)
 				.addConverterFactory(GsonConverterFactory.create())
 				.addCallAdapterFactory(new LiveDataCallAdapterFactory())
 				.build()
 				.create(WebService.class);
 	}
 
+
+	@Singleton
+	@Provides
+	static RemotePostEndpoint providePostWebService() {
+		//return   retrofit.create(RemotePostEndpoint.class);
+		return new Retrofit.Builder()
+				.baseUrl(BuildConfig.API_BASE_URL)
+				.addConverterFactory(GsonConverterFactory.create())
+				//		.addCallAdapterFactory(new LiveDataCallAdapterFactory())
+				.build()
+				.create(RemotePostEndpoint.class);
+	}
 	@Singleton
 	@Provides
 	static SchedulerProvider provideSchedulerProvider() {
@@ -144,6 +161,11 @@ abstract public class RepositoryModule {
 				Executors.newFixedThreadPool(THREAD_COUNT),
 				new AppExecutors.MainThreadExecutor());
 	}
+	/*@Singleton
+	@Provides
+	GcmJobService provideGcmJobService() {
+		return new GcmJobService();
+	}*/
 
 	@Singleton
 	abstract LoanRepo provideLoanRepo(AppDatabase db);
@@ -156,14 +178,28 @@ abstract public class RepositoryModule {
 
 	@Singleton
 	abstract InstallmentRepo provideInstallmentRepo(AppDatabase db);
-	/*@Provides
+
+	@Provides
 	@Singleton
-	Gson provideGson() {
+	static Gson provideGson() {
 		return new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-	}*/
+	}
 
 	@Singleton
 	abstract TransactionsRepo provideTransactionsRepo(AppDatabase db);
 
+
+	@Provides
+	static public HttpLoggingInterceptor loggingInterceptor() {
+		HttpLoggingInterceptor interceptor =
+				new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+					@Override
+					public void log(String message) {
+						Timber.i(message);
+					}
+				});
+		interceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
+		return interceptor;
+	}
 
 }
