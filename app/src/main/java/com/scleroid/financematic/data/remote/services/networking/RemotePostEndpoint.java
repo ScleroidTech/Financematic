@@ -6,6 +6,8 @@ import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.data.local.model.TransactionModel;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
@@ -26,5 +28,20 @@ public interface RemotePostEndpoint {
 
 	@POST("/posts")
 	Call<Expense> addExpense(@Body Expense expense);
+
+	@POST("/posts")
+	Call<Customer> addCustomer(@Body List<Customer> customer);
+
+	@POST("/posts")
+	Call<Loan> addLoan(@Body List<Loan> loan);
+
+	@POST("/posts")
+	Call<TransactionModel> addTransaction(@Body List<TransactionModel> transaction);
+
+	@POST("/posts")
+	Call<Installment> addInstallment(@Body List<Installment> installment);
+
+	@POST("/posts")
+	Call<Expense> addExpense(@Body List<Expense> expense);
 
 }

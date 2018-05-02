@@ -1,7 +1,8 @@
 package com.scleroid.financematic.data.remote.services.jobs;
 
 import com.scleroid.financematic.base.BaseJob;
-import com.scleroid.financematic.data.local.model.TransactionModel;
+
+import java.util.List;
 
 import timber.log.Timber;
 
@@ -11,7 +12,7 @@ import timber.log.Timber;
  * @author Ganesh Kaple
  * @since 5/2/18
  */
-public class SyncTransactionJob extends BaseJob {
+public class SyncTransactionJob<TransactionModel> extends BaseJob {
 
 	private static final String TAG = SyncTransactionJob.class.getCanonicalName();
 
@@ -20,6 +21,9 @@ public class SyncTransactionJob extends BaseJob {
 
 	}
 
+	public SyncTransactionJob(List<TransactionModel> transactionModels) {
+		super(TAG, transactionModels);
+	}
 
 	@Override
 	public void onRun() {

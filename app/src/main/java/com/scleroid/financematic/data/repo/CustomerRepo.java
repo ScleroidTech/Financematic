@@ -8,6 +8,8 @@ import com.scleroid.financematic.data.local.lab.LocalCustomerLab;
 import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.remote.ApiResponse;
 import com.scleroid.financematic.data.remote.WebService;
+import com.scleroid.financematic.data.remote.lab.RemoteCustomerLab;
+import com.scleroid.financematic.data.remote.services.networking.RemotePostEndpoint;
 import com.scleroid.financematic.utils.multithread.AppExecutors;
 import com.scleroid.financematic.utils.network.NetworkBoundResource;
 import com.scleroid.financematic.utils.network.RateLimiter;
@@ -31,16 +33,22 @@ public class CustomerRepo implements Repo<Customer> {
 
 
 	private final LocalCustomerLab localCustomerLab;
+	private RemoteCustomerLab remoteCustomerLab;
 	//TODO remove direct access to this
 	private final WebService webService;
+	private RemotePostEndpoint postEndpoint;
 	private final AppExecutors appExecutors;
 	private RateLimiter<String> customerListRateLimit = new RateLimiter<>(10, TimeUnit.MINUTES);
 	@Inject
 	public CustomerRepo(final LocalCustomerLab localCustomerLab,
+	                    RemoteCustomerLab remoteCustomerLab,
 	                    final WebService webService,
+	                    final RemotePostEndpoint postEndpoint,
 	                    final AppExecutors appExecutors) {
 		this.localCustomerLab = localCustomerLab;
+		this.remoteCustomerLab = remoteCustomerLab;
 		this.webService = webService;
+		this.postEndpoint = postEndpoint;
 		this.appExecutors = appExecutors;
 	}
 
@@ -117,7 +125,7 @@ public class CustomerRepo implements Repo<Customer> {
 		//TODO save this onRemote Source later
 		//Observable.fromCallable(() -> customerDao.saveCustomers(items));
 
-		return localCustomerLab.addItems(items);
+		return localCustomerLab.addItems(items).andThen(remoteCustomerLab.sync(items));
 
 
 	}

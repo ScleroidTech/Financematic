@@ -5,7 +5,10 @@ import com.scleroid.financematic.data.remote.RemoteDataSource;
 import com.scleroid.financematic.data.remote.services.jobs.SyncExpenseJob;
 import com.scleroid.financematic.data.remote.services.jobs.utils.JobManagerFactory;
 
+import java.util.List;
+
 import io.reactivex.Completable;
+import io.reactivex.CompletableSource;
 
 /**
  * Copyright (C) 2018
@@ -19,5 +22,12 @@ public class RemoteExpenseLab implements RemoteDataSource<Expense> {
 		return Completable.fromAction(() ->
 				JobManagerFactory.getJobManager()
 						.addJobInBackground(new SyncExpenseJob<>(expense)));
+	}
+
+	@Override
+	public CompletableSource sync(final List<Expense> items) {
+		return Completable.fromAction(() ->
+				JobManagerFactory.getJobManager()
+						.addJobInBackground(new SyncExpenseJob<>(items)));
 	}
 }

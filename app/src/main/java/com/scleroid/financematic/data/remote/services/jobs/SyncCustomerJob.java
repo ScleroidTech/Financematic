@@ -1,11 +1,10 @@
 package com.scleroid.financematic.data.remote.services.jobs;
 
 import com.scleroid.financematic.base.BaseJob;
-import com.scleroid.financematic.data.local.model.Customer;
 
 import timber.log.Timber;
 
-public class SyncCustomerJob extends BaseJob {
+public class SyncCustomerJob<Customer> extends BaseJob {
 
 	private static final String TAG = SyncCustomerJob.class.getCanonicalName();
 
