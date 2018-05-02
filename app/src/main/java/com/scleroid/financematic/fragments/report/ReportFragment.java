@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +40,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 
 /**
@@ -96,6 +98,13 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 
 	@BindView(R.id.receivedAmt)
 	TextView receivedAmt;
+	@BindView(R.id.filter_button)
+	Button filterButton;
+	@BindView(R.id.no_address_title)
+	TextView noAddressTitle;
+	@BindView(R.id.no_address_subtitle)
+	TextView noAddressSubtitle;
+	Unbinder unbinder;
 	private List<TransactionModel> transactionsList = new ArrayList<>();
 	private ReportAdapter mAdapter;
 
@@ -199,6 +208,7 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 
 		handleClickFromDashboard();
 		setTitle();
+
 		return rootView;
 
 
@@ -288,10 +298,7 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 			                           final int position, final long id) {
 				List<TransactionModel> tempList;
 				reportFilterType = getSuggestion(position);
-				if (startDate == null && endDate == null) {
-					tempList = filterWithoutDate(reportFilterType);
-				} else {tempList = filterWithDate(startDate, endDate, reportFilterType); }
-				updateListData(tempList);
+				//getTheListSorted();
 			}
 
 			@Override
@@ -302,6 +309,11 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 
 		spinnerFilter.setAdapter(spinnerList);
 
+	}
+
+	@OnClick(R.id.filter_button)
+	public void onViewClicked() {
+		getTheListSorted();
 	}
 
 	private ReportFilterType getSuggestion(final int filterSuggestion) {
@@ -455,5 +467,11 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 				getFragmentManager(), msg, DIALOG_DATE);
 	}
 
-
+	private void getTheListSorted() {
+		final List<TransactionModel> tempList;
+		if (startDate == null && endDate == null) {
+			tempList = filterWithoutDate(reportFilterType);
+		} else {tempList = filterWithDate(startDate, endDate, reportFilterType); }
+		updateListData(tempList);
+	}
 }
