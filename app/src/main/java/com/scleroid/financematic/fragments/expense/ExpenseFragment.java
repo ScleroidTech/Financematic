@@ -220,7 +220,7 @@ ExpenseFragment extends BaseFragment {
 		} else {
 			emptyCard.setVisibility(View.GONE);
 			expenseRecyclerView.setVisibility(View.VISIBLE);
-			//	sort(items);
+			sort(items);
 			expenseList = items;
 			updateUi(items);
 			refreshRecyclerView(expenseList);
@@ -313,7 +313,7 @@ ExpenseFragment extends BaseFragment {
 		//Disable Hole in the Pie Chart
 		mChart.setDrawHoleEnabled(false);
 
-//		mChart.animateXY(1400, 1400);
+		mChart.animateXY(1400, 1400);
 // Default value
 //data.setValueFormatter(new DefaultValueFormatter(0));
 
