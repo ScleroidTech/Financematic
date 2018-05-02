@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -255,6 +256,8 @@ public class MainActivity extends BaseActivity
 		// This effect can be seen in GMail app
 		Fragment fragment = getCurrentFragment();
 		if (navItemIndex < 3) {
+			getSupportFragmentManager().popBackStackImmediate(null,
+					FragmentManager.POP_BACK_STACK_INCLUSIVE);
 			loadFragmentRunnable(fragment, false);
 		} else { loadFragmentRunnable(fragment, true); }
 		// show or hide the fab button
