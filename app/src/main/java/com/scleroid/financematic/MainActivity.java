@@ -204,7 +204,7 @@ public class MainActivity extends BaseActivity
 		boolean frag = getIntent().getBooleanExtra(NOTIFY, false);
 		if (frag) {
 			CURRENT_TAG = TAG_NOTIFICATION;
-			loadFragmentRunnable(NotificationActivity.newInstance());
+			loadFragmentRunnable(NotificationActivity.newInstance(), true);
 		}
 
 
@@ -254,8 +254,9 @@ public class MainActivity extends BaseActivity
 		// So using runnable, the fragment is loaded with cross fade effect
 		// This effect can be seen in GMail app
 		Fragment fragment = getCurrentFragment();
-		loadFragmentRunnable(fragment);
-
+		if (navItemIndex < 3) {
+			loadFragmentRunnable(fragment, false);
+		} else { loadFragmentRunnable(fragment, true); }
 		// show or hide the fab button
 
 
@@ -278,7 +279,7 @@ public class MainActivity extends BaseActivity
 		if (id == R.id.action_create_new_loan) {
 
 			RegisterCustomerFragment fragment = new RegisterCustomerFragment();
-			loadFragmentRunnable(fragment);
+			loadFragmentRunnable(fragment, true);
 			return true;
 		}
 
@@ -287,7 +288,7 @@ public class MainActivity extends BaseActivity
 		if (id == R.id.action_notification) {
 			Notification fragment = new Notification();
 			/*CustomerFragment fragment = new CustomerFragment();*/
-			loadFragmentRunnable(fragment);
+			loadFragmentRunnable(fragment, true);
 		}
 
 		// user is in notifications fragment
@@ -364,8 +365,18 @@ public class MainActivity extends BaseActivity
 
 	}
 
-	private void loadFragment(Fragment fragment) {
-		activityUtils.loadFragmentWithoutBackStack(fragment, getSupportFragmentManager());
+	private void loadFragmentRunnable(final Fragment fragment, final boolean b) {
+
+		Runnable pendingRunnable = () -> {
+			// update the main content by replacing fragments
+
+
+			loadFragment(fragment, b);
+		};
+
+		// If pendingRunnable is not null, then add to the message queue
+		// boolean post = handler.post(pendingRunnable);
+		appExecutors.diskIO().execute(pendingRunnable);
 	}
 
 
@@ -389,17 +400,13 @@ public class MainActivity extends BaseActivity
 		item.setIcon(wrapDrawable);
 	}
 
-	private void loadFragmentRunnable(final Fragment fragment) {
-		Runnable pendingRunnable = () -> {
-			// update the main content by replacing fragments
+	private void loadFragment(Fragment fragment, final boolean backstack) {
+		if (backstack) {
+			activityUtils.loadFragment(fragment, getSupportFragmentManager());
+			return;
+		}
 
-
-			loadFragment(fragment);
-		};
-
-		// If pendingRunnable is not null, then add to the message queue
-		// boolean post = handler.post(pendingRunnable);
-		appExecutors.diskIO().execute(pendingRunnable);
+		activityUtils.loadFragmentWithoutBackStack(fragment, getSupportFragmentManager());
 	}
 
 	/*sidebar navigation*/
