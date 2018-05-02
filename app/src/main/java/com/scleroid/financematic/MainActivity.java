@@ -237,7 +237,7 @@ public class MainActivity extends BaseActivity
 		selectNavMenu();
 
 		//selecting appropriate bottom navigation menu item
-		if (navItemIndex < 3) { selectBottomNavMenu(); }
+		selectBottomNavMenu();
 		// set toolbar title
 		setToolbarTitle();
 
@@ -305,7 +305,10 @@ public class MainActivity extends BaseActivity
 	}
 
 	private void selectBottomNavMenu() {
-		MenuItem item = bottomNavigationView.getMenu().getItem(navItemIndex);
+		MenuItem item;
+		if (navItemIndex > 2) { item = bottomNavigationView.getMenu().getItem(0); } else {
+			item = bottomNavigationView.getMenu().getItem(navItemIndex);
+		}
 		if (item != null) { item.setChecked(true); }
 	}
 	private void setToolbarTitle() {
