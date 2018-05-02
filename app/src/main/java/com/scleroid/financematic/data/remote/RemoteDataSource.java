@@ -14,5 +14,8 @@ import io.reactivex.CompletableSource;
 public interface RemoteDataSource<T> {
 	Completable sync(T t);
 
+
+	//TODO no real world use, to be removed , no need to implement
+	@Deprecated
 	CompletableSource sync(List<T> items);
 }
