@@ -39,6 +39,18 @@ public class Installment {
 	private BigDecimal expectedAmt;
 	private int loanAcNo;
 
+	@Override
+	public String toString() {
+		return "Installment{" +
+				"loan=" + loan +
+				", installmentId=" + installmentId +
+				", installmentDate=" + installmentDate +
+				", expectedAmt=" + expectedAmt.toPlainString() +
+				", loanAcNo=" + loanAcNo +
+				", delayReason='" + delayReason + '\'' +
+				'}';
+	}
+
 	private String delayReason;
 
 	public Installment(final int installmentId, final Date installmentDate,
@@ -100,15 +112,6 @@ public class Installment {
 		this.loanAcNo = loanAcNo;
 	}
 
-	@Override
-	public String toString() {
-		return "Installment{" +
-				"installmentId=" + installmentId +
-				", installmentDate=" + installmentDate +
-				", expectedAmt=" + expectedAmt +
-				", loanAcNo=" + loanAcNo +
-				'}';
-	}
 
 	public Loan getLoan() {
 		return loan;

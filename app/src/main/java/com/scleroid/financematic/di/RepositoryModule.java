@@ -192,12 +192,7 @@ abstract public class RepositoryModule {
 	@Provides
 	static public HttpLoggingInterceptor loggingInterceptor() {
 		HttpLoggingInterceptor interceptor =
-				new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
-					@Override
-					public void log(String message) {
-						Timber.i(message);
-					}
-				});
+				new HttpLoggingInterceptor(message -> Timber.i(message));
 		interceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
 		return interceptor;
 	}

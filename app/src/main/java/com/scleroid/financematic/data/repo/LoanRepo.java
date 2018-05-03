@@ -8,6 +8,7 @@ import com.scleroid.financematic.data.local.lab.LocalLoanLab;
 import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.data.remote.ApiResponse;
 import com.scleroid.financematic.data.remote.WebService;
+import com.scleroid.financematic.data.remote.lab.RemoteLoanLab;
 import com.scleroid.financematic.utils.multithread.AppExecutors;
 import com.scleroid.financematic.utils.network.NetworkBoundResource;
 import com.scleroid.financematic.utils.network.RateLimiter;
@@ -20,7 +21,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.reactivex.Completable;
-import io.reactivex.Single;
 
 
 /**
@@ -53,15 +53,18 @@ public class LoanRepo implements Repo<Loan> {
 	private final LocalLoanLab localLoanLab;
 	private final WebService webService;
 	private final AppExecutors appExecutors;
+	private final RemoteLoanLab remoteLoanLab;
 	private RateLimiter<String> loanListRateLimit = new RateLimiter<>(10, TimeUnit.MINUTES);
 
 	@Inject
 	LoanRepo(final LocalLoanLab loanLab, final WebService webService,
-	         final AppExecutors appExecutors) {
+	         final AppExecutors appExecutors,
+	         final RemoteLoanLab remoteLoanLab) {
 
 		this.localLoanLab = loanLab;
 		this.webService = webService;
 		this.appExecutors = appExecutors;
+		this.remoteLoanLab = remoteLoanLab;
 	}
 
 	public LocalLoanLab getLocalLoanLab() {
@@ -169,18 +172,19 @@ public class LoanRepo implements Repo<Loan> {
 	}
 
 	@Override
-	public Single<Loan> saveItem(final Loan loan) {
-		return localLoanLab.saveItem(loan);
+	public Completable saveItem(final Loan loan) {
+		return localLoanLab.saveItem(loan).flatMapCompletable(remoteLoanLab::sync);
 	}
 
 	@Override
-	public Single<Loan> updateItem(final Loan loan) {
-		return localLoanLab.updateItem(loan);
+	public Completable updateItem(final Loan loan) {
+		return localLoanLab.updateItem(loan).flatMapCompletable(remoteLoanLab::sync);
 	}
 
 	@Override
 	public Completable deleteItem(final Loan loan) {
-		return null;
+		//TODO update for server deletion also
+		return localLoanLab.deleteItem(loan);
 	}
 
 

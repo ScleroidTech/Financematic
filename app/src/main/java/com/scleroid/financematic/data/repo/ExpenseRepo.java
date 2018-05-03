@@ -8,6 +8,7 @@ import com.scleroid.financematic.data.local.lab.LocalExpenseLab;
 import com.scleroid.financematic.data.local.model.Expense;
 import com.scleroid.financematic.data.remote.ApiResponse;
 import com.scleroid.financematic.data.remote.WebService;
+import com.scleroid.financematic.data.remote.lab.RemoteExpenseLab;
 import com.scleroid.financematic.utils.multithread.AppExecutors;
 import com.scleroid.financematic.utils.network.NetworkBoundResource;
 import com.scleroid.financematic.utils.network.RateLimiter;
@@ -19,7 +20,6 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
-import io.reactivex.Single;
 
 /**
  * Copyright (C) 2018
@@ -53,15 +53,18 @@ public class ExpenseRepo implements Repo<Expense> {
 	private final WebService webService;
 
 	private final AppExecutors appExecutors;
+	private final RemoteExpenseLab remoteExpenseLab;
 
 	private RateLimiter<String> expenseListRateLimit = new RateLimiter<>(10, TimeUnit.MINUTES);
 
 	@Inject
 	ExpenseRepo(final LocalExpenseLab localExpenseLab,
-	            final WebService webService, final AppExecutors appExecutors) {
+	            final WebService webService, final AppExecutors appExecutors,
+	            final RemoteExpenseLab remoteExpenseLab) {
 		this.localExpenseLab = localExpenseLab;
 		this.webService = webService;
 		this.appExecutors = appExecutors;
+		this.remoteExpenseLab = remoteExpenseLab;
 	}
 
 	public LocalExpenseLab getLocalExpenseLab() {
@@ -139,18 +142,19 @@ public class ExpenseRepo implements Repo<Expense> {
 	}
 
 	@Override
-	public Single<Expense> saveItem(final Expense expense) {
-		return localExpenseLab.saveItem(expense);
+	public Completable saveItem(final Expense expense) {
+		return localExpenseLab.saveItem(expense).flatMapCompletable(remoteExpenseLab::sync);
 	}
 
 	@Override
-	public Single<Expense> updateItem(final Expense expense) {
-		return localExpenseLab.updateItem(expense);
+	public Completable updateItem(final Expense expense) {
+		return localExpenseLab.updateItem(expense).flatMapCompletable(remoteExpenseLab::sync);
 	}
 
 	@Override
 	public Completable deleteItem(final Expense expense) {
-		return null;
+		//TODO update for server side also
+		return localExpenseLab.deleteItem(expense);
 	}
 
 

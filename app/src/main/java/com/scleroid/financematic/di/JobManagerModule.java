@@ -10,6 +10,8 @@ import com.birbit.android.jobqueue.log.CustomLogger;
 import com.birbit.android.jobqueue.scheduling.FrameworkJobSchedulerService;
 import com.scleroid.financematic.data.remote.services.jobs.utils.GcmJobService;
 
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -25,6 +27,7 @@ public class JobManagerModule {
 	private AppComponent component;
 
 	@Provides
+	@Singleton
 	public JobManager jobManager(Context context) {
 		component = DaggerAppComponent.builder()
 				.build();

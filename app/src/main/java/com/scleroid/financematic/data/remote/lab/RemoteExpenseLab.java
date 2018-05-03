@@ -1,14 +1,13 @@
 package com.scleroid.financematic.data.remote.lab;
 
+import com.birbit.android.jobqueue.JobManager;
 import com.scleroid.financematic.data.local.model.Expense;
 import com.scleroid.financematic.data.remote.RemoteDataSource;
 import com.scleroid.financematic.data.remote.services.jobs.SyncExpenseJob;
-import com.scleroid.financematic.data.remote.services.jobs.utils.JobManagerFactory;
 
-import java.util.List;
+import javax.inject.Inject;
 
 import io.reactivex.Completable;
-import io.reactivex.CompletableSource;
 
 /**
  * Copyright (C) 2018
@@ -17,17 +16,18 @@ import io.reactivex.CompletableSource;
  * @since 4/6/18
  */
 public class RemoteExpenseLab implements RemoteDataSource<Expense> {
-	@Override
-	public Completable sync(final Expense expense) {
-		return Completable.fromAction(() ->
-				JobManagerFactory.getJobManager()
-						.addJobInBackground(new SyncExpenseJob<>(expense)));
+	private final JobManager jobManager;
+
+	@Inject
+	public RemoteExpenseLab(JobManager jobManager) {
+		this.jobManager = jobManager;
 	}
 
 	@Override
-	public CompletableSource sync(final List<Expense> items) {
+	public Completable sync(final Expense expense) {
 		return Completable.fromAction(() ->
-				JobManagerFactory.getJobManager()
-						.addJobInBackground(new SyncExpenseJob<>(items)));
+				jobManager
+						.addJobInBackground(new SyncExpenseJob<>(expense)));
 	}
+
 }

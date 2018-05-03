@@ -7,7 +7,6 @@ import com.scleroid.financematic.utils.network.Resource;
 import java.util.List;
 
 import io.reactivex.Completable;
-import io.reactivex.Single;
 
 /**
  * Copyright (C) 2018
@@ -23,10 +22,10 @@ public interface Repo<T> {
 	Completable saveItems(List<T> items);
 
 	//TODO Make this call also save data to network layer
-	Single<T> saveItem(T t);
+	Completable saveItem(T t);
 
 
-	Single<T> updateItem(T t);
+	Completable updateItem(T t);
 
 	Completable deleteItem(T t);
 }

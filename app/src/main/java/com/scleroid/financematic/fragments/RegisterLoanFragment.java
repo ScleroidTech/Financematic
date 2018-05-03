@@ -326,13 +326,13 @@ public class RegisterLoanFragment extends BaseFragment {
 	                      final List<Installment> installments) {
 		Disposable subscribe = loanRepo.saveItem(loan)
 				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe(loan1 -> {
-					Timber.d("Loan Data Saved " + loan1.toString());
+				.subscribe(() -> {
+					Timber.d("Loan Data Saved ");
 					Toasty.success(getBaseActivity(), "Loan Created successfully").show();
 					installmentRepo.saveItems(installments)
 							.observeOn(AndroidSchedulers.mainThread())
 							.subscribe(() -> {
-										Timber.d("Installments Created " + loan1.toString());
+								Timber.d("Installments Created ");
 										activityUtils.loadFragment(
 												CustomerFragment.newInstance(loan.getCustId()),
 												getFragmentManager());

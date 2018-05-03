@@ -257,7 +257,7 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 	private void updateLoan(final Installment expense, final TransactionModel transaction) {
 		loanRepo.updateItem(loan)
 				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe(loan1 -> {
+				.subscribe(() -> {
 					Timber.d(
 							"data updated for loan ");
 
@@ -271,7 +271,7 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 	                                   final TransactionModel transaction) {
 		return transactionsRepo.saveItem(transaction).observeOn(AndroidSchedulers
 				.mainThread())
-				.subscribe(transactionModel -> {
+				.subscribe(() -> {
 					Toasty.success(
 							Objects.requireNonNull(
 									RegisterReceivedDialogFragment.this
@@ -319,7 +319,7 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 					currentInstallment.getExpectedAmt().subtract(expense.getExpectedAmt()));
 			installmentRepo.updateItem(currentInstallment)
 					.observeOn(AndroidSchedulers.mainThread())
-					.subscribe(item -> {
+					.subscribe(() -> {
 								Toasty.success(
 										Objects.requireNonNull(
 												RegisterReceivedDialogFragment.this
@@ -328,7 +328,7 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 												" Successfully")
 										.show();
 								Timber.d(
-										"data updated for Installment " + item.toString());
+										"data updated for Installment ");
 								transactionsRepo.saveItem(transaction);
 
 

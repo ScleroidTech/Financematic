@@ -8,6 +8,7 @@ import com.scleroid.financematic.data.local.lab.LocalInstallmentsLab;
 import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.data.remote.ApiResponse;
 import com.scleroid.financematic.data.remote.WebService;
+import com.scleroid.financematic.data.remote.lab.RemoteInstallmentLab;
 import com.scleroid.financematic.utils.multithread.AppExecutors;
 import com.scleroid.financematic.utils.network.NetworkBoundResource;
 import com.scleroid.financematic.utils.network.RateLimiter;
@@ -19,7 +20,6 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
-import io.reactivex.Single;
 
 /**
  * Copyright (C) 2018
@@ -50,14 +50,17 @@ public class InstallmentRepo implements Repo<Installment> {
 	private final LocalInstallmentsLab localInstallmentsLab;
 	private final WebService webService;
 	private final AppExecutors appExecutors;
+	private final RemoteInstallmentLab remoteInstallmentLab;
 	private RateLimiter<String> installmentListRateLimit = new RateLimiter<>(10, TimeUnit.MINUTES);
 
 	@Inject
 	InstallmentRepo(final LocalInstallmentsLab installmentsLab,
-	                final WebService webService, final AppExecutors appExecutors) {
+	                final WebService webService, final AppExecutors appExecutors,
+	                final RemoteInstallmentLab remoteInstallmentLab) {
 		this.localInstallmentsLab = installmentsLab;
 		this.webService = webService;
 		this.appExecutors = appExecutors;
+		this.remoteInstallmentLab = remoteInstallmentLab;
 	}
 
 	public LocalInstallmentsLab getLocalInstallmentsLab() {
@@ -167,17 +170,21 @@ public class InstallmentRepo implements Repo<Installment> {
 	}
 
 	@Override
-	public Single<Installment> saveItem(final Installment installment) {
-		return localInstallmentsLab.saveItem(installment);
+	public Completable saveItem(final Installment installment) {
+		return localInstallmentsLab.saveItem(installment)
+				.flatMapCompletable(remoteInstallmentLab::sync);
 	}
 
 	@Override
-	public Single<Installment> updateItem(final Installment installment) {
-		return localInstallmentsLab.updateItem(installment);
+	public Completable updateItem(final Installment installment) {
+		return localInstallmentsLab.updateItem(installment)
+				.flatMapCompletable(remoteInstallmentLab::sync);
 	}
 
 	@Override
 	public Completable deleteItem(final Installment installment) {
+		//ToDO update on server also
+
 		return localInstallmentsLab.deleteItem(installment);
 	}
 

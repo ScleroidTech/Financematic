@@ -21,7 +21,6 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
-import io.reactivex.Single;
 
 /**
  * Copyright (C) 2018
@@ -125,26 +124,28 @@ public class CustomerRepo implements Repo<Customer> {
 		//TODO save this onRemote Source later
 		//Observable.fromCallable(() -> customerDao.saveCustomers(items));
 
-		return localCustomerLab.addItems(items).andThen(remoteCustomerLab.sync(items));
+		return localCustomerLab.addItems(items);
 
 
 	}
 
 	@Override
-	public Single<Customer> saveItem(final Customer customer) {
+	public Completable saveItem(final Customer customer) {
 		//Observable.fromCallable(() -> customerDao.saveCustomer(customer));
 
-		return localCustomerLab.saveItem(customer);
+		return localCustomerLab.saveItem(customer).flatMapCompletable(remoteCustomerLab::sync);
 
 	}
 
 	@Override
-	public Single<Customer> updateItem(final Customer customer) {
-		return null;
+	public Completable updateItem(final Customer customer) {
+		return localCustomerLab.updateItem(customer).flatMapCompletable(remoteCustomerLab::sync);
 	}
 
 	@Override
 	public Completable deleteItem(final Customer customer) {
-		return null;
+
+		//TODO update Remote
+		return localCustomerLab.deleteItem(customer);
 	}
 }
