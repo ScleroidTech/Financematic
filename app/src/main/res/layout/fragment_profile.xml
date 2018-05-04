@@ -217,16 +217,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="2dp"
                 android:layout_weight=".7"
-
                 android:ellipsize="end"
-
                 android:maxLines="4"
                 android:text="309,Surtwala mark plazzo , Hinjewadi-wakad "
                 android:textColor="@color/text_profile"
                 android:textSize="16sp"
-
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="@+id/card"
                 app:layout_constraintRight_toRightOf="@+id/card"

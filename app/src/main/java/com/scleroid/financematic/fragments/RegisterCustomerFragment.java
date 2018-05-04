@@ -257,7 +257,7 @@ return;
 	}
 
 	private boolean isValidAddress(String addressval) {
-		String EMAIL_PATTERN = "^[A-Za-z0-9_.\\s]{1,}[\\.]{0,1}[A-Za-z0-9_.\\s]{0,}$";
+		String EMAIL_PATTERN = "^[A-Za-z0-9_.,;\\s]{1,}[\\.]{0,1}[A-Za-z0-9_.,;\\s]{0,}$";
 		//String EMAIL_PATTERN = "^[a-zA-Z0-9_.-]*$";
 		//only alpha space \d+[ ](?:[A-Za-z0-9.-]+[ ]?)+
 		// (?:Avenue|Lane|Road|Boulevard|Drive|Street|Ave|Dr|Rd|Blvd|Ln|St)\.?

@@ -266,7 +266,7 @@
                         android:layout_weight=".7"
                         android:background="@drawable/shadow"
                         android:maxLength="50"
-                        android:maxLines="1"
+                        android:maxLines="3"
                         android:paddingBottom="6dp"
                         android:paddingTop="6dp"
 
