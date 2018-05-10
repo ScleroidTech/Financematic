@@ -10,6 +10,7 @@ import com.scleroid.financematic.data.local.model.TransactionModel;
 
 import java.util.List;
 
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
@@ -32,23 +33,23 @@ public interface WebService {
 
 	@GET("/users/")
 	LiveData<ApiResponse<List<Loan>>> getLoans();
-
+//TODO Change Annotations
 	@GET("/users/")
-	LiveData<ApiResponse<List<Loan>>> getLoans(int customerId);
+	LiveData<ApiResponse<List<Loan>>> getLoans(@Body int customerId);
 
 	LiveData<ApiResponse<List<Expense>>> getExpenses();
 
-	LiveData<ApiResponse<Expense>> getExpense(int expenseNo);
+	LiveData<ApiResponse<Expense>> getExpense(@Body int expenseNo);
 
-	LiveData<ApiResponse<List<TransactionModel>>> getTransactionsForLoan(int loanAcNo);
+	LiveData<ApiResponse<List<TransactionModel>>> getTransactionsForLoan(@Body int loanAcNo);
 
 	LiveData<ApiResponse<List<TransactionModel>>> getTransactions();
 
-	LiveData<ApiResponse<TransactionModel>> getTransaction(int transactionNo);
+	LiveData<ApiResponse<TransactionModel>> getTransaction(@Body int transactionNo);
 
-	LiveData<ApiResponse<Installment>> getInstallment(int installmentNo);
+	LiveData<ApiResponse<Installment>> getInstallment(@Body int installmentNo);
 
 	LiveData<ApiResponse<List<Installment>>> getInstallments();
 
-	LiveData<ApiResponse<List<Installment>>> getInstallmentsForLoan(int loanAcNo);
+	LiveData<ApiResponse<List<Installment>>> getInstallmentsForLoan(@Body int loanAcNo);
 }

@@ -1,5 +1,6 @@
 package com.scleroid.financematic.di;
 
+import android.app.Application;
 import android.content.Context;
 import android.os.Build;
 import android.util.Log;
@@ -24,12 +25,12 @@ import dagger.Provides;
 @Module
 public class JobManagerModule {
 
-	private AppComponent component;
+	AppComponent component;
 
 	@Provides
 	@Singleton
-	public JobManager jobManager(Context context) {
-		component = DaggerAppComponent.builder()
+	public JobManager jobManager(Application application, Context context) {
+		component = DaggerAppComponent.builder().application(application)
 				.build();
 		Configuration.Builder builder = new Configuration.Builder(context)
 				.customLogger(new CustomLogger() {

@@ -26,11 +26,11 @@ public class LoanDetailsViewModel extends BaseViewModel<TransactionModel> implem
 	private final TransactionsRepo transactionRepo;
 	private final LoanRepo loanRepo;
 	private final InstallmentRepo installmentRepo;
-	LiveData<List<TransactionModel>>
+	LiveData<Resource<List<TransactionModel>>>
 			transactionLiveData = new MutableLiveData<>();
-	LiveData<Loan> loanLiveData = new MutableLiveData<>();
+	LiveData<Resource<Loan>> loanLiveData = new MutableLiveData<>();
 	int currentAccountNo = 0;
-	private LiveData<List<Installment>> installmentLiveData = new MutableLiveData<>();
+	private LiveData<Resource<List<Installment>>> installmentLiveData = new MutableLiveData<>();
 
 	public LoanDetailsViewModel(final TransactionsRepo transactionRepo,
 	                            final LoanRepo loanRepo,
@@ -40,14 +40,14 @@ public class LoanDetailsViewModel extends BaseViewModel<TransactionModel> implem
 		this.installmentRepo = installmentRepo;
 	}
 
-	public LiveData<Loan> getLoanLiveData() {
+	public LiveData<Resource<Loan>> getLoanLiveData() {
 		if (loanLiveData.getValue() == null) { loanLiveData = setLoanLiveData(); }
 		return loanLiveData;
 	}
 
-	public LiveData<Loan> setLoanLiveData(
+	public LiveData<Resource<Loan>> setLoanLiveData(
 	) {
-		return loanRepo.getLocalLoanLab().getItem(currentAccountNo);
+		return loanRepo.loadItem(currentAccountNo);
 	}
 
 	public int getCurrentAccountNo() {
@@ -58,29 +58,29 @@ public class LoanDetailsViewModel extends BaseViewModel<TransactionModel> implem
 		this.currentAccountNo = currentAccountNo;
 	}
 
-	protected LiveData<List<Installment>> getInstallmentList() {
-		if (installmentLiveData.getValue() == null || installmentLiveData.getValue().isEmpty()) {
+	protected LiveData<Resource<List<Installment>>> getInstallmentList() {
+		if (installmentLiveData.getValue() == null || installmentLiveData.getValue().data == null) {
 			installmentLiveData = updateInstallmentLiveData();
 		}
 		return installmentLiveData;
 	}
 
-	protected LiveData<List<Installment>> updateInstallmentLiveData() {
+	protected LiveData<Resource<List<Installment>>> updateInstallmentLiveData() {
 		installmentLiveData =
-				installmentRepo.getLocalInstallmentsLab().getItemsForLoan(currentAccountNo);
+				installmentRepo.loadInstallmentsForLoan(currentAccountNo);
 		return installmentLiveData;
 	}
 
-	protected LiveData<List<TransactionModel>> getTransactionList() {
-		if (transactionLiveData.getValue() == null || transactionLiveData.getValue().isEmpty()) {
+	protected LiveData<Resource<List<TransactionModel>>> getTransactionList() {
+		if (transactionLiveData.getValue() == null || transactionLiveData.getValue().data == null) {
 			transactionLiveData = updateTransactionLiveData();
 		}
 		return transactionLiveData;
 	}
 
-	protected LiveData<List<TransactionModel>> updateTransactionLiveData() {
+	protected LiveData<Resource<List<TransactionModel>>> updateTransactionLiveData() {
 		transactionLiveData =
-				transactionRepo.getLocalTransactionsLab().getItemsForLoan(currentAccountNo);
+				transactionRepo.loadTransactionsForLoan(currentAccountNo);
 		return transactionLiveData;
 	}
 

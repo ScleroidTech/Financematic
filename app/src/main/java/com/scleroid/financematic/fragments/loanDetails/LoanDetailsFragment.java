@@ -152,20 +152,20 @@ public class LoanDetailsFragment extends BaseFragment {
 	@Override
 	protected void subscribeToLiveData() {
 		loanViewModel.getTransactionList().observe(this, items -> {
-			updateView(installmentList, items);
+			updateView(installmentList, items.data);
 			//updateTotalLoanAmt();
 
 		});
 
 		loanViewModel.getInstallmentList().observe(this, items -> {
-			updateView(items, transactionList);
+			updateView(items.data, transactionList);
 
 			//updateTotalLoanAmt();
 
 		});
 
 		loanViewModel.getLoanLiveData().observe(this, item -> {
-			theLoan = item;
+			theLoan = item.data;
 			updateUi();
 		});
 	}

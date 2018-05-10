@@ -141,12 +141,12 @@ public class CustomerFragment extends BaseFragment {
 	@Override
 	protected void subscribeToLiveData() {
 		customerViewModel.getLoanList().observe(this, items -> {
-			updateView(items);
+			updateView(items.data);
 
 		});
 
 		customerViewModel.getCustomerLiveData().observe(this, item -> {
-			theCustomer = item;
+			theCustomer = item.data;
 			updateUi();
 		});
 	}

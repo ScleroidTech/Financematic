@@ -181,7 +181,9 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 				});
 
 		dashBoardViewModel.getLoans().observe(this, items -> {
-			loanList = items;
+			if (items.data ==null)
+						return;
+			loanList = items.data;
 			updateUi();
 		});
 	}

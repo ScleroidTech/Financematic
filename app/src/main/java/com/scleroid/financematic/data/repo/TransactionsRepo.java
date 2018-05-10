@@ -65,9 +65,6 @@ public class TransactionsRepo implements Repo<TransactionModel> {
 		this.remoteTransactionLab = remoteTransactionLab;
 	}
 
-	public LocalTransactionsLab getLocalTransactionsLab() {
-		return localTransactionsLab;
-	}
 
 	public LiveData<Resource<List<TransactionModel>>> loadTransactionsForLoan(int loanAcNo) {
 		return new NetworkBoundResource<List<TransactionModel>, List<TransactionModel>>(

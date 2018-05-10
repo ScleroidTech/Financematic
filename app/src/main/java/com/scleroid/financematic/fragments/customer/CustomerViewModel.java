@@ -24,8 +24,8 @@ public class CustomerViewModel extends BaseViewModel
 		implements com.scleroid.financematic.viewmodels.CustomerViewModel {
 	private final CustomerRepo customerRepo;
 	private final LoanRepo loanRepo;
-	LiveData<List<Loan>> loanLiveData = new MutableLiveData<>();
-	LiveData<Customer> customerLiveData = new MutableLiveData<>();
+	private LiveData<Resource<List<Loan>>> loanLiveData = new MutableLiveData<>();
+	private LiveData<Resource<Customer>> customerLiveData = new MutableLiveData<>();
 	int currentCustomerId = 0;
 
 	@Inject
@@ -37,18 +37,18 @@ public class CustomerViewModel extends BaseViewModel
 
 	}
 
-	public LiveData<Customer> getCustomerLiveData() {
+	public LiveData<Resource<Customer>> getCustomerLiveData() {
 		if (customerLiveData.getValue() == null) { customerLiveData = setCustomerLiveData(); }
 		return customerLiveData;
 	}
 
-	public LiveData<Customer> setCustomerLiveData() {
+	public LiveData<Resource<Customer>> setCustomerLiveData() {
 
-		return customerRepo.getLocalCustomerLab().getItem(currentCustomerId);
+		return customerRepo.loadItem(currentCustomerId);
 	}    //TODO add  data in it
 
-	protected LiveData<List<Loan>> getLoanList() {
-		if (loanLiveData.getValue() == null || loanLiveData.getValue().isEmpty()) {
+	protected LiveData<Resource<List<Loan>>> getLoanList() {
+		if (loanLiveData.getValue() == null || loanLiveData.getValue().data == null) {
 			loanLiveData = updateLoanLiveData();
 		}
 		return loanLiveData;
@@ -59,8 +59,8 @@ public class CustomerViewModel extends BaseViewModel
 		return currentCustomerId;
 	}
 
-	protected LiveData<List<Loan>> updateLoanLiveData() {
-		loanLiveData = loanRepo.getLocalLoanLab().getItemWithCustomerId(currentCustomerId);
+	protected LiveData<Resource<List<Loan>>> updateLoanLiveData() {
+		loanLiveData = loanRepo.loadLoansForCustomer(currentCustomerId);
 		return loanLiveData;
 	}
 

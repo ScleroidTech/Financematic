@@ -41,7 +41,7 @@ public class DashboardViewModel extends BaseViewModel<Installment> implements Cu
 	@Inject
 	AppExecutors appExecutors;
 
-	private LiveData<List<Loan>> loanListLiveData = new MutableLiveData<>();
+	private LiveData<Resource<List<Loan>>> loanListLiveData = new MutableLiveData<>();
 	private LiveData<Resource<List<Installment>>> installments;
 	// private LiveData<List<DashBoardModel>> upcomingInstallmentsTransformed;
 	private LiveData<List<Installment>> upcomingInstallments = new MutableLiveData<>();
@@ -91,19 +91,18 @@ public class DashboardViewModel extends BaseViewModel<Installment> implements Cu
 		return upcomingInstallments;
 	}
 
-	public LiveData<List<Loan>> getLoans() {
-		if (loanListLiveData.getValue() == null || loanListLiveData.getValue().isEmpty()) {
+	public LiveData<Resource<List<Loan>>> getLoans() {
+		if (loanListLiveData.getValue() == null || loanListLiveData.getValue().data == null || loanListLiveData.getValue().data.isEmpty() ) {
 			loanListLiveData = setLoans(); /*filterResults(installmentRepo
 					.getLocalInstallmentsLab().getItems());*/
 		}
 		return loanListLiveData;
 	}
 
-	public LiveData<List<Loan>> setLoans(
+	public LiveData<Resource<List<Loan>>> setLoans(
 	) {
 		return
-				loanRepo.getLocalLoanLab()
-						.getItems();
+				loanRepo.loadItems();
 	}
 
 

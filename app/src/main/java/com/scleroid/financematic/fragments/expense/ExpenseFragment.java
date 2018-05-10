@@ -150,7 +150,7 @@ ExpenseFragment extends BaseFragment {
 	 */
 	@Override
 	protected void subscribeToLiveData() {
-		expenseViewModel.getItemList().observe(this, this::updateView);
+		expenseViewModel.getItemList().observe(this, items -> updateView(items.data));
 	}
 
 	/**
