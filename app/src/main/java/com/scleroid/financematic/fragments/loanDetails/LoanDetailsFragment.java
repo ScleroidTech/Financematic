@@ -152,13 +152,18 @@ public class LoanDetailsFragment extends BaseFragment {
 	@Override
 	protected void subscribeToLiveData() {
 		loanViewModel.getTransactionList().observe(this, items -> {
-			updateView(installmentList, items.data);
+			if (items != null) {
+				updateView(installmentList, items.data);
+			}
+
 			//updateTotalLoanAmt();
 
 		});
 
 		loanViewModel.getInstallmentList().observe(this, items -> {
-			updateView(items.data, transactionList);
+			if (items != null) {
+				updateView(items.data, transactionList);
+			}
 
 			//updateTotalLoanAmt();
 
@@ -172,7 +177,11 @@ public class LoanDetailsFragment extends BaseFragment {
 
 	private void updateView(final List<Installment> items, List<TransactionModel>
 			transactionList) {
-		if (items.isEmpty() && transactionList.isEmpty()) {
+
+		if ((items == null || transactionList == null)) {
+			emptyCard.setVisibility(View.VISIBLE);
+			recyclerView.setVisibility(View.GONE);
+		} else if ((items.isEmpty() && transactionList.isEmpty())) {
 			emptyCard.setVisibility(View.VISIBLE);
 			recyclerView.setVisibility(View.GONE);
 		} else {

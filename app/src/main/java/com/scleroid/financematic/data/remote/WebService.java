@@ -33,23 +33,31 @@ public interface WebService {
 
 	@GET("/users/")
 	LiveData<ApiResponse<List<Loan>>> getLoans();
-//TODO Change Annotations
+
+	//TODO Change Annotations
 	@GET("/users/")
 	LiveData<ApiResponse<List<Loan>>> getLoans(@Body int customerId);
 
+	@GET("/users/")
 	LiveData<ApiResponse<List<Expense>>> getExpenses();
 
+	@GET("/users/")
 	LiveData<ApiResponse<Expense>> getExpense(@Body int expenseNo);
 
+	@GET("/users/")
 	LiveData<ApiResponse<List<TransactionModel>>> getTransactionsForLoan(@Body int loanAcNo);
 
+	@GET("/users/")
 	LiveData<ApiResponse<List<TransactionModel>>> getTransactions();
 
 	LiveData<ApiResponse<TransactionModel>> getTransaction(@Body int transactionNo);
 
+	@GET("/users/")
 	LiveData<ApiResponse<Installment>> getInstallment(@Body int installmentNo);
 
+	@GET("/users/")
 	LiveData<ApiResponse<List<Installment>>> getInstallments();
 
+	@GET("/users/")
 	LiveData<ApiResponse<List<Installment>>> getInstallmentsForLoan(@Body int loanAcNo);
 }

@@ -8,11 +8,12 @@ import android.arch.persistence.room.TypeConverters;
 import com.scleroid.financematic.utils.roomConverters.DateConverter;
 import com.scleroid.financematic.utils.roomConverters.MoneyConverter;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity(indices = {@Index(value = "expenseId", unique = true)})
-public class Expense {
+public class Expense implements Serializable {
 	@TypeConverters(MoneyConverter.class)
 	private BigDecimal expenseAmount;
 	private String expenseType;

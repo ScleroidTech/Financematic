@@ -105,7 +105,7 @@ public interface TransactionDao {
 	@Query("SELECT * FROM transactionmodel WHERE loanAcNo=:userId")
 	List<TransactionModel> getTransactionsForLoan(final int userId);
 
-	@Query("SELECT * FROM transactionmodel WHERE loanAcNo=:userId")
+	@Query("SELECT * FROM TransactionModel WHERE loanAcNo=:userId")
 	LiveData<List<TransactionModel>> getTransactionsForLoanLive(final int userId);
 
 

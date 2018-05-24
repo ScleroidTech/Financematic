@@ -10,6 +10,7 @@ import android.arch.persistence.room.TypeConverters;
 import com.scleroid.financematic.utils.roomConverters.DateConverter;
 import com.scleroid.financematic.utils.roomConverters.MoneyConverter;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
@@ -27,7 +28,7 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
 		childColumns = "loanAcNo",
 		onDelete = CASCADE),
 		indices = {@Index(value = "transactionId", unique = true)})
-public class TransactionModel {
+public class TransactionModel implements Serializable {
 	@PrimaryKey(autoGenerate = false)
 	private int transactionId;
 	@TypeConverters(DateConverter.class)

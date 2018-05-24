@@ -5,6 +5,7 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ import java.util.List;
  * @since 4/2/18
  */
 @Entity(indices = {@Index(value = "customerId", unique = true)})
-public class Customer {
+public class Customer implements Serializable {
 
 
 	@Ignore

@@ -20,7 +20,7 @@ public class SyncCustomerJob<Customer> extends BaseJob {
 
 
 		// if any exception is thrown, it will be handled by shouldReRunOnThrowable()
-		//    webService.addCustomer(customer);
+		//  webService.addCustomer(customer);
 
 		// remote call was successful--the Customer will be updated locally to reflect that sync
 		// is no longer pending

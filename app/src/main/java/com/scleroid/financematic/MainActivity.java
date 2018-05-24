@@ -56,7 +56,7 @@ import static com.scleroid.financematic.utils.CommonUtils.makeToast;
 
 public class MainActivity extends BaseActivity
 		implements NavigationView.OnNavigationItemSelectedListener, GarlandApp.FakerReadyListener,
-		           HasSupportFragmentInjector {
+		           HasSupportFragmentInjector, FragmentManager.OnBackStackChangedListener {
 	//TODO Refactor repeating code, look at  android-mvvm-architecture for ideas, its by mind-dorks
 	// tags used to attach the fragments
 	private static final String TAG_DASHBOARD = "dashboard";
@@ -197,6 +197,9 @@ public class MainActivity extends BaseActivity
 		/* toolbar.setCustomerName("Finance Matic");*/
 		// loadFragmentRunnable(new DashboardFragment());
 		//     appExecutors = new InstantAppExecutors();
+		//Listen for changes in the back stack
+		getSupportFragmentManager().addOnBackStackChangedListener(this);
+
 		if (savedInstanceState == null) {
 			navItemIndex = 0;
 			CURRENT_TAG = TAG_DASHBOARD;
@@ -207,7 +210,8 @@ public class MainActivity extends BaseActivity
 			CURRENT_TAG = TAG_NOTIFICATION;
 			loadFragmentRunnable(NotificationActivity.newInstance(), true);
 		}
-
+//Handle when activity is recreated like on orientation Change
+		shouldDisplayHomeUp();
 
 		((GarlandApp) getApplication()).addListener(this);
 
@@ -412,7 +416,11 @@ public class MainActivity extends BaseActivity
 		activityUtils.loadFragmentWithoutBackStack(fragment, getSupportFragmentManager());
 	}
 
-	/*sidebar navigation*/
+/*
+//TODO To not let the acitivty close directly
+	*/
+	/*sidebar navigation*//*
+
 	@Override
 	public void onBackPressed() {
 		DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -422,6 +430,7 @@ public class MainActivity extends BaseActivity
 			super.onBackPressed();
 		}
 	}
+*/
 
 	@Override
 	public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -586,5 +595,24 @@ public class MainActivity extends BaseActivity
 
 	}
 
+	public void shouldDisplayHomeUp() {
+		//Enable Up button only  if there are entries in the back stack
+		boolean canback = getSupportFragmentManager().getBackStackEntryCount() > 0;
+		getSupportActionBar().setDisplayHomeAsUpEnabled(canback);
+	}
 
+	/**
+	 * Called whenever the contents of the back stack change.
+	 */
+	@Override
+	public void onBackStackChanged() {
+		shouldDisplayHomeUp();
+	}
+
+	@Override
+	public boolean onSupportNavigateUp() {
+		//This method is called when the up button is pressed. Just the pop back stack.
+		getSupportFragmentManager().popBackStack();
+		return true;
+	}
 }
