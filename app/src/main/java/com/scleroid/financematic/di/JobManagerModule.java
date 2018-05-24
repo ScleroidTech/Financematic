@@ -9,7 +9,7 @@ import com.birbit.android.jobqueue.JobManager;
 import com.birbit.android.jobqueue.config.Configuration;
 import com.birbit.android.jobqueue.log.CustomLogger;
 import com.birbit.android.jobqueue.scheduling.FrameworkJobSchedulerService;
-import com.scleroid.financematic.data.remote.services.jobs.utils.GcmJobService;
+import com.scleroid.financematic.data.remote.services.jobs.utils.SchedulerJobService;
 
 import javax.inject.Singleton;
 
@@ -73,7 +73,8 @@ public class JobManagerModule {
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 			builder.scheduler(
-					FrameworkJobSchedulerService.createSchedulerFor(context, GcmJobService.class),
+					FrameworkJobSchedulerService.createSchedulerFor(context,
+							SchedulerJobService.class),
 					true);
 		} /*else {
 			int enableGcm = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable

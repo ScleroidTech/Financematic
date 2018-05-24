@@ -7,6 +7,9 @@ import com.birbit.android.jobqueue.JobManager;
 import com.birbit.android.jobqueue.config.Configuration;
 import com.birbit.android.jobqueue.log.CustomLogger;
 import com.birbit.android.jobqueue.scheduling.FrameworkJobSchedulerService;
+import com.birbit.android.jobqueue.scheduling.GcmJobSchedulerService;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 
 import timber.log.Timber;
 
@@ -72,13 +75,12 @@ public class JobManagerFactory {
 			builder.scheduler(FrameworkJobSchedulerService.createSchedulerFor(context,
 					SchedulerJobService.class), true);
 		} else {
-			//TODO GCM not supported any more, what to be done?
-           /* int enableGcm = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable
+			int enableGcm = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable
            (context);
             if (enableGcm == ConnectionResult.SUCCESS) {
                 builder.scheduler(GcmJobSchedulerService.createSchedulerFor(context,
                         GcmJobSchedulerService.class), true);
-            }*/
+            }
 		}
 		return new JobManager(builder.build());
 	}
