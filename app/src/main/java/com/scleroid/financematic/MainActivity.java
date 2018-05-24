@@ -134,6 +134,8 @@ public class MainActivity extends BaseActivity
 		this.toggle = toggle;
 	}
 
+	private boolean mToolBarNavigationListenerIsRegistered = false;
+
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
@@ -154,32 +156,6 @@ public class MainActivity extends BaseActivity
 
 		/*bottom navigation*/
 
-
-		setToggle(new ActionBarDrawerToggle(
-				this, drawer, toolbar, R.string.navigation_drawer_open,
-				R.string.navigation_drawer_close) {
-
-			@Override
-			public void onDrawerOpened(View drawerView) {
-				// Code here will be triggered once the drawer open as we dont want anything to
-				// happen so we leave this blank
-				super.onDrawerOpened(drawerView);
-
-				//Used to change the z index of a custom drawer,
-				//Hack when navigation drawer doesn't listen to click events
-				drawerView.bringToFront();
-			}
-
-			@Override
-			public void onDrawerClosed(View drawerView) {
-				// Code here will be triggered once the drawer closes as we dont want anything to
-				// happen so we leave this blank
-				super.onDrawerClosed(drawerView);
-			}
-		});
-
-		drawer.addDrawerListener(toggle);
-		toggle.syncState();
 		bottomNavigationView = findViewById(R.id.navigation);
 		bottomNavigationView.setOnNavigationItemSelectedListener
 				(item -> {
@@ -200,6 +176,32 @@ public class MainActivity extends BaseActivity
 		//Listen for changes in the back stack
 		getSupportFragmentManager().addOnBackStackChangedListener(this);
 
+		ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
+				this, drawer, toolbar, R.string.navigation_drawer_open,
+				R.string.navigation_drawer_close) {
+
+			@Override
+			public void onDrawerOpened(View drawerView) {
+				// Code here will be triggered once the drawer open as we dont want anything to
+				// happen so we leave this blank
+				super.onDrawerOpened(drawerView);
+
+				//Used to change the z index of a custom drawer,
+				//Hack when navigation drawer doesn't listen to click events
+				drawerView.bringToFront();
+			}
+
+			@Override
+			public void onDrawerClosed(View drawerView) {
+				// Code here will be triggered once the drawer closes as we dont want anything to
+				// happen so we leave this blank
+				super.onDrawerClosed(drawerView);
+			}
+		};
+
+
+		setToggle(actionBarDrawerToggle);
+
 		if (savedInstanceState == null) {
 			navItemIndex = 0;
 			CURRENT_TAG = TAG_DASHBOARD;
@@ -217,6 +219,11 @@ public class MainActivity extends BaseActivity
 
 	}
 
+	public void shouldDisplayHomeUp() {
+		//Enable Up button only  if there are entries in the back stack
+		boolean canback = getSupportFragmentManager().getBackStackEntryCount() > 0;
+		enableBackButton(canback);
+	}
 	/**
 	 * @return layout resource id
 	 */
@@ -595,10 +602,61 @@ public class MainActivity extends BaseActivity
 
 	}
 
-	public void shouldDisplayHomeUp() {
-		//Enable Up button only  if there are entries in the back stack
-		boolean canback = getSupportFragmentManager().getBackStackEntryCount() > 0;
-		getSupportActionBar().setDisplayHomeAsUpEnabled(canback);
+	/**
+	 * To be semantically or contextually correct, maybe change the name and signature of this
+	 * function to something like:
+	 * <p>
+	 * private void showBackButton(boolean show) Just a suggestion.
+	 */
+	private void enableBackButton(boolean enable) {
+
+		// To keep states of ActionBar and ActionBarDrawerToggle synchronized,
+		// when you enable on one, you disable on the other.
+		// And as you may notice, the order for this operation is disable first, then enable -
+		// VERY VERY IMPORTANT.
+		if (enable) {
+//You may not want to open the drawer on swipe from the left in this case
+			drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+// Remove hamburger
+			toggle.setDrawerIndicatorEnabled(false);
+			// Show back button
+			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+			// when DrawerToggle is disabled i.e. setDrawerIndicatorEnabled(false), navigation icon
+			// clicks are disabled i.e. the UP button will not work.
+			// We need to add a listener, as in below, so DrawerToggle will forward
+			// click events to this listener.
+			if (!mToolBarNavigationListenerIsRegistered) {
+				toggle.setToolbarNavigationClickListener(v -> {
+					// Doesn't have to be onBackPressed
+					onBackPressed();
+				});
+
+				mToolBarNavigationListenerIsRegistered = true;
+			}
+
+		} else {
+//You must regain the power of swipe for the drawer.
+			drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+
+// Remove back button
+			getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+			// Show hamburger
+			toggle.setDrawerIndicatorEnabled(true);
+			// Remove the/any drawer toggle listener
+			toggle.setToolbarNavigationClickListener(null);
+			drawer.addDrawerListener(toggle);
+
+			mToolBarNavigationListenerIsRegistered = false;
+		}
+		toggle.syncState();
+
+		// So, one may think "Hmm why not simplify to:
+		// .....
+		// getSupportActionBar().setDisplayHomeAsUpEnabled(enable);
+		// mDrawer.setDrawerIndicatorEnabled(!enable);
+		// ......
+		// To re-iterate, the order in which you enable and disable views IS important
+		// #dontSimplify.
 	}
 
 	/**
@@ -606,6 +664,7 @@ public class MainActivity extends BaseActivity
 	 */
 	@Override
 	public void onBackStackChanged() {
+
 		shouldDisplayHomeUp();
 	}
 
