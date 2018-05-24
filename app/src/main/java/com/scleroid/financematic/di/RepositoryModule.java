@@ -13,6 +13,7 @@ import com.scleroid.financematic.data.local.dao.InstallmentDao;
 import com.scleroid.financematic.data.local.dao.LoanDao;
 import com.scleroid.financematic.data.local.dao.TransactionDao;
 import com.scleroid.financematic.data.remote.WebService;
+import com.scleroid.financematic.data.remote.services.jobs.utils.GcmJobService;
 import com.scleroid.financematic.data.remote.services.networking.RemotePostEndpoint;
 import com.scleroid.financematic.data.repo.CustomerRepo;
 import com.scleroid.financematic.data.repo.ExpenseRepo;
@@ -161,11 +162,12 @@ abstract public class RepositoryModule {
 				Executors.newFixedThreadPool(THREAD_COUNT),
 				new AppExecutors.MainThreadExecutor());
 	}
-	/*@Singleton
+
+	@Singleton
 	@Provides
 	GcmJobService provideGcmJobService() {
 		return new GcmJobService();
-	}*/
+	}
 
 	@Singleton
 	abstract LoanRepo provideLoanRepo(AppDatabase db);

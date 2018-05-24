@@ -1,6 +1,7 @@
 package com.scleroid.financematic.data.remote.services.jobs;
 
 import com.scleroid.financematic.base.BaseJob;
+import com.scleroid.financematic.data.local.model.Installment;
 
 import timber.log.Timber;
 
@@ -10,7 +11,7 @@ import timber.log.Timber;
  * @author Ganesh Kaple
  * @since 5/2/18
  */
-public class SyncInstallmentsJob<Installment> extends BaseJob {
+public class SyncInstallmentsJob extends BaseJob<Installment> {
 
 	private static final String TAG = SyncInstallmentsJob.class.getCanonicalName();
 
@@ -27,7 +28,7 @@ public class SyncInstallmentsJob<Installment> extends BaseJob {
 
 
 		// if any exception is thrown, it will be handled by shouldReRunOnThrowable()
-		//    webService.addInstallment(installment);
+		service.addInstallment(t);
 
 		// remote call was successful--the Installment will be updated locally to reflect that sync
 		// is no longer pending

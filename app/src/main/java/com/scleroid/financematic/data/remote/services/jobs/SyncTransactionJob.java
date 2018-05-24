@@ -1,6 +1,7 @@
 package com.scleroid.financematic.data.remote.services.jobs;
 
 import com.scleroid.financematic.base.BaseJob;
+import com.scleroid.financematic.data.local.model.TransactionModel;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ import timber.log.Timber;
  * @author Ganesh Kaple
  * @since 5/2/18
  */
-public class SyncTransactionJob<TransactionModel> extends BaseJob {
+public class SyncTransactionJob extends BaseJob<TransactionModel> {
 
 	private static final String TAG = SyncTransactionJob.class.getCanonicalName();
 
@@ -31,7 +32,7 @@ public class SyncTransactionJob<TransactionModel> extends BaseJob {
 
 
 		// if any exception is thrown, it will be handled by shouldReRunOnThrowable()
-		//    webService.addTransaction(transaction);
+		service.addTransaction(t);
 
 		// remote call was successful--the Transaction will be updated locally to reflect that sync
 		// is no longer pending

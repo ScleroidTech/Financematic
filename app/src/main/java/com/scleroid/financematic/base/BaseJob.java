@@ -28,7 +28,7 @@ public abstract class BaseJob<T> extends Job {
 	protected List<T> tList;
 	// annotate fields that should be injected and made available to subclasses
 	@Inject
-	RemotePostEndpoint service;
+	protected RemotePostEndpoint service;
 
 
 	protected BaseJob(String TAG, T t) {
