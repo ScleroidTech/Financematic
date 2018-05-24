@@ -27,7 +27,7 @@ public class RemoteTransactionLab implements RemoteDataSource<TransactionModel> 
 	public Completable sync(final TransactionModel transactionModel) {
 		return Completable.fromAction(() ->
 				jobManager
-						.addJobInBackground(new SyncTransactionJob<>(transactionModel)));
+						.addJobInBackground(new SyncTransactionJob(transactionModel)));
 	}
 
 }

@@ -29,7 +29,7 @@ public class RemoteCustomerLab implements RemoteDataSource<Customer> {
         JobManagerFactory.getJobManager().addJobInBackground(new SyncCustomerJob(customer)));*/
 		return Completable.fromAction(() ->
 				jobManager
-						.addJobInBackground(new SyncCustomerJob<>(customer)));
+						.addJobInBackground(new SyncCustomerJob(customer)));
 	}
 
 

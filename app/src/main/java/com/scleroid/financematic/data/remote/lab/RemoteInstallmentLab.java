@@ -28,7 +28,7 @@ public class RemoteInstallmentLab implements RemoteDataSource<Installment> {
 	public Completable sync(final Installment installment) {
 		return Completable.fromAction(() ->
 				jobManager
-						.addJobInBackground(new SyncInstallmentsJob<>(installment)));
+						.addJobInBackground(new SyncInstallmentsJob(installment)));
 	}
 
 }

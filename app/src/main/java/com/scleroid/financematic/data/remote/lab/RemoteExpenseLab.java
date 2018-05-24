@@ -27,7 +27,7 @@ public class RemoteExpenseLab implements RemoteDataSource<Expense> {
 	public Completable sync(final Expense expense) {
 		return Completable.fromAction(() ->
 				jobManager
-						.addJobInBackground(new SyncExpenseJob<>(expense)));
+						.addJobInBackground(new SyncExpenseJob(expense)));
 	}
 
 }

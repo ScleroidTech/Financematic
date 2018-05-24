@@ -27,7 +27,7 @@ public class RemoteLoanLab implements RemoteDataSource<Loan> {
 	public Completable sync(final Loan loan) {
 		return Completable.fromAction(() ->
 				jobManager
-						.addJobInBackground(new SyncLoanJob<>(loan)));
+						.addJobInBackground(new SyncLoanJob(loan)));
 	}
 
 }

@@ -165,7 +165,7 @@ abstract public class RepositoryModule {
 
 	@Singleton
 	@Provides
-	GcmJobService provideGcmJobService() {
+	static GcmJobService provideGcmJobService() {
 		return new GcmJobService();
 	}
 
