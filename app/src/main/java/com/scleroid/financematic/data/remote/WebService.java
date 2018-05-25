@@ -46,11 +46,12 @@ public interface WebService {
 	@GET("/users/")
 	LiveData<ApiResponse<Expense>> getExpense(@Body int expenseNo);
 
-	@POST("mobile/transaction/")
+	@POST("/transaction/")
 	LiveData<ApiResponse<List<TransactionModel>>> getTransactionsForLoan(
 			@Field("loan_id") int loanAcNo);
 
-	@GET("/users/")
+	//Done
+	@GET("/transactionmodel/")
 	LiveData<ApiResponse<List<TransactionModel>>> getTransactions();
 
 	LiveData<ApiResponse<TransactionModel>> getTransaction(@Body int transactionNo);

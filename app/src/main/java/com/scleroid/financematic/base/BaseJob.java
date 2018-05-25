@@ -6,9 +6,9 @@ import android.support.annotation.Nullable;
 import com.birbit.android.jobqueue.Job;
 import com.birbit.android.jobqueue.Params;
 import com.birbit.android.jobqueue.RetryConstraint;
+import com.scleroid.financematic.data.remote.RemotePostEndpoint;
 import com.scleroid.financematic.data.remote.services.jobs.utils.JobPriority;
 import com.scleroid.financematic.data.remote.services.networking.RemoteException;
-import com.scleroid.financematic.data.remote.services.networking.RemotePostEndpoint;
 
 import java.util.List;
 

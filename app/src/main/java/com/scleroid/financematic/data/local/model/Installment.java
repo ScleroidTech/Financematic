@@ -35,12 +35,15 @@ public class Installment implements Serializable {
 	@SerializedName("installement_id")
 	@PrimaryKey(autoGenerate = false)
 	private int installmentId;
+
 	@SerializedName("mydate")
 	@TypeConverters(DateConverter.class)
 	private Date installmentDate;
+
 	@SerializedName("installement_amount")
 	@TypeConverters(MoneyConverter.class)
 	private BigDecimal expectedAmt;
+
 	@SerializedName("loan_id")
 	private int loanAcNo;
 

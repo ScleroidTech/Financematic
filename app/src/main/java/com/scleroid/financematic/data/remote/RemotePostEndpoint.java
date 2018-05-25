@@ -1,4 +1,4 @@
-package com.scleroid.financematic.data.remote.services.networking;
+package com.scleroid.financematic.data.remote;
 
 import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.local.model.Expense;
@@ -46,6 +46,8 @@ public interface RemotePostEndpoint {
 	Call<Expense> addExpense(@Body List<Expense> expense);
 
 	//Done
-	@POST("/mobile/delete/{installment_id}")
+	@POST("/delete/{installment_id}")
 	void deleteInstallment(@Body int installment);
+
+	void deleteCustomer(int customerId);
 }

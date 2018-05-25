@@ -7,6 +7,7 @@ import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 
+import com.google.gson.annotations.SerializedName;
 import com.scleroid.financematic.utils.roomConverters.DateConverter;
 import com.scleroid.financematic.utils.roomConverters.MoneyConverter;
 
@@ -29,20 +30,33 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
 		onDelete = CASCADE),
 		indices = {@Index(value = "transactionId", unique = true)})
 public class TransactionModel implements Serializable {
+
+	@SerializedName("transaction_id")
 	@PrimaryKey(autoGenerate = false)
 	private int transactionId;
+
+	@SerializedName("mydate")
 	@TypeConverters(DateConverter.class)
 	private Date transactionDate;
+
 	@TypeConverters(MoneyConverter.class)
 	private BigDecimal lentAmt;
+
+
 	@TypeConverters(MoneyConverter.class)
 	private BigDecimal gainedAmt;
 
 	@Ignore
 	private LoanDurationType loan;
+
+	@SerializedName("installment_amount")
 	@TypeConverters(MoneyConverter.class)
 	private BigDecimal receivedAmt;
+
+	@SerializedName("description")
 	private String description;
+
+	@SerializedName("loan_id")
 	private int loanAcNo;
 
 	public TransactionModel(final int transactionId, final Date transactionDate,

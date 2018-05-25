@@ -7,9 +7,9 @@ import android.support.annotation.Nullable;
 import com.scleroid.financematic.data.local.lab.LocalCustomerLab;
 import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.remote.ApiResponse;
+import com.scleroid.financematic.data.remote.RemotePostEndpoint;
 import com.scleroid.financematic.data.remote.WebService;
 import com.scleroid.financematic.data.remote.lab.RemoteCustomerLab;
-import com.scleroid.financematic.data.remote.services.networking.RemotePostEndpoint;
 import com.scleroid.financematic.utils.multithread.AppExecutors;
 import com.scleroid.financematic.utils.network.NetworkBoundResource;
 import com.scleroid.financematic.utils.network.RateLimiter;
@@ -146,6 +146,6 @@ public class CustomerRepo implements Repo<Customer> {
 	public Completable deleteItem(final Customer customer) {
 
 		//TODO update Remote
-		return localCustomerLab.deleteItem(customer);
+		return localCustomerLab.deleteItem(customer).flatMapCompletable(remoteCustomerLab::delete);
 	}
 }

@@ -5,6 +5,7 @@ import com.scleroid.financematic.data.local.model.Expense;
 import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.data.local.model.TransactionModel;
+import com.scleroid.financematic.data.remote.RemotePostEndpoint;
 
 import java.io.IOException;
 
