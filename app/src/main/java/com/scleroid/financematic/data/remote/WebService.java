@@ -11,7 +11,9 @@ import com.scleroid.financematic.data.local.model.TransactionModel;
 import java.util.List;
 
 import retrofit2.http.Body;
+import retrofit2.http.Field;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 /**
@@ -44,8 +46,9 @@ public interface WebService {
 	@GET("/users/")
 	LiveData<ApiResponse<Expense>> getExpense(@Body int expenseNo);
 
-	@GET("/users/")
-	LiveData<ApiResponse<List<TransactionModel>>> getTransactionsForLoan(@Body int loanAcNo);
+	@POST("mobile/transaction/")
+	LiveData<ApiResponse<List<TransactionModel>>> getTransactionsForLoan(
+			@Field("loan_id") int loanAcNo);
 
 	@GET("/users/")
 	LiveData<ApiResponse<List<TransactionModel>>> getTransactions();
@@ -58,6 +61,7 @@ public interface WebService {
 	@GET("/users/")
 	LiveData<ApiResponse<List<Installment>>> getInstallments();
 
+	//Done
 	@GET("/installid/{loan_id}")
 	LiveData<ApiResponse<List<Installment>>> getInstallmentsForLoan(@Path("loan_id") int loanAcNo);
 }

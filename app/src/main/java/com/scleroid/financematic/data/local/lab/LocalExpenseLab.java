@@ -122,11 +122,14 @@ public class LocalExpenseLab implements LocalDataSource<Expense> {
 	 * @param item item to be deleted
 	 */
 	@Override
-	public Completable deleteItem(@NonNull final Expense item) {
+	public Single<Expense> deleteItem(@NonNull final Expense item) {
 		Timber.d("deleting expense with id %d", item.getExpenseId());
 
-		return Completable.fromRunnable(() -> expenseDao.delete(item)).subscribeOn(Schedulers.io
-				());
+		return Single.fromCallable(() -> {
+			expenseDao.delete(item);
+
+			return item;
+		}).subscribeOn(Schedulers.io());
 	}
 
 	@Override

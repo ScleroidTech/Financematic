@@ -41,7 +41,11 @@ public interface RemotePostEndpoint {
 	@POST("/posts")
 	Call<Installment> addInstallment(@Body List<Installment> installment);
 
+
 	@POST("/posts")
 	Call<Expense> addExpense(@Body List<Expense> expense);
 
+	//Done
+	@POST("/mobile/delete/{installment_id}")
+	void deleteInstallment(@Body int installment);
 }

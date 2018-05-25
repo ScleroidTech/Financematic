@@ -183,9 +183,8 @@ public class InstallmentRepo implements Repo<Installment> {
 
 	@Override
 	public Completable deleteItem(final Installment installment) {
-		//ToDO update on server also
-
-		return localInstallmentsLab.deleteItem(installment);
+		return localInstallmentsLab.deleteItem(installment)
+				.flatMapCompletable(remoteInstallmentLab::delete);
 	}
 
 }
