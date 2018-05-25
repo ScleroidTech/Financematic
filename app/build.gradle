@@ -34,7 +34,7 @@ android {
         }
     }
     buildTypes.each {
-        it.buildConfigField 'String', 'API_BASE_URL', "\"http://ec2-34-204-12-59.compute-1.amazonaws.com:3306/mobile\""
+        it.buildConfigField 'String', 'API_BASE_URL', "\"http://ec2-34-239-118-216.compute-1.amazonaws.com:3306/mobile/\""
     }
 
     lintOptions {

@@ -3,8 +3,8 @@ package com.scleroid.financematic.data.remote.lab;
 import com.birbit.android.jobqueue.JobManager;
 import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.data.remote.RemoteDataSource;
-import com.scleroid.financematic.data.remote.services.jobs.DeleteInstallmentsJob;
-import com.scleroid.financematic.data.remote.services.jobs.SyncInstallmentsJob;
+import com.scleroid.financematic.data.remote.services.jobs.deleteJobs.DeleteInstallmentsJob;
+import com.scleroid.financematic.data.remote.services.jobs.syncJobs.SyncInstallmentsJob;
 
 import javax.inject.Inject;
 

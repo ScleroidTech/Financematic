@@ -3,13 +3,12 @@ package com.scleroid.financematic.data.remote.lab;
 import com.birbit.android.jobqueue.JobManager;
 import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.remote.RemoteDataSource;
-import com.scleroid.financematic.data.remote.services.jobs.DeleteCustomerJob;
-import com.scleroid.financematic.data.remote.services.jobs.SyncCustomerJob;
+import com.scleroid.financematic.data.remote.services.jobs.deleteJobs.DeleteCustomerJob;
+import com.scleroid.financematic.data.remote.services.jobs.syncJobs.SyncCustomerJob;
 
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
-import io.reactivex.CompletableSource;
 
 /**
  * Copyright (C) 2018
@@ -35,8 +34,9 @@ public class RemoteCustomerLab implements RemoteDataSource<Customer> {
 	}
 
 
-	public CompletableSource delete(final Customer customer) {
+	@Override
+	public Completable delete(final Customer t) {
 		return Completable.fromAction(() -> jobManager
-				.addJobInBackground(new DeleteCustomerJob(customer)));
+				.addJobInBackground(new DeleteCustomerJob(t)));
 	}
 }

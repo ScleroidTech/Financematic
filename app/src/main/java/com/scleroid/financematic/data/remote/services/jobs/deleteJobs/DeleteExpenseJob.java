@@ -1,7 +1,7 @@
-package com.scleroid.financematic.data.remote.services.jobs;
+package com.scleroid.financematic.data.remote.services.jobs.deleteJobs;
 
 import com.scleroid.financematic.base.BaseJob;
-import com.scleroid.financematic.data.local.model.Customer;
+import com.scleroid.financematic.data.local.model.Expense;
 
 import timber.log.Timber;
 
@@ -11,14 +11,12 @@ import timber.log.Timber;
  * @author Ganesh Kaple
  * @since 5/2/18
  */
-public class DeleteCustomerJob extends BaseJob<Customer> {
+public class DeleteExpenseJob extends BaseJob<Expense> {
 
-	private static final String TAG = DeleteCustomerJob.class.getCanonicalName();
+	private static final String TAG = DeleteExpenseJob.class.getCanonicalName();
 
-
-	public DeleteCustomerJob(Customer installment) {
-		super(TAG, installment);
-
+	public DeleteExpenseJob(final Expense expense) {
+		super(TAG, expense);
 	}
 
 
@@ -28,7 +26,7 @@ public class DeleteCustomerJob extends BaseJob<Customer> {
 
 
 		// if any exception is thrown, it will be handled by shouldReRunOnThrowable()
-		service.deleteCustomer(t.getCustomerId());
+		service.deleteExpense(t.getExpenseId());
 
 		// remote call was successful--the Installment will be updated locally to reflect that sync
 		// is no longer pending

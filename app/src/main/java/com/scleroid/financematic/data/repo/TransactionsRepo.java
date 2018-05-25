@@ -188,7 +188,8 @@ public class TransactionsRepo implements Repo<TransactionModel> {
 	@Override
 	public Completable deleteItem(final TransactionModel transactionModel) {
 		//TODO update to server
-		return localTransactionsLab.deleteItem(transactionModel);
+		return localTransactionsLab.deleteItem(transactionModel)
+				.flatMapCompletable(remoteTransactionLab::delete);
 	}
 
 

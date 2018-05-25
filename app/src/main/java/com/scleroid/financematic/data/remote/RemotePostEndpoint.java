@@ -46,8 +46,14 @@ public interface RemotePostEndpoint {
 	Call<Expense> addExpense(@Body List<Expense> expense);
 
 	//Done
-	@POST("/delete/{installment_id}")
+	@POST("delete/{installment_id}")
 	void deleteInstallment(@Body int installment);
 
 	void deleteCustomer(int customerId);
+
+	void deleteExpense(int expenseId);
+
+	void deleteLoan(int accountNo);
+
+	void deleteTransaction(int transactionId);
 }

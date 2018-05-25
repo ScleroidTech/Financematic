@@ -154,7 +154,7 @@ public class ExpenseRepo implements Repo<Expense> {
 	@Override
 	public Completable deleteItem(final Expense expense) {
 		//TODO update for server side also
-		return localExpenseLab.deleteItem(expense);
+		return localExpenseLab.deleteItem(expense).flatMapCompletable(remoteExpenseLab::delete);
 	}
 
 

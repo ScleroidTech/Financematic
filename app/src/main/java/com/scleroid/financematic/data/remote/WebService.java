@@ -37,7 +37,7 @@ public interface WebService {
 	LiveData<ApiResponse<List<Loan>>> getLoans();
 
 	//done
-	@GET("/table1/{customer_id}")
+	@GET("table1/{customer_id}")
 	LiveData<ApiResponse<List<Loan>>> getLoans(@Path("customer_id") int customerId);
 
 	@GET("/users/")
@@ -51,7 +51,7 @@ public interface WebService {
 			@Field("loan_id") int loanAcNo);
 
 	//Done
-	@GET("/transactionmodel/")
+	@GET("transactionmodel/")
 	LiveData<ApiResponse<List<TransactionModel>>> getTransactions();
 
 	LiveData<ApiResponse<TransactionModel>> getTransaction(@Body int transactionNo);
@@ -63,6 +63,6 @@ public interface WebService {
 	LiveData<ApiResponse<List<Installment>>> getInstallments();
 
 	//Done
-	@GET("/installid/{loan_id}")
+	@GET("installid/{loan_id}")
 	LiveData<ApiResponse<List<Installment>>> getInstallmentsForLoan(@Path("loan_id") int loanAcNo);
 }

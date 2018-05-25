@@ -1,4 +1,4 @@
-package com.scleroid.financematic.data.remote.services.jobs;
+package com.scleroid.financematic.data.remote.services.jobs.syncJobs;
 
 import com.scleroid.financematic.base.BaseJob;
 import com.scleroid.financematic.data.local.model.Loan;

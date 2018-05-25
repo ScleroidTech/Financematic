@@ -184,7 +184,7 @@ public class LoanRepo implements Repo<Loan> {
 	@Override
 	public Completable deleteItem(final Loan loan) {
 		//TODO update for server deletion also
-		return localLoanLab.deleteItem(loan);
+		return localLoanLab.deleteItem(loan).flatMapCompletable(remoteLoanLab::sync);
 	}
 
 
