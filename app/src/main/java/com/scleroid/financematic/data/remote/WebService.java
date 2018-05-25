@@ -22,8 +22,8 @@ import retrofit2.http.Path;
  */
 public interface WebService {
 	//TODO Replace with actual api
-	@GET("/users/{customer}")
-	LiveData<ApiResponse<Customer>> getCustomer(@Path("customer") int customerId);
+	@GET("/table1/{customer_id}")
+	LiveData<ApiResponse<Customer>> getCustomer(@Path("customer_id") int customerId);
 
 	@GET("/users/{customer}")
 	LiveData<ApiResponse<List<Customer>>> getCustomers();
@@ -34,9 +34,9 @@ public interface WebService {
 	@GET("/users/")
 	LiveData<ApiResponse<List<Loan>>> getLoans();
 
-	//TODO Change Annotations
-	@GET("/users/")
-	LiveData<ApiResponse<List<Loan>>> getLoans(@Body int customerId);
+	//done
+	@GET("/table1/{customer_id}")
+	LiveData<ApiResponse<List<Loan>>> getLoans(@Path("customer_id") int customerId);
 
 	@GET("/users/")
 	LiveData<ApiResponse<List<Expense>>> getExpenses();
@@ -58,6 +58,6 @@ public interface WebService {
 	@GET("/users/")
 	LiveData<ApiResponse<List<Installment>>> getInstallments();
 
-	@GET("/users/")
-	LiveData<ApiResponse<List<Installment>>> getInstallmentsForLoan(@Body int loanAcNo);
+	@GET("/installid/{loan_id}")
+	LiveData<ApiResponse<List<Installment>>> getInstallmentsForLoan(@Path("loan_id") int loanAcNo);
 }

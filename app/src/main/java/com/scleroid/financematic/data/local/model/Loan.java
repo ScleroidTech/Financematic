@@ -7,6 +7,7 @@ import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 
+import com.google.gson.annotations.SerializedName;
 import com.scleroid.financematic.utils.roomConverters.DateConverter;
 import com.scleroid.financematic.utils.roomConverters.MoneyConverter;
 
@@ -31,23 +32,30 @@ public class Loan implements Serializable {
 
 	@Ignore
 	private Customer customer;
+	@SerializedName("receivedamt")
 	@TypeConverters(MoneyConverter.class)
 	private BigDecimal receivedAmt;
+	@SerializedName("loan_amount")
 	@TypeConverters(MoneyConverter.class)
 	private BigDecimal loanAmt;
+	@SerializedName("startdate")
 	@TypeConverters(DateConverter.class)
 	private Date startDate;
 	@TypeConverters(DateConverter.class)
 	private Date endDate;
+	@SerializedName("interest")
 	private float rateOfInterest;
 	@TypeConverters(MoneyConverter.class)
 	private BigDecimal installmentAmt;
+	@SerializedName("noofinstallment")
 	private int noOfInstallments;
 	private String installmentType;
 	@TypeConverters(MoneyConverter.class)
 	private BigDecimal repayAmt;
+	@SerializedName("loan_id")
 	@PrimaryKey
 	private int accountNo;
+	@SerializedName("cid")
 	private int custId;
 
 
