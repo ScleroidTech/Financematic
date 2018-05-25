@@ -34,6 +34,10 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import okhttp3.Cache;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -126,27 +130,50 @@ abstract public class RepositoryModule {
 		return db.installmentDao();
 	}
 
-	@Singleton
 	@Provides
-	static WebService provideWebService() {
+	@Singleton
+	static Cache provideHttpCache(Application application) {
+		int cacheSize = 10 * 1024 * 1024;
+		Cache cache = new Cache(application.getCacheDir(), cacheSize);
+		return cache;
+	}
+
+	@Provides
+	@Singleton
+	static OkHttpClient provideOkhttpClient(Cache cache, Interceptor interceptor,
+	                                        HttpLoggingInterceptor httpLoggingInterceptor) {
+		OkHttpClient.Builder client = new OkHttpClient.Builder();
+		client.cache(cache);
+		client.addInterceptor(httpLoggingInterceptor);
+		client.addNetworkInterceptor(interceptor);
+
+		return client.build();
+	}
+
+	@Provides
+	@Singleton
+	static Retrofit providesRetrofit(Gson gson, OkHttpClient okHttpClient) {
 		return new Retrofit.Builder()
 				.baseUrl(BuildConfig.API_BASE_URL)
-				.addConverterFactory(GsonConverterFactory.create())
+				.addConverterFactory(GsonConverterFactory.create(gson))
 				.addCallAdapterFactory(new LiveDataCallAdapterFactory())
-				.build()
+				.client(okHttpClient)
+				.build();
+	}
+	@Singleton
+	@Provides
+	static WebService provideWebService(Retrofit retrofit) {
+
+		return retrofit
 				.create(WebService.class);
 	}
 
 
 	@Singleton
 	@Provides
-	static RemotePostEndpoint providePostWebService() {
+	static RemotePostEndpoint providePostWebService(Retrofit retrofit) {
 		//return   retrofit.create(RemotePostEndpoint.class);
-		return new Retrofit.Builder()
-				.baseUrl(BuildConfig.API_BASE_URL)
-				.addConverterFactory(GsonConverterFactory.create())
-				//		.addCallAdapterFactory(new LiveDataCallAdapterFactory())
-				.build()
+		return retrofit
 				.create(RemotePostEndpoint.class);
 	}
 	@Singleton
@@ -198,5 +225,21 @@ abstract public class RepositoryModule {
 		interceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
 		return interceptor;
 	}
+
+	@Provides
+	static public Interceptor headerInterceptor() {
+
+		return chain -> {
+			Request original = chain.request();
+			Request request = original.newBuilder()
+					.header("Content-Type", "application/json")
+					.method(original.method(), original.body())
+					.build();
+			return chain.proceed(request);
+		};
+	}
+
+
+
 
 }

@@ -91,9 +91,7 @@ dependencies {
     //GCM Network Manager
      implementation "com.google.android.gms:play-services-gcm:$project.playServicesVersion"
 
-    // OkHttp Logging Interceptor
-    //  implementation "com.squareup.okhttp3:okhttp:$project.okHttpVersion"
-    // implementation "com.squareup.okhttp3:logging-interceptor:$project.okHttpVersion"
+
     // ButterKnife
     implementation "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterKnifeVersion"
