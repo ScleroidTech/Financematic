@@ -56,7 +56,7 @@ import static com.scleroid.financematic.utils.CommonUtils.makeToast;
 
 public class MainActivity extends BaseActivity
 		implements NavigationView.OnNavigationItemSelectedListener, GarlandApp.FakerReadyListener,
-		           HasSupportFragmentInjector {
+		           HasSupportFragmentInjector, FragmentManager.OnBackStackChangedListener {
 	//TODO Refactor repeating code, look at  android-mvvm-architecture for ideas, its by mind-dorks
 	// tags used to attach the fragments
 	private static final String TAG_DASHBOARD = "dashboard";
@@ -134,6 +134,8 @@ public class MainActivity extends BaseActivity
 		this.toggle = toggle;
 	}
 
+	private boolean mToolBarNavigationListenerIsRegistered = false;
+
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
@@ -154,8 +156,27 @@ public class MainActivity extends BaseActivity
 
 		/*bottom navigation*/
 
+		bottomNavigationView = findViewById(R.id.navigation);
+		bottomNavigationView.setOnNavigationItemSelectedListener
+				(item -> {
+					handleUiClick(item);
+					return true;
+				});
+		BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
 
-		setToggle(new ActionBarDrawerToggle(
+		// attaching bottom sheet behaviour - hide / show on scroll
+		/*  CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams)
+		navigation.getLayoutParams();*/
+		/* layoutParams.setBehavior(new BottomNavigationBehavior());*/
+
+		// load the store fragment by default
+		/* toolbar.setCustomerName("Finance Matic");*/
+		// loadFragmentRunnable(new DashboardFragment());
+		//     appExecutors = new InstantAppExecutors();
+		//Listen for changes in the back stack
+		getSupportFragmentManager().addOnBackStackChangedListener(this);
+
+		ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
 				this, drawer, toolbar, R.string.navigation_drawer_open,
 				R.string.navigation_drawer_close) {
 
@@ -176,27 +197,11 @@ public class MainActivity extends BaseActivity
 				// happen so we leave this blank
 				super.onDrawerClosed(drawerView);
 			}
-		});
+		};
 
-		drawer.addDrawerListener(toggle);
-		toggle.syncState();
-		bottomNavigationView = findViewById(R.id.navigation);
-		bottomNavigationView.setOnNavigationItemSelectedListener
-				(item -> {
-					handleUiClick(item);
-					return true;
-				});
-		BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
 
-		// attaching bottom sheet behaviour - hide / show on scroll
-		/*  CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams)
-		navigation.getLayoutParams();*/
-		/* layoutParams.setBehavior(new BottomNavigationBehavior());*/
+		setToggle(actionBarDrawerToggle);
 
-		// load the store fragment by default
-		/* toolbar.setCustomerName("Finance Matic");*/
-		// loadFragmentRunnable(new DashboardFragment());
-		//     appExecutors = new InstantAppExecutors();
 		if (savedInstanceState == null) {
 			navItemIndex = 0;
 			CURRENT_TAG = TAG_DASHBOARD;
@@ -207,12 +212,18 @@ public class MainActivity extends BaseActivity
 			CURRENT_TAG = TAG_NOTIFICATION;
 			loadFragmentRunnable(NotificationActivity.newInstance(), true);
 		}
-
+//Handle when activity is recreated like on orientation Change
+		shouldDisplayHomeUp();
 
 		((GarlandApp) getApplication()).addListener(this);
 
 	}
 
+	public void shouldDisplayHomeUp() {
+		//Enable Up button only  if there are entries in the back stack
+		boolean canback = getSupportFragmentManager().getBackStackEntryCount() > 0;
+		enableBackButton(canback);
+	}
 	/**
 	 * @return layout resource id
 	 */
@@ -412,7 +423,11 @@ public class MainActivity extends BaseActivity
 		activityUtils.loadFragmentWithoutBackStack(fragment, getSupportFragmentManager());
 	}
 
-	/*sidebar navigation*/
+/*
+//TODO To not let the acitivty close directly
+	*/
+	/*sidebar navigation*//*
+
 	@Override
 	public void onBackPressed() {
 		DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -422,12 +437,11 @@ public class MainActivity extends BaseActivity
 			super.onBackPressed();
 		}
 	}
+*/
 
 	@Override
 	public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-		Fragment fragment;
-		//	Toasty.error(getBaseContext(), item.getTitle() + " clicked", Toast.LENGTH_SHORT)
-		// .show();
+
 		handleUiClick(item);
 
 
@@ -588,5 +602,76 @@ public class MainActivity extends BaseActivity
 
 	}
 
+	/**
+	 * To be semantically or contextually correct, maybe change the name and signature of this
+	 * function to something like:
+	 * <p>
+	 * private void showBackButton(boolean show) Just a suggestion.
+	 */
+	private void enableBackButton(boolean enable) {
 
+		// To keep states of ActionBar and ActionBarDrawerToggle synchronized,
+		// when you enable on one, you disable on the other.
+		// And as you may notice, the order for this operation is disable first, then enable -
+		// VERY VERY IMPORTANT.
+		if (enable) {
+//You may not want to open the drawer on swipe from the left in this case
+			drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+// Remove hamburger
+			toggle.setDrawerIndicatorEnabled(false);
+			// Show back button
+			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+			// when DrawerToggle is disabled i.e. setDrawerIndicatorEnabled(false), navigation icon
+			// clicks are disabled i.e. the UP button will not work.
+			// We need to add a listener, as in below, so DrawerToggle will forward
+			// click events to this listener.
+			if (!mToolBarNavigationListenerIsRegistered) {
+				toggle.setToolbarNavigationClickListener(v -> {
+					// Doesn't have to be onBackPressed
+					onBackPressed();
+				});
+
+				mToolBarNavigationListenerIsRegistered = true;
+			}
+
+		} else {
+//You must regain the power of swipe for the drawer.
+			drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+
+// Remove back button
+			getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+			// Show hamburger
+			toggle.setDrawerIndicatorEnabled(true);
+			// Remove the/any drawer toggle listener
+			toggle.setToolbarNavigationClickListener(null);
+			drawer.addDrawerListener(toggle);
+
+			mToolBarNavigationListenerIsRegistered = false;
+		}
+		toggle.syncState();
+
+		// So, one may think "Hmm why not simplify to:
+		// .....
+		// getSupportActionBar().setDisplayHomeAsUpEnabled(enable);
+		// mDrawer.setDrawerIndicatorEnabled(!enable);
+		// ......
+		// To re-iterate, the order in which you enable and disable views IS important
+		// #dontSimplify.
+	}
+
+	/**
+	 * Called whenever the contents of the back stack change.
+	 */
+	@Override
+	public void onBackStackChanged() {
+
+		shouldDisplayHomeUp();
+	}
+
+	@Override
+	public boolean onSupportNavigateUp() {
+		//This method is called when the up button is pressed. Just the pop back stack.
+		getSupportFragmentManager().popBackStack();
+		return true;
+	}
 }

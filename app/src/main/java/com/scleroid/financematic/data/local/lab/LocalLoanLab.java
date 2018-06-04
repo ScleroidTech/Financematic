@@ -128,10 +128,14 @@ public class LocalLoanLab implements LocalDataSource<Loan> {
 	 * @param item item to be deleted
 	 */
 	@Override
-	public Completable deleteItem(@NonNull final Loan item) {
+	public Single<Loan> deleteItem(@NonNull final Loan item) {
 		Timber.d("deleting loan with id %d", item.getAccountNo());
+		return Single.fromCallable(() -> {
+			loanDao.delete(item);
 
-		return Completable.fromRunnable(() -> loanDao.delete(item)).subscribeOn(Schedulers.io());
+			return item;
+		}).subscribeOn(Schedulers.io());
+
 	}
 
 	@Override

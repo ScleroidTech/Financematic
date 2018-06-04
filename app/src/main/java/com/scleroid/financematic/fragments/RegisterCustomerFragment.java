@@ -196,10 +196,10 @@ return;
 	}
 
 	private void saveCustomer(final Customer customer) {
-		customerRepo.saveItem(customer).subscribe(customer1 -> {
+		customerRepo.saveItem(customer).subscribe(() -> {
 			// handle completion
-			Timber.d("Item Saved" + customer1.toString());
-			activityUtils.loadFragment(RegisterLoanFragment.newInstance(customer1.getCustomerId
+			Timber.d("Item Saved");
+			activityUtils.loadFragment(RegisterLoanFragment.newInstance(customer.getCustomerId
 							()),
 					getFragmentManager());
 			//		Toasty.success(context, "Customers Added");

@@ -49,7 +49,6 @@ public class PeopleViewModel extends BaseViewModel implements CustomerViewModel 
 		return customers;
 	}
 
-	//TODO add  data in it
 	@Override
 	protected LiveData<List<Customer>> updateItemLiveData() {
 		customers = customerRepo.getLocalCustomerLab()

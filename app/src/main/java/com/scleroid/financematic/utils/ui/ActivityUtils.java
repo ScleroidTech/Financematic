@@ -126,6 +126,7 @@ public class ActivityUtils {
 		}
 	}
 
+
 	public void setTitle(AppCompatActivity activity, String msg) {
 		ActionBar actionBar = activity.getSupportActionBar();
 		actionBar.setTitle(msg);

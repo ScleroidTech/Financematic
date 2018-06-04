@@ -11,6 +11,7 @@ import java.util.List;
  * @author Ganesh Kaple
  * @since 4/10/18
  */
+@Deprecated
 public class LoansWithCustomer {
 	//TODO add later
 	@Embedded

@@ -170,13 +170,11 @@ public class DelayDialogFragment extends BaseDialog {
 									new BigDecimal(etrxReceivedAmount.getText().toString()),
 									accountNo);
 							installmentRepo.updateItem(installment).observeOn(
-									AndroidSchedulers.mainThread()).subscribe(installment1 -> {
+									AndroidSchedulers.mainThread()).subscribe(() -> {
 										Toasty.success(getContext(), "Details Updated " +
 												"Successfully")
 												.show();
-										Timber.d("data updated for Installment " +
-												installment1.toString
-														());
+								Timber.d("data updated for Installment ");
 										this.dismiss();
 									}, throwable -> {
 										Toasty.error(getContext(), "Details Not Updated, Try " +

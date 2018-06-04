@@ -3,13 +3,18 @@ package com.scleroid.financematic.di;
 import android.app.Application;
 import android.arch.persistence.room.Room;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.scleroid.financematic.BuildConfig;
 import com.scleroid.financematic.data.local.AppDatabase;
 import com.scleroid.financematic.data.local.dao.CustomerDao;
 import com.scleroid.financematic.data.local.dao.ExpenseDao;
 import com.scleroid.financematic.data.local.dao.InstallmentDao;
 import com.scleroid.financematic.data.local.dao.LoanDao;
 import com.scleroid.financematic.data.local.dao.TransactionDao;
+import com.scleroid.financematic.data.remote.RemotePostEndpoint;
 import com.scleroid.financematic.data.remote.WebService;
+import com.scleroid.financematic.data.remote.services.jobs.utils.GcmJobService;
 import com.scleroid.financematic.data.repo.CustomerRepo;
 import com.scleroid.financematic.data.repo.ExpenseRepo;
 import com.scleroid.financematic.data.repo.InstallmentRepo;
@@ -29,7 +34,13 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import okhttp3.Cache;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import timber.log.Timber;
 
 /**
@@ -38,7 +49,7 @@ import timber.log.Timber;
  * @author ganesh This is used by Dagger to inject the required arguments into the {@link }.
  * @since 3/10/18
  */
-@Module(includes = ViewModelModule.class)
+@Module(includes = {ViewModelModule.class, JobManagerModule.class})
 abstract public class RepositoryModule {
 
 	private static final int THREAD_COUNT = 3;
@@ -119,17 +130,52 @@ abstract public class RepositoryModule {
 		return db.installmentDao();
 	}
 
+	@Provides
+	@Singleton
+	static Cache provideHttpCache(Application application) {
+		int cacheSize = 10 * 1024 * 1024;
+		Cache cache = new Cache(application.getCacheDir(), cacheSize);
+		return cache;
+	}
+
+	@Provides
+	@Singleton
+	static OkHttpClient provideOkhttpClient(Cache cache, Interceptor interceptor,
+	                                        HttpLoggingInterceptor httpLoggingInterceptor) {
+		OkHttpClient.Builder client = new OkHttpClient.Builder();
+		client.cache(cache);
+		client.addInterceptor(httpLoggingInterceptor);
+		client.addNetworkInterceptor(interceptor);
+
+		return client.build();
+	}
+
+	@Provides
+	@Singleton
+	static Retrofit providesRetrofit(Gson gson, OkHttpClient okHttpClient) {
+		return new Retrofit.Builder()
+				.baseUrl(BuildConfig.API_BASE_URL)
+				.addConverterFactory(GsonConverterFactory.create(gson))
+				.addCallAdapterFactory(new LiveDataCallAdapterFactory())
+				.client(okHttpClient)
+				.build();
+	}
 	@Singleton
 	@Provides
-	static WebService provideWebService() {
-		return new Retrofit.Builder()
-				.baseUrl("https://api.github.com/")
-//			    .addConverterFactory(GsonConverterFactory.create())
-				.addCallAdapterFactory(new LiveDataCallAdapterFactory())
-				.build()
+	static WebService provideWebService(Retrofit retrofit) {
+
+		return retrofit
 				.create(WebService.class);
 	}
 
+
+	@Singleton
+	@Provides
+	static RemotePostEndpoint providePostWebService(Retrofit retrofit) {
+		//return   retrofit.create(RemotePostEndpoint.class);
+		return retrofit
+				.create(RemotePostEndpoint.class);
+	}
 	@Singleton
 	@Provides
 	static SchedulerProvider provideSchedulerProvider() {
@@ -145,6 +191,12 @@ abstract public class RepositoryModule {
 	}
 
 	@Singleton
+	@Provides
+	static GcmJobService provideGcmJobService() {
+		return new GcmJobService();
+	}
+
+	@Singleton
 	abstract LoanRepo provideLoanRepo(AppDatabase db);
 
 	@Singleton
@@ -155,14 +207,39 @@ abstract public class RepositoryModule {
 
 	@Singleton
 	abstract InstallmentRepo provideInstallmentRepo(AppDatabase db);
-	/*@Provides
+
+	@Provides
 	@Singleton
-	Gson provideGson() {
+	static Gson provideGson() {
 		return new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-	}*/
+	}
 
 	@Singleton
 	abstract TransactionsRepo provideTransactionsRepo(AppDatabase db);
+
+
+	@Provides
+	static public HttpLoggingInterceptor loggingInterceptor() {
+		HttpLoggingInterceptor interceptor =
+				new HttpLoggingInterceptor(message -> Timber.i(message));
+		interceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
+		return interceptor;
+	}
+
+	@Provides
+	static public Interceptor headerInterceptor() {
+
+		return chain -> {
+			Request original = chain.request();
+			Request request = original.newBuilder()
+					.header("Content-Type", "application/json")
+					.method(original.method(), original.body())
+					.build();
+			return chain.proceed(request);
+		};
+	}
+
+
 
 
 }

@@ -229,7 +229,7 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 	 */
 	@Override
 	protected void subscribeToLiveData() {
-		reportViewModel.getTransactionLiveData().observe(this, this::updateListData);
+		reportViewModel.getItemList().observe(this, transactions -> updateListData(transactions.data));
 	}
 
 	/**

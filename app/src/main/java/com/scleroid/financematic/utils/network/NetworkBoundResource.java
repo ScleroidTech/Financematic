@@ -46,7 +46,9 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
 		LiveData<ResultType> dbSource = loadFromDb();
 		result.addSource(dbSource, data -> {
 			result.removeSource(dbSource);
-			if (shouldFetch(data)) {
+			if (shouldFetch(
+					data)/*TODO put shouldFetch when API ready
+			 */) {
 				fetchFromNetwork(dbSource);
 			} else {
 				result.addSource(dbSource, newData -> setValue(Resource.success(newData)));
@@ -55,8 +57,11 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
 	}
 
 	private void fetchFromNetwork(final LiveData<ResultType> dbSource) {
-		LiveData<ApiResponse<RequestType>> apiResponse = createCall();
-		// we re-attach dbSource as a new source, it will dispatch its latest value quickly
+		//	LiveData<ApiResponse<RequestType>> apiResponse = createCall();
+		result.addSource(dbSource,
+				newData -> setValue(Resource.error("No data here", newData)));
+		//TODO remove the above line and uncomment when api ready
+		/*// we re-attach dbSource as a new source, it will dispatch its latest value quickly
 		result.addSource(dbSource, newData -> setValue(Resource.loading(newData)));
 		result.addSource(apiResponse, response -> {
 			result.removeSource(apiResponse);
@@ -78,7 +83,7 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
 				result.addSource(dbSource,
 						newData -> setValue(Resource.error(response.errorMessage, newData)));
 			}
-		});
+		});*/
 	}
 
 	@MainThread
@@ -105,6 +110,11 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
 
 	@MainThread
 	protected abstract boolean shouldFetch(@Nullable ResultType data);
+
+	@MainThread
+	protected boolean shouldNotFetch(@Nullable ResultType data) {
+		return false;
+	}
 
 	@NonNull
 	@MainThread

@@ -5,6 +5,9 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -14,15 +17,17 @@ import java.util.List;
  * @since 4/2/18
  */
 @Entity(indices = {@Index(value = "customerId", unique = true)})
-public class Customer {
+public class Customer implements Serializable {
 
 
-	@Ignore
-	List<Loan> loanList;
+	@SerializedName("cid")
 	@PrimaryKey(autoGenerate = false)
 	private int customerId;
+	@SerializedName("fullname")
 	private String name;
+	@SerializedName("mobile")
 	private String mobileNumber;
+	@SerializedName("address")
 	private String address;
 	private String city;
 	private String idProofNo;

@@ -160,11 +160,10 @@ public class InsertExpenseDialogFragment extends BaseDialog {
 							new Expense(new BigDecimal(etrxReceivedAmount.getText().toString()),
 									expenseType, expenseDate);
 					expenseRepo.saveItem(expense).observeOn(
-							AndroidSchedulers.mainThread()).subscribe(installment1 -> {
+							AndroidSchedulers.mainThread()).subscribe(() -> {
 								Toasty.success(getContext(), "Details Updated Successfully")
 										.show();
-								Timber.d("data updated for Installment " + installment1.toString
-										());
+						Timber.d("data updated for Installment ");
 							}, throwable -> {
 								Toasty.error(getContext(), "Details Not Updated, Try again Later")
 										.show();

@@ -4,10 +4,12 @@ import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.scleroid.financematic.data.AbsentLiveData;
 import com.scleroid.financematic.data.local.lab.LocalTransactionsLab;
 import com.scleroid.financematic.data.local.model.TransactionModel;
 import com.scleroid.financematic.data.remote.ApiResponse;
 import com.scleroid.financematic.data.remote.WebService;
+import com.scleroid.financematic.data.remote.lab.RemoteTransactionLab;
 import com.scleroid.financematic.utils.multithread.AppExecutors;
 import com.scleroid.financematic.utils.network.NetworkBoundResource;
 import com.scleroid.financematic.utils.network.RateLimiter;
@@ -19,7 +21,6 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
-import io.reactivex.Single;
 
 /**
  * Copyright (C) 2018
@@ -50,20 +51,21 @@ public class TransactionsRepo implements Repo<TransactionModel> {
 
 	private final LocalTransactionsLab localTransactionsLab;
 	private final WebService webService;
+
+	private final RemoteTransactionLab remoteTransactionLab;
 	private final AppExecutors appExecutors;
 	private RateLimiter<String> transactionListRateLimit = new RateLimiter<>(10, TimeUnit.MINUTES);
 
 	@Inject
 	TransactionsRepo(final LocalTransactionsLab transactionsLab,
-	                 final WebService webService, final AppExecutors appExecutors) {
+	                 final WebService webService, final AppExecutors appExecutors,
+	                 final RemoteTransactionLab remoteTransactionLab) {
 		this.localTransactionsLab = transactionsLab;
 		this.webService = webService;
 		this.appExecutors = appExecutors;
+		this.remoteTransactionLab = remoteTransactionLab;
 	}
 
-	public LocalTransactionsLab getLocalTransactionsLab() {
-		return localTransactionsLab;
-	}
 
 	public LiveData<Resource<List<TransactionModel>>> loadTransactionsForLoan(int loanAcNo) {
 		return new NetworkBoundResource<List<TransactionModel>, List<TransactionModel>>(
@@ -127,7 +129,9 @@ public class TransactionsRepo implements Repo<TransactionModel> {
 			@NonNull
 			@Override
 			protected LiveData<ApiResponse<List<TransactionModel>>> createCall() {
-				return webService.getTransactions();
+				//TODO remove this line
+				return AbsentLiveData.create();
+				//	return webService.getTransactions();
 			}
 
 			@Override
@@ -170,18 +174,22 @@ public class TransactionsRepo implements Repo<TransactionModel> {
 	}
 
 	@Override
-	public Single<TransactionModel> saveItem(final TransactionModel transactionModel) {
-		return localTransactionsLab.saveItem(transactionModel);
+	public Completable saveItem(final TransactionModel transactionModel) {
+		return localTransactionsLab.saveItem(transactionModel)
+				.flatMapCompletable(remoteTransactionLab::sync);
 	}
 
 	@Override
-	public Single<TransactionModel> updateItem(final TransactionModel transactionModel) {
-		return null;
+	public Completable updateItem(final TransactionModel transactionModel) {
+		return localTransactionsLab.updateItem(transactionModel)
+				.flatMapCompletable(remoteTransactionLab::sync);
 	}
 
 	@Override
 	public Completable deleteItem(final TransactionModel transactionModel) {
-		return null;
+		//TODO update to server
+		return localTransactionsLab.deleteItem(transactionModel)
+				.flatMapCompletable(remoteTransactionLab::delete);
 	}
 
 

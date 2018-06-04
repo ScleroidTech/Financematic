@@ -7,9 +7,11 @@ import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 
+import com.google.gson.annotations.SerializedName;
 import com.scleroid.financematic.utils.roomConverters.DateConverter;
 import com.scleroid.financematic.utils.roomConverters.MoneyConverter;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -26,18 +28,36 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
 		childColumns = "loanAcNo",
 		onDelete = CASCADE),
 		indices = {@Index(value = "installmentId", unique = true)})
-public class Installment {
+public class Installment implements Serializable {
 
 	@Ignore
 	Loan loan;
+	@SerializedName("installement_id")
 	@PrimaryKey(autoGenerate = false)
 	private int installmentId;
 
+	@SerializedName("mydate")
 	@TypeConverters(DateConverter.class)
 	private Date installmentDate;
+
+	@SerializedName("installement_amount")
 	@TypeConverters(MoneyConverter.class)
 	private BigDecimal expectedAmt;
+
+	@SerializedName("loan_id")
 	private int loanAcNo;
+
+	@Override
+	public String toString() {
+		return "Installment{" +
+				"loan=" + loan +
+				", installmentId=" + installmentId +
+				", installmentDate=" + installmentDate +
+				", expectedAmt=" + expectedAmt.toPlainString() +
+				", loanAcNo=" + loanAcNo +
+				", delayReason='" + delayReason + '\'' +
+				'}';
+	}
 
 	private String delayReason;
 
@@ -100,15 +120,6 @@ public class Installment {
 		this.loanAcNo = loanAcNo;
 	}
 
-	@Override
-	public String toString() {
-		return "Installment{" +
-				"installmentId=" + installmentId +
-				", installmentDate=" + installmentDate +
-				", expectedAmt=" + expectedAmt +
-				", loanAcNo=" + loanAcNo +
-				'}';
-	}
 
 	public Loan getLoan() {
 		return loan;

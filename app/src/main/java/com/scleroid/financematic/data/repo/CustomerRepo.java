@@ -7,7 +7,9 @@ import android.support.annotation.Nullable;
 import com.scleroid.financematic.data.local.lab.LocalCustomerLab;
 import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.remote.ApiResponse;
+import com.scleroid.financematic.data.remote.RemotePostEndpoint;
 import com.scleroid.financematic.data.remote.WebService;
+import com.scleroid.financematic.data.remote.lab.RemoteCustomerLab;
 import com.scleroid.financematic.utils.multithread.AppExecutors;
 import com.scleroid.financematic.utils.network.NetworkBoundResource;
 import com.scleroid.financematic.utils.network.RateLimiter;
@@ -19,7 +21,6 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
-import io.reactivex.Single;
 
 /**
  * Copyright (C) 2018
@@ -31,16 +32,22 @@ public class CustomerRepo implements Repo<Customer> {
 
 
 	private final LocalCustomerLab localCustomerLab;
+	private RemoteCustomerLab remoteCustomerLab;
 	//TODO remove direct access to this
 	private final WebService webService;
+	private RemotePostEndpoint postEndpoint;
 	private final AppExecutors appExecutors;
 	private RateLimiter<String> customerListRateLimit = new RateLimiter<>(10, TimeUnit.MINUTES);
 	@Inject
 	public CustomerRepo(final LocalCustomerLab localCustomerLab,
+	                    RemoteCustomerLab remoteCustomerLab,
 	                    final WebService webService,
+	                    final RemotePostEndpoint postEndpoint,
 	                    final AppExecutors appExecutors) {
 		this.localCustomerLab = localCustomerLab;
+		this.remoteCustomerLab = remoteCustomerLab;
 		this.webService = webService;
+		this.postEndpoint = postEndpoint;
 		this.appExecutors = appExecutors;
 	}
 
@@ -117,27 +124,28 @@ public class CustomerRepo implements Repo<Customer> {
 		//TODO save this onRemote Source later
 		//Observable.fromCallable(() -> customerDao.saveCustomers(items));
 
-		return
-				localCustomerLab.addItems(items);
+		return localCustomerLab.addItems(items);
 
 
 	}
 
 	@Override
-	public Single<Customer> saveItem(final Customer customer) {
+	public Completable saveItem(final Customer customer) {
 		//Observable.fromCallable(() -> customerDao.saveCustomer(customer));
 
-		return localCustomerLab.saveItem(customer);
+		return localCustomerLab.saveItem(customer).flatMapCompletable(remoteCustomerLab::sync);
 
 	}
 
 	@Override
-	public Single<Customer> updateItem(final Customer customer) {
-		return null;
+	public Completable updateItem(final Customer customer) {
+		return localCustomerLab.updateItem(customer).flatMapCompletable(remoteCustomerLab::sync);
 	}
 
 	@Override
 	public Completable deleteItem(final Customer customer) {
-		return null;
+
+		//TODO update Remote
+		return localCustomerLab.deleteItem(customer).flatMapCompletable(remoteCustomerLab::delete);
 	}
 }

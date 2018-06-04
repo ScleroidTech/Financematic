@@ -10,7 +10,10 @@ import com.scleroid.financematic.data.local.model.TransactionModel;
 
 import java.util.List;
 
+import retrofit2.http.Body;
+import retrofit2.http.Field;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 /**
@@ -21,8 +24,8 @@ import retrofit2.http.Path;
  */
 public interface WebService {
 	//TODO Replace with actual api
-	@GET("/users/{customer}")
-	LiveData<ApiResponse<Customer>> getCustomer(@Path("customer") int customerId);
+	@GET("/table1/{customer_id}")
+	LiveData<ApiResponse<Customer>> getCustomer(@Path("customer_id") int customerId);
 
 	@GET("/users/{customer}")
 	LiveData<ApiResponse<List<Customer>>> getCustomers();
@@ -33,22 +36,33 @@ public interface WebService {
 	@GET("/users/")
 	LiveData<ApiResponse<List<Loan>>> getLoans();
 
-	@GET("/users/")
-	LiveData<ApiResponse<List<Loan>>> getLoans(int customerId);
+	//done
+	@GET("table1/{customer_id}")
+	LiveData<ApiResponse<List<Loan>>> getLoans(@Path("customer_id") int customerId);
 
+	@GET("/users/")
 	LiveData<ApiResponse<List<Expense>>> getExpenses();
 
-	LiveData<ApiResponse<Expense>> getExpense(int expenseNo);
+	@GET("/users/")
+	LiveData<ApiResponse<Expense>> getExpense(@Body int expenseNo);
 
-	LiveData<ApiResponse<List<TransactionModel>>> getTransactionsForLoan(int loanAcNo);
+	@POST("/transaction/")
+	LiveData<ApiResponse<List<TransactionModel>>> getTransactionsForLoan(
+			@Field("loan_id") int loanAcNo);
 
+	//Done
+	@GET("transactionmodel/")
 	LiveData<ApiResponse<List<TransactionModel>>> getTransactions();
 
-	LiveData<ApiResponse<TransactionModel>> getTransaction(int transactionNo);
+	LiveData<ApiResponse<TransactionModel>> getTransaction(@Body int transactionNo);
 
-	LiveData<ApiResponse<Installment>> getInstallment(int installmentNo);
+	@GET("/users/")
+	LiveData<ApiResponse<Installment>> getInstallment(@Body int installmentNo);
 
+	@GET("/users/")
 	LiveData<ApiResponse<List<Installment>>> getInstallments();
 
-	LiveData<ApiResponse<List<Installment>>> getInstallmentsForLoan(int loanAcNo);
+	//Done
+	@GET("installid/{loan_id}")
+	LiveData<ApiResponse<List<Installment>>> getInstallmentsForLoan(@Path("loan_id") int loanAcNo);
 }

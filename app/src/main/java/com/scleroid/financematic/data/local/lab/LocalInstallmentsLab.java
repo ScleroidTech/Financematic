@@ -153,11 +153,14 @@ public class LocalInstallmentsLab implements LocalDataSource<Installment> {
 	 * @param item item to be deleted
 	 */
 	@Override
-	public Completable deleteItem(@NonNull final Installment item) {
+	public Single<Installment> deleteItem(@NonNull final Installment item) {
 		Timber.d("deleting installment with id %d", item.getInstallmentId());
+		return Single.fromCallable(() -> {
+			installmentDao.delete(item);
+			Timber.d("installment Deleted ");
+			return item;
+		}).subscribeOn(Schedulers.io());
 
-		return Completable.fromRunnable(() -> installmentDao.delete(item))
-				.subscribeOn(Schedulers.io());
 	}
 
 	/**

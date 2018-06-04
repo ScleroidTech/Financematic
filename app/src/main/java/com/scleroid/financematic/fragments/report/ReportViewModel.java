@@ -20,14 +20,16 @@ import java.util.List;
 public class ReportViewModel extends BaseViewModel<TransactionModel> implements LoanViewModel {
 	//private final LoanRepo loanRepo;
 	private final TransactionsRepo transactionsRepo;
-	LiveData<List<TransactionModel>> transactionLiveData = new MutableLiveData<>();
+//	LiveData<List<TransactionModel>> transactionLiveData = new MutableLiveData<>();
+	LiveData<Resource<List<TransactionModel>>> transactionLivedataDual =new MutableLiveData<>();
 
 	public ReportViewModel(final TransactionsRepo transactionsRepo) {
 		this.transactionsRepo = transactionsRepo;
-		this.transactionLiveData = setTransactionLiveData();
+	//	this.transactionLiveData = setTransactionLiveData();
+		this.transactionLivedataDual = updateItemLiveData();
 	}
 
-	public LiveData<List<TransactionModel>> getTransactionLiveData() {
+/*	public LiveData<List<TransactionModel>> getTransactionLiveData() {
 		if (transactionLiveData.getValue() == null) transactionLiveData = setTransactionLiveData();
 		return transactionLiveData;
 	}
@@ -35,15 +37,16 @@ public class ReportViewModel extends BaseViewModel<TransactionModel> implements 
 	private LiveData<List<TransactionModel>> setTransactionLiveData() {
 
 		return transactionsRepo.getLocalTransactionsLab().getItems();
-	}
+	}*/
 
 	@Override
 	protected LiveData<Resource<List<TransactionModel>>> updateItemLiveData() {
-		return null;
+		return transactionsRepo.loadItems();
 	}
 
 	@Override
 	protected LiveData<Resource<List<TransactionModel>>> getItemList() {
-		return null;
+		if (transactionLivedataDual.getValue() == null || transactionLivedataDual.getValue().data == null) transactionLivedataDual = updateItemLiveData();
+		return transactionLivedataDual;
 	}
 }

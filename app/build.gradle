@@ -33,6 +33,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    buildTypes.each {
+        it.buildConfigField 'String', 'API_BASE_URL', "\"http://ec2-34-239-118-216.compute-1.amazonaws.com:3306/mobile/\""
+    }
+
+    lintOptions {
+        abortOnError false
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -45,10 +52,10 @@ dependencies {
 
     // App's dependencies, including test
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'com.android.support:support-v4:27.1.1'
+  //  implementation 'com.android.support:support-v4:27.1.1'
 
     //noinspection GradleCompatible
-    // implementation "com.android.support:support-v4:$rootProject.supportLibraryVersion"
+     implementation "com.android.support:support-v4:$rootProject.supportLibraryVersion"
     implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
     implementation "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
     implementation "com.android.support:design:$rootProject.supportLibraryVersion"
@@ -82,11 +89,9 @@ dependencies {
     //  implementation "com.birbit:android-priority-jobqueue:$project.priorityJobQueueVersion"
 
     //GCM Network Manager
-    //  implementation "com.google.android.gms:play-services-gcm:$project.playServicesVersion"
+     implementation "com.google.android.gms:play-services-gcm:$project.playServicesVersion"
 
-    // OkHttp Logging Interceptor
-    //  implementation "com.squareup.okhttp3:okhttp:$project.okHttpVersion"
-    // implementation "com.squareup.okhttp3:logging-interceptor:$project.okHttpVersion"
+
     // ButterKnife
     implementation "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterKnifeVersion"
@@ -107,6 +112,12 @@ dependencies {
 
     //Retrofit
     implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+    implementation 'com.birbit:android-priority-jobqueue:2.0.1'
+
+    // OkHttp Logging Interceptor
+    implementation "com.squareup.okhttp3:okhttp:$rootProject.okHttpVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okHttpVersion"
 
     //RxJava Bitch
     implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVersion"

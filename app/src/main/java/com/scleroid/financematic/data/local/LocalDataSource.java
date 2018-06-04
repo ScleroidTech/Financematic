@@ -67,7 +67,7 @@ public interface LocalDataSource<T> {
 	 *
 	 * @param item item to be deleted
 	 */
-	Completable deleteItem(@NonNull T item);
+	Single<T> deleteItem(@NonNull T item);
 
 	Single<T> updateItem(T t);
 
