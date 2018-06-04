@@ -7,7 +7,6 @@ import android.arch.persistence.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -17,11 +16,12 @@ import java.util.List;
  * @since 4/2/18
  */
 @Entity(indices = {@Index(value = "customerId", unique = true)})
-public class Customer implements Serializable {
+public class Customer {
 
 
-	@SerializedName("cid")
+
 	@PrimaryKey(autoGenerate = false)
+	@SerializedName("cid")
 	private int customerId;
 	@SerializedName("fullname")
 	private String name;

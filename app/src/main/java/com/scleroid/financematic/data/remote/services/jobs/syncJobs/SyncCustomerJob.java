@@ -23,7 +23,8 @@ public class SyncCustomerJob extends BaseJob<Customer> {
 
 
 		// if any exception is thrown, it will be handled by shouldReRunOnThrowable()
-		if (service != null) { service.addCustomer(t); }
+		String str = service.addCustomer(t).request().toString();
+		Timber.d(str);
 
 		// remote call was successful--the Customer will be updated locally to reflect that sync
 		// is no longer pending

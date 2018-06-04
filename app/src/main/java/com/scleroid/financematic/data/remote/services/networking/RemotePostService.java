@@ -14,6 +14,7 @@ import javax.inject.Inject;
 import retrofit2.Response;
 import timber.log.Timber;
 
+@Deprecated
 public final class RemotePostService {
 
 	private static RemotePostService instance;

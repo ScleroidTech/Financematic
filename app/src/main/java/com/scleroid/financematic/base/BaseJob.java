@@ -32,8 +32,8 @@ public abstract class BaseJob<T> extends Job {
 	                  final RemotePostEndpoint service) {
 		super(new Params(JobPriority.MID)
 				.requireNetwork()
-				.groupBy(TAG)
-				.persist());
+				.groupBy(TAG));
+		//	.persist());
 		this.t = t;
 		this.service = service;
 	}
