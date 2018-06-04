@@ -3,6 +3,7 @@ package com.scleroid.financematic.data.remote.lab;
 import com.birbit.android.jobqueue.JobManager;
 import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.data.remote.RemoteDataSource;
+import com.scleroid.financematic.data.remote.RemotePostEndpoint;
 import com.scleroid.financematic.data.remote.services.jobs.deleteJobs.DeleteInstallmentsJob;
 import com.scleroid.financematic.data.remote.services.jobs.syncJobs.SyncInstallmentsJob;
 
@@ -19,24 +20,27 @@ import io.reactivex.Completable;
 public class RemoteInstallmentLab implements RemoteDataSource<Installment> {
 
 	private final JobManager jobManager;
+	private RemotePostEndpoint service;
 
 	@Inject
-	public RemoteInstallmentLab(JobManager jobManager) {
+	public RemoteInstallmentLab(JobManager jobManager,
+	                            final RemotePostEndpoint service) {
 		this.jobManager = jobManager;
+		this.service = service;
 	}
 
 	@Override
 	public Completable sync(final Installment installment) {
 		return Completable.fromAction(() ->
 				jobManager
-						.addJobInBackground(new SyncInstallmentsJob(installment)));
+						.addJobInBackground(new SyncInstallmentsJob(installment, service)));
 	}
 
 
 	public Completable delete(final Installment installment) {
 		return Completable.fromAction(() ->
 				jobManager
-						.addJobInBackground(new DeleteInstallmentsJob(installment)));
+						.addJobInBackground(new DeleteInstallmentsJob(installment, service)));
 	}
 
 }

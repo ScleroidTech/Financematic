@@ -11,27 +11,33 @@ import java.util.List;
 import hugo.weaving.DebugLog;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
 public interface RemotePostEndpoint {
 
 	@DebugLog
+	@FormUrlEncoded
 	@POST("/newregister")
 	Call<Customer> addCustomer(@Body Customer customer);
 
 	@DebugLog
+	@FormUrlEncoded
 	@POST("/newloanusers")
 	Call<Loan> addLoan(@Body Loan loan);
 
 	@DebugLog
+	@FormUrlEncoded
 	@POST("/posts")
 	Call<TransactionModel> addTransaction(@Body TransactionModel transaction);
 
 	@DebugLog
+	@FormUrlEncoded
 	@POST("/insertmydate")
 	Call<Installment> addInstallment(@Body Installment installment);
 
 	@DebugLog
+	@FormUrlEncoded
 	@POST("/posts")
 	Call<Expense> addExpense(@Body Expense expense);
 
@@ -58,18 +64,23 @@ public interface RemotePostEndpoint {
 
 	@DebugLog
 	//Done
+	@FormUrlEncoded
 	@POST("delete/{installment_id}")
 	void deleteInstallment(@Body int installment);
 
 	@DebugLog
+	@FormUrlEncoded
 	void deleteCustomer(int customerId);
 
 	@DebugLog
+	@FormUrlEncoded
 	void deleteExpense(int expenseId);
 
 	@DebugLog
+	@FormUrlEncoded
 	void deleteLoan(int accountNo);
 
 	@DebugLog
+	@FormUrlEncoded
 	void deleteTransaction(int transactionId);
 }

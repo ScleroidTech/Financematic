@@ -2,6 +2,7 @@ package com.scleroid.financematic.data.remote.services.jobs.syncJobs;
 
 import com.scleroid.financematic.base.BaseJob;
 import com.scleroid.financematic.data.local.model.Customer;
+import com.scleroid.financematic.data.remote.RemotePostEndpoint;
 
 import timber.log.Timber;
 
@@ -10,8 +11,9 @@ public class SyncCustomerJob extends BaseJob<Customer> {
 	private static final String TAG = SyncCustomerJob.class.getCanonicalName();
 
 
-	public SyncCustomerJob(Customer customer) {
-		super(TAG, customer);
+	public SyncCustomerJob(Customer customer,
+	                       final RemotePostEndpoint service) {
+		super(TAG, customer, service);
 	}
 
 
@@ -21,7 +23,7 @@ public class SyncCustomerJob extends BaseJob<Customer> {
 
 
 		// if any exception is thrown, it will be handled by shouldReRunOnThrowable()
-		service.addCustomer(t);
+		if (service != null) { service.addCustomer(t); }
 
 		// remote call was successful--the Customer will be updated locally to reflect that sync
 		// is no longer pending

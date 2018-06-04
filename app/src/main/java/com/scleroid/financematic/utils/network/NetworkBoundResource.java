@@ -47,8 +47,7 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
 		result.addSource(dbSource, data -> {
 			result.removeSource(dbSource);
 			if (shouldFetch(
-					data)/*TODO put shouldFetch when API ready
-			 */) {
+					data)) {
 				fetchFromNetwork(dbSource);
 			} else {
 				result.addSource(dbSource, newData -> setValue(Resource.success(newData)));
@@ -57,11 +56,11 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
 	}
 
 	private void fetchFromNetwork(final LiveData<ResultType> dbSource) {
-		//	LiveData<ApiResponse<RequestType>> apiResponse = createCall();
-		result.addSource(dbSource,
-				newData -> setValue(Resource.error("No data here", newData)));
-		//TODO remove the above line and uncomment when api ready
-		/*// we re-attach dbSource as a new source, it will dispatch its latest value quickly
+		LiveData<ApiResponse<RequestType>> apiResponse = createCall();
+		/*result.addSource(dbSource,
+				newData -> setValue(Resource.error("No data here", newData)));*/
+
+		// we re-attach dbSource as a new source, it will dispatch its latest value quickly
 		result.addSource(dbSource, newData -> setValue(Resource.loading(newData)));
 		result.addSource(apiResponse, response -> {
 			result.removeSource(apiResponse);
@@ -83,7 +82,7 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
 				result.addSource(dbSource,
 						newData -> setValue(Resource.error(response.errorMessage, newData)));
 			}
-		});*/
+		});
 	}
 
 	@MainThread

@@ -2,6 +2,7 @@ package com.scleroid.financematic.data.remote.services.jobs.deleteJobs;
 
 import com.scleroid.financematic.base.BaseJob;
 import com.scleroid.financematic.data.local.model.TransactionModel;
+import com.scleroid.financematic.data.remote.RemotePostEndpoint;
 
 import timber.log.Timber;
 
@@ -17,8 +18,9 @@ public class DeleteTransactionJob extends BaseJob<TransactionModel> {
 
 
 	public DeleteTransactionJob(
-			final TransactionModel transactionModel) {
-		super(TAG, transactionModel);
+			final TransactionModel transactionModel,
+			final RemotePostEndpoint service) {
+		super(TAG, transactionModel, service);
 	}
 
 	@Override

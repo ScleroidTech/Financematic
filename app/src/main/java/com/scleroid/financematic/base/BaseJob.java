@@ -31,12 +31,14 @@ public abstract class BaseJob<T> extends Job {
 	protected RemotePostEndpoint service;
 
 
-	protected BaseJob(String TAG, T t) {
+	protected BaseJob(String TAG, T t,
+	                  final RemotePostEndpoint service) {
 		super(new Params(JobPriority.MID)
 				.requireNetwork()
 				.groupBy(TAG)
 				.persist());
 		this.t = t;
+		this.service = service;
 	}
 
 	protected BaseJob(String TAG, List<T> t) {

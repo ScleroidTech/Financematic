@@ -12,6 +12,7 @@ import java.util.List;
 
 import hugo.weaving.DebugLog;
 import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -24,10 +25,12 @@ import retrofit2.http.Path;
  */
 public interface WebService {
 	//TODO Replace with actual api
+	@FormUrlEncoded
 	@DebugLog
 	@POST("/registerusercid")
 	LiveData<ApiResponse<Customer>> getCustomer(@Field("customer_id") int customerId);
 
+	@FormUrlEncoded
 	@DebugLog
 	@POST("/registerusers")
 	LiveData<ApiResponse<List<Customer>>> getCustomers();
@@ -53,6 +56,7 @@ public interface WebService {
 	@GET("/getexpenditureid/{id}")
 	LiveData<ApiResponse<Expense>> getExpense(@Path("id") int expenseNo);
 
+	@FormUrlEncoded
 	@DebugLog
 	@POST("/transactionloan_id/")
 	LiveData<ApiResponse<List<TransactionModel>>> getTransactionsForLoan(
@@ -64,6 +68,7 @@ public interface WebService {
 	LiveData<ApiResponse<List<TransactionModel>>> getTransactions();
 
 	@DebugLog
+	@FormUrlEncoded
 	@POST("/transactiontransaction_id/")
 	LiveData<ApiResponse<TransactionModel>> getTransaction(
 			@Field("transaction_id") int transactionNo);
