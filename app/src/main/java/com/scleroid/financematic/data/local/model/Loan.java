@@ -41,6 +41,7 @@ public class Loan implements Serializable {
 	@SerializedName("startdate")
 	@TypeConverters(DateConverter.class)
 	private Date startDate;
+	@SerializedName("enddate")
 	@TypeConverters(DateConverter.class)
 	private Date endDate;
 	@SerializedName("interest")
@@ -49,7 +50,9 @@ public class Loan implements Serializable {
 	private BigDecimal installmentAmt;
 	@SerializedName("noofinstallment")
 	private int noOfInstallments;
+	@SerializedName("installmenttype")
 	private String installmentType;
+	@SerializedName("trepayamount")
 	@TypeConverters(MoneyConverter.class)
 	private BigDecimal repayAmt;
 	@SerializedName("loan_id")

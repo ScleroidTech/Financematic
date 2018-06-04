@@ -30,7 +30,10 @@ public class Customer implements Serializable {
 	@SerializedName("address")
 	private String address;
 	private String city;
+
+	@SerializedName("idproofno")
 	private String idProofNo;
+	@SerializedName("idproof")
 	private String idProofType;
 	@Ignore
 	private List<Loan> loans;
