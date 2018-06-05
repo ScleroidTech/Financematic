@@ -6,6 +6,7 @@ import android.arch.lifecycle.MutableLiveData;
 import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.repo.CustomerRepo;
+import com.scleroid.financematic.utils.network.Resource;
 import com.scleroid.financematic.viewmodels.CustomerViewModel;
 
 import java.util.List;
@@ -18,9 +19,9 @@ import javax.inject.Inject;
  * @author Ganesh Kaple
  * @since 4/9/18
  */
-public class PeopleViewModel extends BaseViewModel implements CustomerViewModel {
+public class PeopleViewModel extends BaseViewModel<Customer> implements CustomerViewModel {
 	private final CustomerRepo customerRepo;
-	LiveData<List<Customer>> customers = new MutableLiveData<>();
+	LiveData<Resource<List<Customer>>> customers = new MutableLiveData<>();
 
 
 	@Inject
@@ -38,10 +39,10 @@ public class PeopleViewModel extends BaseViewModel implements CustomerViewModel 
 	}
 
 	@Override
-	protected LiveData<List<Customer>> getItemList() {
+	protected LiveData<Resource<List<Customer>>> getItemList() {
 
 		//TODO Everything is local currently, put it on remote later
-		if (customers.getValue() == null || customers.getValue().isEmpty()) {
+		if (customers.getValue() == null || customers.getValue().data.isEmpty()) {
 			 /*filterResults(installmentRepo
 					.getLocalInstallmentsLab().getItems());*/
 			customers = updateItemLiveData();
@@ -50,8 +51,8 @@ public class PeopleViewModel extends BaseViewModel implements CustomerViewModel 
 	}
 
 	@Override
-	protected LiveData<List<Customer>> updateItemLiveData() {
-		customers = customerRepo.getLocalCustomerLab()
+	protected LiveData<Resource<List<Customer>>> updateItemLiveData() {
+		customers = customerRepo
 				.getCustomersWithLoans();
 
 		return customers;

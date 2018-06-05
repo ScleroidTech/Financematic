@@ -215,7 +215,7 @@ public class MainActivity extends BaseActivity
 //Handle when activity is recreated like on orientation Change
 		shouldDisplayHomeUp();
 
-		((GarlandApp) getApplication()).addListener(this);
+		//((GarlandApp) getApplication()).addListener(this);
 
 	}
 

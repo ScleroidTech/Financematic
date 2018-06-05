@@ -1,6 +1,8 @@
 package com.scleroid.financematic.data.repo;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MediatorLiveData;
+import android.arch.lifecycle.Transformations;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -33,6 +35,8 @@ public class CustomerRepo implements Repo<Customer> {
 
 	private final LocalCustomerLab localCustomerLab;
 	private RemoteCustomerLab remoteCustomerLab;
+
+	private final LoanRepo loanRepo;
 	//TODO remove direct access to this
 	private final WebService webService;
 	private RemotePostEndpoint postEndpoint;
@@ -41,11 +45,13 @@ public class CustomerRepo implements Repo<Customer> {
 	@Inject
 	public CustomerRepo(final LocalCustomerLab localCustomerLab,
 	                    RemoteCustomerLab remoteCustomerLab,
+	                    final LoanRepo loanRepo,
 	                    final WebService webService,
 	                    final RemotePostEndpoint postEndpoint,
 	                    final AppExecutors appExecutors) {
 		this.localCustomerLab = localCustomerLab;
 		this.remoteCustomerLab = remoteCustomerLab;
+		this.loanRepo = loanRepo;
 		this.webService = webService;
 		this.postEndpoint = postEndpoint;
 		this.appExecutors = appExecutors;
@@ -90,6 +96,39 @@ public class CustomerRepo implements Repo<Customer> {
 
 
 		}.asLiveData();
+	}
+
+	public LiveData<Resource<List<Customer>>> getCustomersWithLoans() {
+		LiveData<Resource<List<Customer>>> customerLiveData = loadItems();
+
+		// TODO Test this, if works remove below code, this part has performance issues
+		customerLiveData = Transformations.switchMap(customerLiveData, inputCustomers -> {
+			MediatorLiveData<Resource<List<Customer>>> customerMediatorLiveData =
+					new MediatorLiveData<>();
+
+
+			if (inputCustomers.data != null) {
+				for (Customer customer : inputCustomers.data) {
+
+					customerMediatorLiveData.addSource(
+							loanRepo.loadLoansForCustomer(customer.getCustomerId()), loan -> {
+
+								customer.setLoans(loan != null ? loan.data : null);
+								customerMediatorLiveData.postValue(inputCustomers);
+
+							});
+				}
+			}
+			return customerMediatorLiveData;
+		});
+		return customerLiveData;
+       /* customerLiveData = Transformations.map(customerLiveData, inputStates -> {
+            for (Customer state : inputStates) {
+                state.setLoans(loanDao.getLoans(state.getCustomerId()));
+            }
+            return inputStates;
+        });
+        return customerLiveData;*/
 	}
 
 	@Override

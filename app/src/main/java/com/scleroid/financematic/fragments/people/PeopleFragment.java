@@ -17,6 +17,8 @@ import android.widget.TextView;
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.base.BaseFragment;
 import com.scleroid.financematic.data.local.model.Customer;
+import com.scleroid.financematic.utils.network.Resource;
+import com.scleroid.financematic.utils.network.Status;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
 
 import java.util.ArrayList;
@@ -26,7 +28,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.Unbinder;
 
 /**
  * Created by scleroid on 28/2/18.
@@ -39,13 +40,18 @@ public class PeopleFragment extends BaseFragment {
 	ActivityUtils activityUtils;
 
 
-
 	TextView firstFragment;
 	@BindView(R.id.simpleSearchView)
 	SearchView simpleSearchView;
 	@BindView(R.id.people_recycler_view)
 	RecyclerView peopleRecyclerView;
-	Unbinder unbinder;
+
+
+	@BindView(R.id.no_address_title)
+	TextView noAddressTitle;
+	@BindView(R.id.no_address_subtitle)
+	TextView noAddressSubtitle;
+
 	private List<Customer> customers = new ArrayList<>();
 
 	private PeopleAdapter mAdapter;
@@ -110,6 +116,7 @@ public class PeopleFragment extends BaseFragment {
 		});
 
 		setTitle();
+
 		return rootView;
 
 
@@ -139,17 +146,9 @@ public class PeopleFragment extends BaseFragment {
 				});
 	}
 
-	private void updateView(final List<Customer> items) {
-		if (items == null || items.isEmpty()) {
-			emptyCard.setVisibility(View.VISIBLE);
-			peopleRecyclerView.setVisibility(View.GONE);
-		} else {
-			emptyCard.setVisibility(View.GONE);
-			peopleRecyclerView.setVisibility(View.VISIBLE);
-			mAdapter.setCustomerList(items);
-
-			customers = items;
-		}
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
 	}
 
 	private void sort(final List<Customer> transactions) {
@@ -188,4 +187,23 @@ public class PeopleFragment extends BaseFragment {
 		return peopleViewModel;
 	}
 
+	private void updateView(final Resource<List<Customer>> items) {
+		emptyCard.setVisibility(View.VISIBLE);
+		peopleRecyclerView.setVisibility(View.GONE);
+
+		if (items == null || items.data.isEmpty()) {
+			noAddressTitle.setText(items.status.toString());
+			noAddressSubtitle.setText(items.message);
+
+		} else if (!items.status.equals(Status.SUCCESS)) {
+			noAddressTitle.setText(items.status.toString());
+			noAddressSubtitle.setText(items.message);
+
+		} else {
+			emptyCard.setVisibility(View.GONE);
+			peopleRecyclerView.setVisibility(View.VISIBLE);
+			mAdapter.setCustomerList(items.data);
+			customers = items.data;
+		}
+	}
 }

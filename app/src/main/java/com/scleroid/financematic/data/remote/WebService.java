@@ -24,13 +24,12 @@ import retrofit2.http.Path;
  * @since 4/5/18
  */
 public interface WebService {
-	//TODO Replace with actual api
 	@FormUrlEncoded
 	@DebugLog
 	@POST("/registerusercid")
 	LiveData<ApiResponse<Customer>> getCustomer(@Field("customer_id") int customerId);
 
-	@FormUrlEncoded
+
 	@DebugLog
 	@POST("/registerusers")
 	LiveData<ApiResponse<List<Customer>>> getCustomers();
