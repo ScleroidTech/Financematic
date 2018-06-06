@@ -160,6 +160,8 @@ abstract public class RepositoryModule {
 				.client(okHttpClient)
 				.build();
 	}
+
+
 	@Singleton
 	@Provides
 	static WebService provideWebService(Retrofit retrofit) {
@@ -211,7 +213,7 @@ abstract public class RepositoryModule {
 	@Provides
 	@Singleton
 	static Gson provideGson() {
-		return new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+		return new GsonBuilder().create();
 	}
 
 	@Singleton

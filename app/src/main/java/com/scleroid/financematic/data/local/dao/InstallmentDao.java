@@ -84,13 +84,6 @@ public interface InstallmentDao {
 	long saveInstallment(Installment installmentModel);
 
 
-	/**
-	 * Performs insertion operation for multiple values
-	 *
-	 * @param installment inserts list of installmentModel object
-	 */
-	@Insert
-	void insertAll(Installment... installment);
 
 	/**
 	 * Updates a specified dataset

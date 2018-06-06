@@ -73,14 +73,6 @@ public interface TransactionDao {
 
 
 	/**
-	 * Performs insertion operation for multiple values
-	 *
-	 * @param transactionModel inserts list of transactionModelModel object
-	 */
-	@Insert
-	void insertAll(TransactionModel... transactionModel);
-
-	/**
 	 * Updates a specified dataset
 	 *
 	 * @param transactionModel the transactionModelModel which needs to be updated

@@ -112,7 +112,7 @@ public class LoanRepo implements Repo<Loan> {
 
 			@Override
 			protected void saveCallResult(@NonNull List<Loan> item) {
-				localLoanLab.addNetworkItems(item);
+//				localLoanLab.addNetworkItems(item);
 			}
 
 			@Override
@@ -144,7 +144,7 @@ public class LoanRepo implements Repo<Loan> {
 		return new NetworkBoundResource<Loan, Loan>(appExecutors) {
 			@Override
 			protected void saveCallResult(@NonNull Loan item) {
-				localLoanLab.addNetworkItem(item);
+				//		localLoanLab.addNetworkItem(item);
 			}
 
 			@Override
