@@ -34,7 +34,6 @@ public class Customer {
 	@SerializedName("address")
 	@Expose
 	private String address;
-	private String city;
 
 	@SerializedName("idproofno")
 	@Expose
@@ -45,13 +44,12 @@ public class Customer {
 	@Ignore
 	private List<Loan> loans;
 
-	public Customer(int customerId, String name, String mobileNumber, String address, String city,
+	public Customer(int customerId, String name, String mobileNumber, String address,
 	                String idProofNo, String idProofType) {
 		this.customerId = customerId;
 		this.name = name;
 		this.mobileNumber = mobileNumber;
 		this.address = address;
-		this.city = city;
 		this.idProofNo = idProofNo;
 		this.idProofType = idProofType;
 	}
@@ -71,18 +69,10 @@ public class Customer {
 				", name='" + name + '\'' +
 				", mobileNumber='" + mobileNumber + '\'' +
 				", address='" + address + '\'' +
-				", city='" + city + '\'' +
+
 				", idProofNo='" + idProofNo + '\'' +
 				", idProofType=" + idProofType +
 				'}';
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
 	}
 
 

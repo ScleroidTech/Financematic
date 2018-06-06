@@ -48,8 +48,7 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
 		LiveData<ResultType> dbSource = loadFromDb();
 		result.addSource(dbSource, data -> {
 			result.removeSource(dbSource);
-			if (shouldFetch(
-					data)) {
+			if (shouldFetch(data)) {
 				fetchFromNetwork(dbSource);
 			} else {
 				result.addSource(dbSource, newData -> setValue(Resource.success(newData)));
@@ -102,7 +101,7 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
 
 	@WorkerThread
 	protected RequestType processResponse(ApiResponse<RequestType> response) {
-		Timber.d(response.body + "");
+//		Timber.d(response.body + "");
 		return response.body;
 	}
 
@@ -115,11 +114,6 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
 
 	@MainThread
 	protected abstract boolean shouldFetch(@Nullable ResultType data);
-
-	@MainThread
-	protected boolean shouldNotFetch(@Nullable ResultType data) {
-		return false;
-	}
 
 	@NonNull
 	@MainThread

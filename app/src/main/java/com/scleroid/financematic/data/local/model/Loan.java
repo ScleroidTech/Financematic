@@ -101,27 +101,26 @@ public class Loan implements Serializable {
 	public void setCustomer(final Customer customer) {
 		this.customer = customer;
 	}
-/*
+
 
 	@Override
 	public String toString() {
 		return "Loan{" +
-				"loanAmt=" + loanAmt.intValue() +
+				"loanAmt=" + loanAmt +
 				", startDate=" + startDate +
 				", endDate=" + endDate +
 				", rateOfInterest=" + rateOfInterest +
-				", installmentAmt=" + installmentAmt.intValue() +
+				", installmentAmt=" + installmentAmt +
 				", noOfInstallments=" + noOfInstallments +
 
 				", installmentType=" + installmentType +
-				", repayAmt=" + repayAmt.intValue() +
+				", repayAmt=" + repayAmt +
 				", accountNo=" + accountNo +
 				", custId=" + custId +
-				", receivedAmt=" + receivedAmt.toString() +
+				", receivedAmt=" + receivedAmt +
 				'}';
 	}
 
-*/
 
  /*   public List<TransactionModel> getTransactions() {
         return transactions;

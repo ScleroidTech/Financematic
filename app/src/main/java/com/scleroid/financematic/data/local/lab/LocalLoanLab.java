@@ -104,6 +104,18 @@ public class LocalLoanLab implements LocalDataSource<Loan> {
 		}).subscribeOn(Schedulers.io());
 	}
 
+	@Override
+	public void addNetworkItems(@NonNull final List<Loan> items) {
+		long[] rowId = loanDao.saveLoans(items);
+		Timber.d("loan stored " + rowId.length);
+	}
+
+	@Override
+	public void addNetworkItem(@NonNull final Loan item) {
+		long rowId = loanDao.saveLoan(item);
+		Timber.d("loan stored " + rowId);
+	}
+
 	/**
 	 * refreshes the data source
 	 */

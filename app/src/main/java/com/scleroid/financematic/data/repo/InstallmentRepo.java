@@ -109,7 +109,7 @@ public class InstallmentRepo implements Repo<Installment> {
 
 			@Override
 			protected void saveCallResult(@NonNull List<Installment> item) {
-				localInstallmentsLab.addItems(item);
+				localInstallmentsLab.addNetworkItems(item);
 			}
 
 			@Override
@@ -142,7 +142,7 @@ public class InstallmentRepo implements Repo<Installment> {
 		return new NetworkBoundResource<Installment, Installment>(appExecutors) {
 			@Override
 			protected void saveCallResult(@NonNull Installment item) {
-				localInstallmentsLab.saveItem(item);
+				localInstallmentsLab.addNetworkItem(item);
 			}
 
 			@Override

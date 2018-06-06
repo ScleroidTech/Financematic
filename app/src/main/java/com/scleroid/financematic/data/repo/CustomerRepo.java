@@ -72,7 +72,7 @@ public class CustomerRepo implements Repo<Customer> {
 			@Override
 			protected void saveCallResult(@NonNull List<Customer> items) {
 				Timber.d("Save call result Is the called date is being stored? ");
-				localCustomerLab.addItems(items);
+				localCustomerLab.addNetworkItems(items);
 			}
 
 			@Override
@@ -135,12 +135,12 @@ public class CustomerRepo implements Repo<Customer> {
 		return new NetworkBoundResource<Customer, Customer>(appExecutors) {
 			@Override
 			protected void saveCallResult(@NonNull Customer item) {
-				localCustomerLab.saveItem(item);
+				localCustomerLab.addNetworkItem(item);
 			}
 
 			@Override
 			protected boolean shouldFetch(@Nullable Customer data) {
-				return data == null;//TODO Why this ?
+				return data == null;
 			}
 
 			@NonNull

@@ -170,7 +170,7 @@ public class RegisterCustomerFragment extends BaseFragment {
 			final String cityName = "Pune";
 			Customer customer =
 					new Customer(CommonUtils.getRandomInt(), stretname, stretmobile, stretAddress,
-							cityName, etIDproofno.getText().toString(), proofType
+							etIDproofno.getText().toString(), proofType
 					);
 			saveCustomer(customer);
 

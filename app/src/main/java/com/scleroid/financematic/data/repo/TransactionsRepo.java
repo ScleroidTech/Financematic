@@ -76,7 +76,7 @@ public class TransactionsRepo implements Repo<TransactionModel> {
 
 			@Override
 			protected void saveCallResult(@NonNull List<TransactionModel> item) {
-				localTransactionsLab.addItems(item);
+				localTransactionsLab.addNetworkItems(item);
 			}
 
 			@NonNull
@@ -111,7 +111,7 @@ public class TransactionsRepo implements Repo<TransactionModel> {
 			@Override
 			protected void saveCallResult(@NonNull List<TransactionModel> item) {
 
-				localTransactionsLab.addItems(item);
+				localTransactionsLab.addNetworkItems(item);
 			}
 
 			@Override
