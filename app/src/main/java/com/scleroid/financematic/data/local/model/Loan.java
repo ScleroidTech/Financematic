@@ -38,19 +38,25 @@ public class Loan implements Serializable {
 	@SerializedName("loan_amount")
 	@TypeConverters(MoneyConverter.class)
 	private BigDecimal loanAmt;
+
 	@SerializedName("startdate")
 	@TypeConverters(DateConverter.class)
 	private Date startDate;
+
 	@SerializedName("enddate")
 	@TypeConverters(DateConverter.class)
 	private Date endDate;
 	@SerializedName("interest")
 	private float rateOfInterest;
+
+	@SerializedName("installement_amount")
 	@TypeConverters(MoneyConverter.class)
 	private BigDecimal installmentAmt;
-	@SerializedName("noofinstallment")
+
+	@SerializedName("noofinstallement")
 	private int noOfInstallments;
-	@SerializedName("installmenttype")
+
+	@SerializedName("installementtype")
 	private String installmentType;
 	@SerializedName("trepayamount")
 	@TypeConverters(MoneyConverter.class)
@@ -122,17 +128,6 @@ public class Loan implements Serializable {
 	}
 
 
- /*   public List<TransactionModel> getTransactions() {
-        return transactions;
-    }
-
-    public void setTransactions(List<TransactionModel> transactions) {
-        this.transactions = transactions;
-    }
-*/
-  /*  @Ignore
-    private List<TransactionModel> transactions ;
-*/
 
 	public BigDecimal getReceivedAmt() {
 		return receivedAmt;
@@ -221,33 +216,5 @@ public class Loan implements Serializable {
 	public void setCustId(int custId) {
 		this.custId = custId;
 	}
-/*  public Loan(String title, String genre, String year) {
-        this.title = title;
-        this.genre = genre;
-        this.year = year;
-    }
 
-    public String getCustomerName() {
-        return title;
-    }
-
-    public void setCustomerName(String name) {
-        this.title = name;
-    }
-
-    public String getInstallmentDate() {
-        return year;
-    }
-
-    public void setInstallmentDate(String year) {
-        this.year = year;
-    }
-
-    public String getAmtDue() {
-        return genre;
-    }
-
-    public void setAmtDue(String genre) {
-        this.genre = genre;
-    }*/
 }
