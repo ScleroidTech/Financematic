@@ -223,7 +223,7 @@ abstract public class RepositoryModule {
 		HttpLoggingInterceptor interceptor =
 				new HttpLoggingInterceptor(
 						message -> Timber.tag("OkHttp").d("Retrofit Logging " + message));
-		interceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
+		interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 		return interceptor;
 	}
 

@@ -111,6 +111,7 @@ public class TransactionsRepo implements Repo<TransactionModel> {
 
 			@Override
 			protected void saveCallResult(@NonNull List<TransactionModel> item) {
+
 				localTransactionsLab.addItems(item);
 			}
 

@@ -11,6 +11,7 @@ import retrofit2.Call;
 import retrofit2.CallAdapter;
 import retrofit2.Callback;
 import retrofit2.Response;
+import timber.log.Timber;
 
 /**
  * Copyright (C) 2018
@@ -47,6 +48,7 @@ public class LiveDataCallAdapter<R> implements CallAdapter<R, LiveData<ApiRespon
 					call.enqueue(new Callback<R>() {
 						@Override
 						public void onResponse(Call<R> call, Response<R> response) {
+							Timber.d(response + "");
 							postValue(new ApiResponse<>(response));
 						}
 

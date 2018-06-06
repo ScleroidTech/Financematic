@@ -23,6 +23,7 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
+import timber.log.Timber;
 
 /**
  * Copyright (C) 2018
@@ -70,6 +71,7 @@ public class CustomerRepo implements Repo<Customer> {
 
 			@Override
 			protected void saveCallResult(@NonNull List<Customer> items) {
+				Timber.d("Save call result Is the called date is being stored? ");
 				localCustomerLab.addItems(items);
 			}
 

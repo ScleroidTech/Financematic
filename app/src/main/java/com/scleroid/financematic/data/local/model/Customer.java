@@ -5,6 +5,7 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -22,18 +23,24 @@ public class Customer {
 
 	@PrimaryKey(autoGenerate = false)
 	@SerializedName("cid")
+	@Expose
 	private int customerId;
 	@SerializedName("fullname")
+	@Expose
 	private String name;
 	@SerializedName("mobile")
+	@Expose
 	private String mobileNumber;
 	@SerializedName("address")
+	@Expose
 	private String address;
 	private String city;
 
 	@SerializedName("idproofno")
+	@Expose
 	private String idProofNo;
 	@SerializedName("idproof")
+	@Expose
 	private String idProofType;
 	@Ignore
 	private List<Loan> loans;

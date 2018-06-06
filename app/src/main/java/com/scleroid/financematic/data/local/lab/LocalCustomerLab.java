@@ -95,7 +95,7 @@ public class LocalCustomerLab implements LocalDataSource<Customer> {
 	 */
 	@Override
 	public Completable addItems(@NonNull final List<Customer> items) {
-		Timber.d("creating new customer ");
+		Timber.d("creating new customers ");
 
 		return Completable.fromRunnable(() -> {
 			long[] rowId = customerDao.saveCustomers(items);
