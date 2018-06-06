@@ -67,10 +67,6 @@ public class ExpenseRepo implements Repo<Expense> {
 		this.remoteExpenseLab = remoteExpenseLab;
 	}
 
-	public LocalExpenseLab getLocalExpenseLab() {
-		return localExpenseLab;
-	}
-
 
 	@Override
 	public LiveData<Resource<List<Expense>>> loadItems() {

@@ -101,6 +101,7 @@ public class Loan implements Serializable {
 	public void setCustomer(final Customer customer) {
 		this.customer = customer;
 	}
+/*
 
 	@Override
 	public String toString() {
@@ -120,6 +121,7 @@ public class Loan implements Serializable {
 				'}';
 	}
 
+*/
 
  /*   public List<TransactionModel> getTransactions() {
         return transactions;

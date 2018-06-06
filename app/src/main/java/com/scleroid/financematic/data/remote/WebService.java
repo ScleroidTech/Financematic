@@ -26,62 +26,62 @@ import retrofit2.http.Path;
 public interface WebService {
 	@FormUrlEncoded
 	@DebugLog
-	@POST("/registerusercid")
+	@POST("/mobile/registerusercid")
 	LiveData<ApiResponse<Customer>> getCustomer(@Field("customer_id") int customerId);
 
 
 	@DebugLog
-	@POST("/registerusers")
+	@GET("/mobile/registerusers")
 	LiveData<ApiResponse<List<Customer>>> getCustomers();
 
 	@DebugLog
-	@POST("/lastinsertnewuserloan_id")
+	@POST("/mobile/lastinsertnewuserloan_id")
 	LiveData<ApiResponse<Loan>> getLoan(@Field("loan") int loanId);
 
 	@DebugLog
-	@GET("/loandetaillist")
+	@GET("/mobile/loandetaillist")
 	LiveData<ApiResponse<List<Loan>>> getLoans();
 
 	//done
 	@DebugLog
-	@GET("/loandetailloanact/{customer_id}")
+	@GET("/mobile/loandetailloanact/{customer_id}")
 	LiveData<ApiResponse<List<Loan>>> getLoans(@Path("customer_id") int customerId);
 
 	@DebugLog
-	@GET("/getexpenditure")
+	@GET("/mobile/getexpenditure")
 	LiveData<ApiResponse<List<Expense>>> getExpenses();
 
 	@DebugLog
-	@GET("/getexpenditureid/{id}")
+	@GET("/mobile/getexpenditureid/{id}")
 	LiveData<ApiResponse<Expense>> getExpense(@Path("id") int expenseNo);
 
 	@FormUrlEncoded
 	@DebugLog
-	@POST("/transactionloan_id/")
+	@POST("/mobile/transactionloan_id/")
 	LiveData<ApiResponse<List<TransactionModel>>> getTransactionsForLoan(
 			@Field("loan_id") int loanAcNo);
 
 	//Done
 	@DebugLog
-	@GET("/transaction/")
+	@GET("/mobile/transaction/")
 	LiveData<ApiResponse<List<TransactionModel>>> getTransactions();
 
 	@DebugLog
 	@FormUrlEncoded
-	@POST("/transactiontransaction_id/")
+	@POST("/mobile/transactiontransaction_id/")
 	LiveData<ApiResponse<TransactionModel>> getTransaction(
 			@Field("transaction_id") int transactionNo);
 
 	@DebugLog
-	@GET("/installmentloan/{installmentNo}")
+	@GET("/mobile/installmentloan/{installmentNo}")
 	LiveData<ApiResponse<Installment>> getInstallment(@Path("installmentNo") int installmentNo);
 
 	@DebugLog
-	@GET("/installmentlist/")
+	@GET("/mobile/installmentlist/")
 	LiveData<ApiResponse<List<Installment>>> getInstallments();
 
 	//Done
 	@DebugLog
-	@GET("/installementloan_id/{loan_id}")
+	@GET("/mobile/installementloan_id/{loan_id}")
 	LiveData<ApiResponse<List<Installment>>> getInstallmentsForLoan(@Path("loan_id") int loanAcNo);
 }

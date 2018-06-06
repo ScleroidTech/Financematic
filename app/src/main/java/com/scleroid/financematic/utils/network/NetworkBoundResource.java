@@ -28,6 +28,8 @@ import com.scleroid.financematic.utils.multithread.AppExecutors;
 
 import java.util.Objects;
 
+import timber.log.Timber;
+
 /**
  * A generic class that can provide a resource backed by both the sqlite database and the network.
  * <p>
@@ -68,6 +70,9 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
 			//noinspection ConstantConditions
 			if (response.isSuccessful()) {
 				appExecutors.diskIO().execute(() -> {
+					Timber.d(
+							response.body != null ? response.body.toString() : response
+									.errorMessage);
 					saveCallResult(processResponse(response));
 					appExecutors.mainThread().execute(() ->
 							// we specially request a new live data,
@@ -97,6 +102,7 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
 
 	@WorkerThread
 	protected RequestType processResponse(ApiResponse<RequestType> response) {
+		Timber.d(response.body + "");
 		return response.body;
 	}
 

@@ -57,9 +57,6 @@ public class CustomerRepo implements Repo<Customer> {
 		this.appExecutors = appExecutors;
 	}
 
-	public LocalCustomerLab getLocalCustomerLab() {
-		return localCustomerLab;
-	}
 
 	@Override
 	public LiveData<Resource<List<Customer>>> loadItems() {

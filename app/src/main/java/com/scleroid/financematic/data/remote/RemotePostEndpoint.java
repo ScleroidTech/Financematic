@@ -17,23 +17,23 @@ import retrofit2.http.POST;
 public interface RemotePostEndpoint {
 
 	@DebugLog
-	@POST("/newregister")
+	@POST("/mobile/newregister")
 	Call<Customer> addCustomer(@Body Customer customer);
 
 	@DebugLog
-	@POST("/newloanusers")
+	@POST("/mobile/newloanusers")
 	Call<Loan> addLoan(@Body Loan loan);
 
 	@DebugLog
-	@POST("/posts")
+	@POST("/mobile/posts")
 	Call<TransactionModel> addTransaction(@Body TransactionModel transaction);
 
 	@DebugLog
-	@POST("/insertmydate")
+	@POST("/mobile/insertmydate")
 	Call<Installment> addInstallment(@Body Installment installment);
 
 	@DebugLog
-	@POST("/posts")
+	@POST("/mobile/posts")
 	Call<Expense> addExpense(@Body Expense expense);
 
 	@DebugLog
