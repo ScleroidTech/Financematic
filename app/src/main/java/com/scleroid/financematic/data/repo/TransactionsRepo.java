@@ -4,7 +4,6 @@ import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.scleroid.financematic.data.AbsentLiveData;
 import com.scleroid.financematic.data.local.lab.LocalTransactionsLab;
 import com.scleroid.financematic.data.local.model.TransactionModel;
 import com.scleroid.financematic.data.remote.ApiResponse;
@@ -131,8 +130,8 @@ public class TransactionsRepo implements Repo<TransactionModel> {
 			@Override
 			protected LiveData<ApiResponse<List<TransactionModel>>> createCall() {
 				//TODO remove this line
-				return AbsentLiveData.create();
-				//	return webService.getTransactions();
+				//return AbsentLiveData.create();
+				return webService.getTransactions();
 			}
 
 			@Override
