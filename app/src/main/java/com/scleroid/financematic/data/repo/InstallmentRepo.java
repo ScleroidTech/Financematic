@@ -76,7 +76,7 @@ public class InstallmentRepo implements Repo<Installment> {
 
 			@Override
 			protected void saveCallResult(@NonNull List<Installment> item) {
-				localInstallmentsLab.addItems(item);
+				localInstallmentsLab.addNetworkItems(item);
 			}
 
 			@NonNull

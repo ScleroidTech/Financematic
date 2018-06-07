@@ -110,7 +110,6 @@ public class TransactionsRepo implements Repo<TransactionModel> {
 
 			@Override
 			protected void saveCallResult(@NonNull List<TransactionModel> item) {
-
 				localTransactionsLab.addNetworkItems(item);
 			}
 
@@ -129,8 +128,7 @@ public class TransactionsRepo implements Repo<TransactionModel> {
 			@NonNull
 			@Override
 			protected LiveData<ApiResponse<List<TransactionModel>>> createCall() {
-				//TODO remove this line
-				//return AbsentLiveData.create();
+
 				return webService.getTransactions();
 			}
 
@@ -146,7 +144,7 @@ public class TransactionsRepo implements Repo<TransactionModel> {
 		return new NetworkBoundResource<TransactionModel, TransactionModel>(appExecutors) {
 			@Override
 			protected void saveCallResult(@NonNull TransactionModel item) {
-				localTransactionsLab.saveItem(item);
+				localTransactionsLab.addNetworkItem(item);
 			}
 
 			@Override

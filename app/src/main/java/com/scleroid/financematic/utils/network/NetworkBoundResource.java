@@ -66,25 +66,30 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
 		result.addSource(apiResponse, response -> {
 			result.removeSource(apiResponse);
 			result.removeSource(dbSource);
-			//noinspection ConstantConditions
-			if (response.isSuccessful()) {
-				appExecutors.diskIO().execute(() -> {
-					Timber.d(
-							response.body != null ? response.body.toString() : response
-									.errorMessage);
-					saveCallResult(processResponse(response));
-					appExecutors.mainThread().execute(() ->
-							// we specially request a new live data,
-							// otherwise we will get immediately last cached value,
-							// which may not be updated with latest results received from network.
-							result.addSource(loadFromDb(),
-									newData -> setValue(Resource.success(newData)))
-					);
-				});
+
+			if (response != null) {
+				if (response.isSuccessful()) {
+					appExecutors.diskIO().execute(() -> {
+						Timber.d(
+								response.body != null ? response.body.toString() : response
+										.errorMessage);
+						saveCallResult(processResponse(response));
+						appExecutors.mainThread().execute(() ->
+								// we specially request a new live data,
+								// otherwise we will get immediately last cached value,
+								// which may not be updated with latest results received from
+								// network.
+								result.addSource(loadFromDb(),
+										newData -> setValue(Resource.success(newData)))
+						);
+					});
+				} else {
+					onFetchFailed();
+					result.addSource(dbSource,
+							newData -> setValue(Resource.error(response.errorMessage, newData)));
+				}
 			} else {
-				onFetchFailed();
-				result.addSource(dbSource,
-						newData -> setValue(Resource.error(response.errorMessage, newData)));
+				Timber.d("No response from server ");
 			}
 		});
 	}
@@ -101,7 +106,7 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
 
 	@WorkerThread
 	protected RequestType processResponse(ApiResponse<RequestType> response) {
-//		Timber.d(response.body + "");
+		Timber.d(response.body + "");
 		return response.body;
 	}
 
