@@ -97,7 +97,6 @@ public class TransactionsRepo implements Repo<TransactionModel> {
 				return localTransactionsLab.getItemsForLoan(loanAcNo);
 			}
 
-
 		}.asLiveData();
 	}
 
@@ -149,7 +148,7 @@ public class TransactionsRepo implements Repo<TransactionModel> {
 
 			@Override
 			protected boolean shouldFetch(@Nullable TransactionModel data) {
-				return data == null;//TODO Why this ?
+				return data == null;
 			}
 
 			@NonNull

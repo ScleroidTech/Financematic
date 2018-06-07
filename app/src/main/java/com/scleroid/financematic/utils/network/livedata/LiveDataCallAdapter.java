@@ -54,6 +54,11 @@ public class LiveDataCallAdapter<R> implements CallAdapter<R, LiveData<ApiRespon
 
 						@Override
 						public void onFailure(Call<R> call, Throwable throwable) {
+							Timber.e(
+									throwable.getMessage() + " THis is where I Crash " + throwable
+											.fillInStackTrace() + " " + throwable
+											.getCause()
+											+ " ");
 							postValue(new ApiResponse<R>(throwable));
 						}
 					});
