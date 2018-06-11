@@ -131,7 +131,7 @@ public class RegisterLoanFragment extends BaseFragment {
 			public void onItemSelected(final AdapterView<?> parent, final View view,
 			                           final int position, final long id) {
 				durationType = country[position];
-				calculateNoOfInstallments();
+				ettxNoofInstallment.setText(String.valueOf(calculateNoOfInstallments()));
 			}
 
 			@Override
@@ -402,14 +402,15 @@ public class RegisterLoanFragment extends BaseFragment {
 		return null;
 	}
 
-	private void calculateNoOfInstallments() {
-		if (startDate == null || endDate == null) return;
+	private long calculateNoOfInstallments() {
+		if (startDate == null || endDate == null) return 0;
 
 
 		durationDivided = convertTime(calculateTotalDuration(), durationConverter(durationType));
-		ettxNoofInstallment.setText(String.valueOf(durationDivided));
 
-		Timber.d(" installment calculation " + " " + durationDivided);
+
+		return durationDivided;
+
 	}
 
 	private long calculateTotalDuration() {
@@ -417,35 +418,33 @@ public class RegisterLoanFragment extends BaseFragment {
 	}
 
 	private long durationConverter(final String durationType) {
-		long divider = 0;
+
 		switch (durationType) {
 			case LoanDurationType.MONTHLY:
-				divider = 30;
-				break;
-			case LoanDurationType.DAILY:
-				divider = 1;
-				break;
-			case LoanDurationType.WEEKLY:
-				divider = 7;
-				break;
-			case LoanDurationType.BIWEEKLY:
-				divider = 15;
-				break;
-			case LoanDurationType.BIMONTHLY:
-				divider = 60;
-				break;
-			case LoanDurationType.QUARTERLY:
-				divider = 90;
-				break;
-			case LoanDurationType.HALF_YEARLY:
-				divider = 180;
-				break;
-			case LoanDurationType.YEARLY:
-				divider = 365;
-				break;
+				return 30;
 
+			case LoanDurationType.DAILY:
+				return 1;
+
+			case LoanDurationType.WEEKLY:
+				return 7;
+
+			case LoanDurationType.BIWEEKLY:
+				return 15;
+
+			case LoanDurationType.BIMONTHLY:
+				return 60;
+
+			case LoanDurationType.QUARTERLY:
+				return 90;
+
+			case LoanDurationType.HALF_YEARLY:
+				return 180;
+
+			case LoanDurationType.YEARLY:
+				return 365;
 		}
-		return divider;
+		return 0;
 	}
 
 	private BigDecimal getAmtOfInstallment() {
@@ -457,8 +456,7 @@ public class RegisterLoanFragment extends BaseFragment {
 				monthlyDuration =
 				convertTime(calculateTotalDuration(), durationConverter(LoanDurationType.MONTHLY));
 		final long
-				duration =
-				convertTime(calculateTotalDuration(), durationConverter(durationType));
+				duration = calculateNoOfInstallments();
 
 		if (TextUtils.isEmpty(totatLoanAmt) || TextUtils.isEmpty(
 				rateOfInterest) || monthlyDuration <= 0) {
@@ -483,7 +481,7 @@ public class RegisterLoanFragment extends BaseFragment {
 			endDate = (Date) intent.getSerializableExtra(DatePickerDialogFragment.EXTRA_DATE);
 			endDateTextView.setText(dateUtils.getFormattedDate(endDate));
 		}
-		calculateNoOfInstallments();
+		ettxNoofInstallment.setText(String.valueOf(calculateNoOfInstallments()));
 
 	}
 
