@@ -448,6 +448,30 @@ public class RegisterLoanFragment extends BaseFragment {
 		return divider;
 	}
 
+	private BigDecimal getAmtOfInstallment() {
+		final String totatLoanAmt = etTotalLoanAmount.getText()
+				.toString();
+		final String rateOfInterest = ettxrateInterest.getText()
+				.toString();
+		final long
+				monthlyDuration =
+				convertTime(calculateTotalDuration(), durationConverter(LoanDurationType.MONTHLY));
+		final long
+				duration =
+				convertTime(calculateTotalDuration(), durationConverter(durationType));
+
+		if (TextUtils.isEmpty(totatLoanAmt) || TextUtils.isEmpty(
+				rateOfInterest) || monthlyDuration <= 0) {
+			return new BigDecimal(0);
+		}
+		BigDecimal loanAmt = BigDecimal.valueOf(Double.valueOf(totatLoanAmt.trim()));
+		double interestRate = Double.valueOf(rateOfInterest.trim());
+		BigDecimal interestAmt = getInterestAmt(loanAmt, monthlyDuration, interestRate);
+
+		return calculateInstallmentAmt(duration, loanAmt, interestAmt);
+
+	}
+
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
@@ -485,26 +509,6 @@ public class RegisterLoanFragment extends BaseFragment {
 
 
 		return (TimeUnit.MILLISECONDS.toDays(timeDiff) / divider);
-	}
-
-	private BigDecimal getAmtOfInstallment() {
-		final String totatLoanAmt = etTotalLoanAmount.getText()
-				.toString();
-		final String rateOfInterest = ettxrateInterest.getText()
-				.toString();
-		final long
-				duration =
-				convertTime(calculateTotalDuration(), durationConverter(LoanDurationType.MONTHLY));
-
-		if (TextUtils.isEmpty(totatLoanAmt) || TextUtils.isEmpty(rateOfInterest) || duration <= 0) {
-			return new BigDecimal(0);
-		}
-		BigDecimal loanAmt = BigDecimal.valueOf(Double.valueOf(totatLoanAmt.trim()));
-		double interestRate = Double.valueOf(rateOfInterest.trim());
-		BigDecimal interestAmt = getInterestAmt(loanAmt, duration, interestRate);
-
-		return calculateInstallmentAmt(duration, loanAmt, interestAmt);
-
 	}
 
 	private BigDecimal calculateInstallmentAmt(final long duration, final BigDecimal loanAmt,
