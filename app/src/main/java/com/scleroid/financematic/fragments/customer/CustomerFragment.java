@@ -185,7 +185,8 @@ public class CustomerFragment extends BaseFragment {
 		}
 		totalLoanTextView.setText(totalLoan + "");*/
 
-		totalLoan = loanList.stream()
+		totalLoan =
+				loanList.stream()
 				.filter(o -> o.getLoanAmt() != null)
 				.mapToInt(o -> o.getLoanAmt().intValue())
 				.sum();

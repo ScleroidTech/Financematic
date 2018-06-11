@@ -129,15 +129,11 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight=".4"
-
                 android:ellipsize="end"
-
-
                 android:maxLines="1"
                 android:text="Mobile No"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="17sp"
-
                 app:layout_constraintLeft_toLeftOf="@+id/card"
                 app:layout_constraintRight_toRightOf="@+id/card"
                 app:layout_constraintTop_toBottomOf="@+id/name_text_view" />
@@ -147,18 +143,13 @@
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_marginLeft="1dp"
-
                 android:layout_marginRight="2dp"
                 android:layout_weight=".7"
-
                 android:ellipsize="end"
-
-
                 android:maxLines="1"
                 android:text="9890683224"
                 android:textColor="@color/text_profile"
                 android:textSize="17sp"
-
                 app:layout_constraintLeft_toLeftOf="@+id/card"
                 app:layout_constraintRight_toRightOf="@+id/card"
                 app:layout_constraintTop_toBottomOf="@+id/name_text_view" />
@@ -173,8 +164,6 @@
             app:layout_constraintLeft_toLeftOf="@+id/card"
             app:layout_constraintRight_toRightOf="@+id/card"
             app:layout_constraintTop_toBottomOf="@+id/imageView6"
-
-
             >
 
             <ImageView
@@ -217,7 +206,7 @@
                 android:layout_marginRight="2dp"
                 android:layout_weight=".7"
                 android:ellipsize="end"
-                android:maxLines="4"
+                android:maxLines="3"
                 android:text="309,Surtwala mark plazzo , Hinjewadi-wakad "
                 android:textColor="@color/text_profile"
                 android:textSize="16sp"
@@ -282,7 +271,7 @@
                 android:ellipsize="end"
 
                 android:maxLines="2"
-                android:text=" Rs 20,112"
+                android:text="Rs 20,112"
                 android:textColor="@color/text_profile"
                 android:textSize="14sp"
 
@@ -357,9 +346,6 @@
             android:clickable="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-
-
-
             android:id="@+id/fab"
             android:layout_width="45dp"
             android:layout_height="45dp"

@@ -115,7 +115,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_weight=".7"
-
+                        android:layout_gravity="center_vertical"
                         android:text="Start Date"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="#409bbf"
@@ -175,6 +175,42 @@
                         android:textSize="17sp" />
 
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="5dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight=".7"
+
+android:layout_gravity="center_vertical"
+                        android:text="Pre-calculated Installment"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="#409bbf"
+                        android:textSize="17sp" />
+
+                    <EditText
+                        android:id="@+id/txprecalculated"
+                        android:layout_width="0dp"
+                        android:layout_height="44dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight=".7"
+                        android:background="@drawable/shadow"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+                        android:textColor="#409bbf" />
+
+                </LinearLayout>
+
 
 
                 <LinearLayout
@@ -211,8 +247,43 @@
                         android:textColor="#409bbf" />
 
                 </LinearLayout>
-
                 <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="5dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight=".7"
+
+                        android:text="Interest Amount"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="#409bbf"
+                        android:textSize="17sp" />
+
+                    <EditText
+                        android:id="@+id/txinterestamount"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight=".7"
+                        android:background="@drawable/shadow"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+                        android:textColor="#409bbf" />
+
+                </LinearLayout>
+
+
+              <!--  <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
@@ -256,7 +327,7 @@
 
                         android:textColor="#409bbf" />
 
-                </LinearLayout>
+                </LinearLayout>-->
 
                 <LinearLayout
                     android:layout_width="match_parent"

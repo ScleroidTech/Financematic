@@ -179,7 +179,6 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="left"
                             android:paddingTop="2dp"
-
                             android:textColor="#409bbf"></Spinner>
 
                     </LinearLayout>
@@ -209,7 +208,6 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="5dp"
                         android:layout_weight=".6"
-
                         android:text="Id proof no"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="#409bbf"
@@ -225,7 +223,6 @@
                         android:maxLines="1"
                         android:paddingBottom="6dp"
                         android:paddingTop="6dp"
-
                         android:textColor="#409bbf" />
 
                 </LinearLayout>
@@ -253,7 +250,6 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="5dp"
                         android:layout_weight=".6"
-
                         android:text="Address"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="#409bbf"
@@ -269,7 +265,6 @@
                         android:maxLines="3"
                         android:paddingBottom="6dp"
                         android:paddingTop="6dp"
-
                         android:textColor="#409bbf" />
 
                 </LinearLayout>
@@ -284,7 +279,6 @@
                     android:layout_marginTop="10dp"
                     android:background="#0fa8bc"
                     android:text="next"
-
                     android:textColor="@color/white"
                     android:textSize="16sp" />
 
