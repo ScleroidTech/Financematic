@@ -1,6 +1,7 @@
 package com.scleroid.financematic.utils.network.livedata;
 
 import android.arch.lifecycle.LiveData;
+import android.support.annotation.NonNull;
 
 import com.scleroid.financematic.data.remote.ApiResponse;
 
@@ -11,6 +12,7 @@ import retrofit2.Call;
 import retrofit2.CallAdapter;
 import retrofit2.Callback;
 import retrofit2.Response;
+import timber.log.Timber;
 
 /**
  * Copyright (C) 2018
@@ -36,7 +38,7 @@ public class LiveDataCallAdapter<R> implements CallAdapter<R, LiveData<ApiRespon
 	}
 
 	@Override
-	public LiveData<ApiResponse<R>> adapt(Call<R> call) {
+	public LiveData<ApiResponse<R>> adapt(@NonNull Call<R> call) {
 		return new LiveData<ApiResponse<R>>() {
 			AtomicBoolean started = new AtomicBoolean(false);
 
@@ -46,12 +48,19 @@ public class LiveDataCallAdapter<R> implements CallAdapter<R, LiveData<ApiRespon
 				if (started.compareAndSet(false, true)) {
 					call.enqueue(new Callback<R>() {
 						@Override
-						public void onResponse(Call<R> call, Response<R> response) {
+						public void onResponse(@NonNull Call<R> call,
+						                       @NonNull Response<R> response) {
+							Timber.d(response + "");
 							postValue(new ApiResponse<>(response));
 						}
 
 						@Override
 						public void onFailure(Call<R> call, Throwable throwable) {
+							Timber.e(
+									throwable.getMessage() + " THis is where I Crash " + throwable
+											.fillInStackTrace() + " " + throwable
+											.getCause()
+											+ " ");
 							postValue(new ApiResponse<R>(throwable));
 						}
 					});

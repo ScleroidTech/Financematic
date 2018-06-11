@@ -388,7 +388,7 @@ public class RegisterLoanFragment extends BaseFragment {
 	 */
 	@Override
 	public int getLayoutId() {
-		return R.layout.registor_given_money;
+		return R.layout.fragment_new_loan_register;
 	}
 
 	/**

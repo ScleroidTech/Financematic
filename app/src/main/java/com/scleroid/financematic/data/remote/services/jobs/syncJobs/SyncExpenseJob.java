@@ -2,6 +2,7 @@ package com.scleroid.financematic.data.remote.services.jobs.syncJobs;
 
 import com.scleroid.financematic.base.BaseJob;
 import com.scleroid.financematic.data.local.model.Expense;
+import com.scleroid.financematic.data.remote.RemotePostEndpoint;
 
 import timber.log.Timber;
 
@@ -14,8 +15,9 @@ import timber.log.Timber;
 public class SyncExpenseJob extends BaseJob<Expense> {
 	private static final String TAG = SyncExpenseJob.class.getCanonicalName();
 
-	public SyncExpenseJob(Expense expense) {
-		super(TAG, expense);
+	public SyncExpenseJob(Expense expense,
+	                      final RemotePostEndpoint service) {
+		super(TAG, expense, service);
 
 	}
 

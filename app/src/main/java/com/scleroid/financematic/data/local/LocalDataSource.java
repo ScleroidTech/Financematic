@@ -52,6 +52,10 @@ public interface LocalDataSource<T> {
 	 */
 	Completable addItems(@NonNull List<T> items);
 
+	void addNetworkItems(@NonNull List<T> items);
+
+	void addNetworkItem(@NonNull T item);
+
 	/**
 	 * refreshes the data source
 	 */

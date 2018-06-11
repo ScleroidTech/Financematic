@@ -78,7 +78,7 @@ public interface ExpenseDao {
 	 *
 	 * @param expense inserts list of expense object
 	 */
-	@Insert
+	@Insert(onConflict = REPLACE)
 	long[] saveExpenses(List<Expense> expense);
 
 	/**

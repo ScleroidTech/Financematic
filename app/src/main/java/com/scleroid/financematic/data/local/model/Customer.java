@@ -5,9 +5,9 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -17,31 +17,39 @@ import java.util.List;
  * @since 4/2/18
  */
 @Entity(indices = {@Index(value = "customerId", unique = true)})
-public class Customer implements Serializable {
+public class Customer {
 
 
-	@SerializedName("cid")
+
 	@PrimaryKey(autoGenerate = false)
+	@SerializedName("cid")
+	@Expose
 	private int customerId;
 	@SerializedName("fullname")
+	@Expose
 	private String name;
 	@SerializedName("mobile")
+	@Expose
 	private String mobileNumber;
 	@SerializedName("address")
+	@Expose
 	private String address;
-	private String city;
+
+	@SerializedName("idproofno")
+	@Expose
 	private String idProofNo;
+	@SerializedName("idproof")
+	@Expose
 	private String idProofType;
 	@Ignore
 	private List<Loan> loans;
 
-	public Customer(int customerId, String name, String mobileNumber, String address, String city,
+	public Customer(int customerId, String name, String mobileNumber, String address,
 	                String idProofNo, String idProofType) {
 		this.customerId = customerId;
 		this.name = name;
 		this.mobileNumber = mobileNumber;
 		this.address = address;
-		this.city = city;
 		this.idProofNo = idProofNo;
 		this.idProofType = idProofType;
 	}
@@ -61,18 +69,10 @@ public class Customer implements Serializable {
 				", name='" + name + '\'' +
 				", mobileNumber='" + mobileNumber + '\'' +
 				", address='" + address + '\'' +
-				", city='" + city + '\'' +
+
 				", idProofNo='" + idProofNo + '\'' +
 				", idProofType=" + idProofType +
 				'}';
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
 	}
 
 

@@ -70,28 +70,11 @@ abstract public class RepositoryModule {
 	@Provides
 	static AppDatabase provideDb(Application context) {
 
-		AppDatabase appDatabase =
-				Room.databaseBuilder(context, AppDatabase.class, "financeMatic.db")
-						/*TODO
-						.addCallback(new RoomDatabase.Callback() {
-			   /**
-				 * Called when the database is created for the first time.
-				 * This is called after all the tables are created.
-				 *
-				 * @param db The database.
+		//	Timber.wtf("why we aren't calling this" + appDatabase);
+		return Room.databaseBuilder(context, AppDatabase.class, "financeMatic.db")
 
-							@Override
-							public void onCreate(@NonNull final SupportSQLiteDatabase db) {
-								super.onCreate(db);
-
-								//TODO add trigger to update values depending upon operations
-								db.execSQL("CREATE TRIGGER");
-							}
-						})*/
-						.fallbackToDestructiveMigration()
-						.build();
-		Timber.wtf("why we aren't calling this" + appDatabase);
-		return appDatabase;
+				.fallbackToDestructiveMigration()
+				.build();
 	}
 
 	@Singleton
@@ -160,6 +143,8 @@ abstract public class RepositoryModule {
 				.client(okHttpClient)
 				.build();
 	}
+
+
 	@Singleton
 	@Provides
 	static WebService provideWebService(Retrofit retrofit) {
@@ -211,7 +196,7 @@ abstract public class RepositoryModule {
 	@Provides
 	@Singleton
 	static Gson provideGson() {
-		return new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+		return new GsonBuilder().create();
 	}
 
 	@Singleton
@@ -221,8 +206,9 @@ abstract public class RepositoryModule {
 	@Provides
 	static public HttpLoggingInterceptor loggingInterceptor() {
 		HttpLoggingInterceptor interceptor =
-				new HttpLoggingInterceptor(message -> Timber.i(message));
-		interceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
+				new HttpLoggingInterceptor(
+						message -> Timber.tag("OkHttp").d("Retrofit Logging " + message));
+		interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 		return interceptor;
 	}
 

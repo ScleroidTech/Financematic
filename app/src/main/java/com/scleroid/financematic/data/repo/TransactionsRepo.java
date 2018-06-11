@@ -4,7 +4,6 @@ import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.scleroid.financematic.data.AbsentLiveData;
 import com.scleroid.financematic.data.local.lab.LocalTransactionsLab;
 import com.scleroid.financematic.data.local.model.TransactionModel;
 import com.scleroid.financematic.data.remote.ApiResponse;
@@ -77,7 +76,7 @@ public class TransactionsRepo implements Repo<TransactionModel> {
 
 			@Override
 			protected void saveCallResult(@NonNull List<TransactionModel> item) {
-				localTransactionsLab.addItems(item);
+				localTransactionsLab.addNetworkItems(item);
 			}
 
 			@NonNull
@@ -98,7 +97,6 @@ public class TransactionsRepo implements Repo<TransactionModel> {
 				return localTransactionsLab.getItemsForLoan(loanAcNo);
 			}
 
-
 		}.asLiveData();
 	}
 
@@ -111,7 +109,7 @@ public class TransactionsRepo implements Repo<TransactionModel> {
 
 			@Override
 			protected void saveCallResult(@NonNull List<TransactionModel> item) {
-				localTransactionsLab.addItems(item);
+				localTransactionsLab.addNetworkItems(item);
 			}
 
 			@Override
@@ -129,9 +127,8 @@ public class TransactionsRepo implements Repo<TransactionModel> {
 			@NonNull
 			@Override
 			protected LiveData<ApiResponse<List<TransactionModel>>> createCall() {
-				//TODO remove this line
-				return AbsentLiveData.create();
-				//	return webService.getTransactions();
+
+				return webService.getTransactions();
 			}
 
 			@Override
@@ -146,12 +143,12 @@ public class TransactionsRepo implements Repo<TransactionModel> {
 		return new NetworkBoundResource<TransactionModel, TransactionModel>(appExecutors) {
 			@Override
 			protected void saveCallResult(@NonNull TransactionModel item) {
-				localTransactionsLab.saveItem(item);
+				localTransactionsLab.addNetworkItem(item);
 			}
 
 			@Override
 			protected boolean shouldFetch(@Nullable TransactionModel data) {
-				return data == null;//TODO Why this ?
+				return data == null;
 			}
 
 			@NonNull

@@ -46,7 +46,9 @@ public class ReportViewModel extends BaseViewModel<TransactionModel> implements 
 
 	@Override
 	protected LiveData<Resource<List<TransactionModel>>> getItemList() {
-		if (transactionLivedataDual.getValue() == null || transactionLivedataDual.getValue().data == null) transactionLivedataDual = updateItemLiveData();
-		return transactionLivedataDual;
+		return transactionsRepo.loadItems();
+	/*	if (transactionLivedataDual.getValue() == null || transactionLivedataDual.getValue().data
+	== null) transactionLivedataDual = updateItemLiveData();
+		return transactionLivedataDual;*/
 	}
 }

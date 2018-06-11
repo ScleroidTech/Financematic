@@ -128,6 +128,20 @@ public class LocalInstallmentsLab implements LocalDataSource<Installment> {
 		}).subscribeOn(Schedulers.io());
 	}
 
+	@Override
+	public void addNetworkItems(@NonNull final List<Installment> items) {
+		Timber.d("Storing data");
+		long[] rowId = installmentDao.saveInstallments(items);
+		Timber.d("installment stored " + rowId.length);
+	}
+
+	@Override
+	public void addNetworkItem(@NonNull final Installment item) {
+		Timber.d("Storing single data");
+		long rowId = installmentDao.saveInstallment(item);
+		Timber.d("installment stored " + rowId);
+	}
+
 	/**
 	 * refreshes the data source
 	 */

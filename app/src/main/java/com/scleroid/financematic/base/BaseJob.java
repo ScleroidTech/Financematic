@@ -12,8 +12,6 @@ import com.scleroid.financematic.data.remote.services.networking.RemoteException
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import timber.log.Timber;
 
 /**
@@ -26,17 +24,18 @@ public abstract class BaseJob<T> extends Job {
 
 	protected T t;
 	protected List<T> tList;
-	// annotate fields that should be injected and made available to subclasses
-	@Inject
+
 	protected RemotePostEndpoint service;
 
 
-	protected BaseJob(String TAG, T t) {
+	protected BaseJob(String TAG, T t,
+	                  final RemotePostEndpoint service) {
 		super(new Params(JobPriority.MID)
 				.requireNetwork()
-				.groupBy(TAG)
-				.persist());
+				.groupBy(TAG));
+		//	.persist());
 		this.t = t;
+		this.service = service;
 	}
 
 	protected BaseJob(String TAG, List<T> t) {
@@ -46,7 +45,6 @@ public abstract class BaseJob<T> extends Job {
 				.persist());
 		this.tList = t;
 	}
-
 
 
 	@Override

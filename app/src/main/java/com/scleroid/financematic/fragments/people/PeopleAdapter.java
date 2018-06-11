@@ -184,7 +184,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 		private int calculateTotalAmt(final List<Loan> loans) {
 			int sum = Stream.of(loans).mapToInt(loan ->
 					loan.getLoanAmt() != null ? loan.getLoanAmt().intValue() : 0).sum();
-			Timber.wtf("sum of Total Amt" + sum);
+			//Timber.wtf("sum of Total Amt" + sum);
 			return sum;
 		}
 
@@ -192,7 +192,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 
 			int sum = Stream.of(loans).mapToInt(loan ->
 					loan.getReceivedAmt() != null ? loan.getReceivedAmt().intValue() : 0).sum();
-			Timber.wtf("sum of received Amt" + sum);
+			//	Timber.wtf("sum of received Amt" + sum);
 			return sum;
 		}
 
@@ -219,7 +219,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 		}
 
 		private void openCustomerPageOnClick() {
-			Timber.wtf("It's clicked dadadad");
+			Timber.d("It's clicked dadadad");
 			Events.openCustomerFragment openCustomerFragment =
 					new Events.openCustomerFragment(customer.getCustomerId());
 			GlobalBus.getBus().post(openCustomerFragment);

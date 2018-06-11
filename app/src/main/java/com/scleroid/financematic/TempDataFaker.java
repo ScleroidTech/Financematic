@@ -69,7 +69,7 @@ public class TempDataFaker {
 				faker.name.name(),
 				faker.phoneNumber.phoneNumber(),
 				faker.address.streetAddress(),
-				faker.address.city(),
+
 				(faker.number.hexadecimal(12)) + "",
 				IdProofType.AADHAR
 

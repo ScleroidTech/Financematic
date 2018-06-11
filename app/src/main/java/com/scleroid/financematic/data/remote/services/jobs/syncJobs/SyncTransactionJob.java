@@ -2,6 +2,7 @@ package com.scleroid.financematic.data.remote.services.jobs.syncJobs;
 
 import com.scleroid.financematic.base.BaseJob;
 import com.scleroid.financematic.data.local.model.TransactionModel;
+import com.scleroid.financematic.data.remote.RemotePostEndpoint;
 
 import java.util.List;
 
@@ -17,8 +18,9 @@ public class SyncTransactionJob extends BaseJob<TransactionModel> {
 
 	private static final String TAG = SyncTransactionJob.class.getCanonicalName();
 
-	public SyncTransactionJob(TransactionModel transaction) {
-		super(TAG, transaction);
+	public SyncTransactionJob(TransactionModel transaction,
+	                          final RemotePostEndpoint service) {
+		super(TAG, transaction, service);
 
 	}
 

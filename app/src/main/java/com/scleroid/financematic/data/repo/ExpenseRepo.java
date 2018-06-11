@@ -67,10 +67,6 @@ public class ExpenseRepo implements Repo<Expense> {
 		this.remoteExpenseLab = remoteExpenseLab;
 	}
 
-	public LocalExpenseLab getLocalExpenseLab() {
-		return localExpenseLab;
-	}
-
 
 	@Override
 	public LiveData<Resource<List<Expense>>> loadItems() {
@@ -84,7 +80,7 @@ public class ExpenseRepo implements Repo<Expense> {
 
 			@Override
 			protected void saveCallResult(@NonNull List<Expense> items) {
-				localExpenseLab.addItems(items);
+				localExpenseLab.addNetworkItems(items);
 			}
 
 			@Override
@@ -114,7 +110,7 @@ public class ExpenseRepo implements Repo<Expense> {
 		return new NetworkBoundResource<Expense, Expense>(appExecutors) {
 			@Override
 			protected void saveCallResult(@NonNull Expense item) {
-				localExpenseLab.saveItem(item);
+				localExpenseLab.addNetworkItem(item);
 			}
 
 			@Override

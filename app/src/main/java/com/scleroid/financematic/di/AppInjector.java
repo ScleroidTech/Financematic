@@ -34,6 +34,7 @@ public class AppInjector {
 					@Override
 					public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
 						handleActivity(activity);
+
 					}
 
 					@Override
@@ -68,6 +69,7 @@ public class AppInjector {
 					}
 				});
 	}
+
 
 	private static void handleActivity(Activity activity) {
 		if (activity instanceof HasSupportFragmentInjector) {

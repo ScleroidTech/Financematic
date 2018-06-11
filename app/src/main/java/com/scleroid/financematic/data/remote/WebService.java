@@ -10,8 +10,9 @@ import com.scleroid.financematic.data.local.model.TransactionModel;
 
 import java.util.List;
 
-import retrofit2.http.Body;
+import hugo.weaving.DebugLog;
 import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -23,46 +24,64 @@ import retrofit2.http.Path;
  * @since 4/5/18
  */
 public interface WebService {
-	//TODO Replace with actual api
-	@GET("/table1/{customer_id}")
-	LiveData<ApiResponse<Customer>> getCustomer(@Path("customer_id") int customerId);
+	@FormUrlEncoded
+	@DebugLog
+	@POST("/mobile/registerusercid")
+	LiveData<ApiResponse<Customer>> getCustomer(@Field("customer_id") int customerId);
 
-	@GET("/users/{customer}")
+
+	@DebugLog
+	@GET("/mobile/registerusers")
 	LiveData<ApiResponse<List<Customer>>> getCustomers();
 
-	@GET("/users/{loan}")
-	LiveData<ApiResponse<Loan>> getLoan(@Path("loan") int loanId);
+	@DebugLog
+	@POST("/mobile/lastinsertnewuserloan_id")
+	LiveData<ApiResponse<Loan>> getLoan(@Field("loan") int loanId);
 
-	@GET("/users/")
+	@DebugLog
+	@GET("/mobile/loandetaillist")
 	LiveData<ApiResponse<List<Loan>>> getLoans();
 
 	//done
-	@GET("table1/{customer_id}")
+	@DebugLog
+	@GET("/mobile/loandetailloanact/{customer_id}")
 	LiveData<ApiResponse<List<Loan>>> getLoans(@Path("customer_id") int customerId);
 
-	@GET("/users/")
+	@DebugLog
+	@GET("/mobile/getexpenditure")
 	LiveData<ApiResponse<List<Expense>>> getExpenses();
 
-	@GET("/users/")
-	LiveData<ApiResponse<Expense>> getExpense(@Body int expenseNo);
+	@DebugLog
+	@GET("/mobile/getexpenditureid/{id}")
+	LiveData<ApiResponse<Expense>> getExpense(@Path("id") int expenseNo);
 
-	@POST("/transaction/")
+	@FormUrlEncoded
+	@DebugLog
+	@POST("/mobile/transactionloan_id/")
 	LiveData<ApiResponse<List<TransactionModel>>> getTransactionsForLoan(
 			@Field("loan_id") int loanAcNo);
 
 	//Done
-	@GET("transactionmodel/")
+	@DebugLog
+	@GET("/mobile/transaction/")
 	LiveData<ApiResponse<List<TransactionModel>>> getTransactions();
 
-	LiveData<ApiResponse<TransactionModel>> getTransaction(@Body int transactionNo);
+	@DebugLog
+	@FormUrlEncoded
+	@POST("/mobile/transactiontransaction_id/")
+	LiveData<ApiResponse<TransactionModel>> getTransaction(
+			@Field("transaction_id") int transactionNo);
 
-	@GET("/users/")
-	LiveData<ApiResponse<Installment>> getInstallment(@Body int installmentNo);
+	@DebugLog
+	@GET("/mobile/installmentloan/{installmentNo}")
+	LiveData<ApiResponse<Installment>> getInstallment(@Path("installmentNo") int installmentNo);
 
-	@GET("/users/")
+	@DebugLog
+	@GET("/mobile/installmentlist/")
 	LiveData<ApiResponse<List<Installment>>> getInstallments();
 
 	//Done
-	@GET("installid/{loan_id}")
+	@DebugLog
+	@GET("/mobile/installementloan_id/{loan_id}")
 	LiveData<ApiResponse<List<Installment>>> getInstallmentsForLoan(@Path("loan_id") int loanAcNo);
 }

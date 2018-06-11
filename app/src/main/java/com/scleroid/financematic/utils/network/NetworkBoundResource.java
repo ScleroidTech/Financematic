@@ -28,6 +28,8 @@ import com.scleroid.financematic.utils.multithread.AppExecutors;
 
 import java.util.Objects;
 
+import timber.log.Timber;
+
 /**
  * A generic class that can provide a resource backed by both the sqlite database and the network.
  * <p>
@@ -46,9 +48,7 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
 		LiveData<ResultType> dbSource = loadFromDb();
 		result.addSource(dbSource, data -> {
 			result.removeSource(dbSource);
-			if (shouldFetch(
-					data)/*TODO put shouldFetch when API ready
-			 */) {
+			if (shouldFetch(data)) {
 				fetchFromNetwork(dbSource);
 			} else {
 				result.addSource(dbSource, newData -> setValue(Resource.success(newData)));
@@ -57,33 +57,41 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
 	}
 
 	private void fetchFromNetwork(final LiveData<ResultType> dbSource) {
-		//	LiveData<ApiResponse<RequestType>> apiResponse = createCall();
-		result.addSource(dbSource,
-				newData -> setValue(Resource.error("No data here", newData)));
-		//TODO remove the above line and uncomment when api ready
-		/*// we re-attach dbSource as a new source, it will dispatch its latest value quickly
+		LiveData<ApiResponse<RequestType>> apiResponse = createCall();
+		/*result.addSource(dbSource,
+				newData -> setValue(Resource.error("No data here", newData)));*/
+
+		// we re-attach dbSource as a new source, it will dispatch its latest value quickly
 		result.addSource(dbSource, newData -> setValue(Resource.loading(newData)));
 		result.addSource(apiResponse, response -> {
 			result.removeSource(apiResponse);
 			result.removeSource(dbSource);
-			//noinspection ConstantConditions
-			if (response.isSuccessful()) {
-				appExecutors.diskIO().execute(() -> {
-					saveCallResult(processResponse(response));
-					appExecutors.mainThread().execute(() ->
-							// we specially request a new live data,
-							// otherwise we will get immediately last cached value,
-							// which may not be updated with latest results received from network.
-							result.addSource(loadFromDb(),
-									newData -> setValue(Resource.success(newData)))
-					);
-				});
+
+			if (response != null) {
+				if (response.isSuccessful()) {
+					appExecutors.diskIO().execute(() -> {
+						Timber.d(
+								response.body != null ? response.body.toString() : response
+										.errorMessage);
+						saveCallResult(processResponse(response));
+						appExecutors.mainThread().execute(() ->
+								// we specially request a new live data,
+								// otherwise we will get immediately last cached value,
+								// which may not be updated with latest results received from
+								// network.
+								result.addSource(loadFromDb(),
+										newData -> setValue(Resource.success(newData)))
+						);
+					});
+				} else {
+					onFetchFailed();
+					result.addSource(dbSource,
+							newData -> setValue(Resource.error(response.errorMessage, newData)));
+				}
 			} else {
-				onFetchFailed();
-				result.addSource(dbSource,
-						newData -> setValue(Resource.error(response.errorMessage, newData)));
+				Timber.d("No response from server ");
 			}
-		});*/
+		});
 	}
 
 	@MainThread
@@ -98,6 +106,7 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
 
 	@WorkerThread
 	protected RequestType processResponse(ApiResponse<RequestType> response) {
+		Timber.d(response.body + "");
 		return response.body;
 	}
 
@@ -110,11 +119,6 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
 
 	@MainThread
 	protected abstract boolean shouldFetch(@Nullable ResultType data);
-
-	@MainThread
-	protected boolean shouldNotFetch(@Nullable ResultType data) {
-		return false;
-	}
 
 	@NonNull
 	@MainThread

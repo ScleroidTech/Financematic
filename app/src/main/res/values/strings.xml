@@ -81,6 +81,7 @@
     <string name="delay_view">Delay Payment</string>
     <string name="submit">Submit</string>
     <string name="expense_type_image">Expense Type Image</string>
+    <string name="interestAmt">Pre Calculated Interest</string>
 
     <!-- Names -->
     <string-array name="names_array">

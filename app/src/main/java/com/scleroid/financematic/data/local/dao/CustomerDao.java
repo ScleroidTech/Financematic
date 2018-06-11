@@ -109,7 +109,7 @@ public interface CustomerDao {
 	 *
 	 * @param customer inserts list of customer object
 	 */
-	@Insert
+	@Insert(onConflict = REPLACE)
 	long[] saveCustomers(List<Customer> customer);
 
 	/**

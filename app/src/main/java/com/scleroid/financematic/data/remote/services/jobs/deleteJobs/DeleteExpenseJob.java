@@ -2,6 +2,7 @@ package com.scleroid.financematic.data.remote.services.jobs.deleteJobs;
 
 import com.scleroid.financematic.base.BaseJob;
 import com.scleroid.financematic.data.local.model.Expense;
+import com.scleroid.financematic.data.remote.RemotePostEndpoint;
 
 import timber.log.Timber;
 
@@ -15,8 +16,9 @@ public class DeleteExpenseJob extends BaseJob<Expense> {
 
 	private static final String TAG = DeleteExpenseJob.class.getCanonicalName();
 
-	public DeleteExpenseJob(final Expense expense) {
-		super(TAG, expense);
+	public DeleteExpenseJob(final Expense expense,
+	                        final RemotePostEndpoint service) {
+		super(TAG, expense, service);
 	}
 
 

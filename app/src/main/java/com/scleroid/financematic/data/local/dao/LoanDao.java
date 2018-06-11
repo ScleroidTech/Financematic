@@ -104,7 +104,7 @@ public interface LoanDao {
 	 *
 	 * @param loan inserts list of loan object
 	 */
-	@Insert
+	@Insert(onConflict = REPLACE)
 	long[] saveLoans(List<Loan> loan);
 
 	/**

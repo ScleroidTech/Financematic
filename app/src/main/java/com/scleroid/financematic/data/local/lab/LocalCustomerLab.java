@@ -78,8 +78,9 @@ public class LocalCustomerLab implements LocalDataSource<Customer> {
 	 */
 	@Override
 	public Single<Customer> saveItem(@NonNull final Customer item) {
-		Timber.d("creating new customer ");
-
+		//	Timber.d("creating new customer ");
+		//	long rowId3 = customerDao.saveCustomer(item);
+		//	Timber.d("creating new customer " + rowId3);
 		return Single.fromCallable(() -> {
 			long rowId = customerDao.saveCustomer(item);
 			Timber.d("customer stored " + rowId);
@@ -95,7 +96,7 @@ public class LocalCustomerLab implements LocalDataSource<Customer> {
 	 */
 	@Override
 	public Completable addItems(@NonNull final List<Customer> items) {
-		Timber.d("creating new customer ");
+
 
 		return Completable.fromRunnable(() -> {
 			long[] rowId = customerDao.saveCustomers(items);
@@ -103,6 +104,33 @@ public class LocalCustomerLab implements LocalDataSource<Customer> {
 
 		}).subscribeOn(Schedulers.io());
 	}
+
+	/**
+	 * adds a list of objects to the data source
+	 *
+	 * @param items list of items
+	 */
+	@Override
+	public void addNetworkItems(@NonNull final List<Customer> items) {
+
+		long[] rowId2 = customerDao.saveCustomers(items);
+		Timber.d("creating new customers " + rowId2.length);
+
+	}
+
+	/**
+	 * adds a list of objects to the data source
+	 *
+	 * @param items list of items
+	 */
+	@Override
+	public void addNetworkItem(@NonNull final Customer items) {
+
+		long rowId2 = customerDao.saveCustomer(items);
+		Timber.d("creating new customers " + rowId2);
+
+	}
+
 
 	/**
 	 * refreshes the data source
@@ -118,7 +146,7 @@ public class LocalCustomerLab implements LocalDataSource<Customer> {
 	@Override
 	public Completable deleteAllItems() {
 		Timber.d("Deleting all customers");
-		return Completable.fromRunnable(() -> customerDao.nukeTable()).subscribeOn(Schedulers.io
+		return Completable.fromRunnable(customerDao::nukeTable).subscribeOn(Schedulers.io
 				());
 
 	}

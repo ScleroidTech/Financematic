@@ -98,6 +98,18 @@ public class LocalExpenseLab implements LocalDataSource<Expense> {
 		}).subscribeOn(Schedulers.io());
 	}
 
+	@Override
+	public void addNetworkItems(@NonNull final List<Expense> items) {
+		long[] rowId = expenseDao.saveExpenses(items);
+		Timber.d("expense stored " + rowId.length);
+	}
+
+	@Override
+	public void addNetworkItem(@NonNull final Expense item) {
+		long rowId = expenseDao.saveExpense(item);
+		Timber.d("expense stored " + rowId);
+	}
+
 	/**
 	 * refreshes the data source
 	 */

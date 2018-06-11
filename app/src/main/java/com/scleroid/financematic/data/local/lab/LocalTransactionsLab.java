@@ -97,6 +97,20 @@ public class LocalTransactionsLab implements LocalDataSource<TransactionModel> {
 		}).subscribeOn(Schedulers.io());
 	}
 
+	@Override
+	public void addNetworkItems(@NonNull final List<TransactionModel> items) {
+		Timber.d("Storing data");
+		long[] rowId = transactionDao.saveTransactions(items);
+		Timber.d("transaction stored " + rowId.length);
+	}
+
+	@Override
+	public void addNetworkItem(@NonNull final TransactionModel item) {
+		Timber.d("Storging single data");
+		long rowId = transactionDao.saveTransaction(item);
+		Timber.d("transaction stored " + rowId);
+	}
+
 	/**
 	 * refreshes the data source
 	 */
