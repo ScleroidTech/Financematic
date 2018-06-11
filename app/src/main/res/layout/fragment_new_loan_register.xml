@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -7,7 +8,15 @@
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:fillViewport="true">
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -28,13 +37,14 @@
                 android:orientation="vertical">
 
                 <!-- Full Name Label -->
+
                 <LinearLayout
                     android:id="@+id/header"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:background="#0fa8bc"
-                    android:paddingBottom="6dip"
-                    android:paddingTop="6dip">
+                    android:paddingTop="6dip"
+                    android:paddingBottom="6dip">
 
                     <TextView
                         android:id="@+id/reg_fullname_detaills"
@@ -54,8 +64,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:orientation="horizontal"
-                    android:paddingBottom="5dp"
-                    android:paddingRight="10dp">
+                    android:paddingRight="10dp"
+                    android:paddingBottom="5dp">
 
                     <TextView
 
@@ -82,11 +92,11 @@
                         android:maxLength="8"
                         android:maxLines="1"
 
-                        android:paddingBottom="6dp"
-
-
                         android:paddingLeft="10dp"
+
+
                         android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
                         android:textColor="#409bbf" />
 
                 </LinearLayout>
@@ -96,8 +106,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:orientation="horizontal"
-                    android:paddingBottom="5dp"
-                    android:paddingRight="10dp">
+                    android:paddingRight="10dp"
+                    android:paddingBottom="5dp">
 
                     <TextView
 
@@ -118,14 +128,14 @@
                         android:layout_weight=".7"
                         android:background="@drawable/shadow"
 
-android:textSize="17sp"
                         android:drawableEnd="@drawable/calender_custom"
                         android:drawableRight="@drawable/calender_custom"
-android:paddingTop="7dp"
                         android:paddingLeft="10dp"
+                        android:paddingTop="7dp"
                         android:paddingRight="15dp"
+                        android:textColor="#409bbf"
 
-                        android:textColor="#409bbf" />
+                        android:textSize="17sp" />
 
                 </LinearLayout>
 
@@ -134,8 +144,8 @@ android:paddingTop="7dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:orientation="horizontal"
-                    android:paddingBottom="5dp"
-                    android:paddingRight="10dp">
+                    android:paddingRight="10dp"
+                    android:paddingBottom="5dp">
 
                     <TextView
 
@@ -155,132 +165,24 @@ android:paddingTop="7dp"
                         android:layout_height="40dp"
                         android:layout_weight=".7"
                         android:background="@drawable/shadow"
-                        android:textSize="17sp"
                         android:drawableEnd="@drawable/calender_custom"
                         android:drawableRight="@drawable/calender_custom"
-
                         android:paddingLeft="10dp"
+
+                        android:paddingTop="6dp"
                         android:paddingRight="15dp"
-                        android:paddingTop="6dp"
-                        android:textColor="#409bbf" />
-
-                </LinearLayout>
-
-
-
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:layout_marginTop="2dp"
-                    android:orientation="horizontal"
-                    android:paddingBottom="2dp"
-                    android:paddingRight="10dp">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight=".7"
-                        android:text="Installment Type"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="#409bbf"
                         android:textSize="17sp" />
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="45dp"
-                        android:layout_weight=".7"
-                        android:background="@drawable/shadow">
-
-                    <Spinner
-                        android:id="@+id/spinnertx"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-
-
-                        android:paddingTop="2dp"
-                        android:textColor="#409bbf" />
-                    </LinearLayout>
                 </LinearLayout>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:orientation="horizontal"
-                    android:paddingBottom="5dp"
-                    android:paddingRight="10dp">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight=".7"
-
-                        android:text="No of Installment"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="#409bbf"
-                        android:textSize="17sp" />
-
-                    <TextView
-                        android:id="@+id/txNoofInstallment"
-                        android:layout_width="0dp"
-                        android:layout_height="40dp"
-                        android:layout_weight=".7"
-                        android:background="@drawable/shadow"
-                        android:inputType="number"
-                        android:maxLength="4"
-                        android:paddingBottom="6dp"
-                        android:paddingLeft="10dp"
-                        android:paddingTop="6dp"
-                        android:textColor="#409bbf" />
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal"
-                    android:paddingBottom="5dp"
-                    android:paddingRight="10dp">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight=".7"
-
-                        android:text="Installment Amount"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="#409bbf"
-                        android:textSize="17sp" />
-
-                    <EditText
-                        android:id="@+id/txInstallmentAmount"
-                        android:layout_width="0dp"
-                        android:layout_height="40dp"
-                        android:layout_weight=".7"
-                        android:background="@drawable/shadow"
-                        android:drawableLeft="@drawable/indianrs1"
-                        android:drawableTint="@color/colorPrimaryDark"
-                        android:inputType="number"
-                        android:maxLength="6"
-                        android:paddingBottom="6dp"
-                        android:paddingLeft="10dp"
-                        android:paddingTop="6dp"
-                        android:textColor="#409bbf" />
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingBottom="5dp"
-                    android:paddingRight="10dp">
+                    android:paddingRight="10dp"
+                    android:paddingBottom="5dp">
 
                     <TextView
                         android:layout_width="0dp"
@@ -303,9 +205,126 @@ android:paddingTop="7dp"
                         android:background="@drawable/shadow"
                         android:inputType="number"
                         android:maxLength="2"
-                        android:paddingBottom="6dp"
                         android:paddingLeft="10dp"
                         android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+                        android:textColor="#409bbf" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="5dp">
+
+                    <EditText
+                        android:id="@+id/txcalculatednterest"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/shadow"
+                        android:hint="@string/interestAmt"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:paddingLeft="10dp"
+
+                        android:textColor="#409bbf" />
+
+                    <TextView
+
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight="0.15"
+                        android:maxLength="2"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+
+                        android:text="Or"
+                        android:textAlignment="center"
+                        android:textColor="#409bbf" />
+
+                    <Button
+                        android:id="@+id/btn_calculate_interest"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:text="Calculate Interest"
+
+                        android:textColor="#409bbf" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="2dp"
+                    android:orientation="horizontal"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="2dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight=".7"
+                        android:text="Installment Type"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="#409bbf"
+                        android:textSize="17sp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_weight=".7"
+                        android:background="@drawable/shadow">
+
+                        <Spinner
+                            android:id="@+id/spinnertx"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+
+
+                            android:paddingTop="2dp"
+                            android:textColor="#409bbf" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="5dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight=".7"
+
+                        android:text="No of Installment"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="#409bbf"
+                        android:textSize="17sp" />
+
+                    <TextView
+                        android:id="@+id/txNoofInstallment"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight=".7"
+                        android:background="@drawable/shadow"
+                        android:inputType="number"
+                        android:maxLength="4"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
                         android:textColor="#409bbf" />
 
                 </LinearLayout>
@@ -315,8 +334,44 @@ android:paddingTop="7dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:orientation="horizontal"
-                    android:paddingBottom="5dp"
-                    android:paddingRight="10dp">
+                    android:paddingRight="10dp"
+                    android:paddingBottom="5dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight=".7"
+
+                        android:text="Installment Amount"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="#409bbf"
+                        android:textSize="17sp" />
+
+                    <EditText
+                        android:id="@+id/txInstallmentAmount"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight=".7"
+                        android:background="@drawable/shadow"
+                        android:drawableLeft="@drawable/indianrs1"
+                        android:drawableTint="@color/colorPrimaryDark"
+                        android:inputType="number"
+                        android:maxLength="6"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+                        android:textColor="#409bbf" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="5dp">
 
                     <TextView
                         android:layout_width="0dp"
@@ -340,9 +395,9 @@ android:paddingTop="7dp"
                         android:drawableTint="@color/colorPrimaryDark"
                         android:inputType="number"
                         android:maxLength="8"
-                        android:paddingBottom="6dp"
                         android:paddingLeft="10dp"
                         android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
                         android:textColor="#409bbf" />
 
                 </LinearLayout>
@@ -352,10 +407,10 @@ android:paddingTop="7dp"
                     android:id="@+id/btn_givenmoney"
                     android:layout_width="fill_parent"
                     android:layout_height="32dp"
-                    android:layout_marginBottom="1dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
                     android:layout_marginTop="1dip"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="1dp"
                     android:background="#0fa8bc"
                     android:text="Submit"
                     android:textColor="@color/white"
