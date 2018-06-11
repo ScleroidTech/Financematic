@@ -37,34 +37,31 @@
         <View
             android:id="@+id/card"
             android:layout_width="350dp"
-            android:layout_height="220dp"
+            android:layout_height="179dp"
             android:layout_marginLeft="32dp"
-            android:layout_marginRight="32dp"
             android:layout_marginTop="120dp"
+            android:layout_marginRight="32dp"
             android:background="@drawable/shadow"
             android:transitionName="@string/transition_card"
 
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/header_cover"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintTop_toTopOf="@+id/header_cover" />
 
         <FrameLayout
             android:id="@+id/frameLayout"
             android:layout_width="90dp"
-            android:layout_height="90dp"
+            android:layout_height="85dp"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
             android:layout_marginRight="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="70dp"
             android:background="@drawable/avatar_border_details"
             android:transitionName="@string/transition_avatar_border"
             app:layout_constraintBottom_toTopOf="@+id/card"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="@+id/header_cover">
 
             <ImageView
                 android:id="@+id/avatar"
@@ -316,12 +313,11 @@
                     android:id="@+id/no_address_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="80dp"
+                    android:layout_marginEnd="8dp"
+
                     android:text="No Loans found"
                     android:textSize="30sp"
-
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
@@ -329,9 +325,9 @@
                     android:id="@+id/no_address_subtitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
                     android:text="No data available yet"
                     android:textSize="15sp"
 
@@ -345,13 +341,14 @@
             android:id="@+id/profile_my_recycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="55dp"
+            android:layout_marginTop="8dp"
             android:paddingBottom="50dp"
             android:scrollbars="vertical"
+            android:visibility="visible"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_loan"
+            app:layout_constraintTop_toBottomOf="@+id/card"
             tools:listitem="@layout/recycler_profile" />
 
 

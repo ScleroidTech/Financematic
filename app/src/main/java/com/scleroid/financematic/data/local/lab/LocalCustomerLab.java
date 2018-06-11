@@ -79,8 +79,8 @@ public class LocalCustomerLab implements LocalDataSource<Customer> {
 	@Override
 	public Single<Customer> saveItem(@NonNull final Customer item) {
 		//	Timber.d("creating new customer ");
-		long rowId3 = customerDao.saveCustomer(item);
-		Timber.d("creating new customer " + rowId3);
+		//	long rowId3 = customerDao.saveCustomer(item);
+		//	Timber.d("creating new customer " + rowId3);
 		return Single.fromCallable(() -> {
 			long rowId = customerDao.saveCustomer(item);
 			Timber.d("customer stored " + rowId);
@@ -146,7 +146,7 @@ public class LocalCustomerLab implements LocalDataSource<Customer> {
 	@Override
 	public Completable deleteAllItems() {
 		Timber.d("Deleting all customers");
-		return Completable.fromRunnable(() -> customerDao.nukeTable()).subscribeOn(Schedulers.io
+		return Completable.fromRunnable(customerDao::nukeTable).subscribeOn(Schedulers.io
 				());
 
 	}

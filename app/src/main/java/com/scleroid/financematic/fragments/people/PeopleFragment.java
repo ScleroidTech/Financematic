@@ -195,7 +195,7 @@ public class PeopleFragment extends BaseFragment {
 			noAddressTitle.setText(items.status.toString());
 			noAddressSubtitle.setText(items.message);
 
-		} else if (!items.status.equals(Status.SUCCESS)) {
+		} else if (items.status.equals(Status.LOADING)) {
 			noAddressTitle.setText(items.status.toString());
 			noAddressSubtitle.setText(items.message);
 
