@@ -99,7 +99,7 @@ public class RegisterLoanFragment extends BaseFragment {
 	@BindView(R.id.txrateInterest)
 	EditText ettxrateInterest;
 	@BindView(R.id.txinterestamount)
-	EditText txinterestamount;
+	EditText txInterestAmount;
 	@BindView(R.id.spinnertx)
 	Spinner spin;
 	@BindView(R.id.txNoofInstallment)
@@ -115,7 +115,6 @@ public class RegisterLoanFragment extends BaseFragment {
 	@BindView(R.id.displaytx)
 	TextView displaytx;
 	Unbinder unbinder;
-
 
 
 	private String durationType = LoanDurationType.MONTHLY;
@@ -154,7 +153,7 @@ public class RegisterLoanFragment extends BaseFragment {
 		// Inflate the layout for this fragment
 		super.onCreateView(inflater, container, savedInstanceState);
 		final View rootView = getRootView();
-	//	unbinder = ButterKnife.bind(this, rootView);
+		//	unbinder = ButterKnife.bind(this, rootView);
 		//initializeAllViews(rootView);
 		Bundle bundle = getArguments();
 		if (bundle != null) {
@@ -225,11 +224,7 @@ public class RegisterLoanFragment extends BaseFragment {
 							ettxrateInterest.setError("Valid valid Rate in %");
 						}
 						getInterestAmt(BigDecimal.valueOf(
-								Double.valueOf(etTotalLoanAmount.getText().toString().trim())),
-								calculateInstallments(calculateTotalDuration(),
-										durationConverter(LoanDurationType.MONTHLY)),
-								Double.valueOf(ettxrateInterest.getText()
-										.toString().trim()));
+								Double.valueOf(etTotalLoanAmount.getText().toString().trim())));
 					}
 				});
 
@@ -267,6 +262,18 @@ public class RegisterLoanFragment extends BaseFragment {
 					}
 				});
 
+		radioInterest.setOnCheckedChangeListener((group, checkedId) -> {
+			if (interestRadioButton.getId() == checkedId && interestRadioButton.isChecked()) {
+				ettxrateInterest.setVisibility(View.GONE);
+				txInterestAmount.setEnabled(true);
+			} else if (rateOfInterestRadioButton.getId() == checkedId && rateOfInterestRadioButton
+					.isChecked()) {
+				ettxrateInterest.setVisibility(View.VISIBLE);
+				txInterestAmount.setEnabled(false);
+				setRateOfInterest();
+			}
+
+		});
 
 		btnGiveMoney = rootView.findViewById(R.id.btn_givenmoney);
 		btnGiveMoney.setOnClickListener(v -> {
@@ -281,7 +288,7 @@ public class RegisterLoanFragment extends BaseFragment {
 					.toString();
 			final String rateOfInterest = ettxrateInterest.getText()
 					.toString();
-			final String interestAmt = txinterestamount.getText()
+			final String interestAmt = txInterestAmount.getText()
 					.toString();
 			String startDateStr = startDateTextView.getText().toString();
 			String endDateStr = endDateTextView
@@ -298,7 +305,7 @@ public class RegisterLoanFragment extends BaseFragment {
 					rateOfInterest) && ettxrateInterest.getVisibility() == View.VISIBLE) {
 				ettxrateInterest.setError("Enter rate Interest");
 			} else if (TextUtils.isEmpty(interestAmt)) {
-				txinterestamount.setError("Enter Interest Amount");
+				txInterestAmount.setError("Enter Interest Amount");
 			}
 			if (TextUtils.isEmpty(installmentAmt)) {
 				ettxInstallmentAmount.setError("Enter Installment Amount");
@@ -333,8 +340,39 @@ public class RegisterLoanFragment extends BaseFragment {
 		});
 
 
-
 		return rootView;
+	}
+
+	/**
+	 * @return layout resource id
+	 */
+	@Override
+	public int getLayoutId() {
+		return R.layout.fragment_new_loan_register;
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		unbinder.unbind();
+	}
+
+	/**
+	 * Override so you can observe your viewModel
+	 */
+	@Override
+	protected void subscribeToLiveData() {
+
+	}
+
+	/**
+	 * Override for set view model
+	 *
+	 * @return view model instance
+	 */
+	@Override
+	public BaseViewModel getViewModel() {
+		return null;
 	}
 
 	private void addData(final int accountNo, final BigDecimal loanAmt1,
@@ -397,7 +435,6 @@ public class RegisterLoanFragment extends BaseFragment {
 				});
 	}
 
-
 	private long calculateNoOfInstallments() {
 		if (startDate == null || endDate == null) return 0;
 
@@ -408,109 +445,6 @@ public class RegisterLoanFragment extends BaseFragment {
 		return durationDivided;
 
 	}
-	private BigDecimal calculateInstallmentAmt(final long duration, final BigDecimal loanAmt,
-	                                           final BigDecimal interestAmt) {
-		switch (installmentCalculationType) {
-			case 0:
-				return getPreDefinedInterestEMI(loanAmt, duration);
-
-			case 1:
-				return getInterestPlusPrincipleEMI(loanAmt, interestAmt);
-
-			case 2:
-				return interestAmt;
-
-			default:
-				return getPreDefinedInterestEMI(loanAmt, duration);
-
-		}
-	}
-
-	private boolean isNotValidAmt(String loan_amountval) {
-		String EMAIL_PATTERN = "^[0-9_.-]*$";
-
-		Pattern pattern = Pattern.compile(EMAIL_PATTERN);
-		Matcher matcher = pattern.matcher(loan_amountval);
-		return !matcher.matches();
-	}
-
-	private void setCustomerName(final TextView customerNameTextView, final Bundle bundle) {
-		customerId = bundle.getInt(CUSTOMER_ID);
-
-		/*Observable.just(customerLab.getRxItem(customerId))
-				.subscribeOn(Schedulers.io())
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe((Single<Customer> customer) -> {
-					customer.subscribe(customer1 ->customerNameTextView.setText(customer1.getName
-					()) );
-							Timber.d("data received, displaying");
-							//customerNameTextView.setText(customer.g);
-						},
-						throwable -> Timber.d("Not gonna show up")
-				);*/
-		Disposable subscribe = customerLab
-				.getRxItem(customerId)
-				.subscribeOn(Schedulers.io())
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe(customer -> {
-							Timber.d("data received, displaying " + customer.toString());
-							customerNameTextView.setText("Customer Name : " + customer.getName());
-						},
-						throwable -> Timber.d("Not gonna show up " + throwable.getMessage()));
-		//	customerNameTextView.setText(customer.getName());
-	}
-
-	/**
-	 * @return layout resource id
-	 */
-	@Override
-	public int getLayoutId() {
-		return R.layout.fragment_new_loan_register;
-	}
-
-	/**
-	 * Override so you can observe your viewModel
-	 */
-	@Override
-	protected void subscribeToLiveData() {
-
-	}
-
-	/**
-	 * Override for set view model
-	 *
-	 * @return view model instance
-	 */
-	@Override
-	public BaseViewModel getViewModel() {
-		return null;
-	}
-
-	private long getInstallments() {
-
-
-		return  getInstallments(durationConverter(durationType));
-
-
-
-
-	}
-
-	private long getInstallments(long converter) {
-		if (startDate == null || endDate == null) return 0;
-
-		durationDivided = calculateInstallments(calculateTotalDuration(), converter);
-
-
-		return durationDivided;
-	}
-
-	private long calculateInstallments(long timeDiff, long divider) {
-
-
-		return (TimeUnit.MILLISECONDS.toDays(timeDiff) / divider);
-	}
-
 
 	private long calculateTotalDuration() {
 		return dateUtils.differenceOfDates(startDate, endDate);
@@ -546,39 +480,73 @@ public class RegisterLoanFragment extends BaseFragment {
 		return 0;
 	}
 
+	private long convertTime(long timeDiff, long divider) {
+
+
+		return (TimeUnit.MILLISECONDS.toDays(timeDiff) / divider);
+	}
+
+	private BigDecimal calculateInstallmentAmt(final long duration, final BigDecimal loanAmt,
+	                                           final BigDecimal interestAmt) {
+		switch (installmentCalculationType) {
+			case 0:
+				return getPreDefinedInterestEMI(loanAmt, duration);
+
+			case 1:
+				return getInterestPlusPrincipleEMI(loanAmt, interestAmt);
+
+			case 2:
+				return interestAmt;
+
+			default:
+				return getPreDefinedInterestEMI(loanAmt, duration);
+
+		}
+	}
+
+	private void setCustomerName(final TextView customerNameTextView, final Bundle bundle) {
+		customerId = bundle.getInt(CUSTOMER_ID);
+
+		/*Observable.just(customerLab.getRxItem(customerId))
+				.subscribeOn(Schedulers.io())
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe((Single<Customer> customer) -> {
+					customer.subscribe(customer1 ->customerNameTextView.setText(customer1.getName
+					()) );
+							Timber.d("data received, displaying");
+							//customerNameTextView.setText(customer.g);
+						},
+						throwable -> Timber.d("Not gonna show up")
+				);*/
+		Disposable subscribe = customerLab
+				.getRxItem(customerId)
+				.subscribeOn(Schedulers.io())
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe(customer -> {
+							Timber.d("data received, displaying " + customer.toString());
+							customerNameTextView.setText("Customer Name : " + customer.getName());
+						},
+						throwable -> Timber.d("Not gonna show up " + throwable.getMessage()));
+		//	customerNameTextView.setText(customer.getName());
+	}
+
 	private BigDecimal getAmtOfInstallment() {
 		final String totatLoanAmt = etTotalLoanAmount.getText()
 				.toString();
-		final String rateOfInterest = ettxrateInterest.getText()
-				.toString();
-		final long
-				monthlyDuration =
-				getInstallments(durationConverter(LoanDurationType.MONTHLY));
+
 		final long
 				duration = getInstallments();
 
-		if (TextUtils.isEmpty(totatLoanAmt) || TextUtils.isEmpty(
-				rateOfInterest) || monthlyDuration <= 0) {
-			return new BigDecimal(0);
+		if (TextUtils.isEmpty(totatLoanAmt)) {
+			return BigDecimal.valueOf(0);
 		}
 		BigDecimal loanAmt = BigDecimal.valueOf(Double.valueOf(totatLoanAmt.trim()));
-		double interestRate = Double.valueOf(rateOfInterest.trim());
-		BigDecimal interestAmt = getInterestAmt(loanAmt, monthlyDuration, interestRate);
+
+		BigDecimal interestAmt = getInterestAmt(loanAmt);
+		if (interestAmt.intValue() == 0) return BigDecimal.valueOf(0);
 
 		return calculateInstallmentAmt(duration, loanAmt, interestAmt);
 
-	}
-
-	private BigDecimal calculateInterestAmt(BigDecimal loanAmt, long duration,
-	                                        double interestRate) {
-
-		return loanAmt.multiply(BigDecimal.valueOf((interestRate / 100) * duration));
-	}
-
-	@Override
-	public void onDestroyView() {
-		super.onDestroyView();
-		unbinder.unbind();
 	}
 
 	@Deprecated
@@ -601,7 +569,7 @@ public class RegisterLoanFragment extends BaseFragment {
 
 	private BigDecimal getInterestPlusPrincipleEMI(BigDecimal loanAmt, BigDecimal interest) {
 		BigDecimal emi = loanAmt.add(interest.divide(BigDecimal.valueOf(
-				convertTime(calculateTotalDuration(), durationConverter(durationType)))));
+				calculateNoOfInstallments())));
 		return emi;
 	}
 
@@ -617,22 +585,22 @@ public class RegisterLoanFragment extends BaseFragment {
 							durationConverter(LoanDurationType.MONTHLY));
 			if (TextUtils.isEmpty(
 					rateOfInterest) || monthlyDuration <= 0) {
-				return new BigDecimal(0);
+				return BigDecimal.valueOf(0);
 			}
 			double interestRate = Double.valueOf(rateOfInterest.trim());
 			BigDecimal interestAmt =
 					calculateInterestAmt(loanAmt, monthlyDuration, interestRate);
 			return interestAmt;
 		} else {
-			return BigDecimal.valueOf(Double.parseDouble(txinterestamount.getText().toString
+			return BigDecimal.valueOf(Double.parseDouble(txInterestAmount.getText().toString
 					()));
 		}
 	}
 
-	private long convertTime(long timeDiff, long divider) {
+	private BigDecimal calculateInterestAmt(BigDecimal loanAmt, long duration,
+	                                        double interestRate) {
 
-
-		return (TimeUnit.MILLISECONDS.toDays(timeDiff) / divider);
+		return loanAmt.multiply(BigDecimal.valueOf((interestRate / 100) * duration));
 	}
 
 	@Override
@@ -648,6 +616,29 @@ public class RegisterLoanFragment extends BaseFragment {
 		}
 		ettxNoofInstallment.setText(String.valueOf(getInstallments()));
 
+	}
+
+	private long getInstallments() {
+
+
+		return getInstallments(durationConverter(durationType));
+
+
+	}
+
+	private long getInstallments(long converter) {
+		if (startDate == null || endDate == null) return 0;
+
+		durationDivided = calculateInstallments(calculateTotalDuration(), converter);
+
+
+		return durationDivided;
+	}
+
+	private long calculateInstallments(long timeDiff, long divider) {
+
+
+		return (TimeUnit.MILLISECONDS.toDays(timeDiff) / divider);
 	}
 
 	@OnClick({R.id.txStartDate, R.id.txEndDate})
@@ -668,7 +659,6 @@ public class RegisterLoanFragment extends BaseFragment {
 				getFragmentManager(), msg, DIALOG_DATE);
 	}
 
-
 	private void setRateOfInterest() {
 		if (ettxrateInterest.getVisibility() == View.VISIBLE) {
 			ettxrateInterest.addTextChangedListener(
@@ -679,7 +669,7 @@ public class RegisterLoanFragment extends BaseFragment {
 							if (isNotValidAmt(text)) {
 								ettxrateInterest.setError("Valid valid Rate in %");
 							}
-							txinterestamount.setText(calculateInterestAmt(BigDecimal.valueOf(
+							txInterestAmount.setText(calculateInterestAmt(BigDecimal.valueOf(
 									Double.valueOf(etTotalLoanAmount.getText().toString().trim())),
 									convertTime(calculateTotalDuration(),
 											durationConverter(LoanDurationType.MONTHLY)),
@@ -691,20 +681,17 @@ public class RegisterLoanFragment extends BaseFragment {
 
 	}
 
+	private boolean isNotValidAmt(String loan_amountval) {
+		String EMAIL_PATTERN = "^[0-9_.-]*$";
 
-
-
-
+		Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+		Matcher matcher = pattern.matcher(loan_amountval);
+		return !matcher.matches();
+	}
 
 	@OnClick(R.id.btn_givenmoney)
 	public void onViewClicked() {}
 
 
-	private BigDecimal getInterestAmt(BigDecimal loanAmt, long duration, double interestRate) {
-		BigDecimal interestAmt =
-				loanAmt.multiply(BigDecimal.valueOf((interestRate / 100) * duration));
-		return interestAmt;
-
-	}
 
 }
