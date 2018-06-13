@@ -462,7 +462,7 @@ public class RegisterLoanFragment extends BaseFragment {
 			BigDecimal interestAmt =
 					calculateInterestAmt(loanAmt, monthlyDuration, interestRate);
 			return interestAmt;
-		} else if (TextUtils.isEmpty(txInterestAmount.getText().toString())) {
+		} else if (!TextUtils.isEmpty(txInterestAmount.getText().toString())) {
 			return BigDecimal.valueOf(Double.parseDouble(txInterestAmount.getText().toString
 					()));
 		}
