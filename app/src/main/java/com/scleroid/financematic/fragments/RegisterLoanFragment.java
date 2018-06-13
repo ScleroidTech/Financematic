@@ -108,8 +108,8 @@ public class RegisterLoanFragment extends BaseFragment {
 	Spinner spin1;
 	@BindView(R.id.txInstallmentAmount)
 	EditText ettxInstallmentAmount;
-	@BindView(R.id.txTotalLoanAmount)
-	EditText etTotalLoanAmount;
+
+	//EditText etTotalLoanAmount;
 	@BindView(R.id.btn_givenmoney)
 	Button btnGiveMoney;
 	@BindView(R.id.displaytx)
@@ -224,7 +224,7 @@ public class RegisterLoanFragment extends BaseFragment {
 							ettxrateInterest.setError("Valid valid Rate in %");
 						}
 						getInterestAmt(BigDecimal.valueOf(
-								Double.valueOf(etTotalLoanAmount.getText().toString().trim())));
+								Double.valueOf(ettxloan_amout.getText().toString().trim())));
 					}
 				});
 
@@ -251,7 +251,7 @@ public class RegisterLoanFragment extends BaseFragment {
 				});
 
 
-		etTotalLoanAmount.addTextChangedListener(
+	/*	etTotalLoanAmount.addTextChangedListener(
 				new TextValidator(etTotalLoanAmount) {
 					@Override
 					public void validate(TextView textView, String text) {
@@ -261,7 +261,7 @@ public class RegisterLoanFragment extends BaseFragment {
 						}
 					}
 				});
-
+*/
 		radioInterest.setOnCheckedChangeListener((group, checkedId) -> {
 			if (interestRadioButton.getId() == checkedId && interestRadioButton.isChecked()) {
 				ettxrateInterest.setVisibility(View.GONE);
@@ -284,8 +284,8 @@ public class RegisterLoanFragment extends BaseFragment {
 			final String noOfInstallments = ettxNoofInstallment.getText()
 					.toString();
 
-			final String totatLoanAmt = etTotalLoanAmount.getText()
-					.toString();
+		/*	final String totatLoanAmt = etTotalLoanAmount.getText()
+					.toString();*/
 			final String rateOfInterest = ettxrateInterest.getText()
 					.toString();
 			final String interestAmt = txInterestAmount.getText()
@@ -296,7 +296,7 @@ public class RegisterLoanFragment extends BaseFragment {
 					.toString();
 			Timber.d(
 					"Printing all values " + installmentAmt + "  " + loanAmt + "  " +
-							noOfInstallments + " " + totatLoanAmt + " " + rateOfInterest + " " +
+							noOfInstallments + " " + rateOfInterest + " " +
 							startDateStr + " " + endDateStr);
 			if (TextUtils.isEmpty(loanAmt)) {
 				ettxloan_amout.setError("Enter Loan Amount");
@@ -316,10 +316,7 @@ public class RegisterLoanFragment extends BaseFragment {
 
 			if (TextUtils.isEmpty(startDateStr)) { startDateTextView.setError("Start Date");}
 			if (TextUtils.isEmpty(endDateStr)) {endDateTextView.setError("End Date");}
-			if (TextUtils.isEmpty(totatLoanAmt)) {
-				etTotalLoanAmount.setError("Total Loan Amount");
-				return;
-			}
+
 
 
 			int accountNo = CommonUtils.getRandomInt();
@@ -531,7 +528,7 @@ public class RegisterLoanFragment extends BaseFragment {
 	}
 
 	private BigDecimal getAmtOfInstallment() {
-		final String totatLoanAmt = etTotalLoanAmount.getText()
+		final String totatLoanAmt = ettxloan_amout.getText()
 				.toString();
 
 		final long
@@ -549,17 +546,25 @@ public class RegisterLoanFragment extends BaseFragment {
 
 	}
 
-	@Deprecated
-	private void initializeAllViews(final View rootView) {
-		startDateTextView = rootView.findViewById(R.id.txStartDate);
-		endDateTextView = rootView.findViewById(R.id.txEndDate);
-		ettxloan_amout = rootView.findViewById(R.id.txloan_amout);
-		ettxrateInterest = rootView.findViewById(R.id.txrateInterest);
-		ettxInstallmentAmount = rootView.findViewById(R.id.txInstallmentAmount);
-		ettxNoofInstallment = rootView.findViewById(R.id.txNoofInstallment);
-		etTotalLoanAmount = rootView.findViewById(R.id.txTotalLoanAmount);
-		customerNameTextView = rootView.findViewById(R.id.reg_fullname_detaills);
+	private void setRateOfInterest() {
+		if (ettxrateInterest.getVisibility() == View.VISIBLE) {
+			ettxrateInterest.addTextChangedListener(
+					new TextValidator(ettxrateInterest) {
+						@Override
+						public void validate(TextView textView, String text) {
 
+							if (isNotValidAmt(text)) {
+								ettxrateInterest.setError("Valid valid Rate in %");
+							}
+							txInterestAmount.setText(calculateInterestAmt(BigDecimal.valueOf(
+									Double.valueOf(ettxloan_amout.getText().toString().trim())),
+									convertTime(calculateTotalDuration(),
+											durationConverter(LoanDurationType.MONTHLY)),
+									Double.valueOf(ettxrateInterest.getText()
+											.toString().trim())).toPlainString());
+						}
+					});
+		}
 
 	}
 
@@ -659,25 +664,17 @@ public class RegisterLoanFragment extends BaseFragment {
 				getFragmentManager(), msg, DIALOG_DATE);
 	}
 
-	private void setRateOfInterest() {
-		if (ettxrateInterest.getVisibility() == View.VISIBLE) {
-			ettxrateInterest.addTextChangedListener(
-					new TextValidator(ettxrateInterest) {
-						@Override
-						public void validate(TextView textView, String text) {
+	@Deprecated
+	private void initializeAllViews(final View rootView) {
+		startDateTextView = rootView.findViewById(R.id.txStartDate);
+		endDateTextView = rootView.findViewById(R.id.txEndDate);
+		ettxloan_amout = rootView.findViewById(R.id.txloan_amout);
+		ettxrateInterest = rootView.findViewById(R.id.txrateInterest);
+		ettxInstallmentAmount = rootView.findViewById(R.id.txInstallmentAmount);
+		ettxNoofInstallment = rootView.findViewById(R.id.txNoofInstallment);
+		//etTotalLoanAmount = rootView.findViewById(R.id.txTotalLoanAmount);
+		customerNameTextView = rootView.findViewById(R.id.reg_fullname_detaills);
 
-							if (isNotValidAmt(text)) {
-								ettxrateInterest.setError("Valid valid Rate in %");
-							}
-							txInterestAmount.setText(calculateInterestAmt(BigDecimal.valueOf(
-									Double.valueOf(etTotalLoanAmount.getText().toString().trim())),
-									convertTime(calculateTotalDuration(),
-											durationConverter(LoanDurationType.MONTHLY)),
-									Double.valueOf(ettxrateInterest.getText()
-											.toString().trim())).toPlainString());
-						}
-					});
-		}
 
 	}
 
