@@ -462,13 +462,13 @@ public class RegisterLoanFragment extends BaseFragment {
 
 							if (isNotValidAmt(text)) {
 								ettxrateInterest.setError("Valid valid Rate in %");
+							} else {
+								txInterestAmount.setText(getInterestAmt(BigDecimal.valueOf(
+										Double.valueOf(ettxloan_amout.getText().toString().trim
+												())))
+
+										.toPlainString());
 							}
-							txInterestAmount.setText(calculateInterestAmt(BigDecimal.valueOf(
-									Double.valueOf(ettxloan_amout.getText().toString().trim())),
-									convertTime(calculateTotalDuration(),
-											durationConverter(LoanDurationType.MONTHLY)),
-									Double.valueOf(ettxrateInterest.getText()
-											.toString().trim())).toPlainString());
 						}
 					});
 		}
