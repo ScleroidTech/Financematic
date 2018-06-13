@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -21,6 +22,7 @@ public class CircleCustomView extends View {
 	private Paint mCircleGray;
 
 	private float mRadius;
+	@NonNull
 	private RectF mArcBounds = new RectF();
 	//a big mistake, capital F was used, making it an object
 	private float drawUpto = 0;
@@ -73,7 +75,7 @@ public class CircleCustomView extends View {
 	}
 
 	@Override
-	protected void onDraw(Canvas canvas) {
+	protected void onDraw(@NonNull Canvas canvas) {
 		super.onDraw(canvas);
 		if (drawUpto == 0) { drawUpto = 50f; }
 		//drawUpto = 46f;

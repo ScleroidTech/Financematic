@@ -1,6 +1,7 @@
 package com.scleroid.financematic.di;
 
 import android.arch.lifecycle.ViewModel;
+import android.support.annotation.NonNull;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -15,5 +16,5 @@ import dagger.MapKey;
 @Retention(RetentionPolicy.RUNTIME)
 @MapKey
 @interface ViewModelKey {
-	Class<? extends ViewModel> value();
+	@NonNull Class<? extends ViewModel> value();
 }

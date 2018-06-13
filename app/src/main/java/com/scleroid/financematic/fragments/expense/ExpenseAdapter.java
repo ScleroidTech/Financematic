@@ -2,6 +2,7 @@ package com.scleroid.financematic.fragments.expense;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,26 +71,33 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
 
 	static class ViewHolder extends RecyclerView.ViewHolder {
 
+		@NonNull
 		static DateUtils dateUtils = new DateUtils();
+		@Nullable
 		@BindView(R.id.month_text_view)
 		TextView monthTextView;
+		@Nullable
 		@BindView(R.id.only_date_text_view)
 		TextView onlyDateTextView;
+		@Nullable
 		@BindView(R.id.day_text_view)
 		TextView dayTextView;
+		@Nullable
 		@BindView(R.id.expense_image)
 		ImageView expenseImage;
+		@Nullable
 		@BindView(R.id.expense_type_text_view)
 		TextView expenseTypeTextView;
+		@Nullable
 		@BindView(R.id.expense_amount_text_view)
 		RupeeTextView expenseAmount;
 
-		ViewHolder(View itemView) {
+		ViewHolder(@NonNull View itemView) {
 			super(itemView);
 			ButterKnife.bind(this, itemView);
 		}
 
-		void setData(Context context, Expense expense) {
+		void setData(@NonNull Context context, @NonNull Expense expense) {
 			BigDecimal expenseAmount = expense.getExpenseAmount();
 			if (expenseAmount == null) return;
 			this.expenseAmount.setText(expenseAmount.toPlainString());
@@ -102,7 +110,7 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
 
 		}
 
-		private void setExpenseType(String expenseType, Context context) {
+		private void setExpenseType(String expenseType, @NonNull Context context) {
 			int expenseTypeImageSrc;
 			int expenseColor;
 

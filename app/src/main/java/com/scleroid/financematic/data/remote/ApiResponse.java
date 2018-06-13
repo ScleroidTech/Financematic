@@ -84,6 +84,7 @@ public class ApiResponse<T> {
 		return code >= 200 && code < 300;
 	}
 
+	@Nullable
 	public Integer getNextPage() {
 		String next = links.get(NEXT_LINK);
 		if (next == null) {

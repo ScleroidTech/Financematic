@@ -1,5 +1,6 @@
 package com.scleroid.financematic.utils.ui;
 
+import android.support.annotation.NonNull;
 import android.widget.Filter;
 
 import com.annimon.stream.Collectors;
@@ -31,9 +32,10 @@ public class CustomFilter extends Filter {
 	}
 
 	//FILTERING OCURS
+	@NonNull
 	@DebugLog
 	@Override
-	protected FilterResults performFiltering(CharSequence constraint) {
+	protected FilterResults performFiltering(@NonNull CharSequence constraint) {
 		FilterResults results = new FilterResults();
 
 	/*	//CHECK CONSTRAINT VALIDITY
@@ -72,7 +74,7 @@ public class CustomFilter extends Filter {
 
 	@DebugLog
 	@Override
-	protected void publishResults(CharSequence constraint, FilterResults results) {
+	protected void publishResults(CharSequence constraint, @NonNull FilterResults results) {
 
 		adapter.setCustomerList((List<Customer>) results.values);
 

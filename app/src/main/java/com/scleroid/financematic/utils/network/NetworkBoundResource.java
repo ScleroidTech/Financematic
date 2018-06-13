@@ -56,7 +56,7 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
 		});
 	}
 
-	private void fetchFromNetwork(final LiveData<ResultType> dbSource) {
+	private void fetchFromNetwork(@NonNull final LiveData<ResultType> dbSource) {
 		LiveData<ApiResponse<RequestType>> apiResponse = createCall();
 		/*result.addSource(dbSource,
 				newData -> setValue(Resource.error("No data here", newData)));*/
@@ -104,8 +104,9 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
 	protected void onFetchFailed() {
 	}
 
+	@Nullable
 	@WorkerThread
-	protected RequestType processResponse(ApiResponse<RequestType> response) {
+	protected RequestType processResponse(@NonNull ApiResponse<RequestType> response) {
 		Timber.d(response.body + "");
 		return response.body;
 	}
@@ -124,6 +125,7 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
 	@MainThread
 	protected abstract LiveData<ResultType> loadFromDb();
 
+	@NonNull
 	public LiveData<Resource<ResultType>> asLiveData() {
 		return result;
 	}

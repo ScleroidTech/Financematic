@@ -2,6 +2,7 @@ package com.scleroid.financematic.data.remote.services.jobs.utils;
 
 import android.content.Context;
 import android.os.Build;
+import android.support.annotation.NonNull;
 
 import com.birbit.android.jobqueue.JobManager;
 import com.birbit.android.jobqueue.config.Configuration;
@@ -16,6 +17,7 @@ import timber.log.Timber;
 public class JobManagerFactory {
 
 	private static JobManager jobManager;
+	@NonNull
 	private static CustomLogger customLogger = new CustomLogger() {
 
 		@Override
@@ -24,17 +26,17 @@ public class JobManagerFactory {
 		}
 
 		@Override
-		public void d(String text, Object... args) {
+		public void d(@NonNull String text, Object... args) {
 			Timber.d(String.format(text, args));
 		}
 
 		@Override
-		public void e(Throwable t, String text, Object... args) {
+		public void e(Throwable t, @NonNull String text, Object... args) {
 			Timber.e(t, String.format(text, args));
 		}
 
 		@Override
-		public void e(String text, Object... args) {
+		public void e(@NonNull String text, Object... args) {
 			Timber.e(String.format(text, args));
 		}
 
@@ -48,7 +50,7 @@ public class JobManagerFactory {
 		return jobManager;
 	}
 
-	public static synchronized JobManager getJobManager(Context context) {
+	public static synchronized JobManager getJobManager(@NonNull Context context) {
 		if (jobManager == null) {
 			jobManager = configureJobManager(context);
 
@@ -56,7 +58,7 @@ public class JobManagerFactory {
 		return jobManager;
 	}
 
-	private static JobManager configureJobManager(Context context) {
+	private static JobManager configureJobManager(@NonNull Context context) {
 
 	 /*   DependencyInjector dependencyInjector = job -> {
 		    // this line depends on how your Dagger components are setup;

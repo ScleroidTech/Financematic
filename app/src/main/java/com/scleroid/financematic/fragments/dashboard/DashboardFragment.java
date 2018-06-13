@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -45,15 +46,20 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 
 	@Inject
 	TextViewUtils textViewUtils;
+	@Nullable
 	@BindView(R.id.total_amount_text_view)
 	RupeeTextView totalAmountTextView;
+	@Nullable
 	@BindView(R.id.remaining_amount_text_view)
 	RupeeTextView remainingAmountTextView;
+	@Nullable
 	@BindView(R.id.lent_amount_text_view)
 	RupeeTextView lentAmountTextView;
 
+	@Nullable
 	@BindView(R.id.upcoming_events_text_view)
 	TextView upcomingEventsTextView;
+	@Nullable
 	@BindView(R.id.recycler_view_dashboard)
 	RecyclerView recyclerViewDashboard;
 
@@ -65,35 +71,41 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 	@Inject
 	LocalLoanLab localLoanLab;
 
+	@Nullable
 	@BindView(R.id.total_amount_title_text_view)
 	TextView totalAmountTitleTextView;
 
+	@Nullable
 	@BindView(R.id.lent_amount_title_text_view)
 	TextView lentAmountTitleTextView;
 
 	private DashboardAdapter mAdapter;
 	private DashboardViewModel dashBoardViewModel;
+	@Nullable
+	@BindView(R.id.empty_card)
+	CardView emptyCard;
+	@Nullable
 	private List<Installment> installments = new ArrayList<>();
-	private List<Loan> loanList = new ArrayList<>();
 
 	public DashboardFragment() {
 		// Required empty public constructor
 	}
 
-	public static DashboardFragment newInstance(String param1, String param2) {
-		DashboardFragment fragment = new DashboardFragment();
-		Bundle args = new Bundle();
-		fragment.setArguments(args);
-		return fragment;
-	}
+	@Nullable
+	private List<Loan> loanList = new ArrayList<>();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 	}
 
-	@BindView(R.id.empty_card)
-	CardView emptyCard;
+	@NonNull
+	public static DashboardFragment newInstance(String param1, String param2) {
+		DashboardFragment fragment = new DashboardFragment();
+		Bundle args = new Bundle();
+		fragment.setArguments(args);
+		return fragment;
+	}
 
 	private void setTitle() {
 		activityUtils.setTitle((AppCompatActivity) getActivity(), "DashBoard");
@@ -188,7 +200,7 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 		});
 	}
 
-	private void updateView(final List<Installment> items) {
+	private void updateView(@Nullable final List<Installment> items) {
 		if (items == null || items.isEmpty()) {
 			emptyCard.setVisibility(View.VISIBLE);
 			recyclerViewDashboard.setVisibility(View.GONE);
@@ -213,7 +225,7 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 
 	}
 
-	private void sort(final List<Installment> transactions) {
+	private void sort(@Nullable final List<Installment> transactions) {
 		if (transactions == null) return;
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -231,14 +243,14 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 		return next.getLoan() == null || next.getLoan().getCustomer() == null;
 	}
 
-	private int calculateTotalAmt(final List<Loan> loans) {
+	private int calculateTotalAmt(@NonNull final List<Loan> loans) {
 		int sum = Stream.of(loans).mapToInt(loan ->
 				loan.getLoanAmt() != null ? loan.getLoanAmt().intValue() : 0).sum();
 		Timber.wtf("sum of Total Amt" + sum);
 		return sum;
 	}
 
-	private int calculateReceivedAmt(final List<Loan> loans) {
+	private int calculateReceivedAmt(@NonNull final List<Loan> loans) {
 
 		int sum = Stream.of(loans).withoutNulls().mapToInt(loan ->
 				loan.getReceivedAmt() != null ? loan.getReceivedAmt().intValue() : 0).sum();
@@ -249,7 +261,7 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 	@OnClick({R.id.total_amount_text_view, R.id.total_amount_title_text_view, R.id
 			.remaining_amount_text_view, R.id.lent_amount_text_view, R.id
 			.lent_amount_title_text_view, R.id.available_amount_title_text_view})
-	public void onViewClicked(View view) {
+	public void onViewClicked(@NonNull View view) {
 		switch (view.getId()) {
 			case R.id.total_amount_text_view:
 			case R.id.total_amount_title_text_view:

@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.Transformations;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.scleroid.financematic.data.local.AppDatabase;
 import com.scleroid.financematic.data.local.LocalDataSource;
@@ -167,6 +168,7 @@ public class LocalCustomerLab implements LocalDataSource<Customer> {
 		}).subscribeOn(Schedulers.io());
 	}
 
+	@Nullable
 	@Override
 	public Single<Customer> updateItem(final Customer customer) {
 		return null;

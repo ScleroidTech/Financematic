@@ -1,6 +1,7 @@
 package com.scleroid.financematic;
 
 import android.app.Application;
+import android.support.annotation.NonNull;
 
 import com.scleroid.financematic.di.AppComponent;
 import com.scleroid.financematic.di.AppInjector;
@@ -41,6 +42,7 @@ public class App extends DaggerApplication implements HasActivityInjector {
 		//JobManagerFactory.getJobManager(this);
 	}
 
+	@NonNull
 	@Override
 	protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
 		AppComponent appComponent = DaggerAppComponent

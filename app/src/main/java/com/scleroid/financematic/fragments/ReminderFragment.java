@@ -1,6 +1,7 @@
 package com.scleroid.financematic.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +34,7 @@ public class ReminderFragment extends Fragment {
 		// Required empty public constructor
 	}
 
+	@NonNull
 	public static ReminderFragment newInstance() {
 		ReminderFragment fragment = new ReminderFragment();
 		Bundle args = new Bundle();

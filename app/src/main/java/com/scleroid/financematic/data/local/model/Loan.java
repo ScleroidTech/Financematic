@@ -6,6 +6,7 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
+import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 import com.scleroid.financematic.utils.roomConverters.DateConverter;
@@ -109,6 +110,7 @@ public class Loan implements Serializable {
 	}
 
 
+	@NonNull
 	@Override
 	public String toString() {
 		return "Loan{" +

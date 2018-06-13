@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -70,6 +71,7 @@ public class MainActivity extends BaseActivity
 	private static final String TAG_PEOPLE = "People";
 	// index to identify current nav menu item
 	public static int navItemIndex = 0;
+	@NonNull
 	public static String CURRENT_TAG = TAG_DASHBOARD;
 
 	@Inject
@@ -136,7 +138,7 @@ public class MainActivity extends BaseActivity
 
 	private boolean mToolBarNavigationListenerIsRegistered = false;
 
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(@Nullable Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
 
@@ -235,6 +237,7 @@ public class MainActivity extends BaseActivity
 	/**
 	 * @return actionBar
 	 */
+	@Nullable
 	@Override
 	public ActionBar getActionBarBase() {
 		return getSupportActionBar();
@@ -283,36 +286,14 @@ public class MainActivity extends BaseActivity
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-
-		//noinspection SimplifiableIfStatement
-		if (id == R.id.action_create_new_loan) {
-
-			RegisterCustomerFragment fragment = new RegisterCustomerFragment();
-			loadFragmentRunnable(fragment, true);
-			return true;
-		}
-
-		// user is in notifications fragment
-		// and selected 'Mark all as Read'
-		if (id == R.id.action_notification) {
-			Notification fragment = new Notification();
-			/*CustomerFragment fragment = new CustomerFragment();*/
-			loadFragmentRunnable(fragment, true);
-		}
-
-		// user is in notifications fragment
-		// and selected 'Clear All'
-		if (id == R.id.action_settings) {
-			Toast.makeText(getApplicationContext(), "Clear all notifications!", Toast.LENGTH_LONG)
-					.show();
-		}
-
-		return super.onOptionsItemSelected(item);
+	public boolean onCreateOptionsMenu(@NonNull Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.activity_main, menu);
+		MenuItem create_new = menu.findItem(R.id.action_create_new_loan);
+		MenuItem notification = menu.findItem(R.id.action_notification);
+		tintMenuIcon(this, create_new, android.R.color.white);
+		tintMenuIcon(this, notification, android.R.color.white);
+		return true;
 	}
 
 	private void selectNavMenu() {
@@ -393,19 +374,41 @@ public class MainActivity extends BaseActivity
 		appExecutors.diskIO().execute(pendingRunnable);
 	}
 
-
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.activity_main, menu);
-		MenuItem create_new = menu.findItem(R.id.action_create_new_loan);
-		MenuItem notification = menu.findItem(R.id.action_notification);
-		tintMenuIcon(this, create_new, android.R.color.white);
-		tintMenuIcon(this, notification, android.R.color.white);
-		return true;
+	public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+
+		//noinspection SimplifiableIfStatement
+		if (id == R.id.action_create_new_loan) {
+
+			RegisterCustomerFragment fragment = new RegisterCustomerFragment();
+			loadFragmentRunnable(fragment, true);
+			return true;
+		}
+
+		// user is in notifications fragment
+		// and selected 'Mark all as Read'
+		if (id == R.id.action_notification) {
+			Notification fragment = new Notification();
+			/*CustomerFragment fragment = new CustomerFragment();*/
+			loadFragmentRunnable(fragment, true);
+		}
+
+		// user is in notifications fragment
+		// and selected 'Clear All'
+		if (id == R.id.action_settings) {
+			Toast.makeText(getApplicationContext(), "Clear all notifications!", Toast.LENGTH_LONG)
+					.show();
+		}
+
+		return super.onOptionsItemSelected(item);
 	}
 
-	public void tintMenuIcon(Context context, MenuItem item, @ColorRes int color) {
+	public void tintMenuIcon(@NonNull Context context, @Nullable MenuItem item,
+	                         @ColorRes int color) {
 		if (item == null) return;
 		Drawable normalDrawable = item.getIcon();
 		Drawable wrapDrawable = DrawableCompat.wrap(normalDrawable);
@@ -532,7 +535,7 @@ public class MainActivity extends BaseActivity
 	}
 
 	@Subscribe
-	public void onCallClick(Events.placeCall phoneNumberCarrier) {
+	public void onCallClick(@NonNull Events.placeCall phoneNumberCarrier) {
 
 		String mobileNumber = phoneNumberCarrier.getNumber();
 
@@ -542,7 +545,7 @@ public class MainActivity extends BaseActivity
 	}
 
 	@Subscribe
-	public void onAddressClick(Events.goToAddress addressCarrier) {
+	public void onAddressClick(@NonNull Events.goToAddress addressCarrier) {
 
 		String address = addressCarrier.getAddress();
 
@@ -553,14 +556,14 @@ public class MainActivity extends BaseActivity
 
 
 	@Subscribe
-	public void onCustomerFragmentOpen(Events.openCustomerFragment customerBundle) {
+	public void onCustomerFragmentOpen(@NonNull Events.openCustomerFragment customerBundle) {
 		int customerId = customerBundle.getCustomerId();
 		CustomerFragment fragment = CustomerFragment.newInstance(customerId);
 		activityUtils.loadFragment(fragment, getSupportFragmentManager());
 	}
 
 	@Subscribe
-	public void onDelayFragmentOpen(Events.openDelayFragment customerBundle) {
+	public void onDelayFragmentOpen(@NonNull Events.openDelayFragment customerBundle) {
 		int delayId = customerBundle.getInstallmentId();
 		int acNo = customerBundle.getLoanAccountNo();
 		DelayDialogFragment fragment = DelayDialogFragment.newInstance(delayId, acNo);
@@ -570,7 +573,8 @@ public class MainActivity extends BaseActivity
 	}
 
 	@Subscribe
-	public void onReceiveMoneyFragmentOpen(Events.openReceiveMoneyFragment customerBundle) {
+	public void onReceiveMoneyFragmentOpen(
+			@NonNull Events.openReceiveMoneyFragment customerBundle) {
 		int delayId = customerBundle.getInstallmentId();
 		int acNo = customerBundle.getAccountNo();
 		RegisterReceivedDialogFragment fragment =
@@ -583,7 +587,7 @@ public class MainActivity extends BaseActivity
 
 
 	@Subscribe
-	public void onLoanFragmentOpen(Events.openLoanDetailsFragment loanBundle) {
+	public void onLoanFragmentOpen(@NonNull Events.openLoanDetailsFragment loanBundle) {
 		int accountNo = loanBundle.getAccountNo();
 		LoanDetailsFragment fragment = LoanDetailsFragment.newInstance(accountNo);
 
@@ -593,7 +597,7 @@ public class MainActivity extends BaseActivity
 	}
 
 	@Subscribe
-	public void onShowToast(Events.showToast toastData) {
+	public void onShowToast(@NonNull Events.showToast toastData) {
 
 		String message = toastData.getMessage();
 		String type = toastData.getType();

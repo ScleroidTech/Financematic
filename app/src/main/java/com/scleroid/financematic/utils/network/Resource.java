@@ -54,7 +54,7 @@ public class Resource<T> {
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(@Nullable Object o) {
 		if (this == o) {
 			return true;
 		}
@@ -73,6 +73,7 @@ public class Resource<T> {
 		return data != null ? data.equals(resource.data) : resource.data == null;
 	}
 
+	@NonNull
 	@Override
 	public String toString() {
 		return "Resource{" +

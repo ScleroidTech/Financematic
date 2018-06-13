@@ -9,6 +9,7 @@ package com.scleroid.financematic.di;
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -26,7 +27,7 @@ public class AppInjector {
 	private AppInjector() {
 	}
 
-	public static void init(App githubApp) {
+	public static void init(@NonNull App githubApp) {
 		DaggerAppComponent.builder().application(githubApp)
 				.build().inject(githubApp);
 		githubApp

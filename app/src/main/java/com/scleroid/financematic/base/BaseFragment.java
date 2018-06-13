@@ -41,6 +41,7 @@ public abstract class BaseFragment<V extends BaseViewModel> extends Fragment {
 
 	@Inject
 	protected ViewModelProvider.Factory viewModelFactory;
+	@Nullable
 	private BaseActivity mActivity;
 	private Unbinder unbinder;
 	private View rootView;
@@ -171,6 +172,7 @@ public abstract class BaseFragment<V extends BaseViewModel> extends Fragment {
 		AndroidSupportInjection.inject(this);
 	}
 
+	@Nullable
 	public BaseActivity getBaseActivity() {
 		return mActivity;
 	}

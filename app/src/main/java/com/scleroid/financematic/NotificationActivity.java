@@ -1,6 +1,7 @@
 package com.scleroid.financematic;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,12 +24,13 @@ public class NotificationActivity extends Fragment {
         // Required empty public constructor
     }
 
+	@NonNull
 	public static NotificationActivity newInstance() {
-        NotificationActivity fragment = new NotificationActivity();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
+		NotificationActivity fragment = new NotificationActivity();
+		Bundle args = new Bundle();
+		fragment.setArguments(args);
+		return fragment;
+	}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

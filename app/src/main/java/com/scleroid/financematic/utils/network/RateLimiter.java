@@ -7,6 +7,7 @@ package com.scleroid.financematic.utils.network;
  */
 
 import android.os.SystemClock;
+import android.support.annotation.NonNull;
 import android.support.v4.util.ArrayMap;
 
 import java.util.concurrent.TimeUnit;
@@ -16,6 +17,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class RateLimiter<KEY> {
 	private final long timeout;
+	@NonNull
 	private ArrayMap<KEY, Long> timestamps = new ArrayMap<>();
 
 	public RateLimiter(int timeout, TimeUnit timeUnit) {

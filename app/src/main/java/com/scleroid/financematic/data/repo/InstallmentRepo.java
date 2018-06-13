@@ -51,6 +51,7 @@ public class InstallmentRepo implements Repo<Installment> {
 	private final WebService webService;
 	private final AppExecutors appExecutors;
 	private final RemoteInstallmentLab remoteInstallmentLab;
+	@NonNull
 	private RateLimiter<String> installmentListRateLimit = new RateLimiter<>(10, TimeUnit.MINUTES);
 
 	@Inject
@@ -105,6 +106,7 @@ public class InstallmentRepo implements Repo<Installment> {
 	@Override
 	public LiveData<Resource<List<Installment>>> loadItems() {
 		return new NetworkBoundResource<List<Installment>, List<Installment>>(appExecutors) {
+			@NonNull
 			String key = Math.random() + "";
 
 			@Override
@@ -165,24 +167,24 @@ public class InstallmentRepo implements Repo<Installment> {
 	}
 
 	@Override
-	public Completable saveItems(final List<Installment> items) {
+	public Completable saveItems(@NonNull final List<Installment> items) {
 		return localInstallmentsLab.addItems(items);
 	}
 
 	@Override
-	public Completable saveItem(final Installment installment) {
+	public Completable saveItem(@NonNull final Installment installment) {
 		return localInstallmentsLab.saveItem(installment)
 				.flatMapCompletable(remoteInstallmentLab::sync);
 	}
 
 	@Override
-	public Completable updateItem(final Installment installment) {
+	public Completable updateItem(@NonNull final Installment installment) {
 		return localInstallmentsLab.updateItem(installment)
 				.flatMapCompletable(remoteInstallmentLab::sync);
 	}
 
 	@Override
-	public Completable deleteItem(final Installment installment) {
+	public Completable deleteItem(@NonNull final Installment installment) {
 		return localInstallmentsLab.deleteItem(installment)
 				.flatMapCompletable(remoteInstallmentLab::delete);
 	}

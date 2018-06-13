@@ -54,6 +54,7 @@ public class LoanRepo implements Repo<Loan> {
 	private final WebService webService;
 	private final AppExecutors appExecutors;
 	private final RemoteLoanLab remoteLoanLab;
+	@NonNull
 	private RateLimiter<String> loanListRateLimit = new RateLimiter<>(10, TimeUnit.MINUTES);
 
 	@Inject
@@ -108,6 +109,7 @@ public class LoanRepo implements Repo<Loan> {
 	@Override
 	public LiveData<Resource<List<Loan>>> loadItems() {
 		return new NetworkBoundResource<List<Loan>, List<Loan>>(appExecutors) {
+			@NonNull
 			String key = Math.random() + "";
 
 			@Override
@@ -167,12 +169,12 @@ public class LoanRepo implements Repo<Loan> {
 	}
 
 	@Override
-	public Completable saveItems(final List<Loan> items) {
+	public Completable saveItems(@NonNull final List<Loan> items) {
 		return localLoanLab.addItems(items);
 	}
 
 	@Override
-	public Completable saveItem(final Loan loan) {
+	public Completable saveItem(@NonNull final Loan loan) {
 		return localLoanLab.saveItem(loan).flatMapCompletable(remoteLoanLab::sync);
 	}
 
@@ -182,7 +184,7 @@ public class LoanRepo implements Repo<Loan> {
 	}
 
 	@Override
-	public Completable deleteItem(final Loan loan) {
+	public Completable deleteItem(@NonNull final Loan loan) {
 		//TODO update for server deletion also
 		return localLoanLab.deleteItem(loan).flatMapCompletable(remoteLoanLab::sync);
 	}

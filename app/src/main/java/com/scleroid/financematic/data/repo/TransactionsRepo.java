@@ -53,6 +53,7 @@ public class TransactionsRepo implements Repo<TransactionModel> {
 
 	private final RemoteTransactionLab remoteTransactionLab;
 	private final AppExecutors appExecutors;
+	@NonNull
 	private RateLimiter<String> transactionListRateLimit = new RateLimiter<>(10, TimeUnit.MINUTES);
 
 	@Inject
@@ -105,6 +106,7 @@ public class TransactionsRepo implements Repo<TransactionModel> {
 	public LiveData<Resource<List<TransactionModel>>> loadItems() {
 		return new NetworkBoundResource<List<TransactionModel>, List<TransactionModel>>(
 				appExecutors) {
+			@NonNull
 			String key = Math.random() + "";
 
 			@Override
@@ -166,12 +168,12 @@ public class TransactionsRepo implements Repo<TransactionModel> {
 	}
 
 	@Override
-	public Completable saveItems(final List<TransactionModel> items) {
+	public Completable saveItems(@NonNull final List<TransactionModel> items) {
 		return localTransactionsLab.addItems(items);
 	}
 
 	@Override
-	public Completable saveItem(final TransactionModel transactionModel) {
+	public Completable saveItem(@NonNull final TransactionModel transactionModel) {
 		return localTransactionsLab.saveItem(transactionModel)
 				.flatMapCompletable(remoteTransactionLab::sync);
 	}
@@ -183,7 +185,7 @@ public class TransactionsRepo implements Repo<TransactionModel> {
 	}
 
 	@Override
-	public Completable deleteItem(final TransactionModel transactionModel) {
+	public Completable deleteItem(@NonNull final TransactionModel transactionModel) {
 		//TODO update to server
 		return localTransactionsLab.deleteItem(transactionModel)
 				.flatMapCompletable(remoteTransactionLab::delete);

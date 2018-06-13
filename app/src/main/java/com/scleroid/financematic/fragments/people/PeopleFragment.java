@@ -3,6 +3,8 @@ package com.scleroid.financematic.fragments.people;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -41,32 +43,33 @@ public class PeopleFragment extends BaseFragment {
 
 
 	TextView firstFragment;
+	@Nullable
 	@BindView(R.id.simpleSearchView)
 	SearchView simpleSearchView;
+	@Nullable
 	@BindView(R.id.people_recycler_view)
 	RecyclerView peopleRecyclerView;
 
 
+	@Nullable
 	@BindView(R.id.no_address_title)
 	TextView noAddressTitle;
+	@Nullable
 	@BindView(R.id.no_address_subtitle)
 	TextView noAddressSubtitle;
-
+	@Nullable
+	@BindView(R.id.empty_card)
+	CardView emptyCard;
+	@Nullable
 	private List<Customer> customers = new ArrayList<>();
-
-	private PeopleAdapter mAdapter;
 	private PeopleViewModel peopleViewModel;
 
 	public PeopleFragment() {
 		// Required empty public constructor
 	}
 
-	public static PeopleFragment newInstance(String param1, String param2) {
-		PeopleFragment fragment = new PeopleFragment();
-		Bundle args = new Bundle();
-		fragment.setArguments(args);
-		return fragment;
-	}
+	@Nullable
+	private PeopleAdapter mAdapter;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -134,8 +137,13 @@ public class PeopleFragment extends BaseFragment {
 		return R.layout.fragment_people;
 	}
 
-	@BindView(R.id.empty_card)
-	CardView emptyCard;
+	@NonNull
+	public static PeopleFragment newInstance(String param1, String param2) {
+		PeopleFragment fragment = new PeopleFragment();
+		Bundle args = new Bundle();
+		fragment.setArguments(args);
+		return fragment;
+	}
 
 	@Override
 	protected void subscribeToLiveData() {
@@ -151,7 +159,7 @@ public class PeopleFragment extends BaseFragment {
 		super.onDestroyView();
 	}
 
-	private void sort(final List<Customer> transactions) {
+	private void sort(@NonNull final List<Customer> transactions) {
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 			transactions.removeIf(
@@ -187,7 +195,7 @@ public class PeopleFragment extends BaseFragment {
 		return peopleViewModel;
 	}
 
-	private void updateView(final Resource<List<Customer>> items) {
+	private void updateView(@Nullable final Resource<List<Customer>> items) {
 		emptyCard.setVisibility(View.VISIBLE);
 		peopleRecyclerView.setVisibility(View.GONE);
 

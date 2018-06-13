@@ -2,6 +2,7 @@ package com.scleroid.financematic.di;
 
 
 import android.app.Application;
+import android.support.annotation.NonNull;
 
 import com.scleroid.financematic.App;
 
@@ -52,6 +53,7 @@ public interface AppComponent extends AndroidInjector<DaggerApplication> {
 		@BindsInstance
 		AppComponent.Builder application(Application application);
 
+		@NonNull
 		AppComponent build();
 	}
 }

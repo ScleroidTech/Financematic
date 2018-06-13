@@ -2,6 +2,7 @@ package com.scleroid.financematic.fragments.loanDetails;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.support.annotation.Nullable;
 
 import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.local.model.Installment;
@@ -85,11 +86,13 @@ public class LoanDetailsViewModel extends BaseViewModel<TransactionModel> implem
 	}
 
 
+	@Nullable
 	@Override
 	protected LiveData<Resource<List<TransactionModel>>> updateItemLiveData() {
 		return null;
 	}
 
+	@Nullable
 	@Override
 	protected LiveData<Resource<List<TransactionModel>>> getItemList() {
 		return null;

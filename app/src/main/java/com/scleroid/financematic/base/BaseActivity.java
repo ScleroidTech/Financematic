@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -95,7 +96,7 @@ public abstract class BaseActivity
 	}
 
 	@TargetApi(Build.VERSION_CODES.M)
-	public boolean hasPermission(String permission) {
+	public boolean hasPermission(@NonNull String permission) {
 		return Build.VERSION.SDK_INT < Build.VERSION_CODES.M ||
 				checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
 	}
@@ -116,7 +117,7 @@ public abstract class BaseActivity
 	}
 
 	@TargetApi(Build.VERSION_CODES.M)
-	public void requestPermissionsSafely(String[] permissions, int requestCode) {
+	public void requestPermissionsSafely(@NonNull String[] permissions, int requestCode) {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 			requestPermissions(permissions, requestCode);
 		}

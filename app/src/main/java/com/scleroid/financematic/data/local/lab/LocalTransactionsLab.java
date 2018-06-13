@@ -2,6 +2,7 @@ package com.scleroid.financematic.data.local.lab;
 
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.scleroid.financematic.data.local.AppDatabase;
 import com.scleroid.financematic.data.local.LocalDataSource;
@@ -146,6 +147,7 @@ public class LocalTransactionsLab implements LocalDataSource<TransactionModel> {
 		}).subscribeOn(Schedulers.io());
 	}
 
+	@Nullable
 	@Override
 	public Single<TransactionModel> updateItem(final TransactionModel transactionModel) {
 		return null;

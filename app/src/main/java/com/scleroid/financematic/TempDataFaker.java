@@ -1,5 +1,7 @@
 package com.scleroid.financematic;
 
+import android.support.annotation.NonNull;
+
 import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.local.model.Expense;
 import com.scleroid.financematic.data.local.model.ExpenseCategory;
@@ -27,7 +29,7 @@ public class TempDataFaker {
 	public TempDataFaker() { }
 
 	@DebugLog
-	void populateData(Faker faker) {
+	void populateData(@NonNull Faker faker) {
 		customers = new ArrayList<Customer>();
 		loans = new ArrayList<Loan>();
 		installments = new ArrayList<Installment>();
@@ -62,7 +64,8 @@ public class TempDataFaker {
 
 	}
 
-	Customer createCustomerData(Faker faker, int customerId) {
+	@NonNull
+	Customer createCustomerData(@NonNull Faker faker, int customerId) {
 
 		return new Customer(
 				customerId,
@@ -76,25 +79,24 @@ public class TempDataFaker {
 		);
 	}
 
-	Loan createLoanData(Faker faker, int customerId, int accountNo) {
+	private Loan createLoanData(Faker faker, int customerId, int accountNo) {
 
 		return new Loan(accountNo,
 				faker.commerce.price(5000, 1000000),
 				faker.date.backward(),
 				faker.date.forward(),
-				faker.commerce.price(50, 1000),
+				faker.commerce.price(5, 10000),
 				faker.commerce.price(0, 2000),
 				faker.number.between(1, 20),
 				LoanDurationType.MONTHLY,
 				faker.commerce.price(6000, 1100000),
-
 				customerId,
 				faker.commerce.price(6000, 100000)
 
 		);
 	}
 
-	TransactionModel createTransactionData(Faker faker, int accountNo) {
+	private TransactionModel createTransactionData(Faker faker, int accountNo) {
 
 		return new TransactionModel(
 				faker.number.positive(100000, 999999),
@@ -108,7 +110,7 @@ public class TempDataFaker {
 		);
 	}
 
-	Installment createInstallmentData(Faker faker, int accountNo) {
+	private Installment createInstallmentData(Faker faker, int accountNo) {
 
 		return new Installment(
 				faker.number.positive(100000, 999999),
@@ -118,7 +120,7 @@ public class TempDataFaker {
 		);
 	}
 
-	Expense createExpenseData(Faker faker) {
+	private Expense createExpenseData(Faker faker) {
 
 		return new Expense(
 				faker.commerce.price(),
@@ -128,7 +130,7 @@ public class TempDataFaker {
 	}
 
 	@DebugLog
-	void saveInDatabase(MainActivity mainActivity) {
+	void saveInDatabase(@NonNull MainActivity mainActivity) {
 		mainActivity.getCustomerRepo().saveItems(customers).subscribe(() -> {
 			// handle completion
 			Timber.d("Items Saved");

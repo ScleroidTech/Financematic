@@ -23,6 +23,7 @@ import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.util.Patterns;
 import android.widget.Toast;
 
@@ -54,11 +55,11 @@ public final class CommonUtils {
 		return new SimpleDateFormat(AppConstants.TIMESTAMP_FORMAT, Locale.US).format(new Date());
 	}
 
-	public static boolean isEmailValid(String email) {
+	public static boolean isEmailValid(@NonNull String email) {
 		return Patterns.EMAIL_ADDRESS.matcher(email).matches();
 	}
 
-	public static String loadJSONFromAsset(Context context, String jsonFileName) throws
+	public static String loadJSONFromAsset(Context context, @NonNull String jsonFileName) throws
 			IOException {
 		AssetManager manager = context.getAssets();
 		InputStream is = manager.open(jsonFileName);
@@ -71,6 +72,7 @@ public final class CommonUtils {
 		return new String(buffer, "UTF-8");
 	}
 
+	@NonNull
 	public static ProgressDialog showLoadingDialog(Context context) {
 		ProgressDialog progressDialog = new ProgressDialog(context);
 		progressDialog.show();
@@ -84,7 +86,8 @@ public final class CommonUtils {
 		return progressDialog;
 	}
 
-	public static void makeToast(final String message, final String type, Context context) {
+	public static void makeToast(@NonNull final String message, final String type,
+	                             @NonNull Context context) {
 		Toast toast = Toasty.info(context, "Nothing is Happening, We're just having fun here");
 		if ("error".equals(type)) {toast = Toasty.error(context, message);}
 //TODO Add Other types of toasts here.

@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -49,44 +50,63 @@ import butterknife.OnClick;
 public class
 ExpenseFragment extends BaseFragment {
 	private static final String DIALOG_EXPENSE_ADD = "add_new_expense";
+	@Nullable
 	@BindView(R.id.expense_recycler)
 	RecyclerView expenseRecyclerView;
+	@Nullable
 	@BindView(R.id.room_rent_amt_text_view)
 	RupeeTextView roomRentAmtTextView;
+	@Nullable
 	@BindView(R.id.light_bill_text_view)
 	RupeeTextView lightBillTextView;
+	@Nullable
 	@BindView(R.id.phone_bill_text_view)
 	RupeeTextView phoneBillTextView;
+	@Nullable
 	@BindView(R.id.salary_text_view)
 	RupeeTextView salaryTextView;
+	@Nullable
 	@BindView(R.id.fuel_text_view)
 	RupeeTextView fuelTextView;
+	@Nullable
 	@BindView(R.id.other_text_view)
 	RupeeTextView otherTextView;
+	@Nullable
 	@BindView(R.id.room_rent_card)
 	LinearLayout roomRentCard;
+	@Nullable
 	@BindView(R.id.light_bill_card)
 	LinearLayout lightBillCard;
+	@Nullable
 	@BindView(R.id.phone_bill_card)
 	LinearLayout phoneBillCard;
+	@Nullable
 	@BindView(R.id.salary_card)
 	LinearLayout salaryCard;
+	@Nullable
 	@BindView(R.id.fuel_card)
 	LinearLayout fuelCard;
+	@Nullable
 	@BindView(R.id.other_card)
 	LinearLayout otherCard;
+	@Nullable
 	@BindView(R.id.pie_chart_expense)
 	PieChart mChart;
+	@Nullable
 	@BindView(R.id.total_expense_text_view)
 	RupeeTextView totalExpenseTextView;
+	@Nullable
 	@BindView(R.id.add_exp_call_button)
 	Button addExpCallButton;
+	@Nullable
 	@BindView(R.id.empty_card)
 	CardView emptyCard;
 	@Inject
 	ActivityUtils activityUtils;
 	Button firstFragment;
+	@Nullable
 	private List<Expense> expenseList = new ArrayList<>();
+	@Nullable
 	private ExpenseAdapter mAdapter;
 	private ExpenseViewModel expenseViewModel;
 	private int totalRoomRentAmt;
@@ -101,6 +121,7 @@ ExpenseFragment extends BaseFragment {
 		// Required empty public constructor
 	}
 
+	@NonNull
 	public static ExpenseFragment newInstance(String param1, String param2) {
 		ExpenseFragment fragment = new ExpenseFragment();
 		Bundle args = new Bundle();
@@ -213,7 +234,7 @@ ExpenseFragment extends BaseFragment {
 	}
 */
 
-	private void updateView(final List<Expense> items) {
+	private void updateView(@Nullable final List<Expense> items) {
 		if (items == null || items.isEmpty()) {
 			emptyCard.setVisibility(View.VISIBLE);
 			expenseRecyclerView.setVisibility(View.GONE);
@@ -228,7 +249,7 @@ ExpenseFragment extends BaseFragment {
 		}
 	}
 
-	private void updateUi(final List<Expense> items) {
+	private void updateUi(@NonNull final List<Expense> items) {
 
 
 		totalLoan = getTotalLoan(items);
@@ -404,7 +425,7 @@ ExpenseFragment extends BaseFragment {
 		mAdapter.notifyDataSetChanged();
 	}
 
-	private void sort(final List<Expense> transactions) {
+	private void sort(@NonNull final List<Expense> transactions) {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 			transactions.sort(Comparator.comparing(Expense::getExpenseDate));
 		} else {
@@ -415,7 +436,7 @@ ExpenseFragment extends BaseFragment {
 
 	@OnClick({R.id.room_rent_card, R.id.light_bill_card, R.id.phone_bill_card, R.id.salary_card, R
 			.id.fuel_card, R.id.other_card})
-	public void onViewClicked(View view) {
+	public void onViewClicked(@NonNull View view) {
 
 		switch (view.getId()) {
 			case R.id.room_rent_card:

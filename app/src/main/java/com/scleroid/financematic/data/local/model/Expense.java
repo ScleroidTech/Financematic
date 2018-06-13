@@ -4,6 +4,7 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
+import android.support.annotation.NonNull;
 
 import com.scleroid.financematic.utils.roomConverters.DateConverter;
 import com.scleroid.financematic.utils.roomConverters.MoneyConverter;
@@ -30,6 +31,7 @@ public class Expense implements Serializable {
 
 	}
 
+	@NonNull
 	@Override
 	public String toString() {
 		return "Expense{" +

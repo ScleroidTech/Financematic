@@ -55,6 +55,7 @@ public class ExpenseRepo implements Repo<Expense> {
 	private final AppExecutors appExecutors;
 	private final RemoteExpenseLab remoteExpenseLab;
 
+	@NonNull
 	private RateLimiter<String> expenseListRateLimit = new RateLimiter<>(10, TimeUnit.MINUTES);
 
 	@Inject
@@ -71,6 +72,7 @@ public class ExpenseRepo implements Repo<Expense> {
 	@Override
 	public LiveData<Resource<List<Expense>>> loadItems() {
 		return new NetworkBoundResource<List<Expense>, List<Expense>>(appExecutors) {
+			@NonNull
 			String key = Math.random() + "";
 
 			@Override
@@ -133,12 +135,12 @@ public class ExpenseRepo implements Repo<Expense> {
 	}
 
 	@Override
-	public Completable saveItems(final List<Expense> items) {
+	public Completable saveItems(@NonNull final List<Expense> items) {
 		return localExpenseLab.addItems(items);
 	}
 
 	@Override
-	public Completable saveItem(final Expense expense) {
+	public Completable saveItem(@NonNull final Expense expense) {
 		return localExpenseLab.saveItem(expense).flatMapCompletable(remoteExpenseLab::sync);
 	}
 
@@ -148,7 +150,7 @@ public class ExpenseRepo implements Repo<Expense> {
 	}
 
 	@Override
-	public Completable deleteItem(final Expense expense) {
+	public Completable deleteItem(@NonNull final Expense expense) {
 		//TODO update for server side also
 		return localExpenseLab.deleteItem(expense).flatMapCompletable(remoteExpenseLab::delete);
 	}

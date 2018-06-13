@@ -31,6 +31,7 @@ public class DatePickerDialogFragment extends BaseDialog {
 	private DatePicker mDatePicker;
 
 
+	@NonNull
 	public static DatePickerDialogFragment newInstance(Date date) {
 		Bundle bundle = new Bundle();
 		bundle.putSerializable(ARG_DATE, date);
@@ -42,6 +43,7 @@ public class DatePickerDialogFragment extends BaseDialog {
 
 	}
 
+	@NonNull
 	public static DatePickerDialogFragment newInstance() {
 		Bundle bundle = new Bundle();
 		//  bundle.putSerializable(ARG_DATE, date);

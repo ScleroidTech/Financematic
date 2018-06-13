@@ -2,6 +2,7 @@ package com.scleroid.financematic.fragments.report;
 
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -143,6 +144,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
 
 
 	public class MyViewHolder extends RecyclerView.ViewHolder {
+		@NonNull
 		DateUtils dateUtils = new DateUtils();
 
 		ReportFilterType filterType = ReportFilterType.ALL_TRANSACTIONS;
@@ -168,20 +170,25 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
 			return filterType;
 		}
 		/* for selected row and change color        implements View.OnClickListener*/
+		@Nullable
 		@BindView(R.id.acc_no_text_view)
 		TextView accNoTextView;
+		@Nullable
 		@BindView(R.id.transactionDate)
 		TextView transactionDate;
+		@Nullable
 		@BindView(R.id.lentAmt)
 		TextView reportLent;
+		@Nullable
 		@BindView(R.id.earnedAmt)
 		TextView reportEarned;
+		@Nullable
 		@BindView(R.id.receivedAmt)
 		TextView receivedAmt;
 		//private SparseBooleanArray selectedItems = new SparseBooleanArray();
 		private TransactionModel report;
 
-		public MyViewHolder(View view) {
+		public MyViewHolder(@NonNull View view) {
 			super(view);
 			/* view.setOnClickListener(this);*/
 			ButterKnife.bind(this, view);

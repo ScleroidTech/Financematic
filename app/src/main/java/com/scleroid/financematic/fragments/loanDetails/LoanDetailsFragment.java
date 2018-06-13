@@ -3,6 +3,8 @@ package com.scleroid.financematic.fragments.loanDetails;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -47,31 +49,42 @@ public class LoanDetailsFragment extends BaseFragment {
 	@Inject
 	TextViewUtils textViewUtils;
 
+	@Nullable
 	@BindView(R.id.total_amount_text_view)
 	RupeeTextView totalAmountTextView;
+	@Nullable
 	@BindView(R.id.duration_text_view)
 	TextView durationTextView;
 
 
+	@Nullable
 	@BindView(R.id.pesonal_summery_details_recycler)
 	RecyclerView pesonalSummeryDetailsRecycler;
 
+	@Nullable
 	@BindView(R.id.interest_text_view)
 	RupeeTextView interestTextView;
 
+	@Nullable
 	@BindView(R.id.card_loan)
 	View cardLoan;
 
+	@Nullable
 	@BindView(R.id.empty_card)
 	CardView emptyCard;
+	@Nullable
 	private List<TransactionModel> transactionList = new ArrayList<>();
 	private RecyclerView recyclerView;
+	@Nullable
 	private LoanAdapter mAdapter;
+	@NonNull
 	private ActivityUtils activityUtils = new ActivityUtils();
 	private int accountNo;
 	private LoanDetailsViewModel loanViewModel;
+	@Nullable
 	private Loan theLoan;
 	private CardHolder cardHolder;
+	@Nullable
 	private List<Installment> installmentList = new ArrayList<>();
 
 
@@ -79,6 +92,7 @@ public class LoanDetailsFragment extends BaseFragment {
 		// Required empty public constructor
 	}
 
+	@NonNull
 	public static LoanDetailsFragment newInstance(int accountNo) {
 		LoanDetailsFragment fragment = new LoanDetailsFragment();
 		Bundle args = new Bundle();
@@ -175,7 +189,8 @@ public class LoanDetailsFragment extends BaseFragment {
 		});
 	}
 
-	private void updateView(final List<Installment> items, List<TransactionModel>
+	private void updateView(@Nullable final List<Installment> items,
+	                        @Nullable List<TransactionModel>
 			transactionList) {
 
 		if ((items == null || transactionList == null)) {
@@ -197,7 +212,7 @@ public class LoanDetailsFragment extends BaseFragment {
 
 	}
 
-	private void sortReverse(final List<TransactionModel> transactions) {
+	private void sortReverse(@NonNull final List<TransactionModel> transactions) {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 			transactions.sort(
 					Comparator.comparing(TransactionModel::getTransactionDate).reversed());
@@ -207,7 +222,7 @@ public class LoanDetailsFragment extends BaseFragment {
 		}
 	}
 
-	private void sort(final List<Installment> transactions) {
+	private void sort(@NonNull final List<Installment> transactions) {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 			transactions.sort(Comparator.comparing(Installment::getInstallmentDate));
 		} else {
@@ -256,8 +271,10 @@ public class LoanDetailsFragment extends BaseFragment {
 
 	static class CardHolder {
 
+		@Nullable
 		@BindView(R.id.paid_amount_text_view)
 		RupeeTextView paidAmountTextView;
+		@Nullable
 		@BindView(R.id.installment_text_view)
 		RupeeTextView installmentTextView;
 	}

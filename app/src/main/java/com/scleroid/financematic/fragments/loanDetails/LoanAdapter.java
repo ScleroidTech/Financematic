@@ -1,5 +1,7 @@
 package com.scleroid.financematic.fragments.loanDetails;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,6 +55,7 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> 
 		notifyDataSetChanged();
 	}
 
+	@NonNull
 	@Override
 	public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		View itemView = LayoutInflater.from(parent.getContext())
@@ -88,35 +91,44 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> 
 	}
 
 	public static class MyViewHolder extends RecyclerView.ViewHolder {
+		@NonNull
 		static DateUtils dateUtils = new DateUtils();
+		@NonNull
 		static TextViewUtils textViewUtils = new TextViewUtils();
+		@NonNull
 		static ActivityUtils activityUtils = new ActivityUtils();
 		//	static CurrencyStringUtils currencyStringUtils = new CurrencyStringUtils();
+		@Nullable
 		@BindView(R.id.month_text_view)
 		TextView monthTextView;
+		@Nullable
 		@BindView(R.id.only_date_text_view)
 		TextView onlyDateTextView;
+		@Nullable
 		@BindView(R.id.day_text_view)
 		TextView dayTextView;
 
 		/*  @BindView(R.id.year_text_view)
 		  TextView yearTextView;*/
+		@Nullable
 		@BindView(R.id.summery_description)
 		TextView summeryDescpription;
+		@Nullable
 		@BindView(R.id.summery_amount)
 		RupeeTextView summeryAmount;
+		@Nullable
 		@BindView(R.id.Btn_paid_rx_summery)
 		Button BtnPaidRxSummery;
 		private Installment installment;
 
-		public MyViewHolder(View view) {
+		public MyViewHolder(@NonNull View view) {
 			super(view);
 			ButterKnife.bind(this, view);
 
 
 		}
 
-		public void setData(TransactionModel passbook) {
+		public void setData(@NonNull TransactionModel passbook) {
 			//  holder.summery_date.setText(passbook.getSummery_date());
 			itemView.setTag(passbook);
 			summeryDescpription.setText(passbook.getDescription());
@@ -139,7 +151,7 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> 
 			//    yearTextView.setText(year);
 		}
 
-		private void setInstallment(final Installment passbook) {
+		private void setInstallment(@NonNull final Installment passbook) {
 			BtnPaidRxSummery.setBackgroundResource(R.drawable.button_rounded_red);
 			BtnPaidRxSummery.setText("Pay");
 			installment = passbook;

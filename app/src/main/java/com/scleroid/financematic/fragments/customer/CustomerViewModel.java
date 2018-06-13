@@ -2,6 +2,7 @@ package com.scleroid.financematic.fragments.customer;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.support.annotation.Nullable;
 
 import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.local.model.Customer;
@@ -68,11 +69,13 @@ public class CustomerViewModel extends BaseViewModel
 		this.currentCustomerId = currentCustomerId;
 	}
 
+	@Nullable
 	@Override
 	protected LiveData<Resource<List>> updateItemLiveData() {
 		return null;
 	}
 
+	@Nullable
 	@Override
 	protected LiveData<Resource<List>> getItemList() {
 		return null;

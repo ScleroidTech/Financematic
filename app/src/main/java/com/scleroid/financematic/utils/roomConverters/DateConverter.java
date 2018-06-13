@@ -1,6 +1,7 @@
 package com.scleroid.financematic.utils.roomConverters;
 
 import android.arch.persistence.room.TypeConverter;
+import android.support.annotation.Nullable;
 
 import java.util.Date;
 
@@ -10,13 +11,15 @@ import java.util.Date;
 
 public class DateConverter {
 
+	@Nullable
 	@TypeConverter
-	public static Date toDate(Long timestamp) {
+	public static Date toDate(@Nullable Long timestamp) {
 		return timestamp == null ? null : new Date(timestamp);
 	}
 
+	@Nullable
 	@TypeConverter
-	public static Long toTimestamp(Date date) {
+	public static Long toTimestamp(@Nullable Date date) {
 		return date == null ? null : date.getTime();
 	}
 }

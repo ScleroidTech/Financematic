@@ -54,6 +54,7 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 	private static final String INSTALLMENT_ID = "installment_id";
 	private static final String ACCOUNT_NO = "account_no";
 	Calendar myCalendar = Calendar.getInstance();
+	@NonNull
 	String[] country = {"Received on Time", "Delayed payment", "Less amount", "Other"};
 	@Inject
 	InstallmentRepo installmentRepo;
@@ -75,6 +76,7 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 		// Required empty public constructor
 	}
 
+	@NonNull
 	public static RegisterReceivedDialogFragment newInstance(int accountNo, int installmentId) {
 		RegisterReceivedDialogFragment fragment = new RegisterReceivedDialogFragment();
 		Bundle args = new Bundle();
@@ -222,7 +224,7 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 						throwable -> Timber.d("Not gonna show up " + throwable.getMessage()));
 	}
 
-	private void updateTitle(final MaterialStyledDialog.Builder builder) {
+	private void updateTitle(@NonNull final MaterialStyledDialog.Builder builder) {
 		loanRepo.getLocalLoanLab()
 				.getRxItem(accountNo)
 				.subscribeOn(Schedulers.io())
@@ -254,7 +256,8 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 				accountNo);
 	}
 
-	private void updateLoan(final Installment expense, final TransactionModel transaction) {
+	private void updateLoan(@NonNull final Installment expense,
+	                        @NonNull final TransactionModel transaction) {
 		loanRepo.updateItem(loan)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(() -> {
@@ -267,8 +270,8 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 	}
 
 	@NonNull
-	private Disposable saveTransaction(final Installment expense,
-	                                   final TransactionModel transaction) {
+	private Disposable saveTransaction(@NonNull final Installment expense,
+	                                   @NonNull final TransactionModel transaction) {
 		return transactionsRepo.saveItem(transaction).observeOn(AndroidSchedulers
 				.mainThread())
 				.subscribe(() -> {
@@ -284,7 +287,8 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 				});
 	}
 
-	private void deleteInstallment(final Installment expense, final TransactionModel transaction) {
+	private void deleteInstallment(final Installment expense,
+	                               @NonNull final TransactionModel transaction) {
 		if (expense.getExpectedAmt().equals(currentInstallment.getExpectedAmt()))
 			installmentRepo.deleteItem(expense)
 					.observeOn(
@@ -346,7 +350,7 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 		}
 	}
 
-	private boolean isValidEmail(String email) {
+	private boolean isValidEmail(@NonNull String email) {
 		String EMAIL_PATTERN = "^[0-9_.]*$";
 
 		Pattern pattern = Pattern.compile(EMAIL_PATTERN);

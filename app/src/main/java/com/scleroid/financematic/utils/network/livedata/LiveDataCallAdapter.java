@@ -37,9 +37,11 @@ public class LiveDataCallAdapter<R> implements CallAdapter<R, LiveData<ApiRespon
 		return responseType;
 	}
 
+	@NonNull
 	@Override
 	public LiveData<ApiResponse<R>> adapt(@NonNull Call<R> call) {
 		return new LiveData<ApiResponse<R>>() {
+			@NonNull
 			AtomicBoolean started = new AtomicBoolean(false);
 
 			@Override

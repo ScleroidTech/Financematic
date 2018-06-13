@@ -47,6 +47,7 @@ public class InsertExpenseDialogFragment extends BaseDialog {
 	@Inject
 	ExpenseRepo expenseRepo;
 	Calendar myCalendar = Calendar.getInstance();
+	@NonNull
 	String[] country =
 			{ExpenseCategory.ROOM_RENT, ExpenseCategory.LIGHT_BILL, ExpenseCategory.PHONE_BILL,
 					ExpenseCategory.PAID_SALARIES, ExpenseCategory.FUEL, ExpenseCategory.OTHER};
@@ -60,6 +61,7 @@ public class InsertExpenseDialogFragment extends BaseDialog {
 		// Required empty public constructor
 	}
 
+	@NonNull
 	public static InsertExpenseDialogFragment newInstance() {
 		InsertExpenseDialogFragment fragment = new InsertExpenseDialogFragment();
 		Bundle args = new Bundle();
@@ -178,7 +180,7 @@ public class InsertExpenseDialogFragment extends BaseDialog {
 	}
 
 
-	private boolean isValidEmail(String email) {
+	private boolean isValidEmail(@NonNull String email) {
 		String EMAIL_PATTERN = "^[0-9]*$";
 
 		Pattern pattern = Pattern.compile(EMAIL_PATTERN);

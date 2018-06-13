@@ -8,6 +8,7 @@ package com.scleroid.financematic.utils;
 
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
+import android.support.annotation.NonNull;
 
 import com.scleroid.financematic.data.repo.CustomerRepo;
 import com.scleroid.financematic.data.repo.ExpenseRepo;
@@ -54,6 +55,7 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
 	}
 
 
+	@NonNull
 	@Override
 	public <T extends ViewModel> T create(Class<T> modelClass) {
 		if (modelClass.isAssignableFrom(CustomerViewModel.class)) {

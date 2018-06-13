@@ -3,6 +3,7 @@ package com.scleroid.financematic.utils.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -21,7 +22,7 @@ public class ActivityUtils {
 	public ActivityUtils() {
 	}//for intend passook
 
-	public void loadFragment(Fragment fragment, FragmentManager fm) {
+	public void loadFragment(Fragment fragment, @NonNull FragmentManager fm) {
 
 		FragmentTransaction fragmentTransaction = fm.beginTransaction();
 		// replace the FrameLayout with new Fragment
@@ -34,7 +35,7 @@ public class ActivityUtils {
 		// load fragment
 	}
 
-	public void loadFragmentWithoutBackStack(Fragment fragment, FragmentManager fm) {
+	public void loadFragmentWithoutBackStack(Fragment fragment, @NonNull FragmentManager fm) {
 
 
 		FragmentTransaction fragmentTransaction = fm.beginTransaction();
@@ -64,8 +65,8 @@ public class ActivityUtils {
 		// load fragment
 	}
 */
-	public void loadDialogFragment(DialogFragment fragment,
-	                               FragmentManager fm, String dialogValue) {
+	public void loadDialogFragment(@NonNull DialogFragment fragment,
+	                               @NonNull FragmentManager fm, String dialogValue) {
 
 		// FragmentTransaction fragmentTransaction = fm.beginTransaction();
 		// replace the FrameLayout with new Fragment
@@ -80,8 +81,9 @@ public class ActivityUtils {
 		// load fragment
 	}
 
-	public void loadDialogFragment(BaseDialog fragment, Fragment targetFragment,
-	                               FragmentManager fm, int requestValue, String dialogValue) {
+	public void loadDialogFragment(@NonNull BaseDialog fragment, Fragment targetFragment,
+	                               @NonNull FragmentManager fm, int requestValue,
+	                               String dialogValue) {
 
 		// FragmentTransaction fragmentTransaction = fm.beginTransaction();
 		// replace the FrameLayout with new Fragment
@@ -97,12 +99,12 @@ public class ActivityUtils {
 		// load fragment
 	}
 
-	public void callIntent(Activity activity, String number) {
+	public void callIntent(@NonNull Activity activity, String number) {
 		Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", number, null));
 		activity.startActivity(intent);
 	}
 
-	public void useUpButton(MainActivity activity, boolean value) {
+	public void useUpButton(@NonNull MainActivity activity, boolean value) {
 		ActionBar actionBar = activity.getSupportActionBar();
 		// Code here will be triggered once the drawer open as we dont want anything to
 // happen so we leave this blank
@@ -127,12 +129,12 @@ public class ActivityUtils {
 	}
 
 
-	public void setTitle(AppCompatActivity activity, String msg) {
+	public void setTitle(@NonNull AppCompatActivity activity, String msg) {
 		ActionBar actionBar = activity.getSupportActionBar();
 		actionBar.setTitle(msg);
 	}
 
-	public void addressIntent(final Activity activity, final String address) {
+	public void addressIntent(@NonNull final Activity activity, final String address) {
 		String drivingMode = "&mode=d";
 		Uri gmmIntentUri = Uri.parse("google.navigation:0,0?q=" + address + drivingMode);
 

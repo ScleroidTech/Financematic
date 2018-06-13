@@ -1,6 +1,8 @@
 package com.scleroid.financematic.fragments.passbook;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,6 +29,7 @@ import java.util.List;
  */
 @Deprecated
 public class PassbookFragment extends BaseFragment {
+	@NonNull
 	private List<Passbook> passbookList = new ArrayList<>();
 	private RecyclerView recyclerView;
 	private PassbookAdapter mAdapter;
@@ -35,6 +38,7 @@ public class PassbookFragment extends BaseFragment {
 		// Required empty public constructor
 	}
 
+	@NonNull
 	public static PassbookFragment newInstance(String param1, String param2) {
 		PassbookFragment fragment = new PassbookFragment();
 		Bundle args = new Bundle();
@@ -125,6 +129,7 @@ public class PassbookFragment extends BaseFragment {
 	 *
 	 * @return view model instance
 	 */
+	@Nullable
 	@Override
 	public BaseViewModel getViewModel() {
 		return null;

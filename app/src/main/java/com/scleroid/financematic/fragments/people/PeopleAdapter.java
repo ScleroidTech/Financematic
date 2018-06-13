@@ -2,6 +2,7 @@ package com.scleroid.financematic.fragments.people;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -119,28 +120,38 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 
 	/*	TextViewUtils textViewUtils= new TextViewUtils();*/
 
+		@NonNull
+		private final View itemView;
+		@Nullable
 		@BindView(R.id.payment_circle_view)
 		CircleCustomView paymentCircleView;
+		@Nullable
 		@BindView(R.id.person_name_text_view)
 		TextView personNameTextView;
+		@Nullable
 		@BindView(R.id.total_amount_title_text_view)
 		TextView totalAmountTitleTextView;
+		@Nullable
 		@BindView(R.id.total_loan_text_view)
 		RupeeTextView totalLoanTextView;
+		@Nullable
 		@BindView(R.id.received_amount_title_text_view)
 		TextView receivedAmountTitleTextView;
+		@Nullable
 		@BindView(R.id.received_amount_text_view)
 		RupeeTextView receivedAmountTextView;
+		private Customer customer;
+		@Nullable
 		@BindView(R.id.percentage_pie_chart_text_view)
 		TextView percentagePieChartTextView;
-		private Customer customer;
-		private final View itemView;
+		@Nullable
 		@BindView(R.id.callButton)
 		ImageView callButton;
+		@Nullable
 		@BindView(R.id.people_item_card_view)
 		CardView peopleItemCardView;
 
-		public MyViewHolder(View view) {
+		public MyViewHolder(@NonNull View view) {
 			super(view);
 			itemView = view;
 			ButterKnife.setDebug(true);
@@ -181,14 +192,14 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 			return (list_received_amoun / list_total_loan) * 100;
 		}
 
-		private int calculateTotalAmt(final List<Loan> loans) {
+		private int calculateTotalAmt(@NonNull final List<Loan> loans) {
 			int sum = Stream.of(loans).mapToInt(loan ->
 					loan.getLoanAmt() != null ? loan.getLoanAmt().intValue() : 0).sum();
 			//Timber.wtf("sum of Total Amt" + sum);
 			return sum;
 		}
 
-		private int calculateReceivedAmt(final List<Loan> loans) {
+		private int calculateReceivedAmt(@NonNull final List<Loan> loans) {
 
 			int sum = Stream.of(loans).mapToInt(loan ->
 					loan.getReceivedAmt() != null ? loan.getReceivedAmt().intValue() : 0).sum();
@@ -197,7 +208,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 		}
 
 		@OnClick({R.id.callButton, R.id.people_item_card_view})
-		public void onViewClicked(View view) {
+		public void onViewClicked(@NonNull View view) {
 			switch (view.getId()) {
 				case R.id.call_button:
 					//	handleCallClick();

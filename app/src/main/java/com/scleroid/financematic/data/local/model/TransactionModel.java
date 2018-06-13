@@ -6,6 +6,7 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
+import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
 import com.scleroid.financematic.utils.roomConverters.DateConverter;
@@ -81,16 +82,17 @@ public class TransactionModel implements Serializable {
 	}
 
 	@Override
-	public String toString() {
-		return "TransactionModel{" +
-				"transactionId=" + transactionId +
-				", transactionDate=" + transactionDate +
-				", lentAmt=" + lentAmt == null ? null : lentAmt.toPlainString() +
-				", gainedAmt=" + gainedAmt == null ? null : gainedAmt.toPlainString() +
-				", receivedAmt=" + receivedAmt == null ? null : receivedAmt.toPlainString() +
-				", description='" + description + '\'' +
-				", loanAcNo=" + loanAcNo +
-				'}';
+	public boolean equals(@Nullable final Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		final TransactionModel that = (TransactionModel) o;
+		return transactionId == that.transactionId &&
+				loanAcNo == that.loanAcNo &&
+				Objects.equals(transactionDate, that.transactionDate) &&
+				Objects.equals(lentAmt, that.lentAmt) &&
+				Objects.equals(gainedAmt, that.gainedAmt) &&
+				Objects.equals(receivedAmt, that.receivedAmt) &&
+				Objects.equals(description, that.description);
 	}
 
 	public int getTransactionId() {
@@ -156,17 +158,17 @@ public class TransactionModel implements Serializable {
 				description, loanAcNo);
 	}
 
+	@Nullable
 	@Override
-	public boolean equals(final Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		final TransactionModel that = (TransactionModel) o;
-		return transactionId == that.transactionId &&
-				loanAcNo == that.loanAcNo &&
-				Objects.equals(transactionDate, that.transactionDate) &&
-				Objects.equals(lentAmt, that.lentAmt) &&
-				Objects.equals(gainedAmt, that.gainedAmt) &&
-				Objects.equals(receivedAmt, that.receivedAmt) &&
-				Objects.equals(description, that.description);
+	public String toString() {
+		return "TransactionModel{" +
+				"transactionId=" + transactionId +
+				", transactionDate=" + transactionDate +
+				", lentAmt=" + lentAmt == null ? null : lentAmt.toPlainString() +
+				", gainedAmt=" + gainedAmt == null ? null : gainedAmt.toPlainString() +
+				", receivedAmt=" + receivedAmt == null ? null : receivedAmt.toPlainString() +
+				", description='" + description + '\'' +
+				", loanAcNo=" + loanAcNo +
+				'}';
 	}
 }

@@ -1,6 +1,7 @@
 package com.scleroid.financematic.fragments.dashboard;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -60,7 +61,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
 		return filterResults(installmentList);
 	}
 
-	private List<Installment> filterResults(List<Installment> installments) {
+	private List<Installment> filterResults(@Nullable List<Installment> installments) {
 
 		if (installments == null) return new ArrayList<>();
 		return Stream.of(installments)
@@ -148,30 +149,38 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
 
 		Installment installment;
 
+		@NonNull
 		DateUtils dateUtils = new DateUtils();
 
 		@Inject
 		CustomerRepo customerRepo;
 		@Inject
 		LoanRepo loanRepo;
+		@Nullable
 		@BindView(R.id.customer_name_text_view)
 		TextView customerNameTextView;
+		@Nullable
 		@BindView(R.id.amount_text_view)
 		RupeeTextView amountTextView;
+		@Nullable
 		@BindView(R.id.due_date_text_view)
 		TextView dueDateTextView;
+		@Nullable
 		@BindView(R.id.time_remaining_text_view)
 		TextView timeRemainingTextView;
+		@Nullable
 		@BindView(R.id.call_button)
 		Button callButton;
+		@Nullable
 		@BindView(R.id.delay_button)
 		Button delayButton;
 		//add manoj
+		@Nullable
 		@BindView(R.id.dashboard_item_cardview)
 		CardView dashboarditemcardview;
 
 
-		MyViewHolder(View view) {
+		MyViewHolder(@NonNull View view) {
 			super(view);
 			ButterKnife.bind(this, view);
 
@@ -215,7 +224,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
 
 
 		@OnClick({R.id.call_button, R.id.delay_button, R.id.dashboard_item_cardview})
-		public void onViewClicked(View view) {
+		public void onViewClicked(@NonNull View view) {
 			switch (view.getId()) {
 				case R.id.call_button:
 					handleCallClick();

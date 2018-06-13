@@ -3,6 +3,7 @@ package com.scleroid.financematic.di;
 import android.app.Application;
 import android.content.Context;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.birbit.android.jobqueue.JobManager;
@@ -27,9 +28,10 @@ public class JobManagerModule {
 
 	AppComponent component;
 
+	@NonNull
 	@Provides
 	@Singleton
-	public JobManager jobManager(Application application, Context context) {
+	public JobManager jobManager(Application application, @NonNull Context context) {
 		component = DaggerAppComponent.builder().application(application)
 				.build();
 		Configuration.Builder builder = new Configuration.Builder(context)
@@ -42,17 +44,17 @@ public class JobManagerModule {
 					}
 
 					@Override
-					public void d(String text, Object... args) {
+					public void d(@NonNull String text, Object... args) {
 						Log.e(TAG, String.format(text, args));
 					}
 
 					@Override
-					public void e(Throwable t, String text, Object... args) {
+					public void e(Throwable t, @NonNull String text, Object... args) {
 						Log.e(TAG, String.format(text, args), t);
 					}
 
 					@Override
-					public void e(String text, Object... args) {
+					public void e(@NonNull String text, Object... args) {
 						Log.e(TAG, String.format(text, args));
 					}
 

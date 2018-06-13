@@ -22,6 +22,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -36,8 +37,10 @@ import dagger.android.support.AndroidSupportInjection;
 public abstract class BaseDialog extends DialogFragment {
 	/*@Inject
 	DispatchingAndroidInjector<Fragment> childFragmentInjector;*/
+	@Nullable
 	private BaseActivity mActivity;
 	private boolean dialogDismissed;
+	@Nullable
 	private Dialog dialog;
 
 /*	@Override
@@ -90,6 +93,7 @@ public abstract class BaseDialog extends DialogFragment {
 		getBaseActivity().onFragmentDetached(tag);
 	}
 
+	@Nullable
 	public BaseActivity getBaseActivity() {
 		return mActivity;
 	}

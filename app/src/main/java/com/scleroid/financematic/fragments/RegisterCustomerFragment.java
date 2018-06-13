@@ -1,6 +1,8 @@
 package com.scleroid.financematic.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -47,6 +49,7 @@ import timber.log.Timber;
 public class RegisterCustomerFragment extends BaseFragment {
 	Button firstFragment;
 	private EditText etname, etmobile, etAddress, etIDproofno;
+	@NonNull
 	String[] selectidtype =
 			{IdProofType.AADHAR, IdProofType.PAN, IdProofType.RATION_CARD, IdProofType
 					.SEVEN_TWELVE_CERTIFICATE, IdProofType.VOTER_ID, IdProofType.PASSPORT,
@@ -63,6 +66,7 @@ public class RegisterCustomerFragment extends BaseFragment {
 		// Required empty public constructor
 	}
 
+	@NonNull
 	public static RegisterCustomerFragment newInstance() {
 		RegisterCustomerFragment fragment = new RegisterCustomerFragment();
 		Bundle args = new Bundle();
@@ -103,7 +107,7 @@ public class RegisterCustomerFragment extends BaseFragment {
 		final Editable etnameText = etname.getText();
 		etname.addTextChangedListener(new TextValidator(etname) {
 			@Override
-			public void validate(TextView textView, String text) {
+			public void validate(TextView textView, @NonNull String text) {
 
 				if (!isValidEmail(text)) {
 					etname.setError("Enter Valid Full name");
@@ -113,7 +117,7 @@ public class RegisterCustomerFragment extends BaseFragment {
 		final Editable etmobileText = etmobile.getText();
 		etmobile.addTextChangedListener(new TextValidator(etmobile) {
 			@Override
-			public void validate(TextView textView, String text) {
+			public void validate(TextView textView, @NonNull String text) {
 
 				if (!isValidMobile(text)) {
 					etmobile.setError("Enter Valid 10 digit no");
@@ -123,7 +127,7 @@ public class RegisterCustomerFragment extends BaseFragment {
 		final Editable etAddressText = etAddress.getText();
 		etAddress.addTextChangedListener(new TextValidator(etAddress) {
 			@Override
-			public void validate(TextView textView, String text) {
+			public void validate(TextView textView, @NonNull String text) {
 
 				if (!isValidAddress(text)) {
 					etAddress.setError("Enter Valid address");
@@ -195,7 +199,7 @@ return;
 		return rootView;
 	}
 
-	private void saveCustomer(final Customer customer) {
+	private void saveCustomer(@NonNull final Customer customer) {
 		customerRepo.saveItem(customer).subscribe(() -> {
 			// handle completion
 			Timber.d("Item Saved");
@@ -235,12 +239,13 @@ return;
 	 *
 	 * @return view model instance
 	 */
+	@Nullable
 	@Override
 	public BaseViewModel getViewModel() {
 		return null;
 	}
 
-	private boolean isValidEmail(String nameval) {
+	private boolean isValidEmail(@NonNull String nameval) {
 		String EMAIL_PATTERN = "^[A-Za-z\\s]{1,}[\\.]{0,1}[A-Za-z\\s]{0,}$";//aplha and space ^[a-zA-Z\\s]*$
 		//String EMAIL_PATTERN = "^[A-Za-z\\s]{1,}[\\.]{0,1}[A-Za-z\\s]{0,}$";/
 		Pattern pattern = Pattern.compile(EMAIL_PATTERN);
@@ -248,7 +253,7 @@ return;
 		return matcher.matches();
 	}
 
-	private boolean isValidMobile(String mobileval) {
+	private boolean isValidMobile(@NonNull String mobileval) {
 		String EMAIL_PATTERN = "^[0-9]{10}$";//only alpha space
 
 		Pattern pattern = Pattern.compile(EMAIL_PATTERN);
@@ -256,7 +261,7 @@ return;
 		return matcher.matches();
 	}
 
-	private boolean isValidAddress(String addressval) {
+	private boolean isValidAddress(@NonNull String addressval) {
 		String EMAIL_PATTERN = "^[A-Za-z0-9_.,;\\s]{1,}[\\.]{0,1}[A-Za-z0-9_.,;\\s]{0,}$";
 		//String EMAIL_PATTERN = "^[a-zA-Z0-9_.-]*$";
 		//only alpha space \d+[ ](?:[A-Za-z0-9.-]+[ ]?)+

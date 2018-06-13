@@ -1,5 +1,7 @@
 package com.scleroid.financematic.di;
 
+import android.support.annotation.NonNull;
+
 import com.scleroid.financematic.Notification;
 import com.scleroid.financematic.fragments.RegisterCustomerFragment;
 import com.scleroid.financematic.fragments.RegisterLoanFragment;
@@ -26,48 +28,63 @@ import dagger.android.ContributesAndroidInjector;
  */
 @Module
 public abstract class FragmentBuildersModule {
+	@NonNull
 	@ContributesAndroidInjector
 	abstract DashboardFragment contributeDashboardFragment();
 
+	@NonNull
 	@ContributesAndroidInjector
 	abstract CustomerFragment contributeCustomerFragment();
 
+	@NonNull
 	@ContributesAndroidInjector
 	abstract ExpenseFragment contributeExpenseFragment();
 
+	@NonNull
 	@ContributesAndroidInjector
 	abstract LoanDetailsFragment contributeLoanDetailsFragment();
 
+	@NonNull
 	@ContributesAndroidInjector
 	abstract PassbookFragment contributePassbookFragment();
 
+	@NonNull
 	@ContributesAndroidInjector
 	abstract PeopleFragment contributePeopleFragment();
 
+	@NonNull
 	@ContributesAndroidInjector
 	abstract RegisterCustomerFragment contributeRegisterCustomerFragment();
 
+	@NonNull
 	@ContributesAndroidInjector
 	abstract RegisterLoanFragment contributeRegisterMoneyFragment();
 
+	@NonNull
 	@ContributesAndroidInjector
 	abstract RegisterReceivedDialogFragment contributeRegisterReceivedFragment();
 
+	@NonNull
 	@ContributesAndroidInjector
 	abstract ReminderFragment contributeReminderFragment();
 
+	@NonNull
 	@ContributesAndroidInjector
 	abstract ReportFragment contributeReportFragment();
 
+	@NonNull
 	@ContributesAndroidInjector
 	abstract Notification contributeNotification();
 
+	@NonNull
 	@ContributesAndroidInjector
 	abstract DelayDialogFragment contributeDelayDialog();
 
+	@NonNull
 	@ContributesAndroidInjector
 	abstract DatePickerDialogFragment contributeDatePickerDialogFragment();
 
+	@NonNull
 	@ContributesAndroidInjector
 	abstract com.scleroid.financematic.fragments.dialogs.InsertExpenseDialogFragment
 	contributeInserDialogFragment();

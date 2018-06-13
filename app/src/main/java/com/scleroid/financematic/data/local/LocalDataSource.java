@@ -8,6 +8,7 @@ package com.scleroid.financematic.data.local;
 
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.util.List;
 
@@ -73,6 +74,7 @@ public interface LocalDataSource<T> {
 	 */
 	Single<T> deleteItem(@NonNull T item);
 
+	@Nullable
 	Single<T> updateItem(T t);
 
 	/*Not using Callback anymore

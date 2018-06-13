@@ -4,6 +4,8 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
@@ -107,7 +109,7 @@ public class DashboardViewModel extends BaseViewModel<Installment> implements Cu
 
 
 	//There's a copy of this code in adapter too,
-	private List<Installment> filterResults(List<Installment> installments) {
+	private List<Installment> filterResults(@Nullable List<Installment> installments) {
 
 		if (installments == null) return new ArrayList<>();
 		return Stream.of(installments)
@@ -116,7 +118,7 @@ public class DashboardViewModel extends BaseViewModel<Installment> implements Cu
 				.collect(Collectors.toList());
 	}
 
-	private boolean filterResult(Installment installment) {
+	private boolean filterResult(@NonNull Installment installment) {
 
 		if (installments == null) return false;
 		return dateUtils.isThisDateWithinRange(
@@ -203,6 +205,7 @@ public class DashboardViewModel extends BaseViewModel<Installment> implements Cu
 		return result;
 	}
 */
+	@Nullable
 	@Override
 	protected LiveData<Resource<List<Installment>>> updateItemLiveData() {
 		//TODO implement this

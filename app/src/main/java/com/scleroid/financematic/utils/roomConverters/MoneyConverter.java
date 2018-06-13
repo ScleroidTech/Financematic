@@ -1,6 +1,7 @@
 package com.scleroid.financematic.utils.roomConverters;
 
 import android.arch.persistence.room.TypeConverter;
+import android.support.annotation.Nullable;
 
 import java.math.BigDecimal;
 
@@ -11,14 +12,16 @@ import java.math.BigDecimal;
  * @since 4/3/18
  */
 public class MoneyConverter {
+	@Nullable
 	@TypeConverter
-	public static BigDecimal toBigDecimal(String number) {
+	public static BigDecimal toBigDecimal(@Nullable String number) {
 		return number == null ? null : new BigDecimal(number).setScale(2,
 				BigDecimal.ROUND_HALF_EVEN);
 	}
 
+	@Nullable
 	@TypeConverter
-	public static String toString(BigDecimal number) {
+	public static String toString(@Nullable BigDecimal number) {
 		return number == null ? null : number.setScale(2, BigDecimal.ROUND_HALF_EVEN)
 				.toPlainString();
 	}

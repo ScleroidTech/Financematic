@@ -42,6 +42,7 @@ public class CustomerRepo implements Repo<Customer> {
 	private final WebService webService;
 	private RemotePostEndpoint postEndpoint;
 	private final AppExecutors appExecutors;
+	@NonNull
 	private RateLimiter<String> customerListRateLimit = new RateLimiter<>(10, TimeUnit.MINUTES);
 	@Inject
 	public CustomerRepo(final LocalCustomerLab localCustomerLab,
@@ -62,6 +63,7 @@ public class CustomerRepo implements Repo<Customer> {
 	@Override
 	public LiveData<Resource<List<Customer>>> loadItems() {
 		return new NetworkBoundResource<List<Customer>, List<Customer>>(appExecutors) {
+			@NonNull
 			String key = Math.random() + "";
 
 			@Override
@@ -158,7 +160,7 @@ public class CustomerRepo implements Repo<Customer> {
 	}
 
 	@Override
-	public Completable saveItems(final List<Customer> items) {
+	public Completable saveItems(@NonNull final List<Customer> items) {
 		//TODO save this onRemote Source later
 		//Observable.fromCallable(() -> customerDao.saveCustomers(items));
 
@@ -168,7 +170,7 @@ public class CustomerRepo implements Repo<Customer> {
 	}
 
 	@Override
-	public Completable saveItem(final Customer customer) {
+	public Completable saveItem(@NonNull final Customer customer) {
 		//Observable.fromCallable(() -> customerDao.saveCustomer(customer));
 
 		return localCustomerLab.saveItem(customer).flatMapCompletable(remoteCustomerLab::sync);
@@ -181,7 +183,7 @@ public class CustomerRepo implements Repo<Customer> {
 	}
 
 	@Override
-	public Completable deleteItem(final Customer customer) {
+	public Completable deleteItem(@NonNull final Customer customer) {
 
 		//TODO update Remote
 		return localCustomerLab.deleteItem(customer).flatMapCompletable(remoteCustomerLab::delete);

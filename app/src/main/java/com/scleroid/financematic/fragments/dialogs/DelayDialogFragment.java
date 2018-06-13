@@ -56,6 +56,7 @@ public class DelayDialogFragment extends BaseDialog {
 		// Required empty public constructor
 	}
 
+	@NonNull
 	public static DelayDialogFragment newInstance(int installmentId, int acNo) {
 		DelayDialogFragment fragment = new DelayDialogFragment();
 		Bundle args = new Bundle();
@@ -205,7 +206,7 @@ public class DelayDialogFragment extends BaseDialog {
 	}
 
 
-	private boolean isValidEmail(String email) {
+	private boolean isValidEmail(@NonNull String email) {
 		String EMAIL_PATTERN = "^[0-9_.]*$";
 
 		Pattern pattern = Pattern.compile(EMAIL_PATTERN);

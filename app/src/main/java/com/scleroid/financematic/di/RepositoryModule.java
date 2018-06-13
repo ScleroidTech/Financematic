@@ -2,6 +2,7 @@ package com.scleroid.financematic.di;
 
 import android.app.Application;
 import android.arch.persistence.room.Room;
+import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -68,7 +69,7 @@ abstract public class RepositoryModule {
 */
 	@Singleton
 	@Provides
-	static AppDatabase provideDb(Application context) {
+	static AppDatabase provideDb(@NonNull Application context) {
 
 		//	Timber.wtf("why we aren't calling this" + appDatabase);
 		return Room.databaseBuilder(context, AppDatabase.class, "financeMatic.db")
@@ -113,6 +114,7 @@ abstract public class RepositoryModule {
 		return db.installmentDao();
 	}
 
+	@NonNull
 	@Provides
 	@Singleton
 	static Cache provideHttpCache(Application application) {
@@ -123,8 +125,9 @@ abstract public class RepositoryModule {
 
 	@Provides
 	@Singleton
-	static OkHttpClient provideOkhttpClient(Cache cache, Interceptor interceptor,
-	                                        HttpLoggingInterceptor httpLoggingInterceptor) {
+	static OkHttpClient provideOkhttpClient(Cache cache, @NonNull Interceptor interceptor,
+	                                        @NonNull HttpLoggingInterceptor
+			                                        httpLoggingInterceptor) {
 		OkHttpClient.Builder client = new OkHttpClient.Builder();
 		client.cache(cache);
 		client.addInterceptor(httpLoggingInterceptor);
@@ -135,7 +138,7 @@ abstract public class RepositoryModule {
 
 	@Provides
 	@Singleton
-	static Retrofit providesRetrofit(Gson gson, OkHttpClient okHttpClient) {
+	static Retrofit providesRetrofit(@NonNull Gson gson, @NonNull OkHttpClient okHttpClient) {
 		return new Retrofit.Builder()
 				.baseUrl(BuildConfig.API_BASE_URL)
 				.addConverterFactory(GsonConverterFactory.create(gson))
@@ -181,28 +184,7 @@ abstract public class RepositoryModule {
 		return new GcmJobService();
 	}
 
-	@Singleton
-	abstract LoanRepo provideLoanRepo(AppDatabase db);
-
-	@Singleton
-	abstract ExpenseRepo provideExpenseRepo(AppDatabase db);
-
-	@Singleton
-	abstract CustomerRepo provideCustomerRepo(AppDatabase db);
-
-	@Singleton
-	abstract InstallmentRepo provideInstallmentRepo(AppDatabase db);
-
-	@Provides
-	@Singleton
-	static Gson provideGson() {
-		return new GsonBuilder().create();
-	}
-
-	@Singleton
-	abstract TransactionsRepo provideTransactionsRepo(AppDatabase db);
-
-
+	@NonNull
 	@Provides
 	static public HttpLoggingInterceptor loggingInterceptor() {
 		HttpLoggingInterceptor interceptor =
@@ -211,6 +193,32 @@ abstract public class RepositoryModule {
 		interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 		return interceptor;
 	}
+
+	@NonNull
+	@Singleton
+	abstract LoanRepo provideLoanRepo(AppDatabase db);
+
+	@NonNull
+	@Singleton
+	abstract ExpenseRepo provideExpenseRepo(AppDatabase db);
+
+	@NonNull
+	@Singleton
+	abstract CustomerRepo provideCustomerRepo(AppDatabase db);
+
+	@Provides
+	@Singleton
+	static Gson provideGson() {
+		return new GsonBuilder().create();
+	}
+
+	@NonNull
+	@Singleton
+	abstract InstallmentRepo provideInstallmentRepo(AppDatabase db);
+
+	@NonNull
+	@Singleton
+	abstract TransactionsRepo provideTransactionsRepo(AppDatabase db);
 
 	@Provides
 	static public Interceptor headerInterceptor() {

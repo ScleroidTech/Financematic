@@ -4,6 +4,8 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -56,6 +58,7 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 	private static final int REQUEST_DATE_TO = 2;
 	private static final String FILTER_TYPE = "filter_type";
 
+	@Nullable
 	@BindView(R.id.empty_card)
 	CardView emptyCard;
 
@@ -63,6 +66,7 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 	DateUtils dateUtils;
 
 
+	@NonNull
 	String[] filterSuggestions =
 			{"All Amount", "Received Amount", "Lent Amount", "Earned Amount"};
 
@@ -72,51 +76,67 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 	/*Spinner spin1;*/
 
 
+	@Nullable
 	@BindView(R.id.from_date_text_view)
 	TextView fromDateTextView;
+	@Nullable
 	@BindView(R.id.to_date_text_view)
 	TextView toDateTextView;
 
+	@Nullable
 	@BindView(R.id.report_recycler_view)
 	RecyclerView reportRecyclerView;
+	@Nullable
 	@BindView(R.id.spinnerr)
 	Spinner spinnerFilter;
 	/*@BindView(R.id.spinnershortdate)
 	Spinner spinnershort;
 */
 
+	@NonNull
 	ActivityUtils activityUtils = new ActivityUtils();
+	@Nullable
 	@BindView(R.id.accNo)
 	TextView accNo;
+	@Nullable
 	@BindView(R.id.installmentDate)
 	TextView installmentDate;
+	@Nullable
 	@BindView(R.id.expectedAmt)
 	TextView expectedAmt;
+	@Nullable
 	@BindView(R.id.earnedAmt)
 	TextView earnedAmt;
 
 
+	@Nullable
 	@BindView(R.id.receivedAmt)
 	TextView receivedAmt;
+	@Nullable
 	@BindView(R.id.filter_button)
 	Button filterButton;
+	@Nullable
 	@BindView(R.id.no_address_title)
 	TextView noAddressTitle;
+	@Nullable
 	@BindView(R.id.no_address_subtitle)
 	TextView noAddressSubtitle;
 	Unbinder unbinder;
+	@Nullable
 	private List<TransactionModel> transactionsList = new ArrayList<>();
 	private ReportAdapter mAdapter;
 
 	private ReportViewModel reportViewModel;
 	private Date startDate;
 	private Date endDate;
+	@Nullable
 	private ReportFilterType reportFilterType = ReportFilterType.ALL_TRANSACTIONS;
 
 	public ReportFragment() {
 		// Required empty public constructor
 	}
 
+	@NonNull
 	public static ReportFragment newInstance(ReportFilterType filterType) {
 		ReportFragment fragment = new ReportFragment();
 		Bundle args = new Bundle();
@@ -126,7 +146,7 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 	}
 
 	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+	public void onActivityResult(int requestCode, int resultCode, @NonNull Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
 
 		if (requestCode == REQUEST_DATE_FROM) {
@@ -265,7 +285,7 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 		}
 	}
 
-	private void updateListData(final List<TransactionModel> transactions) {
+	private void updateListData(@Nullable final List<TransactionModel> transactions) {
 		if (transactions == null || transactions.isEmpty()) {
 			emptyCard.setVisibility(View.VISIBLE);
 			reportRecyclerView.setVisibility(View.GONE);
@@ -279,7 +299,7 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 		}
 	}
 
-	private void sort(final List<TransactionModel> transactions) {
+	private void sort(@NonNull final List<TransactionModel> transactions) {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 			transactions.sort(Comparator.comparing(TransactionModel::getTransactionDate));
 		} else {
@@ -318,6 +338,7 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 		getTheListSorted();
 	}
 
+	@NonNull
 	private ReportFilterType getSuggestion(final int filterSuggestion) {
 		switch (filterSuggestion) {
 			case 0:
@@ -336,7 +357,8 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 	}
 
 	private List<TransactionModel> filterWithDate(final Date startDate, final Date endDate,
-	                                              final ReportFilterType filterSuggestion) {
+	                                              @NonNull final ReportFilterType
+			                                              filterSuggestion) {
 		List<TransactionModel> transactionModels = filterWithoutDate(filterSuggestion);
 		return Stream.of(transactionModels)
 				.filter(expenseList -> expenseList.getTransactionDate()
@@ -405,6 +427,7 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 				.collect(Collectors.toList());
 	}
 
+	@NonNull
 	private List<TransactionModel> allTransactionFilter(final List<TransactionModel> listToShow) {
 		listToShow.addAll(transactionsList);
 		receivedAmt.setVisibility(View.VISIBLE);
@@ -452,7 +475,7 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 
 
 	@OnClick({R.id.from_date_text_view, R.id.to_date_text_view})
-	public void onViewClicked(View view) {
+	public void onViewClicked(@NonNull View view) {
 		switch (view.getId()) {
 			case R.id.from_date_text_view:
 				loadDialogFragment(REQUEST_DATE_FROM);

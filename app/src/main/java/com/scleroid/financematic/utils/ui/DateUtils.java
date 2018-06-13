@@ -1,5 +1,6 @@
 package com.scleroid.financematic.utils.ui;
 
+import android.support.annotation.NonNull;
 import android.text.format.DateFormat;
 
 import java.text.SimpleDateFormat;
@@ -56,12 +57,12 @@ public class DateUtils {
 		return DateFormat.format("dd/MM/yyyy", parcelDate);
 	}
 
-	public CharSequence getFormattedDate(Date date, String format) {
+	public CharSequence getFormattedDate(Date date, @NonNull String format) {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
 		return simpleDateFormat.format(date);
 	}
 
-	public boolean isThisDateWithinRange(Date date, int range) {
+	public boolean isThisDateWithinRange(@NonNull Date date, int range) {
 
 		//  SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
 		// sdf.setLenient(false);
@@ -91,7 +92,7 @@ public class DateUtils {
 
 	}
 
-	public long differenceWithCurrentDate(Date date) {
+	public long differenceWithCurrentDate(@NonNull Date date) {
 
 		//  SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
 		// sdf.setLenient(false);
@@ -119,7 +120,7 @@ public class DateUtils {
 
 	}
 
-	public long differenceOfDates(Date date1, Date date2) {
+	public long differenceOfDates(@NonNull Date date1, @NonNull Date date2) {
 
 		//  SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
 		// sdf.setLenient(false);

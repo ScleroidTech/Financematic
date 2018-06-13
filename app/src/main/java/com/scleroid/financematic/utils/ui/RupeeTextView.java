@@ -7,6 +7,7 @@ package com.scleroid.financematic.utils.ui;
  */
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 
 import java.text.DecimalFormat;
@@ -22,18 +23,18 @@ public class RupeeTextView extends android.support.v7.widget.AppCompatTextView {
 
 	Context context;
 
-	public RupeeTextView(Context context) {
+	public RupeeTextView(@NonNull Context context) {
 		super(context);
 		this.context = context;
 	}
 
-	public RupeeTextView(Context context, AttributeSet attrs) {
+	public RupeeTextView(@NonNull Context context, AttributeSet attrs) {
 		super(context, attrs);
 		this.context = context;
 
 	}
 
-	public RupeeTextView(Context context, AttributeSet attrs, int defStyleAttr) {
+	public RupeeTextView(@NonNull Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
 		this.context = context;
 
@@ -41,7 +42,7 @@ public class RupeeTextView extends android.support.v7.widget.AppCompatTextView {
 
 
 	@Override
-	public void setText(CharSequence text, BufferType type) {
+	public void setText(@NonNull CharSequence text, BufferType type) {
 		String formattedString = null;
 		try {
 			// The comma in the format specifier does the trick

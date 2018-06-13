@@ -239,6 +239,7 @@ public class LocalLoanLab implements LocalDataSource<Loan> {
 	}
 */
 
+	@NonNull
 	public LiveData<Loan> loadLoanDetails(int loanId) {
 		LiveData<Loan> loanLiveData = loanDao.getLoanLive(loanId);
 		LiveData<Loan> result =

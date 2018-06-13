@@ -2,6 +2,8 @@ package com.scleroid.financematic.fragments.customer;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -37,26 +39,34 @@ import timber.log.Timber;
 
 
 public class CustomerFragment extends BaseFragment {
+	@Nullable
 	@BindView(R.id.fab)
 	FloatingActionButton fab;
-
-	private ActivityUtils activityUtils = new ActivityUtils();
-	private static final String CUSTOMER_ID = "customer_id";
+	@Nullable
 	@BindView(R.id.name_text_view)
 	TextView nameTextView;
+	private static final String CUSTOMER_ID = "customer_id";
+	@Nullable
 	@BindView(R.id.mobile_text_view)
 	TextView mobileTextView;
+	@Nullable
 	@BindView(R.id.address_text_view)
 	TextView addressTextView;
-
+	@Nullable
 	@BindView(R.id.total_loan_text_view)
 	RupeeTextView totalLoanTextView;
-	private List<Loan> loanList = new ArrayList<>();
+	@Nullable
+	@BindView(R.id.empty_card)
+	CardView emptyCard;
+	@NonNull
+	private ActivityUtils activityUtils = new ActivityUtils();
 	private RecyclerView recyclerView;
-	private CustomerAdapter mAdapter;
+	@Nullable
+	private List<Loan> loanList = new ArrayList<>();
 	private CustomerViewModel customerViewModel;
 	private int customerId;
-	private Customer theCustomer;
+	@Nullable
+	private CustomerAdapter mAdapter;
 	private int totalLoan;
 
 
@@ -64,6 +74,15 @@ public class CustomerFragment extends BaseFragment {
 		// Required empty public constructor
 	}
 
+	@Nullable
+	private Customer theCustomer;
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+	}
+
+	@NonNull
 	public static CustomerFragment newInstance(int customerId) {
 		CustomerFragment fragment = new CustomerFragment();
 		Bundle args = new Bundle();
@@ -71,14 +90,6 @@ public class CustomerFragment extends BaseFragment {
 		fragment.setArguments(args);
 		return fragment;
 	}
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-	}
-
-	@BindView(R.id.empty_card)
-	CardView emptyCard;
 
 
 	/**
@@ -151,7 +162,7 @@ public class CustomerFragment extends BaseFragment {
 		});
 	}
 
-	private void updateView(final List<Loan> items) {
+	private void updateView(@Nullable final List<Loan> items) {
 		if (items == null || items.isEmpty()) {
 			emptyCard.setVisibility(View.VISIBLE);
 			recyclerView.setVisibility(View.GONE);
@@ -215,7 +226,7 @@ public class CustomerFragment extends BaseFragment {
 
 
 	@OnClick({R.id.fab, R.id.mobile_text_view, R.id.address_text_view})
-	public void onViewClicked(View view) {
+	public void onViewClicked(@NonNull View view) {
 		switch (view.getId()) {
 			case R.id.fab:
 				activityUtils.loadFragment(RegisterLoanFragment.newInstance(customerId),

@@ -10,6 +10,7 @@ import java.util.concurrent.Executors;
  */
 public class DiskIOThreadExecutor implements Executor {
 
+	@NonNull
 	private final Executor mDiskIO;
 
 	public DiskIOThreadExecutor() {

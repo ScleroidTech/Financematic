@@ -13,6 +13,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.support.annotation.NonNull;
 
 import static android.app.NotificationManager.IMPORTANCE_DEFAULT;
 
@@ -21,7 +22,7 @@ public class AlarmReceiver extends BroadcastReceiver{
 	public static final String NOTIFY = "notification_fragment";
 
 	@Override
-    public void onReceive(Context context, Intent intent) {
+	public void onReceive(@NonNull Context context, Intent intent) {
 
 		Intent notificationIntent = new Intent(context,MainActivity.class);
 		notificationIntent.putExtra(NOTIFY, true);

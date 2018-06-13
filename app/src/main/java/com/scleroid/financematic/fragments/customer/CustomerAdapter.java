@@ -78,7 +78,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.MyView
 		TextView title, endDate1, startDate1;
 		RupeeTextView Total_loan, ReceivedAmt;
 
-		MyViewHolder(View view) {
+		MyViewHolder(@NonNull View view) {
 			super(view);
 			title = view.findViewById(R.id.Loan_no_text_view);
 			startDate1 = view.findViewById(R.id.StartDate);

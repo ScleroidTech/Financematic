@@ -1,6 +1,7 @@
 package com.scleroid.financematic.fragments.passbook;
 
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -25,6 +26,7 @@ public class PassbookAdapter extends RecyclerView.Adapter<PassbookAdapter.MyView
 		this.passbookList = passbookList;
 	}
 
+	@NonNull
 	@Override
 	public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		View itemView = LayoutInflater.from(parent.getContext())
@@ -62,9 +64,10 @@ public class PassbookAdapter extends RecyclerView.Adapter<PassbookAdapter.MyView
 		/* for selecte row and chnage color        implements View.OnClickListener*/
 		public TextView passbook_taken_money, passbook_name, passbook_date,
 				passbook_received_money;
+		@NonNull
 		private SparseBooleanArray selectedItems = new SparseBooleanArray();
 
-		public MyViewHolder(View view) {
+		public MyViewHolder(@NonNull View view) {
 			super(view);
 			/* view.setOnClickListener(this);*/
 			passbook_date = view.findViewById(R.id.passbook_date);

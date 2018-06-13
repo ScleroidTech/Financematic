@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -30,7 +31,8 @@ import java.util.List;
      */
 public class Notification extends Fragment {
 
-        private List<Passbook> passbookList = new ArrayList<>();
+	    @NonNull
+	    private List<Passbook> passbookList = new ArrayList<>();
         private RecyclerView recyclerView;
         private PassbookAdapter mAdapter;
 
@@ -39,12 +41,13 @@ public class Notification extends Fragment {
             // Required empty public constructor
         }
 
-        public static Notification newInstance(String param1, String param2) {
-            Notification fragment = new Notification();
-            Bundle args = new Bundle();
-            fragment.setArguments(args);
-            return fragment;
-        }
+	    @NonNull
+	    public static Notification newInstance(String param1, String param2) {
+		    Notification fragment = new Notification();
+		    Bundle args = new Bundle();
+		    fragment.setArguments(args);
+		    return fragment;
+	    }
 
         @Override
         public void onCreate(Bundle savedInstanceState) {

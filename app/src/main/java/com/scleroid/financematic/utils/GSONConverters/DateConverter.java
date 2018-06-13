@@ -1,5 +1,7 @@
 package com.scleroid.financematic.utils.GSONConverters;
 
+import android.support.annotation.NonNull;
+
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -29,8 +31,9 @@ public class DateConverter implements JsonDeserializer<Date> {
 	 * @return a deserialized object of the specified type typeOfT which is a subclass of {@code T}
 	 * @throws JsonParseException if json is not in the expected format of {@code typeofT}
 	 */
+	@NonNull
 	@Override
-	public Date deserialize(JsonElement json, Type typeOfT,
+	public Date deserialize(@NonNull JsonElement json, Type typeOfT,
 	                        JsonDeserializationContext context) throws JsonParseException {
 		String s = json.getAsJsonPrimitive().getAsString();
 		long l = Long.parseLong(s.substring(s.indexOf("(") + 1, s.indexOf("+")));
