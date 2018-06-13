@@ -14,21 +14,15 @@
         android:layout_height="match_parent"
         android:background="@color/grey_1"
         android:id="@+id/profile11111"
-
         >
-
-
-
         <ImageView
 
             android:id="@+id/header_cover"
             android:layout_width="match_parent"
             android:layout_height="180dp"
-
             android:scaleType="centerCrop"
             android:src="@drawable/profile"
             android:transitionName="@string/transition_background"
-
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -43,7 +37,6 @@
             android:layout_marginRight="32dp"
             android:background="@drawable/shadow"
             android:transitionName="@string/transition_card"
-
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@+id/header_cover" />
@@ -266,10 +259,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="5dp"
                 android:layout_weight=".7"
-
-
                 android:ellipsize="end"
-
                 android:maxLines="2"
                 android:text="Rs 20,112"
                 android:textColor="@color/text_profile"

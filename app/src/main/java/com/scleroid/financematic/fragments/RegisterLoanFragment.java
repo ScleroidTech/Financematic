@@ -135,7 +135,7 @@ public class RegisterLoanFragment extends BaseFragment {
 			public void onItemSelected(final AdapterView<?> parent, final View view,
 			                           final int position, final long id) {
 				durationType = country[position];
-				ettxNoofInstallment.setText(String.valueOf(calculateNoOfInstallments()));
+				ettxNoofInstallment.setText(String.valueOf(getInstallments()));
 			}
 
 			@Override
@@ -194,7 +194,7 @@ public class RegisterLoanFragment extends BaseFragment {
 						}
 						getInterestAmt(BigDecimal.valueOf(
 								Double.valueOf(etTotalLoanAmount.getText().toString().trim())),
-								convertTime(calculateTotalDuration(),
+								calculateInstallments(calculateTotalDuration(),
 										durationConverter(LoanDurationType.MONTHLY)),
 								Double.valueOf(ettxrateInterest.getText()
 										.toString().trim()));
@@ -433,16 +433,31 @@ public class RegisterLoanFragment extends BaseFragment {
 		return null;
 	}
 
-	private long calculateNoOfInstallments() {
+	private long getInstallments() {
+
+
+		return  getInstallments(durationConverter(durationType));
+
+
+
+
+	}
+
+	private long getInstallments(long converter) {
 		if (startDate == null || endDate == null) return 0;
 
-
-		durationDivided = convertTime(calculateTotalDuration(), durationConverter(durationType));
+		durationDivided = calculateInstallments(calculateTotalDuration(), converter);
 
 
 		return durationDivided;
-
 	}
+
+	private long calculateInstallments(long timeDiff, long divider) {
+
+
+		return (TimeUnit.MILLISECONDS.toDays(timeDiff) / divider);
+	}
+
 
 	private long calculateTotalDuration() {
 		return dateUtils.differenceOfDates(startDate, endDate);
@@ -485,9 +500,9 @@ public class RegisterLoanFragment extends BaseFragment {
 				.toString();
 		final long
 				monthlyDuration =
-				convertTime(calculateTotalDuration(), durationConverter(LoanDurationType.MONTHLY));
+				getInstallments(durationConverter(LoanDurationType.MONTHLY));
 		final long
-				duration = calculateNoOfInstallments();
+				duration = getInstallments();
 
 		if (TextUtils.isEmpty(totatLoanAmt) || TextUtils.isEmpty(
 				rateOfInterest) || monthlyDuration <= 0) {
@@ -512,7 +527,7 @@ public class RegisterLoanFragment extends BaseFragment {
 			endDate = (Date) intent.getSerializableExtra(DatePickerDialogFragment.EXTRA_DATE);
 			endDateTextView.setText(dateUtils.getFormattedDate(endDate));
 		}
-		ettxNoofInstallment.setText(String.valueOf(calculateNoOfInstallments()));
+		ettxNoofInstallment.setText(String.valueOf(getInstallments()));
 
 	}
 
@@ -534,11 +549,6 @@ public class RegisterLoanFragment extends BaseFragment {
 				getFragmentManager(), msg, DIALOG_DATE);
 	}
 
-	private long convertTime(long timeDiff, long divider) {
-
-
-		return (TimeUnit.MILLISECONDS.toDays(timeDiff) / divider);
-	}
 
 	private BigDecimal calculateInstallmentAmt(final long duration, final BigDecimal loanAmt,
 	                                           final BigDecimal interestAmt) {
@@ -564,7 +574,7 @@ public class RegisterLoanFragment extends BaseFragment {
 
 	private BigDecimal getInterestPlusPrincipleEMI(BigDecimal loanAmt, BigDecimal interest) {
 		BigDecimal emi = loanAmt.add(interest.divide(BigDecimal.valueOf(
-				convertTime(calculateTotalDuration(), durationConverter(durationType)))));
+				calculateInstallments(calculateTotalDuration(), durationConverter(durationType)))));
 		return emi;
 	}
 

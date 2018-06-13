@@ -449,7 +449,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="10dp"
                         android:layout_weight=".7"
-                        android:text="Calculate Installment"
+                        android:text="Calculate Interest"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="#409bbf"
                         android:textSize="17sp" />
