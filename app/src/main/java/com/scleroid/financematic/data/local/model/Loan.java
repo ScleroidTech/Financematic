@@ -47,7 +47,7 @@ public class Loan implements Serializable {
 	@TypeConverters(DateConverter.class)
 	private Date endDate;
 	@SerializedName("interest")
-	private float rateOfInterest;
+	private BigDecimal interestAmt;
 
 	@SerializedName("installement_amount")
 	@TypeConverters(MoneyConverter.class)
@@ -70,18 +70,17 @@ public class Loan implements Serializable {
 
 	@Ignore
 	public Loan(int accountNo, BigDecimal loanAmt, Date startDate, Date endDate,
-	            float rateOfInterest,
+	            BigDecimal interestAmt,
 	            BigDecimal installmentAmt, int noOfInstallments,
-	            String installmentType,
-	            BigDecimal repayAmt, int custId) {
-		this(accountNo, loanAmt, startDate, endDate, rateOfInterest, installmentAmt,
-				noOfInstallments, installmentType, repayAmt, custId, new BigDecimal(0));
+	            String installmentType, int custId) {
+		this(accountNo, loanAmt, startDate, endDate, interestAmt, installmentAmt,
+				noOfInstallments, installmentType, new BigDecimal(0), custId, new BigDecimal(0));
 
 	}
 
 	public Loan(final int accountNo, final BigDecimal loanAmt, final Date startDate,
 	            final Date endDate,
-	            final float rateOfInterest,
+	            final BigDecimal interestAmt,
 	            final BigDecimal installmentAmt, final int noOfInstallments,
 	            final String installmentType,
 	            final BigDecimal repayAmt,
@@ -89,7 +88,7 @@ public class Loan implements Serializable {
 		this.loanAmt = loanAmt;
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.rateOfInterest = rateOfInterest;
+		this.interestAmt = interestAmt;
 		this.installmentAmt = installmentAmt;
 		this.noOfInstallments = noOfInstallments;
 		this.installmentType = installmentType;
@@ -115,7 +114,7 @@ public class Loan implements Serializable {
 				"loanAmt=" + loanAmt +
 				", startDate=" + startDate +
 				", endDate=" + endDate +
-				", rateOfInterest=" + rateOfInterest +
+				", interestAmt=" + interestAmt +
 				", installmentAmt=" + installmentAmt +
 				", noOfInstallments=" + noOfInstallments +
 
@@ -161,12 +160,12 @@ public class Loan implements Serializable {
 		this.endDate = endDate;
 	}
 
-	public float getRateOfInterest() {
-		return rateOfInterest;
+	public BigDecimal getInterestAmt() {
+		return interestAmt;
 	}
 
-	public void setRateOfInterest(float rateOfInterest) {
-		this.rateOfInterest = rateOfInterest;
+	public void setInterestAmt(BigDecimal interestAmt) {
+		this.interestAmt = interestAmt;
 	}
 
 	public BigDecimal getInstallmentAmt() {

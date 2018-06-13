@@ -30,7 +30,7 @@ import com.scleroid.financematic.data.local.model.TransactionModel;
  */
 
 @Database(entities = {Customer.class, Loan.class, TransactionModel.class, Expense.class,
-		Installment.class}, version = 12, exportSchema = false)
+		Installment.class}, version = 13, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 	/*
 

@@ -191,11 +191,11 @@ public class PeopleFragment extends BaseFragment {
 		emptyCard.setVisibility(View.VISIBLE);
 		peopleRecyclerView.setVisibility(View.GONE);
 
-		if (items == null || items.data.isEmpty()) {
+		if (items == null) {
 			noAddressTitle.setText(items.status.toString());
 			noAddressSubtitle.setText(items.message);
 
-		} else if (items.status.equals(Status.LOADING)) {
+		} else if (items.data.isEmpty() && items.status.equals(Status.LOADING)) {
 			noAddressTitle.setText(items.status.toString());
 			noAddressSubtitle.setText(items.message);
 

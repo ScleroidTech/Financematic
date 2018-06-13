@@ -150,7 +150,7 @@ public class RegisterCustomerFragment extends BaseFragment {
             }
         });
 */
-		/* b=(Button)rootView.findViewById(R.id.btn_new_customer_Register);*/
+		/* btnGiveMoney=(Button)rootView.findViewById(R.id.btn_new_customer_Register);*/
 		/* tv=(TextView)rootView.findViewById(R.id.display);*/
 		firstFragment.setOnClickListener(v -> {
 			String stretname = etnameText.toString();

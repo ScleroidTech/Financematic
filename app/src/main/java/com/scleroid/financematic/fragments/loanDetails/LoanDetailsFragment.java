@@ -57,7 +57,7 @@ public class LoanDetailsFragment extends BaseFragment {
 	RecyclerView pesonalSummeryDetailsRecycler;
 
 	@BindView(R.id.interest_text_view)
-	TextView interestTextView;
+	RupeeTextView interestTextView;
 
 	@BindView(R.id.card_loan)
 	View cardLoan;
@@ -220,15 +220,15 @@ public class LoanDetailsFragment extends BaseFragment {
 	DateUtils dateUtils;
 	private void updateUi() {
 		if (theLoan == null) return;
-		totalAmountTextView.setText(theLoan.getLoanAmt().toString());
-		interestTextView.setText(String.format("%s %%", theLoan.getRateOfInterest()));
+		totalAmountTextView.setText(theLoan.getLoanAmt().toPlainString());
+		interestTextView.setText(String.valueOf(theLoan.getInterestAmt().toPlainString()));
 		final long duration =
 				dateUtils.differenceOfDates(theLoan.getStartDate(), theLoan.getEndDate());
 		long months = TimeUnit.MILLISECONDS.toDays(duration) / 30;
 		durationTextView.setText(String.format("%d Months",
 				months));
-		cardHolder.paidAmountTextView.setText(theLoan.getReceivedAmt().toString());
-		cardHolder.installmentTextView.setText(theLoan.getInstallmentAmt().toString());
+		cardHolder.paidAmountTextView.setText(theLoan.getReceivedAmt().toPlainString());
+		cardHolder.installmentTextView.setText(theLoan.getInstallmentAmt().toPlainString());
 		setTitle();
 		//	activityUtils.useUpButton((MainActivity) getActivity(),true);
 
