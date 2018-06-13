@@ -31,7 +31,6 @@ public interface WebService {
 	@POST("/mobile/registerusercid")
 	LiveData<ApiResponse<Customer>> getCustomer(@Field("customer_id") int customerId);
 
-
 	@NonNull
 	@DebugLog
 	@GET("/mobile/registerusers")
@@ -57,6 +56,7 @@ public interface WebService {
 	@DebugLog
 	@GET("/mobile/getexpenditure")
 	LiveData<ApiResponse<List<Expense>>> getExpenses();
+
 
 	@NonNull
 	@DebugLog

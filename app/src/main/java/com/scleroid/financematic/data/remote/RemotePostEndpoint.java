@@ -1,5 +1,6 @@
 package com.scleroid.financematic.data.remote;
 
+
 import android.support.annotation.NonNull;
 
 import com.scleroid.financematic.data.local.model.Customer;
@@ -40,7 +41,7 @@ public interface RemotePostEndpoint {
 
 	@NonNull
 	@DebugLog
-	@POST("/mobile/posts")
+	@POST("/mobile/expand")
 	Call<Expense> addExpense(@Body Expense expense);
 
 	@NonNull
