@@ -421,10 +421,9 @@ public class RegisterLoanFragment extends BaseFragment {
 
 	private void updateInterestAmt() {
 		if (TextUtils.isEmpty(ettxloan_amout.getText().toString())) return;
-		BigDecimal interestAmt = getInterestAmt(BigDecimal.valueOf(
-				Double.valueOf(ettxloan_amout.getText().toString().trim
+		BigDecimal interestAmt = getInterestAmt(
+				getBigDecimal(Double.valueOf(ettxloan_amout.getText().toString().trim
 						())));
-		if (interestAmt.intValue() == 0) return;
 		txInterestAmount.setText(interestAmt.toPlainString());
 	}
 
@@ -459,17 +458,26 @@ public class RegisterLoanFragment extends BaseFragment {
 							durationConverter(LoanDurationType.MONTHLY));
 			if (TextUtils.isEmpty(
 					rateOfInterest) || monthlyDuration <= 0) {
-				return BigDecimal.valueOf(0);
+				return getBigDecimal();
 			}
 			double interestRate = Double.valueOf(rateOfInterest.trim());
 			BigDecimal interestAmt =
 					calculateInterestAmt(loanAmt, monthlyDuration, interestRate);
 			return interestAmt;
 		} else if (!TextUtils.isEmpty(txInterestAmount.getText().toString())) {
-			return BigDecimal.valueOf(Double.parseDouble(txInterestAmount.getText().toString
+			return getBigDecimal(Double.parseDouble(txInterestAmount.getText().toString
 					()));
 		}
-		return BigDecimal.valueOf(0);
+		return getBigDecimal();
+	}
+
+	private BigDecimal getBigDecimal(final Double value) {
+		return BigDecimal.valueOf(value).setScale(2,
+				BigDecimal.ROUND_HALF_EVEN);
+	}
+
+	private BigDecimal getBigDecimal() {
+		return getBigDecimal(0.0);
 	}
 
 	private double convertTime(long timeDiff, long divider) {
@@ -515,7 +523,7 @@ public class RegisterLoanFragment extends BaseFragment {
 	private BigDecimal calculateInterestAmt(BigDecimal loanAmt, double duration,
 	                                        double interestRate) {
 
-		return loanAmt.multiply(BigDecimal.valueOf((interestRate / 100) * duration));
+		return loanAmt.multiply(getBigDecimal((interestRate / 100) * duration));
 	}
 
 	private boolean isNotValidAmt(@NonNull String loan_amountval) {
@@ -547,12 +555,12 @@ public class RegisterLoanFragment extends BaseFragment {
 				duration = getInstallments();
 
 		if (TextUtils.isEmpty(totatLoanAmt)) {
-			return BigDecimal.valueOf(0);
+			return getBigDecimal();
 		}
-		BigDecimal loanAmt = BigDecimal.valueOf(Double.valueOf(totatLoanAmt.trim()));
+		BigDecimal loanAmt = getBigDecimal(Double.valueOf(totatLoanAmt.trim()));
 
 		BigDecimal interestAmt = getInterestAmt(loanAmt);
-		if (interestAmt.intValue() == 0) return BigDecimal.valueOf(0);
+		if (interestAmt.intValue() == 0) return getBigDecimal();
 
 		return calculateInstallmentAmt(duration, loanAmt, interestAmt);
 
