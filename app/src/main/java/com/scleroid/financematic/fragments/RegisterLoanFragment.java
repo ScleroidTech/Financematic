@@ -239,18 +239,6 @@ public class RegisterLoanFragment extends BaseFragment {
 				});
 
 
-		ettxrateInterest.addTextChangedListener(
-				new TextValidator(ettxrateInterest) {
-					@Override
-					public void validate(TextView textView, @NonNull String text) {
-
-						if (isNotValidAmt(text)) {
-							ettxrateInterest.setError("Valid valid Rate in %");
-						}
-						getInterestAmt(BigDecimal.valueOf(
-								Double.valueOf(ettxloan_amout.getText().toString().trim())));
-					}
-				});
 
 		ettxInstallmentAmount.addTextChangedListener(
 				new TextValidator(ettxInstallmentAmount) {
@@ -429,28 +417,12 @@ public class RegisterLoanFragment extends BaseFragment {
 		//	customerNameTextView.setText(customer.getName());
 	}
 
-	private BigDecimal getInterestAmt(@NonNull BigDecimal loanAmt) {
-
-		if (rateOfInterestLayout.getVisibility() == View.VISIBLE) {
-
-			String rateOfInterest = ettxrateInterest.getText()
-					.toString();
-			final long
-					monthlyDuration =
-					convertTime(calculateTotalDuration(),
-							durationConverter(LoanDurationType.MONTHLY));
-			if (TextUtils.isEmpty(
-					rateOfInterest) || monthlyDuration <= 0) {
-				return BigDecimal.valueOf(0);
-			}
-			double interestRate = Double.valueOf(rateOfInterest.trim());
-			BigDecimal interestAmt =
-					calculateInterestAmt(loanAmt, monthlyDuration, interestRate);
-			return interestAmt;
-		} else {
-			return BigDecimal.valueOf(Double.parseDouble(txInterestAmount.getText().toString
-					()));
-		}
+	private void updateInterestAmt() {
+		BigDecimal interestAmt = getInterestAmt(BigDecimal.valueOf(
+				Double.valueOf(ettxloan_amout.getText().toString().trim
+						())));
+		if (interestAmt.intValue() == 0) return;
+		txInterestAmount.setText(interestAmt.toPlainString());
 	}
 
 	private void setRateOfInterest() {
@@ -472,12 +444,29 @@ public class RegisterLoanFragment extends BaseFragment {
 
 	}
 
-	private void updateInterestAmt() {
-		txInterestAmount.setText(getInterestAmt(BigDecimal.valueOf(
-				Double.valueOf(ettxloan_amout.getText().toString().trim
-						())))
+	private BigDecimal getInterestAmt(@NonNull BigDecimal loanAmt) {
 
-				.toPlainString());
+		if (rateOfInterestLayout.getVisibility() == View.VISIBLE) {
+
+			String rateOfInterest = ettxrateInterest.getText()
+					.toString();
+			final long
+					monthlyDuration =
+					convertTime(calculateTotalDuration(),
+							durationConverter(LoanDurationType.MONTHLY));
+			if (TextUtils.isEmpty(
+					rateOfInterest) || monthlyDuration <= 0) {
+				return BigDecimal.valueOf(0);
+			}
+			double interestRate = Double.valueOf(rateOfInterest.trim());
+			BigDecimal interestAmt =
+					calculateInterestAmt(loanAmt, monthlyDuration, interestRate);
+			return interestAmt;
+		} else if (TextUtils.isEmpty(txInterestAmount.getText().toString())) {
+			return BigDecimal.valueOf(Double.parseDouble(txInterestAmount.getText().toString
+					()));
+		}
+		return BigDecimal.valueOf(0);
 	}
 
 	private long calculateNoOfInstallments() {
