@@ -25,7 +25,7 @@
                 android:gravity="top|center"
                 android:orientation="horizontal">
 
-                <LinearLayobut
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginTop="40dp"
@@ -43,7 +43,7 @@
                         android:textColor="#bfff"
                         android:textSize="14sp" />
 
-                    <RupeeTextView
+                    <com.scleroid.financematic.utils.ui.RupeeTextView
                         android:id="@+id/interest_text_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
                         android:textAlignment="textStart"
                         android:textColor="#bfff"
                         android:textSize="20sp" />
-                </LinearLayobut>
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
