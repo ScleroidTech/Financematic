@@ -316,7 +316,7 @@
                         android:layout_weight=".7"
                         android:background="@drawable/shadow"
                         android:inputType="number"
-                        android:maxLength="2"
+
                         android:paddingLeft="10dp"
                         android:paddingTop="6dp"
                         android:paddingBottom="6dp"

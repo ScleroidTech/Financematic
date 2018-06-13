@@ -450,7 +450,7 @@ public class RegisterLoanFragment extends BaseFragment {
 
 			String rateOfInterest = ettxrateInterest.getText()
 					.toString();
-			final long
+			final double
 					monthlyDuration =
 					convertTime(calculateTotalDuration(),
 							durationConverter(LoanDurationType.MONTHLY));
@@ -469,15 +469,10 @@ public class RegisterLoanFragment extends BaseFragment {
 		return BigDecimal.valueOf(0);
 	}
 
-	private long calculateNoOfInstallments() {
-		if (startDate == null || endDate == null) return 0;
+	private double convertTime(long timeDiff, long divider) {
 
 
-		durationDivided = convertTime(calculateTotalDuration(), durationConverter(durationType));
-
-
-		return durationDivided;
-
+		return (double) TimeUnit.MILLISECONDS.toDays(timeDiff) / (double) divider;
 	}
 
 	private long calculateTotalDuration() {
@@ -514,10 +509,10 @@ public class RegisterLoanFragment extends BaseFragment {
 		return 0;
 	}
 
-	private long convertTime(long timeDiff, long divider) {
+	private BigDecimal calculateInterestAmt(BigDecimal loanAmt, double duration,
+	                                        double interestRate) {
 
-
-		return (TimeUnit.MILLISECONDS.toDays(timeDiff) / divider);
+		return loanAmt.multiply(BigDecimal.valueOf((interestRate / 100) * duration));
 	}
 
 	private boolean isNotValidAmt(@NonNull String loan_amountval) {
@@ -608,10 +603,16 @@ public class RegisterLoanFragment extends BaseFragment {
 				});
 	}
 
-	private BigDecimal calculateInterestAmt(BigDecimal loanAmt, long duration,
-	                                        double interestRate) {
+	private long calculateNoOfInstallments() {
+		if (startDate == null || endDate == null) return 0;
 
-		return loanAmt.multiply(BigDecimal.valueOf((interestRate / 100) * duration));
+
+		durationDivided =
+				(long) convertTime(calculateTotalDuration(), durationConverter(durationType));
+
+
+		return durationDivided;
+
 	}
 
 	private BigDecimal calculateInstallmentAmt(final long duration,
