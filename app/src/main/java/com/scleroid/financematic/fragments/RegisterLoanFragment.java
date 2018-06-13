@@ -418,6 +418,7 @@ public class RegisterLoanFragment extends BaseFragment {
 	}
 
 	private void updateInterestAmt() {
+		if (TextUtils.isEmpty(ettxloan_amout.getText().toString())) return;
 		BigDecimal interestAmt = getInterestAmt(BigDecimal.valueOf(
 				Double.valueOf(ettxloan_amout.getText().toString().trim
 						())));
