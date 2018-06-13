@@ -41,7 +41,9 @@ import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import es.dmoral.toasty.Toasty;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -395,47 +397,17 @@ public class RegisterLoanFragment extends BaseFragment {
 				});
 	}
 
-	private BigDecimal getAmtOfInstallment() {
-		final String totatLoanAmt = etTotalLoanAmount.getText()
-				.toString();
 
-		final long
-				duration = calculateNoOfInstallments();
+	private long calculateNoOfInstallments() {
+		if (startDate == null || endDate == null) return 0;
 
-		if (TextUtils.isEmpty(totatLoanAmt)) {
-			return new BigDecimal(0);
-		}
-		BigDecimal loanAmt = BigDecimal.valueOf(Double.valueOf(totatLoanAmt.trim()));
 
-		BigDecimal interestAmt = getInterestAmt(loanAmt);
-		if (interestAmt.intValue() == 0) return new BigDecimal(0);
+		durationDivided = convertTime(calculateTotalDuration(), durationConverter(durationType));
 
-		return calculateInstallmentAmt(duration, loanAmt, interestAmt);
+
+		return durationDivided;
 
 	}
-
-	private List<Installment> createInstallments() {
-		List<Date> dates = calculateDates(startDate, durationDivided);
-		List<Installment> installments = new ArrayList<>();
-		for (Date date : dates) {
-			Installment installment =
-					new Installment(CommonUtils.getRandomInt(), date, amtOfInstallment,
-							loan.getAccountNo());
-			installments.add(installment);
-		}
-		return installments;
-	}
-
-	private List<Date> calculateDates(Date installmentDate, final long durationDivided) {
-		long durationTypeDivider = durationConverter(durationType);
-		List<Date> dates = new ArrayList<>();
-		for (int i = 0; i < durationDivided; i++) {
-			installmentDate = dateUtils.findDate(installmentDate, durationTypeDivider);
-			dates.add(installmentDate);
-		}
-		return dates;
-	}
-
 	private BigDecimal calculateInstallmentAmt(final long duration, final BigDecimal loanAmt,
 	                                           final BigDecimal interestAmt) {
 		switch (installmentCalculationType) {
@@ -697,23 +669,6 @@ public class RegisterLoanFragment extends BaseFragment {
 	}
 
 
-	private BigDecimal calculateInstallmentAmt(final long duration, final BigDecimal loanAmt,
-	                                           final BigDecimal interestAmt) {
-		switch (installmentCalculationType) {
-			case 0:
-				return getPreDefinedInterestEMI(loanAmt, duration);
-
-			case 1:
-				return getInterestPlusPrincipleEMI(loanAmt, interestAmt);
-
-			case 2:
-				return interestAmt;
-
-			default:
-				return getPreDefinedInterestEMI(loanAmt, duration);
-
-		}
-	}
 	private void setRateOfInterest() {
 		if (ettxrateInterest.getVisibility() == View.VISIBLE) {
 			ettxrateInterest.addTextChangedListener(
@@ -735,9 +690,6 @@ public class RegisterLoanFragment extends BaseFragment {
 		}
 
 	}
-	private BigDecimal getPreDefinedInterestEMI(BigDecimal loanAmt, long duration) {
-		return loanAmt.divide(BigDecimal.valueOf(duration));
-	}
 
 
 
@@ -746,11 +698,7 @@ public class RegisterLoanFragment extends BaseFragment {
 
 	@OnClick(R.id.btn_givenmoney)
 	public void onViewClicked() {}
-	private BigDecimal getInterestPlusPrincipleEMI(BigDecimal loanAmt, BigDecimal interest) {
-		BigDecimal emi = loanAmt.add(interest.divide(BigDecimal.valueOf(
-				calculateInstallments(calculateTotalDuration(), durationConverter(durationType)))));
-		return emi;
-	}
+
 
 	private BigDecimal getInterestAmt(BigDecimal loanAmt, long duration, double interestRate) {
 		BigDecimal interestAmt =
@@ -758,6 +706,5 @@ public class RegisterLoanFragment extends BaseFragment {
 		return interestAmt;
 
 	}
-	@OnClick(R.id.btn_givenmoney)
-	public void onViewClicked() {}
+
 }
