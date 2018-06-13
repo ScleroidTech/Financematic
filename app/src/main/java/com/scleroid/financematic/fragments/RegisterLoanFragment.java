@@ -323,6 +323,8 @@ public class RegisterLoanFragment extends BaseFragment {
 			}
 			if (TextUtils.isEmpty(noOfInstallments)) {
 				ettxNoofInstallment.setError("Enter No of Installment");
+			} else if (noOfInstallments.contains("0")) {
+				ettxNoofInstallment.setError("No of installment must not be 0");
 			}
 
 			if (TextUtils.isEmpty(startDateStr)) { startDateTextView.setError("Start Date");}
