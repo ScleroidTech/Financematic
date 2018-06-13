@@ -455,6 +455,7 @@ public class RegisterLoanFragment extends BaseFragment {
 
 	private void setRateOfInterest() {
 		if (rateOfInterestLayout.getVisibility() == View.VISIBLE) {
+
 			ettxrateInterest.addTextChangedListener(
 					new TextValidator(ettxrateInterest) {
 						@Override
@@ -463,16 +464,20 @@ public class RegisterLoanFragment extends BaseFragment {
 							if (isNotValidAmt(text)) {
 								ettxrateInterest.setError("Valid valid Rate in %");
 							} else {
-								txInterestAmount.setText(getInterestAmt(BigDecimal.valueOf(
-										Double.valueOf(ettxloan_amout.getText().toString().trim
-												())))
-
-										.toPlainString());
+								updateInterestAmt();
 							}
 						}
 					});
 		}
 
+	}
+
+	private void updateInterestAmt() {
+		txInterestAmount.setText(getInterestAmt(BigDecimal.valueOf(
+				Double.valueOf(ettxloan_amout.getText().toString().trim
+						())))
+
+				.toPlainString());
 	}
 
 	private long calculateNoOfInstallments() {
@@ -674,6 +679,7 @@ public class RegisterLoanFragment extends BaseFragment {
 			endDateTextView.setText(dateUtils.getFormattedDate(endDate));
 		}
 		ettxNoofInstallment.setText(String.valueOf(getInstallments()));
+		updateInterestAmt();
 
 	}
 
