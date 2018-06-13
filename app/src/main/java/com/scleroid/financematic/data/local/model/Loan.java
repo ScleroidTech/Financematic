@@ -47,6 +47,7 @@ public class Loan implements Serializable {
 	@TypeConverters(DateConverter.class)
 	private Date endDate;
 	@SerializedName("interest")
+	@TypeConverters(MoneyConverter.class)
 	private BigDecimal interestAmt;
 
 	@SerializedName("installement_amount")

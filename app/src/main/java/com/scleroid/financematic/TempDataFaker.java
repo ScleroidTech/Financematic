@@ -82,7 +82,7 @@ public class TempDataFaker {
 				faker.commerce.price(5000, 1000000),
 				faker.date.backward(),
 				faker.date.forward(),
-				faker.number.between(1, 100),
+				faker.commerce.price(50, 1000),
 				faker.commerce.price(0, 2000),
 				faker.number.between(1, 20),
 				LoanDurationType.MONTHLY,
