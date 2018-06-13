@@ -113,9 +113,9 @@
 
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginLeft="10dp"
                         android:layout_weight=".7"
-                        android:layout_gravity="center_vertical"
                         android:text="Start Date"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="#409bbf"
@@ -175,6 +175,42 @@
                         android:textSize="17sp" />
 
                 </LinearLayout>
+                <!--  <LinearLayout
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal"
+                      android:paddingRight="10dp"
+                      android:paddingBottom="5dp">
+
+                      <TextView
+                          android:layout_width="0dp"
+                          android:layout_height="wrap_content"
+                          android:layout_marginLeft="10dp"
+                          android:layout_marginTop="8dp"
+                          android:layout_weight=".7"
+
+  android:layout_gravity="center_vertical"
+                          android:text="Pre-calculated Installment"
+                          android:textAppearance="?android:attr/textAppearanceLarge"
+                          android:textColor="#409bbf"
+                          android:textSize="17sp" />
+
+                      <EditText
+                          android:id="@+id/txprecalculated"
+                          android:layout_width="0dp"
+                          android:layout_height="44dp"
+                          android:layout_marginTop="8dp"
+                          android:layout_weight=".7"
+                          android:background="@drawable/shadow"
+                          android:inputType="number"
+                          android:maxLength="2"
+                          android:paddingLeft="10dp"
+                          android:paddingTop="6dp"
+                          android:paddingBottom="6dp"
+                          android:textColor="#409bbf" />
+
+                  </LinearLayout>-->
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -185,21 +221,21 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="8dp"
                         android:layout_weight=".7"
 
-android:layout_gravity="center_vertical"
-                        android:text="Pre-calculated Installment"
+                        android:text="Pre-calculate Amount"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="#409bbf"
                         android:textSize="17sp" />
 
                     <EditText
-                        android:id="@+id/txprecalculated"
+                        android:id="@+id/txrprecalcuteinterest"
                         android:layout_width="0dp"
                         android:layout_height="44dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="6dp"
                         android:layout_weight=".7"
                         android:background="@drawable/shadow"
                         android:inputType="number"
@@ -210,8 +246,6 @@ android:layout_gravity="center_vertical"
                         android:textColor="#409bbf" />
 
                 </LinearLayout>
-
-
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -247,6 +281,7 @@ android:layout_gravity="center_vertical"
                         android:textColor="#409bbf" />
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -283,51 +318,51 @@ android:layout_gravity="center_vertical"
                 </LinearLayout>
 
 
-              <!--  <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:paddingRight="10dp"
-                    android:paddingBottom="5dp">
+                <!--  <LinearLayout
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:orientation="horizontal"
+                      android:paddingRight="10dp"
+                      android:paddingBottom="5dp">
 
-                    <EditText
-                        android:id="@+id/txcalculatednterest"
-                        android:layout_width="0dp"
-                        android:layout_height="40dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/shadow"
-                        android:hint="@string/interestAmt"
-                        android:inputType="number"
-                        android:maxLength="2"
-                        android:paddingLeft="10dp"
+                      <EditText
+                          android:id="@+id/txcalculatednterest"
+                          android:layout_width="0dp"
+                          android:layout_height="40dp"
+                          android:layout_marginTop="8dp"
+                          android:layout_weight="1"
+                          android:background="@drawable/shadow"
+                          android:hint="@string/interestAmt"
+                          android:inputType="number"
+                          android:maxLength="2"
+                          android:paddingLeft="10dp"
 
-                        android:textColor="#409bbf" />
+                          android:textColor="#409bbf" />
 
-                    <TextView
+                      <TextView
 
-                        android:layout_width="0dp"
-                        android:layout_height="40dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_weight="0.15"
-                        android:maxLength="2"
-                        android:paddingTop="6dp"
-                        android:paddingBottom="6dp"
+                          android:layout_width="0dp"
+                          android:layout_height="40dp"
+                          android:layout_marginTop="8dp"
+                          android:layout_weight="0.15"
+                          android:maxLength="2"
+                          android:paddingTop="6dp"
+                          android:paddingBottom="6dp"
 
-                        android:text="Or"
-                        android:textAlignment="center"
-                        android:textColor="#409bbf" />
+                          android:text="Or"
+                          android:textAlignment="center"
+                          android:textColor="#409bbf" />
 
-                    <Button
-                        android:id="@+id/btn_calculate_interest"
-                        android:layout_width="0dp"
-                        android:layout_height="40dp"
-                        android:layout_weight="1"
-                        android:text="Calculate Interest"
+                      <Button
+                          android:id="@+id/btn_calculate_interest"
+                          android:layout_width="0dp"
+                          android:layout_height="40dp"
+                          android:layout_weight="1"
+                          android:text="Calculate Interest"
 
-                        android:textColor="#409bbf" />
+                          android:textColor="#409bbf" />
 
-                </LinearLayout>-->
+                  </LinearLayout>-->
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -398,6 +433,43 @@ android:layout_gravity="center_vertical"
                         android:paddingBottom="6dp"
                         android:textColor="#409bbf" />
 
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="2dp"
+                    android:orientation="horizontal"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="2dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight=".7"
+                        android:text="Calculate Installment"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="#409bbf"
+                        android:textSize="17sp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_weight=".7"
+                        android:background="@drawable/shadow">
+
+                        <Spinner
+                            android:id="@+id/spinnercalculate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+
+
+                            android:paddingTop="2dp"
+                            android:textColor="#409bbf" />
+                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout

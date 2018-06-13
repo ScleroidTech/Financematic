@@ -64,6 +64,9 @@ public class RegisterLoanFragment extends BaseFragment {
 			{LoanDurationType.MONTHLY, LoanDurationType.DAILY, LoanDurationType.WEEKLY,
 					LoanDurationType.BIWEEKLY, LoanDurationType.BIMONTHLY, LoanDurationType
 					.QUARTERLY, LoanDurationType.HALF_YEARLY, LoanDurationType.YEARLY};
+	String[] calculate =
+			{"Pre-Defined Interest", "Interest including Principal", "Interest only"};
+
 	@Inject
 	LocalCustomerLab customerLab;
 	@Inject
@@ -126,12 +129,26 @@ public class RegisterLoanFragment extends BaseFragment {
 			setCustomerName(customerNameTextView, bundle);
 		}
 		final Spinner spin = rootView.findViewById(R.id.spinnertx);
+		final Spinner spin1 = rootView.findViewById(R.id.spinnercalculate);
 		spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(final AdapterView<?> parent, final View view,
 			                           final int position, final long id) {
 				durationType = country[position];
 				ettxNoofInstallment.setText(String.valueOf(calculateNoOfInstallments()));
+			}
+
+			@Override
+			public void onNothingSelected(final AdapterView<?> parent) {
+
+			}
+		});
+		spin1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(final AdapterView<?> parent, final View view,
+			                           final int position, final long id) {
+				installmentCalculationType = position;
+				ettxInstallmentAmount.setText(String.valueOf(getAmtOfInstallment()));
 			}
 
 			@Override
@@ -147,6 +164,12 @@ public class RegisterLoanFragment extends BaseFragment {
 		aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		//Setting the ArrayAdapter data on the Spinner
 		spin.setAdapter(aa);
+
+		ArrayAdapter<String> aaa = new ArrayAdapter<>(getActivity(),
+				android.R.layout.simple_spinner_item, calculate);
+		aaa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		//Setting the ArrayAdapter data on the Spinner
+		spin1.setAdapter(aaa);
 
 
 		ettxloan_amout.addTextChangedListener(
@@ -169,6 +192,12 @@ public class RegisterLoanFragment extends BaseFragment {
 						if (isNotValidAmt(text)) {
 							ettxrateInterest.setError("Valid valid Rate in %");
 						}
+						getInterestAmt(BigDecimal.valueOf(
+								Double.valueOf(etTotalLoanAmount.getText().toString().trim())),
+								convertTime(calculateTotalDuration(),
+										durationConverter(LoanDurationType.MONTHLY)),
+								Double.valueOf(ettxrateInterest.getText()
+										.toString().trim()));
 					}
 				});
 
@@ -279,6 +308,8 @@ public class RegisterLoanFragment extends BaseFragment {
 		ettxNoofInstallment = rootView.findViewById(R.id.txNoofInstallment);
 		etTotalLoanAmount = rootView.findViewById(R.id.txTotalLoanAmount);
 		customerNameTextView = rootView.findViewById(R.id.reg_fullname_detaills);
+
+
 	}
 
 	private void addData(final int accountNo, final BigDecimal loanAmt1,
