@@ -253,11 +253,13 @@
 
 
                 <LinearLayout
+                    android:id="@+id/rate_of_interest_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:paddingRight="10dp"
-                    android:paddingBottom="5dp">
+                    android:paddingBottom="5dp"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="0dp"

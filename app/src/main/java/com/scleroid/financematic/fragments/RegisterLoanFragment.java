@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -134,6 +135,9 @@ public class RegisterLoanFragment extends BaseFragment {
 	@BindView(R.id.displaytx)
 	TextView displaytx;
 	Unbinder unbinder;
+	@BindView(R.id.rate_of_interest_layout)
+	LinearLayout rateOfInterestLayout;
+	Unbinder unbinder1;
 
 
 	private String durationType = LoanDurationType.MONTHLY;
@@ -284,18 +288,17 @@ public class RegisterLoanFragment extends BaseFragment {
 */
 		radioInterest.setOnCheckedChangeListener((group, checkedId) -> {
 			if (interestRadioButton.getId() == checkedId && interestRadioButton.isChecked()) {
-				ettxrateInterest.setVisibility(View.GONE);
+				rateOfInterestLayout.setVisibility(View.GONE);
 				txInterestAmount.setEnabled(true);
 			} else if (rateOfInterestRadioButton.getId() == checkedId && rateOfInterestRadioButton
 					.isChecked()) {
-				ettxrateInterest.setVisibility(View.VISIBLE);
+				rateOfInterestLayout.setVisibility(View.VISIBLE);
 				txInterestAmount.setEnabled(false);
 				setRateOfInterest();
 			}
 
 		});
 
-		btnGiveMoney = rootView.findViewById(R.id.btn_givenmoney);
 		btnGiveMoney.setOnClickListener(v -> {
 			final String installmentAmt = ettxInstallmentAmount.getText()
 					.toString();
@@ -322,7 +325,7 @@ public class RegisterLoanFragment extends BaseFragment {
 				ettxloan_amout.setError("Enter Loan Amount");
 			}
 			if (TextUtils.isEmpty(
-					rateOfInterest) && ettxrateInterest.getVisibility() == View.VISIBLE) {
+					rateOfInterest) && rateOfInterestLayout.getVisibility() == View.VISIBLE) {
 				ettxrateInterest.setError("Enter rate Interest");
 			} else if (TextUtils.isEmpty(interestAmt)) {
 				txInterestAmount.setError("Enter Interest Amount");
@@ -336,7 +339,6 @@ public class RegisterLoanFragment extends BaseFragment {
 
 			if (TextUtils.isEmpty(startDateStr)) { startDateTextView.setError("Start Date");}
 			if (TextUtils.isEmpty(endDateStr)) {endDateTextView.setError("End Date");}
-
 
 
 			int accountNo = CommonUtils.getRandomInt();
@@ -357,6 +359,7 @@ public class RegisterLoanFragment extends BaseFragment {
 		});
 
 
+
 		return rootView;
 	}
 
@@ -368,11 +371,6 @@ public class RegisterLoanFragment extends BaseFragment {
 		return R.layout.fragment_new_loan_register;
 	}
 
-	@Override
-	public void onDestroyView() {
-		super.onDestroyView();
-		unbinder.unbind();
-	}
 
 	/**
 	 * Override so you can observe your viewModel
@@ -431,31 +429,9 @@ public class RegisterLoanFragment extends BaseFragment {
 		//	customerNameTextView.setText(customer.getName());
 	}
 
-	private void setRateOfInterest() {
-		if (ettxrateInterest.getVisibility() == View.VISIBLE) {
-			ettxrateInterest.addTextChangedListener(
-					new TextValidator(ettxrateInterest) {
-						@Override
-						public void validate(TextView textView, @NonNull String text) {
-
-							if (isNotValidAmt(text)) {
-								ettxrateInterest.setError("Valid valid Rate in %");
-							}
-							txInterestAmount.setText(calculateInterestAmt(BigDecimal.valueOf(
-									Double.valueOf(ettxloan_amout.getText().toString().trim())),
-									convertTime(calculateTotalDuration(),
-											durationConverter(LoanDurationType.MONTHLY)),
-									Double.valueOf(ettxrateInterest.getText()
-											.toString().trim())).toPlainString());
-						}
-					});
-		}
-
-	}
-
 	private BigDecimal getInterestAmt(@NonNull BigDecimal loanAmt) {
 
-		if (ettxrateInterest.getVisibility() == View.VISIBLE) {
+		if (rateOfInterestLayout.getVisibility() == View.VISIBLE) {
 
 			String rateOfInterest = ettxrateInterest.getText()
 					.toString();
@@ -475,6 +451,28 @@ public class RegisterLoanFragment extends BaseFragment {
 			return BigDecimal.valueOf(Double.parseDouble(txInterestAmount.getText().toString
 					()));
 		}
+	}
+
+	private void setRateOfInterest() {
+		if (rateOfInterestLayout.getVisibility() == View.VISIBLE) {
+			ettxrateInterest.addTextChangedListener(
+					new TextValidator(ettxrateInterest) {
+						@Override
+						public void validate(TextView textView, @NonNull String text) {
+
+							if (isNotValidAmt(text)) {
+								ettxrateInterest.setError("Valid valid Rate in %");
+							}
+							txInterestAmount.setText(calculateInterestAmt(BigDecimal.valueOf(
+									Double.valueOf(ettxloan_amout.getText().toString().trim())),
+									convertTime(calculateTotalDuration(),
+											durationConverter(LoanDurationType.MONTHLY)),
+									Double.valueOf(ettxrateInterest.getText()
+											.toString().trim())).toPlainString());
+						}
+					});
+		}
+
 	}
 
 	private long calculateNoOfInstallments() {
@@ -713,7 +711,6 @@ public class RegisterLoanFragment extends BaseFragment {
 
 	@OnClick(R.id.btn_givenmoney)
 	public void onViewClicked() {}
-
 
 
 }
