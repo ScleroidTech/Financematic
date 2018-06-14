@@ -76,7 +76,7 @@ public class RegisterLoanFragment extends BaseFragment {
 					.QUARTERLY, LoanDurationType.HALF_YEARLY, LoanDurationType.YEARLY};
 	@NonNull
 	String[] calculate =
-			{"Pre-Defined Interest", "Interest including Principal", "Interest only"};
+			{"Principal Amount", "Interest + Principal", "Interest only"};
 
 	@Inject
 	LocalCustomerLab customerLab;
