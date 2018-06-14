@@ -80,7 +80,7 @@ public class RegisterLoanFragment extends BaseFragment {
 	Spinner spinnerCalculate;
 	@NonNull
 	String[] calculate =
-			{"Pre-Defined Interest", "Interest including Principal", "Interest only"};
+			{"Principal Amount", "Interest + Principal", "Interest only"};
 
 	@Inject
 	LocalCustomerLab customerLab;
