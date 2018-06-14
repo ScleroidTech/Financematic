@@ -491,14 +491,27 @@ public class RegisterLoanFragment extends BaseFragment {
 		return dates;
 	}
 
-	private BigDecimal getPreDefinedInterestEMI(BigDecimal loanAmt, long duration) {
-		return loanAmt.divide(BigDecimal.valueOf(duration));
+	private BigDecimal calculateInstallmentAmt(final long duration,
+	                                           @NonNull final BigDecimal loanAmt,
+	                                           @NonNull final BigDecimal interestAmt) {
+		switch (installmentCalculationType) {
+			case 0:
+				return divideBigDecimal(loanAmt, duration);
+
+			case 1:
+				return getInterestPlusPrincipleEMI(loanAmt, interestAmt, duration);
+
+			case 2:
+				return divideBigDecimal(interestAmt, duration);
+
+			default:
+				return divideBigDecimal(loanAmt, duration);
+
+		}
 	}
 
-	private BigDecimal getInterestPlusPrincipleEMI(BigDecimal loanAmt, BigDecimal interest) {
-		BigDecimal emi = loanAmt.add(interest).divide(BigDecimal.valueOf(
-				calculateNoOfInstallments()), 2, RoundingMode.HALF_EVEN);
-		return emi;
+	private BigDecimal divideBigDecimal(BigDecimal loanAmt, long duration) {
+		return loanAmt.divide(BigDecimal.valueOf(duration), 2, RoundingMode.HALF_EVEN);
 	}
 
 	private void saveData(@NonNull final Loan loan,
@@ -540,23 +553,15 @@ public class RegisterLoanFragment extends BaseFragment {
 
 	}
 
-	private BigDecimal calculateInstallmentAmt(final long duration,
-	                                           @NonNull final BigDecimal loanAmt,
-	                                           @NonNull final BigDecimal interestAmt) {
-		switch (installmentCalculationType) {
-			case 0:
-				return getPreDefinedInterestEMI(loanAmt, duration);
+	private BigDecimal getInterestPlusPrincipleEMI(BigDecimal loanAmt, BigDecimal interest,
+	                                               final long duration) {
+		BigDecimal emi = divideBigDecimal(loanAmt.add(interest), duration);
+		return emi;
+	}
 
-			case 1:
-				return getInterestPlusPrincipleEMI(loanAmt, interestAmt);
-
-			case 2:
-				return interestAmt;
-
-			default:
-				return getPreDefinedInterestEMI(loanAmt, duration);
-
-		}
+	private BigDecimal getInterestOnly(final long duration, final @NonNull BigDecimal
+			interestAmt) {
+		return divideBigDecimal(interestAmt, duration);
 	}
 
 	@Override
