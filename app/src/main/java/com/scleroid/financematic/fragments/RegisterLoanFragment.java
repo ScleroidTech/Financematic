@@ -202,7 +202,7 @@ public class RegisterLoanFragment extends BaseFragment {
 			@Override
 			public void onItemSelected(final AdapterView<?> parent, final View view,
 			                           final int position, final long id) {
-				Timber.d("Position of Spinner");
+				Timber.d("Position of Spinner" + position);
 				installmentCalculationType = position;
 				String s = getAmtOfInstallment().toPlainString();
 				ettxInstallmentAmount.setText(s);
