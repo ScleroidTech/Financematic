@@ -427,7 +427,8 @@ public class RegisterLoanFragment extends BaseFragment {
 		BigDecimal interestAmt = getInterestAmt(
 				getBigDecimal(Double.valueOf(ettxloan_amout.getText().toString().trim
 						())));
-		txInterestAmount.setText(interestAmt.toPlainString());
+		txInterestAmount.setText(
+				interestAmt.setScale(2, BigDecimal.ROUND_HALF_EVEN).toPlainString());
 	}
 
 	private void setRateOfInterest() {
