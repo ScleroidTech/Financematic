@@ -37,6 +37,7 @@ import com.scleroid.financematic.utils.ui.TextValidator;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -66,14 +67,17 @@ public class RegisterLoanFragment extends BaseFragment {
 	private static final String DIALOG_DATE = "DIALOG_DATE";
 	private static final int REQUEST_DATE_FROM = 1;
 	private static final int REQUEST_DATE_TO = 2;
-
+	private static final String[] EMPTY_ARRAY = new String[0];
 	@Inject
 	DateUtils dateUtils;
 	@NonNull
-	String[] country =
-			{LoanDurationType.MONTHLY, LoanDurationType.DAILY, LoanDurationType.WEEKLY,
-					LoanDurationType.BIWEEKLY, LoanDurationType.BIMONTHLY, LoanDurationType
-					.QUARTERLY, LoanDurationType.HALF_YEARLY, LoanDurationType.YEARLY};
+	List<String> country;
+	@Nullable
+	@BindView(R.id.spinnertx)
+	Spinner spinnerTypeOfInstallment;
+	@Nullable
+	@BindView(R.id.spinnercalculate)
+	Spinner spinnerCalculate;
 	@NonNull
 	String[] calculate =
 			{"Pre-Defined Interest", "Interest including Principal", "Interest only"};
@@ -115,15 +119,138 @@ public class RegisterLoanFragment extends BaseFragment {
 	@Nullable
 	@BindView(R.id.txinterestamount)
 	EditText txInterestAmount;
-	@Nullable
-	@BindView(R.id.spinnertx)
-	Spinner spin;
+	private ArrayAdapter<String> adapterInstallmentType;
 	@Nullable
 	@BindView(R.id.txNoofInstallment)
 	TextView ettxNoofInstallment;
-	@Nullable
-	@BindView(R.id.spinnercalculate)
-	Spinner spin1;
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+	                         Bundle savedInstanceState) {
+		// Inflate the layout for this fragment
+		super.onCreateView(inflater, container, savedInstanceState);
+		final View rootView = getRootView();
+		//	unbinder = ButterKnife.bind(this, rootView);
+		//initializeAllViews(rootView);
+		Bundle bundle = getArguments();
+		if (bundle != null) {
+			setCustomerName(customerNameTextView, bundle);
+		}
+
+
+		spinnerTypeOfInstallment.setOnItemSelectedListener(
+				new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(final AdapterView<?> parent, final View view,
+			                           final int position, final long id) {
+				durationType = getCountry(position);
+				ettxNoofInstallment.setText(String.valueOf(getInstallments()));
+			}
+
+			@Override
+			public void onNothingSelected(final AdapterView<?> parent) {
+
+			}
+		});
+		spinnerCalculate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(final AdapterView<?> parent, final View view,
+			                           final int position, final long id) {
+				Timber.d("Position of Spinner" + position);
+				installmentCalculationType = position;
+				String s = updateInstallmentAmount();
+				Timber.d("Value of Decimal" + s);
+			}
+
+			@Override
+			public void onNothingSelected(final AdapterView<?> parent) {
+
+			}
+		});
+
+		/*        final String text = spinnerTypeOfInstallment.getSelectedItem().toString();*/
+		//Creating the ArrayAdapter instance having the filterSuggestions list
+		setCountry(calculateDurationDifferenceInDays());
+		adapterInstallmentType = new ArrayAdapter<>(getActivity(),
+				android.R.layout.simple_spinner_item, country);
+		adapterInstallmentType.setDropDownViewResource(
+				android.R.layout.simple_spinner_dropdown_item);
+		//Setting the ArrayAdapter data on the Spinner
+		spinnerTypeOfInstallment.setAdapter(adapterInstallmentType);
+
+		ArrayAdapter<String> aaa = new ArrayAdapter<>(getActivity(),
+				android.R.layout.simple_spinner_item, calculate);
+		aaa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		//Setting the ArrayAdapter data on the Spinner
+		spinnerCalculate.setAdapter(aaa);
+
+
+		ettxloan_amout.addTextChangedListener(
+				new TextValidator(ettxloan_amout) {
+					@Override
+					public void validate(TextView textView, @NonNull String text) {
+
+						if (isNotValidAmt(text)) {
+							ettxloan_amout.setError("Valid total given money");
+						} else {
+							updateInterestAmt();
+							updateInstallmentAmount();
+						}
+					}
+				});
+
+
+		ettxInstallmentAmount.addTextChangedListener(
+				new TextValidator(ettxInstallmentAmount) {
+					@Override
+					public void validate(TextView textView, @NonNull String text) {
+
+						if (isNotValidAmt(text)) {
+							ettxInstallmentAmount.setError("Valid Interest Amount");
+						} else {
+							updateInterestAmt();
+							updateInstallmentAmount();
+						}
+					}
+				});
+
+		ettxNoofInstallment.addTextChangedListener(
+				new TextValidator(ettxNoofInstallment) {
+					@Override
+					public void validate(TextView textView, @NonNull String text) {
+
+						if (isNotValidAmt(text)) {
+							ettxNoofInstallment.setError("valid No of Installment");
+						} else {
+							updateInterestAmt();
+							updateInstallmentAmount();
+						}
+					}
+				});
+
+
+
+		radioInterest.setOnCheckedChangeListener((group, checkedId) -> {
+			if (interestRadioButton.getId() == checkedId && interestRadioButton.isChecked()) {
+				rateOfInterestLayout.setVisibility(View.GONE);
+				txInterestAmount.setEnabled(true);
+			} else if (rateOfInterestRadioButton.getId() == checkedId && rateOfInterestRadioButton
+					.isChecked()) {
+				rateOfInterestLayout.setVisibility(View.VISIBLE);
+				txInterestAmount.setEnabled(false);
+				setRateOfInterest();
+				updateInterestAmt();
+				updateInstallmentAmount();
+			}
+
+		});
+
+
+
+
+		return rootView;
+	}
+
 	@Nullable
 	@BindView(R.id.txInstallmentAmount)
 	EditText ettxInstallmentAmount;
@@ -153,6 +280,11 @@ public class RegisterLoanFragment extends BaseFragment {
 
 	private int installmentCalculationType = InstallmentCalculationType.PREDEFINED_INTEREST;
 
+	@NonNull
+	public String getCountry(final int position) {
+		return country.get(position);
+	}
+
 	public RegisterLoanFragment() {
 		// Required empty public constructor
 	}
@@ -172,187 +304,26 @@ public class RegisterLoanFragment extends BaseFragment {
 		super.onCreate(savedInstanceState);
 	}
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-	                         Bundle savedInstanceState) {
-		// Inflate the layout for this fragment
-		super.onCreateView(inflater, container, savedInstanceState);
-		final View rootView = getRootView();
-		//	unbinder = ButterKnife.bind(this, rootView);
-		//initializeAllViews(rootView);
-		Bundle bundle = getArguments();
-		if (bundle != null) {
-			setCustomerName(customerNameTextView, bundle);
+	public void setCountry(@NonNull final long duration) {
+		country = Collections.emptyList();
+
+		if (duration >= 1) country.add(LoanDurationType.DAILY);
+		if (duration >= 30 || duration == 0) country.add(LoanDurationType.MONTHLY);
+		if (duration >= 7) country.add(LoanDurationType.WEEKLY);
+		if (duration >= 15) country.add(LoanDurationType.BIWEEKLY);
+		if (duration >= 60) country.add(LoanDurationType.BIMONTHLY);
+		if (duration >= 90) {
+			country.add(LoanDurationType
+					.QUARTERLY);
 		}
+		if (duration >= 183) country.add(LoanDurationType.HALF_YEARLY);
+		if (duration >= 365) country.add(LoanDurationType.YEARLY);
+	}
 
-
-		spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-			@Override
-			public void onItemSelected(final AdapterView<?> parent, final View view,
-			                           final int position, final long id) {
-				durationType = country[position];
-				ettxNoofInstallment.setText(String.valueOf(getInstallments()));
-			}
-
-			@Override
-			public void onNothingSelected(final AdapterView<?> parent) {
-
-			}
-		});
-		spin1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-			@Override
-			public void onItemSelected(final AdapterView<?> parent, final View view,
-			                           final int position, final long id) {
-				Timber.d("Position of Spinner" + position);
-				installmentCalculationType = position;
-				String s = getAmtOfInstallment().toPlainString();
-				ettxInstallmentAmount.setText(s);
-				Timber.d("Value of Decimal" + s);
-			}
-
-			@Override
-			public void onNothingSelected(final AdapterView<?> parent) {
-
-			}
-		});
-
-		/*        final String text = spin.getSelectedItem().toString();*/
-		//Creating the ArrayAdapter instance having the filterSuggestions list
-		ArrayAdapter<String> aa = new ArrayAdapter<>(getActivity(),
-				android.R.layout.simple_spinner_item, country);
-		aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		//Setting the ArrayAdapter data on the Spinner
-		spin.setAdapter(aa);
-
-		ArrayAdapter<String> aaa = new ArrayAdapter<>(getActivity(),
-				android.R.layout.simple_spinner_item, calculate);
-		aaa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		//Setting the ArrayAdapter data on the Spinner
-		spin1.setAdapter(aaa);
-
-
-		ettxloan_amout.addTextChangedListener(
-				new TextValidator(ettxloan_amout) {
-					@Override
-					public void validate(TextView textView, @NonNull String text) {
-
-						if (isNotValidAmt(text)) {
-							ettxloan_amout.setError("Valid total given money");
-						}
-					}
-				});
-
-
-		ettxInstallmentAmount.addTextChangedListener(
-				new TextValidator(ettxInstallmentAmount) {
-					@Override
-					public void validate(TextView textView, @NonNull String text) {
-
-						if (isNotValidAmt(text)) {
-							ettxInstallmentAmount.setError("Valid Interest Amount");
-						}
-					}
-				});
-
-		ettxNoofInstallment.addTextChangedListener(
-				new TextValidator(ettxNoofInstallment) {
-					@Override
-					public void validate(TextView textView, @NonNull String text) {
-
-						if (isNotValidAmt(text)) {
-							ettxNoofInstallment.setError("valid No of Installment");
-						}
-					}
-				});
-
-
-	/*	etTotalLoanAmount.addTextChangedListener(
-				new TextValidator(etTotalLoanAmount) {
-					@Override
-					public void validate(TextView textView, String text) {
-
-						if (isNotValidAmt(text)) {
-							etTotalLoanAmount.setError("Valid Total Amount");
-						}
-					}
-				});
-*/
-		radioInterest.setOnCheckedChangeListener((group, checkedId) -> {
-			if (interestRadioButton.getId() == checkedId && interestRadioButton.isChecked()) {
-				rateOfInterestLayout.setVisibility(View.GONE);
-				txInterestAmount.setEnabled(true);
-			} else if (rateOfInterestRadioButton.getId() == checkedId && rateOfInterestRadioButton
-					.isChecked()) {
-				rateOfInterestLayout.setVisibility(View.VISIBLE);
-				txInterestAmount.setEnabled(false);
-				setRateOfInterest();
-			}
-
-		});
-
-		btnGiveMoney.setOnClickListener(v -> {
-			final String installmentAmt = ettxInstallmentAmount.getText()
-					.toString();
-			final String loanAmt = ettxloan_amout.getText()
-					.toString();
-			final String noOfInstallments = ettxNoofInstallment.getText()
-					.toString();
-
-		/*	final String totatLoanAmt = etTotalLoanAmount.getText()
-					.toString();*/
-			final String rateOfInterest = ettxrateInterest.getText()
-					.toString();
-			final String interestAmt = txInterestAmount.getText()
-					.toString();
-			String startDateStr = startDateTextView.getText().toString();
-			String endDateStr = endDateTextView
-					.getText()
-					.toString();
-			Timber.d(
-					"Printing all values " + installmentAmt + "  " + loanAmt + "  " +
-							noOfInstallments + " " + rateOfInterest + " " +
-							startDateStr + " " + endDateStr);
-			if (TextUtils.isEmpty(loanAmt)) {
-				ettxloan_amout.setError("Enter Loan Amount");
-			}
-			if (TextUtils.isEmpty(
-					rateOfInterest) && rateOfInterestLayout.getVisibility() == View.VISIBLE) {
-				ettxrateInterest.setError("Enter rate Interest");
-			} else if (TextUtils.isEmpty(interestAmt)) {
-				txInterestAmount.setError("Enter Interest Amount");
-			}
-			if (TextUtils.isEmpty(installmentAmt)) {
-				ettxInstallmentAmount.setError("Enter Installment Amount");
-			}
-			if (TextUtils.isEmpty(noOfInstallments)) {
-				ettxNoofInstallment.setError("Enter No of Installment");
-			} else if (noOfInstallments.contains("0")) {
-				ettxNoofInstallment.setError("No of installment must not be 0");
-			}
-
-			if (TextUtils.isEmpty(startDateStr)) { startDateTextView.setError("Start Date");}
-			if (TextUtils.isEmpty(endDateStr)) {endDateTextView.setError("End Date");}
-
-
-			int accountNo = CommonUtils.getRandomInt();
-			BigDecimal loanAmt1 = new BigDecimal(loanAmt.trim());
-			BigDecimal interestAmt1 = new BigDecimal(interestAmt.trim());
-
-
-			try {
-				amtOfInstallment = new BigDecimal(installmentAmt.trim());
-			} catch (NumberFormatException nFe) {
-				amtOfInstallment = new BigDecimal(Double.valueOf(installmentAmt.trim()));
-			}
-			noOfInstallments1 = Integer.valueOf(noOfInstallments);
-
-			//	BigDecimal repayAmt = new BigDecimal(totatLoanAmt.trim());
-			addData(accountNo, loanAmt1, interestAmt1);
-
-		});
-
-
-		return rootView;
+	private String updateInstallmentAmount() {
+		String s = getAmtOfInstallment().toPlainString();
+		ettxInstallmentAmount.setText(s);
+		return s;
 	}
 
 	/**
@@ -433,6 +404,7 @@ public class RegisterLoanFragment extends BaseFragment {
 								ettxrateInterest.setError("Valid valid Rate in %");
 							} else {
 								updateInterestAmt();
+								updateInstallmentAmount();
 							}
 						}
 					});
@@ -541,15 +513,16 @@ public class RegisterLoanFragment extends BaseFragment {
 				});
 	}
 
-	private long calculateNoOfInstallments() {
+
+	private long calculateDurationDifferenceInDays() {
 		if (startDate == null || endDate == null) return 0;
 
 
-		durationDivided =
-				(long) convertTime(calculateTotalDuration(), durationConverter(durationType));
+		durationDivided = endDate.getDate() - startDate.getDate();
+		long diffInDays = TimeUnit.MILLISECONDS.toDays(durationDivided);
 
 
-		return durationDivided;
+		return diffInDays;
 
 	}
 
@@ -564,20 +537,16 @@ public class RegisterLoanFragment extends BaseFragment {
 		return divideBigDecimal(interestAmt, duration);
 	}
 
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, @NonNull Intent intent) {
-		super.onActivityResult(requestCode, resultCode, intent);
-
-		if (requestCode == REQUEST_DATE_FROM) {
-			startDate = (Date) intent.getSerializableExtra(DatePickerDialogFragment.EXTRA_DATE);
-			startDateTextView.setText(dateUtils.getFormattedDate(startDate));
-		} else if (requestCode == REQUEST_DATE_TO) {
-			endDate = (Date) intent.getSerializableExtra(DatePickerDialogFragment.EXTRA_DATE);
-			endDateTextView.setText(dateUtils.getFormattedDate(endDate));
+	private void updateInterestAmt() {
+		if (TextUtils.isEmpty(ettxloan_amout.getText().toString())) {
+			ettxloan_amout.setError("Loan Amount cannot be empty");
+			return;
 		}
-		ettxNoofInstallment.setText(String.valueOf(getInstallments()));
-		updateInterestAmt();
-
+		BigDecimal interestAmt = getInterestAmt(
+				getBigDecimal(Double.valueOf(ettxloan_amout.getText().toString().trim
+						())));
+		txInterestAmount.setText(
+				interestAmt.setScale(2, BigDecimal.ROUND_HALF_EVEN).toPlainString());
 	}
 
 	private long getInstallments() {
@@ -637,13 +606,21 @@ public class RegisterLoanFragment extends BaseFragment {
 		return 0;
 	}
 
-	private void updateInterestAmt() {
-		if (TextUtils.isEmpty(ettxloan_amout.getText().toString())) return;
-		BigDecimal interestAmt = getInterestAmt(
-				getBigDecimal(Double.valueOf(ettxloan_amout.getText().toString().trim
-						())));
-		txInterestAmount.setText(
-				interestAmt.setScale(2, BigDecimal.ROUND_HALF_EVEN).toPlainString());
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, @NonNull Intent intent) {
+		super.onActivityResult(requestCode, resultCode, intent);
+
+		if (requestCode == REQUEST_DATE_FROM) {
+			startDate = (Date) intent.getSerializableExtra(DatePickerDialogFragment.EXTRA_DATE);
+			startDateTextView.setText(dateUtils.getFormattedDate(startDate));
+		} else if (requestCode == REQUEST_DATE_TO) {
+			endDate = (Date) intent.getSerializableExtra(DatePickerDialogFragment.EXTRA_DATE);
+			endDateTextView.setText(dateUtils.getFormattedDate(endDate));
+		}
+		ettxNoofInstallment.setText(String.valueOf(getInstallments()));
+		updateInterestAmt();
+		setCountry(calculateDurationDifferenceInDays());
+
 	}
 
 	private BigDecimal getInterestAmt(@NonNull BigDecimal loanAmt) {
@@ -692,9 +669,17 @@ public class RegisterLoanFragment extends BaseFragment {
 		return loanAmt.multiply(getBigDecimal((interestRate / 100) * duration));
 	}
 
-	private void loadDialogFragment(final int msg, Date minDate) {
-		activityUtils.loadDialogFragment(DatePickerDialogFragment.newInstance(minDate, true), this,
-				getFragmentManager(), msg, DIALOG_DATE);
+	@OnClick({R.id.txStartDate, R.id.txEndDate})
+
+	public void onViewClicked(@NonNull View view) {
+		switch (view.getId()) {
+			case R.id.txStartDate:
+				loadDialogFragment(REQUEST_DATE_FROM);
+				break;
+			case R.id.txEndDate:
+				loadDialogFragment(REQUEST_DATE_TO, startDate);
+				break;
+		}
 	}
 
 	@Deprecated
@@ -711,16 +696,14 @@ public class RegisterLoanFragment extends BaseFragment {
 
 	}
 
-	@OnClick({R.id.txStartDate, R.id.txEndDate})
-
-	public void onViewClicked(@NonNull View view) {
-		switch (view.getId()) {
-			case R.id.txStartDate:
-				loadDialogFragment(REQUEST_DATE_FROM);
-				break;
-			case R.id.txEndDate:
-				loadDialogFragment(REQUEST_DATE_TO);
-				break;
+	private void loadDialogFragment(final int msg, Date minDate) {
+		if (minDate != null) {
+			activityUtils.loadDialogFragment(DatePickerDialogFragment.newInstance(minDate, true),
+					this,
+					getFragmentManager(), msg, DIALOG_DATE);
+		} else {
+			activityUtils.loadDialogFragment(DatePickerDialogFragment.newInstance(), this,
+					getFragmentManager(), msg, DIALOG_DATE);
 		}
 	}
 
@@ -730,7 +713,66 @@ public class RegisterLoanFragment extends BaseFragment {
 	}
 
 	@OnClick(R.id.btn_givenmoney)
-	public void onViewClicked() {}
+	public void onViewClicked() {
+		final String installmentAmt = ettxInstallmentAmount.getText()
+				.toString();
+		final String loanAmt = ettxloan_amout.getText()
+				.toString();
+		final String noOfInstallments = ettxNoofInstallment.getText()
+				.toString();
+
+		/*	final String totatLoanAmt = etTotalLoanAmount.getText()
+					.toString();*/
+		final String rateOfInterest = ettxrateInterest.getText()
+				.toString();
+		final String interestAmt = txInterestAmount.getText()
+				.toString();
+		String startDateStr = startDateTextView.getText().toString();
+		String endDateStr = endDateTextView
+				.getText()
+				.toString();
+		Timber.d(
+				"Printing all values " + installmentAmt + "  " + loanAmt + "  " +
+						noOfInstallments + " " + rateOfInterest + " " +
+						startDateStr + " " + endDateStr);
+		if (TextUtils.isEmpty(loanAmt)) {
+			ettxloan_amout.setError("Enter Loan Amount");
+		}
+		if (TextUtils.isEmpty(
+				rateOfInterest) && rateOfInterestLayout.getVisibility() == View.VISIBLE) {
+			ettxrateInterest.setError("Enter rate Interest");
+		} else if (TextUtils.isEmpty(interestAmt)) {
+			txInterestAmount.setError("Enter Interest Amount");
+		}
+		if (TextUtils.isEmpty(installmentAmt)) {
+			ettxInstallmentAmount.setError("Enter Installment Amount");
+		}
+		if (TextUtils.isEmpty(noOfInstallments)) {
+			ettxNoofInstallment.setError("Enter No of Installment");
+		} else if (noOfInstallments.contains("0")) {
+			ettxNoofInstallment.setError("No of installment must not be 0");
+		}
+
+		if (TextUtils.isEmpty(startDateStr)) { startDateTextView.setError("Start Date");}
+		if (TextUtils.isEmpty(endDateStr)) {endDateTextView.setError("End Date");}
+
+
+		int accountNo = CommonUtils.getRandomInt();
+		BigDecimal loanAmt1 = new BigDecimal(loanAmt.trim());
+		BigDecimal interestAmt1 = new BigDecimal(interestAmt.trim());
+
+
+		try {
+			amtOfInstallment = new BigDecimal(installmentAmt.trim());
+		} catch (NumberFormatException nFe) {
+			amtOfInstallment = new BigDecimal(Double.valueOf(installmentAmt.trim()));
+		}
+		noOfInstallments1 = Integer.valueOf(noOfInstallments);
+
+		//	BigDecimal repayAmt = new BigDecimal(totatLoanAmt.trim());
+		addData(accountNo, loanAmt1, interestAmt1);
+
+	}
 
 
 }

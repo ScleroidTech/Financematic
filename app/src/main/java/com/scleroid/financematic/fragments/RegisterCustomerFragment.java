@@ -86,7 +86,7 @@ public class RegisterCustomerFragment extends BaseFragment {
 
 		final Spinner spin = rootView.findViewById(R.id.spinneridtype);
 
-		/*        final String text = spin.getSelectedItem().toString();*/
+		/*        final String text = spinnerTypeOfInstallment.getSelectedItem().toString();*/
 		//Creating the ArrayAdapter instance having the filterSuggestions list
 		ArrayAdapter<String> aa = new ArrayAdapter<>(getActivity().getApplicationContext(),
 				android.R.layout.simple_spinner_item, selectidtype);
