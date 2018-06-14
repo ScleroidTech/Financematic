@@ -35,6 +35,7 @@ import com.scleroid.financematic.utils.ui.DateUtils;
 import com.scleroid.financematic.utils.ui.TextValidator;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -495,8 +496,8 @@ public class RegisterLoanFragment extends BaseFragment {
 	}
 
 	private BigDecimal getInterestPlusPrincipleEMI(BigDecimal loanAmt, BigDecimal interest) {
-		BigDecimal emi = loanAmt.add(interest.divide(BigDecimal.valueOf(
-				calculateNoOfInstallments())));
+		BigDecimal emi = loanAmt.add(interest).divide(BigDecimal.valueOf(
+				calculateNoOfInstallments()), 2, RoundingMode.HALF_EVEN);
 		return emi;
 	}
 
@@ -591,6 +592,16 @@ public class RegisterLoanFragment extends BaseFragment {
 		return durationDivided;
 	}
 
+	private long calculateInstallments(long timeDiff, long divider) {
+
+
+		return (TimeUnit.MILLISECONDS.toDays(timeDiff) / divider);
+	}
+
+	private long calculateTotalDuration() {
+		return dateUtils.differenceOfDates(startDate, endDate);
+	}
+
 	private long durationConverter(final String durationType) {
 
 		switch (durationType) {
@@ -619,16 +630,6 @@ public class RegisterLoanFragment extends BaseFragment {
 				return 365;
 		}
 		return 0;
-	}
-
-	private long calculateInstallments(long timeDiff, long divider) {
-
-
-		return (TimeUnit.MILLISECONDS.toDays(timeDiff) / divider);
-	}
-
-	private long calculateTotalDuration() {
-		return dateUtils.differenceOfDates(startDate, endDate);
 	}
 
 	private void updateInterestAmt() {
@@ -665,11 +666,6 @@ public class RegisterLoanFragment extends BaseFragment {
 		return getBigDecimal();
 	}
 
-	private BigDecimal getBigDecimal(final Double value) {
-		return BigDecimal.valueOf(value).setScale(2,
-				BigDecimal.ROUND_HALF_EVEN);
-	}
-
 	private double convertTime(long timeDiff, long divider) {
 
 
@@ -678,6 +674,11 @@ public class RegisterLoanFragment extends BaseFragment {
 
 	private BigDecimal getBigDecimal() {
 		return getBigDecimal(0.0);
+	}
+
+	private BigDecimal getBigDecimal(final Double value) {
+		return BigDecimal.valueOf(value).setScale(2,
+				BigDecimal.ROUND_HALF_EVEN);
 	}
 
 	private BigDecimal calculateInterestAmt(BigDecimal loanAmt, double duration,

@@ -213,23 +213,6 @@ public class LoanDetailsFragment extends BaseFragment {
 
 	}
 
-	private void updateUi() {
-		if (theLoan == null) return;
-		totalAmountTextView.setText(theLoan.getLoanAmt().toPlainString());
-		interestTextView.setText(String.valueOf(theLoan.getInterestAmt().toPlainString()));
-		final long duration =
-				dateUtils.differenceOfDates(theLoan.getStartDate(), theLoan.getEndDate());
-		long months = TimeUnit.MILLISECONDS.toDays(duration) / 30;
-		durationTextView.setText(String.format("%d Months",
-				months));
-		cardHolder.paidAmountTextView.setText(theLoan.getReceivedAmt().toPlainString());
-		cardHolder.installmentTextView.setText(theLoan.getInstallmentAmt().toPlainString());
-		setTitle();
-		//	activityUtils.useUpButton((MainActivity) getActivity(),true);
-
-		setHasOptionsMenu(true);
-	}
-
 	private void sort(@NonNull final List<Installment> transactions) {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 			transactions.sort(Comparator.comparing(Installment::getInstallmentDate));
@@ -247,6 +230,23 @@ public class LoanDetailsFragment extends BaseFragment {
 			Collections.sort(transactions,
 					(m1, m2) -> m2.getTransactionDate().compareTo(m1.getTransactionDate()));
 		}
+	}
+
+	private void updateUi() {
+		if (theLoan == null) return;
+		totalAmountTextView.setText(theLoan.getLoanAmt().toPlainString());
+		interestTextView.setText(String.valueOf(theLoan.getInterestAmt().toPlainString()));
+		final long duration =
+				dateUtils.differenceOfDates(theLoan.getStartDate(), theLoan.getEndDate());
+		long months = TimeUnit.MILLISECONDS.toDays(duration) / 30;
+		durationTextView.setText(String.format("%d Months",
+				months));
+		cardHolder.paidAmountTextView.setText(theLoan.getReceivedAmt().toPlainString());
+		cardHolder.installmentTextView.setText(theLoan.getInstallmentAmt().toPlainString());
+		setTitle();
+		//	activityUtils.useUpButton((MainActivity) getActivity(),true);
+
+		setHasOptionsMenu(true);
 	}
 
 	private void setTitle() {

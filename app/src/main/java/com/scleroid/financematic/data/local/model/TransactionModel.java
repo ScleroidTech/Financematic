@@ -81,20 +81,6 @@ public class TransactionModel implements Serializable {
 		this.loan = loan;
 	}
 
-	@Override
-	public boolean equals(@Nullable final Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		final TransactionModel that = (TransactionModel) o;
-		return transactionId == that.transactionId &&
-				loanAcNo == that.loanAcNo &&
-				Objects.equals(transactionDate, that.transactionDate) &&
-				Objects.equals(lentAmt, that.lentAmt) &&
-				Objects.equals(gainedAmt, that.gainedAmt) &&
-				Objects.equals(receivedAmt, that.receivedAmt) &&
-				Objects.equals(description, that.description);
-	}
-
 	public int getTransactionId() {
 		return transactionId;
 	}
@@ -156,6 +142,20 @@ public class TransactionModel implements Serializable {
 
 		return Objects.hash(transactionId, transactionDate, lentAmt, gainedAmt, receivedAmt,
 				description, loanAcNo);
+	}
+
+	@Override
+	public boolean equals(@Nullable final Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		final TransactionModel that = (TransactionModel) o;
+		return transactionId == that.transactionId &&
+				loanAcNo == that.loanAcNo &&
+				Objects.equals(transactionDate, that.transactionDate) &&
+				Objects.equals(lentAmt, that.lentAmt) &&
+				Objects.equals(gainedAmt, that.gainedAmt) &&
+				Objects.equals(receivedAmt, that.receivedAmt) &&
+				Objects.equals(description, that.description);
 	}
 
 	@Nullable

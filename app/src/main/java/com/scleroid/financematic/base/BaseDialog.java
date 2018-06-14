@@ -131,13 +131,13 @@ public abstract class BaseDialog extends DialogFragment {
 
 	}
 
+	private void performDependencyInjection() {
+		AndroidSupportInjection.inject(this);
+	}
+
 	@Nullable
 	public BaseActivity getBaseActivity() {
 		return mActivity;
-	}
-
-	private void performDependencyInjection() {
-		AndroidSupportInjection.inject(this);
 	}
 
 	public void hideKeyboard() {

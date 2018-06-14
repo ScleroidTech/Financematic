@@ -165,6 +165,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
 		TextView receivedAmt;
 		//private SparseBooleanArray selectedItems = new SparseBooleanArray();
 		private TransactionModel report;
+
 		public MyViewHolder(@NonNull View view) {
 			super(view);
 			/* view.setOnClickListener(this);*/
@@ -211,14 +212,6 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
 			}
 		}
 
-		public ReportFilterType getFilterType() {
-			return filterType;
-		}
-
-		public void setFilterType(final ReportFilterType filterType) {
-			this.filterType = filterType;
-		}
-
 		private void makeItVisible() {
 			receivedAmt.setVisibility(View.VISIBLE);
 			reportLent.setVisibility(View.VISIBLE);
@@ -238,6 +231,13 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
 			reportEarned.setVisibility(View.GONE);
 		}
 
+		public ReportFilterType getFilterType() {
+			return filterType;
+		}
+
+		public void setFilterType(final ReportFilterType filterType) {
+			this.filterType = filterType;
+		}
 
 		@OnClick(R.id.acc_no_text_view)
 		public void onViewClicked() {

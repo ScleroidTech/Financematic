@@ -75,6 +75,12 @@ public class MyDividerItemDecoration extends RecyclerView.ItemDecoration {
 		}
 	}
 
+	private int dpToPx(int dp) {
+		Resources r = context.getResources();
+		return Math.round(
+				TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
+	}
+
 	public void drawHorizontal(@NonNull Canvas c, @NonNull RecyclerView parent) {
 		final int top = parent.getPaddingTop();
 		final int bottom = parent.getHeight() - parent.getPaddingBottom();
@@ -89,12 +95,6 @@ public class MyDividerItemDecoration extends RecyclerView.ItemDecoration {
 			mDivider.setBounds(left, top + dpToPx(margin), right, bottom - dpToPx(margin));
 			mDivider.draw(c);
 		}
-	}
-
-	private int dpToPx(int dp) {
-		Resources r = context.getResources();
-		return Math.round(
-				TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
 	}
 
 	@Override

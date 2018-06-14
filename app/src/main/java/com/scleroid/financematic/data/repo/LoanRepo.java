@@ -74,6 +74,12 @@ public class LoanRepo implements Repo<Loan> {
 
 	public LiveData<Resource<List<Loan>>> loadLoansForCustomer(int customerId) {
 		return new NetworkBoundResource<List<Loan>, List<Loan>>(appExecutors) {
+			@NonNull
+			@Override
+			protected LiveData<List<Loan>> loadFromDb() {
+				return localLoanLab.getItemWithCustomerId(customerId);
+			}
+
 			@Override
 			protected void onFetchFailed() {
 				loanListRateLimit.reset(customerId + "");
@@ -90,11 +96,6 @@ public class LoanRepo implements Repo<Loan> {
 						customerId + "");
 			}
 
-			@NonNull
-			@Override
-			protected LiveData<List<Loan>> loadFromDb() {
-				return localLoanLab.getItemWithCustomerId(customerId);
-			}
 
 			@NonNull
 			@Override

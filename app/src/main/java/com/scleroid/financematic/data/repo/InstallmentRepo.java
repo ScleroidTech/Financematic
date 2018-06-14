@@ -70,6 +70,12 @@ public class InstallmentRepo implements Repo<Installment> {
 
 	public LiveData<Resource<List<Installment>>> loadInstallmentsForLoan(int loanAcNo) {
 		return new NetworkBoundResource<List<Installment>, List<Installment>>(appExecutors) {
+			@NonNull
+			@Override
+			protected LiveData<List<Installment>> loadFromDb() {
+				return localInstallmentsLab.getItemsForLoan(loanAcNo);
+			}
+
 			@Override
 			protected void onFetchFailed() {
 				installmentListRateLimit.reset(loanAcNo + "");
@@ -90,12 +96,6 @@ public class InstallmentRepo implements Repo<Installment> {
 			protected boolean shouldFetch(@Nullable List<Installment> data) {
 				return data == null || data.isEmpty() || installmentListRateLimit.shouldFetch(
 						loanAcNo + "");
-			}
-
-			@NonNull
-			@Override
-			protected LiveData<List<Installment>> loadFromDb() {
-				return localInstallmentsLab.getItemsForLoan(loanAcNo);
 			}
 
 

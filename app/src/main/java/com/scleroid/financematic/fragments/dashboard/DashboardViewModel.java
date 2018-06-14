@@ -87,6 +87,12 @@ public class DashboardViewModel extends BaseViewModel<Installment> implements Cu
 		return upcomingInstallments;
 	}
 
+	public LiveData<List<Installment>> setUpcomingInstallments() {
+		upcomingInstallments = installmentRepo.getLocalInstallmentsLab()
+				.getInstallmentWithCustomers();
+		return upcomingInstallments;
+	}
+
 	public LiveData<Resource<List<Loan>>> getLoans() {
 		if (loanListLiveData.getValue() == null || loanListLiveData.getValue().data == null ||
 				loanListLiveData
@@ -95,12 +101,6 @@ public class DashboardViewModel extends BaseViewModel<Installment> implements Cu
 					.getLocalInstallmentsLab().getItems());*/
 		}
 		return loanListLiveData;
-	}
-
-	public LiveData<List<Installment>> setUpcomingInstallments() {
-		upcomingInstallments = installmentRepo.getLocalInstallmentsLab()
-				.getInstallmentWithCustomers();
-		return upcomingInstallments;
 	}
 
 	public LiveData<Resource<List<Loan>>> setLoans(

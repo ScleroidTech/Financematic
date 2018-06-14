@@ -70,6 +70,12 @@ public class TransactionsRepo implements Repo<TransactionModel> {
 	public LiveData<Resource<List<TransactionModel>>> loadTransactionsForLoan(int loanAcNo) {
 		return new NetworkBoundResource<List<TransactionModel>, List<TransactionModel>>(
 				appExecutors) {
+			@NonNull
+			@Override
+			protected LiveData<List<TransactionModel>> loadFromDb() {
+				return localTransactionsLab.getItemsForLoan(loanAcNo);
+			}
+
 			@Override
 			protected void onFetchFailed() {
 				transactionListRateLimit.reset(loanAcNo + "");
@@ -92,11 +98,6 @@ public class TransactionsRepo implements Repo<TransactionModel> {
 						loanAcNo + "");
 			}
 
-			@NonNull
-			@Override
-			protected LiveData<List<TransactionModel>> loadFromDb() {
-				return localTransactionsLab.getItemsForLoan(loanAcNo);
-			}
 
 		}.asLiveData();
 	}

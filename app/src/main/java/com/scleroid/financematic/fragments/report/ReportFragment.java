@@ -266,20 +266,6 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 		return reportViewModel;
 	}
 
-	private void updateListData(@Nullable final List<TransactionModel> transactions) {
-		if (transactions == null || transactions.isEmpty()) {
-			emptyCard.setVisibility(View.VISIBLE);
-			reportRecyclerView.setVisibility(View.GONE);
-		} else {
-			emptyCard.setVisibility(View.GONE);
-			reportRecyclerView.setVisibility(View.VISIBLE);
-			sort(transactions);
-			transactionsList = transactions;
-			mAdapter.setReportList(transactionsList);
-			mAdapter.setFilterType(reportFilterType);
-		}
-	}
-
 	private void setupSpinner() {
 		ArrayAdapter<? extends String> spinnerList =
 				new ArrayAdapter<>(Objects.requireNonNull(getActivity()),
@@ -305,13 +291,22 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 
 	}
 
-	private void sort(@NonNull final List<TransactionModel> transactions) {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-			transactions.sort(Comparator.comparing(TransactionModel::getTransactionDate));
-		} else {
-			Collections.sort(transactions,
-					(m1, m2) -> m1.getTransactionDate().compareTo(m2.getTransactionDate()));
+	@NonNull
+	private ReportFilterType getSuggestion(final int filterSuggestion) {
+		switch (filterSuggestion) {
+			case 0:
+				return ReportFilterType.ALL_TRANSACTIONS;
+			case 1:
+				return ReportFilterType.RECEIVED_AMOUNT;
+			case 2:
+				return ReportFilterType.LENT_AMOUNT;
+			case 3:
+				return ReportFilterType.EARNED_AMOUNT;
+			default:
+				return ReportFilterType.ALL_TRANSACTIONS;
+
 		}
+
 	}
 
 	private void setupRecyclerView() {
@@ -351,24 +346,6 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 		//	reportRecyclerView.addOnItemTouchListener(recyclerTouchListener);
 	}
 
-	@NonNull
-	private ReportFilterType getSuggestion(final int filterSuggestion) {
-		switch (filterSuggestion) {
-			case 0:
-				return ReportFilterType.ALL_TRANSACTIONS;
-			case 1:
-				return ReportFilterType.RECEIVED_AMOUNT;
-			case 2:
-				return ReportFilterType.LENT_AMOUNT;
-			case 3:
-				return ReportFilterType.EARNED_AMOUNT;
-			default:
-				return ReportFilterType.ALL_TRANSACTIONS;
-
-		}
-
-	}
-
 	private void handleClickFromDashboard() {
 		Bundle bundle = getArguments();
 		if (bundle != null) {
@@ -382,6 +359,29 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 				final List<TransactionModel> tempList = filterWithoutDate(reportFilterType);
 				updateListData(tempList);
 			}
+		}
+	}
+
+	private void updateListData(@Nullable final List<TransactionModel> transactions) {
+		if (transactions == null || transactions.isEmpty()) {
+			emptyCard.setVisibility(View.VISIBLE);
+			reportRecyclerView.setVisibility(View.GONE);
+		} else {
+			emptyCard.setVisibility(View.GONE);
+			reportRecyclerView.setVisibility(View.VISIBLE);
+			sort(transactions);
+			transactionsList = transactions;
+			mAdapter.setReportList(transactionsList);
+			mAdapter.setFilterType(reportFilterType);
+		}
+	}
+
+	private void sort(@NonNull final List<TransactionModel> transactions) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+			transactions.sort(Comparator.comparing(TransactionModel::getTransactionDate));
+		} else {
+			Collections.sort(transactions,
+					(m1, m2) -> m1.getTransactionDate().compareTo(m2.getTransactionDate()));
 		}
 	}
 
@@ -435,6 +435,12 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 
 	}
 
+	private void visibilityToggle() {
+		receivedAmt.setVisibility(View.GONE);
+		expectedAmt.setVisibility(View.GONE);
+		earnedAmt.setVisibility(View.GONE);
+	}
+
 	private List<TransactionModel> applyLentFilter() {
 		return Stream.of(transactionsList)
 				.filter(expenseList -> expenseList.getLentAmt() != null)
@@ -449,12 +455,6 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 
 	private void setTitle() {
 		activityUtils.setTitle((AppCompatActivity) getActivity(), "Report");
-	}
-
-	private void visibilityToggle() {
-		receivedAmt.setVisibility(View.GONE);
-		expectedAmt.setVisibility(View.GONE);
-		earnedAmt.setVisibility(View.GONE);
 	}
 
 	@OnClick(R.id.filter_button)

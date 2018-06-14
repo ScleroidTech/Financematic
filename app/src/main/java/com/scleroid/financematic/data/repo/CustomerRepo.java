@@ -98,6 +98,12 @@ public class CustomerRepo implements Repo<Customer> {
 			@NonNull
 			String key = Math.random() + "";
 
+			@NonNull
+			@Override
+			protected LiveData<List<Customer>> loadFromDb() {
+				return localCustomerLab.getItems();
+			}
+
 			@Override
 			protected void onFetchFailed() {
 				customerListRateLimit.reset(key);
@@ -115,11 +121,6 @@ public class CustomerRepo implements Repo<Customer> {
 				return data == null || data.isEmpty() || customerListRateLimit.shouldFetch(key);
 			}
 
-			@NonNull
-			@Override
-			protected LiveData<List<Customer>> loadFromDb() {
-				return localCustomerLab.getItems();
-			}
 
 			@NonNull
 			@Override

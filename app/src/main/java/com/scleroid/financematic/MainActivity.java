@@ -322,8 +322,18 @@ public class MainActivity extends BaseActivity
 
 	}
 
-	private void selectNavMenu() {
-		navigationView.getMenu().getItem(navItemIndex).setChecked(true);
+	private void loadFragmentRunnable(final Fragment fragment, final boolean b) {
+
+		Runnable pendingRunnable = () -> {
+			// update the main content by replacing fragments
+
+
+			loadFragment(fragment, b);
+		};
+
+		// If pendingRunnable is not null, then add to the message queue
+		// boolean post = handler.post(pendingRunnable);
+		appExecutors.diskIO().execute(pendingRunnable);
 	}
 
 	public void tintMenuIcon(@NonNull Context context, @Nullable MenuItem item,
@@ -417,6 +427,19 @@ public class MainActivity extends BaseActivity
 		drawer.closeDrawer(GravityCompat.START);
 	}
 
+	private void loadFragment(Fragment fragment, final boolean backstack) {
+		if (backstack) {
+			activityUtils.loadFragment(fragment, getSupportFragmentManager());
+			return;
+		}
+
+		activityUtils.loadFragmentWithoutBackStack(fragment, getSupportFragmentManager());
+	}
+
+	private void selectNavMenu() {
+		navigationView.getMenu().getItem(navItemIndex).setChecked(true);
+	}
+
 	private void selectBottomNavMenu() {
 		MenuItem item;
 		if (navItemIndex > 2) { item = bottomNavigationView.getMenu().getItem(0); } else {
@@ -428,6 +451,22 @@ public class MainActivity extends BaseActivity
 	private void setToolbarTitle() {
 		getSupportActionBar().setTitle(activityTitles[navItemIndex]);
 	}
+
+/*
+//TODO To not let the acitivty close directly
+	*/
+	/*sidebar navigation*//*
+
+	@Override
+	public void onBackPressed() {
+		DrawerLayout drawer = findViewById(R.id.drawer_layout);
+		if (drawer.isDrawerOpen(GravityCompat.START)) {
+			drawer.closeDrawer(GravityCompat.START);
+		} else {
+			super.onBackPressed();
+		}
+	}
+*/
 
 	private Fragment getCurrentFragment() {
 		switch (navItemIndex) {
@@ -462,45 +501,6 @@ public class MainActivity extends BaseActivity
 			// .parcelCount);
 		}
 
-	}
-
-	private void loadFragmentRunnable(final Fragment fragment, final boolean b) {
-
-		Runnable pendingRunnable = () -> {
-			// update the main content by replacing fragments
-
-
-			loadFragment(fragment, b);
-		};
-
-		// If pendingRunnable is not null, then add to the message queue
-		// boolean post = handler.post(pendingRunnable);
-		appExecutors.diskIO().execute(pendingRunnable);
-	}
-
-/*
-//TODO To not let the acitivty close directly
-	*/
-	/*sidebar navigation*//*
-
-	@Override
-	public void onBackPressed() {
-		DrawerLayout drawer = findViewById(R.id.drawer_layout);
-		if (drawer.isDrawerOpen(GravityCompat.START)) {
-			drawer.closeDrawer(GravityCompat.START);
-		} else {
-			super.onBackPressed();
-		}
-	}
-*/
-
-	private void loadFragment(Fragment fragment, final boolean backstack) {
-		if (backstack) {
-			activityUtils.loadFragment(fragment, getSupportFragmentManager());
-			return;
-		}
-
-		activityUtils.loadFragmentWithoutBackStack(fragment, getSupportFragmentManager());
 	}
 
 	@Override

@@ -288,11 +288,6 @@ ExpenseFragment extends BaseFragment {
 
 	}
 
-	private void refreshRecyclerView(List<Expense> expenses) {
-		mAdapter.setExpenses(expenses);
-		mAdapter.notifyDataSetChanged();
-	}
-
 	@SuppressLint("NewApi")
 	private int getTotalLoan(final List<Expense> items) {
 		//	Observable<Integer> sourceObservable = Observable.range(1, 20);
@@ -432,6 +427,11 @@ ExpenseFragment extends BaseFragment {
 
 	private float getPercentage(int amt) {
 		return (float) amt / totalLoan * 100;
+	}
+
+	private void refreshRecyclerView(List<Expense> expenses) {
+		mAdapter.setExpenses(expenses);
+		mAdapter.notifyDataSetChanged();
 	}
 
 	@OnClick({R.id.room_rent_card, R.id.light_bill_card, R.id.phone_bill_card, R.id.salary_card, R

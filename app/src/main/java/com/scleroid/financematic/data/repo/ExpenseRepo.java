@@ -75,6 +75,12 @@ public class ExpenseRepo implements Repo<Expense> {
 			@NonNull
 			String key = Math.random() + "";
 
+			@NonNull
+			@Override
+			protected LiveData<List<Expense>> loadFromDb() {
+				return localExpenseLab.getItems();
+			}
+
 			@Override
 			protected void onFetchFailed() {
 				expenseListRateLimit.reset(key + "");
@@ -91,11 +97,6 @@ public class ExpenseRepo implements Repo<Expense> {
 						"");
 			}
 
-			@NonNull
-			@Override
-			protected LiveData<List<Expense>> loadFromDb() {
-				return localExpenseLab.getItems();
-			}
 
 			@NonNull
 			@Override
