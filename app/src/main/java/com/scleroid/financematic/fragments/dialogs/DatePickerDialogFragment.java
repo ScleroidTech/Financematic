@@ -28,6 +28,7 @@ import java.util.GregorianCalendar;
 public class DatePickerDialogFragment extends BaseDialog {
 	public static final String EXTRA_DATE = "com.example.ganesh.criminalintent.date";
 	private static final String ARG_DATE = "crime_date";
+	private static final String ARG_FLAG = "isMinDate";
 	private DatePicker mDatePicker;
 
 
@@ -56,11 +57,25 @@ public class DatePickerDialogFragment extends BaseDialog {
 	}
 
 	@NonNull
+	public static DatePickerDialogFragment newInstance(Date date, boolean isMinDate) {
+		Bundle bundle = new Bundle();
+		bundle.putSerializable(ARG_DATE, date);
+		bundle.putBoolean(ARG_FLAG, isMinDate);
+		DatePickerDialogFragment fragment = new DatePickerDialogFragment();
+		fragment.setArguments(bundle);
+		return fragment;
+
+
+	}
+
+	@NonNull
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		Date date = (Date) getArguments().getSerializable(ARG_DATE);
+		Boolean flagMin = getArguments().getBoolean(ARG_FLAG);
 		Calendar calendar = Calendar.getInstance();
-		if (date != null) { calendar.setTime(date); }
+
+		if (date != null && !flagMin) { calendar.setTime(date); }
 
 		int year = calendar.get(Calendar.YEAR);
 		int month = calendar.get(Calendar.MONTH);
@@ -69,6 +84,9 @@ public class DatePickerDialogFragment extends BaseDialog {
 		View v = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_date, null);
 		mDatePicker = v.findViewById(R.id.dialog_date_picker);
 		mDatePicker.init(year, month, day, null);
+		if (flagMin) {
+			mDatePicker.setMinDate(date != null ? date.getTime() : new Date().getTime());
+		}
 
 		return new AlertDialog.Builder(getActivity()).setTitle(R.string.date_picker_title)
 				.setView(v)

@@ -689,6 +689,12 @@ public class RegisterLoanFragment extends BaseFragment {
 				getFragmentManager(), msg, DIALOG_DATE);
 	}
 
+	private void loadDialogFragment(final int msg, Date minDate) {
+		activityUtils.loadDialogFragment(DatePickerDialogFragment.newInstance(minDate, true), this,
+				getFragmentManager(), msg, DIALOG_DATE);
+	}
+
+
 	@Deprecated
 	private void initializeAllViews(final View rootView) {
 		startDateTextView = rootView.findViewById(R.id.txStartDate);
