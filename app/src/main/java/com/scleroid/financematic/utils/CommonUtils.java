@@ -95,7 +95,8 @@ public final class CommonUtils {
 	}
 
 	public static int getRandomInt() {
-		return new Random().nextInt(Integer.MAX_VALUE);
+		//Only generate numbers until 9999
+		return new Random().nextInt(9999);
 	}
 	/*public static  List<TransactionModel> sortItOut(List<TransactionModel> list) {
 		return list.stream().sorted((o1, o2)->o1.getTransactionDate().
