@@ -158,7 +158,7 @@ public class TransactionModel implements Serializable {
 				Objects.equals(description, that.description);
 	}
 
-	@Nullable
+	/*@Nullable
 	@Override
 	public String toString() {
 		return "TransactionModel{" +
@@ -170,5 +170,5 @@ public class TransactionModel implements Serializable {
 				", description='" + description + '\'' +
 				", loanAcNo=" + loanAcNo +
 				'}';
-	}
+	}*/
 }
