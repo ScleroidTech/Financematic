@@ -177,14 +177,14 @@ public class TempDataFaker {
 		mainActivity.getExpenseRepo().saveItems(expenses)
 
 				.subscribe(() -> {
-			// handle completion
-			Timber.d("Items Saved");
-			//		Toasty.success(context, "Customers Added");
-		}, throwable -> {
-			// handle error
-			Timber.d(throwable, "Items not Saved" + throwable.getMessage());
-			//		Toasty.error(context, "Customers Not Added");
-		});
+					// handle completion
+					Timber.d("Items Saved");
+					//		Toasty.success(context, "Customers Added");
+				}, throwable -> {
+					// handle error
+					Timber.d(throwable, "Items not Saved" + throwable.getMessage());
+					//		Toasty.error(context, "Customers Not Added");
+				});
 
 	}
 }

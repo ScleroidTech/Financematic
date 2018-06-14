@@ -14,8 +14,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="7dp"
             android:layout_marginTop="7dp"
+            android:layout_marginBottom="7dp"
             android:orientation="horizontal"
 
             >
@@ -26,9 +26,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".6"
-android:textAlignment="center"
-
                 android:text="122222"
+
+                android:textAlignment="center"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="14sp" />
 

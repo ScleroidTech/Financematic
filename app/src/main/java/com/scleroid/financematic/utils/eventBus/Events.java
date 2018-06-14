@@ -74,6 +74,7 @@ public class Events {
 			return loanAccountNo;
 		}
 	}
+
 	/**
 	 *
 	 */
@@ -142,6 +143,7 @@ public class Events {
 			return address;
 		}
 	}
+
 	// Event used to show toast
 	public static class showToast {
 		private String message;

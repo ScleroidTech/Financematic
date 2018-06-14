@@ -78,25 +78,18 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 	@Nullable
 	@BindView(R.id.lent_amount_title_text_view)
 	TextView lentAmountTitleTextView;
-
-	private DashboardAdapter mAdapter;
-	private DashboardViewModel dashBoardViewModel;
 	@Nullable
 	@BindView(R.id.empty_card)
 	CardView emptyCard;
+	private DashboardAdapter mAdapter;
+	private DashboardViewModel dashBoardViewModel;
 	@Nullable
 	private List<Installment> installments = new ArrayList<>();
-
-	public DashboardFragment() {
-		// Required empty public constructor
-	}
-
 	@Nullable
 	private List<Loan> loanList = new ArrayList<>();
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	public DashboardFragment() {
+		// Required empty public constructor
 	}
 
 	@NonNull
@@ -107,16 +100,9 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 		return fragment;
 	}
 
-	private void setTitle() {
-		activityUtils.setTitle((AppCompatActivity) getActivity(), "DashBoard");
-	}
-
-	/**
-	 * @return layout resource id
-	 */
 	@Override
-	public int getLayoutId() {
-		return R.layout.fragment_dashboard;
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 	}
 
 	@Override
@@ -140,6 +126,29 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 		updateView(installments);
 		return rootView;
 	}
+
+	/**
+	 * @return layout resource id
+	 */
+	@Override
+	public int getLayoutId() {
+		return R.layout.fragment_dashboard;
+	}
+
+	@Override
+	protected void subscribeToLiveData() {
+		dashBoardViewModel.getUpcomingInstallments().observe(this,
+				items -> {
+					updateView(items);
+				});
+
+		dashBoardViewModel.getLoans().observe(this, items -> {
+			if (items.data == null) { return; }
+			loanList = items.data;
+			updateUi();
+		});
+	}
+
 	/**
 	 * Override for set view model
 	 *
@@ -150,6 +159,32 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 		dashBoardViewModel =
 				ViewModelProviders.of(this, viewModelFactory).get(DashboardViewModel.class);
 		return dashBoardViewModel;
+	}
+
+	private void updateUi() {
+		int receivedAmt = calculateReceivedAmt(loanList);
+		int totalAmt = calculateTotalAmt(loanList);
+		int lentAmt = totalAmt - receivedAmt;
+
+		totalAmountTextView.setText(String.valueOf(totalAmt));
+		lentAmountTextView.setText(String.valueOf(lentAmt));
+		remainingAmountTextView.setText(String.valueOf(receivedAmt));
+
+	}
+
+	private int calculateReceivedAmt(@NonNull final List<Loan> loans) {
+
+		int sum = Stream.of(loans).withoutNulls().mapToInt(loan ->
+				loan.getReceivedAmt() != null ? loan.getReceivedAmt().intValue() : 0).sum();
+		Timber.wtf("sum of received Amt" + sum);
+		return sum;
+	}
+
+	private int calculateTotalAmt(@NonNull final List<Loan> loans) {
+		int sum = Stream.of(loans).mapToInt(loan ->
+				loan.getLoanAmt() != null ? loan.getLoanAmt().intValue() : 0).sum();
+		Timber.wtf("sum of Total Amt" + sum);
+		return sum;
 	}
 
 	private void setupRecyclerView() {
@@ -185,19 +220,8 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 		// (recyclerTouchListener);
 	}
 
-	@Override
-	protected void subscribeToLiveData() {
-		dashBoardViewModel.getUpcomingInstallments().observe(this,
-				items -> {
-					updateView(items);
-				});
-
-		dashBoardViewModel.getLoans().observe(this, items -> {
-			if (items.data ==null)
-						return;
-			loanList = items.data;
-			updateUi();
-		});
+	private void setTitle() {
+		activityUtils.setTitle((AppCompatActivity) getActivity(), "DashBoard");
 	}
 
 	private void updateView(@Nullable final List<Installment> items) {
@@ -211,17 +235,6 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 			mAdapter.setInstallmentList(items);
 			installments = items;
 		}
-
-	}
-
-	private void updateUi() {
-		int receivedAmt = calculateReceivedAmt(loanList);
-		int totalAmt = calculateTotalAmt(loanList);
-		int lentAmt = totalAmt - receivedAmt;
-
-		totalAmountTextView.setText(String.valueOf(totalAmt));
-		lentAmountTextView.setText(String.valueOf(lentAmt));
-		remainingAmountTextView.setText(String.valueOf(receivedAmt));
 
 	}
 
@@ -241,21 +254,6 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 
 	private boolean predicate(final Installment next) {
 		return next.getLoan() == null || next.getLoan().getCustomer() == null;
-	}
-
-	private int calculateTotalAmt(@NonNull final List<Loan> loans) {
-		int sum = Stream.of(loans).mapToInt(loan ->
-				loan.getLoanAmt() != null ? loan.getLoanAmt().intValue() : 0).sum();
-		Timber.wtf("sum of Total Amt" + sum);
-		return sum;
-	}
-
-	private int calculateReceivedAmt(@NonNull final List<Loan> loans) {
-
-		int sum = Stream.of(loans).withoutNulls().mapToInt(loan ->
-				loan.getReceivedAmt() != null ? loan.getReceivedAmt().intValue() : 0).sum();
-		Timber.wtf("sum of received Amt" + sum);
-		return sum;
 	}
 
 	@OnClick({R.id.total_amount_text_view, R.id.total_amount_title_text_view, R.id

@@ -160,6 +160,7 @@ public class LocalLoanLab implements LocalDataSource<Loan> {
 			return loan;
 		}).subscribeOn(Schedulers.io());
 	}
+
 	/**
 	 * gets a single item provided by id
 	 *

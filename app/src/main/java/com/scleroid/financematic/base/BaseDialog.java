@@ -52,22 +52,21 @@ public abstract class BaseDialog extends DialogFragment {
 		}
 	}*/
 
-	@Override
-	public void onAttach(Context context) {
-		performDependencyInjection();
-		super.onAttach(context);
-		if (context instanceof BaseActivity) {
-			BaseActivity mActivity = (BaseActivity) context;
-			this.mActivity = mActivity;
-			mActivity.onFragmentAttached();
-		}
+	public void dismissDialog(String tag) {
+		dismiss();
+		getBaseActivity().onFragmentDetached(tag);
 	}
 
-
+	/**
+	 * Dismiss the fragment and its dialog.  If the fragment was added to the back stack, all back
+	 * stack state up to and including this entry will be popped.  Otherwise, a new transaction
+	 * will
+	 * be committed to remove the fragment.
+	 */
 	@Override
-	public void onDetach() {
-		mActivity = null;
-		super.onDetach();
+	public void dismiss() {
+		this.dismissAllowingStateLoss();
+		super.dismiss();
 	}
 
 
@@ -84,41 +83,21 @@ public abstract class BaseDialog extends DialogFragment {
 	}
 */
 
-	private void performDependencyInjection() {
-		AndroidSupportInjection.inject(this);
-	}
-
-	public void dismissDialog(String tag) {
-		dismiss();
-		getBaseActivity().onFragmentDetached(tag);
-	}
-
-	@Nullable
-	public BaseActivity getBaseActivity() {
-		return mActivity;
-	}
-
-	public void hideKeyboard() {
-		if (mActivity != null) {
-			mActivity.hideKeyboard();
+	@Override
+	public void onAttach(Context context) {
+		performDependencyInjection();
+		super.onAttach(context);
+		if (context instanceof BaseActivity) {
+			BaseActivity mActivity = (BaseActivity) context;
+			this.mActivity = mActivity;
+			mActivity.onFragmentAttached();
 		}
 	}
 
-	public void hideLoading() {
-		if (mActivity != null) {
-			mActivity.hideLoading();
-		}
-	}
-
-	public boolean isNetworkConnected() {
-		return mActivity != null && mActivity.isNetworkConnected();
-	}
-
-
-	public void showLoading() {
-		if (mActivity != null) {
-			mActivity.showLoading();
-		}
+	@Override
+	public void onDetach() {
+		mActivity = null;
+		super.onDetach();
 	}
 
 	@NonNull
@@ -145,12 +124,36 @@ public abstract class BaseDialog extends DialogFragment {
 		return dialog;
 	}
 
-
 	@Override
 	public void onStop() {
 		this.dismiss();
 		super.onStop();
 
+	}
+
+	@Nullable
+	public BaseActivity getBaseActivity() {
+		return mActivity;
+	}
+
+	private void performDependencyInjection() {
+		AndroidSupportInjection.inject(this);
+	}
+
+	public void hideKeyboard() {
+		if (mActivity != null) {
+			mActivity.hideKeyboard();
+		}
+	}
+
+	public void hideLoading() {
+		if (mActivity != null) {
+			mActivity.hideLoading();
+		}
+	}
+
+	public boolean isNetworkConnected() {
+		return mActivity != null && mActivity.isNetworkConnected();
 	}
 
 /*	@Override
@@ -160,15 +163,11 @@ public abstract class BaseDialog extends DialogFragment {
 		dismiss();
 	}
 
-	*//**
-	 * Dismiss the fragment and its dialog.  If the fragment was added to the back stack, all back
-	 * stack state up to and including this entry will be popped.  Otherwise, a new transaction
-	 * will
-	 * be committed to remove the fragment.
-	 */
-	@Override
-	public void dismiss() {
-		this.dismissAllowingStateLoss();
-		super.dismiss();
+	*/
+
+	public void showLoading() {
+		if (mActivity != null) {
+			mActivity.showLoading();
+		}
 	}
 }

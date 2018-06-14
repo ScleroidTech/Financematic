@@ -78,11 +78,11 @@ public class JobManagerFactory {
 					SchedulerJobService.class), true);
 		} else {
 			int enableGcm = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable
-           (context);
-            if (enableGcm == ConnectionResult.SUCCESS) {
-                builder.scheduler(GcmJobSchedulerService.createSchedulerFor(context,
-                        GcmJobSchedulerService.class), true);
-            }
+					(context);
+			if (enableGcm == ConnectionResult.SUCCESS) {
+				builder.scheduler(GcmJobSchedulerService.createSchedulerFor(context,
+						GcmJobSchedulerService.class), true);
+			}
 		}
 		return new JobManager(builder.build());
 	}

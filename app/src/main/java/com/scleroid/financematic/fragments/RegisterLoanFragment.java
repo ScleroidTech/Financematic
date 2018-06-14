@@ -242,7 +242,6 @@ public class RegisterLoanFragment extends BaseFragment {
 				});
 
 
-
 		ettxInstallmentAmount.addTextChangedListener(
 				new TextValidator(ettxInstallmentAmount) {
 					@Override
@@ -352,7 +351,6 @@ public class RegisterLoanFragment extends BaseFragment {
 		});
 
 
-
 		return rootView;
 	}
 
@@ -422,15 +420,6 @@ public class RegisterLoanFragment extends BaseFragment {
 		//	customerNameTextView.setText(customer.getName());
 	}
 
-	private void updateInterestAmt() {
-		if (TextUtils.isEmpty(ettxloan_amout.getText().toString())) return;
-		BigDecimal interestAmt = getInterestAmt(
-				getBigDecimal(Double.valueOf(ettxloan_amout.getText().toString().trim
-						())));
-		txInterestAmount.setText(
-				interestAmt.setScale(2, BigDecimal.ROUND_HALF_EVEN).toPlainString());
-	}
-
 	private void setRateOfInterest() {
 		if (rateOfInterestLayout.getVisibility() == View.VISIBLE) {
 
@@ -448,86 +437,6 @@ public class RegisterLoanFragment extends BaseFragment {
 					});
 		}
 
-	}
-
-	private BigDecimal getInterestAmt(@NonNull BigDecimal loanAmt) {
-
-		if (rateOfInterestLayout.getVisibility() == View.VISIBLE) {
-
-			String rateOfInterest = ettxrateInterest.getText()
-					.toString();
-			final double
-					monthlyDuration =
-					convertTime(calculateTotalDuration(),
-							durationConverter(LoanDurationType.MONTHLY));
-			if (TextUtils.isEmpty(
-					rateOfInterest) || monthlyDuration <= 0) {
-				return getBigDecimal();
-			}
-			double interestRate = Double.valueOf(rateOfInterest.trim());
-			BigDecimal interestAmt =
-					calculateInterestAmt(loanAmt, monthlyDuration, interestRate);
-			return interestAmt;
-		} else if (!TextUtils.isEmpty(txInterestAmount.getText().toString())) {
-			return getBigDecimal(Double.parseDouble(txInterestAmount.getText().toString
-					()));
-		}
-		return getBigDecimal();
-	}
-
-	private BigDecimal getBigDecimal(final Double value) {
-		return BigDecimal.valueOf(value).setScale(2,
-				BigDecimal.ROUND_HALF_EVEN);
-	}
-
-	private BigDecimal getBigDecimal() {
-		return getBigDecimal(0.0);
-	}
-
-	private double convertTime(long timeDiff, long divider) {
-
-
-		return (double) TimeUnit.MILLISECONDS.toDays(timeDiff) / (double) divider;
-	}
-
-	private long calculateTotalDuration() {
-		return dateUtils.differenceOfDates(startDate, endDate);
-	}
-
-	private long durationConverter(final String durationType) {
-
-		switch (durationType) {
-			case LoanDurationType.MONTHLY:
-				return 30;
-
-			case LoanDurationType.DAILY:
-				return 1;
-
-			case LoanDurationType.WEEKLY:
-				return 7;
-
-			case LoanDurationType.BIWEEKLY:
-				return 15;
-
-			case LoanDurationType.BIMONTHLY:
-				return 60;
-
-			case LoanDurationType.QUARTERLY:
-				return 90;
-
-			case LoanDurationType.HALF_YEARLY:
-				return 180;
-
-			case LoanDurationType.YEARLY:
-				return 365;
-		}
-		return 0;
-	}
-
-	private BigDecimal calculateInterestAmt(BigDecimal loanAmt, double duration,
-	                                        double interestRate) {
-
-		return loanAmt.multiply(getBigDecimal((interestRate / 100) * duration));
 	}
 
 	private boolean isNotValidAmt(@NonNull String loan_amountval) {
@@ -649,6 +558,22 @@ public class RegisterLoanFragment extends BaseFragment {
 		}
 	}
 
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, @NonNull Intent intent) {
+		super.onActivityResult(requestCode, resultCode, intent);
+
+		if (requestCode == REQUEST_DATE_FROM) {
+			startDate = (Date) intent.getSerializableExtra(DatePickerDialogFragment.EXTRA_DATE);
+			startDateTextView.setText(dateUtils.getFormattedDate(startDate));
+		} else if (requestCode == REQUEST_DATE_TO) {
+			endDate = (Date) intent.getSerializableExtra(DatePickerDialogFragment.EXTRA_DATE);
+			endDateTextView.setText(dateUtils.getFormattedDate(endDate));
+		}
+		ettxNoofInstallment.setText(String.valueOf(getInstallments()));
+		updateInterestAmt();
+
+	}
+
 	private long getInstallments() {
 
 
@@ -666,38 +591,105 @@ public class RegisterLoanFragment extends BaseFragment {
 		return durationDivided;
 	}
 
+	private long durationConverter(final String durationType) {
+
+		switch (durationType) {
+			case LoanDurationType.MONTHLY:
+				return 30;
+
+			case LoanDurationType.DAILY:
+				return 1;
+
+			case LoanDurationType.WEEKLY:
+				return 7;
+
+			case LoanDurationType.BIWEEKLY:
+				return 15;
+
+			case LoanDurationType.BIMONTHLY:
+				return 60;
+
+			case LoanDurationType.QUARTERLY:
+				return 90;
+
+			case LoanDurationType.HALF_YEARLY:
+				return 180;
+
+			case LoanDurationType.YEARLY:
+				return 365;
+		}
+		return 0;
+	}
+
 	private long calculateInstallments(long timeDiff, long divider) {
 
 
 		return (TimeUnit.MILLISECONDS.toDays(timeDiff) / divider);
 	}
 
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, @NonNull Intent intent) {
-		super.onActivityResult(requestCode, resultCode, intent);
-
-		if (requestCode == REQUEST_DATE_FROM) {
-			startDate = (Date) intent.getSerializableExtra(DatePickerDialogFragment.EXTRA_DATE);
-			startDateTextView.setText(dateUtils.getFormattedDate(startDate));
-		} else if (requestCode == REQUEST_DATE_TO) {
-			endDate = (Date) intent.getSerializableExtra(DatePickerDialogFragment.EXTRA_DATE);
-			endDateTextView.setText(dateUtils.getFormattedDate(endDate));
-		}
-		ettxNoofInstallment.setText(String.valueOf(getInstallments()));
-		updateInterestAmt();
-
+	private long calculateTotalDuration() {
+		return dateUtils.differenceOfDates(startDate, endDate);
 	}
 
-	private void loadDialogFragment(final int msg) {
-		activityUtils.loadDialogFragment(DatePickerDialogFragment.newInstance(), this,
-				getFragmentManager(), msg, DIALOG_DATE);
+	private void updateInterestAmt() {
+		if (TextUtils.isEmpty(ettxloan_amout.getText().toString())) return;
+		BigDecimal interestAmt = getInterestAmt(
+				getBigDecimal(Double.valueOf(ettxloan_amout.getText().toString().trim
+						())));
+		txInterestAmount.setText(
+				interestAmt.setScale(2, BigDecimal.ROUND_HALF_EVEN).toPlainString());
+	}
+
+	private BigDecimal getInterestAmt(@NonNull BigDecimal loanAmt) {
+
+		if (rateOfInterestLayout.getVisibility() == View.VISIBLE) {
+
+			String rateOfInterest = ettxrateInterest.getText()
+					.toString();
+			final double
+					monthlyDuration =
+					convertTime(calculateTotalDuration(),
+							durationConverter(LoanDurationType.MONTHLY));
+			if (TextUtils.isEmpty(
+					rateOfInterest) || monthlyDuration <= 0) {
+				return getBigDecimal();
+			}
+			double interestRate = Double.valueOf(rateOfInterest.trim());
+			BigDecimal interestAmt =
+					calculateInterestAmt(loanAmt, monthlyDuration, interestRate);
+			return interestAmt;
+		} else if (!TextUtils.isEmpty(txInterestAmount.getText().toString())) {
+			return getBigDecimal(Double.parseDouble(txInterestAmount.getText().toString
+					()));
+		}
+		return getBigDecimal();
+	}
+
+	private BigDecimal getBigDecimal(final Double value) {
+		return BigDecimal.valueOf(value).setScale(2,
+				BigDecimal.ROUND_HALF_EVEN);
+	}
+
+	private double convertTime(long timeDiff, long divider) {
+
+
+		return (double) TimeUnit.MILLISECONDS.toDays(timeDiff) / (double) divider;
+	}
+
+	private BigDecimal getBigDecimal() {
+		return getBigDecimal(0.0);
+	}
+
+	private BigDecimal calculateInterestAmt(BigDecimal loanAmt, double duration,
+	                                        double interestRate) {
+
+		return loanAmt.multiply(getBigDecimal((interestRate / 100) * duration));
 	}
 
 	private void loadDialogFragment(final int msg, Date minDate) {
 		activityUtils.loadDialogFragment(DatePickerDialogFragment.newInstance(minDate, true), this,
 				getFragmentManager(), msg, DIALOG_DATE);
 	}
-
 
 	@Deprecated
 	private void initializeAllViews(final View rootView) {
@@ -724,6 +716,11 @@ public class RegisterLoanFragment extends BaseFragment {
 				loadDialogFragment(REQUEST_DATE_TO);
 				break;
 		}
+	}
+
+	private void loadDialogFragment(final int msg) {
+		activityUtils.loadDialogFragment(DatePickerDialogFragment.newInstance(), this,
+				getFragmentManager(), msg, DIALOG_DATE);
 	}
 
 	@OnClick(R.id.btn_givenmoney)

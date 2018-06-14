@@ -39,6 +39,14 @@ public class PeopleViewModel extends BaseViewModel<Customer> implements Customer
 	}
 
 	@Override
+	protected LiveData<Resource<List<Customer>>> updateItemLiveData() {
+		customers = customerRepo
+				.getCustomersWithLoans();
+
+		return customers;
+	}
+
+	@Override
 	protected LiveData<Resource<List<Customer>>> getItemList() {
 
 		//TODO Everything is local currently, put it on remote later
@@ -47,14 +55,6 @@ public class PeopleViewModel extends BaseViewModel<Customer> implements Customer
 					.getLocalInstallmentsLab().getItems());*/
 			customers = updateItemLiveData();
 		}
-		return customers;
-	}
-
-	@Override
-	protected LiveData<Resource<List<Customer>>> updateItemLiveData() {
-		customers = customerRepo
-				.getCustomersWithLoans();
-
 		return customers;
 	}
 }

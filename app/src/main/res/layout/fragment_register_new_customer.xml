@@ -29,8 +29,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="#0fa8bc"
-                android:paddingBottom="5dip"
-                android:paddingTop="5dip">
+                android:paddingTop="5dip"
+                android:paddingBottom="5dip">
 
                 <TextView
                     android:id="@+id/reg_fullname2"
@@ -50,8 +50,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:orientation="horizontal"
-                    android:paddingBottom="5dp"
-                    android:paddingRight="10dp">
+                    android:paddingRight="10dp"
+                    android:paddingBottom="5dp">
 
                     <ImageView
                         android:layout_width="25dp"
@@ -83,9 +83,9 @@
                         android:background="@drawable/shadow"
                         android:maxLength="30"
                         android:maxLines="1"
-                        android:paddingBottom="6dp"
-                        android:paddingRight="10dp"
                         android:paddingTop="6dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="6dp"
                         android:textColor="#409bbf"
                         android:textColorHighlight="#ff0000"
                         android:textColorLink="#783302" />
@@ -97,8 +97,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal"
-                    android:paddingBottom="5dp"
-                    android:paddingRight="10dp">
+                    android:paddingRight="10dp"
+                    android:paddingBottom="5dp">
 
                     <ImageView
                         android:layout_width="25dp"
@@ -128,8 +128,8 @@
                         android:background="@drawable/shadow"
                         android:maxLength="12"
                         android:maxLines="1"
-                        android:paddingBottom="6dp"
                         android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
                         android:textColor="#409bbf" />
 
                 </LinearLayout>
@@ -140,8 +140,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal"
-                    android:paddingBottom="5dp"
-                    android:paddingRight="10dp">
+                    android:paddingRight="10dp"
+                    android:paddingBottom="5dp">
 
                     <ImageView
                         android:layout_width="25dp"
@@ -169,8 +169,8 @@
                         android:layout_weight=".7"
                         android:background="@drawable/shadow"
                         android:gravity="right"
-                        android:paddingBottom="5dp"
-                        android:paddingTop="7dp">
+                        android:paddingTop="7dp"
+                        android:paddingBottom="5dp">
 
 
                         <Spinner
@@ -190,8 +190,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal"
-                    android:paddingBottom="5dp"
-                    android:paddingRight="10dp">
+                    android:paddingRight="10dp"
+                    android:paddingBottom="5dp">
 
                     <ImageView
                         android:layout_width="25dp"
@@ -221,8 +221,8 @@
                         android:background="@drawable/shadow"
                         android:maxLength="20"
                         android:maxLines="1"
-                        android:paddingBottom="6dp"
                         android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
                         android:textColor="#409bbf" />
 
                 </LinearLayout>
@@ -232,8 +232,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal"
-                    android:paddingBottom="5dp"
-                    android:paddingRight="10dp">
+                    android:paddingRight="10dp"
+                    android:paddingBottom="5dp">
 
                     <ImageView
                         android:layout_width="25dp"
@@ -263,8 +263,8 @@
                         android:background="@drawable/shadow"
                         android:maxLength="50"
                         android:maxLines="3"
-                        android:paddingBottom="6dp"
                         android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
                         android:textColor="#409bbf" />
 
                 </LinearLayout>
@@ -273,10 +273,10 @@
                     android:id="@+id/btn_new_customer_Register1"
                     android:layout_width="fill_parent"
                     android:layout_height="33dp"
-                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
                     android:background="#0fa8bc"
                     android:text="next"
                     android:textColor="@color/white"

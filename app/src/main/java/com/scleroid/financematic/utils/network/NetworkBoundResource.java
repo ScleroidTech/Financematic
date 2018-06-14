@@ -56,6 +56,13 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
 		});
 	}
 
+	@NonNull
+	@MainThread
+	protected abstract LiveData<ResultType> loadFromDb();
+
+	@MainThread
+	protected abstract boolean shouldFetch(@Nullable ResultType data);
+
 	private void fetchFromNetwork(@NonNull final LiveData<ResultType> dbSource) {
 		LiveData<ApiResponse<RequestType>> apiResponse = createCall();
 		/*result.addSource(dbSource,
@@ -101,8 +108,12 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
 		}
 	}
 
-	protected void onFetchFailed() {
-	}
+	@NonNull
+	@MainThread
+	protected abstract LiveData<ApiResponse<RequestType>> createCall();
+
+	@WorkerThread
+	protected abstract void saveCallResult(@NonNull RequestType item);
 
 	@Nullable
 	@WorkerThread
@@ -111,19 +122,8 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
 		return response.body;
 	}
 
-	@WorkerThread
-	protected abstract void saveCallResult(@NonNull RequestType item);
-
-	@NonNull
-	@MainThread
-	protected abstract LiveData<ApiResponse<RequestType>> createCall();
-
-	@MainThread
-	protected abstract boolean shouldFetch(@Nullable ResultType data);
-
-	@NonNull
-	@MainThread
-	protected abstract LiveData<ResultType> loadFromDb();
+	protected void onFetchFailed() {
+	}
 
 	@NonNull
 	public LiveData<Resource<ResultType>> asLiveData() {

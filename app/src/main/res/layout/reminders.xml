@@ -51,8 +51,8 @@
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
                     android:layout_below="@+id/cardview_list_title10"
+                    android:layout_alignParentRight="true"
                     android:layout_marginTop="15dp"
                     android:text="EMI amout 2000"
                     android:textSize="20sp" />
@@ -61,8 +61,8 @@
                     android:id="@+id/cardview_image12"
                     android:layout_width="50dp"
                     android:layout_height="40dp"
-                    android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
                     app:srcCompat="@drawable/ic_person_black_24dp"
 
 
@@ -114,8 +114,8 @@
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
                     android:layout_below="@+id/cardview_list_title14"
+                    android:layout_alignParentRight="true"
                     android:layout_marginTop="15dp"
                     android:text="EMI amout 2000"
                     android:textSize="20sp" />
@@ -124,8 +124,8 @@
                     android:id="@+id/cardview_image123"
                     android:layout_width="50dp"
                     android:layout_height="40dp"
-                    android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
                     app:srcCompat="@drawable/ic_person_black_24dp"
 
 

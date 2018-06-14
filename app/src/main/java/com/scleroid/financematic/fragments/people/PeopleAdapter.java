@@ -39,6 +39,14 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 		implements Filterable {
 
 
+	public List<Customer> customerList;
+	CustomFilter filter;
+	private Context context;
+
+	public PeopleAdapter(List<Customer> customerList) {
+		this.customerList = customerList;
+	}
+
 	public List<Customer> getCustomerList() {
 		return customerList;
 	}
@@ -48,17 +56,6 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 		this.customerList = customerList;
 		notifyDataSetChanged();
 	}
-
-	public List<Customer> customerList;
-	private Context context;
-	CustomFilter filter;
-
-
-
-	public PeopleAdapter(List<Customer> customerList) {
-		this.customerList = customerList;
-	}
-
 
 	@NonNull
 	@Override
@@ -98,7 +95,6 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 	}
 
 
-
 	@Override
 	public int getItemCount() {
 		return customerList.size();
@@ -118,7 +114,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 	public static class MyViewHolder extends RecyclerView.ViewHolder {
 
 
-	/*	TextViewUtils textViewUtils= new TextViewUtils();*/
+		/*	TextViewUtils textViewUtils= new TextViewUtils();*/
 
 		@NonNull
 		private final View itemView;
@@ -140,7 +136,6 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 		@Nullable
 		@BindView(R.id.received_amount_text_view)
 		RupeeTextView receivedAmountTextView;
-		private Customer customer;
 		@Nullable
 		@BindView(R.id.percentage_pie_chart_text_view)
 		TextView percentagePieChartTextView;
@@ -150,6 +145,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 		@Nullable
 		@BindView(R.id.people_item_card_view)
 		CardView peopleItemCardView;
+		private Customer customer;
 
 		public MyViewHolder(@NonNull View view) {
 			super(view);
@@ -174,22 +170,12 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 			drawCircle(receivedAmt, totalAmt);
 		}
 
-		private void drawCircle(final int receivedAmt, final int totalAmt) {
-			float percentage = getPercentage((float) receivedAmt, totalAmt);
-			String percentageString = new DecimalFormat("##").format(percentage);
-			percentagePieChartTextView.setText(String.format("%s %%", percentageString));
-			float angle = getAngle(percentage);
-			paymentCircleView.setAngle(angle);
-			paymentCircleView.invalidate();
-		}
+		private int calculateReceivedAmt(@NonNull final List<Loan> loans) {
 
-		private float getAngle(float avg) {
-			int angle = (int) ((avg / 100) * 360);
-			return (float) angle;
-		}
-
-		private float getPercentage(float list_received_amoun, int list_total_loan) {
-			return (list_received_amoun / list_total_loan) * 100;
+			int sum = Stream.of(loans).mapToInt(loan ->
+					loan.getReceivedAmt() != null ? loan.getReceivedAmt().intValue() : 0).sum();
+			//	Timber.wtf("sum of received Amt" + sum);
+			return sum;
 		}
 
 		private int calculateTotalAmt(@NonNull final List<Loan> loans) {
@@ -199,12 +185,22 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 			return sum;
 		}
 
-		private int calculateReceivedAmt(@NonNull final List<Loan> loans) {
+		private void drawCircle(final int receivedAmt, final int totalAmt) {
+			float percentage = getPercentage((float) receivedAmt, totalAmt);
+			String percentageString = new DecimalFormat("##").format(percentage);
+			percentagePieChartTextView.setText(String.format("%s %%", percentageString));
+			float angle = getAngle(percentage);
+			paymentCircleView.setAngle(angle);
+			paymentCircleView.invalidate();
+		}
 
-			int sum = Stream.of(loans).mapToInt(loan ->
-					loan.getReceivedAmt() != null ? loan.getReceivedAmt().intValue() : 0).sum();
-			//	Timber.wtf("sum of received Amt" + sum);
-			return sum;
+		private float getPercentage(float list_received_amoun, int list_total_loan) {
+			return (list_received_amoun / list_total_loan) * 100;
+		}
+
+		private float getAngle(float avg) {
+			int angle = (int) ((avg / 100) * 360);
+			return (float) angle;
 		}
 
 		@OnClick({R.id.callButton, R.id.people_item_card_view})
@@ -221,19 +217,19 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.MyViewHold
 
 		}
 
+		private void openCustomerPageOnClick() {
+			Timber.d("It's clicked dadadad");
+			Events.openCustomerFragment openCustomerFragment =
+					new Events.openCustomerFragment(customer.getCustomerId());
+			GlobalBus.getBus().post(openCustomerFragment);
+		}
+
 		private void handleCallClick() {
 			String phone = customer.getMobileNumber();
 			Timber.d(phone + " of person " + customer.getName());
 			Events.placeCall makeACall = new Events.placeCall(phone);
 
 			GlobalBus.getBus().post(makeACall);
-		}
-
-		private void openCustomerPageOnClick() {
-			Timber.d("It's clicked dadadad");
-			Events.openCustomerFragment openCustomerFragment =
-					new Events.openCustomerFragment(customer.getCustomerId());
-			GlobalBus.getBus().post(openCustomerFragment);
 		}
 
 	}

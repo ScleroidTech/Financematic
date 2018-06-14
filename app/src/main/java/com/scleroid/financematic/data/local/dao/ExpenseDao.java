@@ -23,8 +23,7 @@ import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
  * Data Access Object required for
  *
  * @author Ganesh Kaple
- * @see android.arch.persistence.room.Room
- * For Model
+ * @see android.arch.persistence.room.Room For Model
  * @see Expense
  * @since 10-01-2018
  */

@@ -1,162 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-   >
+    android:layout_height="match_parent">
 
 
-            <!-- Registration Form -->
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
+    <!-- Registration Form -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="7dp"
+
+        android:orientation="vertical"
+        android:padding="5dip">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="5dp"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="7dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight=".5"
 
-                android:orientation="vertical"
-                android:padding="5dip">
+                android:text="Enter Amount"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#409bbf"
+                android:textSize="20sp" />
 
+            <EditText
 
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:orientation="horizontal"
-                    android:paddingBottom="5dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="5dp"
-                    android:weightSum="1">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight=".5"
-
-                        android:text="Enter Amount"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="#409bbf"
-                        android:textSize="20sp" />
-
-                    <EditText
-
-                        android:id="@+id/amount_edit_text"
-                        android:layout_width="0dp"
-                        android:layout_height="45dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight=".5"
-                     android:paddingLeft="12dp"   android:background="@drawable/shadow"
-               android:drawableLeft="@drawable/ic_rupeeindian"
-                        android:drawableTint="@color/colorPrimaryDark"
-                        android:maxLines="1"
-                        android:paddingBottom="10dp"
-                        android:paddingTop="10dp"
-                        android:textColor="#409bbf" />
+                android:id="@+id/amount_edit_text"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight=".5"
+                android:background="@drawable/shadow"
+                android:drawableLeft="@drawable/ic_rupeeindian"
+                android:drawableTint="@color/colorPrimaryDark"
+                android:maxLines="1"
+                android:paddingLeft="12dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:textColor="#409bbf" />
 
 
-                </LinearLayout>
+        </LinearLayout>
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal"
-                    android:paddingBottom="5dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="5dp"
-                    android:weightSum="1">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="5dp"
+            android:weightSum="1">
 
-                    <TextView
-                        android:id="@+id/exp_date11"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight=".5"
+            <TextView
+                android:id="@+id/exp_date11"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight=".5"
 
-                        android:text="Date"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="#409bbf"
-                        android:textSize="20sp" />
-
-
-                    <TextView
-                        android:id="@+id/exp_date"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight=".5"
-                        android:paddingRight="10dp"  android:background="@drawable/shadow"
-                        android:drawableRight="@drawable/ic_calendarclocktime"
-                        android:drawableTint="@color/colorPrimaryDark"
-                        android:maxLines="1"
-                        android:paddingBottom="10dp"
-                        android:paddingTop="10dp"
-                        android:textColor="#409bbf" />
+                android:text="Date"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#409bbf"
+                android:textSize="20sp" />
 
 
-                </LinearLayout>
+            <TextView
+                android:id="@+id/exp_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight=".5"
+                android:background="@drawable/shadow"
+                android:drawableRight="@drawable/ic_calendarclocktime"
+                android:drawableTint="@color/colorPrimaryDark"
+                android:maxLines="1"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
+                android:textColor="#409bbf" />
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal"
-                    android:paddingBottom="5dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="5dp"
-                    android:weightSum="1">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight=".5"
-
-                        android:text="Category"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="#409bbf"
-                        android:textSize="20sp" />
+        </LinearLayout>
 
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".5"
-                        android:background="@drawable/shadow5"
-                        android:paddingLeft="10dp"
-                        android:paddingTop="10dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="5dp"
+            android:weightSum="1">
 
-                        <Spinner
-                            android:id="@+id/spinnerexp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="right"
-                            android:textColor="#409bbf"
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight=".5"
 
-                            ></Spinner>
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
+                android:text="Category"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#409bbf"
+                android:textSize="20sp" />
 
 
-                <TextView
-                    android:id="@+id/display1"
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:background="@drawable/shadow5"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp">
 
+                <Spinner
+                    android:id="@+id/spinnerexp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:scrollbars="vertical"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textSize="18sp" />
+                    android:layout_gravity="right"
+                    android:textColor="#409bbf"
+
+                    ></Spinner>
 
             </LinearLayout>
-            <!-- Registration Form Ends -->
+
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/display1"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
+            android:scrollbars="vertical"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+    <!-- Registration Form Ends -->
 
 
 </android.support.constraint.ConstraintLayout>

@@ -24,58 +24,62 @@ import java.util.List;
  */
 
 
-    /**
-     * Copyright (C) 2018
-     * @author Ganesh Kaple
-     * @since 2/3/18
-     */
+/**
+ * Copyright (C) 2018
+ *
+ * @author Ganesh Kaple
+ * @since 2/3/18
+ */
 public class Notification extends Fragment {
 
-	    @NonNull
-	    private List<Passbook> passbookList = new ArrayList<>();
-        private RecyclerView recyclerView;
-        private PassbookAdapter mAdapter;
+	@NonNull
+	private List<Passbook> passbookList = new ArrayList<>();
+	private RecyclerView recyclerView;
+	private PassbookAdapter mAdapter;
 
 
-        public Notification() {
-            // Required empty public constructor
-        }
+	public Notification() {
+		// Required empty public constructor
+	}
 
-	    @NonNull
-	    public static Notification newInstance(String param1, String param2) {
-		    Notification fragment = new Notification();
-		    Bundle args = new Bundle();
-		    fragment.setArguments(args);
-		    return fragment;
-	    }
+	@NonNull
+	public static Notification newInstance(String param1, String param2) {
+		Notification fragment = new Notification();
+		Bundle args = new Bundle();
+		fragment.setArguments(args);
+		return fragment;
+	}
 
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-        }
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+	}
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            // Inflate the layout for this fragment
-            View rootView = inflater.inflate(R.layout.notification, container, false);
-
-
-            AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-            //AlarmReceiver notificationIntent = new AlarmReceiver();
-                   Intent notificationIntent = new Intent(this.getActivity(), AlarmReceiver.class);
-           PendingIntent broadcast = PendingIntent.getBroadcast(this.getActivity(), 100, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-            Calendar cal = Calendar.getInstance();
-            cal.add(Calendar.SECOND, 3);
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), broadcast);
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+	                         Bundle savedInstanceState) {
+		// Inflate the layout for this fragment
+		View rootView = inflater.inflate(R.layout.notification, container, false);
 
 
-            return rootView;
+		AlarmManager alarmManager =
+				(AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+		//AlarmReceiver notificationIntent = new AlarmReceiver();
+		Intent notificationIntent = new Intent(this.getActivity(), AlarmReceiver.class);
+		PendingIntent broadcast =
+				PendingIntent.getBroadcast(this.getActivity(), 100, notificationIntent,
+						PendingIntent.FLAG_UPDATE_CURRENT);
+
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.SECOND, 3);
+		alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), broadcast);
 
 
-        }
+		return rootView;
 
 
-    }
+	}
+
+
+}
 

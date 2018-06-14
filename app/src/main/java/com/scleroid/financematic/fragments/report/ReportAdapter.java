@@ -30,14 +30,6 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
 
 	private ReportFilterType filterType;
 
-	public ReportFilterType getFilterType() {
-		return filterType;
-	}
-
-	public void setFilterType(final ReportFilterType filterType) {
-		this.filterType = filterType;
-	}
-
 	ReportAdapter() {
 		/*this.reportList = new SortedList<TransactionModel>(TransactionModel.class,
 				new SortedList.Callback<TransactionModel>() {
@@ -79,6 +71,14 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
 						notifyItemMoved(fromPosition, toPosition);
 					}
 				});*/
+	}
+
+	public ReportFilterType getFilterType() {
+		return filterType;
+	}
+
+	public void setFilterType(final ReportFilterType filterType) {
+		this.filterType = filterType;
 	}
 
 	public void setReportList(
@@ -124,8 +124,9 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
 		}
 	}
 
-	public TransactionModel get(int position) {
-		return reportList.get(position);
+	@Override
+	public int getItemCount() {
+		return reportList.size();
 	}
 
 	/*public void clear() {
@@ -137,38 +138,15 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
 		reportList.endBatchedUpdates();
 	}*/
 
-	@Override
-	public int getItemCount() {
-		return reportList.size();
+	public TransactionModel get(int position) {
+		return reportList.get(position);
 	}
-
 
 	public class MyViewHolder extends RecyclerView.ViewHolder {
 		@NonNull
 		DateUtils dateUtils = new DateUtils();
 
 		ReportFilterType filterType = ReportFilterType.ALL_TRANSACTIONS;
-
-		private void setData(TransactionModel report) {
-			this.report = report;
-			accNoTextView.setText(String.valueOf(report.getLoanAcNo()));
-			transactionDate.setText(
-					dateUtils.getFormattedDateDigitsOnly(report.getTransactionDate()));
-			reportLent.setText(
-					report.getLentAmt() != null ? report.getLentAmt().toString() : " ");
-			reportEarned.setText(
-					report.getGainedAmt() != null ? report.getGainedAmt().toString() : " ");
-			receivedAmt.setText(
-					report.getReceivedAmt() != null ? report.getReceivedAmt().toString() : " ");
-			accNoTextView.setTextColor(Color.parseColor("#5432ff"));
-			filterData(getFilterType());
-
-			//reportBalance.setText(String.valueOf( report));
-		}
-
-		public ReportFilterType getFilterType() {
-			return filterType;
-		}
 		/* for selected row and change color        implements View.OnClickListener*/
 		@Nullable
 		@BindView(R.id.acc_no_text_view)
@@ -187,7 +165,6 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
 		TextView receivedAmt;
 		//private SparseBooleanArray selectedItems = new SparseBooleanArray();
 		private TransactionModel report;
-
 		public MyViewHolder(@NonNull View view) {
 			super(view);
 			/* view.setOnClickListener(this);*/
@@ -196,8 +173,21 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
 
 		}
 
-		public void setFilterType(final ReportFilterType filterType) {
-			this.filterType = filterType;
+		private void setData(TransactionModel report) {
+			this.report = report;
+			accNoTextView.setText(String.valueOf(report.getLoanAcNo()));
+			transactionDate.setText(
+					dateUtils.getFormattedDateDigitsOnly(report.getTransactionDate()));
+			reportLent.setText(
+					report.getLentAmt() != null ? report.getLentAmt().toString() : " ");
+			reportEarned.setText(
+					report.getGainedAmt() != null ? report.getGainedAmt().toString() : " ");
+			receivedAmt.setText(
+					report.getReceivedAmt() != null ? report.getReceivedAmt().toString() : " ");
+			accNoTextView.setTextColor(Color.parseColor("#5432ff"));
+			filterData(getFilterType());
+
+			//reportBalance.setText(String.valueOf( report));
 		}
 
 		private void filterData(final ReportFilterType filterType) {
@@ -219,6 +209,14 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
 					break;
 
 			}
+		}
+
+		public ReportFilterType getFilterType() {
+			return filterType;
+		}
+
+		public void setFilterType(final ReportFilterType filterType) {
+			this.filterType = filterType;
 		}
 
 		private void makeItVisible() {

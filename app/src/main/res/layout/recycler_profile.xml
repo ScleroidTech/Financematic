@@ -16,9 +16,9 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="1dp"
+        android:layout_marginEnd="8dp"
 
         android:elevation="5dp"
 
@@ -55,9 +55,9 @@
                 android:id="@+id/call_button11"
                 android:layout_width="35dp"
                 android:layout_height="33dp"
-                android:layout_marginEnd="16dp"
-
                 android:layout_marginTop="18dp"
+
+                android:layout_marginEnd="16dp"
                 android:background="@drawable/ic_keyboard_arrow_right_black_24dp"
                 android:backgroundTint="@color/colorPrimaryDark"
 
@@ -128,8 +128,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                android:layout_marginBottom="0dp"
                 android:layout_marginTop="13dp"
+                android:layout_marginBottom="0dp"
                 android:background="@color/colorPrimaryDark"
 
                 android:orientation="horizontal"
@@ -145,9 +145,9 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_alignParentTop="true"
-                    android:layout_marginBottom="8dp"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
                     android:background="@drawable/ic_account_balance_black_24dp"
                     android:backgroundTint="@color/white"
 
@@ -159,10 +159,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="2dp"
                     android:layout_marginStart="1dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginBottom="8dp"
 
                     android:text="Total Loan"
                     android:textAlignment="viewStart"
@@ -178,10 +178,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="2dp"
                     android:layout_marginStart="1dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginBottom="8dp"
 
                     android:text="20000"
                     android:textAlignment="viewStart"
@@ -197,9 +197,9 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_alignParentTop="true"
-                    android:layout_marginBottom="8dp"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
                     android:background="@drawable/ic_trending_up_black_24dp"
                     android:backgroundTint="@color/white"
 
@@ -212,10 +212,10 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/Loan_no_text_view"
 
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="1dp"
                     android:layout_marginStart="1dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginEnd="1dp"
+                    android:layout_marginBottom="8dp"
 
                     android:text="Received"
                     android:textAlignment="center"
@@ -232,10 +232,10 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/Loan_no_text_view"
 
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="1dp"
                     android:layout_marginStart="1dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginEnd="1dp"
+                    android:layout_marginBottom="8dp"
 
                     android:text="100"
                     android:textAlignment="center"

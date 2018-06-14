@@ -10,11 +10,11 @@
         android:id="@+id/people_item_card_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="4dp"
-
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+
         android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="4dp"
         android:elevation="5dp"
         app:cardBackgroundColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -30,9 +30,9 @@
                 android:id="@+id/payment_circle_view"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
-                android:layout_marginBottom="8dp"
                 android:layout_marginStart="2dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -52,14 +52,14 @@
 
 
             <TextView
-                android:textColor="#441953"
                 android:id="@+id/total_amount_title_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/person_name_text_view"
-                android:layout_marginBottom="3dp"
                 android:layout_marginStart="6dp"
+                android:layout_marginBottom="3dp"
                 android:text="Total loan"
+                android:textColor="#441953"
 
                 android:textSize="12sp"
                 app:layout_constraintBottom_toTopOf="@+id/total_loan_text_view"
@@ -70,8 +70,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/total_amount_title_text_view"
-                android:layout_marginBottom="8dp"
                 android:layout_marginStart="122dp"
+                android:layout_marginBottom="8dp"
                 android:text="200000"
                 android:textSize="17sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -80,13 +80,13 @@
             <TextView
                 android:id="@+id/received_amount_title_text_view"
                 android:layout_width="wrap_content"
-                android:textColor="#441953"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
                 android:layout_below="@+id/person_name_text_view"
-                android:layout_marginBottom="4dp"
+                android:layout_alignParentRight="true"
                 android:layout_marginStart="8dp"
+                android:layout_marginBottom="4dp"
                 android:text="Received"
+                android:textColor="#441953"
 
                 android:textSize="12sp"
                 app:layout_constraintBottom_toTopOf="@+id/received_amount_text_view"
@@ -99,8 +99,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
 
-                android:layout_marginBottom="8dp"
                 android:layout_marginStart="18dp"
+                android:layout_marginBottom="8dp"
                 android:text="20000"
                 android:textSize="17sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -110,9 +110,9 @@
                 android:id="@+id/imageButton"
                 android:layout_width="25dp"
                 android:layout_height="22dp"
-                android:layout_marginBottom="32dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="32dp"
                 android:background="@drawable/ic_trending_up_black_24dp"
                 android:backgroundTint="@color/green"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -127,9 +127,9 @@
                 android:id="@+id/imageView5"
                 android:layout_width="20dp"
                 android:layout_height="18dp"
-                android:layout_marginBottom="32dp"
-
                 android:layout_marginStart="24dp"
+
+                android:layout_marginBottom="32dp"
                 android:background="@drawable/ic_account_balance_black_24dp"
                 android:backgroundTint="@color/colorPrimaryDark"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -139,10 +139,10 @@
                 android:id="@+id/percentage_pie_chart_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
                 android:text="46%"
                 android:textAlignment="center"
                 android:textColor="@color/green"
@@ -161,8 +161,6 @@
                 android:backgroundTint="#4696c5"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-
 
 
         </android.support.constraint.ConstraintLayout>

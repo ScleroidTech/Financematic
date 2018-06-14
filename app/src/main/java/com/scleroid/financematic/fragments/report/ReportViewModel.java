@@ -20,12 +20,12 @@ import java.util.List;
 public class ReportViewModel extends BaseViewModel<TransactionModel> implements LoanViewModel {
 	//private final LoanRepo loanRepo;
 	private final TransactionsRepo transactionsRepo;
-//	LiveData<List<TransactionModel>> transactionLiveData = new MutableLiveData<>();
-	LiveData<Resource<List<TransactionModel>>> transactionLivedataDual =new MutableLiveData<>();
+	//	LiveData<List<TransactionModel>> transactionLiveData = new MutableLiveData<>();
+	LiveData<Resource<List<TransactionModel>>> transactionLivedataDual = new MutableLiveData<>();
 
 	public ReportViewModel(final TransactionsRepo transactionsRepo) {
 		this.transactionsRepo = transactionsRepo;
-	//	this.transactionLiveData = setTransactionLiveData();
+		//	this.transactionLiveData = setTransactionLiveData();
 		this.transactionLivedataDual = updateItemLiveData();
 	}
 

@@ -154,10 +154,6 @@ ExpenseFragment extends BaseFragment {
 		return view;
 	}
 
-	private void setTitle() {
-		activityUtils.setTitle((AppCompatActivity) getActivity(), "Expenses");
-	}
-
 	/**
 	 * @return layout resource id
 	 */
@@ -220,6 +216,10 @@ ExpenseFragment extends BaseFragment {
 
 	}
 
+	private void setTitle() {
+		activityUtils.setTitle((AppCompatActivity) getActivity(), "Expenses");
+	}
+
 	/*private void updateUi(final List<Expense> items) {
 		getTotalLoan(items);
 
@@ -246,6 +246,15 @@ ExpenseFragment extends BaseFragment {
 			updateUi(items);
 			refreshRecyclerView(expenseList);
 
+		}
+	}
+
+	private void sort(@NonNull final List<Expense> transactions) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+			transactions.sort(Comparator.comparing(Expense::getExpenseDate));
+		} else {
+			Collections.sort(transactions,
+					(m1, m2) -> m1.getExpenseDate().compareTo(m2.getExpenseDate()));
 		}
 	}
 
@@ -279,69 +288,9 @@ ExpenseFragment extends BaseFragment {
 
 	}
 
-	private void initializeChartData() {
-		// IMPORTANT: In a PieChart, no values (Entry) should have the same
-		// xIndex (even if from different DataSets), since no values can be
-		// drawn above each other.
-		float roomRent = getPercentage(totalRoomRentAmt);
-		float phoneBill = getPercentage(totalPhoneBillAmt);
-		float lightBill = getPercentage(totalLightBillAmt);
-		float other = getPercentage(totalOtherAmt);
-		float fuel = getPercentage(totalFuelAmt);
-		float salaries = getPercentage(totalPaidSalaryAmt);
-		ArrayList<PieEntry> yvalues = new ArrayList<>();
-		yvalues.add(new PieEntry(roomRent, ExpenseCategory.ROOM_RENT));
-		yvalues.add(new PieEntry(phoneBill, ExpenseCategory.PHONE_BILL));
-		yvalues.add(new PieEntry(lightBill, ExpenseCategory.LIGHT_BILL));
-		yvalues.add(new PieEntry(fuel, ExpenseCategory.FUEL));
-		yvalues.add(new PieEntry(salaries, ExpenseCategory.PAID_SALARIES));
-		yvalues.add(new PieEntry(other, ExpenseCategory.OTHER));
-
-		PieDataSet dataSet = new PieDataSet(yvalues, "Expenses");
-		List<String> xVals = new ArrayList<>();
-
-		xVals.add(ExpenseCategory.ROOM_RENT);
-		xVals.add(ExpenseCategory.PHONE_BILL);
-		xVals.add(ExpenseCategory.LIGHT_BILL);
-		xVals.add(ExpenseCategory.FUEL);
-		xVals.add(ExpenseCategory.PAID_SALARIES);
-		xVals.add(ExpenseCategory.OTHER);
-		//   List<LegendEntry> entries = new ArrayList<>();
-
-   /*     for (int i = 0; i < xVals.size(); i++) {
-            LegendEntry entry = new LegendEntry();
-            entry.label = xVals.get(i);
-            entries.add(entry);
-        }*/
-		Legend legend = mChart.getLegend();
-		legend.setEnabled(false);
-
-		dataSet.setColors(ColorTemplate.LIBERTY_COLORS);
-		dataSet.setSliceSpace(3f);
-		mChart.setDrawEntryLabels(true);
-		mChart.setUsePercentValues(true);
-		mChart.getDescription().setEnabled(false);
-//        mChart.getXAxis().setTextColor(Color.GRAY);
-		mChart.getLegend().setTextColor(Color.DKGRAY);
-		PieData data = new PieData(dataSet);
-		data.setValueTextColor(Color.WHITE);
-		// In percentage Term
-		data.setValueFormatter(new PercentFormatter());
-		mChart.invalidate();
-		mChart.setData(data);
-
-
-		//Disable Hole in the Pie Chart
-		mChart.setDrawHoleEnabled(false);
-
-		mChart.animateXY(1400, 1400);
-// Default value
-//data.setValueFormatter(new DefaultValueFormatter(0));
-
-	}
-
-	private float getPercentage(int amt) {
-		return (float) amt / totalLoan * 100;
+	private void refreshRecyclerView(List<Expense> expenses) {
+		mAdapter.setExpenses(expenses);
+		mAdapter.notifyDataSetChanged();
 	}
 
 	@SuppressLint("NewApi")
@@ -420,18 +369,69 @@ ExpenseFragment extends BaseFragment {
 				.sum();
 	}
 
-	private void refreshRecyclerView(List<Expense> expenses) {
-		mAdapter.setExpenses(expenses);
-		mAdapter.notifyDataSetChanged();
+	private void initializeChartData() {
+		// IMPORTANT: In a PieChart, no values (Entry) should have the same
+		// xIndex (even if from different DataSets), since no values can be
+		// drawn above each other.
+		float roomRent = getPercentage(totalRoomRentAmt);
+		float phoneBill = getPercentage(totalPhoneBillAmt);
+		float lightBill = getPercentage(totalLightBillAmt);
+		float other = getPercentage(totalOtherAmt);
+		float fuel = getPercentage(totalFuelAmt);
+		float salaries = getPercentage(totalPaidSalaryAmt);
+		ArrayList<PieEntry> yvalues = new ArrayList<>();
+		yvalues.add(new PieEntry(roomRent, ExpenseCategory.ROOM_RENT));
+		yvalues.add(new PieEntry(phoneBill, ExpenseCategory.PHONE_BILL));
+		yvalues.add(new PieEntry(lightBill, ExpenseCategory.LIGHT_BILL));
+		yvalues.add(new PieEntry(fuel, ExpenseCategory.FUEL));
+		yvalues.add(new PieEntry(salaries, ExpenseCategory.PAID_SALARIES));
+		yvalues.add(new PieEntry(other, ExpenseCategory.OTHER));
+
+		PieDataSet dataSet = new PieDataSet(yvalues, "Expenses");
+		List<String> xVals = new ArrayList<>();
+
+		xVals.add(ExpenseCategory.ROOM_RENT);
+		xVals.add(ExpenseCategory.PHONE_BILL);
+		xVals.add(ExpenseCategory.LIGHT_BILL);
+		xVals.add(ExpenseCategory.FUEL);
+		xVals.add(ExpenseCategory.PAID_SALARIES);
+		xVals.add(ExpenseCategory.OTHER);
+		//   List<LegendEntry> entries = new ArrayList<>();
+
+   /*     for (int i = 0; i < xVals.size(); i++) {
+            LegendEntry entry = new LegendEntry();
+            entry.label = xVals.get(i);
+            entries.add(entry);
+        }*/
+		Legend legend = mChart.getLegend();
+		legend.setEnabled(false);
+
+		dataSet.setColors(ColorTemplate.LIBERTY_COLORS);
+		dataSet.setSliceSpace(3f);
+		mChart.setDrawEntryLabels(true);
+		mChart.setUsePercentValues(true);
+		mChart.getDescription().setEnabled(false);
+//        mChart.getXAxis().setTextColor(Color.GRAY);
+		mChart.getLegend().setTextColor(Color.DKGRAY);
+		PieData data = new PieData(dataSet);
+		data.setValueTextColor(Color.WHITE);
+		// In percentage Term
+		data.setValueFormatter(new PercentFormatter());
+		mChart.invalidate();
+		mChart.setData(data);
+
+
+		//Disable Hole in the Pie Chart
+		mChart.setDrawHoleEnabled(false);
+
+		mChart.animateXY(1400, 1400);
+// Default value
+//data.setValueFormatter(new DefaultValueFormatter(0));
+
 	}
 
-	private void sort(@NonNull final List<Expense> transactions) {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-			transactions.sort(Comparator.comparing(Expense::getExpenseDate));
-		} else {
-			Collections.sort(transactions,
-					(m1, m2) -> m1.getExpenseDate().compareTo(m2.getExpenseDate()));
-		}
+	private float getPercentage(int amt) {
+		return (float) amt / totalLoan * 100;
 	}
 
 	@OnClick({R.id.room_rent_card, R.id.light_bill_card, R.id.phone_bill_card, R.id.salary_card, R

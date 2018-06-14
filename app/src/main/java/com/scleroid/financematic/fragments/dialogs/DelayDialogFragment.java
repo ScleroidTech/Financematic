@@ -40,7 +40,6 @@ public class DelayDialogFragment extends BaseDialog {
 	private static final String INSTALLMENT_ID = "installment_id";
 
 
-
 	private static final String LOAN_AC_NO = "ac_no";
 	@Inject
 	InstallmentRepo installmentRepo;
@@ -52,6 +51,7 @@ public class DelayDialogFragment extends BaseDialog {
 	private Date delayedDate;
 	private Installment installment;
 	private Date installmentDate;
+
 	public DelayDialogFragment() {
 		// Required empty public constructor
 	}
@@ -85,7 +85,7 @@ public class DelayDialogFragment extends BaseDialog {
 							installmentDate = installment.getInstallmentDate();
 							installmentAmount = installment.getExpectedAmt().toPlainString();
 							//TODO set TextView here, or edittext hint
-							etrxReceivedAmount .setText(String.valueOf(installmentAmount));
+							etrxReceivedAmount.setText(String.valueOf(installmentAmount));
 
 						},
 						throwable -> Timber.d("Not gonna show up " + throwable.getMessage()));
@@ -193,6 +193,22 @@ public class DelayDialogFragment extends BaseDialog {
 
 	}
 
+	private boolean isValidEmail(@NonNull String email) {
+		String EMAIL_PATTERN = "^[0-9_.]*$";
+
+		Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+		Matcher matcher = pattern.matcher(email);
+		return matcher.matches();
+	}
+
+	private void updateLabel() {
+		String myFormat = "MM/dd/yy"; //In which you need put here
+		SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+		delayedDate = myCalendar.getTime();
+		etrxDate.setText(sdf.format(delayedDate));
+	}
+
 	/**
 	 * Dismiss the fragment and its dialog.  If the fragment was added to the back stack, all back
 	 * stack state up to and including this entry will be popped.  Otherwise, a new transaction
@@ -204,24 +220,6 @@ public class DelayDialogFragment extends BaseDialog {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 	}
-
-
-	private boolean isValidEmail(@NonNull String email) {
-		String EMAIL_PATTERN = "^[0-9_.]*$";
-
-		Pattern pattern = Pattern.compile(EMAIL_PATTERN);
-		Matcher matcher = pattern.matcher(email);
-		return matcher.matches();
-	}
-
-
-	private void updateLabel() {
-		String myFormat = "MM/dd/yy"; //In which you need put here
-		SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
-		delayedDate = myCalendar.getTime();
-		etrxDate.setText(sdf.format(delayedDate));
-	}
 /*
 
 	@Override
@@ -230,7 +228,6 @@ public class DelayDialogFragment extends BaseDialog {
 	}
 
 */
-
 
 
 }

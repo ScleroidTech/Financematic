@@ -58,23 +58,6 @@ public abstract class BaseActivity
 
 	}
 
-	/**
-	 * @return layout resource id
-	 */
-	public abstract
-	@LayoutRes
-	int getLayoutId();
-
-
-	/**
-	 * Dispatch onPause() to fragments.
-	 */
-	@Override
-	protected void onPause() {
-		super.onPause();
-		eventBus.unregister(this);
-	}
-
 	@Override
 	protected void onStop() {
 		super.onStop();
@@ -83,6 +66,22 @@ public abstract class BaseActivity
 
 	public void performDependencyInjection() {
 		AndroidInjection.inject(this);
+	}
+
+	/**
+	 * @return layout resource id
+	 */
+	public abstract
+	@LayoutRes
+	int getLayoutId();
+
+	/**
+	 * Dispatch onPause() to fragments.
+	 */
+	@Override
+	protected void onPause() {
+		super.onPause();
+		eventBus.unregister(this);
 	}
 
 	@Override
@@ -138,7 +137,6 @@ public abstract class BaseActivity
 	 * @return actionBar
 	 */
 	public abstract android.support.v7.app.ActionBar getActionBarBase();
-
 
 
 }

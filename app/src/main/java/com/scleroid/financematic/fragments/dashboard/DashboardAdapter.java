@@ -237,6 +237,14 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
 			}
 		}
 
+		private void handleCallClick() {
+			String phone = installment.getLoan().getCustomer().getMobileNumber();
+			Timber.d(phone + " of person " + installment.getLoan().getCustomer().getName());
+			Events.placeCall makeACall = new Events.placeCall(phone);
+
+			GlobalBus.getBus().post(makeACall);
+		}
+
 		private void handleDelay() {
 			Timber.d("delay of Payment" + installment.getLoan().getCustomer().getName());
 			Events.openDelayFragment delayFragment =
@@ -244,14 +252,6 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
 							installment.getLoanAcNo());
 
 			GlobalBus.getBus().post(delayFragment);
-		}
-
-		private void handleCallClick() {
-			String phone = installment.getLoan().getCustomer().getMobileNumber();
-			Timber.d(phone + " of person " + installment.getLoan().getCustomer().getName());
-			Events.placeCall makeACall = new Events.placeCall(phone);
-
-			GlobalBus.getBus().post(makeACall);
 		}
 
 

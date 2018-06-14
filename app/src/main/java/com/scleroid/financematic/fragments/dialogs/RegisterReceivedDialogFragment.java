@@ -217,11 +217,27 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 							final String installmentAmt = currentInstallment.getExpectedAmt()
 									.toPlainString();
 							//TODO Set text to textview or hint to edittext here
-						
-							etrxReceivedAmount .setText(installmentAmt);
+
+							etrxReceivedAmount.setText(installmentAmt);
 
 						},
 						throwable -> Timber.d("Not gonna show up " + throwable.getMessage()));
+	}
+
+	private boolean isValidEmail(@NonNull String email) {
+		String EMAIL_PATTERN = "^[0-9_.]*$";
+
+		Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+		Matcher matcher = pattern.matcher(email);
+		return matcher.matches();
+	}
+
+	private void updateLabel() {
+		String myFormat = "MM/dd/yy"; //In which you need put here
+		SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+		paymentDate = myCalendar.getTime();
+		etrxDate.setText(sdf.format(paymentDate));
 	}
 
 	private void updateTitle(@NonNull final MaterialStyledDialog.Builder builder) {
@@ -238,8 +254,11 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 						throwable -> Timber.d("Not gonna show up " + throwable.getMessage()));
 	}
 
-	private void updateReceivedAmount(final BigDecimal receivedAmt) {
-		loan.setReceivedAmt(loan.getReceivedAmt().add(receivedAmt));
+	@NonNull
+	private Installment createInstallment(final BigDecimal receivedAmt) {
+		return new Installment(installmentId, paymentDate,
+				receivedAmt,
+				accountNo);
 	}
 
 	@NonNull
@@ -249,11 +268,8 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 				receivedAmt, description, accountNo);
 	}
 
-	@NonNull
-	private Installment createInstallment(final BigDecimal receivedAmt) {
-		return new Installment(installmentId, paymentDate,
-				receivedAmt,
-				accountNo);
+	private void updateReceivedAmount(final BigDecimal receivedAmt) {
+		loan.setReceivedAmt(loan.getReceivedAmt().add(receivedAmt));
 	}
 
 	private void updateLoan(@NonNull final Installment expense,
@@ -289,7 +305,9 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 
 	private void deleteInstallment(final Installment expense,
 	                               @NonNull final TransactionModel transaction) {
-		if (expense.getExpectedAmt().equals(currentInstallment.getExpectedAmt()))
+		if (expense.getExpectedAmt()
+				.equals(currentInstallment.getExpectedAmt()) || expense.getExpectedAmt()
+				.intValue() > currentInstallment.getExpectedAmt().intValue()) {
 			installmentRepo.deleteItem(expense)
 					.observeOn(
 							AndroidSchedulers.mainThread())
@@ -317,7 +335,7 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 								);
 							}
 					);
-		else {
+		} else {
 			currentInstallment.setDelayReason("Less amount");
 			currentInstallment.setExpectedAmt(
 					currentInstallment.getExpectedAmt().subtract(expense.getExpectedAmt()));
@@ -348,22 +366,6 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 							}
 					);
 		}
-	}
-
-	private boolean isValidEmail(@NonNull String email) {
-		String EMAIL_PATTERN = "^[0-9_.]*$";
-
-		Pattern pattern = Pattern.compile(EMAIL_PATTERN);
-		Matcher matcher = pattern.matcher(email);
-		return matcher.matches();
-	}
-
-	private void updateLabel() {
-		String myFormat = "MM/dd/yy"; //In which you need put here
-		SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
-		paymentDate = myCalendar.getTime();
-		etrxDate.setText(sdf.format(paymentDate));
 	}
 
 

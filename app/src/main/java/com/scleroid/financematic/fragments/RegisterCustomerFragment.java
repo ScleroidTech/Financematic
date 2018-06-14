@@ -48,18 +48,16 @@ import timber.log.Timber;
 
 public class RegisterCustomerFragment extends BaseFragment {
 	Button firstFragment;
-	private EditText etname, etmobile, etAddress, etIDproofno;
 	@NonNull
 	String[] selectidtype =
 			{IdProofType.AADHAR, IdProofType.PAN, IdProofType.RATION_CARD, IdProofType
 					.SEVEN_TWELVE_CERTIFICATE, IdProofType.VOTER_ID, IdProofType.PASSPORT,
 					IdProofType.OTHER};
-
 	@Inject
 	ActivityUtils activityUtils;
-
 	@Inject
 	CustomerRepo customerRepo;
+	private EditText etname, etmobile, etAddress, etIDproofno;
 	private String proofType = IdProofType.AADHAR;
 
 	public RegisterCustomerFragment() {
@@ -199,23 +197,6 @@ return;
 		return rootView;
 	}
 
-	private void saveCustomer(@NonNull final Customer customer) {
-		customerRepo.saveItem(customer).subscribe(() -> {
-			// handle completion
-			Timber.d("Item Saved");
-			activityUtils.loadFragment(RegisterLoanFragment.newInstance(customer.getCustomerId
-							()),
-					getFragmentManager());
-			//		Toasty.success(context, "Customers Added");
-		}, throwable -> {
-			// handle error
-			Timber.d(throwable,
-					"Items not Saved" + customer.toString() + " error is   " + throwable
-							.getMessage());
-			//		Toasty.error(context, "Customers No
-		});
-	}
-
 	/**
 	 * @return layout resource id
 	 */
@@ -246,7 +227,8 @@ return;
 	}
 
 	private boolean isValidEmail(@NonNull String nameval) {
-		String EMAIL_PATTERN = "^[A-Za-z\\s]{1,}[\\.]{0,1}[A-Za-z\\s]{0,}$";//aplha and space ^[a-zA-Z\\s]*$
+		String EMAIL_PATTERN =
+				"^[A-Za-z\\s]{1,}[\\.]{0,1}[A-Za-z\\s]{0,}$";//aplha and space ^[a-zA-Z\\s]*$
 		//String EMAIL_PATTERN = "^[A-Za-z\\s]{1,}[\\.]{0,1}[A-Za-z\\s]{0,}$";/
 		Pattern pattern = Pattern.compile(EMAIL_PATTERN);
 		Matcher matcher = pattern.matcher(nameval);
@@ -270,6 +252,23 @@ return;
 		Pattern pattern = Pattern.compile(EMAIL_PATTERN);
 		Matcher matcher = pattern.matcher(addressval);
 		return matcher.matches();
+	}
+
+	private void saveCustomer(@NonNull final Customer customer) {
+		customerRepo.saveItem(customer).subscribe(() -> {
+			// handle completion
+			Timber.d("Item Saved");
+			activityUtils.loadFragment(RegisterLoanFragment.newInstance(customer.getCustomerId
+							()),
+					getFragmentManager());
+			//		Toasty.success(context, "Customers Added");
+		}, throwable -> {
+			// handle error
+			Timber.d(throwable,
+					"Items not Saved" + customer.toString() + " error is   " + throwable
+							.getMessage());
+			//		Toasty.error(context, "Customers No
+		});
 	}
 
 

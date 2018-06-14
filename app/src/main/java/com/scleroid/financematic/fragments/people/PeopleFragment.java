@@ -63,13 +63,20 @@ public class PeopleFragment extends BaseFragment {
 	@Nullable
 	private List<Customer> customers = new ArrayList<>();
 	private PeopleViewModel peopleViewModel;
+	@Nullable
+	private PeopleAdapter mAdapter;
 
 	public PeopleFragment() {
 		// Required empty public constructor
 	}
 
-	@Nullable
-	private PeopleAdapter mAdapter;
+	@NonNull
+	public static PeopleFragment newInstance(String param1, String param2) {
+		PeopleFragment fragment = new PeopleFragment();
+		Bundle args = new Bundle();
+		fragment.setArguments(args);
+		return fragment;
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -137,12 +144,9 @@ public class PeopleFragment extends BaseFragment {
 		return R.layout.fragment_people;
 	}
 
-	@NonNull
-	public static PeopleFragment newInstance(String param1, String param2) {
-		PeopleFragment fragment = new PeopleFragment();
-		Bundle args = new Bundle();
-		fragment.setArguments(args);
-		return fragment;
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
 	}
 
 	@Override
@@ -152,35 +156,6 @@ public class PeopleFragment extends BaseFragment {
 					//	sort(items);
 					updateView(items);
 				});
-	}
-
-	@Override
-	public void onDestroyView() {
-		super.onDestroyView();
-	}
-
-	private void sort(@NonNull final List<Customer> transactions) {
-
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-			transactions.removeIf(
-					transaction -> transaction.getLoans() == null || transaction.getLoans()
-							.isEmpty());
-			//	transactions.sort(Comparator.comparing(Installment::getInstallmentDate));
-		} else {
-			for (Iterator it = transactions.iterator(); it.hasNext(); ) {
-
-				if (predicate((Customer) it.next())) {
-
-					it.remove();
-
-				}
-
-			}
-		}
-	}
-
-	private boolean predicate(final Customer next) {
-		return next.getLoans() == null || next.getLoans().isEmpty();
 	}
 
 	/**
@@ -213,5 +188,29 @@ public class PeopleFragment extends BaseFragment {
 			mAdapter.setCustomerList(items.data);
 			customers = items.data;
 		}
+	}
+
+	private void sort(@NonNull final List<Customer> transactions) {
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+			transactions.removeIf(
+					transaction -> transaction.getLoans() == null || transaction.getLoans()
+							.isEmpty());
+			//	transactions.sort(Comparator.comparing(Installment::getInstallmentDate));
+		} else {
+			for (Iterator it = transactions.iterator(); it.hasNext(); ) {
+
+				if (predicate((Customer) it.next())) {
+
+					it.remove();
+
+				}
+
+			}
+		}
+	}
+
+	private boolean predicate(final Customer next) {
+		return next.getLoans() == null || next.getLoans().isEmpty();
 	}
 }

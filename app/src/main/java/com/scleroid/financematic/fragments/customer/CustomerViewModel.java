@@ -25,9 +25,9 @@ public class CustomerViewModel extends BaseViewModel
 		implements com.scleroid.financematic.viewmodels.CustomerViewModel {
 	private final CustomerRepo customerRepo;
 	private final LoanRepo loanRepo;
+	int currentCustomerId = 0;
 	private LiveData<Resource<List<Loan>>> loanLiveData = new MutableLiveData<>();
 	private LiveData<Resource<Customer>> customerLiveData = new MutableLiveData<>();
-	int currentCustomerId = 0;
 
 	@Inject
 	public CustomerViewModel(CustomerRepo customerRepo, LoanRepo loanRepo) {
@@ -56,13 +56,13 @@ public class CustomerViewModel extends BaseViewModel
 
 	}
 
-	public int getCurrentCustomerId() {
-		return currentCustomerId;
-	}
-
 	protected LiveData<Resource<List<Loan>>> updateLoanLiveData() {
 		loanLiveData = loanRepo.loadLoansForCustomer(currentCustomerId);
 		return loanLiveData;
+	}
+
+	public int getCurrentCustomerId() {
+		return currentCustomerId;
 	}
 
 	public void setCurrentCustomerId(final int currentCustomerId) {

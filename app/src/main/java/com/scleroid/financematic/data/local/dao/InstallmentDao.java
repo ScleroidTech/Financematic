@@ -84,7 +84,6 @@ public interface InstallmentDao {
 	long saveInstallment(Installment installmentModel);
 
 
-
 	/**
 	 * Updates a specified dataset
 	 *

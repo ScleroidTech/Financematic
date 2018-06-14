@@ -39,13 +39,13 @@ import timber.log.Timber;
 
 
 public class CustomerFragment extends BaseFragment {
+	private static final String CUSTOMER_ID = "customer_id";
 	@Nullable
 	@BindView(R.id.fab)
 	FloatingActionButton fab;
 	@Nullable
 	@BindView(R.id.name_text_view)
 	TextView nameTextView;
-	private static final String CUSTOMER_ID = "customer_id";
 	@Nullable
 	@BindView(R.id.mobile_text_view)
 	TextView mobileTextView;
@@ -68,18 +68,11 @@ public class CustomerFragment extends BaseFragment {
 	@Nullable
 	private CustomerAdapter mAdapter;
 	private int totalLoan;
-
-
-	public CustomerFragment() {
-		// Required empty public constructor
-	}
-
 	@Nullable
 	private Customer theCustomer;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	public CustomerFragment() {
+		// Required empty public constructor
 	}
 
 	@NonNull
@@ -91,13 +84,9 @@ public class CustomerFragment extends BaseFragment {
 		return fragment;
 	}
 
-
-	/**
-	 * @return layout resource id
-	 */
 	@Override
-	public int getLayoutId() {
-		return R.layout.fragment_profile;
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 	}
 
 	@Override
@@ -147,6 +136,14 @@ public class CustomerFragment extends BaseFragment {
 	}
 
 	/**
+	 * @return layout resource id
+	 */
+	@Override
+	public int getLayoutId() {
+		return R.layout.fragment_profile;
+	}
+
+	/**
 	 * Override so you can observe your viewModel
 	 */
 	@Override
@@ -160,6 +157,32 @@ public class CustomerFragment extends BaseFragment {
 			theCustomer = item.data;
 			updateUi();
 		});
+	}
+
+	/**
+	 * Override for set view model
+	 *
+	 * @return view model instance
+	 */
+	@Override
+	public BaseViewModel getViewModel() {
+		customerViewModel =
+				ViewModelProviders.of(this, viewModelFactory).get(CustomerViewModel.class);
+
+		return customerViewModel;
+	}
+
+	private void updateUi() {
+		if (theCustomer == null) return;
+		nameTextView.setText(theCustomer.getName());
+		mobileTextView.setText(theCustomer.getMobileNumber());
+		addressTextView.setText(theCustomer.getAddress());
+		setTitle();
+	}
+
+	private void setTitle() {
+		activityUtils.setTitle((AppCompatActivity) getActivity(),
+				"Customer Id." + theCustomer.getCustomerId());
 	}
 
 	private void updateView(@Nullable final List<Loan> items) {
@@ -177,19 +200,6 @@ public class CustomerFragment extends BaseFragment {
 		}
 	}
 
-	private void updateUi() {
-		if (theCustomer == null) return;
-		nameTextView.setText(theCustomer.getName());
-		mobileTextView.setText(theCustomer.getMobileNumber());
-		addressTextView.setText(theCustomer.getAddress());
-		setTitle();
-	}
-
-	private void setTitle() {
-		activityUtils.setTitle((AppCompatActivity) getActivity(),
-				"Customer Id." + theCustomer.getCustomerId());
-	}
-
 	private void updateTotalLoanAmt() {
 	/*	for (Loan loan : loanList) {
 			totalLoan += loan.getLoanAmt().intValue();
@@ -198,25 +208,11 @@ public class CustomerFragment extends BaseFragment {
 
 		totalLoan =
 				loanList.stream()
-				.filter(o -> o.getLoanAmt() != null)
-				.mapToInt(o -> o.getLoanAmt().intValue())
-				.sum();
+						.filter(o -> o.getLoanAmt() != null)
+						.mapToInt(o -> o.getLoanAmt().intValue())
+						.sum();
 		totalLoanTextView.setText(totalLoan + "");
 	}
-
-	/**
-	 * Override for set view model
-	 *
-	 * @return view model instance
-	 */
-	@Override
-	public BaseViewModel getViewModel() {
-		customerViewModel =
-				ViewModelProviders.of(this, viewModelFactory).get(CustomerViewModel.class);
-
-		return customerViewModel;
-	}
-
 
 	@OnClick(R.id.fab)
 	public void onViewClicked() {

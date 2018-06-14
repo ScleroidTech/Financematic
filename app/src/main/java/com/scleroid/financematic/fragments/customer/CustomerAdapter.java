@@ -57,10 +57,10 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.MyView
 	public void onBindViewHolder(MyViewHolder holder, int position) {
 		Loan loan = loanList.get(position);
 		holder.title.setText(String.format("Loan A/c No. %d", (int) loan.getAccountNo()));
-		holder.Total_loan.setText(loan.getLoanAmt().toString());
+		holder.Total_loan.setText(loan.getLoanAmt().toPlainString());
 		holder.endDate1.setText(dateUtils.getFormattedDate(loan.getEndDate()));
 		holder.startDate1.setText(dateUtils.getFormattedDate(loan.getStartDate()));
-		holder.ReceivedAmt.setText(loan.getReceivedAmt().toString());
+		holder.ReceivedAmt.setText(loan.getReceivedAmt().toPlainString());
 		holder.itemView.setOnClickListener(v -> {
 			Events.openLoanDetailsFragment openCustomerFragment =
 					new Events.openLoanDetailsFragment(loan.getAccountNo());

@@ -161,16 +161,16 @@ public abstract class BaseFragment<V extends BaseViewModel> extends Fragment {
 	 */
 	protected abstract void subscribeToLiveData();
 
+	private void performDependencyInjection() {
+		AndroidSupportInjection.inject(this);
+	}
+
 	/**
 	 * Override for set view model
 	 *
 	 * @return view model instance
 	 */
 	public abstract V getViewModel();
-
-	private void performDependencyInjection() {
-		AndroidSupportInjection.inject(this);
-	}
 
 	@Nullable
 	public BaseActivity getBaseActivity() {

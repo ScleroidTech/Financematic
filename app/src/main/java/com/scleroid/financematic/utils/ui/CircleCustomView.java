@@ -53,7 +53,7 @@ public class CircleCustomView extends View {
 		mCircleYellow.setStrokeCap(Paint.Cap.SQUARE);
 		// mEyeAndMouthPaint.setColor(getResources().getColor(R.color.colorAccent));
 		mCircleYellow.setColor(Color.parseColor("#4693c5"));
-	/*	mCircleYellow.setColor(Color.parseColor("#fbab00"));4693c5 yellow*/
+		/*	mCircleYellow.setColor(Color.parseColor("#fbab00"));4693c5 yellow*/
 		mCircleGray = new Paint(Paint.ANTI_ALIAS_FLAG);
 		mCircleGray.setStyle(Paint.Style.FILL);
 		mCircleGray.setColor(Color.GRAY);

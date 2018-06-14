@@ -60,7 +60,8 @@ public class LoanDetailsViewModel extends BaseViewModel<TransactionModel> implem
 	}
 
 	protected LiveData<Resource<List<Installment>>> getInstallmentList() {
-		if (installmentLiveData.getValue() == null || installmentLiveData.getValue().data == null) {
+		if (installmentLiveData.getValue() == null || installmentLiveData.getValue().data ==
+				null) {
 			installmentLiveData = updateInstallmentLiveData();
 		}
 		return installmentLiveData;
@@ -73,7 +74,8 @@ public class LoanDetailsViewModel extends BaseViewModel<TransactionModel> implem
 	}
 
 	protected LiveData<Resource<List<TransactionModel>>> getTransactionList() {
-		if (transactionLiveData.getValue() == null || transactionLiveData.getValue().data == null) {
+		if (transactionLiveData.getValue() == null || transactionLiveData.getValue().data ==
+				null) {
 			transactionLiveData = updateTransactionLiveData();
 		}
 		return transactionLiveData;

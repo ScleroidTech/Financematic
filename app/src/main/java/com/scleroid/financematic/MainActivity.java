@@ -97,11 +97,11 @@ public class MainActivity extends BaseActivity
 	private ActionBarDrawerToggle toggle;
 
 
-
 	private DrawerLayout drawer;
 	private NavigationView navigationView;
 	private String[] activityTitles;
 	private BottomNavigationView bottomNavigationView;
+	private boolean mToolBarNavigationListenerIsRegistered = false;
 
 	@NonNull
 	public static Intent newIntent(Context activity) {
@@ -135,8 +135,6 @@ public class MainActivity extends BaseActivity
 	public void setToggle(final ActionBarDrawerToggle toggle) {
 		this.toggle = toggle;
 	}
-
-	private boolean mToolBarNavigationListenerIsRegistered = false;
 
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 
@@ -221,11 +219,6 @@ public class MainActivity extends BaseActivity
 
 	}
 
-	public void shouldDisplayHomeUp() {
-		//Enable Up button only  if there are entries in the back stack
-		boolean canback = getSupportFragmentManager().getBackStackEntryCount() > 0;
-		enableBackButton(canback);
-	}
 	/**
 	 * @return layout resource id
 	 */
@@ -241,6 +234,50 @@ public class MainActivity extends BaseActivity
 	@Override
 	public ActionBar getActionBarBase() {
 		return getSupportActionBar();
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(@NonNull Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.activity_main, menu);
+		MenuItem create_new = menu.findItem(R.id.action_create_new_loan);
+		MenuItem notification = menu.findItem(R.id.action_notification);
+		tintMenuIcon(this, create_new, android.R.color.white);
+		tintMenuIcon(this, notification, android.R.color.white);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+
+		//noinspection SimplifiableIfStatement
+		if (id == R.id.action_create_new_loan) {
+
+			RegisterCustomerFragment fragment = new RegisterCustomerFragment();
+			loadFragmentRunnable(fragment, true);
+			return true;
+		}
+
+		// user is in notifications fragment
+		// and selected 'Mark all as Read'
+		if (id == R.id.action_notification) {
+			Notification fragment = new Notification();
+			/*CustomerFragment fragment = new CustomerFragment();*/
+			loadFragmentRunnable(fragment, true);
+		}
+
+		// user is in notifications fragment
+		// and selected 'Clear All'
+		if (id == R.id.action_settings) {
+			Toast.makeText(getApplicationContext(), "Clear all notifications!", Toast.LENGTH_LONG)
+					.show();
+		}
+
+		return super.onOptionsItemSelected(item);
 	}
 
 	/***
@@ -285,30 +322,27 @@ public class MainActivity extends BaseActivity
 
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(@NonNull Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.activity_main, menu);
-		MenuItem create_new = menu.findItem(R.id.action_create_new_loan);
-		MenuItem notification = menu.findItem(R.id.action_notification);
-		tintMenuIcon(this, create_new, android.R.color.white);
-		tintMenuIcon(this, notification, android.R.color.white);
-		return true;
-	}
-
 	private void selectNavMenu() {
 		navigationView.getMenu().getItem(navItemIndex).setChecked(true);
 	}
 
-	private void selectBottomNavMenu() {
-		MenuItem item;
-		if (navItemIndex > 2) { item = bottomNavigationView.getMenu().getItem(0); } else {
-			item = bottomNavigationView.getMenu().getItem(navItemIndex);
-		}
-		if (item != null) { item.setChecked(true); }
+	public void tintMenuIcon(@NonNull Context context, @Nullable MenuItem item,
+	                         @ColorRes int color) {
+		if (item == null) return;
+		Drawable normalDrawable = item.getIcon();
+		Drawable wrapDrawable = DrawableCompat.wrap(normalDrawable);
+		DrawableCompat.setTint(wrapDrawable, context.getResources().getColor(color));
+
+		item.setIcon(wrapDrawable);
 	}
-	private void setToolbarTitle() {
-		getSupportActionBar().setTitle(activityTitles[navItemIndex]);
+
+	@Override
+	public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+		handleUiClick(item);
+
+
+		return true;
 	}
 
 
@@ -324,132 +358,6 @@ public class MainActivity extends BaseActivity
 
 
 	/*bottom navigation*/
-
-	private Fragment getCurrentFragment() {
-		switch (navItemIndex) {
-			//TODO
-			case 0:
-				// dashboard
-				return new DashboardFragment();
-			case 1:
-				return new PeopleFragment();
-
-			case 2:
-				// Report fragment
-				return new ReportFragment();
-			case 3:
-				// new Customers fragment
-				return new RegisterCustomerFragment();
-			case 4:
-				// Expenses fragment
-				return new ExpenseFragment();
-
-          /*
-           TODO
-           case 4:
-                // Notifications fragment
-                return new Fragment();
-
-            case 5:
-                //setting fragment
-                return new SettingsFragment();*/
-			default:
-				return new DashboardFragment();// HomeFragment.newInstance(HomeFragment
-			// .parcelCount);
-		}
-
-	}
-
-	private void loadFragmentRunnable(final Fragment fragment, final boolean b) {
-
-		Runnable pendingRunnable = () -> {
-			// update the main content by replacing fragments
-
-
-			loadFragment(fragment, b);
-		};
-
-		// If pendingRunnable is not null, then add to the message queue
-		// boolean post = handler.post(pendingRunnable);
-		appExecutors.diskIO().execute(pendingRunnable);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-
-		//noinspection SimplifiableIfStatement
-		if (id == R.id.action_create_new_loan) {
-
-			RegisterCustomerFragment fragment = new RegisterCustomerFragment();
-			loadFragmentRunnable(fragment, true);
-			return true;
-		}
-
-		// user is in notifications fragment
-		// and selected 'Mark all as Read'
-		if (id == R.id.action_notification) {
-			Notification fragment = new Notification();
-			/*CustomerFragment fragment = new CustomerFragment();*/
-			loadFragmentRunnable(fragment, true);
-		}
-
-		// user is in notifications fragment
-		// and selected 'Clear All'
-		if (id == R.id.action_settings) {
-			Toast.makeText(getApplicationContext(), "Clear all notifications!", Toast.LENGTH_LONG)
-					.show();
-		}
-
-		return super.onOptionsItemSelected(item);
-	}
-
-	public void tintMenuIcon(@NonNull Context context, @Nullable MenuItem item,
-	                         @ColorRes int color) {
-		if (item == null) return;
-		Drawable normalDrawable = item.getIcon();
-		Drawable wrapDrawable = DrawableCompat.wrap(normalDrawable);
-		DrawableCompat.setTint(wrapDrawable, context.getResources().getColor(color));
-
-		item.setIcon(wrapDrawable);
-	}
-
-	private void loadFragment(Fragment fragment, final boolean backstack) {
-		if (backstack) {
-			activityUtils.loadFragment(fragment, getSupportFragmentManager());
-			return;
-		}
-
-		activityUtils.loadFragmentWithoutBackStack(fragment, getSupportFragmentManager());
-	}
-
-/*
-//TODO To not let the acitivty close directly
-	*/
-	/*sidebar navigation*//*
-
-	@Override
-	public void onBackPressed() {
-		DrawerLayout drawer = findViewById(R.id.drawer_layout);
-		if (drawer.isDrawerOpen(GravityCompat.START)) {
-			drawer.closeDrawer(GravityCompat.START);
-		} else {
-			super.onBackPressed();
-		}
-	}
-*/
-
-	@Override
-	public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-		handleUiClick(item);
-
-
-		return true;
-	}
 
 	private void handleUiClick(final @NonNull MenuItem item) {
 		//Check to see which item was being clicked and perform appropriate action
@@ -509,6 +417,91 @@ public class MainActivity extends BaseActivity
 		drawer.closeDrawer(GravityCompat.START);
 	}
 
+	private void selectBottomNavMenu() {
+		MenuItem item;
+		if (navItemIndex > 2) { item = bottomNavigationView.getMenu().getItem(0); } else {
+			item = bottomNavigationView.getMenu().getItem(navItemIndex);
+		}
+		if (item != null) { item.setChecked(true); }
+	}
+
+	private void setToolbarTitle() {
+		getSupportActionBar().setTitle(activityTitles[navItemIndex]);
+	}
+
+	private Fragment getCurrentFragment() {
+		switch (navItemIndex) {
+			//TODO
+			case 0:
+				// dashboard
+				return new DashboardFragment();
+			case 1:
+				return new PeopleFragment();
+
+			case 2:
+				// Report fragment
+				return new ReportFragment();
+			case 3:
+				// new Customers fragment
+				return new RegisterCustomerFragment();
+			case 4:
+				// Expenses fragment
+				return new ExpenseFragment();
+
+          /*
+           TODO
+           case 4:
+                // Notifications fragment
+                return new Fragment();
+
+            case 5:
+                //setting fragment
+                return new SettingsFragment();*/
+			default:
+				return new DashboardFragment();// HomeFragment.newInstance(HomeFragment
+			// .parcelCount);
+		}
+
+	}
+
+	private void loadFragmentRunnable(final Fragment fragment, final boolean b) {
+
+		Runnable pendingRunnable = () -> {
+			// update the main content by replacing fragments
+
+
+			loadFragment(fragment, b);
+		};
+
+		// If pendingRunnable is not null, then add to the message queue
+		// boolean post = handler.post(pendingRunnable);
+		appExecutors.diskIO().execute(pendingRunnable);
+	}
+
+/*
+//TODO To not let the acitivty close directly
+	*/
+	/*sidebar navigation*//*
+
+	@Override
+	public void onBackPressed() {
+		DrawerLayout drawer = findViewById(R.id.drawer_layout);
+		if (drawer.isDrawerOpen(GravityCompat.START)) {
+			drawer.closeDrawer(GravityCompat.START);
+		} else {
+			super.onBackPressed();
+		}
+	}
+*/
+
+	private void loadFragment(Fragment fragment, final boolean backstack) {
+		if (backstack) {
+			activityUtils.loadFragment(fragment, getSupportFragmentManager());
+			return;
+		}
+
+		activityUtils.loadFragmentWithoutBackStack(fragment, getSupportFragmentManager());
+	}
 
 	@Override
 	public void onFakerReady(Faker faker) {
@@ -524,7 +517,6 @@ public class MainActivity extends BaseActivity
 			tempDataFaker.populateData(faker);
 		tempDataFaker.saveInDatabase(this);
 	}
-
 
 	/**
 	 * Returns an {@link AndroidInjector} of {@link Fragment}s.
@@ -553,7 +545,6 @@ public class MainActivity extends BaseActivity
 
 
 	}
-
 
 	@Subscribe
 	public void onCustomerFragmentOpen(@NonNull Events.openCustomerFragment customerBundle) {
@@ -585,7 +576,6 @@ public class MainActivity extends BaseActivity
 
 	}
 
-
 	@Subscribe
 	public void onLoanFragmentOpen(@NonNull Events.openLoanDetailsFragment loanBundle) {
 		int accountNo = loanBundle.getAccountNo();
@@ -604,6 +594,21 @@ public class MainActivity extends BaseActivity
 		makeToast(message, type, this);
 
 
+	}
+
+	/**
+	 * Called whenever the contents of the back stack change.
+	 */
+	@Override
+	public void onBackStackChanged() {
+
+		shouldDisplayHomeUp();
+	}
+
+	public void shouldDisplayHomeUp() {
+		//Enable Up button only  if there are entries in the back stack
+		boolean canback = getSupportFragmentManager().getBackStackEntryCount() > 0;
+		enableBackButton(canback);
 	}
 
 	/**
@@ -661,15 +666,6 @@ public class MainActivity extends BaseActivity
 		// ......
 		// To re-iterate, the order in which you enable and disable views IS important
 		// #dontSimplify.
-	}
-
-	/**
-	 * Called whenever the contents of the back stack change.
-	 */
-	@Override
-	public void onBackStackChanged() {
-
-		shouldDisplayHomeUp();
 	}
 
 	@Override

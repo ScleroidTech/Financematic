@@ -130,7 +130,6 @@ public class Loan implements Serializable {
 	}
 
 
-
 	public BigDecimal getReceivedAmt() {
 		return receivedAmt;
 	}

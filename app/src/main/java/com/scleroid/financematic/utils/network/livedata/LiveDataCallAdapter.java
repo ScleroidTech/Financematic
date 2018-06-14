@@ -22,8 +22,6 @@ import timber.log.Timber;
 
 /**
  * A Retrofit adapter that converts the Call into a LiveData of ApiResponse.
- *
- * @param <R>
  */
 public class LiveDataCallAdapter<R> implements CallAdapter<R, LiveData<ApiResponse<R>>> {
 	private final Type responseType;

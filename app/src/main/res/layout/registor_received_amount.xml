@@ -31,17 +31,17 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:orientation="horizontal"
-                    android:paddingBottom="5dp"
-                    android:paddingRight="5dp">
+                    android:paddingRight="5dp"
+                    android:paddingBottom="5dp">
 
                     <TextView
 
-android:gravity="center_vertical"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="10dp"
                         android:layout_weight=".7"
+                        android:gravity="center_vertical"
 
                         android:text="Paid Date"
                         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -54,19 +54,19 @@ android:gravity="center_vertical"
                         android:layout_height="wrap_content"
                         android:layout_weight=".7"
                         android:background="@drawable/shadow"
-                        android:gravity="center_vertical"
                         android:clickable="true"
+                        android:drawable="@color/colorPrimaryDark"
                         android:drawableEnd="@drawable/ic_date_range_black_24dp"
                         android:drawableRight="@drawable/ic_date_range_black_24dp"
-                        android:drawable="@color/colorPrimaryDark"
-
-                        android:hint="selecte Date"
-                        android:paddingBottom="9dp"
-
-
-                        android:paddingRight="15dp"
-                        android:paddingTop="9dp"
                         android:focusable="true"
+
+                        android:gravity="center_vertical"
+                        android:hint="selecte Date"
+
+
+                        android:paddingTop="9dp"
+                        android:paddingRight="15dp"
+                        android:paddingBottom="9dp"
                         android:textColor="#409bbf" />
 
                 </LinearLayout>
@@ -77,18 +77,18 @@ android:gravity="center_vertical"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal"
-                    android:paddingBottom="5dp"
                     android:paddingRight="5dp"
+                    android:paddingBottom="5dp"
                     android:weightSum="1">
 
                     <TextView
 
-                        android:gravity="center_vertical"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="10dp"
                         android:layout_weight=".5"
+                        android:gravity="center_vertical"
 
                         android:text="Received Amount"
                         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -96,7 +96,6 @@ android:gravity="center_vertical"
                         android:textSize="20sp" />
 
                     <EditText
-                        android:gravity="center_vertical"
                         android:id="@+id/rxReceivedAmount"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -104,9 +103,10 @@ android:gravity="center_vertical"
                         android:background="@drawable/shadow"
                         android:drawableLeft="@drawable/ic_rupeeindian"
                         android:drawableTint="@color/colorPrimaryDark"
+                        android:gravity="center_vertical"
                         android:maxLines="1"
-                        android:paddingBottom="10dp"
                         android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
                         android:textColor="#409bbf" />
 
                 </LinearLayout>
@@ -117,16 +117,16 @@ android:gravity="center_vertical"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal"
-                    android:paddingBottom="5dp"
-                    android:paddingRight="5dp">
+                    android:paddingRight="5dp"
+                    android:paddingBottom="5dp">
 
                     <TextView
-                        android:gravity="center_vertical"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="10dp"
                         android:layout_weight=".7"
+                        android:gravity="center_vertical"
 
                         android:text="description"
                         android:textAppearance="?android:attr/textAppearanceLarge"

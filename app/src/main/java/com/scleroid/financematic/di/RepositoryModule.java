@@ -164,6 +164,7 @@ abstract public class RepositoryModule {
 		return retrofit
 				.create(RemotePostEndpoint.class);
 	}
+
 	@Singleton
 	@Provides
 	static SchedulerProvider provideSchedulerProvider() {
@@ -194,31 +195,11 @@ abstract public class RepositoryModule {
 		return interceptor;
 	}
 
-	@NonNull
-	@Singleton
-	abstract LoanRepo provideLoanRepo(AppDatabase db);
-
-	@NonNull
-	@Singleton
-	abstract ExpenseRepo provideExpenseRepo(AppDatabase db);
-
-	@NonNull
-	@Singleton
-	abstract CustomerRepo provideCustomerRepo(AppDatabase db);
-
 	@Provides
 	@Singleton
 	static Gson provideGson() {
 		return new GsonBuilder().create();
 	}
-
-	@NonNull
-	@Singleton
-	abstract InstallmentRepo provideInstallmentRepo(AppDatabase db);
-
-	@NonNull
-	@Singleton
-	abstract TransactionsRepo provideTransactionsRepo(AppDatabase db);
 
 	@Provides
 	static public Interceptor headerInterceptor() {
@@ -233,7 +214,25 @@ abstract public class RepositoryModule {
 		};
 	}
 
+	@NonNull
+	@Singleton
+	abstract LoanRepo provideLoanRepo(AppDatabase db);
 
+	@NonNull
+	@Singleton
+	abstract ExpenseRepo provideExpenseRepo(AppDatabase db);
+
+	@NonNull
+	@Singleton
+	abstract CustomerRepo provideCustomerRepo(AppDatabase db);
+
+	@NonNull
+	@Singleton
+	abstract InstallmentRepo provideInstallmentRepo(AppDatabase db);
+
+	@NonNull
+	@Singleton
+	abstract TransactionsRepo provideTransactionsRepo(AppDatabase db);
 
 
 }

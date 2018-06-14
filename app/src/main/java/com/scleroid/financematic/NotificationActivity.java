@@ -14,15 +14,16 @@ import android.view.ViewGroup;
 
 /**
  * Copyright (C) 2018
+ *
  * @author Ganesh Kaple
  * @since 2/3/18
  */
 
 public class NotificationActivity extends Fragment {
 
-    public NotificationActivity() {
-        // Required empty public constructor
-    }
+	public NotificationActivity() {
+		// Required empty public constructor
+	}
 
 	@NonNull
 	public static NotificationActivity newInstance() {
@@ -32,24 +33,22 @@ public class NotificationActivity extends Fragment {
 		return fragment;
 	}
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+	}
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View rootView =  inflater.inflate(R.layout.notification_activity, container, false);
-
-
-
-        return rootView;
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+	                         Bundle savedInstanceState) {
+		// Inflate the layout for this fragment
+		View rootView = inflater.inflate(R.layout.notification_activity, container, false);
 
 
+		return rootView;
 
-    }
+
+	}
 
 
 }

@@ -21,8 +21,6 @@ import timber.log.Timber;
 
 /**
  * Common class used by API responses.
- *
- * @param <T>
  */
 public class ApiResponse<T> {
 	private static final Pattern LINK_PATTERN = Pattern

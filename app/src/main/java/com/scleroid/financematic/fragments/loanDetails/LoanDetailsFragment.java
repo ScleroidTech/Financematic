@@ -72,6 +72,8 @@ public class LoanDetailsFragment extends BaseFragment {
 	@Nullable
 	@BindView(R.id.empty_card)
 	CardView emptyCard;
+	@Inject
+	DateUtils dateUtils;
 	@Nullable
 	private List<TransactionModel> transactionList = new ArrayList<>();
 	private RecyclerView recyclerView;
@@ -86,7 +88,6 @@ public class LoanDetailsFragment extends BaseFragment {
 	private CardHolder cardHolder;
 	@Nullable
 	private List<Installment> installmentList = new ArrayList<>();
-
 
 	public LoanDetailsFragment() {
 		// Required empty public constructor
@@ -191,7 +192,7 @@ public class LoanDetailsFragment extends BaseFragment {
 
 	private void updateView(@Nullable final List<Installment> items,
 	                        @Nullable List<TransactionModel>
-			transactionList) {
+			                        transactionList) {
 
 		if ((items == null || transactionList == null)) {
 			emptyCard.setVisibility(View.VISIBLE);
@@ -212,27 +213,6 @@ public class LoanDetailsFragment extends BaseFragment {
 
 	}
 
-	private void sortReverse(@NonNull final List<TransactionModel> transactions) {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-			transactions.sort(
-					Comparator.comparing(TransactionModel::getTransactionDate).reversed());
-		} else {
-			Collections.sort(transactions,
-					(m1, m2) -> m2.getTransactionDate().compareTo(m1.getTransactionDate()));
-		}
-	}
-
-	private void sort(@NonNull final List<Installment> transactions) {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-			transactions.sort(Comparator.comparing(Installment::getInstallmentDate));
-		} else {
-			Collections.sort(transactions,
-					(m1, m2) -> m1.getInstallmentDate().compareTo(m2.getInstallmentDate()));
-		}
-	}
-
-	@Inject
-	DateUtils dateUtils;
 	private void updateUi() {
 		if (theLoan == null) return;
 		totalAmountTextView.setText(theLoan.getLoanAmt().toPlainString());
@@ -248,6 +228,25 @@ public class LoanDetailsFragment extends BaseFragment {
 		//	activityUtils.useUpButton((MainActivity) getActivity(),true);
 
 		setHasOptionsMenu(true);
+	}
+
+	private void sort(@NonNull final List<Installment> transactions) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+			transactions.sort(Comparator.comparing(Installment::getInstallmentDate));
+		} else {
+			Collections.sort(transactions,
+					(m1, m2) -> m1.getInstallmentDate().compareTo(m2.getInstallmentDate()));
+		}
+	}
+
+	private void sortReverse(@NonNull final List<TransactionModel> transactions) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+			transactions.sort(
+					Comparator.comparing(TransactionModel::getTransactionDate).reversed());
+		} else {
+			Collections.sort(transactions,
+					(m1, m2) -> m2.getTransactionDate().compareTo(m1.getTransactionDate()));
+		}
 	}
 
 	private void setTitle() {
@@ -278,7 +277,6 @@ public class LoanDetailsFragment extends BaseFragment {
 		@BindView(R.id.installment_text_view)
 		RupeeTextView installmentTextView;
 	}
-
 
 
 }

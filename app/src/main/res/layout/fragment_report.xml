@@ -1,315 +1,315 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginTop="60dp"
-        >
+        android:layout_height="wrap_content">
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:orientation="horizontal"
-            android:paddingBottom="5dp"
-            android:paddingRight="10dp">
-
-
-            <TextView
-                android:id="@+id/from_date_text_view"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/drawable_report_shadow"
-                android:drawableEnd="@drawable/shadow3"
-
-                android:drawableTint="@color/colorPrimary"
-                android:paddingBottom="6dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="15dp"
-                android:paddingTop="6dp"
-                android:text="From"
-                android:textColor="@color/colorPrimary"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/to_date_text_view"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/drawable_report_shadow"
-                android:drawableEnd="@drawable/shadow3"
-                android:drawableRight="@drawable/shadow3"
-                android:drawableTint="@color/colorPrimary"
-                android:paddingBottom="6dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="15dp"
-                android:paddingTop="6dp"
-                android:text="To Date"
-                android:textColor="@color/colorPrimary"
-                android:textSize="16sp" />
-
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal"
-
-            android:paddingBottom="5dp"
-            android:paddingRight="10dp">
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-
-                android:layout_weight=".3"
-                >
-
-       <TextView
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:text="Filter"
-           android:textAlignment="viewEnd"
-           android:layout_marginEnd="15dp"
-           android:textSize="17sp"
-           android:paddingTop="3dp"
-           android:textColor="@color/colorPrimary"
-
-
-          />
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/drawable_report_shadow"
-                android:paddingRight="5dp"
- android:layout_marginLeft="5dp"
-                android:paddingTop="5dp"
-                android:textColor="@color/colorPrimary"
-                android:layout_weight=".6"
-                >
-
-                <Spinner
-                    android:id="@+id/spinnerr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:layout_gravity="right"
-
-                    android:textColor="@color/colorPrimary" />
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-android:layout_marginEnd="10dp"
-                android:layout_marginLeft="5dp"
-                android:paddingLeft="10dp"
-                >
-
-                <Button
-                    android:id="@+id/filter_button"
-                    android:layout_width="70dp"
-                    android:layout_height="28dp"
-
-
-                    android:background="@drawable/button_rounded_border"
-                    android:backgroundTint="@color/colorPrimaryDark"
-                    android:text="Go"
-                    android:textColor="@color/white"
-                    android:textSize="17sp" />
-
-                <!--  <Spinner
-                      android:id="@+id/spinnershortdate"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-
-                      android:layout_gravity="right"
-
-                      android:textColor="@color/colorPrimary" />-->
-            </LinearLayout>
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/report_table"
-
+            android:layout_height="match_parent"
+            android:layout_marginTop="60dp"
             android:orientation="vertical">
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="15dp"
                 android:orientation="horizontal"
+                android:paddingRight="10dp"
+                android:paddingBottom="5dp">
 
-
-                >
 
                 <TextView
-                    android:id="@+id/accNo"
+                    android:id="@+id/from_date_text_view"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".63"
-                    android:background="@drawable/borderright1"
-                    android:text="Acc.No"
-android:textAlignment="center"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/white"
-                    android:textSize="15sp" />
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/drawable_report_shadow"
+                    android:drawableEnd="@drawable/shadow3"
+
+                    android:drawableTint="@color/colorPrimary"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="6dp"
+                    android:paddingRight="15dp"
+                    android:paddingBottom="6dp"
+                    android:text="From"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/installmentDate"
+                    android:id="@+id/to_date_text_view"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".9"
-                    android:background="@drawable/borderright1"
-                    android:text="Date"
-                    android:textAlignment="center"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/white"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/expectedAmt"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".8"
-                    android:background="@drawable/borderright1"
-                    android:text="Lent"
-                    android:textAlignment="center"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/white"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/earnedAmt"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".8"
-                    android:background="@drawable/borderright1"
-                    android:text="Earned"
-                    android:textAlignment="center"
-
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/white"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/receivedAmt"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".8"
-
-                    android:text="Received"
-                    android:textAlignment="center"
-
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/white"
-                    android:textSize="15sp" />
-
-             <!--   <TextView
-                    android:id="@+id/report_balence"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".8"
-
-                    android:text="Balence"
-
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/white"
-                    android:textSize="15sp" />-->
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/drawable_report_shadow"
+                    android:drawableEnd="@drawable/shadow3"
+                    android:drawableRight="@drawable/shadow3"
+                    android:drawableTint="@color/colorPrimary"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="6dp"
+                    android:paddingRight="15dp"
+                    android:paddingBottom="6dp"
+                    android:text="To Date"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
 
 
             </LinearLayout>
-        </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/empty_card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/simpleSearchView"
-            android:visibility="gone">
 
-            <android.support.constraint.ConstraintLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
 
-                <TextView
-                    android:id="@+id/no_address_title"
+                android:paddingRight="10dp"
+                android:paddingBottom="5dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+
+                    android:layout_weight=".3">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="15dp"
+                        android:paddingTop="3dp"
+                        android:text="Filter"
+                        android:textAlignment="viewEnd"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="17sp"
+
+
+                        />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight=".6"
+                    android:background="@drawable/drawable_report_shadow"
+                    android:paddingTop="5dp"
+                    android:paddingRight="5dp"
+                    android:textColor="@color/colorPrimary">
+
+                    <Spinner
+                        android:id="@+id/spinnerr"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_gravity="right"
+
+                        android:textColor="@color/colorPrimary" />
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="80dp"
-                    android:text="Not Enough Data"
-                    android:textSize="30sp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:paddingLeft="10dp">
 
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    <Button
+                        android:id="@+id/filter_button"
+                        android:layout_width="70dp"
+                        android:layout_height="28dp"
 
-                <TextView
-                    android:id="@+id/no_address_subtitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:text="Make some transactions first"
-                    android:textSize="15sp"
 
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/no_address_title" />
-            </android.support.constraint.ConstraintLayout>
-        </android.support.v7.widget.CardView>
+                        android:background="@drawable/button_rounded_border"
+                        android:backgroundTint="@color/colorPrimaryDark"
+                        android:text="Go"
+                        android:textColor="@color/white"
+                        android:textSize="17sp" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/report_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:scrollbars="vertical"
+                    <!--  <Spinner
+                          android:id="@+id/spinnershortdate"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
 
-            tools:listitem="@layout/recycler_report" />
-    </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
-            <View
+                          android:layout_gravity="right"
+
+                          android:textColor="@color/colorPrimary" />-->
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="1dp"></View>
+                android:layout_height="wrap_content"
+                android:background="@color/report_table"
+
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:orientation="horizontal"
+
+
+                    >
+
+                    <TextView
+                        android:id="@+id/accNo"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".63"
+                        android:background="@drawable/borderright1"
+                        android:text="Acc.No"
+                        android:textAlignment="center"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/installmentDate"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".9"
+                        android:background="@drawable/borderright1"
+                        android:text="Date"
+                        android:textAlignment="center"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/expectedAmt"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".8"
+                        android:background="@drawable/borderright1"
+                        android:text="Lent"
+                        android:textAlignment="center"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/earnedAmt"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".8"
+                        android:background="@drawable/borderright1"
+                        android:text="Earned"
+                        android:textAlignment="center"
+
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/receivedAmt"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".8"
+
+                        android:text="Received"
+                        android:textAlignment="center"
+
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
+
+                    <!--   <TextView
+                           android:id="@+id/report_balence"
+                           android:layout_width="0dp"
+                           android:layout_height="wrap_content"
+                           android:layout_weight=".8"
+
+                           android:text="Balence"
+
+                           android:textAppearance="?android:attr/textAppearanceLarge"
+                           android:textColor="@color/white"
+                           android:textSize="15sp" />-->
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/empty_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/simpleSearchView"
+                    android:visibility="gone">
+
+                    <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/no_address_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="80dp"
+                            android:layout_marginEnd="8dp"
+                            android:text="Not Enough Data"
+                            android:textSize="30sp"
+
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                        <TextView
+                            android:id="@+id/no_address_subtitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:text="Make some transactions first"
+                            android:textSize="15sp"
+
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/no_address_title" />
+                    </android.support.constraint.ConstraintLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/report_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:scrollbars="vertical"
+
+                    tools:listitem="@layout/recycler_report" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"></View>
+            </LinearLayout>
+
         </LinearLayout>
 
-    </LinearLayout>
-
-</android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
 
 </ScrollView>

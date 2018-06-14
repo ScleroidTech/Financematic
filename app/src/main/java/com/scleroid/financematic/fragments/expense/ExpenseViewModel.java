@@ -40,7 +40,9 @@ public class ExpenseViewModel extends BaseViewModel<Expense>
 
 	@Override
 	protected LiveData<Resource<List<Expense>>> getItemList() {
-		if (expenseList.getValue() == null || expenseList.getValue().data == null || expenseList.getValue().data.isEmpty()) {
+		if (expenseList.getValue() == null || expenseList.getValue().data == null || expenseList
+				.getValue().data
+				.isEmpty()) {
 			expenseList = updateItemLiveData();
 		}
 		return expenseList;

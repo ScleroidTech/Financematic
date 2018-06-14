@@ -249,7 +249,8 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 	 */
 	@Override
 	protected void subscribeToLiveData() {
-		reportViewModel.getItemList().observe(this, transactions -> updateListData(transactions.data));
+		reportViewModel.getItemList()
+				.observe(this, transactions -> updateListData(transactions.data));
 	}
 
 	/**
@@ -265,26 +266,6 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 		return reportViewModel;
 	}
 
-	private void setTitle() {
-		activityUtils.setTitle((AppCompatActivity) getActivity(), "Report");
-	}
-
-	private void handleClickFromDashboard() {
-		Bundle bundle = getArguments();
-		if (bundle != null) {
-			reportFilterType = (ReportFilterType) bundle.get(FILTER_TYPE);
-			if (reportFilterType != null) {
-				if (reportFilterType == ReportFilterType.RECEIVED_AMOUNT) {
-					spinnerFilter.setSelection(1);
-				} else if (reportFilterType == ReportFilterType.LENT_AMOUNT) {
-					spinnerFilter.setSelection(2);
-				}
-				final List<TransactionModel> tempList = filterWithoutDate(reportFilterType);
-				updateListData(tempList);
-			}
-		}
-	}
-
 	private void updateListData(@Nullable final List<TransactionModel> transactions) {
 		if (transactions == null || transactions.isEmpty()) {
 			emptyCard.setVisibility(View.VISIBLE);
@@ -296,15 +277,6 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 			transactionsList = transactions;
 			mAdapter.setReportList(transactionsList);
 			mAdapter.setFilterType(reportFilterType);
-		}
-	}
-
-	private void sort(@NonNull final List<TransactionModel> transactions) {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-			transactions.sort(Comparator.comparing(TransactionModel::getTransactionDate));
-		} else {
-			Collections.sort(transactions,
-					(m1, m2) -> m1.getTransactionDate().compareTo(m2.getTransactionDate()));
 		}
 	}
 
@@ -333,107 +305,13 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 
 	}
 
-	@OnClick(R.id.filter_button)
-	public void onViewClicked() {
-		getTheListSorted();
-	}
-
-	@NonNull
-	private ReportFilterType getSuggestion(final int filterSuggestion) {
-		switch (filterSuggestion) {
-			case 0:
-				return ReportFilterType.ALL_TRANSACTIONS;
-			case 1:
-				return ReportFilterType.RECEIVED_AMOUNT;
-			case 2:
-				return ReportFilterType.LENT_AMOUNT;
-			case 3:
-				return ReportFilterType.EARNED_AMOUNT;
-			default:
-				return ReportFilterType.ALL_TRANSACTIONS;
-
+	private void sort(@NonNull final List<TransactionModel> transactions) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+			transactions.sort(Comparator.comparing(TransactionModel::getTransactionDate));
+		} else {
+			Collections.sort(transactions,
+					(m1, m2) -> m1.getTransactionDate().compareTo(m2.getTransactionDate()));
 		}
-
-	}
-
-	private List<TransactionModel> filterWithDate(final Date startDate, final Date endDate,
-	                                              @NonNull final ReportFilterType
-			                                              filterSuggestion) {
-		List<TransactionModel> transactionModels = filterWithoutDate(filterSuggestion);
-		return Stream.of(transactionModels)
-				.filter(expenseList -> expenseList.getTransactionDate()
-						.after(startDate) && expenseList.getTransactionDate().before(endDate))
-				.collect(Collectors.toList());
-
-	}
-
-	private List<TransactionModel> filterWithoutDate(final ReportFilterType filterSuggestion) {
-		List<TransactionModel> listToShow = new ArrayList<>();
-
-		switch (filterSuggestion) {
-			case ALL_TRANSACTIONS:
-				allTransactionFilter(listToShow);
-				break;
-			case RECEIVED_AMOUNT:
-				listToShow = applyReceivedFilter();
-				updateUI(receivedAmt);
-				break;
-			case LENT_AMOUNT:
-				listToShow = applyLentFilter();
-				updateUI(expectedAmt);
-				break;
-			case EARNED_AMOUNT:
-				listToShow = applyEarnedFilter();
-				updateUI(earnedAmt);
-				break;
-			default:
-				allTransactionFilter(listToShow);
-				break;
-
-		}
-		return listToShow;
-
-	}
-
-	private void updateUI(final TextView amt) {
-		//First Enable any previously disabled views
-		visibilityToggle();
-		amt.setVisibility(View.VISIBLE);
-
-	}
-
-	private void visibilityToggle() {
-		receivedAmt.setVisibility(View.GONE);
-		expectedAmt.setVisibility(View.GONE);
-		earnedAmt.setVisibility(View.GONE);
-	}
-
-
-	private List<TransactionModel> applyReceivedFilter() {
-		return Stream.of(transactionsList)
-				.filter(expenseList -> expenseList.getReceivedAmt() != null)
-				.collect(Collectors.toList());
-	}
-
-	private List<TransactionModel> applyEarnedFilter() {
-		return Stream.of(transactionsList)
-				.filter(expenseList -> expenseList.getGainedAmt() != null)
-				.collect(Collectors.toList());
-	}
-
-	private List<TransactionModel> applyLentFilter() {
-		return Stream.of(transactionsList)
-				.filter(expenseList -> expenseList.getLentAmt() != null)
-				.collect(Collectors.toList());
-	}
-
-	@NonNull
-	private List<TransactionModel> allTransactionFilter(final List<TransactionModel> listToShow) {
-		listToShow.addAll(transactionsList);
-		receivedAmt.setVisibility(View.VISIBLE);
-		expectedAmt.setVisibility(View.VISIBLE);
-		earnedAmt.setVisibility(View.VISIBLE);
-		return listToShow;
 	}
 
 	private void setupRecyclerView() {
@@ -473,6 +351,127 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 		//	reportRecyclerView.addOnItemTouchListener(recyclerTouchListener);
 	}
 
+	@NonNull
+	private ReportFilterType getSuggestion(final int filterSuggestion) {
+		switch (filterSuggestion) {
+			case 0:
+				return ReportFilterType.ALL_TRANSACTIONS;
+			case 1:
+				return ReportFilterType.RECEIVED_AMOUNT;
+			case 2:
+				return ReportFilterType.LENT_AMOUNT;
+			case 3:
+				return ReportFilterType.EARNED_AMOUNT;
+			default:
+				return ReportFilterType.ALL_TRANSACTIONS;
+
+		}
+
+	}
+
+	private void handleClickFromDashboard() {
+		Bundle bundle = getArguments();
+		if (bundle != null) {
+			reportFilterType = (ReportFilterType) bundle.get(FILTER_TYPE);
+			if (reportFilterType != null) {
+				if (reportFilterType == ReportFilterType.RECEIVED_AMOUNT) {
+					spinnerFilter.setSelection(1);
+				} else if (reportFilterType == ReportFilterType.LENT_AMOUNT) {
+					spinnerFilter.setSelection(2);
+				}
+				final List<TransactionModel> tempList = filterWithoutDate(reportFilterType);
+				updateListData(tempList);
+			}
+		}
+	}
+
+	private List<TransactionModel> filterWithoutDate(final ReportFilterType filterSuggestion) {
+		List<TransactionModel> listToShow = new ArrayList<>();
+
+		switch (filterSuggestion) {
+			case ALL_TRANSACTIONS:
+				allTransactionFilter(listToShow);
+				break;
+			case RECEIVED_AMOUNT:
+				listToShow = applyReceivedFilter();
+				updateUI(receivedAmt);
+				break;
+			case LENT_AMOUNT:
+				listToShow = applyLentFilter();
+				updateUI(expectedAmt);
+				break;
+			case EARNED_AMOUNT:
+				listToShow = applyEarnedFilter();
+				updateUI(earnedAmt);
+				break;
+			default:
+				allTransactionFilter(listToShow);
+				break;
+
+		}
+		return listToShow;
+
+	}
+
+	@NonNull
+	private List<TransactionModel> allTransactionFilter(final List<TransactionModel> listToShow) {
+		listToShow.addAll(transactionsList);
+		receivedAmt.setVisibility(View.VISIBLE);
+		expectedAmt.setVisibility(View.VISIBLE);
+		earnedAmt.setVisibility(View.VISIBLE);
+		return listToShow;
+	}
+
+	private List<TransactionModel> applyReceivedFilter() {
+		return Stream.of(transactionsList)
+				.filter(expenseList -> expenseList.getReceivedAmt() != null)
+				.collect(Collectors.toList());
+	}
+
+	private void updateUI(final TextView amt) {
+		//First Enable any previously disabled views
+		visibilityToggle();
+		amt.setVisibility(View.VISIBLE);
+
+	}
+
+	private List<TransactionModel> applyLentFilter() {
+		return Stream.of(transactionsList)
+				.filter(expenseList -> expenseList.getLentAmt() != null)
+				.collect(Collectors.toList());
+	}
+
+	private List<TransactionModel> applyEarnedFilter() {
+		return Stream.of(transactionsList)
+				.filter(expenseList -> expenseList.getGainedAmt() != null)
+				.collect(Collectors.toList());
+	}
+
+	private void setTitle() {
+		activityUtils.setTitle((AppCompatActivity) getActivity(), "Report");
+	}
+
+	private void visibilityToggle() {
+		receivedAmt.setVisibility(View.GONE);
+		expectedAmt.setVisibility(View.GONE);
+		earnedAmt.setVisibility(View.GONE);
+	}
+
+	@OnClick(R.id.filter_button)
+	public void onViewClicked() {
+		getTheListSorted();
+	}
+
+	private List<TransactionModel> filterWithDate(final Date startDate, final Date endDate,
+	                                              @NonNull final ReportFilterType
+			                                              filterSuggestion) {
+		List<TransactionModel> transactionModels = filterWithoutDate(filterSuggestion);
+		return Stream.of(transactionModels)
+				.filter(expenseList -> expenseList.getTransactionDate()
+						.after(startDate) && expenseList.getTransactionDate().before(endDate))
+				.collect(Collectors.toList());
+
+	}
 
 	@OnClick({R.id.from_date_text_view, R.id.to_date_text_view})
 	public void onViewClicked(@NonNull View view) {

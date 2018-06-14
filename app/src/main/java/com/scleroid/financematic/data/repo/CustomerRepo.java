@@ -35,15 +35,15 @@ public class CustomerRepo implements Repo<Customer> {
 
 
 	private final LocalCustomerLab localCustomerLab;
-	private RemoteCustomerLab remoteCustomerLab;
-
 	private final LoanRepo loanRepo;
 	//TODO remove direct access to this
 	private final WebService webService;
-	private RemotePostEndpoint postEndpoint;
 	private final AppExecutors appExecutors;
+	private RemoteCustomerLab remoteCustomerLab;
+	private RemotePostEndpoint postEndpoint;
 	@NonNull
 	private RateLimiter<String> customerListRateLimit = new RateLimiter<>(10, TimeUnit.MINUTES);
+
 	@Inject
 	public CustomerRepo(final LocalCustomerLab localCustomerLab,
 	                    RemoteCustomerLab remoteCustomerLab,
@@ -59,6 +59,38 @@ public class CustomerRepo implements Repo<Customer> {
 		this.appExecutors = appExecutors;
 	}
 
+	public LiveData<Resource<List<Customer>>> getCustomersWithLoans() {
+		LiveData<Resource<List<Customer>>> customerLiveData = loadItems();
+
+		// TODO Test this, if works remove below code, this part has performance issues
+		customerLiveData = Transformations.switchMap(customerLiveData, inputCustomers -> {
+			MediatorLiveData<Resource<List<Customer>>> customerMediatorLiveData =
+					new MediatorLiveData<>();
+
+
+			if (inputCustomers.data != null) {
+				for (Customer customer : inputCustomers.data) {
+
+					customerMediatorLiveData.addSource(
+							loanRepo.loadLoansForCustomer(customer.getCustomerId()), loan -> {
+
+								customer.setLoans(loan != null ? loan.data : null);
+								customerMediatorLiveData.postValue(inputCustomers);
+
+							});
+				}
+			}
+			return customerMediatorLiveData;
+		});
+		return customerLiveData;
+       /* customerLiveData = Transformations.map(customerLiveData, inputStates -> {
+            for (Customer state : inputStates) {
+                state.setLoans(loanDao.getLoans(state.getCustomerId()));
+            }
+            return inputStates;
+        });
+        return customerLiveData;*/
+	}
 
 	@Override
 	public LiveData<Resource<List<Customer>>> loadItems() {
@@ -97,39 +129,6 @@ public class CustomerRepo implements Repo<Customer> {
 
 
 		}.asLiveData();
-	}
-
-	public LiveData<Resource<List<Customer>>> getCustomersWithLoans() {
-		LiveData<Resource<List<Customer>>> customerLiveData = loadItems();
-
-		// TODO Test this, if works remove below code, this part has performance issues
-		customerLiveData = Transformations.switchMap(customerLiveData, inputCustomers -> {
-			MediatorLiveData<Resource<List<Customer>>> customerMediatorLiveData =
-					new MediatorLiveData<>();
-
-
-			if (inputCustomers.data != null) {
-				for (Customer customer : inputCustomers.data) {
-
-					customerMediatorLiveData.addSource(
-							loanRepo.loadLoansForCustomer(customer.getCustomerId()), loan -> {
-
-								customer.setLoans(loan != null ? loan.data : null);
-								customerMediatorLiveData.postValue(inputCustomers);
-
-							});
-				}
-			}
-			return customerMediatorLiveData;
-		});
-		return customerLiveData;
-       /* customerLiveData = Transformations.map(customerLiveData, inputStates -> {
-            for (Customer state : inputStates) {
-                state.setLoans(loanDao.getLoans(state.getCustomerId()));
-            }
-            return inputStates;
-        });
-        return customerLiveData;*/
 	}
 
 	@Override

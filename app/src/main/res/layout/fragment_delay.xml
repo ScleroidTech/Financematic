@@ -6,190 +6,189 @@
     android:layout_marginTop="70dp">
 
 
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="7dp"
+        android:orientation="vertical"
+        android:padding="5dip">
 
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
+        <!--          &lt;!&ndash; Full Name Label &ndash;&gt;
+                  <LinearLayout
+                      android:id="@+id/header"
+                      android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:background="#0fa8bc"
+                      android:paddingBottom="5dip"
+                      android:paddingTop="5dip">
+
+                      <TextView
+                          android:id="@+id/reg_fullname_detaills"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+
+                          android:singleLine="true"
+                          android:text="Date Delay"
+                          android:textAlignment="center"
+                          android:textColor="@color/white"
+                          android:textSize="20sp" />
+                      &lt;!&ndash; Logo Ends &ndash;&gt;
+                  </LinearLayout>
+
+  -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="5dp"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="7dp"
-                android:orientation="vertical"
-                android:padding="5dip">
+                android:layout_gravity="center_vertical"
+                android:layout_weight=".5"
 
-                <!--          &lt;!&ndash; Full Name Label &ndash;&gt;
-                          <LinearLayout
-                              android:id="@+id/header"
-                              android:layout_width="fill_parent"
-                              android:layout_height="wrap_content"
-                              android:background="#0fa8bc"
-                              android:paddingBottom="5dip"
-                              android:paddingTop="5dip">
+                android:text="Pay Amount"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#409bbf"
+                android:textSize="20sp" />
 
-                              <TextView
-                                  android:id="@+id/reg_fullname_detaills"
-                                  android:layout_width="fill_parent"
-                                  android:layout_height="wrap_content"
+            <EditText
+                android:id="@+id/amount_edit_text"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight=".5"
+                android:background="@drawable/shadow"
+                android:drawableLeft="@drawable/ic_rupeeindian"
+                android:drawableTint="@color/colorPrimaryDark"
+                android:maxLines="1"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:textColor="#409bbf"
+                android:textSize="18sp"
+                tools:ignore="LabelFor" />
 
-                                  android:singleLine="true"
-                                  android:text="Date Delay"
-                                  android:textAlignment="center"
-                                  android:textColor="@color/white"
-                                  android:textSize="20sp" />
-                              &lt;!&ndash; Logo Ends &ndash;&gt;
-                          </LinearLayout>
 
-          -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="5dp"
+            android:weightSum="1">
+
+            <TextView
+
+                android:id="@+id/exp_date11"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight=".5"
+
+                android:text="Delay Date"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#409bbf"
+                android:textSize="20sp" />
+
+
+            <TextView
+                android:id="@+id/exp_date"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight=".5"
+                android:background="@drawable/shadow"
+                android:drawableRight="@drawable/ic_calendarclocktime"
+                android:drawableTint="@color/colorPrimaryDark"
+                android:maxLines="1"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
+                android:textColor="#409bbf"
+                android:textSize="18sp" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="5dp"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight=".5"
+
+                android:text="Reason"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#409bbf"
+                android:textSize="20sp" />
+
+
+            <EditText
+                android:id="@+id/reason_edit_text"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight=".5"
+                android:background="@drawable/shadow"
+                android:maxLength="22"
+                android:maxLines="2"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:textColor="#409bbf"
+                android:textSize="18sp" />
+
+
+        </LinearLayout>
+
+
+        <!--        <Button
+                    android:id="@+id/btn_customer_name1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="37dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:layout_marginTop="15dp"
-                    android:orientation="horizontal"
-                    android:paddingBottom="5dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="5dp"
-                    android:weightSum="1">
+                    android:background="#0fa8bc"
+                    android:text="Submit"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight=".5"
+                <TextView
+                    android:id="@+id/display1"
 
-                        android:text="Pay Amount"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="#409bbf"
-                        android:textSize="20sp" />
-
-                    <EditText
-                        android:paddingLeft="10dp"
-                        android:textSize="18sp"
-                        android:id="@+id/amount_edit_text"
-                        android:layout_width="0dp"
-                        android:layout_height="45dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight=".5"
-                        android:background="@drawable/shadow"
-                        android:drawableLeft="@drawable/ic_rupeeindian"
-                        android:drawableTint="@color/colorPrimaryDark"
-                        android:maxLines="1"
-                        android:paddingBottom="10dp"
-                        android:paddingTop="10dp"
-                        android:textColor="#409bbf"
-                        tools:ignore="LabelFor" />
-
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal"
-                    android:paddingBottom="5dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="5dp"
-                    android:weightSum="1">
-
-                    <TextView
-
-                        android:id="@+id/exp_date11"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight=".5"
-
-                        android:text="Delay Date"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="#409bbf"
-                        android:textSize="20sp" />
-
-
-                    <TextView
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:id="@+id/exp_date"
-                        android:layout_width="0dp"
-                        android:layout_height="45dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight=".5"
-                        android:background="@drawable/shadow"
-                        android:textSize="18sp"
-                        android:drawableRight="@drawable/ic_calendarclocktime"
-                        android:drawableTint="@color/colorPrimaryDark"
-                        android:maxLines="1"
-                        android:paddingBottom="10dp"
-                        android:paddingTop="10dp"
-                        android:textColor="#409bbf" />
-
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal"
-                    android:paddingBottom="5dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="5dp"
-                    android:weightSum="1">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight=".5"
-
-                        android:text="Reason"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="#409bbf"
-                        android:textSize="20sp" />
-
-
-                    <EditText
-                        android:paddingLeft="10dp"
-                        android:id="@+id/reason_edit_text"
-                        android:layout_width="0dp"
-                        android:layout_height="45dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight=".5"
-                        android:background="@drawable/shadow"
-                        android:textSize="18sp"
-                        android:maxLines="2"
-                        android:paddingBottom="10dp"
-                        android:paddingTop="10dp"
-                        android:textColor="#409bbf"
-                        android:maxLength="22"/>
-
-
-                </LinearLayout>
-
-
-                <!--        <Button
-                            android:id="@+id/btn_customer_name1"
-                            android:layout_width="fill_parent"
-                            android:layout_height="37dp"
-                            android:layout_marginBottom="15dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
-                            android:layout_marginTop="15dp"
-                            android:background="#0fa8bc"
-                            android:text="Submit"
-                            android:textColor="@color/white"
-                            android:textSize="18sp" />
-
-                        <TextView
-                            android:id="@+id/display1"
-
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:padding="10dp"
-                            android:scrollbars="vertical"
-                            android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:textSize="18sp" />
-        -->
-            </LinearLayout>
-            <!-- Registration Form Ends -->
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:scrollbars="vertical"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textSize="18sp" />
+-->
+    </LinearLayout>
+    <!-- Registration Form Ends -->
 
 </android.support.constraint.ConstraintLayout>

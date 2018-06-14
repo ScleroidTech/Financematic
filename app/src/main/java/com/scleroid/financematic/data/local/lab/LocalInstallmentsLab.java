@@ -72,16 +72,6 @@ public class LocalInstallmentsLab implements LocalDataSource<Installment> {
 	}
 
 	/**
-	 * gets a single item provided by id
-	 *
-	 * @param itemId the id of the item to be get
-	 */
-	public Single<Installment> getRxItem(final int itemId) {
-		Timber.d("getting installment with id %d", itemId);
-		return installmentDao.getRxInstallment(itemId);
-	}
-
-	/**
 	 * Saves item to data source
 	 *
 	 * @param item item object to be saved
@@ -97,22 +87,6 @@ public class LocalInstallmentsLab implements LocalDataSource<Installment> {
 		}).subscribeOn(Schedulers.io());
 	}
 
-
-	/**
-	 * Saves item to data source
-	 *
-	 * @param item item object to be saved
-	 */
-
-	public Single<Installment> updateItem(@NonNull final Installment item) {
-		Timber.d("creating new installment ");
-
-		return Single.fromCallable(() -> {
-			int rowId = installmentDao.update(item);
-			Timber.d("installment stored " + rowId);
-			return item;
-		}).subscribeOn(Schedulers.io());
-	}
 	/**
 	 * adds a list of objects to the data source
 	 *
@@ -175,6 +149,32 @@ public class LocalInstallmentsLab implements LocalDataSource<Installment> {
 			return item;
 		}).subscribeOn(Schedulers.io());
 
+	}
+
+	/**
+	 * Saves item to data source
+	 *
+	 * @param item item object to be saved
+	 */
+
+	public Single<Installment> updateItem(@NonNull final Installment item) {
+		Timber.d("creating new installment ");
+
+		return Single.fromCallable(() -> {
+			int rowId = installmentDao.update(item);
+			Timber.d("installment stored " + rowId);
+			return item;
+		}).subscribeOn(Schedulers.io());
+	}
+
+	/**
+	 * gets a single item provided by id
+	 *
+	 * @param itemId the id of the item to be get
+	 */
+	public Single<Installment> getRxItem(final int itemId) {
+		Timber.d("getting installment with id %d", itemId);
+		return installmentDao.getRxInstallment(itemId);
 	}
 
 	/**

@@ -110,6 +110,16 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
 
 		}
 
+		private void setDate(Date date) {
+			CharSequence month = dateUtils.getFormattedDate(date, "MMM. yyyy");
+			CharSequence exactDate = dateUtils.getFormattedDate(date, "dd");
+			CharSequence day = dateUtils.getFormattedDate(date, "EEE");
+			monthTextView.setText(month);
+			onlyDateTextView.setText(exactDate);
+			dayTextView.setText(day);
+			//    yearTextView.setText(year);
+		}
+
 		private void setExpenseType(String expenseType, @NonNull Context context) {
 			int expenseTypeImageSrc;
 			int expenseColor;
@@ -147,16 +157,6 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
 
 			expenseImage.setImageResource(expenseTypeImageSrc);
 			expenseImage.setColorFilter(expenseColor);
-		}
-
-		private void setDate(Date date) {
-			CharSequence month = dateUtils.getFormattedDate(date, "MMM. yyyy");
-			CharSequence exactDate = dateUtils.getFormattedDate(date, "dd");
-			CharSequence day = dateUtils.getFormattedDate(date, "EEE");
-			monthTextView.setText(month);
-			onlyDateTextView.setText(exactDate);
-			dayTextView.setText(day);
-			//    yearTextView.setText(year);
 		}
 
 
