@@ -86,7 +86,7 @@ public class DatePickerDialogFragment extends BaseDialog {
 		mDatePicker.init(year, month, day, null);
 		if (flagMin) {
 			mDatePicker.setMinDate(date != null ? date.getTime() : new Date().getTime());
-		}
+		} else { mDatePicker.setMinDate(Calendar.getInstance().getTimeInMillis()); }
 
 		return new AlertDialog.Builder(getActivity()).setTitle(R.string.date_picker_title)
 				.setView(v)
