@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/grey_1"
-        android:paddingTop="30dp">
+        android:paddingTop="40dp">
 
 
         <ImageView
@@ -263,10 +263,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="5dp"
                 android:layout_weight=".7"
-
-
                 android:ellipsize="end"
-
                 android:maxLines="2"
                 android:text="Rs 20,112"
                 android:textColor="@color/text_profile"
@@ -336,12 +333,10 @@
 
 
         <android.support.design.widget.FloatingActionButton
-
-
             android:id="@+id/fab"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="66dp"
+            android:layout_width="53dp"
+            android:layout_height="53dp"
+            android:layout_marginTop="57dp"
             android:layout_marginEnd="26dp"
             android:background="@android:drawable/ic_input_add"
             android:backgroundTint="@color/white"
