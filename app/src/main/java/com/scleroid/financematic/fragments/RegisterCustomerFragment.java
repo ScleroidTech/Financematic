@@ -161,7 +161,7 @@ public class RegisterCustomerFragment extends BaseFragment {
 			if (TextUtils.isEmpty(stretname)) {etname.setError("Enter Full Name");}
 			if (TextUtils.isEmpty(stretmobile)) {etmobile.setError("Enter Mobile No");}
 			if (TextUtils.isEmpty(stretAddress)) {
-				etAddress.setError("Enter Loan Amount");
+				etAddress.setError("Enter Address ");
 				return;
 			}
 			/*   activityUtils.loadFragment(new RegisterLoanFragment(), getFragmentManager

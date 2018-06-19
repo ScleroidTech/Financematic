@@ -5,10 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -36,7 +33,7 @@
 
             android:id="@+id/linearLayout4"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
 
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
@@ -49,7 +46,7 @@
             <TextView
                 android:id="@+id/total_expense_label"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="20dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="8dp"
@@ -519,5 +516,5 @@
 
 
     </android.support.constraint.ConstraintLayout>
-    </LinearLayout>
+
 </ScrollView>
