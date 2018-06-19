@@ -234,7 +234,17 @@ public class RegisterLoanFragment extends BaseFragment {
 						}
 					}
 				});
-
+		txInterestAmount.addTextChangedListener(new TextValidator(txInterestAmount) {
+			@Override
+			public void validate(final TextView textView, final String text) {
+				if (isNotValidAmt(text)) {
+					txInterestAmount.setError("valid Interest Amount");
+				} else {
+					//	updateInterestAmt();
+					updateInstallmentAmount();
+				}
+			}
+		});
 
 
 		radioInterest.setOnCheckedChangeListener((group, checkedId) -> {
@@ -471,7 +481,7 @@ public class RegisterLoanFragment extends BaseFragment {
 		BigDecimal loanAmt = getBigDecimal(Double.valueOf(totatLoanAmt.trim()));
 
 		BigDecimal interestAmt = getInterestAmt(loanAmt);
-		if (interestAmt.intValue() == 0) return getBigDecimal();
+		//	if (interestAmt.intValue() == 0) return getBigDecimal();
 
 		return calculateInstallmentAmt(duration, loanAmt, interestAmt);
 
