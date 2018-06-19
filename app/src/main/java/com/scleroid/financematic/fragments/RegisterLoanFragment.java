@@ -385,7 +385,7 @@ public class RegisterLoanFragment extends BaseFragment {
 	                                        final BigDecimal loanAmt1,
 	                                        final Date startDate) {
 		return new TransactionModel(CommonUtils.getRandomInt(), startDate, loanAmt1,
-				BigDecimal.valueOf(0), BigDecimal.valueOf(0), "Lent Loan", accountNo);
+				null, null, "Lent Loan", accountNo);
 	}
 
 	private void setCustomerName(@NonNull final TextView customerNameTextView,

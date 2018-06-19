@@ -28,6 +28,7 @@ import com.scleroid.financematic.utils.CommonUtils;
 import com.scleroid.financematic.utils.ui.TextValidator;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -232,6 +233,12 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 		return matcher.matches();
 	}
 
+	@NonNull
+	private TransactionModel createTransaction(final BigDecimal receivedAmt) {
+		return new TransactionModel(CommonUtils.getRandomInt(), paymentDate, null,
+				getEarnedAmount(),
+				receivedAmt, description, accountNo);
+	}
 	private void updateLabel() {
 		String myFormat = "MM/dd/yy"; //In which you need put here
 		SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
@@ -261,11 +268,9 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 				accountNo);
 	}
 
-	@NonNull
-	private TransactionModel createTransaction(final BigDecimal receivedAmt) {
-		return new TransactionModel(CommonUtils.getRandomInt(), paymentDate, null,
-				null,
-				receivedAmt, description, accountNo);
+	private BigDecimal getEarnedAmount() {
+		return loan.getInstallmentAmt()
+				.divide(BigDecimal.valueOf(loan.getNoOfInstallments()), 2, RoundingMode.HALF_EVEN);
 	}
 
 	private void updateReceivedAmount(final BigDecimal receivedAmt) {
