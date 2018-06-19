@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -66,6 +68,10 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 	TransactionsRepo transactionsRepo;
 	private TextView etrxDate;
 	private TextView etrxReceivedAmount;
+
+	private EditText etrxOtherDescription;
+
+	private LinearLayout otherDescLayout;
 	private int accountNo;
 	private int installmentId;
 	private Date paymentDate;
@@ -120,6 +126,10 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 			public void onItemSelected(final AdapterView<?> parent, final View view,
 			                           final int position, final long id) {
 				description = country[position];
+				if (position < 3) {
+
+					otherDescLayout.setVisibility(View.GONE);
+				} else { otherDescLayout.setVisibility(View.VISIBLE); }
 			}
 
 			@Override
@@ -139,7 +149,8 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 
 		etrxDate = rootView.findViewById(R.id.rxDate);
 		etrxReceivedAmount = rootView.findViewById(R.id.rxReceivedAmount);
-
+		etrxOtherDescription = rootView.findViewById(R.id.rxdescriptionother);
+		otherDescLayout = rootView.findViewById(R.id.other_reason_view);
 
 		etrxReceivedAmount.addTextChangedListener(new TextValidator(etrxReceivedAmount) {
 			@Override
@@ -186,7 +197,9 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 				.setPositiveText(R.string.submit)
 				.onPositive((MaterialDialog dialog, DialogAction which) -> {
 					if (etrxReceivedAmount.getText() == null || paymentDate == null || description
-							== null) {
+							== null || (otherDescLayout.getVisibility() == View.VISIBLE &&
+							etrxOtherDescription
+									.getText() == null)) {
 						Toasty.error(getBaseActivity(), "You haven't filled all data").show();
 						return;
 					}
@@ -235,6 +248,9 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 
 	@NonNull
 	private TransactionModel createTransaction(final BigDecimal receivedAmt) {
+		if (description.equals(country[3])) {
+			description = etrxOtherDescription.getText().toString();
+		}
 		return new TransactionModel(CommonUtils.getRandomInt(), paymentDate, null,
 				getEarnedAmount(),
 				receivedAmt, description, accountNo);
