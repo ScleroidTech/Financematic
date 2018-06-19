@@ -20,6 +20,7 @@ buildscript {
 
         //Hugo plugin
         classpath 'com.jakewharton.hugo:hugo-plugin:1.2.1'
+        classpath 'com.google.firebase:firebase-plugins:1.1.5'
     }
 }
 

@@ -1,6 +1,9 @@
 apply plugin: 'com.android.application'
+
 apply plugin: 'com.jakewharton.hugo'
 apply plugin: 'io.fabric'
+
+apply plugin: 'com.google.firebase.firebase-perf'
 
 /*configurations {
     all*.exclude group: 'com.android.support', module: 'support-v4'
@@ -149,7 +152,7 @@ dependencies {
     compile 'com.google.firebase:firebase-core:16.0.1'
 
     implementation 'com.crashlytics.sdk.android:crashlytics:2.9.4'
-
+    implementation 'com.google.firebase:firebase-perf:16.0.0'
 
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
