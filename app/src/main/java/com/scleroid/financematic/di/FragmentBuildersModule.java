@@ -3,6 +3,7 @@ package com.scleroid.financematic.di;
 import android.support.annotation.NonNull;
 
 import com.scleroid.financematic.Notification;
+import com.scleroid.financematic.fragments.AddMoneyFragment;
 import com.scleroid.financematic.fragments.RegisterCustomerFragment;
 import com.scleroid.financematic.fragments.RegisterLoanFragment;
 import com.scleroid.financematic.fragments.ReminderFragment;
@@ -88,6 +89,11 @@ public abstract class FragmentBuildersModule {
 	@ContributesAndroidInjector
 	abstract com.scleroid.financematic.fragments.dialogs.InsertExpenseDialogFragment
 	contributeInserDialogFragment();
+
+	@NonNull
+	@ContributesAndroidInjector
+	abstract AddMoneyFragment
+	contributeAddMoneyFragment();
 
 
 }
