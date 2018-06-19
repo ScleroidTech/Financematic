@@ -275,7 +275,7 @@ public class RegisterLoanFragment extends BaseFragment {
 	Unbinder unbinder1;
 
 
-	private String durationType = LoanDurationType.MONTHLY;
+	private String durationType;
 	private Date startDate;
 	private Date endDate;
 	private int customerId;
@@ -595,8 +595,7 @@ public class RegisterLoanFragment extends BaseFragment {
 	}
 
 	private long getInstallments() {
-
-
+		if (durationType == null) { durationType = getCountry(0); }
 		return getInstallments(durationConverter(durationType));
 
 
