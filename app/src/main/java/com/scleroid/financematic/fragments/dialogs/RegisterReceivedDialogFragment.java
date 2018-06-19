@@ -121,13 +121,18 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 			getInstallment();
 		}
 		final Spinner spin = rootView.findViewById(R.id.spinnerrx);
+
+		etrxDate = rootView.findViewById(R.id.rxDate);
+		etrxReceivedAmount = rootView.findViewById(R.id.rxReceivedAmount);
+		etrxOtherDescription = rootView.findViewById(R.id.rxdescriptionother);
+		otherDescLayout = rootView.findViewById(R.id.other_reason_view);
+		otherDescLayout.setVisibility(View.GONE);
 		spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(final AdapterView<?> parent, final View view,
 			                           final int position, final long id) {
 				description = country[position];
 				if (position < 3) {
-
 					otherDescLayout.setVisibility(View.GONE);
 				} else { otherDescLayout.setVisibility(View.VISIBLE); }
 			}
@@ -147,11 +152,6 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 		spin.setAdapter(aa);
 
 
-		etrxDate = rootView.findViewById(R.id.rxDate);
-		etrxReceivedAmount = rootView.findViewById(R.id.rxReceivedAmount);
-		etrxOtherDescription = rootView.findViewById(R.id.rxdescriptionother);
-		otherDescLayout = rootView.findViewById(R.id.other_reason_view);
-
 		etrxReceivedAmount.addTextChangedListener(new TextValidator(etrxReceivedAmount) {
 			@Override
 			public void validate(TextView textView, String text) {
@@ -160,8 +160,6 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 				if (!isValidEmail(email)) {
 					etrxReceivedAmount.setError("Enter Amount");
 				}
-
-
 			}
 		});
 
