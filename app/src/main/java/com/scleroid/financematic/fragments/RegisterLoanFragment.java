@@ -795,11 +795,11 @@ public class RegisterLoanFragment extends BaseFragment {
 			txInterestAmount.setError("Enter Interest Amount");
 			return;
 		}
-		if (TextUtils.isEmpty(installmentAmt) || Integer.valueOf(installmentAmt.trim()) == 0) {
+		if (TextUtils.isEmpty(installmentAmt) || Double.valueOf(installmentAmt.trim()) == 0.00) {
 			ettxInstallmentAmount.setError("Enter Installment Amount");
 			return;
 		}
-		if (TextUtils.isEmpty(noOfInstallments) || Integer.valueOf(noOfInstallments) == 0) {
+		if (TextUtils.isEmpty(noOfInstallments) || Double.valueOf(noOfInstallments) == 0.00) {
 			ettxNoofInstallment.setError("Enter No of Installment");
 			return;
 		} else if (noOfInstallments.contains("0")) {
