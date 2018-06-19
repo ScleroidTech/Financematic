@@ -519,7 +519,7 @@ public class RegisterLoanFragment extends BaseFragment {
 
 	private BigDecimal divideBigDecimal(BigDecimal loanAmt, long duration) {
 		if (duration == 0) {
-			Toasty.error(getContext(), "Seems like you haven't entered the duration").show();
+			//	Toasty.error(getContext(), "Seems like you haven't entered the duration").show();
 			return BigDecimal.valueOf(0);
 		}
 		return loanAmt.divide(BigDecimal.valueOf(duration), 2, RoundingMode.HALF_EVEN);
