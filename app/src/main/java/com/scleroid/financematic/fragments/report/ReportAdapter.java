@@ -115,13 +115,13 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
 		holder.setData(report);
 
 
-		if (position % 2 == 1) {
+		/*if (position % 2 == 1) {
 			holder.itemView.setBackgroundColor(Color.parseColor("#d5e5f0"));
 			//  holder.imageView.setBackgroundColor(Color.parseColor("#FFFFFF"));
 		} else {
 			holder.itemView.setBackgroundColor(Color.parseColor("#FFFAF8FD"));
 			//  holder.imageView.setBackgroundColor(Color.parseColor("#FFFAF8FD"));
-		}
+		}*/
 	}
 
 	@Override
