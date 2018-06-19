@@ -25,8 +25,10 @@ import com.scleroid.financematic.data.local.lab.LocalCustomerLab;
 import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.data.local.model.LoanDurationType;
+import com.scleroid.financematic.data.local.model.TransactionModel;
 import com.scleroid.financematic.data.repo.InstallmentRepo;
 import com.scleroid.financematic.data.repo.LoanRepo;
+import com.scleroid.financematic.data.repo.TransactionsRepo;
 import com.scleroid.financematic.fragments.customer.CustomerFragment;
 import com.scleroid.financematic.fragments.dialogs.DatePickerDialogFragment;
 import com.scleroid.financematic.utils.CommonUtils;
@@ -85,6 +87,9 @@ public class RegisterLoanFragment extends BaseFragment {
 	LocalCustomerLab customerLab;
 	@Inject
 	LoanRepo loanRepo;
+	@Inject
+	TransactionsRepo transactionRepo;
+
 
 	@Inject
 	InstallmentRepo installmentRepo;
@@ -372,7 +377,15 @@ public class RegisterLoanFragment extends BaseFragment {
 				noOfInstallments1, durationType, customerId);
 
 		final List<Installment> installments = createInstallments();
-		saveData(loan, installments);
+		TransactionModel transaction = getTransaction(accountNo, loanAmt1, startDate);
+		saveData(loan, installments, transaction);
+	}
+
+	private TransactionModel getTransaction(final int accountNo,
+	                                        final BigDecimal loanAmt1,
+	                                        final Date startDate) {
+		return new TransactionModel(CommonUtils.getRandomInt(), startDate, loanAmt1,
+				BigDecimal.valueOf(0), BigDecimal.valueOf(0), "Lent Loan", accountNo);
 	}
 
 	private void setCustomerName(@NonNull final TextView customerNameTextView,
@@ -497,7 +510,8 @@ public class RegisterLoanFragment extends BaseFragment {
 	}
 
 	private void saveData(@NonNull final Loan loan,
-	                      @NonNull final List<Installment> installments) {
+	                      @NonNull final List<Installment> installments,
+	                      TransactionModel transaction) {
 		Disposable subscribe = loanRepo.saveItem(loan)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(() -> {
@@ -507,6 +521,7 @@ public class RegisterLoanFragment extends BaseFragment {
 							.observeOn(AndroidSchedulers.mainThread())
 							.subscribe(() -> {
 										Timber.d("Installments Created ");
+								transactionRepo.saveItem(transaction);
 										activityUtils.loadFragment(
 												CustomerFragment.newInstance(loan.getCustId()),
 												getFragmentManager());
