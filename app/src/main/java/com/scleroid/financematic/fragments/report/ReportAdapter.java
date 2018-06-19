@@ -175,15 +175,16 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
 
 		private void setData(TransactionModel report) {
 			this.report = report;
-			accNoTextView.setText("A/c No.  " + String.valueOf(report.getLoanAcNo()));
-			transactionDate.setText("Date " +
-					dateUtils.getFormattedDateDigitsOnly(report.getTransactionDate()));
-			reportLent.setText("Lent: " +
-					report.getLentAmt() != null ? report.getLentAmt().toString() : " ");
-			reportEarned.setText("Earned: " +
-					report.getGainedAmt() != null ? report.getGainedAmt().toString() : " ");
-			receivedAmt.setText("Received: " +
-					report.getReceivedAmt() != null ? report.getReceivedAmt().toString() : " ");
+			accNoTextView.setText(String.format("A/c No.  %s",
+					String.valueOf(report.getLoanAcNo())));
+			transactionDate.setText(String.format("Date %s",
+					dateUtils.getFormattedDateDigitsOnly(report.getTransactionDate())));
+			reportLent.setText(String.format("Lent: %s",
+					report.getLentAmt() != null ? report.getLentAmt().toString() : " "));
+			reportEarned.setText(String.format("Earned: %s",
+					report.getGainedAmt() != null ? report.getGainedAmt().toString() : " "));
+			receivedAmt.setText(String.format("Received: %s",
+					report.getReceivedAmt() != null ? report.getReceivedAmt().toString() : " "));
 			//	accNoTextView.setTextColor(Color.parseColor("#5432ff"));
 			filterData(getFilterType());
 
