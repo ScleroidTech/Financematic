@@ -230,6 +230,7 @@
                         android:layout_height="44dp"
                         android:layout_marginTop="6dp"
                         android:layout_weight="1"
+                        android:checked="true"
                         android:paddingTop="6dp"
                         android:paddingBottom="6dp"
                         android:text="Interest Amount"

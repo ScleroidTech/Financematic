@@ -315,8 +315,8 @@ public class RegisterLoanFragment extends BaseFragment {
 		country.clear();
 		//	adapterInstallmentType.clear();
 
-		if (duration >= 1) country.add(LoanDurationType.DAILY);
 		if (duration >= 30 || duration == 0) country.add(LoanDurationType.MONTHLY);
+		if (duration >= 1) country.add(LoanDurationType.DAILY);
 		if (duration >= 7) country.add(LoanDurationType.WEEKLY);
 		if (duration >= 15) country.add(LoanDurationType.BIWEEKLY);
 		if (duration >= 60) country.add(LoanDurationType.BIMONTHLY);
