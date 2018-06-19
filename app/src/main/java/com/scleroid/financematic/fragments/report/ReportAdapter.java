@@ -1,6 +1,5 @@
 package com.scleroid.financematic.fragments.report;
 
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -92,7 +91,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
 	@Override
 	public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		View itemView = LayoutInflater.from(parent.getContext())
-				.inflate(R.layout.recycler_report, parent, false);
+				.inflate(R.layout.recycler_report_other, parent, false);
 
 		return new MyViewHolder(itemView);
 
@@ -176,16 +175,16 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
 
 		private void setData(TransactionModel report) {
 			this.report = report;
-			accNoTextView.setText(String.valueOf(report.getLoanAcNo()));
-			transactionDate.setText(
+			accNoTextView.setText("A/c No.  " + String.valueOf(report.getLoanAcNo()));
+			transactionDate.setText("Date " +
 					dateUtils.getFormattedDateDigitsOnly(report.getTransactionDate()));
-			reportLent.setText(
+			reportLent.setText("Lent: " +
 					report.getLentAmt() != null ? report.getLentAmt().toString() : " ");
-			reportEarned.setText(
+			reportEarned.setText("Earned: " +
 					report.getGainedAmt() != null ? report.getGainedAmt().toString() : " ");
-			receivedAmt.setText(
+			receivedAmt.setText("Received: " +
 					report.getReceivedAmt() != null ? report.getReceivedAmt().toString() : " ");
-			accNoTextView.setTextColor(Color.parseColor("#5432ff"));
+			//	accNoTextView.setTextColor(Color.parseColor("#5432ff"));
 			filterData(getFilterType());
 
 			//reportBalance.setText(String.valueOf( report));
@@ -239,7 +238,8 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.MyViewHold
 			this.filterType = filterType;
 		}
 
-		@OnClick(R.id.acc_no_text_view)
+		/*	@OnClick(R.id.acc_no_text_view)*/
+		@OnClick(R.id.card_view)
 		public void onViewClicked() {
 			Events.openLoanDetailsFragment openCustomerFragment =
 					new Events.openLoanDetailsFragment(report.getLoanAcNo());
