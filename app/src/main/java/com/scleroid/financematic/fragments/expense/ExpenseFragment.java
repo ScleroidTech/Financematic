@@ -212,7 +212,7 @@ ExpenseFragment extends BaseFragment {
 						getFragmentManager
 								(), DIALOG_EXPENSE_ADD));
 
-		expenseRecyclerView.setNestedScrollingEnabled(false);
+		expenseRecyclerView.setNestedScrollingEnabled(true);
 
 	}
 

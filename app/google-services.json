@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "22199840658",
+    "firebase_url": "https://financematic-c0778.firebaseio.com",
+    "project_id": "financematic-c0778",
+    "storage_bucket": "financematic-c0778.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:22199840658:android:724029503577cd3c",
+        "android_client_info": {
+          "package_name": "com.scleroid.financematic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "22199840658-03lhn78mm8o8r8jg63be8eta5epv2sau.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "22199840658-03lhn78mm8o8r8jg63be8eta5epv2sau.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWcOSOT2QnlrvpEPRQ_hfcc_dKdiDt9eo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
