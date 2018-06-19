@@ -56,7 +56,7 @@
 
             <TextView
                 android:id="@+id/lentAmt"
-                android:layout_width="99dp"
+                android:layout_width="107dp"
                 android:layout_height="19dp"
 
 
