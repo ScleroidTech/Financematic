@@ -150,7 +150,7 @@ public class RegisterLoanFragment extends BaseFragment {
 			public void onItemSelected(final AdapterView<?> parent, final View view,
 			                           final int position, final long id) {
 				durationType = getCountry(position);
-				ettxNoofInstallment.setText(String.valueOf(getInstallments()));
+				updateNoOfInstallments();
 			}
 
 			@Override
@@ -608,11 +608,8 @@ public class RegisterLoanFragment extends BaseFragment {
 				interestAmt.setScale(2, BigDecimal.ROUND_HALF_EVEN).toPlainString());
 	}
 
-	private long getInstallments() {
-		if (durationType == null) { durationType = getCountry(0); }
-		return getInstallments(durationConverter(durationType));
-
-
+	private void updateNoOfInstallments() {
+		ettxNoofInstallment.setText(String.valueOf(getInstallments()));
 	}
 
 	private long getInstallments(long converter) {
@@ -664,6 +661,12 @@ public class RegisterLoanFragment extends BaseFragment {
 		return 0;
 	}
 
+	private long getInstallments() {
+		if (durationType == null) { return getInstallments(durationConverter(getCountry(0))); }
+		return getInstallments(durationConverter(durationType));
+
+	}
+
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, @NonNull Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
@@ -675,7 +678,7 @@ public class RegisterLoanFragment extends BaseFragment {
 			endDate = (Date) intent.getSerializableExtra(DatePickerDialogFragment.EXTRA_DATE);
 			endDateTextView.setText(dateUtils.getFormattedDate(endDate));
 		}
-		ettxNoofInstallment.setText(String.valueOf(getInstallments()));
+		updateNoOfInstallments();
 		updateInterestAmt();
 		setCountry(calculateDurationDifferenceInDays());
 
