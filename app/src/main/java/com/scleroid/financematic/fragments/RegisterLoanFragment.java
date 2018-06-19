@@ -782,26 +782,44 @@ public class RegisterLoanFragment extends BaseFragment {
 						startDateStr + " " + endDateStr);
 		if (TextUtils.isEmpty(loanAmt)) {
 			ettxloan_amout.setError("Enter Loan Amount");
+			return;
 		}
 		if (TextUtils.isEmpty(
 				rateOfInterest) && rateOfInterestLayout.getVisibility() == View.VISIBLE) {
 			ettxrateInterest.setError("Enter rate Interest");
+			return;
 		} else if (TextUtils.isEmpty(interestAmt)) {
 			txInterestAmount.setError("Enter Interest Amount");
+			return;
 		}
 		if (TextUtils.isEmpty(installmentAmt)) {
 			ettxInstallmentAmount.setError("Enter Installment Amount");
+			return;
 		}
 		if (TextUtils.isEmpty(noOfInstallments)) {
 			ettxNoofInstallment.setError("Enter No of Installment");
+			return;
 		} else if (noOfInstallments.contains("0")) {
 			ettxNoofInstallment.setError("No of installment must not be 0");
+			return;
 		}
 
-		if (TextUtils.isEmpty(startDateStr)) { startDateTextView.setError("Start Date");}
-		if (TextUtils.isEmpty(endDateStr)) {endDateTextView.setError("End Date");}
+		if (TextUtils.isEmpty(startDateStr)) {
+			startDateTextView.setError("Start Date");
+			return;
+		}
+		if (TextUtils.isEmpty(endDateStr)) {
+			endDateTextView.setError("End Date");
+			return;
+		}
 
-
+		if (startDate.getDate() > endDate.getDate()) {
+			Toasty.error(getContext(), "Starting date must come before end date").show();
+			return;
+		} else if (startDate.getTime() == endDate.getDate()) {
+			Toasty.error(getContext(), "Start date and end date cannot be the same day").show();
+			return;
+		}
 		int accountNo = CommonUtils.getRandomInt();
 		BigDecimal loanAmt1 = new BigDecimal(loanAmt.trim());
 		BigDecimal interestAmt1 = new BigDecimal(interestAmt.trim());

@@ -49,7 +49,7 @@ public class DatePickerDialogFragment extends BaseDialog {
 	public static DatePickerDialogFragment newInstance(final boolean b) {
 		//TODO can be used, if needed
 		Bundle bundle = new Bundle();
-		bundle.putBoolean(ARG_FLAG, b);
+		bundle.putBoolean(ARG_FLAG_OTHER, b);
 		DatePickerDialogFragment fragment = new DatePickerDialogFragment();
 		fragment.setArguments(bundle);
 		return fragment;
@@ -61,7 +61,7 @@ public class DatePickerDialogFragment extends BaseDialog {
 	public static DatePickerDialogFragment newInstance(Date date, boolean isMinDate) {
 		Bundle bundle = new Bundle();
 		bundle.putSerializable(ARG_DATE, date);
-		bundle.putBoolean(ARG_FLAG_OTHER, isMinDate);
+		bundle.putBoolean(ARG_FLAG, isMinDate);
 		DatePickerDialogFragment fragment = new DatePickerDialogFragment();
 		fragment.setArguments(bundle);
 		return fragment;
