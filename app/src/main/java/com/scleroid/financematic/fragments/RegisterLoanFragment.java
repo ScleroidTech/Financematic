@@ -508,6 +508,10 @@ public class RegisterLoanFragment extends BaseFragment {
 	}
 
 	private BigDecimal divideBigDecimal(BigDecimal loanAmt, long duration) {
+		if (duration == 0) {
+			Toasty.error(getContext(), "Seems like you haven't entered the duration").show();
+			return BigDecimal.valueOf(0);
+		}
 		return loanAmt.divide(BigDecimal.valueOf(duration), 2, RoundingMode.HALF_EVEN);
 	}
 
@@ -791,11 +795,11 @@ public class RegisterLoanFragment extends BaseFragment {
 			txInterestAmount.setError("Enter Interest Amount");
 			return;
 		}
-		if (TextUtils.isEmpty(installmentAmt)) {
+		if (TextUtils.isEmpty(installmentAmt) || Integer.valueOf(installmentAmt.trim()) == 0) {
 			ettxInstallmentAmount.setError("Enter Installment Amount");
 			return;
 		}
-		if (TextUtils.isEmpty(noOfInstallments)) {
+		if (TextUtils.isEmpty(noOfInstallments) || Integer.valueOf(noOfInstallments) == 0) {
 			ettxNoofInstallment.setError("Enter No of Installment");
 			return;
 		} else if (noOfInstallments.contains("0")) {
@@ -813,6 +817,9 @@ public class RegisterLoanFragment extends BaseFragment {
 		}
 
 		if (startDate.getDate() > endDate.getDate()) {
+			Timber.d(
+					"Starting date must come before end date" + startDate.getDate() + " " +
+							endDate.getDate());
 			Toasty.error(getContext(), "Starting date must come before end date").show();
 			return;
 		} else if (startDate.getTime() == endDate.getDate()) {
