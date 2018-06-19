@@ -2,6 +2,8 @@ package com.scleroid.financematic.di;
 
 import android.app.Application;
 import android.arch.persistence.room.Room;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
@@ -77,6 +79,24 @@ abstract public class RepositoryModule {
 				.fallbackToDestructiveMigration()
 				.build();
 	}
+
+	@Singleton
+	@Provides
+	static SharedPreferences provideSharedPreferences(@NonNull Application context) {
+
+		//	Timber.wtf("why we aren't calling this" + appDatabase);
+		return context.getSharedPreferences("financeMaticPref", Context.MODE_PRIVATE);
+	}
+
+	@Singleton
+	@Provides
+	static SharedPreferences.Editor provideSharedPreferencesEditor(
+			@NonNull SharedPreferences sharedPreferences) {
+
+		//	Timber.wtf("why we aren't calling this" + appDatabase);
+		return sharedPreferences.edit();
+	}
+
 
 	@Singleton
 	@Provides
