@@ -719,13 +719,13 @@ public class RegisterLoanFragment extends BaseFragment {
 					this,
 					getFragmentManager(), msg, DIALOG_DATE);
 		} else {
-			activityUtils.loadDialogFragment(DatePickerDialogFragment.newInstance(), this,
+			activityUtils.loadDialogFragment(DatePickerDialogFragment.newInstance(false), this,
 					getFragmentManager(), msg, DIALOG_DATE);
 		}
 	}
 
 	private void loadDialogFragment(final int msg) {
-		activityUtils.loadDialogFragment(DatePickerDialogFragment.newInstance(), this,
+		activityUtils.loadDialogFragment(DatePickerDialogFragment.newInstance(false), this,
 				getFragmentManager(), msg, DIALOG_DATE);
 	}
 

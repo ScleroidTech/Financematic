@@ -375,22 +375,23 @@ ExpenseFragment extends BaseFragment {
 		float fuel = getPercentage(totalFuelAmt);
 		float salaries = getPercentage(totalPaidSalaryAmt);
 		ArrayList<PieEntry> yvalues = new ArrayList<>();
-		yvalues.add(new PieEntry(roomRent, ExpenseCategory.ROOM_RENT));
-		yvalues.add(new PieEntry(phoneBill, ExpenseCategory.PHONE_BILL));
-		yvalues.add(new PieEntry(lightBill, ExpenseCategory.LIGHT_BILL));
-		yvalues.add(new PieEntry(fuel, ExpenseCategory.FUEL));
-		yvalues.add(new PieEntry(salaries, ExpenseCategory.PAID_SALARIES));
-		yvalues.add(new PieEntry(other, ExpenseCategory.OTHER));
+		if (roomRent != 0) yvalues.add(new PieEntry(roomRent, ExpenseCategory.ROOM_RENT));
+
+		if (phoneBill != 0) yvalues.add(new PieEntry(phoneBill, ExpenseCategory.PHONE_BILL));
+		if (lightBill != 0) yvalues.add(new PieEntry(lightBill, ExpenseCategory.LIGHT_BILL));
+		if (fuel != 0) yvalues.add(new PieEntry(fuel, ExpenseCategory.FUEL));
+		if (salaries != 0) yvalues.add(new PieEntry(salaries, ExpenseCategory.PAID_SALARIES));
+		if (other != 0) yvalues.add(new PieEntry(other, ExpenseCategory.OTHER));
 
 		PieDataSet dataSet = new PieDataSet(yvalues, "Expenses");
-		List<String> xVals = new ArrayList<>();
-
-		xVals.add(ExpenseCategory.ROOM_RENT);
+		/*	List<String> xVals = new ArrayList<>();
+		 */
+	/*	xVals.add(ExpenseCategory.ROOM_RENT);
 		xVals.add(ExpenseCategory.PHONE_BILL);
 		xVals.add(ExpenseCategory.LIGHT_BILL);
 		xVals.add(ExpenseCategory.FUEL);
 		xVals.add(ExpenseCategory.PAID_SALARIES);
-		xVals.add(ExpenseCategory.OTHER);
+		xVals.add(ExpenseCategory.OTHER);*/
 		//   List<LegendEntry> entries = new ArrayList<>();
 
    /*     for (int i = 0; i < xVals.size(); i++) {
@@ -401,7 +402,7 @@ ExpenseFragment extends BaseFragment {
 		Legend legend = mChart.getLegend();
 		legend.setEnabled(false);
 
-		dataSet.setColors(ColorTemplate.LIBERTY_COLORS);
+		dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
 		dataSet.setSliceSpace(3f);
 		mChart.setDrawEntryLabels(true);
 		mChart.setUsePercentValues(true);
