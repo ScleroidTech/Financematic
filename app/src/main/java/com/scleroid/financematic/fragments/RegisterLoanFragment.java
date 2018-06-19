@@ -37,7 +37,6 @@ import com.scleroid.financematic.utils.ui.TextValidator;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -71,7 +70,7 @@ public class RegisterLoanFragment extends BaseFragment {
 	@Inject
 	DateUtils dateUtils;
 	@NonNull
-	List<String> country;
+	List<String> country = new ArrayList<>();
 	@Nullable
 	@BindView(R.id.spinnertx)
 	Spinner spinnerTypeOfInstallment;
@@ -158,8 +157,8 @@ public class RegisterLoanFragment extends BaseFragment {
 			                           final int position, final long id) {
 				Timber.d("Position of Spinner" + position);
 				installmentCalculationType = position;
-				String s = updateInstallmentAmount();
-				Timber.d("Value of Decimal" + s);
+				updateInstallmentAmount();
+				Timber.d("Value of Decimal");
 			}
 
 			@Override
@@ -170,9 +169,10 @@ public class RegisterLoanFragment extends BaseFragment {
 
 		/*        final String text = spinnerTypeOfInstallment.getSelectedItem().toString();*/
 		//Creating the ArrayAdapter instance having the filterSuggestions list
-		setCountry(calculateDurationDifferenceInDays());
 		adapterInstallmentType = new ArrayAdapter<>(getActivity(),
 				android.R.layout.simple_spinner_item, country);
+		setCountry(calculateDurationDifferenceInDays());
+
 		adapterInstallmentType.setDropDownViewResource(
 				android.R.layout.simple_spinner_dropdown_item);
 		//Setting the ArrayAdapter data on the Spinner
@@ -209,7 +209,7 @@ public class RegisterLoanFragment extends BaseFragment {
 							ettxInstallmentAmount.setError("Valid Interest Amount");
 						} else {
 							updateInterestAmt();
-							updateInstallmentAmount();
+//							updateInstallmentAmount();
 						}
 					}
 				});
@@ -305,7 +305,10 @@ public class RegisterLoanFragment extends BaseFragment {
 	}
 
 	public void setCountry(@NonNull final long duration) {
-		country = Collections.emptyList();
+		Timber.d("whats the duration " + duration);
+
+		country.clear();
+		//	adapterInstallmentType.clear();
 
 		if (duration >= 1) country.add(LoanDurationType.DAILY);
 		if (duration >= 30 || duration == 0) country.add(LoanDurationType.MONTHLY);
@@ -318,12 +321,19 @@ public class RegisterLoanFragment extends BaseFragment {
 		}
 		if (duration >= 183) country.add(LoanDurationType.HALF_YEARLY);
 		if (duration >= 365) country.add(LoanDurationType.YEARLY);
+		Timber.d("whats the Country holds " + country.size());
+
+		//	adapterInstallmentType.addAll(country);
+		adapterInstallmentType.notifyDataSetChanged();
+
+
 	}
 
-	private String updateInstallmentAmount() {
+	private void updateInstallmentAmount() {
 		String s = getAmtOfInstallment().toPlainString();
-		ettxInstallmentAmount.setText(s);
-		return s;
+		if (ettxInstallmentAmount != null) {
+			ettxInstallmentAmount.setText(s);
+		}
 	}
 
 	/**
@@ -515,12 +525,19 @@ public class RegisterLoanFragment extends BaseFragment {
 
 
 	private long calculateDurationDifferenceInDays() {
-		if (startDate == null || endDate == null) return 0;
+		if (startDate == null || endDate == null) {
+			if (startDate == null) Timber.d("startdate is null");
+			if (endDate == null) Timber.d("enddate is null");
+			return 0;
+		}
 
 
-		durationDivided = endDate.getDate() - startDate.getDate();
+		durationDivided = endDate.getTime() - startDate.getTime();
+
 		long diffInDays = TimeUnit.MILLISECONDS.toDays(durationDivided);
-
+		Timber.d(
+				"duration after dividing " + durationDivided + " aftrer converting to days " +
+						diffInDays);
 
 		return diffInDays;
 
