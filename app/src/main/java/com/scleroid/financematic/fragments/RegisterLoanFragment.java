@@ -215,7 +215,7 @@ public class RegisterLoanFragment extends BaseFragment {
 						if (isNotValidAmt(text)) {
 							ettxInstallmentAmount.setError("Valid Interest Amount");
 						} else {
-							updateInterestAmt();
+							//	updateInterestAmt();
 //							updateInstallmentAmount();
 						}
 					}
