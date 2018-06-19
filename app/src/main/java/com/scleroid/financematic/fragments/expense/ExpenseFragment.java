@@ -209,8 +209,7 @@ ExpenseFragment extends BaseFragment {
 		firstFragment = getRootView().findViewById(R.id.add_exp_call_button);
 		firstFragment.setOnClickListener(
 				v -> activityUtils.loadDialogFragment(InsertExpenseDialogFragment.newInstance(),
-						getFragmentManager
-								(), DIALOG_EXPENSE_ADD));
+						getFragmentManager(), DIALOG_EXPENSE_ADD));
 
 		expenseRecyclerView.setNestedScrollingEnabled(true);
 
