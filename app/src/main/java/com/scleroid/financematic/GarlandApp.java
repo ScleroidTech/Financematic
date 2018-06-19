@@ -37,7 +37,7 @@ public class GarlandApp extends App {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		initFaker();
+		//	initFaker();
 	}
 
 	/**
