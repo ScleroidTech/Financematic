@@ -15,15 +15,23 @@ public class Session {
 	public static final String KEY_USER_TOTAL_AMOUNT = "total_amount";
 	private static final String TOTAL_AMOUNT = "total_amount";
 	private Context context;
+	private SharedPreferences shref;
 	private SharedPreferences.Editor editor;
 
 	@Inject
-	public Session(Context context, SharedPreferences.Editor editor) {
+	public Session(Context context, SharedPreferences shref) {
 		this.context = context;
-		this.editor = editor;
+		this.shref = shref;
+		this.editor = shref.edit();
+		editor.apply();
 	}
 
 	public void updateAmount(float amount) {
 		editor.putFloat(KEY_USER_TOTAL_AMOUNT, amount);
+		editor.apply();
+	}
+
+	public float getAmount() {
+		return shref.getFloat(KEY_USER_TOTAL_AMOUNT, 0);
 	}
 }

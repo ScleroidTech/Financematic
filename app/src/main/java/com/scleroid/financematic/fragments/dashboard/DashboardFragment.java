@@ -23,6 +23,7 @@ import com.scleroid.financematic.data.local.lab.LocalCustomerLab;
 import com.scleroid.financematic.data.local.lab.LocalLoanLab;
 import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.data.local.model.Loan;
+import com.scleroid.financematic.data.local.model.Session;
 import com.scleroid.financematic.fragments.report.ReportFilterType;
 import com.scleroid.financematic.fragments.report.ReportFragment;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
@@ -161,29 +162,46 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 		return dashBoardViewModel;
 	}
 
-	private void updateUi() {
-		int receivedAmt = calculateReceivedAmt(loanList);
-		int totalAmt = calculateTotalAmt(loanList);
-		int lentAmt = totalAmt - receivedAmt;
+	@Inject
+	Session session;
 
+	private void updateUi() {
+
+		float totalAmt = calculateTotalAmt(loanList);
+		int lentAmt = calculateLentAmt(loanList);
+		float receivedAmt = totalAmt - lentAmt;
 		totalAmountTextView.setText(String.valueOf(totalAmt));
 		lentAmountTextView.setText(String.valueOf(lentAmt));
 		remainingAmountTextView.setText(String.valueOf(receivedAmt));
 
 	}
 
+	private int calculateLentAmt(@NonNull final List<Loan> loans) {
+		int sum = Stream.of(loans).mapToInt(loan ->
+				loan.getLoanAmt() != null ? loan.getLoanAmt().intValue() : 0).sum();
+		Timber.i("sum of Total Amt" + sum);
+		return sum;
+	}
+
+	private float calculateTotalAmt(@NonNull final List<Loan> loans) {
+	/*	int sum = Stream.of(loans).mapToInt(loan ->
+				loan.getLoanAmt() != null ? loan.getLoanAmt().intValue() : 0).sum();*/
+		int sum = (int) session.getAmount();
+
+		//TODO this maybe need to removed
+		if (sum == 0) {
+			sum = Stream.of(loans).mapToInt(loan ->
+					loan.getLoanAmt() != null ? loan.getLoanAmt().intValue() : 0).sum();
+		}
+		Timber.i("sum of Total Amt" + sum);
+		return sum;
+	}
+
 	private int calculateReceivedAmt(@NonNull final List<Loan> loans) {
 
 		int sum = Stream.of(loans).withoutNulls().mapToInt(loan ->
 				loan.getReceivedAmt() != null ? loan.getReceivedAmt().intValue() : 0).sum();
-		Timber.wtf("sum of received Amt" + sum);
-		return sum;
-	}
-
-	private int calculateTotalAmt(@NonNull final List<Loan> loans) {
-		int sum = Stream.of(loans).mapToInt(loan ->
-				loan.getLoanAmt() != null ? loan.getLoanAmt().intValue() : 0).sum();
-		Timber.wtf("sum of Total Amt" + sum);
+		Timber.i("sum of received Amt" + sum);
 		return sum;
 	}
 

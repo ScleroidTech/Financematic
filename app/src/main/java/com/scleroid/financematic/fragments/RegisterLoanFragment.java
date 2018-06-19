@@ -25,6 +25,7 @@ import com.scleroid.financematic.data.local.lab.LocalCustomerLab;
 import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.data.local.model.LoanDurationType;
+import com.scleroid.financematic.data.local.model.Session;
 import com.scleroid.financematic.data.local.model.TransactionModel;
 import com.scleroid.financematic.data.repo.InstallmentRepo;
 import com.scleroid.financematic.data.repo.LoanRepo;
@@ -89,7 +90,8 @@ public class RegisterLoanFragment extends BaseFragment {
 	LoanRepo loanRepo;
 	@Inject
 	TransactionsRepo transactionRepo;
-
+	@Inject
+	Session session;
 
 	@Inject
 	InstallmentRepo installmentRepo;
@@ -521,11 +523,14 @@ public class RegisterLoanFragment extends BaseFragment {
 							.observeOn(AndroidSchedulers.mainThread())
 							.subscribe(() -> {
 										Timber.d("Installments Created ");
+
+								updateTotalAmount(loan);
 								transactionRepo.saveItem(transaction);
 										activityUtils.loadFragment(
 												CustomerFragment.newInstance(loan.getCustId()),
 												getFragmentManager());
 									}
+
 							);
 
 				}, throwable -> {
@@ -536,6 +541,14 @@ public class RegisterLoanFragment extends BaseFragment {
 							"Loan Data not Saved " + throwable.getMessage() + " errors are " + loan
 									.toString()).show();
 				});
+	}
+
+	private void updateTotalAmount(final @NonNull Loan loan) {
+		float amount = session.getAmount() - loan.getLoanAmt().floatValue();
+		if (amount <= 0) {
+			Toasty.warning(getContext(), " Looks like you're running out of cash").show();
+		}
+		session.updateAmount(amount);
 	}
 
 

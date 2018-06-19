@@ -28,6 +28,7 @@ import com.scleroid.financematic.data.repo.ExpenseRepo;
 import com.scleroid.financematic.data.repo.InstallmentRepo;
 import com.scleroid.financematic.data.repo.LoanRepo;
 import com.scleroid.financematic.data.repo.TransactionsRepo;
+import com.scleroid.financematic.fragments.AddMoneyFragment;
 import com.scleroid.financematic.fragments.RegisterCustomerFragment;
 import com.scleroid.financematic.fragments.customer.CustomerFragment;
 import com.scleroid.financematic.fragments.dashboard.DashboardFragment;
@@ -69,6 +70,7 @@ public class MainActivity extends BaseActivity
 	private static final String DIALOG_DELAY = "Delay Payment";
 	private static final String DIALOG_MONEY_RECEIVED = "Received Payment";
 	private static final String TAG_PEOPLE = "People";
+	private static final String TAG_ADD_MONEY = "add_money";
 	// index to identify current nav menu item
 	public static int navItemIndex = 0;
 	@NonNull
@@ -391,6 +393,11 @@ public class MainActivity extends BaseActivity
 				navItemIndex = 4;
 				CURRENT_TAG = TAG_EXPENSES;
 				break;
+			case R.id.nav_add_money:
+				navItemIndex = 5;
+				CURRENT_TAG = TAG_ADD_MONEY;
+				break;
+
 
 			case R.id.navigation_list_people:
 				navItemIndex = 1;
@@ -487,8 +494,10 @@ public class MainActivity extends BaseActivity
 				// Expenses fragment
 				return new ExpenseFragment();
 
+			case 5:
+				return new AddMoneyFragment();
           /*
-           TODO
+
            case 4:
                 // Notifications fragment
                 return new Fragment();
