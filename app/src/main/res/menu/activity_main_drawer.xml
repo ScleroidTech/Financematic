@@ -24,6 +24,10 @@
             android:id="@+id/nav_expenses"
             android:icon="@drawable/ic_storage_black_24dp"
             android:title="Expenses" />
+        <item
+            android:id="@+id/nav_add_money"
+            android:icon="@drawable/ic_account_balance_wallet_black_24dp"
+            android:title="Add Money" />
 
     </group>
 
