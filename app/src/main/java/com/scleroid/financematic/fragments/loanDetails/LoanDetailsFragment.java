@@ -33,6 +33,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -291,10 +292,27 @@ public class LoanDetailsFragment extends BaseFragment {
 	public void onUpdatingInstallments(@NonNull Events.newAmt loanBundle) {
 		BigDecimal amount = loanBundle.getNumber();
 		if (installmentList != null) {
+			double sum = com.annimon.stream.Stream.of(installmentList)
+					.withoutNulls()
+					.mapToDouble(installment ->
+							installment.getExpectedAmt().doubleValue())
+					.sum();
+			final BigDecimal newTotalRemainingAmt =
+					BigDecimal.valueOf(sum).subtract(amount);
+			final BigDecimal newInstallmentAmount;
+			if (installmentList.size() != 0) {
+				newInstallmentAmount =
+						newTotalRemainingAmt.divide(BigDecimal.valueOf(installmentList
+										.size()), 2,
+								RoundingMode.HALF_EVEN);
+			} else { newInstallmentAmount = amount; }
+
+
 			for (Installment installment : installmentList
 					) {
-				installment.setExpectedAmt(amount);
+				installment.setExpectedAmt(newInstallmentAmount);
 			}
+			loanViewModel.saveInstallmentsList(installmentList);
 		}
 
 
