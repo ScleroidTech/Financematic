@@ -11,6 +11,7 @@ import com.scleroid.financematic.data.local.model.Installment;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
 import io.reactivex.Single;
 
 import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
@@ -39,6 +40,7 @@ public interface InstallmentDao {
 	 */
 	@Query("SELECT * FROM Installment")
 	LiveData<List<Installment>> getAllInstallmentsLive();
+
 
 	/**
 	 * Returns a specific value compared to serialNo passed
@@ -106,8 +108,11 @@ public interface InstallmentDao {
 	@Query("DELETE FROM Installment")
 	void nukeTable();
 
+
 	@Query("SELECT * FROM installment WHERE loanAcNo=:userId")
-	List<Installment> getInstallmentsForLoan(final int userId);
+	Flowable<List<Installment>> getRxInstallmentsByLoan(final int userId);
+
+
 
 	@Query("SELECT * FROM installment WHERE loanAcNo=:userId")
 	LiveData<List<Installment>> getInstallmentsForLoanLive(final int userId);

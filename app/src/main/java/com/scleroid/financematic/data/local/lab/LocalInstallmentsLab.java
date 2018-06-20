@@ -16,6 +16,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
+import io.reactivex.Flowable;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
@@ -175,6 +176,28 @@ public class LocalInstallmentsLab implements LocalDataSource<Installment> {
 	public Single<Installment> getRxItem(final int itemId) {
 		Timber.d("getting installment with id %d", itemId);
 		return installmentDao.getRxInstallment(itemId);
+	}
+
+	/**
+	 * gets a list of all items
+	 */
+	public Flowable<List<Installment>> getRxItemsForLoan(int acNo) {
+        /* Alternate Method for same purpose
+        Runnable runnable = () -> {
+            final LiveData<List<Installment>> installments= installmentDao.getAllInstallmentLive();
+            appExecutors.mainThread().execute(() -> {
+                if (installments.getValue().isEmpty()){
+                    callback.onDataNotAvailable();
+                }
+                else callback.onLoaded(installments);
+            });
+
+
+        };
+        appExecutors.diskIO().execute(runnable);*/
+
+		Timber.d("getting all installments");
+		return installmentDao.getRxInstallmentsByLoan(acNo);
 	}
 
 	/**

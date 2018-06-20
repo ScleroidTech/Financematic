@@ -339,8 +339,38 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 	private void deleteInstallment(final Installment expense,
 	                               @NonNull final TransactionModel transaction) {
 		if (expense.getExpectedAmt()
-				.equals(currentInstallment.getExpectedAmt()) || expense.getExpectedAmt()
 				.intValue() > currentInstallment.getExpectedAmt().intValue()) {
+			installmentRepo.deleteItem(expense)
+					.observeOn(
+							AndroidSchedulers.mainThread())
+					.subscribe(() -> {
+								Toasty.success(
+										Objects.requireNonNull(
+												RegisterReceivedDialogFragment.this
+														.getContext()),
+										"Installment has been paid" +
+												" Successfully")
+										.show();
+								Timber.d(
+										"data removed for Installment ");
+								transactionsRepo.saveItem(transaction);
+								updateInstallments(expense.getExpectedAmt()
+										.subtract(currentInstallment.getExpectedAmt()));
+
+
+							}, throwable -> {
+								Toasty.error(getBaseActivity(),
+										"Details Not Updated, Try" +
+												" " +
+												"again" +
+												" Later")
+										.show();
+								Timber.e("data  not updated for " + expense
+								);
+							}
+					);
+		} else if (expense.getExpectedAmt()
+				.equals(currentInstallment.getExpectedAmt())) {
 			installmentRepo.deleteItem(expense)
 					.observeOn(
 							AndroidSchedulers.mainThread())
@@ -399,6 +429,35 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 							}
 					);
 		}
+	}
+
+	private void updateInstallments(final BigDecimal expectedAmt) {
+		installmentRepo.getLocalInstallmentsLab()
+				.getRxItemsForLoan(installmentId)
+				.subscribeOn(Schedulers.io())
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe(installments -> {
+							Timber.d("Updating all installments amounts ");
+							double sum = com.annimon.stream.Stream.of(installments)
+									.withoutNulls()
+									.mapToDouble(installment ->
+											installment.getExpectedAmt().doubleValue())
+									.sum();
+							final BigDecimal newTotalRemainingAmt =
+									BigDecimal.valueOf(sum).subtract(expectedAmt);
+							final BigDecimal newInstallmentAmount =
+									newTotalRemainingAmt.divide(BigDecimal.valueOf(installments
+													.size()), 2,
+											RoundingMode.HALF_EVEN);
+							for (Installment installmentFresh : installments) {
+								installmentFresh.setExpectedAmt(newInstallmentAmount);
+								installmentRepo.saveItem(installmentFresh);
+							}
+
+
+						},
+						throwable -> Timber.e(
+								"Updating all installments amount failed" + throwable.getMessage()));
 	}
 
 
