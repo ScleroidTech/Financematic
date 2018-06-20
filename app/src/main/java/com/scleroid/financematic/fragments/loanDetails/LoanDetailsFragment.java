@@ -314,7 +314,8 @@ public class LoanDetailsFragment extends BaseFragment {
 								RoundingMode.HALF_EVEN);
 				Timber.d(
 						" And This is new Installment Amount  " + newInstallmentAmount
-								.toPlainString());
+								.toPlainString() + " which is divided by " + installmentList
+								.size());
 
 			} else { newInstallmentAmount = amount; }
 
