@@ -437,7 +437,7 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(installments -> {
-							Timber.d("Updating all installments amounts ");
+							Timber.d("Updating all installments amounts " + installments.size());
 							double sum = com.annimon.stream.Stream.of(installments)
 									.withoutNulls()
 									.mapToDouble(installment ->
@@ -445,10 +445,13 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 									.sum();
 							final BigDecimal newTotalRemainingAmt =
 									BigDecimal.valueOf(sum).subtract(expectedAmt);
-							final BigDecimal newInstallmentAmount =
-									newTotalRemainingAmt.divide(BigDecimal.valueOf(installments
-													.size()), 2,
-											RoundingMode.HALF_EVEN);
+							final BigDecimal newInstallmentAmount;
+							if (installments.size() != 0)
+								newInstallmentAmount =
+										newTotalRemainingAmt.divide(BigDecimal.valueOf(installments
+														.size()), 2,
+												RoundingMode.HALF_EVEN);
+							else { newInstallmentAmount = newTotalRemainingAmt; }
 							for (Installment installmentFresh : installments) {
 								installmentFresh.setExpectedAmt(newInstallmentAmount);
 								installmentRepo.saveItem(installmentFresh);
