@@ -248,14 +248,6 @@ ExpenseFragment extends BaseFragment {
 		}
 	}
 
-	private void sort(@NonNull final List<Expense> transactions) {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-			transactions.sort(Comparator.comparing(Expense::getExpenseDate));
-		} else {
-			Collections.sort(transactions,
-					(m1, m2) -> m1.getExpenseDate().compareTo(m2.getExpenseDate()));
-		}
-	}
 
 	private void updateUi(@NonNull final List<Expense> items) {
 
@@ -469,10 +461,24 @@ ExpenseFragment extends BaseFragment {
 
 	private List<Expense> filterResults(String selected_type) {
 
-		return Stream.of(expenseList)
+		List<Expense> collect = Stream.of(expenseList)
 				.filter(expenseList -> expenseList.getExpenseType().equals(selected_type))
 				.collect(Collectors.toList());
+
+		return sort(collect);
 	}
+
+	private List<Expense> sort(@NonNull final List<Expense> transactions) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+			transactions.sort(Comparator.comparing(Expense::getExpenseDate));
+		} else {
+			Collections.sort(transactions,
+					(m1, m2) -> m1.getExpenseDate().compareTo(m2.getExpenseDate()));
+		}
+		Collections.reverse(transactions);
+		return transactions;
+	}
+
 
 
 }
