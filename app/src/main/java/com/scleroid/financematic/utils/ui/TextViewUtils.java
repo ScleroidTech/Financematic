@@ -42,4 +42,19 @@ public class TextViewUtils {
 				null, Shader.TileMode.CLAMP);
 		textView.getPaint().setShader(textShader);
 	}
+
+	public void textViewExperimentsRed(@NonNull TextView textView) {
+		Shader textShaderOther = new LinearGradient(0, 0, 300, textView.getLineHeight(),
+				new int[]{0xFFFF7513, 0xFFDB4437, 0xFF00E0E4},
+
+				null, Shader.TileMode.CLAMP);
+		Timber.i(
+				"textview Values" + textView.getTextScaleX() + " " + textView.getTextSize() + " "
+						+ textView
+						.getMeasuredWidth() + " " + textView.getLineHeight());
+		Shader textShader = new LinearGradient(0, 0, 150, textView.getLineHeight(),
+				new int[]{Color.GRAY, Color.BLUE},
+				null, Shader.TileMode.CLAMP);
+		textView.getPaint().setShader(textShader);
+	}
 }

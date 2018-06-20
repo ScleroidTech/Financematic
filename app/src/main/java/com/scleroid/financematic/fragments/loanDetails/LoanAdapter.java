@@ -136,7 +136,7 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> 
 			if (passbook.getReceivedAmt() == null) {
 				summeryAmount.setText(passbook.getLentAmt().toPlainString());
 				setDate(passbook.getTransactionDate());
-				textViewUtils.textViewExperimentsNext(summeryAmount);
+				textViewUtils.textViewExperimentsRed(summeryAmount);
 				BtnPaidRxSummery.setBackgroundResource(R.drawable.button_rounded_gray);
 				BtnPaidRxSummery.setText("Lent");
 			} else {

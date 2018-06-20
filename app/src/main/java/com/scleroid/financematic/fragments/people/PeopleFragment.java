@@ -151,11 +151,9 @@ public class PeopleFragment extends BaseFragment {
 
 	@Override
 	protected void subscribeToLiveData() {
+		//		sort(items.data);
 		peopleViewModel.getItemList().observe(this,
-				items -> {
-					//		sort(items.data);
-					updateView(items);
-				});
+				this::updateView);
 	}
 
 	/**
@@ -174,7 +172,7 @@ public class PeopleFragment extends BaseFragment {
 		emptyCard.setVisibility(View.VISIBLE);
 		peopleRecyclerView.setVisibility(View.GONE);
 
-		if (items == null) {
+		if (items == null || items.data == null) {
 			noAddressTitle.setText(items.status.toString());
 			noAddressSubtitle.setText(items.message);
 
