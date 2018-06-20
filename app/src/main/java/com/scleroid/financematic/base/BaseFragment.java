@@ -27,6 +27,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.scleroid.financematic.utils.eventBus.GlobalBus;
+
+import org.greenrobot.eventbus.EventBus;
+
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
@@ -45,10 +49,11 @@ public abstract class BaseFragment<V extends BaseViewModel> extends Fragment {
 	private BaseActivity mActivity;
 	private Unbinder unbinder;
 	private View rootView;
-
+	EventBus eventBus = GlobalBus.getBus();
 	@Override
 	public void onAttach(Context context) {
 		super.onAttach(context);
+		eventBus.register(this);
 		if (context instanceof BaseActivity) {
 			BaseActivity activity = (BaseActivity) context;
 			this.mActivity = activity;
@@ -153,6 +158,7 @@ public abstract class BaseFragment<V extends BaseViewModel> extends Fragment {
 	@Override
 	public void onDetach() {
 		mActivity = null;
+		eventBus.unregister(this);
 		super.onDetach();
 	}
 

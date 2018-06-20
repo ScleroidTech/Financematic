@@ -21,11 +21,15 @@ import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.data.local.model.TransactionModel;
+import com.scleroid.financematic.utils.eventBus.Events;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.DateUtils;
 import com.scleroid.financematic.utils.ui.RupeeTextView;
 import com.scleroid.financematic.utils.ui.TextViewUtils;
 
+import org.greenrobot.eventbus.Subscribe;
+
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -278,5 +282,18 @@ public class LoanDetailsFragment extends BaseFragment {
 		RupeeTextView installmentTextView;
 	}
 
+
+	@Subscribe
+	public void onUpdatingInstallments(@NonNull Events.newAmt loanBundle) {
+		BigDecimal amount = loanBundle.getNumber();
+		if (installmentList != null) {
+			for (Installment installment : installmentList
+					) {
+				installment.setExpectedAmt(amount);
+			}
+		}
+
+
+	}
 
 }

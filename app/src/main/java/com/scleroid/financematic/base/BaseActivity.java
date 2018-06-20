@@ -41,12 +41,12 @@ public abstract class BaseActivity
 
 	@Override
 	public void onFragmentAttached() {
-
+		eventBus.register(this);
 	}
 
 	@Override
 	public void onFragmentDetached(String tag) {
-
+		eventBus.unregister(this);
 	}
 
 	@Override

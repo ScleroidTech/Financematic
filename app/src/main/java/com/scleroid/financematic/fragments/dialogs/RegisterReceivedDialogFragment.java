@@ -27,6 +27,8 @@ import com.scleroid.financematic.data.repo.InstallmentRepo;
 import com.scleroid.financematic.data.repo.LoanRepo;
 import com.scleroid.financematic.data.repo.TransactionsRepo;
 import com.scleroid.financematic.utils.CommonUtils;
+import com.scleroid.financematic.utils.eventBus.Events;
+import com.scleroid.financematic.utils.eventBus.GlobalBus;
 import com.scleroid.financematic.utils.ui.DateUtils;
 import com.scleroid.financematic.utils.ui.TextValidator;
 
@@ -354,7 +356,7 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 								Timber.d(
 										"data removed for Installment ");
 								transactionsRepo.saveItem(transaction);
-								updateInstallments(expense.getExpectedAmt()
+						updateInstallmentViaEventBus(expense.getExpectedAmt()
 										.subtract(currentInstallment.getExpectedAmt()));
 
 
@@ -461,6 +463,14 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 						},
 						throwable -> Timber.e(
 								"Updating all installments amount failed" + throwable.getMessage()));
+	}
+
+	private void updateInstallmentViaEventBus(final BigDecimal expectedAmt) {
+
+		Timber.d("Updating all installments");
+		Events.newAmt makeACall = new Events.newAmt(expectedAmt);
+
+		GlobalBus.getBus().post(makeACall);
 	}
 
 

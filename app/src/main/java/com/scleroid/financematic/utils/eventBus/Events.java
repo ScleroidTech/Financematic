@@ -2,6 +2,8 @@ package com.scleroid.financematic.utils.eventBus;
 
 import android.os.Bundle;
 
+import java.math.BigDecimal;
+
 /**
  * The class used to provide events that need to be handled by
  *
@@ -130,6 +132,22 @@ public class Events {
 			return message;
 		}
 	}
+
+
+	// Event used to place call using MainActivity
+	public static class newAmt {
+		private BigDecimal message;
+
+		public newAmt(final BigDecimal phone) {
+			this.message = phone;
+		}
+
+
+		public BigDecimal getNumber() {
+			return message;
+		}
+	}
+
 
 
 	public static class goToAddress {

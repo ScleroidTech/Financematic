@@ -87,6 +87,13 @@ public class LoanDetailsViewModel extends BaseViewModel<TransactionModel> implem
 		return transactionLiveData;
 	}
 
+	protected void saveInstallmentsList(List<Installment> installments) {
+		for (Installment installment : installments
+				) {
+			installmentRepo.updateItem(installment);
+
+		}
+	}
 
 	@Nullable
 	@Override
