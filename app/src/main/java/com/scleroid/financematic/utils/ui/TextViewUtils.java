@@ -45,7 +45,7 @@ public class TextViewUtils {
 
 	public void textViewExperimentsRed(@NonNull TextView textView) {
 		Shader textShaderOther = new LinearGradient(0, 0, 300, textView.getLineHeight(),
-				new int[]{0xFFFF7513, 0xFFDB4437, 0xFF00E0E4},
+				new int[]{0xFFFF7513, 0xFFDB4437, 0xFFB72B21},
 
 				null, Shader.TileMode.CLAMP);
 		Timber.i(
