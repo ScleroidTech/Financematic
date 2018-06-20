@@ -538,7 +538,7 @@ public class RegisterLoanFragment extends BaseFragment {
 							.subscribe(() -> {
 										Timber.d("Installments Created ");
 
-								updateTotalAmount(loan);
+								//updateTotalAmount(loan);
 								transactionRepo.saveItem(transaction).observeOn(AndroidSchedulers.mainThread())
 										.subscribe(() -> {
 											Timber.d("Transaction Created ");
