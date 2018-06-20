@@ -244,6 +244,7 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 
 							etrxDate.setText(dateUtils.getFormattedDate(installmentDate));
 							etrxReceivedAmount.setText(installmentAmt);
+							updateLabel();
 
 						},
 						throwable -> Timber.d("Not gonna show up " + throwable.getMessage()));
