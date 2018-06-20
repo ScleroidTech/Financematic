@@ -11,6 +11,7 @@ import com.scleroid.financematic.data.local.dao.InstallmentDao;
 import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.data.local.model.Loan;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -96,13 +97,25 @@ public class LocalInstallmentsLab implements LocalDataSource<Installment> {
 	@Override
 	public Completable addItems(@NonNull final List<Installment> items) {
 		Timber.d("ABCD creating new installment ");
-		installmentDao.saveInstallments(items);
+		//	installmentDao.saveInstallments(items);
 		return Completable.fromRunnable(() -> {
 			long[] rowId = installmentDao.saveInstallments(items);
 			Timber.d("ABCD installment stored " + rowId.length);
 		}).subscribeOn(Schedulers.io());
 	}
 
+	/**
+	 * adds a list of objects to the data source
+	 */
+	public Single<Installment> updateInstallments(final int acNo, final BigDecimal amt) {
+		Timber.d("ABCD creating new installment ");
+		return Single.fromCallable(() -> {
+			Installment installment = installmentDao.updateInstallmentAmount(acNo, amt);
+			Timber.d("installment Deleted ");
+			return installment;
+		}).subscribeOn(Schedulers.io());
+		//
+	}
 	@Override
 	public void addNetworkItems(@NonNull final List<Installment> items) {
 		Timber.d("Storing data");

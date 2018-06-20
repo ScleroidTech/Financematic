@@ -320,12 +320,12 @@ public class LoanDetailsFragment extends BaseFragment {
 
 			} else { newInstallmentAmount = amount; }
 
-
 			for (Installment installment : installmentList
 					) {
-				installment.setExpectedAmt(newInstallmentAmount);
+				//	installment.setExpectedAmt(newInstallmentAmount);
+				loanViewModel.saveInstallmentsList(installment.getLoanAcNo(), newInstallmentAmount);
 			}
-			loanViewModel.saveInstallmentsList(installmentList);
+
 		}
 
 

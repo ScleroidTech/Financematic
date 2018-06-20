@@ -14,6 +14,7 @@ import com.scleroid.financematic.data.repo.TransactionsRepo;
 import com.scleroid.financematic.utils.network.Resource;
 import com.scleroid.financematic.viewmodels.LoanViewModel;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import timber.log.Timber;
@@ -89,14 +90,14 @@ public class LoanDetailsViewModel extends BaseViewModel<TransactionModel> implem
 		return transactionLiveData;
 	}
 
-	protected void saveInstallmentsList(List<Installment> installments) {
+	protected void saveInstallmentsList(final int amt, final BigDecimal loanId) {
 		/*for (Installment installment : installments
 				) {
 			installmentRepo.updateItem(installment);
 
 		}*/
 		Timber.d("ABCD saving installments");
-		installmentRepo.saveItems(installments);
+		installmentRepo.updateAmountLoan(loanId, amt);
 	}
 
 	@Nullable

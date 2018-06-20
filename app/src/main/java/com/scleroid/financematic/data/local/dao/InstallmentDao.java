@@ -9,6 +9,7 @@ import android.arch.persistence.room.Update;
 
 import com.scleroid.financematic.data.local.model.Installment;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import io.reactivex.Flowable;
@@ -117,5 +118,8 @@ public interface InstallmentDao {
 	@Query("SELECT * FROM installment WHERE loanAcNo=:userId")
 	LiveData<List<Installment>> getInstallmentsForLoanLive(final int userId);
 
+
+	@Query("UPDATE installment SET expectedAmt = :amt WHERE loanAcNo=:userId")
+	Installment updateInstallmentAmount(final int userId, BigDecimal amt);
 
 }

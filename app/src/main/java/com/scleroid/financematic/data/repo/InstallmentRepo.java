@@ -14,6 +14,7 @@ import com.scleroid.financematic.utils.network.NetworkBoundResource;
 import com.scleroid.financematic.utils.network.RateLimiter;
 import com.scleroid.financematic.utils.network.Resource;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -180,6 +181,11 @@ public class InstallmentRepo implements Repo<Installment> {
 	@Override
 	public Completable updateItem(@NonNull final Installment installment) {
 		return localInstallmentsLab.updateItem(installment)
+				.flatMapCompletable(remoteInstallmentLab::sync);
+	}
+
+	public Completable updateAmountLoan(final BigDecimal amt, final int acNo) {
+		return localInstallmentsLab.updateInstallments(acNo, amt)
 				.flatMapCompletable(remoteInstallmentLab::sync);
 	}
 
