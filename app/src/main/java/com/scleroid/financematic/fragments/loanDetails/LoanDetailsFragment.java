@@ -1,6 +1,7 @@
 package com.scleroid.financematic.fragments.loanDetails;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,11 +23,13 @@ import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.data.local.model.TransactionModel;
 import com.scleroid.financematic.utils.eventBus.Events;
+import com.scleroid.financematic.utils.eventBus.GlobalBus;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.DateUtils;
 import com.scleroid.financematic.utils.ui.RupeeTextView;
 import com.scleroid.financematic.utils.ui.TextViewUtils;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.math.BigDecimal;
@@ -78,6 +81,7 @@ public class LoanDetailsFragment extends BaseFragment {
 	CardView emptyCard;
 	@Inject
 	DateUtils dateUtils;
+	EventBus eventBus = GlobalBus.getBus();
 	@Nullable
 	private List<TransactionModel> transactionList = new ArrayList<>();
 	private RecyclerView recyclerView;
@@ -104,6 +108,12 @@ public class LoanDetailsFragment extends BaseFragment {
 		args.putInt(ACCOUNT_NO, accountNo);
 		fragment.setArguments(args);
 		return fragment;
+	}
+
+	@Override
+	public void onAttach(Context context) {
+		super.onAttach(context);
+		eventBus.register(this);
 	}
 
 	@Override
@@ -163,6 +173,12 @@ public class LoanDetailsFragment extends BaseFragment {
 	@Override
 	public int getLayoutId() {
 		return R.layout.fragment_loan_details;
+	}
+
+	@Override
+	public void onDetach() {
+		eventBus.unregister(this);
+		super.onDetach();
 	}
 
 	/**
@@ -258,7 +274,6 @@ public class LoanDetailsFragment extends BaseFragment {
 				"A/c No." + theLoan.getAccountNo());
 	}
 
-
 	/**
 	 * Override for set view model
 	 *
@@ -272,17 +287,6 @@ public class LoanDetailsFragment extends BaseFragment {
 		return loanViewModel;
 	}
 
-	static class CardHolder {
-
-		@Nullable
-		@BindView(R.id.paid_amount_text_view)
-		RupeeTextView paidAmountTextView;
-		@Nullable
-		@BindView(R.id.installment_text_view)
-		RupeeTextView installmentTextView;
-	}
-
-
 	@Subscribe
 	public void onUpdatingInstallments(@NonNull Events.newAmt loanBundle) {
 		BigDecimal amount = loanBundle.getNumber();
@@ -294,6 +298,16 @@ public class LoanDetailsFragment extends BaseFragment {
 		}
 
 
+	}
+
+	static class CardHolder {
+
+		@Nullable
+		@BindView(R.id.paid_amount_text_view)
+		RupeeTextView paidAmountTextView;
+		@Nullable
+		@BindView(R.id.installment_text_view)
+		RupeeTextView installmentTextView;
 	}
 
 }

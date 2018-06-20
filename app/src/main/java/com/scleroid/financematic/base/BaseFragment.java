@@ -53,7 +53,7 @@ public abstract class BaseFragment<V extends BaseViewModel> extends Fragment {
 	@Override
 	public void onAttach(Context context) {
 		super.onAttach(context);
-		eventBus.register(this);
+		//	eventBus.register(this);
 		if (context instanceof BaseActivity) {
 			BaseActivity activity = (BaseActivity) context;
 			this.mActivity = activity;
@@ -158,7 +158,7 @@ public abstract class BaseFragment<V extends BaseViewModel> extends Fragment {
 	@Override
 	public void onDetach() {
 		mActivity = null;
-		eventBus.unregister(this);
+//		eventBus.unregister(this);
 		super.onDetach();
 	}
 

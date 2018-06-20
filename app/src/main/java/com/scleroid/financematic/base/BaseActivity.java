@@ -81,13 +81,13 @@ public abstract class BaseActivity
 	@Override
 	protected void onPause() {
 		super.onPause();
-		eventBus.unregister(this);
+//		eventBus.unregister(this);
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		eventBus.register(this);
+//		eventBus.register(this);
 
         /*if (listState != null) {
             recyclerViewPager.getLayoutManager().onRestoreInstanceState(listState);
