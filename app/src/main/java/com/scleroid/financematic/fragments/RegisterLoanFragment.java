@@ -628,6 +628,7 @@ public class RegisterLoanFragment extends BaseFragment {
 	}
 
 	private long calculateTotalDuration() {
+		if (startDate == null || endDate == null) return 0;
 		return dateUtils.differenceOfDates(startDate, endDate);
 	}
 
