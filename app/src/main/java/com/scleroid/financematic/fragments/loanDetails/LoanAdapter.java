@@ -172,7 +172,10 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> 
 			} else {
 				summeryDescpription.setText("Yet to come");
 			}
-			summeryAmount.setText(passbook.getExpectedAmt().toString());
+
+			String text = passbook.getExpectedAmt().toPlainString();
+			Timber.d("ABCD Installment Amount" + text);
+			summeryAmount.setText(text);
 			setDate(passbook.getInstallmentDate());
 			textViewUtils.textViewExperiments(summeryAmount);
 
