@@ -134,6 +134,7 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> 
 			itemView.setTag(passbook);
 			summeryDescpription.setText(passbook.getDescription());
 			if (passbook.getReceivedAmt() == null) {
+				itemView.setBackgroundColor(0xFF999999);
 				summeryAmount.setText(passbook.getLentAmt().toPlainString());
 				setDate(passbook.getTransactionDate());
 				textViewUtils.textViewExperimentsRed(summeryAmount);
