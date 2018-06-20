@@ -27,6 +27,7 @@ import com.scleroid.financematic.data.repo.InstallmentRepo;
 import com.scleroid.financematic.data.repo.LoanRepo;
 import com.scleroid.financematic.data.repo.TransactionsRepo;
 import com.scleroid.financematic.utils.CommonUtils;
+import com.scleroid.financematic.utils.ui.DateUtils;
 import com.scleroid.financematic.utils.ui.TextValidator;
 
 import java.math.BigDecimal;
@@ -63,6 +64,8 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 	InstallmentRepo installmentRepo;
 	@Inject
 	LoanRepo loanRepo;
+	@Inject
+	DateUtils dateUtils;
 
 	@Inject
 	TransactionsRepo transactionsRepo;
@@ -78,6 +81,7 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 	private String description;
 	private Loan loan;
 	private Installment currentInstallment;
+	private Date installmentDate;
 
 	public RegisterReceivedDialogFragment() {
 		// Required empty public constructor
@@ -115,17 +119,18 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 				LayoutInflater.from(getActivity()).inflate(R.layout.registor_received_amount,
 						null);
 		Bundle bundle = getArguments();
+		etrxDate = rootView.findViewById(R.id.rxDate);
+		etrxReceivedAmount = rootView.findViewById(R.id.rxReceivedAmount);
+		etrxOtherDescription = rootView.findViewById(R.id.rxdescriptionother);
+		otherDescLayout = rootView.findViewById(R.id.other_reason_view);
+		final Spinner spin = rootView.findViewById(R.id.spinnerrx);
 		if (bundle != null) {
 			accountNo = bundle.getInt(ACCOUNT_NO);
 			installmentId = bundle.getInt(INSTALLMENT_ID);
 			getInstallment();
 		}
-		final Spinner spin = rootView.findViewById(R.id.spinnerrx);
 
-		etrxDate = rootView.findViewById(R.id.rxDate);
-		etrxReceivedAmount = rootView.findViewById(R.id.rxReceivedAmount);
-		etrxOtherDescription = rootView.findViewById(R.id.rxdescriptionother);
-		otherDescLayout = rootView.findViewById(R.id.other_reason_view);
+
 		otherDescLayout.setVisibility(View.GONE);
 		spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
@@ -177,11 +182,7 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 			new DatePickerDialog(getBaseActivity(), dateSetListener, myCalendar
 					.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
 					myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-/*  FragmentManager fragmentManager = getActivity().getFragmentManager();
-DialogFragment dialogFragment = new Fragment_datepicker_all();
-*//*  dialogFragment.setTargetFragment(fragmentManager.findFragmentByTag
-			 * (CURRENT_TAG), REQUEST_DATE);*//*
-dialogFragment.show(fragmentManager, DIALOG_DATE);*/
+
 		});
 		MaterialStyledDialog.Builder builder = new MaterialStyledDialog.Builder(getActivity());
 		updateTitle(builder);
@@ -228,8 +229,10 @@ dialogFragment.show(fragmentManager, DIALOG_DATE);*/
 							Timber.d("data received, displaying " + customer.toString());
 							final String installmentAmt = currentInstallment.getExpectedAmt()
 									.toPlainString();
-							//TODO Set text to textview or hint to edittext here
+							installmentDate = currentInstallment.getInstallmentDate();
+							myCalendar.setTime(installmentDate);
 
+							etrxDate.setText(dateUtils.getFormattedDate(installmentDate));
 							etrxReceivedAmount.setText(installmentAmt);
 
 						},
