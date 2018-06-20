@@ -412,6 +412,7 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 			Collections.sort(transactions,
 					(m1, m2) -> m1.getTransactionDate().compareTo(m2.getTransactionDate()));
 		}
+		Collections.reverse(transactions);
 	}
 
 	@NonNull
