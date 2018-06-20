@@ -355,9 +355,12 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 										.show();
 								Timber.d(
 										"data removed for Installment ");
-								transactionsRepo.saveItem(transaction);
-						updateInstallmentViaEventBus(expense.getExpectedAmt()
-										.subtract(currentInstallment.getExpectedAmt()));
+						transactionsRepo.saveItem(transaction).observeOn(
+								AndroidSchedulers.mainThread()).subscribe(() -> {
+							updateInstallmentViaEventBus(expense.getExpectedAmt()
+									.subtract(currentInstallment.getExpectedAmt()));
+
+						});
 
 
 							}, throwable -> {
