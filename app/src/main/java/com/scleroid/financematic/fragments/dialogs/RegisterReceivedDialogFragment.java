@@ -195,11 +195,21 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 				.setIcon(R.drawable.ic_stopwatch)
 				.setPositiveText(R.string.submit)
 				.onPositive((MaterialDialog dialog, DialogAction which) -> {
-					if (etrxReceivedAmount.getText() == null || paymentDate == null || description
-							== null || (otherDescLayout.getVisibility() == View.VISIBLE &&
+					if (etrxReceivedAmount.getText() == null) {
+						Toasty.error(getBaseActivity(), "You haven't filled Amount").show();
+						return;
+					} else if (paymentDate == null) {
+						Toasty.error(getBaseActivity(), "You haven't set the date").show();
+						return;
+					} else if (description
+							== null) {
+						Toasty.error(getBaseActivity(), "You haven't selected description").show();
+						return;
+					} else if ((otherDescLayout.getVisibility() == View.VISIBLE &&
 							etrxOtherDescription
 									.getText() == null)) {
-						Toasty.error(getBaseActivity(), "You haven't filled all data").show();
+						Toasty.error(getBaseActivity(),
+								"You haven't added the reason for description").show();
 						return;
 					}
 					Timber.d(
