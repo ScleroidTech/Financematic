@@ -170,6 +170,7 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 		double totalAmt = calculateTotalAmt(loanList);
 		double lentAmt = calculateLentAmt(loanList);
 		double receivedAmt = totalAmt - lentAmt;
+		Timber.d("Calculating Daashboard " + totalAmt + "  " + lentAmt + "  " + receivedAmt);
 		totalAmountTextView.setText(String.valueOf(totalAmt));
 		lentAmountTextView.setText(String.valueOf(lentAmt));
 		remainingAmountTextView.setText(String.valueOf(receivedAmt));
