@@ -188,11 +188,11 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 				loan.getLoanAmt() != null ? loan.getLoanAmt().intValue() : 0).sum();*/
 		double sum = session.getAmount();
 
-		//TODO this maybe need to removed
+		/*//TODO this maybe need to removed
 		if (sum == 0) {
 			sum = Stream.of(loans).mapToDouble(loan ->
 					loan.getLoanAmt() != null ? loan.getLoanAmt().doubleValue() : 0).sum();
-		}
+		}*/
 		Timber.i("sum of Total Amt" + sum);
 		return sum;
 	}
