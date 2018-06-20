@@ -73,6 +73,7 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> 
 		} else {
 			Timber.e(position + "  " + transactionList.size() + "");
 			TransactionModel passbook = transactionList.get(position - installmentList.size());
+			if (passbook.getReceivedAmt() == null) return;
 			holder.setData(passbook);
 		}
 	}
