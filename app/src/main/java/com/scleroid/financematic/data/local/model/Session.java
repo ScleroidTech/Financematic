@@ -27,7 +27,7 @@ public class Session {
 	}
 
 	public void updateAmount(float amount) {
-		editor.putFloat(KEY_USER_TOTAL_AMOUNT, amount);
+		editor.putFloat(KEY_USER_TOTAL_AMOUNT, getAmount() + amount);
 		editor.apply();
 	}
 
