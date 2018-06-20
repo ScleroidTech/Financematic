@@ -17,6 +17,10 @@ import com.scleroid.financematic.viewmodels.LoanViewModel;
 import java.math.BigDecimal;
 import java.util.List;
 
+import io.reactivex.CompletableObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 /**
@@ -97,7 +101,24 @@ public class LoanDetailsViewModel extends BaseViewModel<TransactionModel> implem
 
 		}*/
 		Timber.d("ABCD saving installments");
-		installmentRepo.updateAmountLoan(loanId, amt);
+		installmentRepo.updateAmountLoan(loanId, amt).subscribeOn(Schedulers.io())
+				.observeOn(AndroidSchedulers.mainThread()).subscribe(new CompletableObserver() {
+			@Override
+			public void onSubscribe(final Disposable d) {
+
+			}
+
+			@Override
+			public void onComplete() {
+				Timber.d("ABCD This is completed i guess");
+			}
+
+			@Override
+			public void onError(final Throwable e) {
+
+			}
+
+		});
 	}
 
 	@Nullable
