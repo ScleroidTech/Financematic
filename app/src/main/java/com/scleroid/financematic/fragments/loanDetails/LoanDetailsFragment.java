@@ -319,13 +319,14 @@ public class LoanDetailsFragment extends BaseFragment {
 								.size());
 
 			} else { newInstallmentAmount = amount; }
-
+			List<Installment> newList = new ArrayList<>();
 			for (Installment installment : installmentList
 					) {
-				//	installment.setExpectedAmt(newInstallmentAmount);
-				loanViewModel.saveInstallmentsList(installment.getLoanAcNo(), newInstallmentAmount);
-			}
+				installment.setExpectedAmt(newInstallmentAmount);
+				newList.add(installment);
 
+			}
+			loanViewModel.saveInstallmentsList(newList);
 		}
 
 

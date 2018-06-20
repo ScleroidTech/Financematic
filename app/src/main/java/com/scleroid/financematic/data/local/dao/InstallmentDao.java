@@ -121,7 +121,7 @@ public interface InstallmentDao {
 	LiveData<List<Installment>> getInstallmentsForLoanLive(final int userId);
 
 	@TypeConverters(MoneyConverter.class)
-	@Query("UPDATE installment SET expectedAmt = :amt WHERE loanAcNo=:userId")
+	@Query("SELECT * FROM installment WHERE loanAcNo=:userId")
 	Installment updateInstallmentAmount(final int userId,
 	                                    BigDecimal amt);
 

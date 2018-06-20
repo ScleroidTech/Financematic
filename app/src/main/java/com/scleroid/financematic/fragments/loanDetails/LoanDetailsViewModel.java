@@ -14,7 +14,6 @@ import com.scleroid.financematic.data.repo.TransactionsRepo;
 import com.scleroid.financematic.utils.network.Resource;
 import com.scleroid.financematic.viewmodels.LoanViewModel;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import io.reactivex.CompletableObserver;
@@ -94,14 +93,15 @@ public class LoanDetailsViewModel extends BaseViewModel<TransactionModel> implem
 		return transactionLiveData;
 	}
 
-	protected void saveInstallmentsList(final int amt, final BigDecimal loanId) {
+	protected void saveInstallmentsList(
+			final List<Installment> installments) {
 		/*for (Installment installment : installments
 				) {
 			installmentRepo.updateItem(installment);
 
 		}*/
 		Timber.d("ABCD saving installments");
-		installmentRepo.updateAmountLoan(loanId, amt).subscribeOn(Schedulers.io())
+		installmentRepo.saveItems(installments).subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread()).subscribe(new CompletableObserver() {
 			@Override
 			public void onSubscribe(final Disposable d) {
