@@ -167,31 +167,31 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 
 	private void updateUi() {
 
-		float totalAmt = calculateTotalAmt(loanList);
-		int lentAmt = calculateLentAmt(loanList);
-		float receivedAmt = totalAmt - lentAmt;
+		double totalAmt = calculateTotalAmt(loanList);
+		double lentAmt = calculateLentAmt(loanList);
+		double receivedAmt = totalAmt - lentAmt;
 		totalAmountTextView.setText(String.valueOf(totalAmt));
 		lentAmountTextView.setText(String.valueOf(lentAmt));
 		remainingAmountTextView.setText(String.valueOf(receivedAmt));
 
 	}
 
-	private int calculateLentAmt(@NonNull final List<Loan> loans) {
-		int sum = Stream.of(loans).mapToInt(loan ->
-				loan.getLoanAmt() != null ? loan.getLoanAmt().intValue() : 0).sum();
+	private double calculateLentAmt(@NonNull final List<Loan> loans) {
+		double sum = Stream.of(loans).withoutNulls().mapToDouble(loan ->
+				loan.getLoanAmt().doubleValue()).sum();
 		Timber.i("sum of Total Amt" + sum);
 		return sum;
 	}
 
-	private float calculateTotalAmt(@NonNull final List<Loan> loans) {
+	private double calculateTotalAmt(@NonNull final List<Loan> loans) {
 	/*	int sum = Stream.of(loans).mapToInt(loan ->
 				loan.getLoanAmt() != null ? loan.getLoanAmt().intValue() : 0).sum();*/
-		int sum = (int) session.getAmount();
+		double sum = session.getAmount();
 
 		//TODO this maybe need to removed
 		if (sum == 0) {
-			sum = Stream.of(loans).mapToInt(loan ->
-					loan.getLoanAmt() != null ? loan.getLoanAmt().intValue() : 0).sum();
+			sum = Stream.of(loans).mapToDouble(loan ->
+					loan.getLoanAmt() != null ? loan.getLoanAmt().doubleValue() : 0).sum();
 		}
 		Timber.i("sum of Total Amt" + sum);
 		return sum;
