@@ -73,7 +73,7 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> 
 		} else {
 			Timber.e(position + "  " + transactionList.size() + "");
 			TransactionModel passbook = transactionList.get(position - installmentList.size());
-			if (passbook.getReceivedAmt() == null) return;
+
 			holder.setData(passbook);
 		}
 	}
@@ -133,11 +133,19 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder> 
 			//  holder.summery_date.setText(passbook.getSummery_date());
 			itemView.setTag(passbook);
 			summeryDescpription.setText(passbook.getDescription());
-			summeryAmount.setText(passbook.getReceivedAmt().toString());
-			setDate(passbook.getTransactionDate());
-			textViewUtils.textViewExperiments(summeryAmount);
-			BtnPaidRxSummery.setBackgroundResource(R.drawable.button_rounded_green);
-			BtnPaidRxSummery.setText("Paid");
+			if (passbook.getReceivedAmt() == null) {
+				summeryAmount.setText(passbook.getLentAmt().toPlainString());
+				setDate(passbook.getTransactionDate());
+				textViewUtils.textViewExperimentsNext(summeryAmount);
+				BtnPaidRxSummery.setBackgroundResource(R.drawable.button_rounded_gray);
+				BtnPaidRxSummery.setText("Lent");
+			} else {
+				summeryAmount.setText(passbook.getReceivedAmt().toPlainString());
+				setDate(passbook.getTransactionDate());
+				textViewUtils.textViewExperiments(summeryAmount);
+				BtnPaidRxSummery.setBackgroundResource(R.drawable.button_rounded_green);
+				BtnPaidRxSummery.setText("Paid");
+			}
 
 		}
 

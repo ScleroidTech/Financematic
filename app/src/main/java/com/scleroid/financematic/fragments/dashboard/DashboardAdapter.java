@@ -86,7 +86,6 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
 
 		if (dashBoardModel.getLoan() == null) {
 			Timber.wtf(" loan is empty for " + dashBoardModel.toString());
-
 			return;
 		}
 

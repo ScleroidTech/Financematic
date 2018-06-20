@@ -153,7 +153,7 @@ public class PeopleFragment extends BaseFragment {
 	protected void subscribeToLiveData() {
 		peopleViewModel.getItemList().observe(this,
 				items -> {
-					//	sort(items);
+					//		sort(items.data);
 					updateView(items);
 				});
 	}
