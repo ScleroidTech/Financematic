@@ -95,11 +95,11 @@ public class LocalInstallmentsLab implements LocalDataSource<Installment> {
 	 */
 	@Override
 	public Completable addItems(@NonNull final List<Installment> items) {
-		Timber.d("creating new installment ");
+		Timber.d("ABCD creating new installment ");
 		installmentDao.saveInstallments(items);
 		return Completable.fromRunnable(() -> {
 			long[] rowId = installmentDao.saveInstallments(items);
-			Timber.d("installment stored " + rowId.length);
+			Timber.d("ABCD installment stored " + rowId.length);
 		}).subscribeOn(Schedulers.io());
 	}
 

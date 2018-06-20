@@ -293,7 +293,7 @@ public class LoanDetailsFragment extends BaseFragment {
 	public void onUpdatingInstallments(@NonNull Events.newAmt loanBundle) {
 
 		BigDecimal amount = loanBundle.getNumber();
-		Timber.d("I'm in the eventBus with amount" + amount.toPlainString());
+		Timber.d("ABCD I'm in the eventBus with amount" + amount.toPlainString());
 		if (installmentList != null) {
 			double sum = com.annimon.stream.Stream.of(installmentList)
 					.withoutNulls()
@@ -303,7 +303,8 @@ public class LoanDetailsFragment extends BaseFragment {
 			final BigDecimal newTotalRemainingAmt =
 					BigDecimal.valueOf(sum).subtract(amount);
 			Timber.d(
-					" And Now the new amount should be  " + newTotalRemainingAmt.toPlainString() +
+					"ABCD And Now the new amount should be  " + newTotalRemainingAmt.toPlainString
+							() +
 							" which is " + sum + "- " + amount
 							.toPlainString());
 			final BigDecimal newInstallmentAmount;
@@ -313,7 +314,7 @@ public class LoanDetailsFragment extends BaseFragment {
 										.size()), 2,
 								RoundingMode.HALF_EVEN);
 				Timber.d(
-						" And This is new Installment Amount  " + newInstallmentAmount
+						"ABCD And This is new Installment Amount  " + newInstallmentAmount
 								.toPlainString() + " which is divided by " + installmentList
 								.size());
 

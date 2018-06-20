@@ -467,7 +467,8 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 
 	private void updateInstallmentViaEventBus(final BigDecimal expectedAmt) {
 
-		Timber.d("Updating all installments, Amount to be deducted" + expectedAmt.toPlainString());
+		Timber.d(
+				"ABCD Updating all installments, Amount to be deducted" + expectedAmt.toPlainString());
 		Events.newAmt makeACall = new Events.newAmt(expectedAmt);
 
 		GlobalBus.getBus().post(makeACall);

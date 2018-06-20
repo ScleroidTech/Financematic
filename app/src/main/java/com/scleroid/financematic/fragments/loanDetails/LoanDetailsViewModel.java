@@ -95,7 +95,7 @@ public class LoanDetailsViewModel extends BaseViewModel<TransactionModel> implem
 			installmentRepo.updateItem(installment);
 
 		}*/
-		Timber.d("saving installments");
+		Timber.d("ABCD saving installments");
 		installmentRepo.saveItems(installments);
 	}
 
