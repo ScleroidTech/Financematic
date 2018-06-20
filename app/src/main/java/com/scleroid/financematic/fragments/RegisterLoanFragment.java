@@ -838,13 +838,13 @@ public class RegisterLoanFragment extends BaseFragment {
 			return;
 		}
 
-		if (startDate.getDate() > endDate.getDate()) {
+		if (startDate.compareTo(endDate) > 0) {
 			Timber.d(
 					"Starting date must come before end date" + startDate.getDate() + " " +
 							endDate.getDate());
 			Toasty.error(getContext(), "Starting date must come before end date").show();
 			return;
-		} else if (startDate.getTime() == endDate.getDate()) {
+		} else if (startDate.compareTo(endDate) == 0) {
 			Toasty.error(getContext(), "Start date and end date cannot be the same day").show();
 			return;
 		}
