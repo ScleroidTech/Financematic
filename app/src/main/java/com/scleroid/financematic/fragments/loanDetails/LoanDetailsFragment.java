@@ -44,6 +44,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 
 /**
@@ -290,7 +291,9 @@ public class LoanDetailsFragment extends BaseFragment {
 
 	@Subscribe
 	public void onUpdatingInstallments(@NonNull Events.newAmt loanBundle) {
+
 		BigDecimal amount = loanBundle.getNumber();
+		Timber.d("I'm in the eventBus with amount" + amount.toPlainString());
 		if (installmentList != null) {
 			double sum = com.annimon.stream.Stream.of(installmentList)
 					.withoutNulls()
@@ -299,12 +302,20 @@ public class LoanDetailsFragment extends BaseFragment {
 					.sum();
 			final BigDecimal newTotalRemainingAmt =
 					BigDecimal.valueOf(sum).subtract(amount);
+			Timber.d(
+					" And Now the new amount should be  " + newTotalRemainingAmt.toPlainString() +
+							" which is " + sum + "- " + amount
+							.toPlainString());
 			final BigDecimal newInstallmentAmount;
 			if (installmentList.size() != 0) {
 				newInstallmentAmount =
 						newTotalRemainingAmt.divide(BigDecimal.valueOf(installmentList
 										.size()), 2,
 								RoundingMode.HALF_EVEN);
+				Timber.d(
+						" And This is new Installment Amount  " + newInstallmentAmount
+								.toPlainString());
+
 			} else { newInstallmentAmount = amount; }
 
 

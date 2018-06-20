@@ -16,6 +16,8 @@ import com.scleroid.financematic.viewmodels.LoanViewModel;
 
 import java.util.List;
 
+import timber.log.Timber;
+
 /**
  * Copyright (C) 2018
  *
@@ -88,11 +90,13 @@ public class LoanDetailsViewModel extends BaseViewModel<TransactionModel> implem
 	}
 
 	protected void saveInstallmentsList(List<Installment> installments) {
-		for (Installment installment : installments
+		/*for (Installment installment : installments
 				) {
 			installmentRepo.updateItem(installment);
 
-		}
+		}*/
+		Timber.d("saving installments");
+		installmentRepo.saveItems(installments);
 	}
 
 	@Nullable
