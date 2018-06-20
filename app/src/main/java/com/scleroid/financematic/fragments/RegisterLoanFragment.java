@@ -539,10 +539,18 @@ public class RegisterLoanFragment extends BaseFragment {
 										Timber.d("Installments Created ");
 
 								updateTotalAmount(loan);
-								transactionRepo.saveItem(transaction);
-										activityUtils.loadFragment(
-												CustomerFragment.newInstance(loan.getCustId()),
-												getFragmentManager());
+								transactionRepo.saveItem(transaction).observeOn(AndroidSchedulers.mainThread())
+										.subscribe(() -> {
+											Timber.d("Transaction Created ");
+											activityUtils.loadFragment(
+													CustomerFragment.newInstance(loan.getCustId()),
+													getFragmentManager());
+										},throwable -> {
+											Timber.d(
+													"Transacyion not saved " + throwable.getMessage() + " errors are " + loan
+															.toString());
+										});
+
 									}
 
 							);
