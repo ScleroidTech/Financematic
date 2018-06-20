@@ -22,6 +22,7 @@ import com.scleroid.financematic.R;
 import com.scleroid.financematic.base.BaseDialog;
 import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.data.local.model.Loan;
+import com.scleroid.financematic.data.local.model.Session;
 import com.scleroid.financematic.data.local.model.TransactionModel;
 import com.scleroid.financematic.data.repo.InstallmentRepo;
 import com.scleroid.financematic.data.repo.LoanRepo;
@@ -68,6 +69,9 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 	LoanRepo loanRepo;
 	@Inject
 	DateUtils dateUtils;
+
+	@Inject
+	Session sesson;
 
 	@Inject
 	TransactionsRepo transactionsRepo;
@@ -305,6 +309,7 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 
 	private void updateReceivedAmount(final BigDecimal receivedAmt) {
 		loan.setReceivedAmt(loan.getReceivedAmt().add(receivedAmt));
+
 	}
 
 	private void updateLoan(@NonNull final Installment expense,
@@ -334,6 +339,7 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 							.show();
 					Timber.d(
 							"data added transaction ");
+					sesson.updateAmount(transaction.getReceivedAmt().floatValue());
 					deleteInstallment(expense, transaction);
 				});
 	}
