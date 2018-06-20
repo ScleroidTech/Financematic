@@ -433,7 +433,7 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 
 	private void updateInstallments(final BigDecimal expectedAmt) {
 		installmentRepo.getLocalInstallmentsLab()
-				.getRxItemsForLoan(installmentId)
+				.getRxItemsForLoan(loan.getAccountNo())
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(installments -> {
