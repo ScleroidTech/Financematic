@@ -117,9 +117,9 @@
         <item>Mareva</item>
     </string-array>
 
-    <string name="unknown_error">Something is Definitely wrong, Kuch to gadbad hai?</string>
-    <string name="no_internet_connection">There\'s no internet here, Are you in Forest?</string>
-    <string name="sign_in_cancelled">You cancelled sign in, Are You Drunk?</string>
+    <string name="unknown_error">Something went wrong</string>
+    <string name="no_internet_connection">There\'s no internet here, Please check your network</string>
+    <string name="sign_in_cancelled">Sign in was cancelled</string>
 
 
 </resources>
