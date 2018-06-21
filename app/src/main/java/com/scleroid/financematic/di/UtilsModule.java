@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.DateUtils;
+import com.scleroid.financematic.utils.ui.SnackBarUtils;
 import com.scleroid.financematic.utils.ui.TextViewUtils;
 
 import javax.inject.Singleton;
@@ -31,5 +32,8 @@ public abstract class UtilsModule {
 	@Singleton
 	abstract ActivityUtils getActivityUtils();
 
+	@NonNull
+	@Singleton
+	abstract SnackBarUtils getSnackBarUtils();
 
 }

@@ -1,5 +1,6 @@
 package com.scleroid.financematic;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -9,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -22,6 +24,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.ErrorCodes;
+import com.firebase.ui.auth.IdpResponse;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.scleroid.financematic.base.BaseActivity;
 import com.scleroid.financematic.data.repo.CustomerRepo;
 import com.scleroid.financematic.data.repo.ExpenseRepo;
@@ -42,8 +49,12 @@ import com.scleroid.financematic.utils.eventBus.Events;
 import com.scleroid.financematic.utils.multithread.AppExecutors;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.BottomNavigationViewHelper;
+import com.scleroid.financematic.utils.ui.SnackBarUtils;
 
 import org.greenrobot.eventbus.Subscribe;
+
+import java.util.Arrays;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -73,6 +84,17 @@ public class MainActivity extends BaseActivity
 	private static final String TAG_ADD_MONEY = "add_money";
 	// index to identify current nav menu item
 	public static int navItemIndex = 0;
+
+	private static final int RC_SIGN_IN = 123;
+
+// ...
+
+	// Choose authentication providers
+	List<AuthUI.IdpConfig> providers = Arrays.asList(
+			new AuthUI.IdpConfig.EmailBuilder().build(),
+			new AuthUI.IdpConfig.PhoneBuilder().build());
+
+
 	@NonNull
 	public static String CURRENT_TAG = TAG_DASHBOARD;
 
@@ -138,10 +160,24 @@ public class MainActivity extends BaseActivity
 		this.toggle = toggle;
 	}
 
+	@Inject
+	SnackBarUtils snackBarUtils;
+	private FirebaseAuth mFirebaseAuth;
+	private FirebaseUser firebaseUser;
+	//  @Nullable
+	//  @BindView(R.id.text_view_email)
+	private String username, photoUrl;
+	private String userEmail;
+	private String userPhone;
+
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-
+		// Initialize Firebase Auth
+		mFirebaseAuth = FirebaseAuth.getInstance();
+		firebaseUser = mFirebaseAuth.getCurrentUser();
+		//Check login, & if not, prompt the user to login
+		validateLogin();
 
 		final Toolbar toolbar = findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
@@ -219,6 +255,91 @@ public class MainActivity extends BaseActivity
 
 		//	((GarlandApp) getApplication()).addListener(this);
 
+	}
+
+	/**
+	 * Check if user logged in or not, If not, Call the FireBaseUI to issue the login to user
+	 */
+	private void validateLogin() {
+		if (firebaseUser == null) {
+			// Not signed in, launch the Sign In activity
+			startActivityForResult(
+					AuthUI.getInstance()
+							.createSignInIntentBuilder()
+							.setAvailableProviders(providers)
+							.setIsSmartLockEnabled(true, true)
+							.build(),
+					RC_SIGN_IN);
+			//startActivity(new Intent(this, LoginActivity.class));
+			//  finish();
+
+		} else {
+			username = firebaseUser.getDisplayName();
+
+			if (firebaseUser.getEmail() != null) {
+				userEmail = firebaseUser.getEmail();
+
+			}
+			if (firebaseUser.getPhoneNumber() != null) {
+				userPhone = firebaseUser.getPhoneNumber();
+			}
+			if (firebaseUser.getPhotoUrl() != null) {
+				photoUrl = firebaseUser.getPhotoUrl().toString();
+			}
+
+		}
+
+	}
+
+	@SuppressLint("TimberArgCount")
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		handleSignInResponse(requestCode, resultCode, data);
+	}
+
+	@SuppressLint("TimberArgCount")
+	private void handleSignInResponse(int requestCode, int resultCode, Intent data) {
+		if (requestCode == RC_SIGN_IN) {
+			IdpResponse response = IdpResponse.fromResultIntent(data);
+
+			if (resultCode == RESULT_OK) {
+				// Successfully signed in
+				firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+				validateLogin();
+				// ...
+			} else {
+				// Sign in failed, check response for error code
+				// Sign in failed
+				if (response == null) {
+					// User pressed back button
+					showSnackbar(R.string.sign_in_cancelled);
+					return;
+				}
+
+				if (response.getError().getErrorCode() == ErrorCodes.NO_NETWORK) {
+					showSnackbar(R.string.no_internet_connection);
+					return;
+				}
+
+				showSnackbar(R.string.unknown_error);
+				Timber.e("Sign-in error: ", response.getError());
+			}
+			Timber.d(resultCode + " " + response.toString());
+			// ...
+		}
+	}
+
+	/**
+	 * Calls the {@link SnackBarUtils} method showSnackBar Which is used to display {@link
+	 * Snackbar}
+	 *
+	 * @param msg the message string which needs to be shown
+	 */
+	private void showSnackbar(int msg) {
+		View parentLayout = getWindow().getDecorView().findViewById(android.R.id.content);
+		snackBarUtils.showSnackbar(parentLayout, msg);
 	}
 
 	/**
