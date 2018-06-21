@@ -91,8 +91,9 @@ public class MainActivity extends BaseActivity
 
 	// Choose authentication providers
 	List<AuthUI.IdpConfig> providers = Arrays.asList(
-			new AuthUI.IdpConfig.EmailBuilder().build(),
-			new AuthUI.IdpConfig.PhoneBuilder().build());
+			new AuthUI.IdpConfig.EmailBuilder().setAllowNewAccounts(false)
+					.setRequireName(true)
+					.build());
 
 
 	@NonNull
@@ -268,6 +269,9 @@ public class MainActivity extends BaseActivity
 							.createSignInIntentBuilder()
 							.setAvailableProviders(providers)
 							.setIsSmartLockEnabled(true, true)
+							.setLogo(R.drawable.ic_launcher)      // Set logo drawable
+							.setTheme(R.style.AppTheme)      // Set theme
+
 							.build(),
 					RC_SIGN_IN);
 			//startActivity(new Intent(this, LoginActivity.class));
