@@ -577,7 +577,7 @@ public static String CURRENT_TAG = TAG_DASHBOARD;
 	}
 
 /*
-//TODO To not let the acitivty close directly
+//TODO To not let the activity close directly
 	*/
 	/*sidebar navigation*//*
 

@@ -1,21 +1,8 @@
 <resources>
     <string name="app_name">Finance matic</string>
     <string name="title_home">Home</string>
-    <string name="title_list">List Person</string>
-    <string name="title_add_profile">New Loan person</string>
-    <string name="title_Profile">profile</string>
-    <string name="title_notification">notification</string>
-    <string name="feb16_2018">Feb16,2018</string>
-    <string name="person_name">Feb17,2018</string>
-    <string name="total_loan">Total Loan </string>
-    <string name="paid_amount">Paid Amount</string>
     <string name="loan_date">Date</string>
-    <string name="loan_amount">Amount</string>
 
-    <string name="spinner_title">Select Category</string>
-
-
-    <string name="menu_settings">Settings</string>
 
     <string name="date_picker_title">Select Date</string>
 
@@ -23,99 +10,22 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="total_amount">Total</string>
-    <string name="amount_with_symbol">₹ 10000</string>
     <string name="available_amount_title">Available</string>
     <string name="lent_amount">Lent</string>
     <string name="upcoming_events">Upcoming</string>
 
-    <string name="Rs">\u20B9</string>
-    <string name="rs">\u20A8</string>
-
-
-    <string name="transition_background" translatable="false">background</string>
-    <string name="transition_avatar_border" translatable="false">avatar_border</string>
-    <string name="transition_card" translatable="false">card</string>
-
-    <string name="transition_list" translatable="false">list</string>
-    <string name="location">Location</string>
-
-
-    <string name="nameerror">Enter a valid name</string>
-    <string name="emailerror">Enter a valid email</string>
-    <string name="mobileerror">Enter a valid mobile</string>
-    <string name="dateerror">Enter a valid date</string>
-    <string name="ageerror">Enter a valid age</string>
-
-
-    <string name="action_settings">Settings</string>
-
 
     <!--delete all below-->
-    <string name="notification_channel_followers">Follower Notification Channel</string>
-    <string name="notification_channel_direct_message">Direct Messages Channel</string>
 
     <!-- UI Strings -->
-    <string name="got_to_settings_button">Go to Settings</string>
-
-    <string name="test_follower_title">Test Follower Notifications</string>
-    <string name="test_birthday_follower_button">Follower Added</string>
-    <string name="test_life_follower_button">Follower Removed</string>
-    <string name="follower_notification_settings_button">Follower Notification Settings</string>
-
-    <string name="test_dm_title">Test Direct Message Notifications</string>
-    <string name="test_coworker_dm_button">From Coworker</string>
-    <string name="test_friend_dm_button">From Friend</string>
-    <string name="dm_notification_settings_button">DM Notification Settings</string>
 
     <!-- Notification Strings -->
-    <string name="follower_title_notification">Follower</string>
-    <string name="direct_message_title_notification">Direct Message</string>
 
-    <string name="follower_added_notification_body">%1$s is now following you!</string>
-    <string name="follower_removed_notification_body">%1$s has stopped following you.</string>
-
-    <string name="dm_friend_notification_body">%1$s: What\'s up?</string>
-    <string name="dm_coworker_notification_body">%1$s: Have you finished the report?</string>
-    <string name="error_click">Unknown click event.</string>
     <string name="amount">1000000</string>
-    <string name="delay_view">Delay Payment</string>
     <string name="submit">Submit</string>
     <string name="expense_type_image">Expense Type Image</string>
-    <string name="interestAmt">Pre Calculated Interest</string>
 
     <!-- Names -->
-    <string-array name="names_array">
-        <item>Ethan</item>
-        <item>Mia</item>
-        <item>Mohamed</item>
-        <item>Fatima</item>
-        <item>Daniel</item>
-        <item>Luis</item>
-        <item>Tomás</item>
-        <item>Sofia</item>
-        <item>Camila</item>
-        <item>Somchai</item>
-        <item>Minato</item>
-        <item>Noam</item>
-        <item>Feng</item>
-        <item>Nor</item>
-        <item>Seo-yeon</item>
-        <item>Xioamei</item>
-        <item>Hugo</item>
-        <item>Jonas</item>
-        <item>Oliver</item>
-        <item>Francesco</item>
-        <item>Maxim</item>
-        <item>Yusuf</item>
-        <item>Laia</item>
-        <item>Emma</item>
-        <item>Angeliki</item>
-        <item>Zuzanna</item>
-        <item>Ioana</item>
-        <item>Zeynep</item>
-        <item>Hiro</item>
-        <item>Mareva</item>
-    </string-array>
 
     <string name="unknown_error">Something went wrong</string>
     <string name="no_internet_connection">There\'s no internet here, Please check your network</string>

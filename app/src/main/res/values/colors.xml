@@ -5,23 +5,15 @@
     <color name="colorAccent">#FF4081</color>
     <color name="textcolor">#0068ee</color>
     <color name="white">#f9fafc</color>
-    <color name="white1">#f2f4f9</color>
     <color name="green">#288113</color>
     <color name="red">#b72b21</color>
-    <color name="grey_300">#E0E0E0</color>
     <color name="color_white">#fefefe</color>
     <color name="installmentDate">#999999</color>
-    <color name="customerName">#121111</color>
-    <color name="colorBackground">#662222</color>
     <color name="colorDivide">#ed3232</color>
     <color name="colorDivide1">#7c7070</color>
-    <color name="blues">#d5e5f0</color>
-    <color name="dash">#4c4c4c</color>
     <color name="card_color">#93944f</color>
     <color name="gray_text">#9c9c9c</color>
     <color name="black_text">#a000</color>
-    <color name="text_profile">#aab4ba</color>
-    <color name="tint_profile">#f95b2a</color>
 
     <color name="report_table">#0fa8bc</color>
     <!--    <color name="Transparent">#00000000</color>-->
@@ -33,25 +25,7 @@
     <color name="exp_card4">#1aaea1</color>
     <color name="exp_card5">#406c0d</color>
     <color name="exp_card6">#9374cb</color>
-    <color name="back_image">#b72b21</color>
     <color name="grey_1">#f7f5f5</color>
-    <color name="colorWhite">#feffff</color>
-
-    <color name="backgroundTop">#444a5a</color>
-    <color name="header_green">#b3d577</color>
-    <color name="header_green1">#66c693</color>
-    <color name="details_name_color">#333333</color>
-    <color name="item_info_color">#bdc5cc</color>
-    <color name="item_name_color">#aab4ba</color>
-    <color name="item_separator_color">#c8c9cc</color>
-
-
-    <color name="details_info_color">@color/item_name_color</color>
-    <color name="details_status_color">#90ba47</color>
-    <color name="details_list_color">#f5f6f9</color>
-    <color name="details_item_header">@color/details_name_color</color>
-    <color name="details_item_text">#858d92</color>
-    <color name="details_item_separator">@color/item_separator_color</color>
 
 
 </resources>
