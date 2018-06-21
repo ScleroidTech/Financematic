@@ -104,19 +104,6 @@ public class LocalInstallmentsLab implements LocalDataSource<Installment> {
 		}).subscribeOn(Schedulers.io());
 	}
 
-	/**
-	 * adds a list of objects to the data source
-	 */
-	public Single<Installment> updateInstallments(final int acNo, final BigDecimal amt) {
-		Timber.d("ABCD creating new installment ");
-		return Single.fromCallable(() -> {
-			Installment installment =
-					installmentDao.updateInstallmentAmount(acNo);
-			Timber.d("ABCD job done bro");
-			return installment;
-		}).subscribeOn(Schedulers.io());
-		//
-	}
 	@Override
 	public void addNetworkItems(@NonNull final List<Installment> items) {
 		Timber.d("Storing data");
@@ -180,6 +167,20 @@ public class LocalInstallmentsLab implements LocalDataSource<Installment> {
 			Timber.d("installment stored " + rowId);
 			return item;
 		}).subscribeOn(Schedulers.io());
+	}
+
+	/**
+	 * adds a list of objects to the data source
+	 */
+	public Single<Installment> updateInstallments(final int acNo, final BigDecimal amt) {
+		Timber.d("ABCD creating new installment ");
+		return Single.fromCallable(() -> {
+			Installment installment =
+					installmentDao.updateInstallmentAmount(acNo);
+			Timber.d("ABCD job done bro");
+			return installment;
+		}).subscribeOn(Schedulers.io());
+		//
 	}
 
 	/**

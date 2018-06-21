@@ -149,7 +149,6 @@ public class Events {
 	}
 
 
-
 	public static class goToAddress {
 		private String address;
 

@@ -23,8 +23,8 @@ import es.dmoral.toasty.Toasty;
 
 /**
  * A simple {@link Fragment} subclass. Activities that contain this fragment interface to handle
- * interaction events. Use the {@link
- * AddMoneyFragment#newInstance} factory method to create an instance of this fragment.
+ * interaction events. Use the {@link AddMoneyFragment#newInstance} factory method to create an
+ * instance of this fragment.
  */
 public class AddMoneyFragment extends BaseFragment {
 	// TODO: Rename parameter arguments, choose names that match
@@ -36,11 +36,11 @@ public class AddMoneyFragment extends BaseFragment {
 	@BindView(R.id.add_money_button)
 	Button addMoneyButton;
 	Unbinder unbinder;
-
+	@Inject
+	Session session;
 	// TODO: Rename and change types of parameters
 	private String mParam1;
 	private String mParam2;
-
 
 	public AddMoneyFragment() {
 		// Required empty public constructor
@@ -64,8 +64,11 @@ public class AddMoneyFragment extends BaseFragment {
 		return fragment;
 	}
 
-	@Inject
-	Session session;
+	@Override
+	public void onAttach(Context context) {
+		super.onAttach(context);
+
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -74,12 +77,6 @@ public class AddMoneyFragment extends BaseFragment {
 			mParam1 = getArguments().getString(ARG_PARAM1);
 			mParam2 = getArguments().getString(ARG_PARAM2);
 		}
-	}
-
-	@Override
-	public void onAttach(Context context) {
-		super.onAttach(context);
-
 	}
 
 	@Override

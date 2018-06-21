@@ -5,13 +5,10 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
-import android.arch.persistence.room.TypeConverters;
 import android.arch.persistence.room.Update;
 
 import com.scleroid.financematic.data.local.model.Installment;
-import com.scleroid.financematic.utils.roomConverters.MoneyConverter;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import io.reactivex.Flowable;
@@ -114,7 +111,6 @@ public interface InstallmentDao {
 
 	@Query("SELECT * FROM installment WHERE loanAcNo=:userId")
 	Flowable<List<Installment>> getRxInstallmentsByLoan(final int userId);
-
 
 
 	@Query("SELECT * FROM installment WHERE loanAcNo=:userId")

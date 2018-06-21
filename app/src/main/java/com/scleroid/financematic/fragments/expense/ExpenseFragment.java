@@ -426,6 +426,17 @@ ExpenseFragment extends BaseFragment {
 		mAdapter.notifyDataSetChanged();
 	}
 
+	private List<Expense> sort(@NonNull final List<Expense> transactions) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+			transactions.sort(Comparator.comparing(Expense::getExpenseDate));
+		} else {
+			Collections.sort(transactions,
+					(m1, m2) -> m1.getExpenseDate().compareTo(m2.getExpenseDate()));
+		}
+		Collections.reverse(transactions);
+		return transactions;
+	}
+
 	@OnClick({R.id.room_rent_card, R.id.light_bill_card, R.id.phone_bill_card, R.id.salary_card, R
 			.id.fuel_card, R.id.other_card})
 	public void onViewClicked(@NonNull View view) {
@@ -467,18 +478,6 @@ ExpenseFragment extends BaseFragment {
 
 		return sort(collect);
 	}
-
-	private List<Expense> sort(@NonNull final List<Expense> transactions) {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-			transactions.sort(Comparator.comparing(Expense::getExpenseDate));
-		} else {
-			Collections.sort(transactions,
-					(m1, m2) -> m1.getExpenseDate().compareTo(m2.getExpenseDate()));
-		}
-		Collections.reverse(transactions);
-		return transactions;
-	}
-
 
 
 }

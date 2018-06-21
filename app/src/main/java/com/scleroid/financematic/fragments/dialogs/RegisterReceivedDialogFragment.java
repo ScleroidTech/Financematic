@@ -256,6 +256,14 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 						throwable -> Timber.d("Not gonna show up " + throwable.getMessage()));
 	}
 
+	private void updateLabel() {
+		String myFormat = "MM/dd/yy"; //In which you need put here
+		SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+		paymentDate = myCalendar.getTime();
+		etrxDate.setText(sdf.format(paymentDate));
+	}
+
 	private boolean isValidEmail(@NonNull String email) {
 		String EMAIL_PATTERN = "^[0-9_.]*$";
 
@@ -273,12 +281,10 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 				getEarnedAmount(),
 				receivedAmt, description, accountNo);
 	}
-	private void updateLabel() {
-		String myFormat = "MM/dd/yy"; //In which you need put here
-		SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
-		paymentDate = myCalendar.getTime();
-		etrxDate.setText(sdf.format(paymentDate));
+	private BigDecimal getEarnedAmount() {
+		return loan.getInstallmentAmt()
+				.divide(BigDecimal.valueOf(loan.getNoOfInstallments()), 2, RoundingMode.HALF_EVEN);
 	}
 
 	private void updateTitle(@NonNull final MaterialStyledDialog.Builder builder) {
@@ -300,11 +306,6 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 		return new Installment(installmentId, paymentDate,
 				receivedAmt,
 				accountNo);
-	}
-
-	private BigDecimal getEarnedAmount() {
-		return loan.getInstallmentAmt()
-				.divide(BigDecimal.valueOf(loan.getNoOfInstallments()), 2, RoundingMode.HALF_EVEN);
 	}
 
 	private void updateReceivedAmount(final BigDecimal receivedAmt) {
@@ -442,6 +443,16 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 		}
 	}
 
+	private void updateInstallmentViaEventBus(final BigDecimal expectedAmt) {
+
+		Timber.d(
+				"ABCD Updating all installments, Amount to be deducted" + expectedAmt
+						.toPlainString());
+		Events.newAmt makeACall = new Events.newAmt(expectedAmt);
+
+		GlobalBus.getBus().post(makeACall);
+	}
+
 	private void updateInstallments(final BigDecimal expectedAmt) {
 		installmentRepo.getLocalInstallmentsLab()
 				.getRxItemsForLoan(loan.getAccountNo())
@@ -457,12 +468,12 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 							final BigDecimal newTotalRemainingAmt =
 									BigDecimal.valueOf(sum).subtract(expectedAmt);
 							final BigDecimal newInstallmentAmount;
-							if (installments.size() != 0)
+							if (installments.size() != 0) {
 								newInstallmentAmount =
 										newTotalRemainingAmt.divide(BigDecimal.valueOf(installments
 														.size()), 2,
 												RoundingMode.HALF_EVEN);
-							else { newInstallmentAmount = newTotalRemainingAmt; }
+							} else { newInstallmentAmount = newTotalRemainingAmt; }
 							for (Installment installmentFresh : installments) {
 								installmentFresh.setExpectedAmt(newInstallmentAmount);
 								installmentRepo.saveItem(installmentFresh);
@@ -471,16 +482,8 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 
 						},
 						throwable -> Timber.e(
-								"Updating all installments amount failed" + throwable.getMessage()));
-	}
-
-	private void updateInstallmentViaEventBus(final BigDecimal expectedAmt) {
-
-		Timber.d(
-				"ABCD Updating all installments, Amount to be deducted" + expectedAmt.toPlainString());
-		Events.newAmt makeACall = new Events.newAmt(expectedAmt);
-
-		GlobalBus.getBus().post(makeACall);
+								"Updating all installments amount failed" + throwable.getMessage
+										()));
 	}
 
 

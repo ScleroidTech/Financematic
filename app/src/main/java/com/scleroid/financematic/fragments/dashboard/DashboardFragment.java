@@ -82,6 +82,8 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 	@Nullable
 	@BindView(R.id.empty_card)
 	CardView emptyCard;
+	@Inject
+	Session session;
 	private DashboardAdapter mAdapter;
 	private DashboardViewModel dashBoardViewModel;
 	@Nullable
@@ -162,9 +164,6 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 		return dashBoardViewModel;
 	}
 
-	@Inject
-	Session session;
-
 	private void updateUi() {
 
 		double totalAmt = calculateTotalAmt(loanList);
@@ -195,14 +194,6 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 					loan.getLoanAmt() != null ? loan.getLoanAmt().doubleValue() : 0).sum();
 		}*/
 		Timber.i("sum of Total Amt" + sum);
-		return sum;
-	}
-
-	private int calculateReceivedAmt(@NonNull final List<Loan> loans) {
-
-		int sum = Stream.of(loans).withoutNulls().mapToInt(loan ->
-				loan.getReceivedAmt() != null ? loan.getReceivedAmt().intValue() : 0).sum();
-		Timber.i("sum of received Amt" + sum);
 		return sum;
 	}
 
@@ -269,6 +260,14 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 			Collections.sort(transactions,
 					(m1, m2) -> m1.getInstallmentDate().compareTo(m2.getInstallmentDate()));
 		}
+	}
+
+	private int calculateReceivedAmt(@NonNull final List<Loan> loans) {
+
+		int sum = Stream.of(loans).withoutNulls().mapToInt(loan ->
+				loan.getReceivedAmt() != null ? loan.getReceivedAmt().intValue() : 0).sum();
+		Timber.i("sum of received Amt" + sum);
+		return sum;
 	}
 
 	private boolean predicate(final Installment next) {

@@ -184,15 +184,15 @@ public class InstallmentRepo implements Repo<Installment> {
 				.flatMapCompletable(remoteInstallmentLab::sync);
 	}
 
-	public Completable updateAmountLoan(final BigDecimal amt, final int acNo) {
-		return localInstallmentsLab.updateInstallments(acNo, amt)
-				.flatMapCompletable(remoteInstallmentLab::sync);
-	}
-
 	@Override
 	public Completable deleteItem(@NonNull final Installment installment) {
 		return localInstallmentsLab.deleteItem(installment)
 				.flatMapCompletable(remoteInstallmentLab::delete);
+	}
+
+	public Completable updateAmountLoan(final BigDecimal amt, final int acNo) {
+		return localInstallmentsLab.updateInstallments(acNo, amt)
+				.flatMapCompletable(remoteInstallmentLab::sync);
 	}
 
 }

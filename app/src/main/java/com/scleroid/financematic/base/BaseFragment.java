@@ -45,11 +45,12 @@ public abstract class BaseFragment<V extends BaseViewModel> extends Fragment {
 
 	@Inject
 	protected ViewModelProvider.Factory viewModelFactory;
+	EventBus eventBus = GlobalBus.getBus();
 	@Nullable
 	private BaseActivity mActivity;
 	private Unbinder unbinder;
 	private View rootView;
-	EventBus eventBus = GlobalBus.getBus();
+
 	@Override
 	public void onAttach(Context context) {
 		super.onAttach(context);

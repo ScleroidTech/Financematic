@@ -125,10 +125,51 @@ public class RegisterLoanFragment extends BaseFragment {
 	@Nullable
 	@BindView(R.id.txinterestamount)
 	EditText txInterestAmount;
-	private ArrayAdapter<String> adapterInstallmentType;
 	@Nullable
 	@BindView(R.id.txNoofInstallment)
 	TextView ettxNoofInstallment;
+	@Nullable
+	@BindView(R.id.txInstallmentAmount)
+	EditText ettxInstallmentAmount;
+	//EditText etTotalLoanAmount;
+	@Nullable
+	@BindView(R.id.btn_givenmoney)
+	Button btnGiveMoney;
+	@Nullable
+	@BindView(R.id.displaytx)
+	TextView displaytx;
+	Unbinder unbinder;
+	@BindView(R.id.rate_of_interest_layout)
+	LinearLayout rateOfInterestLayout;
+	Unbinder unbinder1;
+	private ArrayAdapter<String> adapterInstallmentType;
+	private String durationType;
+	private Date startDate;
+	private Date endDate;
+	private int customerId;
+	private Loan loan;
+	private int noOfInstallments1;
+	private BigDecimal amtOfInstallment;
+	private long durationDivided;
+	private int installmentCalculationType = InstallmentCalculationType.PREDEFINED_INTEREST;
+
+	public RegisterLoanFragment() {
+		// Required empty public constructor
+	}
+
+	@NonNull
+	public static RegisterLoanFragment newInstance(int customer_id) {
+		RegisterLoanFragment fragment = new RegisterLoanFragment();
+		Bundle args = new Bundle();
+		args.putInt(CUSTOMER_ID, customer_id);
+		fragment.setArguments(args);
+		return fragment;
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -146,18 +187,18 @@ public class RegisterLoanFragment extends BaseFragment {
 
 		spinnerTypeOfInstallment.setOnItemSelectedListener(
 				new AdapterView.OnItemSelectedListener() {
-			@Override
-			public void onItemSelected(final AdapterView<?> parent, final View view,
-			                           final int position, final long id) {
-				durationType = getCountry(position);
-				updateNoOfInstallments();
-			}
+					@Override
+					public void onItemSelected(final AdapterView<?> parent, final View view,
+					                           final int position, final long id) {
+						durationType = getCountry(position);
+						updateNoOfInstallments();
+					}
 
-			@Override
-			public void onNothingSelected(final AdapterView<?> parent) {
+					@Override
+					public void onNothingSelected(final AdapterView<?> parent) {
 
-			}
-		});
+					}
+				});
 		spinnerCalculate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(final AdapterView<?> parent, final View view,
@@ -263,94 +304,7 @@ public class RegisterLoanFragment extends BaseFragment {
 		});
 
 
-
-
 		return rootView;
-	}
-
-	@Nullable
-	@BindView(R.id.txInstallmentAmount)
-	EditText ettxInstallmentAmount;
-
-	//EditText etTotalLoanAmount;
-	@Nullable
-	@BindView(R.id.btn_givenmoney)
-	Button btnGiveMoney;
-	@Nullable
-	@BindView(R.id.displaytx)
-	TextView displaytx;
-	Unbinder unbinder;
-	@BindView(R.id.rate_of_interest_layout)
-	LinearLayout rateOfInterestLayout;
-	Unbinder unbinder1;
-
-
-	private String durationType;
-	private Date startDate;
-	private Date endDate;
-	private int customerId;
-	private Loan loan;
-	private int noOfInstallments1;
-
-	private BigDecimal amtOfInstallment;
-	private long durationDivided;
-
-	private int installmentCalculationType = InstallmentCalculationType.PREDEFINED_INTEREST;
-
-	@NonNull
-	public String getCountry(final int position) {
-		return country.get(position);
-	}
-
-	public RegisterLoanFragment() {
-		// Required empty public constructor
-	}
-
-	@NonNull
-	public static RegisterLoanFragment newInstance(int customer_id) {
-		RegisterLoanFragment fragment = new RegisterLoanFragment();
-		Bundle args = new Bundle();
-		args.putInt(CUSTOMER_ID, customer_id);
-		fragment.setArguments(args);
-		return fragment;
-	}
-
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-	}
-
-	public void setCountry(@NonNull final long duration) {
-		Timber.d("whats the duration " + duration);
-
-		country.clear();
-		//	adapterInstallmentType.clear();
-
-		if (duration >= 30 || duration == 0) country.add(LoanDurationType.MONTHLY);
-		if (duration >= 1) country.add(LoanDurationType.DAILY);
-		if (duration >= 7) country.add(LoanDurationType.WEEKLY);
-		if (duration >= 15) country.add(LoanDurationType.BIWEEKLY);
-		if (duration >= 60) country.add(LoanDurationType.BIMONTHLY);
-		if (duration >= 90) {
-			country.add(LoanDurationType
-					.QUARTERLY);
-		}
-		if (duration >= 183) country.add(LoanDurationType.HALF_YEARLY);
-		if (duration >= 365) country.add(LoanDurationType.YEARLY);
-		Timber.d("whats the Country holds " + country.size());
-
-		//	adapterInstallmentType.addAll(country);
-		adapterInstallmentType.notifyDataSetChanged();
-
-
-	}
-
-	private void updateInstallmentAmount() {
-		String s = getAmtOfInstallment().toPlainString();
-		if (ettxInstallmentAmount != null) {
-			ettxInstallmentAmount.setText(s);
-		}
 	}
 
 	/**
@@ -360,7 +314,6 @@ public class RegisterLoanFragment extends BaseFragment {
 	public int getLayoutId() {
 		return R.layout.fragment_new_loan_register;
 	}
-
 
 	/**
 	 * Override so you can observe your viewModel
@@ -381,23 +334,11 @@ public class RegisterLoanFragment extends BaseFragment {
 		return null;
 	}
 
-	private void addData(final int accountNo, final BigDecimal loanAmt1,
-	                     final BigDecimal interestAmt) {
-
-		loan = new Loan(accountNo, loanAmt1, startDate,
-				endDate, interestAmt, amtOfInstallment,
-				noOfInstallments1, durationType, customerId);
-
-		final List<Installment> installments = createInstallments();
-		TransactionModel transaction = getTransaction(accountNo, loanAmt1, startDate);
-		saveData(loan, installments, transaction);
-	}
-
-	private TransactionModel getTransaction(final int accountNo,
-	                                        final BigDecimal loanAmt1,
-	                                        final Date startDate) {
-		return new TransactionModel(CommonUtils.getRandomInt(), startDate, loanAmt1,
-				null, null, "Lent Loan", accountNo);
+	private void updateInstallmentAmount() {
+		String s = getAmtOfInstallment().toPlainString();
+		if (ettxInstallmentAmount != null) {
+			ettxInstallmentAmount.setText(s);
+		}
 	}
 
 	private void setCustomerName(@NonNull final TextView customerNameTextView,
@@ -455,19 +396,6 @@ public class RegisterLoanFragment extends BaseFragment {
 		return !matcher.matches();
 	}
 
-	@NonNull
-	private List<Installment> createInstallments() {
-		List<Date> dates = calculateDates(startDate, durationDivided);
-		List<Installment> installments = new ArrayList<>();
-		for (Date date : dates) {
-			Installment installment =
-					new Installment(CommonUtils.getRandomInt(), date, amtOfInstallment,
-							loan.getAccountNo());
-			installments.add(installment);
-		}
-		return installments;
-	}
-
 	private BigDecimal getAmtOfInstallment() {
 		final String totatLoanAmt = ettxloan_amout.getText()
 				.toString();
@@ -485,17 +413,6 @@ public class RegisterLoanFragment extends BaseFragment {
 
 		return calculateInstallmentAmt(duration, loanAmt, interestAmt);
 
-	}
-
-	@NonNull
-	private List<Date> calculateDates(Date installmentDate, final long durationDivided) {
-		long durationTypeDivider = durationConverter(durationType);
-		List<Date> dates = new ArrayList<>();
-		for (int i = 0; i < durationDivided; i++) {
-			installmentDate = dateUtils.findDate(installmentDate, durationTypeDivider);
-			dates.add(installmentDate);
-		}
-		return dates;
 	}
 
 	private BigDecimal calculateInstallmentAmt(final long duration,
@@ -517,52 +434,34 @@ public class RegisterLoanFragment extends BaseFragment {
 		}
 	}
 
-	private BigDecimal divideBigDecimal(BigDecimal loanAmt, long duration) {
-		if (duration == 0) {
-			//	Toasty.error(getContext(), "Seems like you haven't entered the duration").show();
-			return BigDecimal.valueOf(0);
+	public void setCountry(@NonNull final long duration) {
+		Timber.d("whats the duration " + duration);
+
+		country.clear();
+		//	adapterInstallmentType.clear();
+
+		if (duration >= 30 || duration == 0) country.add(LoanDurationType.MONTHLY);
+		if (duration >= 1) country.add(LoanDurationType.DAILY);
+		if (duration >= 7) country.add(LoanDurationType.WEEKLY);
+		if (duration >= 15) country.add(LoanDurationType.BIWEEKLY);
+		if (duration >= 60) country.add(LoanDurationType.BIMONTHLY);
+		if (duration >= 90) {
+			country.add(LoanDurationType
+					.QUARTERLY);
 		}
-		return loanAmt.divide(BigDecimal.valueOf(duration), 2, RoundingMode.HALF_EVEN);
+		if (duration >= 183) country.add(LoanDurationType.HALF_YEARLY);
+		if (duration >= 365) country.add(LoanDurationType.YEARLY);
+		Timber.d("whats the Country holds " + country.size());
+
+		//	adapterInstallmentType.addAll(country);
+		adapterInstallmentType.notifyDataSetChanged();
+
+
 	}
 
-	private void saveData(@NonNull final Loan loan,
-	                      @NonNull final List<Installment> installments,
-	                      TransactionModel transaction) {
-		Disposable subscribe = loanRepo.saveItem(loan)
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe(() -> {
-					Timber.d("Loan Data Saved ");
-					Toasty.success(getBaseActivity(), "Loan Created successfully").show();
-					installmentRepo.saveItems(installments)
-							.observeOn(AndroidSchedulers.mainThread())
-							.subscribe(() -> {
-										Timber.d("Installments Created ");
-
-								//updateTotalAmount(loan);
-								transactionRepo.saveItem(transaction).observeOn(AndroidSchedulers.mainThread())
-										.subscribe(() -> {
-											Timber.d("Transaction Created ");
-											activityUtils.loadFragment(
-													CustomerFragment.newInstance(loan.getCustId()),
-													getFragmentManager());
-										},throwable -> {
-											Timber.d(
-													"Transacyion not saved " + throwable.getMessage() + " errors are " + loan
-															.toString());
-										});
-
-									}
-
-							);
-
-				}, throwable -> {
-					Timber.d(
-							"Loan Data not Saved " + throwable.getMessage() + " errors are " + loan
-									.toString());
-					Toasty.error(getBaseActivity(),
-							"Loan Data not Saved " + throwable.getMessage() + " errors are " + loan
-									.toString()).show();
-				});
+	@NonNull
+	public String getCountry(final int position) {
+		return country.get(position);
 	}
 
 	private void updateTotalAmount(final @NonNull Loan loan) {
@@ -573,6 +472,24 @@ public class RegisterLoanFragment extends BaseFragment {
 		session.updateAmount(amount);
 	}
 
+	private BigDecimal getInterestPlusPrincipleEMI(BigDecimal loanAmt, BigDecimal interest,
+	                                               final long duration) {
+		BigDecimal emi = divideBigDecimal(loanAmt.add(interest), duration);
+		return emi;
+	}
+
+	private BigDecimal divideBigDecimal(BigDecimal loanAmt, long duration) {
+		if (duration == 0) {
+			//	Toasty.error(getContext(), "Seems like you haven't entered the duration").show();
+			return BigDecimal.valueOf(0);
+		}
+		return loanAmt.divide(BigDecimal.valueOf(duration), 2, RoundingMode.HALF_EVEN);
+	}
+
+	private BigDecimal getInterestOnly(final long duration, final @NonNull BigDecimal
+			interestAmt) {
+		return divideBigDecimal(interestAmt, duration);
+	}
 
 	private long calculateDurationDifferenceInDays() {
 		if (startDate == null || endDate == null) {
@@ -593,17 +510,6 @@ public class RegisterLoanFragment extends BaseFragment {
 
 	}
 
-	private BigDecimal getInterestPlusPrincipleEMI(BigDecimal loanAmt, BigDecimal interest,
-	                                               final long duration) {
-		BigDecimal emi = divideBigDecimal(loanAmt.add(interest), duration);
-		return emi;
-	}
-
-	private BigDecimal getInterestOnly(final long duration, final @NonNull BigDecimal
-			interestAmt) {
-		return divideBigDecimal(interestAmt, duration);
-	}
-
 	private void updateInterestAmt() {
 		if (TextUtils.isEmpty(ettxloan_amout.getText().toString())) {
 			ettxloan_amout.setError("Loan Amount cannot be empty");
@@ -614,66 +520,6 @@ public class RegisterLoanFragment extends BaseFragment {
 						())));
 		txInterestAmount.setText(
 				interestAmt.setScale(2, BigDecimal.ROUND_HALF_EVEN).toPlainString());
-	}
-
-	private void updateNoOfInstallments() {
-		ettxNoofInstallment.setText(String.valueOf(getInstallments()));
-	}
-
-	private long getInstallments(long converter) {
-		if (startDate == null || endDate == null) return 0;
-
-		durationDivided = calculateInstallments(calculateTotalDuration(), converter);
-
-
-		return durationDivided;
-	}
-
-	private long calculateInstallments(long timeDiff, long divider) {
-
-
-		return (TimeUnit.MILLISECONDS.toDays(timeDiff) / divider);
-	}
-
-	private long calculateTotalDuration() {
-		if (startDate == null || endDate == null) return 0;
-		return dateUtils.differenceOfDates(startDate, endDate);
-	}
-
-	private long durationConverter(final String durationType) {
-
-		switch (durationType) {
-			case LoanDurationType.MONTHLY:
-				return 30;
-
-			case LoanDurationType.DAILY:
-				return 1;
-
-			case LoanDurationType.WEEKLY:
-				return 7;
-
-			case LoanDurationType.BIWEEKLY:
-				return 15;
-
-			case LoanDurationType.BIMONTHLY:
-				return 60;
-
-			case LoanDurationType.QUARTERLY:
-				return 90;
-
-			case LoanDurationType.HALF_YEARLY:
-				return 180;
-
-			case LoanDurationType.YEARLY:
-				return 365;
-		}
-		return 0;
-	}
-
-	private long getInstallments() {
-		if (durationType == null) { return getInstallments(durationConverter(getCountry(0))); }
-		return getInstallments(durationConverter(durationType));
-
 	}
 
 	@Override
@@ -733,10 +579,70 @@ public class RegisterLoanFragment extends BaseFragment {
 				BigDecimal.ROUND_HALF_EVEN);
 	}
 
+	private void updateNoOfInstallments() {
+		ettxNoofInstallment.setText(String.valueOf(getInstallments()));
+	}
+
 	private BigDecimal calculateInterestAmt(BigDecimal loanAmt, double duration,
 	                                        double interestRate) {
 
 		return loanAmt.multiply(getBigDecimal((interestRate / 100) * duration));
+	}
+
+	private long getInstallments() {
+		if (durationType == null) { return getInstallments(durationConverter(getCountry(0))); }
+		return getInstallments(durationConverter(durationType));
+
+	}
+
+	private long getInstallments(long converter) {
+		if (startDate == null || endDate == null) return 0;
+
+		durationDivided = calculateInstallments(calculateTotalDuration(), converter);
+
+
+		return durationDivided;
+	}
+
+	private long calculateInstallments(long timeDiff, long divider) {
+
+
+		return (TimeUnit.MILLISECONDS.toDays(timeDiff) / divider);
+	}
+
+	private long calculateTotalDuration() {
+		if (startDate == null || endDate == null) return 0;
+		return dateUtils.differenceOfDates(startDate, endDate);
+	}
+
+	private long durationConverter(final String durationType) {
+
+		switch (durationType) {
+			case LoanDurationType.MONTHLY:
+				return 30;
+
+			case LoanDurationType.DAILY:
+				return 1;
+
+			case LoanDurationType.WEEKLY:
+				return 7;
+
+			case LoanDurationType.BIWEEKLY:
+				return 15;
+
+			case LoanDurationType.BIMONTHLY:
+				return 60;
+
+			case LoanDurationType.QUARTERLY:
+				return 90;
+
+			case LoanDurationType.HALF_YEARLY:
+				return 180;
+
+			case LoanDurationType.YEARLY:
+				return 365;
+		}
+		return 0;
 	}
 
 	@OnClick({R.id.txStartDate, R.id.txEndDate})
@@ -750,20 +656,6 @@ public class RegisterLoanFragment extends BaseFragment {
 				loadDialogFragment(REQUEST_DATE_TO, startDate);
 				break;
 		}
-	}
-
-	@Deprecated
-	private void initializeAllViews(final View rootView) {
-		startDateTextView = rootView.findViewById(R.id.txStartDate);
-		endDateTextView = rootView.findViewById(R.id.txEndDate);
-		ettxloan_amout = rootView.findViewById(R.id.txloan_amout);
-		ettxrateInterest = rootView.findViewById(R.id.txrateInterest);
-		ettxInstallmentAmount = rootView.findViewById(R.id.txInstallmentAmount);
-		ettxNoofInstallment = rootView.findViewById(R.id.txNoofInstallment);
-		//etTotalLoanAmount = rootView.findViewById(R.id.txTotalLoanAmount);
-		customerNameTextView = rootView.findViewById(R.id.reg_fullname_detaills);
-
-
 	}
 
 	private void loadDialogFragment(final int msg, Date minDate) {
@@ -780,6 +672,20 @@ public class RegisterLoanFragment extends BaseFragment {
 	private void loadDialogFragment(final int msg) {
 		activityUtils.loadDialogFragment(DatePickerDialogFragment.newInstance(false), this,
 				getFragmentManager(), msg, DIALOG_DATE);
+	}
+
+	@Deprecated
+	private void initializeAllViews(final View rootView) {
+		startDateTextView = rootView.findViewById(R.id.txStartDate);
+		endDateTextView = rootView.findViewById(R.id.txEndDate);
+		ettxloan_amout = rootView.findViewById(R.id.txloan_amout);
+		ettxrateInterest = rootView.findViewById(R.id.txrateInterest);
+		ettxInstallmentAmount = rootView.findViewById(R.id.txInstallmentAmount);
+		ettxNoofInstallment = rootView.findViewById(R.id.txNoofInstallment);
+		//etTotalLoanAmount = rootView.findViewById(R.id.txTotalLoanAmount);
+		customerNameTextView = rootView.findViewById(R.id.reg_fullname_detaills);
+
+
 	}
 
 	@OnClick(R.id.btn_givenmoney)
@@ -863,6 +769,93 @@ public class RegisterLoanFragment extends BaseFragment {
 		//	BigDecimal repayAmt = new BigDecimal(totatLoanAmt.trim());
 		addData(accountNo, loanAmt1, interestAmt1);
 
+	}
+
+	private void addData(final int accountNo, final BigDecimal loanAmt1,
+	                     final BigDecimal interestAmt) {
+
+		loan = new Loan(accountNo, loanAmt1, startDate,
+				endDate, interestAmt, amtOfInstallment,
+				noOfInstallments1, durationType, customerId);
+
+		final List<Installment> installments = createInstallments();
+		TransactionModel transaction = getTransaction(accountNo, loanAmt1, startDate);
+		saveData(loan, installments, transaction);
+	}
+
+	private TransactionModel getTransaction(final int accountNo,
+	                                        final BigDecimal loanAmt1,
+	                                        final Date startDate) {
+		return new TransactionModel(CommonUtils.getRandomInt(), startDate, loanAmt1,
+				null, null, "Lent Loan", accountNo);
+	}
+
+	@NonNull
+	private List<Installment> createInstallments() {
+		List<Date> dates = calculateDates(startDate, durationDivided);
+		List<Installment> installments = new ArrayList<>();
+		for (Date date : dates) {
+			Installment installment =
+					new Installment(CommonUtils.getRandomInt(), date, amtOfInstallment,
+							loan.getAccountNo());
+			installments.add(installment);
+		}
+		return installments;
+	}
+
+	@NonNull
+	private List<Date> calculateDates(Date installmentDate, final long durationDivided) {
+		long durationTypeDivider = durationConverter(durationType);
+		List<Date> dates = new ArrayList<>();
+		for (int i = 0; i < durationDivided; i++) {
+			installmentDate = dateUtils.findDate(installmentDate, durationTypeDivider);
+			dates.add(installmentDate);
+		}
+		return dates;
+	}
+
+	private void saveData(@NonNull final Loan loan,
+	                      @NonNull final List<Installment> installments,
+	                      TransactionModel transaction) {
+		Disposable subscribe = loanRepo.saveItem(loan)
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe(() -> {
+					Timber.d("Loan Data Saved ");
+					Toasty.success(getBaseActivity(), "Loan Created successfully").show();
+					installmentRepo.saveItems(installments)
+							.observeOn(AndroidSchedulers.mainThread())
+							.subscribe(() -> {
+										Timber.d("Installments Created ");
+
+										//updateTotalAmount(loan);
+										transactionRepo.saveItem(transaction)
+												.observeOn(AndroidSchedulers.mainThread())
+												.subscribe(() -> {
+													Timber.d("Transaction Created ");
+													activityUtils.loadFragment(
+															CustomerFragment.newInstance(loan
+																	.getCustId()),
+															getFragmentManager());
+												}, throwable -> {
+													Timber.d(
+															"Transacyion not saved " + throwable
+																	.getMessage() + " errors are "
+																	+ loan
+																	.toString());
+												});
+
+									}
+
+							);
+
+				}, throwable -> {
+					Timber.d(
+							"Loan Data not Saved " + throwable.getMessage() + " errors are " + loan
+									.toString());
+					Toasty.error(getBaseActivity(),
+							"Loan Data not Saved " + throwable.getMessage() + " errors are " + loan
+									.toString()).show();
+				});
 	}
 
 

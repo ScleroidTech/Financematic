@@ -82,23 +82,18 @@ public class MainActivity extends BaseActivity
 	private static final String DIALOG_MONEY_RECEIVED = "Received Payment";
 	private static final String TAG_PEOPLE = "People";
 	private static final String TAG_ADD_MONEY = "add_money";
+	private static final int RC_SIGN_IN = 123;
 	// index to identify current nav menu item
 	public static int navItemIndex = 0;
 
-	private static final int RC_SIGN_IN = 123;
-
 // ...
-
+@NonNull
+public static String CURRENT_TAG = TAG_DASHBOARD;
 	// Choose authentication providers
 	List<AuthUI.IdpConfig> providers = Arrays.asList(
 			new AuthUI.IdpConfig.EmailBuilder().setAllowNewAccounts(false)
 					.setRequireName(true)
 					.build());
-
-
-	@NonNull
-	public static String CURRENT_TAG = TAG_DASHBOARD;
-
 	@Inject
 	CustomerRepo customerRepo;
 
@@ -119,14 +114,21 @@ public class MainActivity extends BaseActivity
 	DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
 	@Inject
 	Context context;
+	@Inject
+	SnackBarUtils snackBarUtils;
 	private ActionBarDrawerToggle toggle;
-
-
 	private DrawerLayout drawer;
 	private NavigationView navigationView;
 	private String[] activityTitles;
 	private BottomNavigationView bottomNavigationView;
 	private boolean mToolBarNavigationListenerIsRegistered = false;
+	private FirebaseAuth mFirebaseAuth;
+	private FirebaseUser firebaseUser;
+	//  @Nullable
+	//  @BindView(R.id.text_view_email)
+	private String username, photoUrl;
+	private String userEmail;
+	private String userPhone;
 
 	@NonNull
 	public static Intent newIntent(Context activity) {
@@ -160,16 +162,6 @@ public class MainActivity extends BaseActivity
 	public void setToggle(final ActionBarDrawerToggle toggle) {
 		this.toggle = toggle;
 	}
-
-	@Inject
-	SnackBarUtils snackBarUtils;
-	private FirebaseAuth mFirebaseAuth;
-	private FirebaseUser firebaseUser;
-	//  @Nullable
-	//  @BindView(R.id.text_view_email)
-	private String username, photoUrl;
-	private String userEmail;
-	private String userPhone;
 
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 
@@ -259,40 +251,20 @@ public class MainActivity extends BaseActivity
 	}
 
 	/**
-	 * Check if user logged in or not, If not, Call the FireBaseUI to issue the login to user
+	 * @return layout resource id
 	 */
-	private void validateLogin() {
-		if (firebaseUser == null) {
-			// Not signed in, launch the Sign In activity
-			startActivityForResult(
-					AuthUI.getInstance()
-							.createSignInIntentBuilder()
-							.setAvailableProviders(providers)
-							.setIsSmartLockEnabled(true, true)
-							.setLogo(R.drawable.ic_launcher)      // Set logo drawable
-							.setTheme(R.style.AppTheme)      // Set theme
+	@Override
+	public int getLayoutId() {
+		return R.layout.activity_main;
+	}
 
-							.build(),
-					RC_SIGN_IN);
-			//startActivity(new Intent(this, LoginActivity.class));
-			//  finish();
-
-		} else {
-			username = firebaseUser.getDisplayName();
-
-			if (firebaseUser.getEmail() != null) {
-				userEmail = firebaseUser.getEmail();
-
-			}
-			if (firebaseUser.getPhoneNumber() != null) {
-				userPhone = firebaseUser.getPhoneNumber();
-			}
-			if (firebaseUser.getPhotoUrl() != null) {
-				photoUrl = firebaseUser.getPhotoUrl().toString();
-			}
-
-		}
-
+	/**
+	 * @return actionBar
+	 */
+	@Nullable
+	@Override
+	public ActionBar getActionBarBase() {
+		return getSupportActionBar();
 	}
 
 	@SuppressLint("TimberArgCount")
@@ -336,6 +308,43 @@ public class MainActivity extends BaseActivity
 	}
 
 	/**
+	 * Check if user logged in or not, If not, Call the FireBaseUI to issue the login to user
+	 */
+	private void validateLogin() {
+		if (firebaseUser == null) {
+			// Not signed in, launch the Sign In activity
+			startActivityForResult(
+					AuthUI.getInstance()
+							.createSignInIntentBuilder()
+							.setAvailableProviders(providers)
+							.setIsSmartLockEnabled(true, true)
+							.setLogo(R.drawable.ic_launcher)      // Set logo drawable
+							.setTheme(R.style.AppTheme)      // Set theme
+
+							.build(),
+					RC_SIGN_IN);
+			//startActivity(new Intent(this, LoginActivity.class));
+			//  finish();
+
+		} else {
+			username = firebaseUser.getDisplayName();
+
+			if (firebaseUser.getEmail() != null) {
+				userEmail = firebaseUser.getEmail();
+
+			}
+			if (firebaseUser.getPhoneNumber() != null) {
+				userPhone = firebaseUser.getPhoneNumber();
+			}
+			if (firebaseUser.getPhotoUrl() != null) {
+				photoUrl = firebaseUser.getPhotoUrl().toString();
+			}
+
+		}
+
+	}
+
+	/**
 	 * Calls the {@link SnackBarUtils} method showSnackBar Which is used to display {@link
 	 * Snackbar}
 	 *
@@ -344,23 +353,6 @@ public class MainActivity extends BaseActivity
 	private void showSnackbar(int msg) {
 		View parentLayout = getWindow().getDecorView().findViewById(android.R.id.content);
 		snackBarUtils.showSnackbar(parentLayout, msg);
-	}
-
-	/**
-	 * @return layout resource id
-	 */
-	@Override
-	public int getLayoutId() {
-		return R.layout.activity_main;
-	}
-
-	/**
-	 * @return actionBar
-	 */
-	@Nullable
-	@Override
-	public ActionBar getActionBarBase() {
-		return getSupportActionBar();
 	}
 
 	@Override
@@ -407,48 +399,6 @@ public class MainActivity extends BaseActivity
 		return super.onOptionsItemSelected(item);
 	}
 
-	/***
-	 * Returns respected fragment that user
-	 * selected from navigation menu
-	 */
-	private void loadFragmentFromNavigationDrawers() {
-		// selecting appropriate nav menu item
-		selectNavMenu();
-
-		//selecting appropriate bottom navigation menu item
-		selectBottomNavMenu();
-		// set toolbar title
-		setToolbarTitle();
-
-		// if user select the current navigation menu again, don't do anything
-		// just close the navigation drawer
-		if (getSupportFragmentManager().findFragmentByTag(CURRENT_TAG) != null) {
-			drawer.closeDrawers();
-
-			return;
-		}
-
-		// Sometimes, when fragment has huge data, screen seems hanging
-		// when switching between navigation menus
-		// So using runnable, the fragment is loaded with cross fade effect
-		// This effect can be seen in GMail app
-		Fragment fragment = getCurrentFragment();
-		if (navItemIndex < 3) {
-			getSupportFragmentManager().popBackStackImmediate(null,
-					FragmentManager.POP_BACK_STACK_INCLUSIVE);
-			loadFragmentRunnable(fragment, false);
-		} else { loadFragmentRunnable(fragment, true); }
-		// show or hide the fab button
-
-
-		//Closing drawer on item click
-		drawer.closeDrawers();
-
-		// refresh toolbar menu
-		invalidateOptionsMenu();
-
-	}
-
 	private void loadFragmentRunnable(final Fragment fragment, final boolean b) {
 
 		Runnable pendingRunnable = () -> {
@@ -461,6 +411,15 @@ public class MainActivity extends BaseActivity
 		// If pendingRunnable is not null, then add to the message queue
 		// boolean post = handler.post(pendingRunnable);
 		appExecutors.diskIO().execute(pendingRunnable);
+	}
+
+	private void loadFragment(Fragment fragment, final boolean backstack) {
+		if (backstack) {
+			activityUtils.loadFragment(fragment, getSupportFragmentManager());
+			return;
+		}
+
+		activityUtils.loadFragmentWithoutBackStack(fragment, getSupportFragmentManager());
 	}
 
 	public void tintMenuIcon(@NonNull Context context, @Nullable MenuItem item,
@@ -559,13 +518,46 @@ public class MainActivity extends BaseActivity
 		drawer.closeDrawer(GravityCompat.START);
 	}
 
-	private void loadFragment(Fragment fragment, final boolean backstack) {
-		if (backstack) {
-			activityUtils.loadFragment(fragment, getSupportFragmentManager());
+	/***
+	 * Returns respected fragment that user
+	 * selected from navigation menu
+	 */
+	private void loadFragmentFromNavigationDrawers() {
+		// selecting appropriate nav menu item
+		selectNavMenu();
+
+		//selecting appropriate bottom navigation menu item
+		selectBottomNavMenu();
+		// set toolbar title
+		setToolbarTitle();
+
+		// if user select the current navigation menu again, don't do anything
+		// just close the navigation drawer
+		if (getSupportFragmentManager().findFragmentByTag(CURRENT_TAG) != null) {
+			drawer.closeDrawers();
+
 			return;
 		}
 
-		activityUtils.loadFragmentWithoutBackStack(fragment, getSupportFragmentManager());
+		// Sometimes, when fragment has huge data, screen seems hanging
+		// when switching between navigation menus
+		// So using runnable, the fragment is loaded with cross fade effect
+		// This effect can be seen in GMail app
+		Fragment fragment = getCurrentFragment();
+		if (navItemIndex < 3) {
+			getSupportFragmentManager().popBackStackImmediate(null,
+					FragmentManager.POP_BACK_STACK_INCLUSIVE);
+			loadFragmentRunnable(fragment, false);
+		} else { loadFragmentRunnable(fragment, true); }
+		// show or hide the fab button
+
+
+		//Closing drawer on item click
+		drawer.closeDrawers();
+
+		// refresh toolbar menu
+		invalidateOptionsMenu();
+
 	}
 
 	private void selectNavMenu() {

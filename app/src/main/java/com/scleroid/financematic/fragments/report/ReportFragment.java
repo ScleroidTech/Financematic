@@ -266,6 +266,20 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 		return reportViewModel;
 	}
 
+	private void updateListData(@Nullable final List<TransactionModel> transactions) {
+		if (transactions == null || transactions.isEmpty()) {
+			emptyCard.setVisibility(View.VISIBLE);
+			reportRecyclerView.setVisibility(View.GONE);
+		} else {
+			emptyCard.setVisibility(View.GONE);
+			reportRecyclerView.setVisibility(View.VISIBLE);
+			sort(transactions);
+			transactionsList = transactions;
+			mAdapter.setReportList(transactions);
+			mAdapter.setFilterType(reportFilterType);
+		}
+	}
+
 	private void setupSpinner() {
 		ArrayAdapter<? extends String> spinnerList =
 				new ArrayAdapter<>(Objects.requireNonNull(getActivity()),
@@ -376,6 +390,16 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 		}
 	}
 
+	private void sort(@NonNull final List<TransactionModel> transactions) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+			transactions.sort(Comparator.comparing(TransactionModel::getTransactionDate));
+		} else {
+			Collections.sort(transactions,
+					(m1, m2) -> m1.getTransactionDate().compareTo(m2.getTransactionDate()));
+		}
+		Collections.reverse(transactions);
+	}
+
 	private List<TransactionModel> filterWithoutDate(final ReportFilterType filterSuggestion) {
 		List<TransactionModel> listToShow = new ArrayList<>();
 
@@ -404,17 +428,6 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 
 	}
 
-
-	private void sort(@NonNull final List<TransactionModel> transactions) {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-			transactions.sort(Comparator.comparing(TransactionModel::getTransactionDate));
-		} else {
-			Collections.sort(transactions,
-					(m1, m2) -> m1.getTransactionDate().compareTo(m2.getTransactionDate()));
-		}
-		Collections.reverse(transactions);
-	}
-
 	@NonNull
 	private List<TransactionModel> allTransactionFilter(final List<TransactionModel> listToShow) {
 		listToShow.addAll(transactionsList);
@@ -424,37 +437,10 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 		return listToShow;
 	}
 
-	private void updateListData(@Nullable final List<TransactionModel> transactions) {
-		if (transactions == null || transactions.isEmpty()) {
-			emptyCard.setVisibility(View.VISIBLE);
-			reportRecyclerView.setVisibility(View.GONE);
-		} else {
-			emptyCard.setVisibility(View.GONE);
-			reportRecyclerView.setVisibility(View.VISIBLE);
-			sort(transactions);
-			transactionsList = transactions;
-			mAdapter.setReportList(transactions);
-			mAdapter.setFilterType(reportFilterType);
-		}
-	}
-
 	private List<TransactionModel> applyReceivedFilter() {
 		return Stream.of(transactionsList)
 				.filter(expenseList -> expenseList.getReceivedAmt() != null)
 				.collect(Collectors.toList());
-	}
-
-	private void updateUI(final TextView amt) {
-		//First Enable any previously disabled views
-		visibilityToggle();
-		amt.setVisibility(View.VISIBLE);
-
-	}
-
-	private void visibilityToggle() {
-//		receivedAmt.setVisibility(View.GONE);
-//		expectedAmt.setVisibility(View.GONE);
-//		earnedAmt.setVisibility(View.GONE);
 	}
 
 	private List<TransactionModel> applyLentFilter() {
@@ -473,9 +459,30 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 		activityUtils.setTitle((AppCompatActivity) getActivity(), "Report");
 	}
 
+	private void updateUI(final TextView amt) {
+		//First Enable any previously disabled views
+		visibilityToggle();
+		amt.setVisibility(View.VISIBLE);
+
+	}
+
+	private void visibilityToggle() {
+//		receivedAmt.setVisibility(View.GONE);
+//		expectedAmt.setVisibility(View.GONE);
+//		earnedAmt.setVisibility(View.GONE);
+	}
+
 	@OnClick(R.id.filter_button)
 	public void onViewClicked() {
 		getTheListSorted();
+	}
+
+	private void getTheListSorted() {
+		final List<TransactionModel> tempList;
+		if (startDate == null && endDate == null) {
+			tempList = filterWithoutDate(reportFilterType);
+		} else {tempList = filterWithDate(startDate, endDate, reportFilterType); }
+		updateListDataTemp(tempList);
 	}
 
 	private List<TransactionModel> filterWithDate(final Date startDate, final Date endDate,
@@ -505,13 +512,5 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 	private void loadDialogFragment(int msg) {
 		activityUtils.loadDialogFragment(DatePickerDialogFragment.newInstance(false), this,
 				getFragmentManager(), msg, DIALOG_DATE);
-	}
-
-	private void getTheListSorted() {
-		final List<TransactionModel> tempList;
-		if (startDate == null && endDate == null) {
-			tempList = filterWithoutDate(reportFilterType);
-		} else {tempList = filterWithDate(startDate, endDate, reportFilterType); }
-		updateListDataTemp(tempList);
 	}
 }
