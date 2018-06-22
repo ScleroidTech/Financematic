@@ -14,12 +14,6 @@
     <string name="lent_amount">Lent</string>
     <string name="upcoming_events">Upcoming</string>
 
-    <string name="transition_background" translatable="false">background</string>
-    <string name="transition_avatar_border" translatable="false">avatar_border</string>
-    <string name="transition_card" translatable="false">card</string>
-
-    <string name="amount_with_symbol">₹ 10000</string>
-
     <!--delete all below-->
 
     <!-- UI Strings -->
@@ -29,7 +23,6 @@
     <string name="amount">1000000</string>
     <string name="submit">Submit</string>
     <string name="expense_type_image">Expense Type Image</string>
-    <string name="menu_settings">Settings</string>
     <!-- Names -->
 
     <string name="unknown_error">Something went wrong</string>
