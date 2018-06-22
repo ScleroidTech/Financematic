@@ -24,7 +24,7 @@
     <string name="amount">1000000</string>
     <string name="submit">Submit</string>
     <string name="expense_type_image">Expense Type Image</string>
-
+    <string name="menu_settings">Settings</string>
     <!-- Names -->
 
     <string name="unknown_error">Something went wrong</string>

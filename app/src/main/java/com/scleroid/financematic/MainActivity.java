@@ -318,7 +318,7 @@ public static String CURRENT_TAG = TAG_DASHBOARD;
 							.createSignInIntentBuilder()
 							.setAvailableProviders(providers)
 							.setIsSmartLockEnabled(true, true)
-							.setLogo(R.drawable.ic_launcher)      // Set logo drawable
+							.setLogo(R.mipmap.ic_launcher)      // Set logo drawable
 							.setTheme(R.style.AppTheme)      // Set theme
 
 							.build(),
