@@ -69,7 +69,6 @@ public class RegisterLoanFragment extends BaseFragment {
 	private static final String DIALOG_DATE = "DIALOG_DATE";
 	private static final int REQUEST_DATE_FROM = 1;
 	private static final int REQUEST_DATE_TO = 2;
-	private static final String[] EMPTY_ARRAY = new String[0];
 	@Inject
 	DateUtils dateUtils;
 	@NonNull
@@ -179,129 +178,13 @@ public class RegisterLoanFragment extends BaseFragment {
 		final View rootView = getRootView();
 		//	unbinder = ButterKnife.bind(this, rootView);
 		//initializeAllViews(rootView);
-		Bundle bundle = getArguments();
-		if (bundle != null) {
-			setCustomerName(customerNameTextView, bundle);
-		}
+		checkBundle();
 
+		setSpinnerTypeOfInstallment();
 
-		spinnerTypeOfInstallment.setOnItemSelectedListener(
-				new AdapterView.OnItemSelectedListener() {
-					@Override
-					public void onItemSelected(final AdapterView<?> parent, final View view,
-					                           final int position, final long id) {
-						durationType = getCountry(position);
-						updateNoOfInstallments();
-					}
+		setSpinnerCalculate();
 
-					@Override
-					public void onNothingSelected(final AdapterView<?> parent) {
-
-					}
-				});
-		spinnerCalculate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-			@Override
-			public void onItemSelected(final AdapterView<?> parent, final View view,
-			                           final int position, final long id) {
-				Timber.d("Position of Spinner" + position);
-				installmentCalculationType = position;
-				updateInstallmentAmount();
-				Timber.d("Value of Decimal");
-			}
-
-			@Override
-			public void onNothingSelected(final AdapterView<?> parent) {
-
-			}
-		});
-
-		/*        final String text = spinnerTypeOfInstallment.getSelectedItem().toString();*/
-		//Creating the ArrayAdapter instance having the filterSuggestions list
-		adapterInstallmentType = new ArrayAdapter<>(getActivity(),
-				android.R.layout.simple_spinner_item, country);
-		setCountry(calculateDurationDifferenceInDays());
-
-		adapterInstallmentType.setDropDownViewResource(
-				android.R.layout.simple_spinner_dropdown_item);
-		//Setting the ArrayAdapter data on the Spinner
-		spinnerTypeOfInstallment.setAdapter(adapterInstallmentType);
-
-		ArrayAdapter<String> aaa = new ArrayAdapter<>(getActivity(),
-				android.R.layout.simple_spinner_item, calculate);
-		aaa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		//Setting the ArrayAdapter data on the Spinner
-		spinnerCalculate.setAdapter(aaa);
-
-
-		ettxloan_amout.addTextChangedListener(
-				new TextValidator(ettxloan_amout) {
-					@Override
-					public void validate(TextView textView, @NonNull String text) {
-
-						if (isNotValidAmt(text)) {
-							ettxloan_amout.setError("Valid total given money");
-						} else {
-							updateInterestAmt();
-							updateInstallmentAmount();
-						}
-					}
-				});
-
-
-		ettxInstallmentAmount.addTextChangedListener(
-				new TextValidator(ettxInstallmentAmount) {
-					@Override
-					public void validate(TextView textView, @NonNull String text) {
-
-						if (isNotValidAmt(text)) {
-							ettxInstallmentAmount.setError("Valid Interest Amount");
-						} else {
-							//	updateInterestAmt();
-//							updateInstallmentAmount();
-						}
-					}
-				});
-
-		ettxNoofInstallment.addTextChangedListener(
-				new TextValidator(ettxNoofInstallment) {
-					@Override
-					public void validate(TextView textView, @NonNull String text) {
-
-						if (isNotValidAmt(text)) {
-							ettxNoofInstallment.setError("valid No of Installment");
-						} else {
-							updateInterestAmt();
-							updateInstallmentAmount();
-						}
-					}
-				});
-		txInterestAmount.addTextChangedListener(new TextValidator(txInterestAmount) {
-			@Override
-			public void validate(final TextView textView, final String text) {
-				if (isNotValidAmt(text)) {
-					txInterestAmount.setError("valid Interest Amount");
-				} else {
-					//	updateInterestAmt();
-					updateInstallmentAmount();
-				}
-			}
-		});
-
-
-		radioInterest.setOnCheckedChangeListener((group, checkedId) -> {
-			if (interestRadioButton.getId() == checkedId && interestRadioButton.isChecked()) {
-				rateOfInterestLayout.setVisibility(View.GONE);
-				txInterestAmount.setEnabled(true);
-			} else if (rateOfInterestRadioButton.getId() == checkedId && rateOfInterestRadioButton
-					.isChecked()) {
-				rateOfInterestLayout.setVisibility(View.VISIBLE);
-				txInterestAmount.setEnabled(false);
-				setRateOfInterest();
-				updateInterestAmt();
-				updateInstallmentAmount();
-			}
-
-		});
+		setListeners();
 
 
 		return rootView;
@@ -320,7 +203,7 @@ public class RegisterLoanFragment extends BaseFragment {
 	 */
 	@Override
 	protected void subscribeToLiveData() {
-
+		//NO live data here, supposed to be empty
 	}
 
 	/**
@@ -332,6 +215,63 @@ public class RegisterLoanFragment extends BaseFragment {
 	@Override
 	public BaseViewModel getViewModel() {
 		return null;
+	}
+
+	private void setSpinnerCalculate() {
+		spinnerCalculate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(final AdapterView<?> parent, final View view,
+			                           final int position, final long id) {
+				Timber.d("Position of Spinner" + position);
+				installmentCalculationType = position;
+				updateInstallmentAmount();
+				Timber.d("Value of Decimal");
+			}
+
+			@Override
+			public void onNothingSelected(final AdapterView<?> parent) {
+
+			}
+		});
+		ArrayAdapter<String> aaa = new ArrayAdapter<>(getActivity(),
+				android.R.layout.simple_spinner_item, calculate);
+		aaa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		//Setting the ArrayAdapter data on the Spinner
+		spinnerCalculate.setAdapter(aaa);
+	}
+
+	private void setSpinnerTypeOfInstallment() {
+		spinnerTypeOfInstallment.setOnItemSelectedListener(
+				new AdapterView.OnItemSelectedListener() {
+					@Override
+					public void onItemSelected(final AdapterView<?> parent, final View view,
+					                           final int position, final long id) {
+						durationType = getCountry(position);
+						updateNoOfInstallments();
+					}
+
+					@Override
+					public void onNothingSelected(final AdapterView<?> parent) {
+
+					}
+				});
+		adapterInstallmentType = new ArrayAdapter<>(getActivity(),
+				android.R.layout.simple_spinner_item, country);
+		setCountry(calculateDurationDifferenceInDays());
+
+		adapterInstallmentType.setDropDownViewResource(
+				android.R.layout.simple_spinner_dropdown_item);
+		//Setting the ArrayAdapter data on the Spinner
+		spinnerTypeOfInstallment.setAdapter(adapterInstallmentType);
+	}
+
+	private void updateNoOfInstallments() {
+		ettxNoofInstallment.setText(String.valueOf(getInstallments()));
+	}
+
+	@NonNull
+	public String getCountry(final int position) {
+		return country.get(position);
 	}
 
 	private void updateInstallmentAmount() {
@@ -434,6 +374,91 @@ public class RegisterLoanFragment extends BaseFragment {
 		}
 	}
 
+	private void setListeners() {
+		ettxloan_amout.addTextChangedListener(
+				new TextValidator(ettxloan_amout) {
+					@Override
+					public void validate(TextView textView, @NonNull String text) {
+
+						if (isNotValidAmt(text)) {
+							ettxloan_amout.setError("Valid total given money");
+						} else {
+							updateInterestAmt();
+							updateInstallmentAmount();
+						}
+					}
+				});
+
+
+		ettxInstallmentAmount.addTextChangedListener(
+				new TextValidator(ettxInstallmentAmount) {
+					@Override
+					public void validate(TextView textView, @NonNull String text) {
+
+						if (isNotValidAmt(text)) {
+							ettxInstallmentAmount.setError("Valid Interest Amount");
+						} else {
+							//	updateInterestAmt();
+//							updateInstallmentAmount();
+						}
+					}
+				});
+
+		ettxNoofInstallment.addTextChangedListener(
+				new TextValidator(ettxNoofInstallment) {
+					@Override
+					public void validate(TextView textView, @NonNull String text) {
+
+						if (isNotValidAmt(text)) {
+							ettxNoofInstallment.setError("valid No of Installment");
+						} else {
+							updateInterestAmt();
+							updateInstallmentAmount();
+						}
+					}
+				});
+		txInterestAmount.addTextChangedListener(new TextValidator(txInterestAmount) {
+			@Override
+			public void validate(final TextView textView, final String text) {
+				if (isNotValidAmt(text)) {
+					txInterestAmount.setError("valid Interest Amount");
+				} else {
+					//	updateInterestAmt();
+					updateInstallmentAmount();
+				}
+			}
+		});
+
+
+		radioInterest.setOnCheckedChangeListener((group, checkedId) -> {
+			if (interestRadioButton.getId() == checkedId && interestRadioButton.isChecked()) {
+				rateOfInterestLayout.setVisibility(View.GONE);
+				txInterestAmount.setEnabled(true);
+			} else if (rateOfInterestRadioButton.getId() == checkedId && rateOfInterestRadioButton
+					.isChecked()) {
+				rateOfInterestLayout.setVisibility(View.VISIBLE);
+				txInterestAmount.setEnabled(false);
+				setRateOfInterest();
+				updateInterestAmt();
+				updateInstallmentAmount();
+			}
+
+		});
+	}
+
+	private void checkBundle() {
+		Bundle bundle = getArguments();
+		if (bundle != null) {
+			setCustomerName(customerNameTextView, bundle);
+		}
+	}
+
+	private BigDecimal getInterestPlusPrincipleEMI(BigDecimal loanAmt, BigDecimal interest,
+	                                               final long duration) {
+		BigDecimal emi = divideBigDecimal(loanAmt.add(interest), duration);
+		return emi;
+	}
+
 	public void setCountry(@NonNull final long duration) {
 		Timber.d("whats the duration " + duration);
 
@@ -457,38 +482,6 @@ public class RegisterLoanFragment extends BaseFragment {
 		adapterInstallmentType.notifyDataSetChanged();
 
 
-	}
-
-	@NonNull
-	public String getCountry(final int position) {
-		return country.get(position);
-	}
-
-	private void updateTotalAmount(final @NonNull Loan loan) {
-		float amount = session.getAmount() - loan.getLoanAmt().floatValue();
-		if (amount <= 0) {
-			Toasty.warning(getContext(), " Looks like you're running out of cash").show();
-		}
-		session.updateAmount(amount);
-	}
-
-	private BigDecimal getInterestPlusPrincipleEMI(BigDecimal loanAmt, BigDecimal interest,
-	                                               final long duration) {
-		BigDecimal emi = divideBigDecimal(loanAmt.add(interest), duration);
-		return emi;
-	}
-
-	private BigDecimal divideBigDecimal(BigDecimal loanAmt, long duration) {
-		if (duration == 0) {
-			//	Toasty.error(getContext(), "Seems like you haven't entered the duration").show();
-			return BigDecimal.valueOf(0);
-		}
-		return loanAmt.divide(BigDecimal.valueOf(duration), 2, RoundingMode.HALF_EVEN);
-	}
-
-	private BigDecimal getInterestOnly(final long duration, final @NonNull BigDecimal
-			interestAmt) {
-		return divideBigDecimal(interestAmt, duration);
 	}
 
 	private long calculateDurationDifferenceInDays() {
@@ -520,23 +513,6 @@ public class RegisterLoanFragment extends BaseFragment {
 						())));
 		txInterestAmount.setText(
 				interestAmt.setScale(2, BigDecimal.ROUND_HALF_EVEN).toPlainString());
-	}
-
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, @NonNull Intent intent) {
-		super.onActivityResult(requestCode, resultCode, intent);
-
-		if (requestCode == REQUEST_DATE_FROM) {
-			startDate = (Date) intent.getSerializableExtra(DatePickerDialogFragment.EXTRA_DATE);
-			startDateTextView.setText(dateUtils.getFormattedDate(startDate));
-		} else if (requestCode == REQUEST_DATE_TO) {
-			endDate = (Date) intent.getSerializableExtra(DatePickerDialogFragment.EXTRA_DATE);
-			endDateTextView.setText(dateUtils.getFormattedDate(endDate));
-		}
-		updateNoOfInstallments();
-		updateInterestAmt();
-		setCountry(calculateDurationDifferenceInDays());
-
 	}
 
 	private BigDecimal getInterestAmt(@NonNull BigDecimal loanAmt) {
@@ -579,19 +555,40 @@ public class RegisterLoanFragment extends BaseFragment {
 				BigDecimal.ROUND_HALF_EVEN);
 	}
 
-	private void updateNoOfInstallments() {
-		ettxNoofInstallment.setText(String.valueOf(getInstallments()));
-	}
-
 	private BigDecimal calculateInterestAmt(BigDecimal loanAmt, double duration,
 	                                        double interestRate) {
 
 		return loanAmt.multiply(getBigDecimal((interestRate / 100) * duration));
 	}
 
+	private BigDecimal divideBigDecimal(BigDecimal loanAmt, long duration) {
+		if (duration == 0) {
+			//	Toasty.error(getContext(), "Seems like you haven't entered the duration").show();
+			return BigDecimal.valueOf(0);
+		}
+		return loanAmt.divide(BigDecimal.valueOf(duration), 2, RoundingMode.HALF_EVEN);
+	}
+
 	private long getInstallments() {
 		if (durationType == null) { return getInstallments(durationConverter(getCountry(0))); }
 		return getInstallments(durationConverter(durationType));
+
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, @NonNull Intent intent) {
+		super.onActivityResult(requestCode, resultCode, intent);
+
+		if (requestCode == REQUEST_DATE_FROM) {
+			startDate = (Date) intent.getSerializableExtra(DatePickerDialogFragment.EXTRA_DATE);
+			startDateTextView.setText(dateUtils.getFormattedDate(startDate));
+		} else if (requestCode == REQUEST_DATE_TO) {
+			endDate = (Date) intent.getSerializableExtra(DatePickerDialogFragment.EXTRA_DATE);
+			endDateTextView.setText(dateUtils.getFormattedDate(endDate));
+		}
+		updateNoOfInstallments();
+		updateInterestAmt();
+		setCountry(calculateDurationDifferenceInDays());
 
 	}
 
@@ -615,36 +612,6 @@ public class RegisterLoanFragment extends BaseFragment {
 		return dateUtils.differenceOfDates(startDate, endDate);
 	}
 
-	private long durationConverter(final String durationType) {
-
-		switch (durationType) {
-			case LoanDurationType.MONTHLY:
-				return 30;
-
-			case LoanDurationType.DAILY:
-				return 1;
-
-			case LoanDurationType.WEEKLY:
-				return 7;
-
-			case LoanDurationType.BIWEEKLY:
-				return 15;
-
-			case LoanDurationType.BIMONTHLY:
-				return 60;
-
-			case LoanDurationType.QUARTERLY:
-				return 90;
-
-			case LoanDurationType.HALF_YEARLY:
-				return 180;
-
-			case LoanDurationType.YEARLY:
-				return 365;
-		}
-		return 0;
-	}
-
 	@OnClick({R.id.txStartDate, R.id.txEndDate})
 
 	public void onViewClicked(@NonNull View view) {
@@ -655,7 +622,20 @@ public class RegisterLoanFragment extends BaseFragment {
 			case R.id.txEndDate:
 				loadDialogFragment(REQUEST_DATE_TO, startDate);
 				break;
+			default:
+				return;
 		}
+	}
+
+	@NonNull
+	private List<Date> calculateDates(Date installmentDate, final long durationDivided) {
+		long durationTypeDivider = durationConverter(durationType);
+		List<Date> dates = new ArrayList<>();
+		for (int i = 0; i < durationDivided; i++) {
+			final Date installmentDate2 = dateUtils.findDate(installmentDate, durationTypeDivider);
+			dates.add(installmentDate2);
+		}
+		return dates;
 	}
 
 	private void loadDialogFragment(final int msg, Date minDate) {
@@ -674,19 +654,7 @@ public class RegisterLoanFragment extends BaseFragment {
 				getFragmentManager(), msg, DIALOG_DATE);
 	}
 
-	@Deprecated
-	private void initializeAllViews(final View rootView) {
-		startDateTextView = rootView.findViewById(R.id.txStartDate);
-		endDateTextView = rootView.findViewById(R.id.txEndDate);
-		ettxloan_amout = rootView.findViewById(R.id.txloan_amout);
-		ettxrateInterest = rootView.findViewById(R.id.txrateInterest);
-		ettxInstallmentAmount = rootView.findViewById(R.id.txInstallmentAmount);
-		ettxNoofInstallment = rootView.findViewById(R.id.txNoofInstallment);
-		//etTotalLoanAmount = rootView.findViewById(R.id.txTotalLoanAmount);
-		customerNameTextView = rootView.findViewById(R.id.reg_fullname_detaills);
 
-
-	}
 
 	@OnClick(R.id.btn_givenmoney)
 	public void onViewClicked() {
@@ -803,21 +771,41 @@ public class RegisterLoanFragment extends BaseFragment {
 		return installments;
 	}
 
-	@NonNull
-	private List<Date> calculateDates(Date installmentDate, final long durationDivided) {
-		long durationTypeDivider = durationConverter(durationType);
-		List<Date> dates = new ArrayList<>();
-		for (int i = 0; i < durationDivided; i++) {
-			installmentDate = dateUtils.findDate(installmentDate, durationTypeDivider);
-			dates.add(installmentDate);
+	private long durationConverter(final String durationType) {
+
+		switch (durationType) {
+			case LoanDurationType.MONTHLY:
+				return 30;
+
+			case LoanDurationType.DAILY:
+				return 1;
+
+			case LoanDurationType.WEEKLY:
+				return 7;
+
+			case LoanDurationType.BIWEEKLY:
+				return 15;
+
+			case LoanDurationType.BIMONTHLY:
+				return 60;
+
+			case LoanDurationType.QUARTERLY:
+				return 90;
+
+			case LoanDurationType.HALF_YEARLY:
+				return 180;
+
+			case LoanDurationType.YEARLY:
+				return 365;
+			default:
+					return 0;
 		}
-		return dates;
 	}
 
 	private void saveData(@NonNull final Loan loan,
 	                      @NonNull final List<Installment> installments,
 	                      TransactionModel transaction) {
-		Disposable subscribe = loanRepo.saveItem(loan)
+		loanRepo.saveItem(loan)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(() -> {
 					Timber.d("Loan Data Saved ");
