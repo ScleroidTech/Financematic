@@ -76,7 +76,6 @@ public class MainActivity extends BaseActivity
 	private static final String TAG_NEW_CUSTOMER = "new_customer";
 	private static final String TAG_REPORT = "report";
 	private static final String TAG_EXPENSES = "expenses";
-	private static final String TAG_SUMMERY = "Customer_Summery";
 	private static final String TAG_NOTIFICATION = "notification";
 	private static final String DIALOG_DELAY = "Delay Payment";
 	private static final String DIALOG_MONEY_RECEIVED = "Received Payment";
@@ -130,10 +129,6 @@ public static String CURRENT_TAG = TAG_DASHBOARD;
 	private String userEmail;
 	private String userPhone;
 
-	@NonNull
-	public static Intent newIntent(Context activity) {
-		return new Intent(activity, MainActivity.class);
-	}
 
 	public CustomerRepo getCustomerRepo() {
 		return customerRepo;
