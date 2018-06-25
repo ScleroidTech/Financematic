@@ -123,8 +123,7 @@ public static String CURRENT_TAG = TAG_DASHBOARD;
 	private boolean mToolBarNavigationListenerIsRegistered = false;
 	private FirebaseAuth mFirebaseAuth;
 	private FirebaseUser firebaseUser;
-	//  @Nullable
-	//  @BindView(R.id.text_view_email)
+
 	private String username, photoUrl;
 	private String userEmail;
 	private String userPhone;
