@@ -12,7 +12,7 @@ import android.widget.EditText;
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.base.BaseFragment;
 import com.scleroid.financematic.base.BaseViewModel;
-import com.scleroid.financematic.data.local.model.Session;
+import com.scleroid.financematic.data.local.Session;
 
 import javax.inject.Inject;
 

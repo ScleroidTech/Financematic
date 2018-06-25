@@ -1,6 +1,5 @@
-package com.scleroid.financematic.data.local.model;
+package com.scleroid.financematic.data.local;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 
 import javax.inject.Inject;
@@ -13,15 +12,12 @@ import javax.inject.Inject;
  */
 public class Session {
 	public static final String KEY_USER_TOTAL_AMOUNT = "total_amount";
-	private static final String TOTAL_AMOUNT = "total_amount";
-	private Context context;
 	private SharedPreferences shref;
 	private SharedPreferences.Editor editor;
 
 	@Inject
-	public Session(Context context, SharedPreferences shref) {
-		this.context = context;
-		this.shref = shref;
+	public Session(SharedPreferences shpref) {
+		this.shref = shpref;
 		this.editor = shref.edit();
 		editor.apply();
 	}
