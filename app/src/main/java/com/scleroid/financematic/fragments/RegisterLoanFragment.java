@@ -340,8 +340,7 @@ public class RegisterLoanFragment extends BaseFragment {
 		final String totatLoanAmt = ettxloan_amout.getText()
 				.toString();
 
-		final long
-				duration = getInstallments();
+		final long duration = getInstallments();
 
 		if (TextUtils.isEmpty(totatLoanAmt)) {
 			return getBigDecimal();
@@ -492,11 +491,11 @@ public class RegisterLoanFragment extends BaseFragment {
 		}
 
 
-		durationDivided = endDate.getTime() - startDate.getTime();
+		long anotherduration = endDate.getTime() - startDate.getTime();
 
-		long diffInDays = TimeUnit.MILLISECONDS.toDays(durationDivided);
+		long diffInDays = TimeUnit.MILLISECONDS.toDays(anotherduration);
 		Timber.d(
-				"duration after dividing " + durationDivided + " aftrer converting to days " +
+				"duration after dividing " + anotherduration + " aftrer converting to days " +
 						diffInDays);
 
 		return diffInDays;
