@@ -633,7 +633,7 @@ public class RegisterLoanFragment extends BaseFragment {
 		for (int i = 0; i < durationDivided; i++) {
 			final Date installmentDate2 = dateUtils.findDate(installmentDate, durationTypeDivider);
 			dates.add(installmentDate2);
-			Timber.d("Printing dates "+ i+ "  " + installmentDate2.toString() + " duration of The dates" + durationDivided);
+			Timber.d("Printing dates "+ i+ "  " + installmentDate2.toString() + " duration of The dates" + durationDivided  + " " + durationTypeDivider);
 		}
 		return dates;
 	}
