@@ -8,9 +8,9 @@ package com.scleroid.financematic.fragments;
  */
 public interface InstallmentCalculationType {
 
-	int PREDEFINED_INTEREST = 0;
+	int PREDEFINED_INTEREST = 1;
 
-	int PRINCIPLE_PLUS_INTEREST = 1;
+	int PRINCIPLE_PLUS_INTEREST = 0;
 
 	int ONLY_INTEREST = 2;
 

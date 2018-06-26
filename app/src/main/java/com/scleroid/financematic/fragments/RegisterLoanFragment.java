@@ -81,7 +81,7 @@ public class RegisterLoanFragment extends BaseFragment {
 	Spinner spinnerCalculate;
 	@NonNull
 	String[] calculate =
-			{"Principal Amount", "Interest + Principal", "Interest only"};
+			{"Interest + Principal","Principal Only", "Interest only"};
 
 	@Inject
 	LocalCustomerLab customerLab;
@@ -150,7 +150,7 @@ public class RegisterLoanFragment extends BaseFragment {
 	private int noOfInstallments1;
 	private BigDecimal amtOfInstallment;
 	private long durationDivided;
-	private int installmentCalculationType = InstallmentCalculationType.PREDEFINED_INTEREST;
+	private int installmentCalculationType = InstallmentCalculationType.PRINCIPLE_PLUS_INTEREST;
 
 	public RegisterLoanFragment() {
 		// Required empty public constructor
@@ -359,10 +359,10 @@ public class RegisterLoanFragment extends BaseFragment {
 	                                           @NonNull final BigDecimal interestAmt) {
 		switch (installmentCalculationType) {
 			case 0:
-				return divideBigDecimal(loanAmt, duration);
+				return getInterestPlusPrincipleEMI(loanAmt, interestAmt, duration);
 
 			case 1:
-				return getInterestPlusPrincipleEMI(loanAmt, interestAmt, duration);
+				return divideBigDecimal(loanAmt, duration);
 
 			case 2:
 				return divideBigDecimal(interestAmt, duration);
