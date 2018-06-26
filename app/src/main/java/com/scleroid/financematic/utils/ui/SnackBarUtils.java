@@ -14,4 +14,9 @@ public class SnackBarUtils {
 
 		Snackbar.make(view, msg, Snackbar.LENGTH_SHORT).show();
 	}
+
+	public void showSnackbar(View view, String msg) {
+
+		Snackbar.make(view, msg, Snackbar.LENGTH_SHORT).show();
+	}
 }
