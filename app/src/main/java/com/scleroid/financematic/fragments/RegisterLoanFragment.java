@@ -631,9 +631,9 @@ public class RegisterLoanFragment extends BaseFragment {
 		long durationTypeDivider = durationConverter(durationType);
 		List<Date> dates = new ArrayList<>();
 		for (int i = 0; i < durationDivided; i++) {
-			final Date installmentDate2 = dateUtils.findDate(installmentDate, durationTypeDivider);
-			dates.add(installmentDate2);
-			Timber.d("Printing dates "+ i+ "  " + installmentDate2.toString() + " duration of The dates" + durationDivided  + " " + durationTypeDivider);
+			installmentDate = dateUtils.findDate(installmentDate, durationTypeDivider);
+			dates.add(installmentDate);
+			Timber.d("Printing dates "+ i+ "  " + installmentDate.toString() + " duration of The dates" + durationDivided  + " " + durationTypeDivider);
 		}
 		return dates;
 	}
