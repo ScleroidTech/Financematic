@@ -760,7 +760,7 @@ public class RegisterLoanFragment extends BaseFragment {
 
 	@NonNull
 	private List<Installment> createInstallments() {
-		List<Date> dates = calculateDates(startDate, durationDivided);
+		List<Date> dates = calculateDates(startDate, getInstallments(durationConverter(durationType)));
 		List<Installment> installments = new ArrayList<>();
 		for (Date date : dates) {
 			Installment installment =
