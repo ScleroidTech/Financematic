@@ -158,13 +158,13 @@ public static String CURRENT_TAG = TAG_DASHBOARD;
 	}
 
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
-
-		super.onCreate(savedInstanceState);
 		// Initialize Firebase Auth
 		mFirebaseAuth = FirebaseAuth.getInstance();
 		firebaseUser = mFirebaseAuth.getCurrentUser();
 		//Check login, & if not, prompt the user to login
 		validateLogin();
+		super.onCreate(savedInstanceState);
+
 
 		final Toolbar toolbar = findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
@@ -310,10 +310,10 @@ public static String CURRENT_TAG = TAG_DASHBOARD;
 			startActivityForResult(
 					AuthUI.getInstance()
 							.createSignInIntentBuilder()
-							.setAvailableProviders(providers)
-							.setIsSmartLockEnabled(true, true)
 							.setLogo(R.mipmap.ic_launcher)      // Set logo drawable
 							.setTheme(R.style.AppTheme)      // Set theme
+							.setAvailableProviders(providers)
+							.setIsSmartLockEnabled(true, true)
 
 							.build(),
 					RC_SIGN_IN);
