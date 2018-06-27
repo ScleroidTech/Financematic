@@ -301,7 +301,7 @@ public static String CURRENT_TAG = TAG_DASHBOARD;
 				int errorCode = response.getError().getErrorCode();
 				@SuppressLint("RestrictedApi") String s = ErrorCodes.toFriendlyMessage(errorCode);
 				showSnackbar(s);
-				Timber.e("Sign-in error: ", response.getError());
+				Timber.e("Sign-in error: " + errorCode + " ", response.getError());
 			}
 			Timber.d(resultCode + " " + response.toString());
 			// ...
