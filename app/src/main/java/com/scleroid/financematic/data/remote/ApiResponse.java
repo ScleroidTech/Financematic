@@ -53,7 +53,7 @@ public class ApiResponse<T> {
 				try {
 					message = response.errorBody().string();
 				} catch (IOException ignored) {
-					Timber.e(ignored, "error while parsing response");
+					Timber.e(ignored, "error while parsing response" + ignored.getMessage());
 				}
 			}
 			if (message == null || message.trim().length() == 0) {

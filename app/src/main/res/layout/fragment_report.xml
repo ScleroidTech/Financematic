@@ -8,6 +8,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_marginTop="50dp"
+
         android:layout_height="wrap_content">
 
 
@@ -24,6 +25,7 @@
                 android:layout_marginTop="15dp"
                 android:orientation="horizontal"
                 android:paddingRight="10dp"
+
                 android:paddingBottom="5dp">
 
 
@@ -298,7 +300,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:scrollbars="vertical"
-                    android:layout_marginBottom="30dp"
+                    android:layout_marginBottom="40dp"
+                    android:paddingBottom="60dp"
                     tools:listitem="@layout/recycler_report" />
             </LinearLayout>
 

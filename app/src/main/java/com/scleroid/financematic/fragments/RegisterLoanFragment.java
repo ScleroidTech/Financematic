@@ -81,7 +81,7 @@ public class RegisterLoanFragment extends BaseFragment {
 	Spinner spinnerCalculate;
 	@NonNull
 	String[] calculate =
-			{"Principal Amount", "Interest + Principal", "Interest only"};
+			{"Interest + Principal","Principal Only", "Interest only"};
 
 	@Inject
 	LocalCustomerLab customerLab;
@@ -150,7 +150,7 @@ public class RegisterLoanFragment extends BaseFragment {
 	private int noOfInstallments1;
 	private BigDecimal amtOfInstallment;
 	private long durationDivided;
-	private int installmentCalculationType = InstallmentCalculationType.PREDEFINED_INTEREST;
+	private int installmentCalculationType = InstallmentCalculationType.PRINCIPLE_PLUS_INTEREST;
 
 	public RegisterLoanFragment() {
 		// Required empty public constructor
@@ -340,8 +340,7 @@ public class RegisterLoanFragment extends BaseFragment {
 		final String totatLoanAmt = ettxloan_amout.getText()
 				.toString();
 
-		final long
-				duration = getInstallments();
+		final long duration = getInstallments();
 
 		if (TextUtils.isEmpty(totatLoanAmt)) {
 			return getBigDecimal();
@@ -360,10 +359,10 @@ public class RegisterLoanFragment extends BaseFragment {
 	                                           @NonNull final BigDecimal interestAmt) {
 		switch (installmentCalculationType) {
 			case 0:
-				return divideBigDecimal(loanAmt, duration);
+				return getInterestPlusPrincipleEMI(loanAmt, interestAmt, duration);
 
 			case 1:
-				return getInterestPlusPrincipleEMI(loanAmt, interestAmt, duration);
+				return divideBigDecimal(loanAmt, duration);
 
 			case 2:
 				return divideBigDecimal(interestAmt, duration);
@@ -492,11 +491,11 @@ public class RegisterLoanFragment extends BaseFragment {
 		}
 
 
-		durationDivided = endDate.getTime() - startDate.getTime();
+		long anotherduration = endDate.getTime() - startDate.getTime();
 
-		long diffInDays = TimeUnit.MILLISECONDS.toDays(durationDivided);
+		long diffInDays = TimeUnit.MILLISECONDS.toDays(anotherduration);
 		Timber.d(
-				"duration after dividing " + durationDivided + " aftrer converting to days " +
+				"duration after dividing " + anotherduration + " aftrer converting to days " +
 						diffInDays);
 
 		return diffInDays;
@@ -632,8 +631,9 @@ public class RegisterLoanFragment extends BaseFragment {
 		long durationTypeDivider = durationConverter(durationType);
 		List<Date> dates = new ArrayList<>();
 		for (int i = 0; i < durationDivided; i++) {
-			final Date installmentDate2 = dateUtils.findDate(installmentDate, durationTypeDivider);
-			dates.add(installmentDate2);
+			installmentDate = dateUtils.findDate(installmentDate, durationTypeDivider);
+			dates.add(installmentDate);
+			Timber.d("Printing dates "+ i+ "  " + installmentDate.toString() + " duration of The dates" + durationDivided  + " " + durationTypeDivider);
 		}
 		return dates;
 	}
@@ -760,7 +760,7 @@ public class RegisterLoanFragment extends BaseFragment {
 
 	@NonNull
 	private List<Installment> createInstallments() {
-		List<Date> dates = calculateDates(startDate, durationDivided);
+		List<Date> dates = calculateDates(startDate, getInstallments(durationConverter(durationType)));
 		List<Installment> installments = new ArrayList<>();
 		for (Date date : dates) {
 			Installment installment =

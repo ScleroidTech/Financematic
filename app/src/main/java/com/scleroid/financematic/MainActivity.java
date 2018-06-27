@@ -288,12 +288,19 @@ public static String CURRENT_TAG = TAG_DASHBOARD;
 					return;
 				}
 
-				if (response.getError().getErrorCode() == ErrorCodes.NO_NETWORK) {
+				/*if (response.getError().getErrorCode() == ErrorCodes.NO_NETWORK) {
 					showSnackbar(R.string.no_internet_connection);
 					return;
 				}
-
-				showSnackbar(R.string.unknown_error);
+				else if (response.getError().getErrorCode() == ErrorCodes.PLAY_SERVICES_UPDATE_CANCELLED) {
+					showSnackbar(R.string.common_google_play_services_install_text);
+					return;
+				}
+				else if (response.getError().getErrorCode() == ErrorCodes.PROVIDER_ERROR)
+*/
+				int errorCode = response.getError().getErrorCode();
+				@SuppressLint("RestrictedApi") String s = ErrorCodes.toFriendlyMessage(errorCode);
+				showSnackbar(s);
 				Timber.e("Sign-in error: ", response.getError());
 			}
 			Timber.d(resultCode + " " + response.toString());
@@ -348,6 +355,17 @@ public static String CURRENT_TAG = TAG_DASHBOARD;
 		View parentLayout = getWindow().getDecorView().findViewById(android.R.id.content);
 		snackBarUtils.showSnackbar(parentLayout, msg);
 	}
+	/**
+	 * Calls the {@link SnackBarUtils} method showSnackBar Which is used to display {@link
+	 * Snackbar}
+	 *
+	 * @param msg the message string which needs to be shown
+	 */
+	private void showSnackbar(String msg) {
+		View parentLayout = getWindow().getDecorView().findViewById(android.R.id.content);
+		snackBarUtils.showSnackbar(parentLayout, msg);
+	}
+
 
 	@Override
 	public boolean onCreateOptionsMenu(@NonNull Menu menu) {

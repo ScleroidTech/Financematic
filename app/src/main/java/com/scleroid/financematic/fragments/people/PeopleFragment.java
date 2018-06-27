@@ -109,7 +109,12 @@ public class PeopleFragment extends BaseFragment {
 		peopleRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
 		peopleRecyclerView.setAdapter(mAdapter);
-
+		simpleSearchView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				simpleSearchView.setIconified(false);
+			}
+		});
 
 		simpleSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 			@Override

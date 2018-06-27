@@ -126,7 +126,7 @@ public class AddMoneyFragment extends BaseFragment {
 		session.updateAmount(Float.parseFloat(addMoneyEditText.getText().toString().trim()));
 		Toasty.success(getContext(),
 				"Amount Saved Successfully, Continue to browse through the application").show();
-
+		addMoneyEditText.setText("");
 	}
 
 
