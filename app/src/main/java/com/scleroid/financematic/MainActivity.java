@@ -163,7 +163,7 @@ public static String CURRENT_TAG = TAG_DASHBOARD;
 		mFirebaseAuth = FirebaseAuth.getInstance();
 		firebaseUser = mFirebaseAuth.getCurrentUser();
 		//Check login, & if not, prompt the user to login
-		//	validateLogin();
+		validateLogin();
 		super.onCreate(savedInstanceState);
 
 

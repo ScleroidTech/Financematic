@@ -36,8 +36,6 @@
     <string name="no_internet_connection">There\'s no internet here, Please check your network</string>
     <string name="sign_in_cancelled">Sign in was cancelled</string>
 
-    <string name="app_name">Firebase Authentication</string>
-
     <string name="label_google_sign_in">Firebase + Google Sign In</string>
     <string name="desc_google_sign_in">Use a Google Sign In credential to authenticate with Firebase.</string>
 
