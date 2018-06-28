@@ -31,12 +31,6 @@
                 </intent-filter>-->
 
         </activity>
-        <activity android:name=".registration.ChooserActivity">
-
-        </activity>
-        <activity
-            android:name=".registration.CustomAuthActivity"
-            android:label="@string/label_custom_auth" />
 
         <activity
             android:name=".registration.EmailPasswordActivity"
@@ -48,30 +42,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".registration.PasswordlessActivity"
-            android:label="@string/label_passwordless"
-            android:launchMode="singleTop">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <data
-                    android:host="auth.example.com"
-                    android:pathPrefix="/emailSignInLink"
-                    android:scheme="https" />
-
-                <category android:name="android.intent.category.BROWSABLE" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".registration.PhoneAuthActivity"
-            android:label="@string/label_phone_auth"
-            android:windowSoftInputMode="adjustPan" />
-
-
-        <activity
-            android:name=".registration.FirebaseUIActivity"
-            android:label="@string/label_firebase_ui" />
 
 
         <receiver android:name=".AlarmReceiver" />
