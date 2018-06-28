@@ -32,7 +32,7 @@ import com.scleroid.financematic.R;
  * Simple list-based Activity to redirect to one of the other Activities. This Activity does not
  * contain any useful code related to Firebase Authentication. You may want to start with
  * one of the following Files:
- *     {@link GoogleSignInActivity}
+ *
  *     {@link EmailPasswordActivity}
  *     {@link PasswordlessActivity}
  *     {@link PhoneAuthActivity}
@@ -41,7 +41,7 @@ import com.scleroid.financematic.R;
 public class ChooserActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
 	private static final Class[] CLASSES = new Class[]{
-			GoogleSignInActivity.class,
+
 
 			EmailPasswordActivity.class,
 			PasswordlessActivity.class,

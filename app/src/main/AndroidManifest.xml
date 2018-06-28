@@ -47,9 +47,6 @@
         <activity
             android:name=".registration.CustomAuthActivity"
             android:label="@string/label_custom_auth" />
-        <activity
-            android:name=".registration.GoogleSignInActivity"
-            android:label="@string/label_google_sign_in" />
 
         <activity
             android:name=".registration.EmailPasswordActivity"
