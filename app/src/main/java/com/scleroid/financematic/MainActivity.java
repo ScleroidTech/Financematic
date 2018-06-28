@@ -92,7 +92,8 @@ public static String CURRENT_TAG = TAG_DASHBOARD;
 	List<AuthUI.IdpConfig> providers = Arrays.asList(
 			new AuthUI.IdpConfig.EmailBuilder().setAllowNewAccounts(false)
 					.setRequireName(true)
-					.build());
+					.build(), new AuthUI.IdpConfig.PhoneBuilder().build(),
+			new AuthUI.IdpConfig.GoogleBuilder().build());
 	@Inject
 	CustomerRepo customerRepo;
 
@@ -287,17 +288,6 @@ public static String CURRENT_TAG = TAG_DASHBOARD;
 					showSnackbar(R.string.sign_in_cancelled);
 					return;
 				}
-
-				/*if (response.getError().getErrorCode() == ErrorCodes.NO_NETWORK) {
-					showSnackbar(R.string.no_internet_connection);
-					return;
-				}
-				else if (response.getError().getErrorCode() == ErrorCodes.PLAY_SERVICES_UPDATE_CANCELLED) {
-					showSnackbar(R.string.common_google_play_services_install_text);
-					return;
-				}
-				else if (response.getError().getErrorCode() == ErrorCodes.PROVIDER_ERROR)
-*/
 				int errorCode = response.getError().getErrorCode();
 				@SuppressLint("RestrictedApi") String s =
 						ErrorCodes.toFriendlyMessage(errorCode) + " ERRORCODE" + errorCode;
