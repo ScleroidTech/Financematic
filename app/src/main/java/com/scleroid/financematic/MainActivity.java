@@ -271,6 +271,7 @@ public static String CURRENT_TAG = TAG_DASHBOARD;
 
 	@SuppressLint("TimberArgCount")
 	private void handleSignInResponse(int requestCode, int resultCode, Intent data) {
+		Timber.d("This is getting called ");
 		if (requestCode == RC_SIGN_IN) {
 			IdpResponse response = IdpResponse.fromResultIntent(data);
 
@@ -304,7 +305,7 @@ public static String CURRENT_TAG = TAG_DASHBOARD;
 				showSnackbar(s);
 				Timber.e("Firebase Sign-in error: " + errorCode + " ", response.getError());
 			}
-			Timber.d(resultCode + " " + response.toString());
+			Timber.d(resultCode + " firebase Issues " + response.toString());
 			// ...
 		}
 	}
@@ -319,7 +320,7 @@ public static String CURRENT_TAG = TAG_DASHBOARD;
 					AuthUI.getInstance()
 							.createSignInIntentBuilder()
 							.setLogo(R.mipmap.ic_launcher)      // Set logo drawable
-							.setTheme(R.style.AppTheme)      // Set theme
+							.setTheme(R.style.GreenTheme)  // Set theme
 							.setAvailableProviders(providers)
 							.setIsSmartLockEnabled(true, true)
 

@@ -15,8 +15,12 @@
       },
       "oauth_client": [
         {
-          "client_id": "22199840658-03lhn78mm8o8r8jg63be8eta5epv2sau.apps.googleusercontent.com",
-          "client_type": 3
+          "client_id": "22199840658-k6c6gjnm0680d2l04c1amvl3tco8vo9d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.scleroid.financematic",
+            "certificate_hash": "5c0d9e22557b731d726634fc4c35a4d3615f03cc"
+          }
         },
         {
           "client_id": "22199840658-03lhn78mm8o8r8jg63be8eta5epv2sau.apps.googleusercontent.com",
@@ -33,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "22199840658-03lhn78mm8o8r8jg63be8eta5epv2sau.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
@@ -44,9 +53,3 @@
   ],
   "configuration_version": "1"
 }
-
-
-
-
-
-
