@@ -14,11 +14,13 @@
 
 package com.scleroid.financematic.registration;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +30,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.scleroid.financematic.MainActivity;
 import com.scleroid.financematic.R;
 
 public class EmailPasswordActivity extends BaseActivity implements
@@ -35,10 +38,12 @@ public class EmailPasswordActivity extends BaseActivity implements
 
 	private static final String TAG = "EmailPassword";
 
-	private TextView mStatusTextView;
-	private TextView mDetailTextView;
+/*	private TextView mStatusTextView;
+	private TextView mDetailTextView;*/
 	private EditText mEmailField;
 	private EditText mPasswordField;
+	/*private Button memail_sign;*/
+	private Button mforgot;
 
 	// [START declare_auth]
 	private FirebaseAuth mAuth;
@@ -50,16 +55,37 @@ public class EmailPasswordActivity extends BaseActivity implements
 		setContentView(R.layout.activity_emailpassword);
 
 		// Views
-		mStatusTextView = findViewById(R.id.status);
-		mDetailTextView = findViewById(R.id.detail);
+		/*mStatusTextView = findViewById(R.id.status);
+		mDetailTextView = findViewById(R.id.detail);*/
 		mEmailField = findViewById(R.id.field_email);
 		mPasswordField = findViewById(R.id.field_password);
+		mforgot= findViewById(R.id.email_create_account_button);
+		mforgot.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				Intent downloadIntent1 = new Intent(EmailPasswordActivity.this, ForgotActivity.class);
+				startActivity(downloadIntent1);
+			}
+		});
+		/*memail_sign = findViewById(R.id.email_sign_in_button);
+        memail_sign.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+
+			}
+		});*/
 
 		// Buttons
 		findViewById(R.id.email_sign_in_button).setOnClickListener(this);
-		findViewById(R.id.email_create_account_button).setOnClickListener(this);
-		findViewById(R.id.sign_out_button).setOnClickListener(this);
-		findViewById(R.id.verify_email_button).setOnClickListener(this);
+		/*findViewById(R.id.email_create_account_button).setOnClickListener(this);*/
+
+
+		/*findViewById(R.id.sign_out_button).setOnClickListener(this);*/
+		/*findViewById(R.id.verify_email_button).setOnClickListener(this);*/
 
 		// [START initialize_auth]
 		mAuth = FirebaseAuth.getInstance();
@@ -79,22 +105,24 @@ public class EmailPasswordActivity extends BaseActivity implements
 	private void updateUI(FirebaseUser user) {
 		hideProgressDialog();
 		if (user != null) {
-			mStatusTextView.setText(getString(R.string.emailpassword_status_fmt,
+		/*	mStatusTextView.setText(getString(R.string.emailpassword_status_fmt,
 					user.getEmail(), user.isEmailVerified()));
-			mDetailTextView.setText(getString(R.string.firebase_status_fmt, user.getUid()));
+			mDetailTextView.setText(getString(R.string.firebase_status_fmt, user.getUid()));*/
 
 			findViewById(R.id.email_password_buttons).setVisibility(View.GONE);
 			findViewById(R.id.email_password_fields).setVisibility(View.GONE);
-			findViewById(R.id.signed_in_buttons).setVisibility(View.VISIBLE);
+			Intent downloadIntent = new Intent(this, MainActivity.class);
+			startActivity(downloadIntent);
+			/*findViewById(R.id.signed_in_buttons).setVisibility(View.VISIBLE);*/
 
-			findViewById(R.id.verify_email_button).setEnabled(!user.isEmailVerified());
+		/*	findViewById(R.id.verify_email_button).setEnabled(!user.isEmailVerified());*/
 		} else {
-			mStatusTextView.setText(R.string.signed_out);
-			mDetailTextView.setText(null);
+			/*mStatusTextView.setText(R.string.signed_out);
+			mDetailTextView.setText(null);*/
 
 			findViewById(R.id.email_password_buttons).setVisibility(View.VISIBLE);
 			findViewById(R.id.email_password_fields).setVisibility(View.VISIBLE);
-			findViewById(R.id.signed_in_buttons).setVisibility(View.GONE);
+			/*findViewById(R.id.signed_in_buttons).setVisibility(View.GONE);*/
 		}
 	}
 
@@ -103,13 +131,14 @@ public class EmailPasswordActivity extends BaseActivity implements
 		int i = v.getId();
 		if (i == R.id.email_create_account_button) {
 			createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
-		} else if (i == R.id.email_sign_in_button) {
+		} else
+        if (i == R.id.email_sign_in_button) {
 			signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
-		} else if (i == R.id.sign_out_button) {
+		} /*else if (i == R.id.sign_out_button) {
 			signOut();
 		} else if (i == R.id.verify_email_button) {
 			sendEmailVerification();
-		}
+		}*/
 	}
 
 	private void createAccount(String email, String password) {
@@ -133,14 +162,14 @@ public class EmailPasswordActivity extends BaseActivity implements
 						} else {
 							// If sign in fails, display a message to the user.
 							Log.w(TAG, "createUserWithEmail:failure", task.getException());
-							Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
+							Toast.makeText(EmailPasswordActivity.this, "Authentication Fail or wrong id",
 									Toast.LENGTH_SHORT).show();
 							updateUI(null);
 						}
 
 						// [START_EXCLUDE]
 						hideProgressDialog();
-						// [END_EXCLUDE]
+						// [END_EXCLUDE].class
 					}
 				});
 		// [END create_user_with_email]
@@ -193,23 +222,23 @@ public class EmailPasswordActivity extends BaseActivity implements
 					}
 
 					// [START_EXCLUDE]
-					if (!task.isSuccessful()) {
+				/*	if (!task.isSuccessful()) {
 						mStatusTextView.setText(R.string.auth_failed);
-					}
+					}*/
 					hideProgressDialog();
 					// [END_EXCLUDE]
 				});
 		// [END sign_in_with_email]
 	}
 
-	private void signOut() {
+	/*private void signOut() {
 		mAuth.signOut();
 		updateUI(null);
-	}
+	}*/
 
 	private void sendEmailVerification() {
 		// Disable button
-		findViewById(R.id.verify_email_button).setEnabled(false);
+		/*findViewById(R.id.verify_email_button).setEnabled(false);*/
 
 		// Send verification email
 		// [START send_email_verification]
@@ -220,7 +249,7 @@ public class EmailPasswordActivity extends BaseActivity implements
 					public void onComplete(@NonNull Task<Void> task) {
 						// [START_EXCLUDE]
 						// Re-enable button
-						findViewById(R.id.verify_email_button).setEnabled(true);
+						/*findViewById(R.id.verify_email_button).setEnabled(true);*/
 
 						if (task.isSuccessful()) {
 							Toast.makeText(EmailPasswordActivity.this,

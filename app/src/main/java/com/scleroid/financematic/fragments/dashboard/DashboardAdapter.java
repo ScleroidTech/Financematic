@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
+import com.annimon.stream.function.Predicate;
 import com.scleroid.financematic.R;
 import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.data.repo.CustomerRepo;
@@ -65,8 +66,13 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
 
 		if (installments == null) return new ArrayList<>();
 		return Stream.of(installments)
-				.filter(installment -> dateUtils.isThisDateWithinRange(
-						installment.getInstallmentDate(), FILTER_DAYS))
+				.filter(new Predicate<Installment>() {
+					@Override
+					public boolean test(Installment installment) {
+						return dateUtils.isThisDateWithinRange(
+								installment.getInstallmentDate(), FILTER_DAYS);
+					}
+				})
 				.collect(Collectors.toList());
 	}
 
