@@ -388,7 +388,7 @@ public static String CURRENT_TAG = TAG_DASHBOARD;
 		// user is in notifications fragment
 		// and selected 'Mark all as Read'
 		if (id == R.id.action_notification) {
-			Notification fragment = new Notification();
+			NotificationActivity fragment = new NotificationActivity();
 			/*CustomerFragment fragment = new CustomerFragment();*/
 			loadFragmentRunnable(fragment, true);
 		}

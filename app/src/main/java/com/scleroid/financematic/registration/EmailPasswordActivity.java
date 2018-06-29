@@ -22,6 +22,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -42,7 +43,7 @@ public class EmailPasswordActivity extends BaseActivity implements
 	private EditText mEmailField;
 	private EditText mPasswordField;
 	/*private Button memail_sign;*/
-	private Button mforgot;
+	private TextView mforgot;
 
 	// [START declare_auth]
 	private FirebaseAuth mAuth;
@@ -105,7 +106,7 @@ public class EmailPasswordActivity extends BaseActivity implements
 
 	private void updateUI(FirebaseUser user) {
 		hideProgressDialog();
-		if (user != null) {
+		if (user == null) {
 		/*	mStatusTextView.setText(getString(R.string.emailpassword_status_fmt,
 					user.getEmail(), user.isEmailVerified()));
 			mDetailTextView.setText(getString(R.string.firebase_status_fmt, user.getUid()));*/

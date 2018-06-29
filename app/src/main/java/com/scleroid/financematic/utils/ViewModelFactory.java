@@ -10,6 +10,8 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
 
+import com.scleroid.financematic.Notification;
+import com.scleroid.financematic.NotificationViewModel;
 import com.scleroid.financematic.data.repo.CustomerRepo;
 import com.scleroid.financematic.data.repo.ExpenseRepo;
 import com.scleroid.financematic.data.repo.InstallmentRepo;
@@ -80,6 +82,10 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
 		} else if (modelClass.isAssignableFrom(ReportViewModel.class)) {
 			//noinspection unchecked
 			return (T) new ReportViewModel(transactionsRepo);
+		}
+		else if (modelClass.isAssignableFrom(NotificationViewModel.class)) {
+			//noinspection unchecked
+			return (T) new NotificationViewModel(loanRepo, installmentRepo);
 		}
 		throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
 	}
