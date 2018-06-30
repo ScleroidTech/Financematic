@@ -170,69 +170,9 @@ public class NotificationViewModel extends BaseViewModel<Installment> implements
                     return installmentMediatorLiveData;
                 });
         return installmentsLive;
-		/*loansLive = Transformations.map(loansLive, new Function<List<Customer>, List<Customer>>
-		() {
 
-			@Override
-			public List<Customer> apply(final List<Customer> inputStates) {
-               *//* for (Customer state : inputStates) {
-                    state.setLoans(dao.getLoans(state.getCustomerId()));
-                }*//*
-				return inputStates;
-			}
-		});
-		return loansLive;*/
     }
 
-    /* public LiveData<List<DashboardViewModel>> getTransformedUpcomingData() {
-     *//* new MediatorLiveData<List<DashBoardModel>>();
-        LiveData<List<DashBoardModel>> dashBoardLiveData;
-        dashBoardLiveData = Transformations.switchMap(getUpcomingInstallments(),
-        (List<Installment> input) -> {
-            MediatorLiveData<List<DashBoardModel>> data = new MediatorLiveData<>();
-            List<DashBoardModel> dash = new ArrayList<>();
-            for (Installment installment : input) {
-                DashBoardModel dashBoardModel;
-                installment = loadInstallments(installment);
-                int loanAcNo = installment.getLoanAcNo();
-
-                //TODO remove getLocalLoanLAb from here
-                Loan loan =  ;
-                if (loan == null) continue;
-                Timber.d(loan.toString());
-                int custId = loan.getCustId();
-	            //TODO remove getLocalCstLAb from her
-                Customer customer = customerRepo.getLocalCustomerLab().getItem(
-                        custId).getValue();
-               // if (customer == null) continue;
-                Timber.d(customer.toString());
-                String customerName = customer.getName();
-                dashBoardModel =
-                        new DashBoardModel(custId, loanAcNo, installment.getInstallmentId(),
-                                customerName, customer.getMobileNumber(),
-                                installment.getExpectedAmt(), installment.getInstallmentDate());
-                dash.add(dashBoardModel);
-            }
-            data.setValue(dash);
-            return data;
-        });
-        return dashBoardLiveData;*//*
-    }
-	public LiveData<Installment> loadInstallments(Installment installment) {
-		//LiveData<Installment> quotationLiveData = get
-		LiveData<Installment> result =
-				Transformations.switchMap(installment, quotation -> {
-					MutableLiveData<Installment> mutableResult = new MutableLiveData<>();
-					appExecutors.diskIO().execute(() -> {
-						installment.setLoan(loanRepo.getLocalLoanLab().getRxItem(installment
-						.getLoanAcNo()));
-						mutableResult.postValue(quotation);
-					});
-					return mutableResult;
-				});
-		return result;
-	}
-*/
     @Nullable
     @Override
     protected LiveData<Resource<List<Installment>>> updateItemLiveData() {

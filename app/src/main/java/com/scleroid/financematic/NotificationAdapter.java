@@ -1,5 +1,9 @@
 package com.scleroid.financematic;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
@@ -24,6 +28,7 @@ import com.scleroid.financematic.utils.ui.RupeeTextView;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -141,6 +146,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             Timber.wtf(" name is empty for " + dashBoardModel.getLoan().getCustomer().toString());
             return;
         }
+
         holder.setData(dashBoardModel);
         holder.itemView.setTag(dashBoardModel);
 
@@ -297,4 +303,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
 
     }
+
+
+
+
 }

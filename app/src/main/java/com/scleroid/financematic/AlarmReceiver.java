@@ -21,6 +21,8 @@ public class AlarmReceiver extends BroadcastReceiver {
 	public static final String NOTIFY = "notification_fragment";
 	private static final String CHANNEL_ID = "com.scleroid.financematic.channelId";
 
+
+
 	@Override
 	public void onReceive(@NonNull Context context, Intent intent) {
 
@@ -35,7 +37,10 @@ public class AlarmReceiver extends BroadcastReceiver {
 				stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
 		Notification.Builder builder = new Notification.Builder(context);
-
+		//add
+	   /*  notificationIntent.getStringExtra("id");
+		String name = notificationIntent.getStringExtra("name");
+*/
 		Notification notification = builder.setContentTitle("Customer Name")
 				.setContentText("RS 2000 Due in 2 day's")
 				.setTicker("New Message Alert!")

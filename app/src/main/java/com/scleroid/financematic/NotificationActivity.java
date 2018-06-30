@@ -1,6 +1,10 @@
 package com.scleroid.financematic;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -34,6 +38,7 @@ import com.scleroid.financematic.utils.ui.RupeeTextView;
 import com.scleroid.financematic.utils.ui.TextViewUtils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -48,15 +53,6 @@ import timber.log.Timber;
 /**
  * Created by scleroid on 16/4/18.
  */
-
-
-/**
- * Copyright (C) 2018
- *
- * @author Ganesh Kaple
- * @since 2/3/18
- */
-
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -176,6 +172,8 @@ public class NotificationActivity extends BaseFragment<NotificationViewModel>{
 			// Inflate the layout for this fragment
 			View rootView = getRootView();
 
+
+			noticationmethod();
 			// recyclerView = rootView.findViewById(R.id.recycler_view_dashboard);11
 
 			// prepareTempDashBoardModelData();
@@ -189,7 +187,27 @@ public class NotificationActivity extends BaseFragment<NotificationViewModel>{
 			updateView(installments);
 			return rootView;
 		}
+    public void noticationmethod(){
+		 //Notification code
+		 AlarmManager alarmManager =
+				 (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+		 //AlarmReceiver notificationIntent = new AlarmReceiver();
+		 Intent notificationIntent = new Intent(this.getActivity(), AlarmReceiver.class);
+		 PendingIntent broadcast =
+				 PendingIntent.getBroadcast(this.getActivity(), 100, notificationIntent,
+						 PendingIntent.FLAG_UPDATE_CURRENT);
 
+		 Calendar cal = Calendar.getInstance();
+		 cal.add(Calendar.SECOND, 3);
+		 alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), broadcast);
+
+		// Intent i=new Intent(this.getActivity(),AlarmReceiver.class);
+		/* notificationIntent.putExtra("id", installment.getLoan().getCustomer()+"");
+		 notificationIntent.putExtra("name", user.getUserFullName());
+		 this.getActivity().startActivity(notificationIntent);
+*/
+           return;
+	 }
 		/**
 		 * @return layout resource id
 		 */
@@ -228,23 +246,9 @@ public class NotificationActivity extends BaseFragment<NotificationViewModel>{
 
 		private void updateUi() {
 
-			/*double totalAmt = calculateTotalAmt(loanList);
-			double lentAmt = calculateLentAmt(loanList);
-			double receivedAmt = totalAmt - lentAmt;
-			Timber.d("Calculating Daashboard " + totalAmt + "  " + lentAmt + "  " + receivedAmt);
-			totalAmountTextView.setText(String.valueOf(totalAmt));
-			lentAmountTextView.setText(String.valueOf(lentAmt));
-			remainingAmountTextView.setText(String.valueOf(receivedAmt));
-*/
 		}
 
-		/*private double calculateLentAmt(@NonNull final List<Loan> loans) {
-			double sum = Stream.of(loans).withoutNulls().mapToDouble(loan ->
-					loan.getLoanAmt().doubleValue()).sum();
-			Timber.i("sum of Total Amt" + sum);
-			return sum;
-		}
-*/
+
 		private double calculateTotalAmt(@NonNull final List<Loan> loans) {
 	/*	int sum = Stream.of(loans).mapToInt(loan ->
 				loan.getLoanAmt() != null ? loan.getLoanAmt().intValue() : 0).sum();*/
@@ -323,40 +327,5 @@ public class NotificationActivity extends BaseFragment<NotificationViewModel>{
 						(m1, m2) -> m1.getInstallmentDate().compareTo(m2.getInstallmentDate()));
 			}
 		}
-
-
-
-		/*private boolean predicate(final Installment next) {
-			return next.getLoan() == null || next.getLoan().getCustomer() == null;
-		}*/
-
-		/*@OnClick({R.id.total_amount_text_view, R.id.total_amount_title_text_view, R.id
-				.remaining_amount_text_view, R.id.lent_amount_text_view, R.id
-				.lent_amount_title_text_view, R.id.available_amount_title_text_view})
-		public void onViewClicked(@NonNull View view) {
-			switch (view.getId()) {
-				case R.id.total_amount_text_view:
-				case R.id.total_amount_title_text_view:
-					activityUtils.loadFragment(
-							ReportFragment.newInstance(ReportFilterType.ALL_TRANSACTIONS),
-							getFragmentManager());
-					break;
-				case R.id.remaining_amount_text_view:
-				case R.id.available_amount_title_text_view:
-					activityUtils.loadFragment(
-							ReportFragment.newInstance(ReportFilterType.RECEIVED_AMOUNT),
-							getFragmentManager());
-					break;
-				case R.id.lent_amount_text_view:
-				case R.id.lent_amount_title_text_view:
-					activityUtils.loadFragment(ReportFragment.newInstance(ReportFilterType
-									.LENT_AMOUNT),
-							getFragmentManager());
-					break;
-
-			}
-
-
-		}*/
 
 	}
