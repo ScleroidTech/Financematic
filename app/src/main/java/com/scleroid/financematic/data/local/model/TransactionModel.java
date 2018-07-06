@@ -8,6 +8,8 @@ import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 import android.support.annotation.Nullable;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.scleroid.financematic.utils.roomConverters.DateConverter;
 import com.scleroid.financematic.utils.roomConverters.MoneyConverter;
@@ -35,6 +37,20 @@ public class TransactionModel implements Serializable {
 	@SerializedName("transaction_id")
 	@PrimaryKey(autoGenerate = false)
 	private int transactionId;
+
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(final String userId) {
+		this.userId = userId;
+	}
+
+	@Ignore
+	@SerializedName("userid")
+	@Expose
+	private String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 	@SerializedName("mydate")
 	@TypeConverters(DateConverter.class)

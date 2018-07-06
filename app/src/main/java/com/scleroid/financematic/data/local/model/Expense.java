@@ -1,11 +1,15 @@
 package com.scleroid.financematic.data.local.model;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 import android.support.annotation.NonNull;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import com.scleroid.financematic.utils.roomConverters.DateConverter;
 import com.scleroid.financematic.utils.roomConverters.MoneyConverter;
 
@@ -22,6 +26,18 @@ public class Expense implements Serializable {
 	private Date expenseDate;
 	@PrimaryKey(autoGenerate = true)
 	private int expenseId;
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(final String userId) {
+		this.userId = userId;
+	}
+
+	@Ignore
+	@SerializedName("userid")
+	@Expose
+	private String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 	public Expense(BigDecimal expenseAmount, String expenseType, Date expenseDate) {
 

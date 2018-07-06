@@ -8,6 +8,8 @@ import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 import android.support.annotation.NonNull;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.scleroid.financematic.utils.roomConverters.DateConverter;
 import com.scleroid.financematic.utils.roomConverters.MoneyConverter;
@@ -30,6 +32,20 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
 		onDelete = CASCADE),
 		indices = {@Index(value = "installmentId", unique = true)})
 public class Installment implements Serializable {
+
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(final String userId) {
+		this.userId = userId;
+	}
+
+	@Ignore
+	@SerializedName("userid")
+	@Expose
+	private String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 	@Ignore
 	Loan loan;
