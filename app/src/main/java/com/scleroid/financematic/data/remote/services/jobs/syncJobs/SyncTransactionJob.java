@@ -34,7 +34,7 @@ public class SyncTransactionJob extends BaseJob<TransactionModel> {
 
 
 		// if any exception is thrown, it will be handled by shouldReRunOnThrowable()
-		service.addTransaction(t);
+		service.addTransaction(firebaseUser.getUid(),t);
 
 		// remote call was successful--the Transaction will be updated locally to reflect that sync
 		// is no longer pending

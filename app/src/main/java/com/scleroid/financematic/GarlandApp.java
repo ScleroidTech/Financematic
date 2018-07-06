@@ -19,6 +19,7 @@ import io.reactivex.schedulers.Schedulers;
  *
  * @author not me
  */
+@Deprecated
 public class GarlandApp extends App {
 	/**
 	 * This is a listner, I don't know what it does

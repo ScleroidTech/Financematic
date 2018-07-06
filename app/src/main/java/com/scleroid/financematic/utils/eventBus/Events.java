@@ -77,47 +77,6 @@ public class Events {
 		}
 	}
 
-	/**
-	 *
-	 */
-	public static class ActivityActivityMessage {
-		private String message;
-
-		public ActivityActivityMessage(String message) {
-			this.message = message;
-		}
-
-		public String getMessage() {
-			return message;
-		}
-	}
-
-	// Event used to send message from activity to activity.
-	public static class AddressMessage {
-		private Bundle message;
-
-		public AddressMessage(Bundle bundle) {
-			this.message = bundle;
-		}
-
-		public Bundle getMessage() {
-			return message;
-		}
-	}
-
-	// Event used to send message from activity to activity.
-	public static class DateMessage {
-		private Bundle message;
-
-		public DateMessage(Bundle bundle) {
-			this.message = bundle;
-		}
-
-		public Bundle getMessage() {
-			return message;
-		}
-	}
-
 
 	// Event used to place call using MainActivity
 	public static class placeCall {
@@ -134,7 +93,6 @@ public class Events {
 	}
 
 
-	// Event used to place call using MainActivity
 	public static class newAmt {
 		private BigDecimal message;
 

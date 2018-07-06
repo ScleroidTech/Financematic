@@ -1,5 +1,7 @@
 package com.scleroid.financematic.data.remote.services.networking;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.local.model.Expense;
 import com.scleroid.financematic.data.local.model.Installment;
@@ -21,6 +23,9 @@ public final class RemotePostService {
 
 	@Inject
 	RemotePostEndpoint service;
+
+	private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+	protected FirebaseUser firebaseUser = mAuth.getCurrentUser();
 
 	@Inject
 	public RemotePostService(
@@ -60,7 +65,7 @@ public final class RemotePostService {
 
 		// Remote call can be executed synchronously since the job calling it is already
 		// backgrounded.
-		Response<Loan> response = service.addLoan(loan).execute();
+		Response<Loan> response = service.addLoan(firebaseUser.getUid(),loan).execute();
 
 		if (response == null || !response.isSuccessful() || response.errorBody() != null) {
 			throw new RemoteException(response);
@@ -75,7 +80,7 @@ public final class RemotePostService {
 
 		// Remote call can be executed synchronously since the job calling it is already
 		// backgrounded.
-		Response<TransactionModel> response = service.addTransaction(transaction).execute();
+		Response<TransactionModel> response = service.addTransaction(firebaseUser.getUid(),transaction).execute();
 
 		if (response == null || !response.isSuccessful() || response.errorBody() != null) {
 			throw new RemoteException(response);
@@ -89,7 +94,7 @@ public final class RemotePostService {
 
 		// Remote call can be executed synchronously since the job calling it is already
 		// backgrounded.
-		Response<Installment> response = service.addInstallment(installment).execute();
+		Response<Installment> response = service.addInstallment(firebaseUser.getUid(),installment).execute();
 
 		if (response == null || !response.isSuccessful() || response.errorBody() != null) {
 			throw new RemoteException(response);
@@ -103,7 +108,7 @@ public final class RemotePostService {
 
 		// Remote call can be executed synchronously since the job calling it is already
 		// backgrounded.
-		Response<Expense> response = service.addExpense(expense).execute();
+		Response<Expense> response = service.addExpense(firebaseUser.getUid(),expense).execute();
 
 		if (response == null || !response.isSuccessful() || response.errorBody() != null) {
 			throw new RemoteException(response);
@@ -117,7 +122,7 @@ public final class RemotePostService {
 
 		// Remote call can be executed synchronously since the job calling it is already
 		// backgrounded.
-		Response<Customer> response = service.addCustomer(customer).execute();
+		Response<Customer> response = service.addCustomer(firebaseUser.getUid(),customer).execute();
 
 		if (response == null || !response.isSuccessful() || response.errorBody() != null) {
 			throw new RemoteException(response);

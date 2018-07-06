@@ -61,9 +61,12 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.MyView
 		holder.endDate1.setText(dateUtils.getFormattedDate(loan.getEndDate()));
 		holder.startDate1.setText(dateUtils.getFormattedDate(loan.getStartDate()));
 		holder.ReceivedAmt.setText(loan.getReceivedAmt().toPlainString());
+
+
 		holder.itemView.setOnClickListener(v -> {
 			Events.openLoanDetailsFragment openCustomerFragment =
 					new Events.openLoanDetailsFragment(loan.getAccountNo());
+
 			GlobalBus.getBus().post(openCustomerFragment);
 		});
 	}

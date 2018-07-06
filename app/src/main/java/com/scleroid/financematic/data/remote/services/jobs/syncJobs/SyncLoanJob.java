@@ -29,7 +29,7 @@ public class SyncLoanJob extends BaseJob<Loan> {
 
 
 		// if any exception is thrown, it will be handled by shouldReRunOnThrowable()
-		service.addLoan(t);
+		service.addLoan(firebaseUser.getUid(),t);
 
 		// remote call was successful--the Loan will be updated locally to reflect that sync
 		// is no longer pending

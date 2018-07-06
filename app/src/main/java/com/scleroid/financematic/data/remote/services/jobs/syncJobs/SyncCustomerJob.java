@@ -9,6 +9,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import timber.log.Timber;
 
+
 public class SyncCustomerJob extends BaseJob<Customer> {
 
 	private static final String TAG = SyncCustomerJob.class.getCanonicalName();
@@ -26,7 +27,7 @@ public class SyncCustomerJob extends BaseJob<Customer> {
 
 
 		// if any exception is thrown, it will be handled by shouldReRunOnThrowable()
-		service.addCustomer(t).enqueue(new Callback<Customer>() {
+		service.addCustomer(firebaseUser.getUid(), t).enqueue(new Callback<Customer>() {
 			@Override
 			public void onResponse(final Call<Customer> call, final Response<Customer> response) {
 				if (response.isSuccessful()) {

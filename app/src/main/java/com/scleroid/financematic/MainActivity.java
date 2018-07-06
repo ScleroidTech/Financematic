@@ -163,7 +163,7 @@ public static String CURRENT_TAG = TAG_DASHBOARD;
 		mFirebaseAuth = FirebaseAuth.getInstance();
 		firebaseUser = mFirebaseAuth.getCurrentUser();
 		//Check login, & if not, prompt the user to login
-		validateLogin();
+		//validateLogin();
 		super.onCreate(savedInstanceState);
 
 
@@ -267,7 +267,7 @@ public static String CURRENT_TAG = TAG_DASHBOARD;
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 
-		handleSignInResponse(requestCode, resultCode, data);
+		//handleSignInResponse(requestCode, resultCode, data);
 	}
 
 	@SuppressLint("TimberArgCount")
@@ -279,7 +279,7 @@ public static String CURRENT_TAG = TAG_DASHBOARD;
 			if (resultCode == RESULT_OK) {
 				// Successfully signed in
 				firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-				validateLogin();
+				//validateLogin();
 				// ...
 			} else {
 				// Sign in failed, check response for error code
@@ -494,20 +494,7 @@ public static String CURRENT_TAG = TAG_DASHBOARD;
 
 
 
-          /* case R.id.nav_settings:
-                navItemIndex = 5;
-                CURRENT_TAG = TAG_SETTINGS;
-                break;
-            case R.id.nav_share:
-                //TODO launch new intent instead of loading fragment
-                //   startActivity(new Intent(MainActivity.this, AboutUsActivity.class));
-                drawer.closeDrawers();
-                return true;
-            case R.id.nav_send:
-                // launch new intent instead of loading fragment
-                //TODO  startActivity(new Intent(MainActivity.this, PrivacyPolicyActivity.class));
-                drawer.closeDrawers();
-                return true;*/
+
 			default:
 				navItemIndex = 0;
 		}
@@ -617,18 +604,9 @@ public static String CURRENT_TAG = TAG_DASHBOARD;
 
 			case 5:
 				return new AddMoneyFragment();
-          /*
 
-           case 4:
-                // Notifications fragment
-                return new Fragment();
-
-            case 5:
-                //setting fragment
-                return new SettingsFragment();*/
 			default:
-				return new DashboardFragment();// HomeFragment.newInstance(HomeFragment
-			// .parcelCount);
+				return new DashboardFragment();
 		}
 
 	}
@@ -637,7 +615,7 @@ public static String CURRENT_TAG = TAG_DASHBOARD;
 	public void onFakerReady(Faker faker) {
 		Timber.wtf("is this called?");
 
-		addFakeData(faker);
+	//	addFakeData(faker);
 
 	}
 
@@ -707,8 +685,8 @@ public static String CURRENT_TAG = TAG_DASHBOARD;
 	}
 
 	@Subscribe
-	public void onLoanFragmentOpen(@NonNull Events.openLoanDetailsFragment loanBundle) {
-		int accountNo = loanBundle.getAccountNo();
+	public void onLoanFragmentOpen(@NonNull Events.openLoanDetailsFragment loan) {
+		int accountNo = loan.getAccountNo();
 		LoanDetailsFragment fragment = LoanDetailsFragment.newInstance(accountNo);
 
 		activityUtils.loadFragment(fragment, getSupportFragmentManager());

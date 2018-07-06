@@ -220,8 +220,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
 					diff);
 			if (installment.getLoan().getCustomer().getMobileNumber() == null) {
 				callButton.setEnabled(false);
-				Events.showToast showToast =
-						new Events.showToast("We don't have this number", "error");
+				Events.showToast showToast =  new Events.showToast("We don't have this number", "error");
 				GlobalBus.getBus().post(showToast);
 
 			}

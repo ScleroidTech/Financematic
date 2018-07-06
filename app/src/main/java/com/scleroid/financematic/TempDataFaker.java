@@ -18,6 +18,10 @@ import hugo.weaving.DebugLog;
 import io.bloco.faker.Faker;
 import timber.log.Timber;
 
+/**
+ *
+ */
+@Deprecated
 public class TempDataFaker {
 
 	private List<Installment> installments;

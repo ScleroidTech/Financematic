@@ -30,7 +30,7 @@ public class SyncInstallmentsJob extends BaseJob<Installment> {
 
 
 		// if any exception is thrown, it will be handled by shouldReRunOnThrowable()
-		service.addInstallment(t);
+		service.addInstallment(firebaseUser.getUid(),t);
 
 		// remote call was successful--the Installment will be updated locally to reflect that sync
 		// is no longer pending
