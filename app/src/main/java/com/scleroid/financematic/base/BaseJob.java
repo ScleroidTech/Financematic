@@ -6,8 +6,6 @@ import android.support.annotation.Nullable;
 import com.birbit.android.jobqueue.Job;
 import com.birbit.android.jobqueue.Params;
 import com.birbit.android.jobqueue.RetryConstraint;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.scleroid.financematic.data.remote.RemotePostEndpoint;
 import com.scleroid.financematic.data.remote.services.jobs.utils.JobPriority;
 import com.scleroid.financematic.data.remote.services.networking.RemoteException;
@@ -28,9 +26,6 @@ public abstract class BaseJob<T> extends Job {
 	protected List<T> tList;
 
 	protected RemotePostEndpoint service;
-
-	private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-	protected FirebaseUser firebaseUser = mAuth.getCurrentUser();
 
 
 	protected BaseJob(String TAG, T t,

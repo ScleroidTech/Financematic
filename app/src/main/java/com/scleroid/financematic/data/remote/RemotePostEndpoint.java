@@ -18,31 +18,31 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
 public interface RemotePostEndpoint {
+
 	@NonNull
 	@DebugLog
 	@POST("/mobile/newregister")
-	Call<Customer> addCustomer(@Body final String firebaseUser,
-	                           @Body Customer customer);
+	Call<Customer> addCustomer(@Body Customer customer);
 
 	@NonNull
 	@DebugLog
 	@POST("/mobile/newloanusers")
-	Call<Loan> addLoan(@Body final String firebaseUser, @Body Loan loan);
+	Call<Loan> addLoan(@Body Loan loan);
 
 	@NonNull
 	@DebugLog
 	@POST("/mobile/posts")
-	Call<TransactionModel> addTransaction(@Body final String firebaseUser, @Body TransactionModel transaction);
+	Call<TransactionModel> addTransaction(@Body TransactionModel transaction);
 
 	@NonNull
 	@DebugLog
 	@POST("/mobile/insertmydate")
-	Call<Installment> addInstallment(@Body final String firebaseUser, @Body Installment installment);
+	Call<Installment> addInstallment(@Body Installment installment);
 
 	@NonNull
 	@DebugLog
 	@POST("/mobile/expand")
-	Call<Expense> addExpense(@Body final String firebaseUser, @Body Expense expense);
+	Call<Expense> addExpense(@Body Expense expense);
 
 	@NonNull
 	@DebugLog

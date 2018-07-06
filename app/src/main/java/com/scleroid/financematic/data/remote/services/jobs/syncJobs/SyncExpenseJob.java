@@ -27,7 +27,7 @@ public class SyncExpenseJob extends BaseJob<Expense> {
 
 
 		// if any exception is thrown, it will be handled by shouldReRunOnThrowable()
-		service.addExpense(firebaseUser.getUid(),t);
+		service.addExpense(t);
 
 		// remote call was successful--the Expense will be updated locally to reflect that sync
 		// is no longer pending
