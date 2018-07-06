@@ -6,6 +6,7 @@ import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -43,6 +44,19 @@ public class Customer {
 	private String idProofType;
 	@Ignore
 	private List<Loan> loans;
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(final String userId) {
+		this.userId = userId;
+	}
+
+	@Ignore
+	@SerializedName("userid")
+	@Expose
+	private String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 	public Customer(int customerId, String name, String mobileNumber, String address,
 	                String idProofNo, String idProofType) {
