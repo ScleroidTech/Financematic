@@ -38,6 +38,9 @@ public class Notification extends Fragment {
 	private PassbookAdapter mAdapter;
 
 
+
+
+
 	public Notification() {
 		// Required empty public constructor
 	}

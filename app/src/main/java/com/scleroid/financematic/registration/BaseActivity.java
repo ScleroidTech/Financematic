@@ -2,6 +2,9 @@ package com.scleroid.financematic.registration;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.LayoutRes;
+import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,10 +12,14 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.scleroid.financematic.R;
 
-public class BaseActivity extends AppCompatActivity {
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
+public abstract class BaseActivity extends AppCompatActivity {
 
 	@VisibleForTesting
 	public ProgressDialog mProgressDialog;
+	private Unbinder unbinder;
 
 	public void showProgressDialog() {
 		if (mProgressDialog == null) {
@@ -44,4 +51,24 @@ public class BaseActivity extends AppCompatActivity {
 		}
 	}
 
+	@Override
+	protected void onCreate(@Nullable final Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(getLayoutId());
+		unbinder = ButterKnife.bind(this);
+	}
+
+	@Override
+	protected void onDestroy() {
+
+		super.onDestroy();
+		unbinder.unbind();
+	}
+
+	/**
+	 * @return layout resource id
+	 */
+	public abstract
+	@LayoutRes
+	int getLayoutId();
 }
