@@ -3,8 +3,6 @@ package com.scleroid.financematic.data.remote;
 
 import android.support.annotation.NonNull;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.local.model.Expense;
 import com.scleroid.financematic.data.local.model.Installment;
