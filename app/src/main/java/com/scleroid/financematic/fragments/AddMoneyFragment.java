@@ -44,7 +44,7 @@ public class AddMoneyFragment extends BaseFragment {
 	private String mParam1;
 	private String mParam2;
 	@Inject
-	private ActivityUtils activityUtils;
+	ActivityUtils activityUtils;
 
 	public AddMoneyFragment() {
 		// Required empty public constructor
