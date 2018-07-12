@@ -5,6 +5,8 @@ package com.scleroid.financematic.data.local.model;
  *
  * @author Ganesh Kaple
  * @since 4/16/18
+ *
+ * Types of different types of ID proof out there
  */
 public interface IdProofType {
 

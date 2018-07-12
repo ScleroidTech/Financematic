@@ -21,42 +21,15 @@ import com.scleroid.financematic.data.local.model.TransactionModel;
  * @see TransactionModel
  * @see Expense
  * @see com.scleroid.financematic.data.local.model.Installment
- * @since 27/10/17 It is a singleton class,so it holds only one object for it's entire existence It
- * holds the current object of database It handles creating of the database if it doesn't exists &
- * providing the database object whenever required There are 3 tables in this database,
+ * @since 27/10/17
+ * It is responsible for the Database for entire app
+ * Object initialization is done via dagger and is a singleton object over all app
+ *
  */
 
 @Database(entities = {Customer.class, Loan.class, TransactionModel.class, Expense.class,
 		Installment.class}, version = 13, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
-	/*
-
-    private static AppDatabase instance;
-
-    *//*
-    public static AppDatabase getAppDatabase(Context context) {
-        *//*
-           creates a new database if instance doesn't exists
-         *//*
-
-        if (instance == null) {
-            instance =
-                    Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class,
-                    "financeMatic-database")
-                            //While Migration of database, it destroys previous versions, should
-                            be removed
-                            .fallbackToDestructiveMigration()
-                            .build();
-        }
-        return instance;
-    }
-
-    *//*
-    public static void destroyInstance() {
-
-        instance = null;
-    }
-*/
 
 	/**
 	 * Customer Model Data Access Object, For Room Library

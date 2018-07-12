@@ -175,17 +175,4 @@ public class TransactionModel implements Serializable {
 				Objects.equals(description, that.description);
 	}
 
-	/*@Nullable
-	@Override
-	public String toString() {
-		return "TransactionModel{" +
-				"transactionId=" + transactionId +
-				", transactionDate=" + transactionDate +
-				", lentAmt=" + lentAmt == null ? null : lentAmt.toPlainString() +
-				", gainedAmt=" + gainedAmt == null ? null : gainedAmt.toPlainString() +
-				", receivedAmt=" + receivedAmt == null ? null : receivedAmt.toPlainString() +
-				", description='" + description + '\'' +
-				", loanAcNo=" + loanAcNo +
-				'}';
-	}*/
 }

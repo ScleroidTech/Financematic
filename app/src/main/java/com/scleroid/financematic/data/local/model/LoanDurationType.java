@@ -5,6 +5,7 @@ package com.scleroid.financematic.data.local.model;
  *
  * @author Ganesh Kaple
  * @since 4/16/18
+ * Different durations of loans
  */
 public interface LoanDurationType {
 
@@ -13,6 +14,7 @@ public interface LoanDurationType {
 	String WEEKLY = "Weekly";
 
 	String BIWEEKLY = "Bi-Weekly";
+
 	String MONTHLY = "Monthly";
 
 	String BIMONTHLY = "Bi-Monthly";

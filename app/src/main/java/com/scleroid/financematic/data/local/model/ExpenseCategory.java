@@ -5,6 +5,8 @@ package com.scleroid.financematic.data.local.model;
  *
  * @author Ganesh Kaple
  * @since 4/16/18
+ *
+ * Categories of different types of expense category
  */
 public interface ExpenseCategory {
 	String OTHER = "Others";

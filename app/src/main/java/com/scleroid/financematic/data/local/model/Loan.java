@@ -21,17 +21,14 @@ import java.util.Date;
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
 /**
- * Created by Lincoln on 15/01/16.
+ * Model representing Loan
  */
-
 @Entity(foreignKeys = @ForeignKey(entity = Customer.class,
 		parentColumns = "customerId",
 		childColumns = "custId",
 		onDelete = CASCADE),
 		indices = {@Index(value = "accountNo", unique = true)})
 public class Loan implements Serializable {
-	/* private String title, genre, year;
-	 */
 
 
 	public String getUserId() {
