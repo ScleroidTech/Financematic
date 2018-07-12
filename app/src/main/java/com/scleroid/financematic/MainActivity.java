@@ -552,7 +552,8 @@ public class MainActivity extends BaseActivity
 					FragmentManager.POP_BACK_STACK_INCLUSIVE);
 			loadFragmentRunnable(fragment, false);
 		} else {
-			loadFragmentRunnable(fragment, true);
+			//TODO make it true when you're done
+			loadFragmentRunnable(fragment, false);
 		}
 		// show or hide the fab button
 
