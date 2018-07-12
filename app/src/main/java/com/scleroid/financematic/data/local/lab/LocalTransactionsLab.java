@@ -98,6 +98,11 @@ public class LocalTransactionsLab implements LocalDataSource<TransactionModel> {
 		}).subscribeOn(Schedulers.io());
 	}
 
+	/**
+	 * adds network items to local database
+	 *
+	 * @param items list of generic items
+	 */
 	@Override
 	public void addNetworkItems(@NonNull final List<TransactionModel> items) {
 		Timber.d("Storing data");
@@ -105,6 +110,11 @@ public class LocalTransactionsLab implements LocalDataSource<TransactionModel> {
 		Timber.d("transaction stored " + rowId.length);
 	}
 
+	/**
+	 * adds network item to local database,
+	 * single value
+	 * @param item generic object
+	 */
 	@Override
 	public void addNetworkItem(@NonNull final TransactionModel item) {
 		Timber.d("Storging single data");
@@ -112,13 +122,6 @@ public class LocalTransactionsLab implements LocalDataSource<TransactionModel> {
 		Timber.d("transaction stored " + rowId);
 	}
 
-	/**
-	 * refreshes the data source
-	 */
-	@Override
-	public void refreshItems() {
-		//TODO implement later
-	}
 
 	/**
 	 * Deletes all the data source
@@ -147,9 +150,16 @@ public class LocalTransactionsLab implements LocalDataSource<TransactionModel> {
 		}).subscribeOn(Schedulers.io());
 	}
 
+	/**
+	 * Updates a transaction object with new values
+	 * @param transactionModel to be updated
+	 * @return after updating
+	 */
 	@Nullable
 	@Override
 	public Single<TransactionModel> updateItem(final TransactionModel transactionModel) {
+		//TODO implement this
+
 		return null;
 	}
 

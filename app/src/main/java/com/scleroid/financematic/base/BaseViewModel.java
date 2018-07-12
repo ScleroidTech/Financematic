@@ -12,12 +12,9 @@ import java.util.List;
  *
  * @author Ganesh Kaple
  * @since 4/6/18
- */
-
-/**
+ *
  * It's actually unnecessary
  * its base class for all viewmodels
- *
  * @param <N> generic viewmodel object
  */
 public abstract class BaseViewModel<N> extends ViewModel {
@@ -31,7 +28,7 @@ public abstract class BaseViewModel<N> extends ViewModel {
 
 	/**
 	 * returns livedata object to be used in further places
-	 * @return
+	 * @return list of item in livedata wrapper
 	 */
 	protected abstract LiveData<Resource<List<N>>> getItemList();
 

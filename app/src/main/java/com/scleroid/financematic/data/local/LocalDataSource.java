@@ -53,14 +53,21 @@ public interface LocalDataSource<T> {
 	 */
 	Completable addItems(@NonNull List<T> items);
 
-	void addNetworkItems(@NonNull List<T> items);
-
-	void addNetworkItem(@NonNull T item);
 
 	/**
-	 * refreshes the data source
+	 * adds items from network to local database
+	 *
+	 * @param items list of generic items
 	 */
-	void refreshItems();
+	void addNetworkItems(@NonNull List<T> items);
+
+	/**
+	 * adds a single item from network when called
+	 * to local database
+	 * @param item generic object
+	 */
+	void addNetworkItem(@NonNull T item);
+
 
 	/**
 	 * Deletes all the data source
@@ -74,35 +81,14 @@ public interface LocalDataSource<T> {
 	 */
 	Single<T> deleteItem(@NonNull T item);
 
+	/**
+	 * Updates a particular item
+	 * @param t the item to be updated
+	 * @return the updated item wrapped in Rx
+	 * @see Single object
+	 */
 	@Nullable
 	Single<T> updateItem(T t);
 
-	/*Not using Callback anymore
-	 *
-	 * *//**
-	 * Callback for getItems
-	 *
-	 * @param <T>
-	 *//*
-    interface LoadCallback<T> {
 
-        void onLoaded(LiveData<List<T>> items);
-
-        void onDataNotAvailable();
-    }
-
-
-    *//**
-	 * CallBack for getItem
-	 *
-	 * @param <T>
-	 *//*
-    interface GetCallback<T> {
-
-        default void onLoaded(LiveData<T> item) {
-
-        }
-
-        void onDataNotAvailable();
-    }*/
 }

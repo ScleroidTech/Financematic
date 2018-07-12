@@ -60,15 +60,6 @@ public interface InstallmentDao {
 	@Query("SELECT * FROM Installment where installmentId = :serialNo ")
 	Single<Installment> getRxInstallment(int serialNo);
 
-
-	/**
-	 * select query to count Number of installment
-	 *
-	 * @return number of total entries in the table
-	 */
-	@Query("SELECT COUNT(*) from Installment")
-	int countInstallment();
-
 	/**
 	 * Performs insertion operation
 	 *

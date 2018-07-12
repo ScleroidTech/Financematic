@@ -26,9 +26,22 @@ import timber.log.Timber;
  *
  * @author Ganesh Kaple
  * @since 4/5/18
+ *
+ * A single point of access for all DB related queries for
+ * @see Customer class
  */
 public class LocalCustomerLab implements LocalDataSource<Customer> {
+	/**
+	 * Object of Dao
+	 * which will be required to perform db related queries
+	 * initialized in constructor
+	 */
 	private final CustomerDao customerDao;
+	/**
+	 * Object of loanDao class,
+	 * required for some queries,
+	 * instantiated via dagger
+	 */
 	@Inject
 	LoanDao loanDao;
 
@@ -79,9 +92,7 @@ public class LocalCustomerLab implements LocalDataSource<Customer> {
 	 */
 	@Override
 	public Single<Customer> saveItem(@NonNull final Customer item) {
-		//	Timber.d("creating new customer ");
-		//	long rowId3 = customerDao.saveCustomer(item);
-		//	Timber.d("creating new customer " + rowId3);
+
 		return Single.fromCallable(() -> {
 			long rowId = customerDao.saveCustomer(item);
 			Timber.d("customer stored " + rowId);
@@ -133,13 +144,6 @@ public class LocalCustomerLab implements LocalDataSource<Customer> {
 	}
 
 
-	/**
-	 * refreshes the data source
-	 */
-	@Override
-	public void refreshItems() {
-
-	}
 
 	/**
 	 * Deletes all the data source
@@ -185,35 +189,12 @@ public class LocalCustomerLab implements LocalDataSource<Customer> {
 		return customerDao.getRxCustomer(itemId);
 	}
 
-	public LiveData<List<Customer>> getCustomersWithLoans() {
-		LiveData<List<Customer>> customerLiveData = customerDao.getAllCustomerLive();
-
-		// TODO Test this, if works remove below code, this part has performance issues
-		customerLiveData = Transformations.switchMap(customerLiveData, inputCustomers -> {
-			MediatorLiveData<List<Customer>> customerMediatorLiveData = new MediatorLiveData<>();
-
-			for (Customer customer : inputCustomers) {
-
-				customerMediatorLiveData.addSource(
-						loanDao.getLoanByCustomerIdLive(customer.getCustomerId()), loan -> {
-
-							customer.setLoans(loan);
-							customerMediatorLiveData.postValue(inputCustomers);
-
-						});
-			}
-			return customerMediatorLiveData;
-		});
-		return customerLiveData;
-       /* customerLiveData = Transformations.map(customerLiveData, inputStates -> {
-            for (Customer state : inputStates) {
-                state.setLoans(loanDao.getLoans(state.getCustomerId()));
-            }
-            return inputStates;
-        });
-        return customerLiveData;*/
-	}
-
+	/**
+	 * gets customer with all his loans attached to it's object
+	 *
+	 * @param id customer id for the customer to be retrieved
+	 * @return customer wrapped in  livedata object
+	 */
 	public LiveData<Customer> getCustomer(int id) {
 		LiveData<Customer> customerLiveData = customerDao.getCustomerLive(id);
 		customerLiveData = Transformations.switchMap(customerLiveData, inputCustomer -> {
@@ -226,7 +207,6 @@ public class LocalCustomerLab implements LocalDataSource<Customer> {
 			return mediatorLiveData;
 		});
 		return customerLiveData;
-		//Good Job buddy, now the real challenge is next method
 	}
 
 

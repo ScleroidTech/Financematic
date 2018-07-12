@@ -19,12 +19,9 @@ import timber.log.Timber;
  *
  * @author Ganesh Kaple
  * @since 5/2/18
- */
-
-/**
+ *
  * Creates a base class for all the jobs it created
  * jobs are forwarded to
- *
  * @param <T> generic object of the job to be handled
  * @see com.birbit.android.jobqueue.JobManager to be handled later
  */

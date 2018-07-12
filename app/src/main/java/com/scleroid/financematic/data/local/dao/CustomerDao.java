@@ -16,27 +16,19 @@ import io.reactivex.Single;
 import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 
 /**
- * Data Access Object required for
+
  * <p>
  * Copyright (C) 2018
- *
  * @author Ganesh Kaple
+ *
+ * Data Access Object required for
  * @see android.arch.persistence.room.Room For Model
  * @see Customer
- * @since 4/2/18
  * @since 10-01-2018
  */
 @Dao
-
 public interface CustomerDao {
 
-	/**
-	 * Select Query
-	 *
-	 * @return List of all customers in database
-	 */
-	@Query("SELECT * FROM Customer")
-	List<Customer> getCustomers();
 
 	/**
 	 * Returns  list of all customers
@@ -66,35 +58,6 @@ public interface CustomerDao {
 	 */
 	@Query("SELECT * FROM Customer where customerId = :serialNo ")
 	LiveData<Customer> getCustomerLive(int serialNo);
-
-	/* *//**
-	 * Returns no of loans per customer
-	 *
-	 * @param custId the id of customer which we need data about
-	 * @return list of loans
-	 *//*
-
-    @Query("SELECT * FROM Loan WHERE custId = :custId")
-    List<Loan> getLoans(int custId);
-
-    *//**
-	 * Returns no of loans per customer
-	 *
-	 * @param custId customer id which we need loan about
-	 * @return list of loans in a livedata wrapper
-	 *//*
-
-    @Query("SELECT * FROM Loan WHERE custId = :custId")
-    LiveData<List<Loan>> getLoansLive(int custId);
-*/
-
-	/**
-	 * select query to count Number of customer
-	 *
-	 * @return number of total entries in the table
-	 */
-	@Query("SELECT COUNT(*) from Customer")
-	int countCustomer();
 
 	/**
 	 * Performs insertion operation

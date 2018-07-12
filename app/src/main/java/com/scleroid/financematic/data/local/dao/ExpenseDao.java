@@ -57,14 +57,6 @@ public interface ExpenseDao {
 	LiveData<Expense> getExpense(int serialNo);
 
 	/**
-	 * select query to count Number of expense
-	 *
-	 * @return number of total entries in the table
-	 */
-	@Query("SELECT COUNT(*) from Expense")
-	int countExpense();
-
-	/**
 	 * Performs insertion operation
 	 *
 	 * @param expense inserts this object in the database

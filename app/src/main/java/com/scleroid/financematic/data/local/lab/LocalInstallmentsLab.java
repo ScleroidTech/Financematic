@@ -104,6 +104,11 @@ public class LocalInstallmentsLab implements LocalDataSource<Installment> {
 		}).subscribeOn(Schedulers.io());
 	}
 
+	/**
+	 * stores network items in local database
+	 *
+	 * @param items list of generic items
+	 */
 	@Override
 	public void addNetworkItems(@NonNull final List<Installment> items) {
 		Timber.d("Storing data");
@@ -111,6 +116,10 @@ public class LocalInstallmentsLab implements LocalDataSource<Installment> {
 		Timber.d("installment stored " + rowId.length);
 	}
 
+	/**
+	 * stores single network item from network to local database
+	 * @param item generic object
+	 */
 	@Override
 	public void addNetworkItem(@NonNull final Installment item) {
 		Timber.d("Storing single data");
@@ -118,13 +127,6 @@ public class LocalInstallmentsLab implements LocalDataSource<Installment> {
 		Timber.d("installment stored " + rowId);
 	}
 
-	/**
-	 * refreshes the data source
-	 */
-	@Override
-	public void refreshItems() {
-
-	}
 
 	/**
 	 * Deletes all the data source
@@ -238,6 +240,11 @@ public class LocalInstallmentsLab implements LocalDataSource<Installment> {
 		return installmentDao.getInstallmentsForLoanLive(acNo);
 	}
 
+	/**
+	 * returns installment list with
+	 * a particular customer attached to it to whom it belongs
+	 * @return list of installments
+	 */
 	public LiveData<List<Installment>> getInstallmentWithCustomers() {
 		LiveData<List<Installment>> installmentsLive = installmentDao.getAllInstallmentsLive();
 
@@ -258,18 +265,7 @@ public class LocalInstallmentsLab implements LocalDataSource<Installment> {
 					return installmentMediatorLiveData;
 				});
 		return installmentsLive;
-		/*loansLive = Transformations.map(loansLive, new Function<List<Customer>, List<Customer>>
-		() {
 
-			@Override
-			public List<Customer> apply(final List<Customer> inputStates) {
-               *//* for (Customer state : inputStates) {
-                    state.setLoans(dao.getLoans(state.getCustomerId()));
-                }*//*
-				return inputStates;
-			}
-		});
-		return loansLive;*/
 	}
 
 

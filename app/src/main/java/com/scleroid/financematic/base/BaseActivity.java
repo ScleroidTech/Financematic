@@ -18,9 +18,6 @@ import dagger.android.support.HasSupportFragmentInjector;
  *
  * @author Ganesh Kaple
  * @since 4/6/18
- */
-
-/**
  * All activities must extend this
  * so they can have basic features like Dependency Injection using
  *

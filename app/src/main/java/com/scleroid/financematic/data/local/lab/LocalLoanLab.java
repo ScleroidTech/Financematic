@@ -104,25 +104,27 @@ public class LocalLoanLab implements LocalDataSource<Loan> {
 		}).subscribeOn(Schedulers.io());
 	}
 
+	/**
+	 * adds all network items to local database
+	 *
+	 * @param items list of generic items
+	 */
 	@Override
 	public void addNetworkItems(@NonNull final List<Loan> items) {
 		long[] rowId = loanDao.saveLoans(items);
 		Timber.d("loan stored " + rowId.length);
 	}
 
+	/**
+	 * Adds a single network item to local database
+	 * @param item generic object
+	 */
 	@Override
 	public void addNetworkItem(@NonNull final Loan item) {
 		long rowId = loanDao.saveLoan(item);
 		Timber.d("loan stored " + rowId);
 	}
 
-	/**
-	 * refreshes the data source
-	 */
-	@Override
-	public void refreshItems() {
-
-	}
 
 	/**
 	 * Deletes all the data source
@@ -150,6 +152,11 @@ public class LocalLoanLab implements LocalDataSource<Loan> {
 
 	}
 
+	/**
+	 * Updates an item with new data
+	 * @param loan the object to be updated
+	 * @return updated item
+	 */
 	@Override
 	public Single<Loan> updateItem(final Loan loan) {
 		Timber.d("updating loan ");
@@ -178,22 +185,6 @@ public class LocalLoanLab implements LocalDataSource<Loan> {
 		return loanDao.getRxLoan(itemId);
 	}
 
-	/*public LiveData<Loan> loadQuotationDetails(int quotationId) {
-		LiveData<Loan> quotationLiveData =
-				quotationDao.getQuotationCustomer(quotationId);
-		LiveData<QuotationCustomer> result =
-				Transformations.switchMap(quotationLiveData, quotation -> {
-					MutableLiveData<QuotationCustomer> mutableResult = new MutableLiveData<>();
-					appExecutors.diskIO().execute(() -> {
-						quotation.quotationDetList =
-								quotationDetDao.getQuotationDetsByQuotationIdSync(quotationId);
-						mutableResult.postValue(quotation);
-					});
-					return mutableResult;
-				});
-		return result;
-	}
-*/
 	public LiveData<List<Loan>> getLoanWithCustomers() {
 		LiveData<List<Loan>> loansLive = loanDao.getLoansLive();
 
@@ -211,34 +202,8 @@ public class LocalLoanLab implements LocalDataSource<Loan> {
 			return loanMediatorLiveData;
 		});
 		return loansLive;
-		/*loansLive = Transformations.map(loansLive, new Function<List<Customer>, List<Customer>>
-		() {
 
-			@Override
-			public List<Customer> apply(final List<Customer> inputStates) {
-               *//* for (Customer state : inputStates) {
-                    state.setLoans(dao.getLoans(state.getCustomerId()));
-                }*//*
-				return inputStates;
-			}
-		});
-		return loansLive;*/
 	}
-
-/*
-	public LiveData<List<Loan>> getLoanWithCustomer(int id) {
-		LiveData<List< Loan>> loanLiveData = loanDao.getLoanLive(id);
-		final LiveData<Loan> finalLoanLiveData = loanLiveData;
-
-		loanLiveData = Transformations.switchMap(loanLiveData, (Loan loan) -> {
-			Customer customer = customerDao.getCustomer(loan.getCustId());
-			loan.setCustomer(customer);
-			return finalLoanLiveData;
-		});
-		return loanLiveData;
-		//Good Job buddy, now the real challenge is next method
-	}
-*/
 
 	@NonNull
 	public LiveData<Loan> loadLoanDetails(int loanId) {

@@ -8,7 +8,6 @@ import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
 import com.scleroid.financematic.data.local.model.Loan;
-import com.scleroid.financematic.data.local.model.TransactionModel;
 
 import java.util.List;
 
@@ -83,14 +82,6 @@ public interface LoanDao {
 	Single<Loan> getRxLoan(int serialNo);
 
 	/**
-	 * select query to count Number of loan
-	 *
-	 * @return number of total entries in the table
-	 */
-	@Query("SELECT COUNT(*) from Loan")
-	int countLoan();
-
-	/**
 	 * Performs insertion operation
 	 *
 	 * @param loan inserts this object in the database
@@ -127,33 +118,6 @@ public interface LoanDao {
 	 */
 	@Query("DELETE FROM Loan")
 	void nukeTable();
-
-
-	/**
-	 * Returns no of transactions per loan
-	 *
-	 * @param accNo the id of loan which we need data about
-	 * @return list of transactions per loan
-	 */
-
-	@Query("SELECT * FROM TransactionModel WHERE loanAcNo = :accNo")
-	List<TransactionModel> getTransactions(int accNo);
-
-	/**
-	 * Returns no of loans per customer
-	 *
-	 * @param accNo id of the loan which we need data about
-	 * @return list of transactions in a livedata wrapper
-	 */
-
-	@Query("SELECT * FROM TransactionModel WHERE loanAcNo = :accNo")
-	LiveData<List<TransactionModel>> getTransactionsLive(int accNo);
-
-	@Query("SELECT * FROM loan WHERE custId=:userId")
-	List<Loan> getLoansForCustomer(final int userId);
-
-	@Query("SELECT * FROM loan WHERE custId=:userId")
-	LiveData<List<Loan>> getLoansForCustomerLive(final int userId);
 
 
 }

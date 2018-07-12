@@ -110,13 +110,7 @@ public class LocalExpenseLab implements LocalDataSource<Expense> {
 		Timber.d("expense stored " + rowId);
 	}
 
-	/**
-	 * refreshes the data source
-	 */
-	@Override
-	public void refreshItems() {
 
-	}
 
 	/**
 	 * Deletes all the data source
@@ -144,6 +138,14 @@ public class LocalExpenseLab implements LocalDataSource<Expense> {
 		}).subscribeOn(Schedulers.io());
 	}
 
+
+	/**
+	 * updates a particular item in the database
+	 *
+	 * @param expense object to be updated
+	 * @return updated object wrapped in
+	 * @see Single of Rxjava
+	 */
 	@Override
 	public Single<Expense> updateItem(final Expense expense) {
 		Timber.d("creating new installment ");

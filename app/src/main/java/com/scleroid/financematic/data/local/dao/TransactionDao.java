@@ -47,13 +47,6 @@ public interface TransactionDao {
 	@Query("SELECT * FROM TransactionModel where transactionId = :serialNo ")
 	LiveData<TransactionModel> getTransaction(int serialNo);
 
-	/**
-	 * select query to count Number of transactionModel
-	 *
-	 * @return number of total entries in the table
-	 */
-	@Query("SELECT COUNT(*) from TransactionModel")
-	int countTransaction();
 
 	/**
 	 * Performs insertion operation
@@ -93,9 +86,6 @@ public interface TransactionDao {
 	 */
 	@Query("DELETE FROM TransactionModel")
 	void nukeTable();
-
-	@Query("SELECT * FROM transactionmodel WHERE loanAcNo=:userId")
-	List<TransactionModel> getTransactionsForLoan(final int userId);
 
 	@Query("SELECT * FROM TransactionModel WHERE loanAcNo=:userId")
 	LiveData<List<TransactionModel>> getTransactionsForLoanLive(final int userId);
