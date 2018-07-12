@@ -1,4 +1,4 @@
-package com.scleroid.financematic.fragments.loanDetails;
+package com.scleroid.financematic.fragments.loandetails;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;

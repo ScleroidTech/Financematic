@@ -19,8 +19,7 @@ import com.scleroid.financematic.data.repo.TransactionsRepo;
 import com.scleroid.financematic.fragments.customer.CustomerViewModel;
 import com.scleroid.financematic.fragments.dashboard.DashboardViewModel;
 import com.scleroid.financematic.fragments.expense.ExpenseViewModel;
-import com.scleroid.financematic.fragments.loanDetails.LoanDetailsViewModel;
-import com.scleroid.financematic.fragments.passbook.PassbookViewModel;
+import com.scleroid.financematic.fragments.loandetails.LoanDetailsViewModel;
 import com.scleroid.financematic.fragments.people.PeopleViewModel;
 import com.scleroid.financematic.fragments.report.ReportViewModel;
 
@@ -75,9 +74,7 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
 		} else if (modelClass.isAssignableFrom(DashboardViewModel.class)) {
 			//noinspection unchecked
 			return (T) new DashboardViewModel(loanRepo, installmentRepo);
-		} else if (modelClass.isAssignableFrom(PassbookViewModel.class)) {
-			//noinspection unchecked
-			return (T) new PassbookViewModel();
+
 		} else if (modelClass.isAssignableFrom(ReportViewModel.class)) {
 			//noinspection unchecked
 			return (T) new ReportViewModel(transactionsRepo);

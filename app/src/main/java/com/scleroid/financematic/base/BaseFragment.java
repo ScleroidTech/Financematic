@@ -89,6 +89,8 @@ public abstract class BaseFragment<V extends BaseViewModel> extends Fragment {
 		performDependencyInjection();
 		super.onCreate(savedInstanceState);
 
+
+		final V mViewModel = getViewModel();
 		setHasOptionsMenu(false);
 	}
 

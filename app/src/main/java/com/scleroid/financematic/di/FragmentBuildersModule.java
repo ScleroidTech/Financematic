@@ -13,8 +13,7 @@ import com.scleroid.financematic.fragments.dialogs.DatePickerDialogFragment;
 import com.scleroid.financematic.fragments.dialogs.DelayDialogFragment;
 import com.scleroid.financematic.fragments.dialogs.RegisterReceivedDialogFragment;
 import com.scleroid.financematic.fragments.expense.ExpenseFragment;
-import com.scleroid.financematic.fragments.loanDetails.LoanDetailsFragment;
-import com.scleroid.financematic.fragments.passbook.PassbookFragment;
+import com.scleroid.financematic.fragments.loandetails.LoanDetailsFragment;
 import com.scleroid.financematic.fragments.people.PeopleFragment;
 import com.scleroid.financematic.fragments.report.ReportFragment;
 
@@ -45,9 +44,6 @@ public abstract class FragmentBuildersModule {
 	@ContributesAndroidInjector
 	abstract LoanDetailsFragment contributeLoanDetailsFragment();
 
-	@NonNull
-	@ContributesAndroidInjector
-	abstract PassbookFragment contributePassbookFragment();
 
 	@NonNull
 	@ContributesAndroidInjector

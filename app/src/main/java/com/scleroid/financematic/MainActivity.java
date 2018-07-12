@@ -42,7 +42,7 @@ import com.scleroid.financematic.fragments.dashboard.DashboardFragment;
 import com.scleroid.financematic.fragments.dialogs.DelayDialogFragment;
 import com.scleroid.financematic.fragments.dialogs.RegisterReceivedDialogFragment;
 import com.scleroid.financematic.fragments.expense.ExpenseFragment;
-import com.scleroid.financematic.fragments.loanDetails.LoanDetailsFragment;
+import com.scleroid.financematic.fragments.loandetails.LoanDetailsFragment;
 import com.scleroid.financematic.fragments.people.PeopleFragment;
 import com.scleroid.financematic.fragments.report.ReportFragment;
 import com.scleroid.financematic.utils.eventbus.Events;

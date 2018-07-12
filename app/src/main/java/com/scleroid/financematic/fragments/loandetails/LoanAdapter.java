@@ -1,4 +1,4 @@
-package com.scleroid.financematic.fragments.loanDetails;
+package com.scleroid.financematic.fragments.loandetails;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;

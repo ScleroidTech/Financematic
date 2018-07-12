@@ -7,8 +7,7 @@ import android.support.annotation.NonNull;
 import com.scleroid.financematic.fragments.customer.CustomerViewModel;
 import com.scleroid.financematic.fragments.dashboard.DashboardViewModel;
 import com.scleroid.financematic.fragments.expense.ExpenseViewModel;
-import com.scleroid.financematic.fragments.loanDetails.LoanDetailsViewModel;
-import com.scleroid.financematic.fragments.passbook.PassbookViewModel;
+import com.scleroid.financematic.fragments.loandetails.LoanDetailsViewModel;
 import com.scleroid.financematic.fragments.people.PeopleViewModel;
 import com.scleroid.financematic.utils.ViewModelFactory;
 
@@ -54,12 +53,6 @@ public abstract class ViewModelModule {
 	@IntoMap
 	@ViewModelKey(DashboardViewModel.class)
 	abstract ViewModel bindDashboardViewModel(DashboardViewModel dashboardViewModel);
-
-	@NonNull
-	@Binds
-	@IntoMap
-	@ViewModelKey(PassbookViewModel.class)
-	abstract ViewModel bindPassbookViewModel(PassbookViewModel passbookViewModel);
 
 
 	@NonNull
