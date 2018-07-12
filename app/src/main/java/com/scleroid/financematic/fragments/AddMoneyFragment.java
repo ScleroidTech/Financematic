@@ -3,6 +3,7 @@ package com.scleroid.financematic.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import com.scleroid.financematic.R;
 import com.scleroid.financematic.base.BaseFragment;
 import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.local.Session;
+import com.scleroid.financematic.utils.ui.ActivityUtils;
 
 import javax.inject.Inject;
 
@@ -41,6 +43,8 @@ public class AddMoneyFragment extends BaseFragment {
 	// TODO: Rename and change types of parameters
 	private String mParam1;
 	private String mParam2;
+	@Inject
+	private ActivityUtils activityUtils;
 
 	public AddMoneyFragment() {
 		// Required empty public constructor
@@ -71,6 +75,17 @@ public class AddMoneyFragment extends BaseFragment {
 	}
 
 	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+	                         Bundle savedInstanceState) {
+		super.onCreateView(inflater, container, savedInstanceState);
+		// Inflate the layout for this fragment
+		View view = getRootView();
+		setTitle();
+
+		return view;
+	}
+
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if (getArguments() != null) {
@@ -79,14 +94,8 @@ public class AddMoneyFragment extends BaseFragment {
 		}
 	}
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-	                         Bundle savedInstanceState) {
-		super.onCreateView(inflater, container, savedInstanceState);
-		// Inflate the layout for this fragment
-		View view = getRootView();
-
-		return view;
+	private void setTitle() {
+		activityUtils.setTitle((AppCompatActivity) getActivity(), "Add Money");
 	}
 
 	/**

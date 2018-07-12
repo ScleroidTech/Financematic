@@ -2,11 +2,11 @@
 <resources>
     <string-array name="nav_item_activity_titles">
         <item>Dashboard</item>
-        <item>New Customer</item>
+        <item>List of Customers</item>
         <item>Report</item>
+        <item>Add Customer</item>
         <item>Expenses</item>
-        <item>Notification</item>
-        <item>Settings</item>
+        <item>Add Money</item>
 
     </string-array>
 </resources>

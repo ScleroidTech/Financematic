@@ -1,8 +1,6 @@
 package com.scleroid.financematic;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
@@ -25,8 +23,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
-import com.firebase.ui.auth.ErrorCodes;
-import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.scleroid.financematic.base.BaseActivity;
@@ -163,7 +159,7 @@ public class MainActivity extends BaseActivity
 		mFirebaseAuth = FirebaseAuth.getInstance();
 		firebaseUser = mFirebaseAuth.getCurrentUser();
 		//Check login, & if not, prompt the user to login
-		validateLogin();
+		//validateLogin();
 		super.onCreate(savedInstanceState);
 
 
@@ -262,7 +258,7 @@ public class MainActivity extends BaseActivity
 		return getSupportActionBar();
 	}
 
-	@SuppressLint("TimberArgCount")
+	/*@SuppressLint("TimberArgCount")
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -299,6 +295,8 @@ public class MainActivity extends BaseActivity
 			// ...
 		}
 	}
+
+	*/
 
 	/**
 	 * Check if user logged in or not, If not, Call the FireBaseUI to issue the login to user
@@ -575,12 +573,18 @@ public class MainActivity extends BaseActivity
 		MenuItem item;
 		if (navItemIndex > 2) {
 			item = bottomNavigationView.getMenu().getItem(0);
+			for (int i = 1; i < 2; i++) {
+				MenuItem item2 = bottomNavigationView.getMenu().getItem(0);
+				item2.setChecked(false);
+			}
 		} else {
 			item = bottomNavigationView.getMenu().getItem(navItemIndex);
+			if (item != null) {
+				item.setChecked(true);
+			}
 		}
-		if (item != null) {
-			item.setChecked(true);
-		}
+
+
 	}
 
 	private void setToolbarTitle() {

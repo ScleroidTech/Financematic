@@ -3,6 +3,7 @@ package com.scleroid.financematic.fragments;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -84,6 +85,7 @@ public class RegisterCustomerFragment extends BaseFragment {
 		super.onCreateView(inflater, container, savedInstanceState);
 		final View rootView = getRootView();
 
+		setTitle();
 		final Spinner spin = rootView.findViewById(R.id.spinneridtype);
 
 		/*        final String text = spinnerTypeOfInstallment.getSelectedItem().toString();*/
@@ -199,6 +201,10 @@ return;
 
 
 		return rootView;
+	}
+
+	private void setTitle() {
+		activityUtils.setTitle((AppCompatActivity) getActivity(), "Add New Customer");
 	}
 
 	/**
