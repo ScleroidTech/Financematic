@@ -21,7 +21,6 @@ public interface Repo<T> {
 
 	Completable saveItems(List<T> items);
 
-	//TODO Make this call also save data to network layer
 	Completable saveItem(T t);
 
 

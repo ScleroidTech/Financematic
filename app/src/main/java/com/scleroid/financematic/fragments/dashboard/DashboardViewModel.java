@@ -48,19 +48,6 @@ public class DashboardViewModel extends BaseViewModel<Installment> implements Cu
 	// private LiveData<List<DashBoardModel>> upcomingInstallmentsTransformed;
 	private LiveData<List<Installment>> upcomingInstallments = new MutableLiveData<>();
 
-    /*TODO temporarily removed
-    private MutableLiveData<List<Installment>> filterResults(
-		    final LiveData<List<Installment>> data) {
-		if (data == null ) Timber.wtf("The list is empty");
-         List<Installment> list = Stream.of(data.getValue())
-                .filter(installments -> dateUtils.isThisDateWithinRange(installments
-                .getInstallmentDate(), FILTER_DAYS))
-                .collect(Collectors.toList());
-	    MutableLiveData<List<Installment>> mutableLiveData=  new MutableLiveData<>();
-	    mutableLiveData.setValue(list);
-        return mutableLiveData;
-    }
-*/
 
 	@Inject
 	public DashboardViewModel(LoanRepo loanRepo,

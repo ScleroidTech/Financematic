@@ -30,8 +30,6 @@ public class RemoteCustomerLab implements RemoteDataSource<Customer> {
 
 	@Override
 	public Completable sync(final Customer customer) {
-      /*  return Completable.fromAction(()->
-        JobManagerFactory.getJobManager().addJobInBackground(new SyncCustomerJob(customer)));*/
 		return Completable.fromAction(() ->
 				jobManager
 						.addJobInBackground(new SyncCustomerJob(customer, service)));

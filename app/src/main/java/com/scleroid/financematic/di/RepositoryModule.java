@@ -57,23 +57,12 @@ abstract public class RepositoryModule {
 
 	private static final int THREAD_COUNT = 3;
 
-	//TODO When DataBase Added
-  /*  @Singleton
-    @Binds
-    @Local
-    abstract LocalDataSource provideTasksLocalDataSource(LocalLocalDataSource dataSource);
 
-    @Singleton
-    @Binds
-    @Remote
-    abstract LocalDataSource provideTasksRemoteDataSource(FakeTasksRemoteDataSource dataSource);
-
-*/
 	@Singleton
 	@Provides
 	static AppDatabase provideDb(@NonNull Application context) {
 
-		//	Timber.wtf("why we aren't calling this" + appDatabase);
+
 		return Room.databaseBuilder(context, AppDatabase.class, "financeMatic.db")
 
 				.fallbackToDestructiveMigration()
@@ -84,7 +73,7 @@ abstract public class RepositoryModule {
 	@Provides
 	static SharedPreferences provideSharedPreferences(@NonNull Application context) {
 
-		//	Timber.wtf("why we aren't calling this" + appDatabase);
+
 		return context.getSharedPreferences("financeMaticPref", Context.MODE_PRIVATE);
 	}
 
@@ -93,7 +82,7 @@ abstract public class RepositoryModule {
 	static SharedPreferences.Editor provideSharedPreferencesEditor(
 			@NonNull SharedPreferences sharedPreferences) {
 
-		//	Timber.wtf("why we aren't calling this" + appDatabase);
+
 		return sharedPreferences.edit();
 	}
 

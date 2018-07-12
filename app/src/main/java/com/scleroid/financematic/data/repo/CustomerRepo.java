@@ -36,7 +36,6 @@ public class CustomerRepo implements Repo<Customer> {
 
 	private final LocalCustomerLab localCustomerLab;
 	private final LoanRepo loanRepo;
-	//TODO remove direct access to this
 	private final WebService webService;
 	private final AppExecutors appExecutors;
 	private RemoteCustomerLab remoteCustomerLab;
@@ -83,13 +82,7 @@ public class CustomerRepo implements Repo<Customer> {
 			return customerMediatorLiveData;
 		});
 		return customerLiveData;
-       /* customerLiveData = Transformations.map(customerLiveData, inputStates -> {
-            for (Customer state : inputStates) {
-                state.setLoans(loanDao.getLoans(state.getCustomerId()));
-            }
-            return inputStates;
-        });
-        return customerLiveData;*/
+
 	}
 
 	@Override
@@ -171,7 +164,6 @@ public class CustomerRepo implements Repo<Customer> {
 
 	@Override
 	public Completable saveItem(@NonNull final Customer customer) {
-		//Observable.fromCallable(() -> customerDao.saveCustomer(customer));
 
 		return localCustomerLab.saveItem(customer).flatMapCompletable(remoteCustomerLab::sync);
 

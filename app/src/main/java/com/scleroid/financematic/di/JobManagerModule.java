@@ -78,13 +78,7 @@ public class JobManagerModule {
 					FrameworkJobSchedulerService.createSchedulerFor(context,
 							SchedulerJobService.class),
 					true);
-		} /*else {
-			int enableGcm = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable
-			(context);
-			if (enableGcm == ConnectionResult.SUCCESS) {
-				builder.scheduler(GcmJobSchedulerService.createSchedulerFor(context, GcmJobService
-				.class), true);
-			}*/
+		}
 
 		return new JobManager(builder.build());
 	}

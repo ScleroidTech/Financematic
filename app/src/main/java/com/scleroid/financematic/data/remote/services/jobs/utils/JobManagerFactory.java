@@ -60,12 +60,6 @@ public class JobManagerFactory {
 
 	private static JobManager configureJobManager(@NonNull Context context) {
 
-	 /*   DependencyInjector dependencyInjector = job -> {
-		    // this line depends on how your Dagger components are setup;
-		    // the important part is to cast job to BaseJob
-		    ((Application) context).DaggerAppComponent().inject((BaseJob) job);
-	    };
-*/
 		Configuration.Builder builder = new Configuration.Builder(context)
 				.minConsumerCount(1)//always keep at least one consumer alive
 				.maxConsumerCount(3)//up to 3 consumers at a time
