@@ -34,7 +34,9 @@ public class SyncCustomerJob extends BaseJob<Customer> {
 							.toString() + " " + response.code() + " " + response.headers() + " " +
 							response
 									.message() + "\n" + response.raw());
-				} else { Timber.e(response.errorBody() + "\n" + response.raw()); }
+				} else {
+					Timber.e(response.errorBody() + "\n" + response.raw());
+				}
 			}
 
 			@Override

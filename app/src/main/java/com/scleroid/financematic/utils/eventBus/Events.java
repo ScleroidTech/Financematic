@@ -20,7 +20,9 @@ public class Events {
 	public static class openCustomerFragment {
 		private int customerId;
 
-		public openCustomerFragment(final int customerId) {this.customerId = customerId;}
+		public openCustomerFragment(final int customerId) {
+			this.customerId = customerId;
+		}
 
 		public int getCustomerId() {
 			return customerId;

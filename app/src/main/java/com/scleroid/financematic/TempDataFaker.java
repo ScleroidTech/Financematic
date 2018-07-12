@@ -26,7 +26,8 @@ public class TempDataFaker {
 	private List<Loan> loans;
 	private List<Expense> expenses;
 
-	public TempDataFaker() { }
+	public TempDataFaker() {
+	}
 
 	@DebugLog
 	void populateData(@NonNull Faker faker) {

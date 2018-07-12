@@ -25,10 +25,10 @@ import timber.log.Timber;
  * Copyright (C) 2018
  *
  * @author Ganesh Kaple
- * @since 4/5/18
- *
- * A single point of access for all DB related queries for
  * @see Customer class
+ * @since 4/5/18
+ * <p>
+ * A single point of access for all DB related queries for
  */
 public class LocalCustomerLab implements LocalDataSource<Customer> {
 	/**
@@ -142,7 +142,6 @@ public class LocalCustomerLab implements LocalDataSource<Customer> {
 		Timber.d("creating new customers " + rowId2);
 
 	}
-
 
 
 	/**

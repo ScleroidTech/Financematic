@@ -48,7 +48,9 @@ public class LoanDetailsViewModel extends BaseViewModel<TransactionModel> implem
 	}
 
 	public LiveData<Resource<Loan>> getLoanLiveData() {
-		if (loanLiveData.getValue() == null) { loanLiveData = setLoanLiveData(); }
+		if (loanLiveData.getValue() == null) {
+			loanLiveData = setLoanLiveData();
+		}
 		return loanLiveData;
 	}
 

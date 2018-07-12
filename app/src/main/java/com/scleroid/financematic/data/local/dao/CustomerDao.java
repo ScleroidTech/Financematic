@@ -16,11 +16,11 @@ import io.reactivex.Single;
 import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 
 /**
-
  * <p>
  * Copyright (C) 2018
- * @author Ganesh Kaple
  *
+ * @author Ganesh Kaple
+ * <p>
  * Data Access Object required for
  * @see android.arch.persistence.room.Room For Model
  * @see Customer

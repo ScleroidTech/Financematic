@@ -1,9 +1,5 @@
 package com.scleroid.financematic;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
@@ -28,7 +24,6 @@ import com.scleroid.financematic.utils.ui.RupeeTextView;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -41,123 +36,86 @@ import timber.log.Timber;
 import static com.scleroid.financematic.fragments.dashboard.DashboardViewModel.FILTER_DAYS;
 
 
-        import android.support.annotation.NonNull;
-        import android.support.annotation.Nullable;
-        import android.support.v7.widget.CardView;
-        import android.support.v7.widget.RecyclerView;
-        import android.view.LayoutInflater;
-        import android.view.View;
-        import android.view.ViewGroup;
-        import android.widget.Button;
-        import android.widget.TextView;
-
-        import com.annimon.stream.Collectors;
-        import com.annimon.stream.Stream;
-        import com.annimon.stream.function.Predicate;
-        import com.scleroid.financematic.R;
-        import com.scleroid.financematic.data.local.model.Installment;
-        import com.scleroid.financematic.data.repo.CustomerRepo;
-        import com.scleroid.financematic.data.repo.LoanRepo;
-        import com.scleroid.financematic.utils.eventBus.Events;
-        import com.scleroid.financematic.utils.eventBus.GlobalBus;
-        import com.scleroid.financematic.utils.ui.ActivityUtils;
-        import com.scleroid.financematic.utils.ui.DateUtils;
-        import com.scleroid.financematic.utils.ui.RupeeTextView;
-
-        import java.math.BigDecimal;
-        import java.util.ArrayList;
-        import java.util.List;
-
-        import javax.inject.Inject;
-
-        import butterknife.BindView;
-        import butterknife.ButterKnife;
-        import butterknife.OnClick;
-        import timber.log.Timber;
-
-        import static com.scleroid.financematic.fragments.dashboard.DashboardViewModel.FILTER_DAYS;
-
-
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.MyViewHolder> {
 
 
-    @Inject
-    DateUtils dateUtils = new DateUtils();
-    //add manoj
-    @Inject
-    ActivityUtils activityUtils;
-    private List<Installment> installmentList;
+	@Inject
+	DateUtils dateUtils = new DateUtils();
+	//add manoj
+	@Inject
+	ActivityUtils activityUtils;
+	private List<Installment> installmentList;
 
 
-    NotificationAdapter(List<Installment> installmentList) {
-        this.installmentList = installmentList;
-        //this.filteredInstallments = filterResults(installmentList);
-    }
+	NotificationAdapter(List<Installment> installmentList) {
+		this.installmentList = installmentList;
+		//this.filteredInstallments = filterResults(installmentList);
+	}
 
 /*TODO Work in Progress ,Add this & remove other constructor
     public DashboardAdapter(List<Loan> installmentList) {
         this.installmentList = installmentList;
     }*/
 
-    public List<Installment> getFilteredInstallments() {
-        return filterResults(installmentList);
-    }
+	public List<Installment> getFilteredInstallments() {
+		return filterResults(installmentList);
+	}
 
-    private List<Installment> filterResults(@Nullable List<Installment> installments) {
+	private List<Installment> filterResults(@Nullable List<Installment> installments) {
 
-        if (installments == null) return new ArrayList<>();
-        return Stream.of(installments)
-                .filter(new Predicate<Installment>() {
-                    @Override
-                    public boolean test(Installment installment) {
-                        return dateUtils.isThisDateWithinRange(
-                                installment.getInstallmentDate(), FILTER_DAYS);
-                    }
-                })
-                .collect(Collectors.toList());
-    }
+		if (installments == null) return new ArrayList<>();
+		return Stream.of(installments)
+				.filter(new Predicate<Installment>() {
+					@Override
+					public boolean test(Installment installment) {
+						return dateUtils.isThisDateWithinRange(
+								installment.getInstallmentDate(), FILTER_DAYS);
+					}
+				})
+				.collect(Collectors.toList());
+	}
 
-    @NonNull
-    @Override
-    public NotificationAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_item_dashboard, parent, false);
+	@NonNull
+	@Override
+	public NotificationAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+		View itemView = LayoutInflater.from(parent.getContext())
+				.inflate(R.layout.list_item_dashboard, parent, false);
 
-        return new NotificationAdapter.MyViewHolder(itemView);
-    }
+		return new NotificationAdapter.MyViewHolder(itemView);
+	}
 
-    @Override
-    public void onBindViewHolder(NotificationAdapter.MyViewHolder holder, int position) {
-        Installment dashBoardModel = installmentList.get(position);
-
-
-        if (dashBoardModel.getLoan() == null) {
-            Timber.wtf(" loan is empty for " + dashBoardModel.toString());
-            return;
-        }
-
-        if (dashBoardModel.getLoan().getCustomer() == null) {
-            Timber.wtf(" customer is empty for " + dashBoardModel.getLoan().toString());
-
-            return;
-        }
-        if (
-                dashBoardModel.getLoan().getCustomer().getName() == null) {
-            Timber.wtf(" name is empty for " + dashBoardModel.getLoan().getCustomer().toString());
-            return;
-        }
-
-        holder.setData(dashBoardModel);
-        holder.itemView.setTag(dashBoardModel);
+	@Override
+	public void onBindViewHolder(NotificationAdapter.MyViewHolder holder, int position) {
+		Installment dashBoardModel = installmentList.get(position);
 
 
-        //add manoj
-        holder.dashboarditemcardview.setOnClickListener(v -> {
-            Timber.wtf("It's clicked dadadad");
-            Events.openCustomerFragment openCustomerFragment =
-                    new Events.openCustomerFragment(dashBoardModel.getLoan().getCustId());
-            GlobalBus.getBus().post(openCustomerFragment);
-        });
+		if (dashBoardModel.getLoan() == null) {
+			Timber.wtf(" loan is empty for " + dashBoardModel.toString());
+			return;
+		}
+
+		if (dashBoardModel.getLoan().getCustomer() == null) {
+			Timber.wtf(" customer is empty for " + dashBoardModel.getLoan().toString());
+
+			return;
+		}
+		if (
+				dashBoardModel.getLoan().getCustomer().getName() == null) {
+			Timber.wtf(" name is empty for " + dashBoardModel.getLoan().getCustomer().toString());
+			return;
+		}
+
+		holder.setData(dashBoardModel);
+		holder.itemView.setTag(dashBoardModel);
+
+
+		//add manoj
+		holder.dashboarditemcardview.setOnClickListener(v -> {
+			Timber.wtf("It's clicked dadadad");
+			Events.openCustomerFragment openCustomerFragment =
+					new Events.openCustomerFragment(dashBoardModel.getLoan().getCustId());
+			GlobalBus.getBus().post(openCustomerFragment);
+		});
 
 
 
@@ -173,138 +131,138 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 				.dispose();*/
 
 
-    }
+	}
 
 
-    @Override
-    public int getItemCount() {
-        return installmentList.size();
-    }
+	@Override
+	public int getItemCount() {
+		return installmentList.size();
+	}
 
-    public void setInstallmentList(final List<Installment> installmentList) {
-        //Timber.d("What's the list" + installmentList.isEmpty() + installmentList.toString());
-        List<Installment> filterResults = filterResults(installmentList);
-        Timber.d("What's the list" + filterResults.isEmpty() + filterResults.toString());
-        this.installmentList = filterResults;
-        //this.installmentList = installmentList;
-        notifyDataSetChanged();
-    }
-
-
-    static class MyViewHolder extends RecyclerView.ViewHolder {
+	public void setInstallmentList(final List<Installment> installmentList) {
+		//Timber.d("What's the list" + installmentList.isEmpty() + installmentList.toString());
+		List<Installment> filterResults = filterResults(installmentList);
+		Timber.d("What's the list" + filterResults.isEmpty() + filterResults.toString());
+		this.installmentList = filterResults;
+		//this.installmentList = installmentList;
+		notifyDataSetChanged();
+	}
 
 
-        Installment installment;
-
-        @NonNull
-        DateUtils dateUtils = new DateUtils();
-
-        @Inject
-        CustomerRepo customerRepo;
-        @Inject
-        LoanRepo loanRepo;
-        @Nullable
-        @BindView(R.id.customer_name_text_view)
-        TextView customerNameTextView;
-        @Nullable
-        @BindView(R.id.amount_text_view)
-        RupeeTextView amountTextView;
-        @Nullable
-        @BindView(R.id.due_date_text_view)
-        TextView dueDateTextView;
-        @Nullable
-        @BindView(R.id.time_remaining_text_view)
-        TextView timeRemainingTextView;
-        @Nullable
-        @BindView(R.id.call_button)
-        Button callButton;
-        @Nullable
-        @BindView(R.id.delay_button)
-        Button delayButton;
-        //add manoj
-        @Nullable
-        @BindView(R.id.dashboard_item_cardview)
-        CardView dashboarditemcardview;
+	static class MyViewHolder extends RecyclerView.ViewHolder {
 
 
-        MyViewHolder(@NonNull View view) {
-            super(view);
-            ButterKnife.bind(this, view);
+		Installment installment;
 
-        }
+		@NonNull
+		DateUtils dateUtils = new DateUtils();
 
-        private void setData(final Installment installment) {
-            this.installment = installment;
-            customerNameTextView.setText("loading ...");
-            //TODO Remove local call
-
-            if (installment.getLoan().getCustomer() != null) {
-                customerNameTextView.setText(installment.getLoan().getCustomer().getName());
-            }
-            BigDecimal expectedAmt = installment.getExpectedAmt();
-            if (expectedAmt == null) {
-                Timber.wtf("THere's no data available " + installment.toString());
-                amountTextView.setText("fetching");
-            } else {
-                amountTextView.setText(
-
-                        expectedAmt.toString());
-            }
-            dueDateTextView.setText(
-                    dateUtils.getFormattedDate(installment.getInstallmentDate()));
-            long differenceOfDates =
-                    dateUtils.differenceWithCurrentDate(installment.getInstallmentDate());
-            String diff;
-            if (differenceOfDates != 0) {
-                diff = String.format("%d day(s) to go", differenceOfDates);
-            } else { diff = String.format("Today"); }
-            timeRemainingTextView.setText(
-                    diff);
-            if (installment.getLoan().getCustomer().getMobileNumber() == null) {
-                callButton.setEnabled(false);
-                Events.showToast showToast =
-                        new Events.showToast("We don't have this number", "error");
-                GlobalBus.getBus().post(showToast);
-
-            }
-        }
+		@Inject
+		CustomerRepo customerRepo;
+		@Inject
+		LoanRepo loanRepo;
+		@Nullable
+		@BindView(R.id.customer_name_text_view)
+		TextView customerNameTextView;
+		@Nullable
+		@BindView(R.id.amount_text_view)
+		RupeeTextView amountTextView;
+		@Nullable
+		@BindView(R.id.due_date_text_view)
+		TextView dueDateTextView;
+		@Nullable
+		@BindView(R.id.time_remaining_text_view)
+		TextView timeRemainingTextView;
+		@Nullable
+		@BindView(R.id.call_button)
+		Button callButton;
+		@Nullable
+		@BindView(R.id.delay_button)
+		Button delayButton;
+		//add manoj
+		@Nullable
+		@BindView(R.id.dashboard_item_cardview)
+		CardView dashboarditemcardview;
 
 
-        @OnClick({R.id.call_button, R.id.delay_button, R.id.dashboard_item_cardview})
-        public void onViewClicked(@NonNull View view) {
-            switch (view.getId()) {
-                case R.id.call_button:
-                    handleCallClick();
-                    break;
-                case R.id.delay_button:
-                    handleDelay();
-                    break;
-                case R.id.dashboard_item_cardview:
-                    break;
-            }
-        }
+		MyViewHolder(@NonNull View view) {
+			super(view);
+			ButterKnife.bind(this, view);
 
-        private void handleCallClick() {
-            String phone = installment.getLoan().getCustomer().getMobileNumber();
-            Timber.d(phone + " of person " + installment.getLoan().getCustomer().getName());
-            Events.placeCall makeACall = new Events.placeCall(phone);
+		}
 
-            GlobalBus.getBus().post(makeACall);
-        }
+		private void setData(final Installment installment) {
+			this.installment = installment;
+			customerNameTextView.setText("loading ...");
+			//TODO Remove local call
 
-        private void handleDelay() {
-            Timber.d("delay of Payment" + installment.getLoan().getCustomer().getName());
-            Events.openDelayFragment delayFragment =
-                    new Events.openDelayFragment(installment.getInstallmentId(),
-                            installment.getLoanAcNo());
+			if (installment.getLoan().getCustomer() != null) {
+				customerNameTextView.setText(installment.getLoan().getCustomer().getName());
+			}
+			BigDecimal expectedAmt = installment.getExpectedAmt();
+			if (expectedAmt == null) {
+				Timber.wtf("THere's no data available " + installment.toString());
+				amountTextView.setText("fetching");
+			} else {
+				amountTextView.setText(
 
-            GlobalBus.getBus().post(delayFragment);
-        }
+						expectedAmt.toString());
+			}
+			dueDateTextView.setText(
+					dateUtils.getFormattedDate(installment.getInstallmentDate()));
+			long differenceOfDates =
+					dateUtils.differenceWithCurrentDate(installment.getInstallmentDate());
+			String diff;
+			if (differenceOfDates != 0) {
+				diff = String.format("%d day(s) to go", differenceOfDates);
+			} else {
+				diff = String.format("Today");
+			}
+			timeRemainingTextView.setText(
+					diff);
+			if (installment.getLoan().getCustomer().getMobileNumber() == null) {
+				callButton.setEnabled(false);
+				Events.showToast showToast =
+						new Events.showToast("We don't have this number", "error");
+				GlobalBus.getBus().post(showToast);
+
+			}
+		}
 
 
-    }
+		@OnClick({R.id.call_button, R.id.delay_button, R.id.dashboard_item_cardview})
+		public void onViewClicked(@NonNull View view) {
+			switch (view.getId()) {
+				case R.id.call_button:
+					handleCallClick();
+					break;
+				case R.id.delay_button:
+					handleDelay();
+					break;
+				case R.id.dashboard_item_cardview:
+					break;
+			}
+		}
+
+		private void handleCallClick() {
+			String phone = installment.getLoan().getCustomer().getMobileNumber();
+			Timber.d(phone + " of person " + installment.getLoan().getCustomer().getName());
+			Events.placeCall makeACall = new Events.placeCall(phone);
+
+			GlobalBus.getBus().post(makeACall);
+		}
+
+		private void handleDelay() {
+			Timber.d("delay of Payment" + installment.getLoan().getCustomer().getName());
+			Events.openDelayFragment delayFragment =
+					new Events.openDelayFragment(installment.getInstallmentId(),
+							installment.getLoanAcNo());
+
+			GlobalBus.getBus().post(delayFragment);
+		}
 
 
+	}
 
 
 }

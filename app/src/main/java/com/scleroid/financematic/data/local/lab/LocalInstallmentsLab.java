@@ -118,6 +118,7 @@ public class LocalInstallmentsLab implements LocalDataSource<Installment> {
 
 	/**
 	 * stores single network item from network to local database
+	 *
 	 * @param item generic object
 	 */
 	@Override
@@ -243,6 +244,7 @@ public class LocalInstallmentsLab implements LocalDataSource<Installment> {
 	/**
 	 * returns installment list with
 	 * a particular customer attached to it to whom it belongs
+	 *
 	 * @return list of installments
 	 */
 	public LiveData<List<Installment>> getInstallmentWithCustomers() {

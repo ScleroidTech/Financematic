@@ -117,6 +117,7 @@ public class LocalLoanLab implements LocalDataSource<Loan> {
 
 	/**
 	 * Adds a single network item to local database
+	 *
 	 * @param item generic object
 	 */
 	@Override
@@ -154,6 +155,7 @@ public class LocalLoanLab implements LocalDataSource<Loan> {
 
 	/**
 	 * Updates an item with new data
+	 *
 	 * @param loan the object to be updated
 	 * @return updated item
 	 */

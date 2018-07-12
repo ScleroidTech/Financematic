@@ -2,7 +2,6 @@ package com.scleroid.financematic.di;
 
 import android.support.annotation.NonNull;
 
-import com.scleroid.financematic.Notification;
 import com.scleroid.financematic.NotificationActivity;
 import com.scleroid.financematic.fragments.AddMoneyFragment;
 import com.scleroid.financematic.fragments.RegisterCustomerFragment;

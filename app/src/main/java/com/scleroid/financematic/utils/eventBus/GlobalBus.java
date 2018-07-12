@@ -18,7 +18,9 @@ public class GlobalBus {
 
 	//TODO remove this, we need this inside Dagger
 	public static EventBus getBus() {
-		if (sBus == null) { sBus = EventBus.getDefault(); }
+		if (sBus == null) {
+			sBus = EventBus.getDefault();
+		}
 		return sBus;
 	}
 }

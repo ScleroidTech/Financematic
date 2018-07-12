@@ -111,7 +111,6 @@ public class LocalExpenseLab implements LocalDataSource<Expense> {
 	}
 
 
-
 	/**
 	 * Deletes all the data source
 	 */

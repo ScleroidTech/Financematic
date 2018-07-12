@@ -40,6 +40,15 @@ public abstract class BaseDialog extends DialogFragment {
 	@Nullable
 	private BaseActivity mActivity;
 
+	/**
+	 * gets base activity
+	 *
+	 * @return activity object
+	 */
+	@Nullable
+	public BaseActivity getBaseActivity() {
+		return mActivity;
+	}
 
 	/**
 	 * Dismiss the fragment and its dialog.  If the fragment was added to the back stack, all back
@@ -82,6 +91,7 @@ public abstract class BaseDialog extends DialogFragment {
 	/**
 	 * Initializes the dialog,
 	 * creates its view, attaches itself to root etc,
+	 *
 	 * @param savedInstanceState bundle object to be passed for initialization parameter
 	 * @return dialog object after initialization
 	 */
@@ -129,13 +139,5 @@ public abstract class BaseDialog extends DialogFragment {
 		AndroidSupportInjection.inject(this);
 	}
 
-	/**
-	 * gets base activity
-	 * @return activity object
-	 */
-	@Nullable
-	public BaseActivity getBaseActivity() {
-		return mActivity;
-	}
 
 }

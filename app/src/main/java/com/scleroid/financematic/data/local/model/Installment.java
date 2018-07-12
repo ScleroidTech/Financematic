@@ -34,33 +34,21 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
 public class Installment implements Serializable {
 
 
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(final String userId) {
-		this.userId = userId;
-	}
-
+	@Ignore
+	Loan loan;
 	@Ignore
 	@SerializedName("userid")
 	@Expose
 	private String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-	@Ignore
-	Loan loan;
 	@SerializedName("installement_id")
 	@PrimaryKey(autoGenerate = false)
 	private int installmentId;
-
 	@SerializedName("mydate")
 	@TypeConverters(DateConverter.class)
 	private Date installmentDate;
-
 	@SerializedName("installement_amount")
 	@TypeConverters(MoneyConverter.class)
 	private BigDecimal expectedAmt;
-
 	@SerializedName("loan_id")
 	private int loanAcNo;
 	private String delayReason;
@@ -74,7 +62,6 @@ public class Installment implements Serializable {
 		this.loanAcNo = loanAcNo;
 		this.delayReason = delayReason;
 	}
-
 	@Ignore
 	public Installment(final int installmentId, final Date installmentDate,
 	                   final BigDecimal expectedAmt, final int loanAcNo) {
@@ -82,6 +69,14 @@ public class Installment implements Serializable {
 		this.installmentDate = installmentDate;
 		this.expectedAmt = expectedAmt;
 		this.loanAcNo = loanAcNo;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(final String userId) {
+		this.userId = userId;
 	}
 
 	@NonNull

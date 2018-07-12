@@ -89,7 +89,9 @@ public final class CommonUtils {
 	public static void makeToast(@NonNull final String message, final String type,
 	                             @NonNull Context context) {
 		Toast toast = Toasty.info(context, "Nothing is Happening, We're just having fun here");
-		if ("error".equals(type)) {toast = Toasty.error(context, message);}
+		if ("error".equals(type)) {
+			toast = Toasty.error(context, message);
+		}
 //TODO Add Other types of toasts here.
 		toast.show();
 	}

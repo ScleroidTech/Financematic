@@ -37,43 +37,24 @@ public class TransactionModel implements Serializable {
 	@SerializedName("transaction_id")
 	@PrimaryKey(autoGenerate = false)
 	private int transactionId;
-
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(final String userId) {
-		this.userId = userId;
-	}
-
 	@Ignore
 	@SerializedName("userid")
 	@Expose
 	private String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-	
 	@SerializedName("mydate")
 	@TypeConverters(DateConverter.class)
 	private Date transactionDate;
-
 	@TypeConverters(MoneyConverter.class)
 	private BigDecimal lentAmt;
-
-
 	@TypeConverters(MoneyConverter.class)
 	private BigDecimal gainedAmt;
-
 	@Ignore
 	private LoanDurationType loan;
-
 	@SerializedName("installment_amount")
 	@TypeConverters(MoneyConverter.class)
 	private BigDecimal receivedAmt;
-
 	@SerializedName("description")
 	private String description;
-
 	@SerializedName("loan_id")
 	private int loanAcNo;
 
@@ -88,6 +69,14 @@ public class TransactionModel implements Serializable {
 		this.receivedAmt = receivedAmt;
 		this.description = description;
 		this.loanAcNo = loanAcNo;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(final String userId) {
+		this.userId = userId;
 	}
 
 	public LoanDurationType getLoan() {

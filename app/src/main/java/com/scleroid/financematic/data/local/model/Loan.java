@@ -31,19 +31,10 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
 public class Loan implements Serializable {
 
 
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(final String userId) {
-		this.userId = userId;
-	}
-
 	@Ignore
 	@SerializedName("userid")
 	@Expose
 	private String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
 	@Ignore
 	private Customer customer;
 	@SerializedName("receivedamt")
@@ -52,25 +43,20 @@ public class Loan implements Serializable {
 	@SerializedName("loan_amount")
 	@TypeConverters(MoneyConverter.class)
 	private BigDecimal loanAmt;
-
 	@SerializedName("startdate")
 	@TypeConverters(DateConverter.class)
 	private Date startDate;
-
 	@SerializedName("enddate")
 	@TypeConverters(DateConverter.class)
 	private Date endDate;
 	@SerializedName("interest")
 	@TypeConverters(MoneyConverter.class)
 	private BigDecimal interestAmt;
-
 	@SerializedName("installement_amount")
 	@TypeConverters(MoneyConverter.class)
 	private BigDecimal installmentAmt;
-
 	@SerializedName("noofinstallement")
 	private int noOfInstallments;
-
 	@SerializedName("installementtype")
 	private String installmentType;
 	@SerializedName("trepayamount")
@@ -81,7 +67,6 @@ public class Loan implements Serializable {
 	private int accountNo;
 	@SerializedName("cid")
 	private int custId;
-
 
 	@Ignore
 	public Loan(int accountNo, BigDecimal loanAmt, Date startDate, Date endDate,
@@ -113,6 +98,13 @@ public class Loan implements Serializable {
 		this.custId = custId;
 	}
 
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(final String userId) {
+		this.userId = userId;
+	}
 
 	public Customer getCustomer() {
 		return customer;

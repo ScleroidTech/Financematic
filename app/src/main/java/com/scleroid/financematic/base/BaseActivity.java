@@ -17,12 +17,11 @@ import dagger.android.support.HasSupportFragmentInjector;
  * Copyright (C) 2018
  *
  * @author Ganesh Kaple
+ * @see dagger and an eventbus implementation
+ * Also there's a basic progressDialog which can be used and it injects fragments with DI
  * @since 4/6/18
  * All activities must extend this
  * so they can have basic features like Dependency Injection using
- *
- * @see dagger and an eventbus implementation
- * Also there's a basic progressDialog which can be used and it injects fragments with DI
  */
 public abstract class BaseActivity
 		extends AppCompatActivity
@@ -41,6 +40,7 @@ public abstract class BaseActivity
 	/**
 	 * Performs Dependency injection,
 	 * calls onCreate to create the view, and sets contentView
+	 *
 	 * @param savedInstanceState Bundle object with data to be passed while instantiation
 	 */
 	@Override
@@ -53,6 +53,7 @@ public abstract class BaseActivity
 
 	/**
 	 * Injects activity with
+	 *
 	 * @see AndroidInjection
 	 */
 	public void performDependencyInjection() {
@@ -61,6 +62,7 @@ public abstract class BaseActivity
 
 	/**
 	 * returns layout resource id, must be overridden in activity
+	 *
 	 * @return layout resource id
 	 */
 	public abstract
@@ -87,6 +89,11 @@ public abstract class BaseActivity
 		eventBus.register(this);
 
 	}
+
+	/**
+	 * @return actionBar
+	 */
+	public abstract android.support.v7.app.ActionBar getActionBarBase();
 
 
 }

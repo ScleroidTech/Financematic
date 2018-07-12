@@ -26,14 +26,6 @@ public class Expense implements Serializable {
 	private Date expenseDate;
 	@PrimaryKey(autoGenerate = true)
 	private int expenseId;
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(final String userId) {
-		this.userId = userId;
-	}
-
 	@Ignore
 	@SerializedName("userid")
 	@Expose
@@ -45,6 +37,14 @@ public class Expense implements Serializable {
 		this.expenseType = expenseType;
 		this.expenseDate = expenseDate;
 
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(final String userId) {
+		this.userId = userId;
 	}
 
 	@NonNull

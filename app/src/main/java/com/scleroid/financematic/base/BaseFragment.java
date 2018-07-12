@@ -35,6 +35,7 @@ import dagger.android.support.AndroidSupportInjection;
 
 /**
  * Base class for all fragments
+ *
  * @param <V> generic viewmodel object
  */
 
@@ -52,6 +53,7 @@ public abstract class BaseFragment<V extends BaseViewModel> extends Fragment {
 	private BaseActivity mActivity;
 	/**
 	 * Unbinder for
+	 *
 	 * @see ButterKnife
 	 */
 	private Unbinder unbinder;
@@ -62,8 +64,9 @@ public abstract class BaseFragment<V extends BaseViewModel> extends Fragment {
 
 	/**
 	 * Attaches itself to activity if the context is part of
-	 * @see  BaseActivity
+	 *
 	 * @param context context of calling activity
+	 * @see BaseActivity
 	 */
 	@Override
 	public void onAttach(Context context) {
@@ -77,8 +80,9 @@ public abstract class BaseFragment<V extends BaseViewModel> extends Fragment {
 
 	/**
 	 * Creates and initializes the
-	 * @see Fragment here
+	 *
 	 * @param savedInstanceState bundle object for initialization parameter
+	 * @see Fragment here
 	 */
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {

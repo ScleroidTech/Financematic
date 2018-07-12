@@ -76,7 +76,9 @@ public class DatePickerDialogFragment extends BaseDialog {
 		Boolean flagMin = getArguments().getBoolean(ARG_FLAG);
 		Calendar calendar = Calendar.getInstance();
 
-		if (date != null && !flagMin) { calendar.setTime(date); }
+		if (date != null && !flagMin) {
+			calendar.setTime(date);
+		}
 
 		int year = calendar.get(Calendar.YEAR);
 		int month = calendar.get(Calendar.MONTH);

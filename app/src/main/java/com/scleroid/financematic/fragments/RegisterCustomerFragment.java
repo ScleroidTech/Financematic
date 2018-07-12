@@ -158,8 +158,12 @@ public class RegisterCustomerFragment extends BaseFragment {
 			String stretname = etnameText.toString();
 			String stretmobile = etmobileText.toString();
 			String stretAddress = etAddressText.toString();
-			if (TextUtils.isEmpty(stretname)) {etname.setError("Enter Full Name");}
-			if (TextUtils.isEmpty(stretmobile)) {etmobile.setError("Enter Mobile No");}
+			if (TextUtils.isEmpty(stretname)) {
+				etname.setError("Enter Full Name");
+			}
+			if (TextUtils.isEmpty(stretmobile)) {
+				etmobile.setError("Enter Mobile No");
+			}
 			if (TextUtils.isEmpty(stretAddress)) {
 				etAddress.setError("Enter Address ");
 				return;

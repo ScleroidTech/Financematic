@@ -77,7 +77,9 @@ public class CircleCustomView extends View {
 	@Override
 	protected void onDraw(@NonNull Canvas canvas) {
 		super.onDraw(canvas);
-		if (drawUpto == 0) { drawUpto = 50f; }
+		if (drawUpto == 0) {
+			drawUpto = 50f;
+		}
 		//drawUpto = 46f;
 
 

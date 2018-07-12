@@ -39,7 +39,9 @@ public class CustomerViewModel extends BaseViewModel
 	}
 
 	public LiveData<Resource<Customer>> getCustomerLiveData() {
-		if (customerLiveData.getValue() == null) { customerLiveData = setCustomerLiveData(); }
+		if (customerLiveData.getValue() == null) {
+			customerLiveData = setCustomerLiveData();
+		}
 		return customerLiveData;
 	}
 

@@ -36,6 +36,7 @@ public class Session {
 
 	/**
 	 * returns the current total amount,
+	 *
 	 * @return amount
 	 */
 	public float getAmount() {

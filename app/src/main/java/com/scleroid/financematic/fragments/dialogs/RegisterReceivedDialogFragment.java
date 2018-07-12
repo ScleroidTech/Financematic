@@ -145,7 +145,9 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 				description = country[position];
 				if (position < 3) {
 					otherDescLayout.setVisibility(View.GONE);
-				} else { otherDescLayout.setVisibility(View.VISIBLE); }
+				} else {
+					otherDescLayout.setVisibility(View.VISIBLE);
+				}
 			}
 
 			@Override
@@ -473,7 +475,9 @@ public class RegisterReceivedDialogFragment extends BaseDialog {
 										newTotalRemainingAmt.divide(BigDecimal.valueOf(installments
 														.size()), 2,
 												RoundingMode.HALF_EVEN);
-							} else { newInstallmentAmount = newTotalRemainingAmt; }
+							} else {
+								newInstallmentAmount = newTotalRemainingAmt;
+							}
 							for (Installment installmentFresh : installments) {
 								installmentFresh.setExpectedAmt(newInstallmentAmount);
 								installmentRepo.saveItem(installmentFresh);

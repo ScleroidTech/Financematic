@@ -22,7 +22,6 @@ public class AlarmReceiver extends BroadcastReceiver {
 	private static final String CHANNEL_ID = "com.scleroid.financematic.channelId";
 
 
-
 	@Override
 	public void onReceive(@NonNull Context context, Intent intent) {
 

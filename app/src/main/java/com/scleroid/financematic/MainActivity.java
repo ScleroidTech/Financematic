@@ -69,7 +69,7 @@ import static com.scleroid.financematic.utils.CommonUtils.makeToast;
 
 public class MainActivity extends BaseActivity
 		implements NavigationView.OnNavigationItemSelectedListener, GarlandApp.FakerReadyListener,
-		           HasSupportFragmentInjector, FragmentManager.OnBackStackChangedListener {
+		HasSupportFragmentInjector, FragmentManager.OnBackStackChangedListener {
 	//TODO Refactor repeating code, look at  android-mvvm-architecture for ideas, its by mind-dorks
 	// tags used to attach the fragments
 	private static final String TAG_DASHBOARD = "dashboard";
@@ -85,9 +85,9 @@ public class MainActivity extends BaseActivity
 	// index to identify current nav menu item
 	public static int navItemIndex = 0;
 
-// ...
-@NonNull
-public static String CURRENT_TAG = TAG_DASHBOARD;
+	// ...
+	@NonNull
+	public static String CURRENT_TAG = TAG_DASHBOARD;
 	// Choose authentication providers
 	List<AuthUI.IdpConfig> providers = Arrays.asList(
 			new AuthUI.IdpConfig.EmailBuilder().setAllowNewAccounts(false)
@@ -347,6 +347,7 @@ public static String CURRENT_TAG = TAG_DASHBOARD;
 		View parentLayout = getWindow().getDecorView().findViewById(android.R.id.content);
 		snackBarUtils.showSnackbar(parentLayout, msg);
 	}
+
 	/**
 	 * Calls the {@link SnackBarUtils} method showSnackBar Which is used to display {@link
 	 * Snackbar}
@@ -552,7 +553,9 @@ public static String CURRENT_TAG = TAG_DASHBOARD;
 			getSupportFragmentManager().popBackStackImmediate(null,
 					FragmentManager.POP_BACK_STACK_INCLUSIVE);
 			loadFragmentRunnable(fragment, false);
-		} else { loadFragmentRunnable(fragment, true); }
+		} else {
+			loadFragmentRunnable(fragment, true);
+		}
 		// show or hide the fab button
 
 
@@ -570,10 +573,14 @@ public static String CURRENT_TAG = TAG_DASHBOARD;
 
 	private void selectBottomNavMenu() {
 		MenuItem item;
-		if (navItemIndex > 2) { item = bottomNavigationView.getMenu().getItem(0); } else {
+		if (navItemIndex > 2) {
+			item = bottomNavigationView.getMenu().getItem(0);
+		} else {
 			item = bottomNavigationView.getMenu().getItem(navItemIndex);
 		}
-		if (item != null) { item.setChecked(true); }
+		if (item != null) {
+			item.setChecked(true);
+		}
 	}
 
 	private void setToolbarTitle() {

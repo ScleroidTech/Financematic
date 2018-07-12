@@ -24,7 +24,6 @@ import com.scleroid.financematic.data.local.model.TransactionModel;
  * @since 27/10/17
  * It is responsible for the Database for entire app
  * Object initialization is done via dagger and is a singleton object over all app
- *
  */
 
 @Database(entities = {Customer.class, Loan.class, TransactionModel.class, Expense.class,

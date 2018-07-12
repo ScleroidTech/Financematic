@@ -81,7 +81,7 @@ public class RegisterLoanFragment extends BaseFragment {
 	Spinner spinnerCalculate;
 	@NonNull
 	String[] calculate =
-			{"Interest + Principal","Principal Only", "Interest only"};
+			{"Interest + Principal", "Principal Only", "Interest only"};
 
 	@Inject
 	LocalCustomerLab customerLab;
@@ -263,15 +263,6 @@ public class RegisterLoanFragment extends BaseFragment {
 				android.R.layout.simple_spinner_dropdown_item);
 		//Setting the ArrayAdapter data on the Spinner
 		spinnerTypeOfInstallment.setAdapter(adapterInstallmentType);
-	}
-
-	private void updateNoOfInstallments() {
-		ettxNoofInstallment.setText(String.valueOf(getInstallments()));
-	}
-
-	@NonNull
-	public String getCountry(final int position) {
-		return country.get(position);
 	}
 
 	private void updateInstallmentAmount() {
@@ -458,6 +449,99 @@ public class RegisterLoanFragment extends BaseFragment {
 		return emi;
 	}
 
+	private BigDecimal divideBigDecimal(BigDecimal loanAmt, long duration) {
+		if (duration == 0) {
+			//	Toasty.error(getContext(), "Seems like you haven't entered the duration").show();
+			return BigDecimal.valueOf(0);
+		}
+		return loanAmt.divide(BigDecimal.valueOf(duration), 2, RoundingMode.HALF_EVEN);
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, @NonNull Intent intent) {
+		super.onActivityResult(requestCode, resultCode, intent);
+
+		if (requestCode == REQUEST_DATE_FROM) {
+			startDate = (Date) intent.getSerializableExtra(DatePickerDialogFragment.EXTRA_DATE);
+			startDateTextView.setText(dateUtils.getFormattedDate(startDate));
+		} else if (requestCode == REQUEST_DATE_TO) {
+			endDate = (Date) intent.getSerializableExtra(DatePickerDialogFragment.EXTRA_DATE);
+			endDateTextView.setText(dateUtils.getFormattedDate(endDate));
+		}
+		updateNoOfInstallments();
+		updateInterestAmt();
+		setCountry(calculateDurationDifferenceInDays());
+
+	}
+
+	private void updateNoOfInstallments() {
+		ettxNoofInstallment.setText(String.valueOf(getInstallments()));
+	}
+
+	private long getInstallments() {
+		if (durationType == null) {
+			return getInstallments(durationConverter(getCountry(0)));
+		}
+		return getInstallments(durationConverter(durationType));
+
+	}
+
+	@NonNull
+	public String getCountry(final int position) {
+		return country.get(position);
+	}
+
+	private long getInstallments(long converter) {
+		if (startDate == null || endDate == null) return 0;
+
+		durationDivided = calculateInstallments(calculateTotalDuration(), converter);
+
+
+		return durationDivided;
+	}
+
+	private long calculateInstallments(long timeDiff, long divider) {
+
+
+		return (TimeUnit.MILLISECONDS.toDays(timeDiff) / divider);
+	}
+
+	private long calculateTotalDuration() {
+		if (startDate == null || endDate == null) return 0;
+		return dateUtils.differenceOfDates(startDate, endDate);
+	}
+
+	private long durationConverter(final String durationType) {
+
+		switch (durationType) {
+			case LoanDurationType.MONTHLY:
+				return 30;
+
+			case LoanDurationType.DAILY:
+				return 1;
+
+			case LoanDurationType.WEEKLY:
+				return 7;
+
+			case LoanDurationType.BIWEEKLY:
+				return 15;
+
+			case LoanDurationType.BIMONTHLY:
+				return 60;
+
+			case LoanDurationType.QUARTERLY:
+				return 90;
+
+			case LoanDurationType.HALF_YEARLY:
+				return 180;
+
+			case LoanDurationType.YEARLY:
+				return 365;
+			default:
+				return 0;
+		}
+	}
+
 	public void setCountry(@NonNull final long duration) {
 		Timber.d("whats the duration " + duration);
 
@@ -560,57 +644,6 @@ public class RegisterLoanFragment extends BaseFragment {
 		return loanAmt.multiply(getBigDecimal((interestRate / 100) * duration));
 	}
 
-	private BigDecimal divideBigDecimal(BigDecimal loanAmt, long duration) {
-		if (duration == 0) {
-			//	Toasty.error(getContext(), "Seems like you haven't entered the duration").show();
-			return BigDecimal.valueOf(0);
-		}
-		return loanAmt.divide(BigDecimal.valueOf(duration), 2, RoundingMode.HALF_EVEN);
-	}
-
-	private long getInstallments() {
-		if (durationType == null) { return getInstallments(durationConverter(getCountry(0))); }
-		return getInstallments(durationConverter(durationType));
-
-	}
-
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, @NonNull Intent intent) {
-		super.onActivityResult(requestCode, resultCode, intent);
-
-		if (requestCode == REQUEST_DATE_FROM) {
-			startDate = (Date) intent.getSerializableExtra(DatePickerDialogFragment.EXTRA_DATE);
-			startDateTextView.setText(dateUtils.getFormattedDate(startDate));
-		} else if (requestCode == REQUEST_DATE_TO) {
-			endDate = (Date) intent.getSerializableExtra(DatePickerDialogFragment.EXTRA_DATE);
-			endDateTextView.setText(dateUtils.getFormattedDate(endDate));
-		}
-		updateNoOfInstallments();
-		updateInterestAmt();
-		setCountry(calculateDurationDifferenceInDays());
-
-	}
-
-	private long getInstallments(long converter) {
-		if (startDate == null || endDate == null) return 0;
-
-		durationDivided = calculateInstallments(calculateTotalDuration(), converter);
-
-
-		return durationDivided;
-	}
-
-	private long calculateInstallments(long timeDiff, long divider) {
-
-
-		return (TimeUnit.MILLISECONDS.toDays(timeDiff) / divider);
-	}
-
-	private long calculateTotalDuration() {
-		if (startDate == null || endDate == null) return 0;
-		return dateUtils.differenceOfDates(startDate, endDate);
-	}
-
 	@OnClick({R.id.txStartDate, R.id.txEndDate})
 
 	public void onViewClicked(@NonNull View view) {
@@ -624,18 +657,6 @@ public class RegisterLoanFragment extends BaseFragment {
 			default:
 				return;
 		}
-	}
-
-	@NonNull
-	private List<Date> calculateDates(Date installmentDate, final long durationDivided) {
-		long durationTypeDivider = durationConverter(durationType);
-		List<Date> dates = new ArrayList<>();
-		for (int i = 0; i < durationDivided; i++) {
-			installmentDate = dateUtils.findDate(installmentDate, durationTypeDivider);
-			dates.add(installmentDate);
-			Timber.d("Printing dates "+ i+ "  " + installmentDate.toString() + " duration of The dates" + durationDivided  + " " + durationTypeDivider);
-		}
-		return dates;
 	}
 
 	private void loadDialogFragment(final int msg, Date minDate) {
@@ -653,7 +674,6 @@ public class RegisterLoanFragment extends BaseFragment {
 		activityUtils.loadDialogFragment(DatePickerDialogFragment.newInstance(false), this,
 				getFragmentManager(), msg, DIALOG_DATE);
 	}
-
 
 
 	@OnClick(R.id.btn_givenmoney)
@@ -760,7 +780,8 @@ public class RegisterLoanFragment extends BaseFragment {
 
 	@NonNull
 	private List<Installment> createInstallments() {
-		List<Date> dates = calculateDates(startDate, getInstallments(durationConverter(durationType)));
+		List<Date> dates = calculateDates(startDate,
+				getInstallments(durationConverter(durationType)));
 		List<Installment> installments = new ArrayList<>();
 		for (Date date : dates) {
 			Installment installment =
@@ -771,35 +792,17 @@ public class RegisterLoanFragment extends BaseFragment {
 		return installments;
 	}
 
-	private long durationConverter(final String durationType) {
-
-		switch (durationType) {
-			case LoanDurationType.MONTHLY:
-				return 30;
-
-			case LoanDurationType.DAILY:
-				return 1;
-
-			case LoanDurationType.WEEKLY:
-				return 7;
-
-			case LoanDurationType.BIWEEKLY:
-				return 15;
-
-			case LoanDurationType.BIMONTHLY:
-				return 60;
-
-			case LoanDurationType.QUARTERLY:
-				return 90;
-
-			case LoanDurationType.HALF_YEARLY:
-				return 180;
-
-			case LoanDurationType.YEARLY:
-				return 365;
-			default:
-					return 0;
+	@NonNull
+	private List<Date> calculateDates(Date installmentDate, final long durationDivided) {
+		long durationTypeDivider = durationConverter(durationType);
+		List<Date> dates = new ArrayList<>();
+		for (int i = 0; i < durationDivided; i++) {
+			installmentDate = dateUtils.findDate(installmentDate, durationTypeDivider);
+			dates.add(installmentDate);
+			Timber.d("Printing dates " + i + "  " + installmentDate
+					.toString() + " duration of The dates" + durationDivided + " " + durationTypeDivider);
 		}
+		return dates;
 	}
 
 	private void saveData(@NonNull final Loan loan,

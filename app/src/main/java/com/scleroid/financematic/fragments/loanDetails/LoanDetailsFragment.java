@@ -318,7 +318,9 @@ public class LoanDetailsFragment extends BaseFragment {
 								.toPlainString() + " which is divided by " + installmentList
 								.size());
 
-			} else { newInstallmentAmount = amount; }
+			} else {
+				newInstallmentAmount = amount;
+			}
 			List<Installment> newList = new ArrayList<>();
 			for (Installment installment : installmentList
 					) {

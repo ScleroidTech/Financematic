@@ -113,6 +113,7 @@ public class LocalTransactionsLab implements LocalDataSource<TransactionModel> {
 	/**
 	 * adds network item to local database,
 	 * single value
+	 *
 	 * @param item generic object
 	 */
 	@Override
@@ -152,6 +153,7 @@ public class LocalTransactionsLab implements LocalDataSource<TransactionModel> {
 
 	/**
 	 * Updates a transaction object with new values
+	 *
 	 * @param transactionModel to be updated
 	 * @return after updating
 	 */

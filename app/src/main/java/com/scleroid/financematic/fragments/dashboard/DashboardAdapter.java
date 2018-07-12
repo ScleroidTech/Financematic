@@ -215,7 +215,9 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
 			String diff;
 			if (differenceOfDates != 0) {
 				diff = String.format("%d day(s) to go", differenceOfDates);
-			} else { diff = String.format("Today"); }
+			} else {
+				diff = String.format("Today");
+			}
 			timeRemainingTextView.setText(
 					diff);
 			if (installment.getLoan().getCustomer().getMobileNumber() == null) {

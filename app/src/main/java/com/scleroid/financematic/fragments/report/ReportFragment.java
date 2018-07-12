@@ -481,7 +481,9 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 		final List<TransactionModel> tempList;
 		if (startDate == null && endDate == null) {
 			tempList = filterWithoutDate(reportFilterType);
-		} else {tempList = filterWithDate(startDate, endDate, reportFilterType); }
+		} else {
+			tempList = filterWithDate(startDate, endDate, reportFilterType);
+		}
 		updateListDataTemp(tempList);
 	}
 

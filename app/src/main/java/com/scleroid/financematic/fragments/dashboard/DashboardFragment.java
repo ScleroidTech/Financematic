@@ -1,6 +1,5 @@
 package com.scleroid.financematic.fragments.dashboard;
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,7 +26,6 @@ import com.scleroid.financematic.data.local.model.Installment;
 import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.fragments.report.ReportFilterType;
 import com.scleroid.financematic.fragments.report.ReportFragment;
-import com.scleroid.financematic.utils.network.Resource;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.RupeeTextView;
 import com.scleroid.financematic.utils.ui.TextViewUtils;
@@ -148,12 +146,12 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 				});
 
 		dashBoardViewModel.getLoans().observe(this, items -> {
-            if (items.data == null) {
-                return;
-            }
-            loanList = items.data;
-            DashboardFragment.this.updateUi();
-        });
+			if (items.data == null) {
+				return;
+			}
+			loanList = items.data;
+			DashboardFragment.this.updateUi();
+		});
 	}
 
 	/**

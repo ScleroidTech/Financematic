@@ -64,6 +64,7 @@ public interface LocalDataSource<T> {
 	/**
 	 * adds a single item from network when called
 	 * to local database
+	 *
 	 * @param item generic object
 	 */
 	void addNetworkItem(@NonNull T item);
@@ -83,6 +84,7 @@ public interface LocalDataSource<T> {
 
 	/**
 	 * Updates a particular item
+	 *
 	 * @param t the item to be updated
 	 * @return the updated item wrapped in Rx
 	 * @see Single object

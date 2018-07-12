@@ -44,15 +44,6 @@ public class Customer {
 	private String idProofType;
 	@Ignore
 	private List<Loan> loans;
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(final String userId) {
-		this.userId = userId;
-	}
-
 	@Ignore
 	@SerializedName("userid")
 	@Expose
@@ -66,6 +57,14 @@ public class Customer {
 		this.address = address;
 		this.idProofNo = idProofNo;
 		this.idProofType = idProofType;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(final String userId) {
+		this.userId = userId;
 	}
 
 	public List<Loan> getLoans() {
