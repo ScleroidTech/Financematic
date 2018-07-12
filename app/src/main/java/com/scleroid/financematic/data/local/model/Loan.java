@@ -11,8 +11,8 @@ import android.support.annotation.NonNull;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.scleroid.financematic.utils.roomConverters.DateConverter;
-import com.scleroid.financematic.utils.roomConverters.MoneyConverter;
+import com.scleroid.financematic.utils.roomconverters.DateConverter;
+import com.scleroid.financematic.utils.roomconverters.MoneyConverter;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

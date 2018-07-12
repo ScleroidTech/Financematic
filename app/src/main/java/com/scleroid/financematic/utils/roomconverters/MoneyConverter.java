@@ -1,4 +1,4 @@
-package com.scleroid.financematic.utils.roomConverters;
+package com.scleroid.financematic.utils.roomconverters;
 
 import android.arch.persistence.room.TypeConverter;
 import android.support.annotation.Nullable;

@@ -1,4 +1,4 @@
-package com.scleroid.financematic.utils.GSONConverters;
+package com.scleroid.financematic.utils.gsonconverters;
 
 import android.support.annotation.NonNull;
 

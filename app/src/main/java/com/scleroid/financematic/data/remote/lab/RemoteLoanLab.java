@@ -4,8 +4,8 @@ import com.birbit.android.jobqueue.JobManager;
 import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.data.remote.RemoteDataSource;
 import com.scleroid.financematic.data.remote.RemotePostEndpoint;
-import com.scleroid.financematic.data.remote.services.jobs.deleteJobs.DeleteLoanJob;
-import com.scleroid.financematic.data.remote.services.jobs.syncJobs.SyncLoanJob;
+import com.scleroid.financematic.data.remote.services.jobs.delete.DeleteLoanJob;
+import com.scleroid.financematic.data.remote.services.jobs.sync.SyncLoanJob;
 
 import javax.inject.Inject;
 

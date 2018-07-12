@@ -28,8 +28,8 @@ import com.scleroid.financematic.data.repo.InstallmentRepo;
 import com.scleroid.financematic.data.repo.LoanRepo;
 import com.scleroid.financematic.data.repo.TransactionsRepo;
 import com.scleroid.financematic.utils.CommonUtils;
-import com.scleroid.financematic.utils.eventBus.Events;
-import com.scleroid.financematic.utils.eventBus.GlobalBus;
+import com.scleroid.financematic.utils.eventbus.Events;
+import com.scleroid.financematic.utils.eventbus.GlobalBus;
 import com.scleroid.financematic.utils.ui.DateUtils;
 import com.scleroid.financematic.utils.ui.TextValidator;
 

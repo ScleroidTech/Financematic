@@ -21,8 +21,8 @@ import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.local.model.Customer;
 import com.scleroid.financematic.data.local.model.Loan;
 import com.scleroid.financematic.fragments.RegisterLoanFragment;
-import com.scleroid.financematic.utils.eventBus.Events;
-import com.scleroid.financematic.utils.eventBus.GlobalBus;
+import com.scleroid.financematic.utils.eventbus.Events;
+import com.scleroid.financematic.utils.eventbus.GlobalBus;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.RupeeTextView;
 

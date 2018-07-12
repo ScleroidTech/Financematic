@@ -6,7 +6,7 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import com.scleroid.financematic.utils.eventBus.GlobalBus;
+import com.scleroid.financematic.utils.eventbus.GlobalBus;
 
 import org.greenrobot.eventbus.EventBus;
 

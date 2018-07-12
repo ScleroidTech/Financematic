@@ -1,4 +1,4 @@
-package com.scleroid.financematic.utils.eventBus;
+package com.scleroid.financematic.utils.eventbus;
 
 import org.greenrobot.eventbus.EventBus;
 

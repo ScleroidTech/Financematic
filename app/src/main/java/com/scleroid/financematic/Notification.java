@@ -12,12 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.scleroid.financematic.data.tempModels.Passbook;
-import com.scleroid.financematic.fragments.passbook.PassbookAdapter;
-
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 /**
  * Created by scleroid on 11/4/18.
@@ -32,10 +27,7 @@ import java.util.List;
  */
 public class Notification extends Fragment {
 
-	@NonNull
-	private List<Passbook> passbookList = new ArrayList<>();
 	private RecyclerView recyclerView;
-	private PassbookAdapter mAdapter;
 
 
 	public Notification() {

@@ -45,7 +45,7 @@ import com.scleroid.financematic.fragments.expense.ExpenseFragment;
 import com.scleroid.financematic.fragments.loanDetails.LoanDetailsFragment;
 import com.scleroid.financematic.fragments.people.PeopleFragment;
 import com.scleroid.financematic.fragments.report.ReportFragment;
-import com.scleroid.financematic.utils.eventBus.Events;
+import com.scleroid.financematic.utils.eventbus.Events;
 import com.scleroid.financematic.utils.multithread.AppExecutors;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.BottomNavigationViewHelper;
