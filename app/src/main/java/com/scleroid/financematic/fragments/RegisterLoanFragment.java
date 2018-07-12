@@ -282,17 +282,7 @@ public class RegisterLoanFragment extends BaseFragment {
 	                             final Bundle bundle) {
 		customerId = bundle.getInt(CUSTOMER_ID);
 
-		/*Observable.just(customerLab.getRxItem(customerId))
-				.subscribeOn(Schedulers.io())
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe((Single<Customer> customer) -> {
-					customer.subscribe(customer1 ->customerNameTextView.setText(customer1.getName
-					()) );
-							Timber.d("data received, displaying");
-							//customerNameTextView.setText(customer.g);
-						},
-						throwable -> Timber.d("Not gonna show up")
-				);*/
+
 		Disposable subscribe = customerLab
 				.getRxItem(customerId)
 				.subscribeOn(Schedulers.io())
@@ -302,7 +292,6 @@ public class RegisterLoanFragment extends BaseFragment {
 							customerNameTextView.setText("Customer Name : " + customer.getName());
 						},
 						throwable -> Timber.d("Not gonna show up " + throwable.getMessage()));
-		//	customerNameTextView.setText(customer.getName());
 	}
 
 	private void setRateOfInterest() {
@@ -713,7 +702,8 @@ public class RegisterLoanFragment extends BaseFragment {
 				rateOfInterest) && rateOfInterestLayout.getVisibility() == View.VISIBLE) {
 			ettxrateInterest.setError("Enter rate Interest");
 			return;
-		} else if (TextUtils.isEmpty(interestAmt)) {
+		}
+		if (TextUtils.isEmpty(interestAmt)) {
 			txInterestAmount.setError("Enter Interest Amount");
 			return;
 		}

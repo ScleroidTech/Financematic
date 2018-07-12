@@ -48,7 +48,7 @@ import timber.log.Timber;
  */
 
 public class RegisterCustomerFragment extends BaseFragment {
-	Button firstFragment;
+	Button submitButton;
 	@NonNull
 	String[] selectidtype =
 			{IdProofType.AADHAR, IdProofType.PAN, IdProofType.RATION_CARD, IdProofType
@@ -97,7 +97,7 @@ public class RegisterCustomerFragment extends BaseFragment {
 		spin.setAdapter(aa);
 
 //Intend
-		firstFragment = rootView.findViewById(R.id.btn_new_customer_Register1);
+		submitButton = rootView.findViewById(R.id.btn_new_customer_Register1);
 
 		etname = rootView.findViewById(R.id.coustomer_Name_EditText);
 		etmobile = rootView.findViewById(R.id.Mobile_Number_EditText);
@@ -146,36 +146,24 @@ public class RegisterCustomerFragment extends BaseFragment {
 
 			}
 		});
-        /*firstFragment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-
-            }
-        });
-*/
-		/* btnGiveMoney=(Button)rootView.findViewById(R.id.btn_new_customer_Register);*/
-		/* tv=(TextView)rootView.findViewById(R.id.display);*/
-		firstFragment.setOnClickListener(v -> {
+		submitButton.setOnClickListener(v -> {
 			String stretname = etnameText.toString();
 			String stretmobile = etmobileText.toString();
 			String stretAddress = etAddressText.toString();
 			if (TextUtils.isEmpty(stretname)) {
 				etname.setError("Enter Full Name");
+				return;
 			}
 			if (TextUtils.isEmpty(stretmobile)) {
 				etmobile.setError("Enter Mobile No");
+				return;
 			}
 			if (TextUtils.isEmpty(stretAddress)) {
 				etAddress.setError("Enter Address ");
 				return;
 			}
-			/*   activityUtils.loadFragment(new RegisterLoanFragment(), getFragmentManager
-			() );
-			 */
 
-			//Added Customer in database
-			final String cityName = "Pune";
 			Customer customer =
 					new Customer(CommonUtils.getRandomInt(), stretname, stretmobile, stretAddress,
 							etIDproofno.getText().toString(), proofType
@@ -185,18 +173,6 @@ public class RegisterCustomerFragment extends BaseFragment {
 			Toast.makeText(getActivity().getApplicationContext(),
 					"successfully created Customer info", Toast.LENGTH_LONG).show();
 
-/* else
-{
-Toast.makeText(getActivity().getApplicationContext(),"PLz enter all Field",
-Toast.LENGTH_LONG).show();
-return;
-
-}*/
-
-
-			/* tv.setText("Your Input: \n"+etname.getText().toString()+"\n"+etAddress.getText
-			().toString()+"\n"+etmobile.getText().toString()+"\n"+etLoan_number.getText()
-			.toString()+"\n"+etIDproofno.getText().toString()+"\n"+"\nEnd.");*/
 		});
 
 
