@@ -21,7 +21,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.view.ViewGroup;
@@ -29,33 +28,18 @@ import android.view.Window;
 import android.widget.RelativeLayout;
 
 import dagger.android.support.AndroidSupportInjection;
+import io.reactivex.annotations.NonNull;
 
 /**
- * Created by amitshekhar on 10/07/17.
+ * The base class for all dialog classes,
+ * adds dagger and other relevant items common for all dialogs
  */
 
 public abstract class BaseDialog extends DialogFragment {
-	/*@Inject
-	DispatchingAndroidInjector<Fragment> childFragmentInjector;*/
+
 	@Nullable
 	private BaseActivity mActivity;
-	private boolean dialogDismissed;
-	@Nullable
-	private Dialog dialog;
 
-/*	@Override
-	public void onResume() {
-		super.onResume();
-//...
-		if (dialogDismissed && dialog != null) {
-			dialog.dismiss();
-		}
-	}*/
-
-	public void dismissDialog(String tag) {
-		dismiss();
-		getBaseActivity().onFragmentDetached(tag);
-	}
 
 	/**
 	 * Dismiss the fragment and its dialog.  If the fragment was added to the back stack, all back
@@ -69,20 +53,13 @@ public abstract class BaseDialog extends DialogFragment {
 		super.dismiss();
 	}
 
-
-	/* A hack that didn't work
-	@Override
-	public void show(final FragmentManager fragmentManager, final String tagName) {
-		//super.show(manar, tag);
-		if (fragmentManager.isStateSaved()) return;
-
-		FragmentTransaction ft = fragmentManager.beginTransaction();
-		ft.add(this, tagName);
-		ft.disallowAddToBackStack();
-		ft.commitAllowingStateLoss();
-	}
-*/
-
+	/**
+	 * Attaches itself to activity,
+	 * Performs DI,
+	 * then adds itself to activity if the context is right
+	 *
+	 * @param context Object of current activity
+	 */
 	@Override
 	public void onAttach(Context context) {
 		performDependencyInjection();
@@ -90,28 +67,38 @@ public abstract class BaseDialog extends DialogFragment {
 		if (context instanceof BaseActivity) {
 			BaseActivity mActivity = (BaseActivity) context;
 			this.mActivity = mActivity;
-			mActivity.onFragmentAttached();
 		}
 	}
 
+	/**
+	 * Removes attachment with the activity it was previously attached to
+	 */
 	@Override
 	public void onDetach() {
 		mActivity = null;
 		super.onDetach();
 	}
 
+	/**
+	 * Initializes the dialog,
+	 * creates its view, attaches itself to root etc,
+	 * @param savedInstanceState bundle object to be passed for initialization parameter
+	 * @return dialog object after initialization
+	 */
 	@NonNull
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		// the content
+		// creates the layout object
 		final RelativeLayout root = new RelativeLayout(getActivity());
 		root.setLayoutParams(new ViewGroup.LayoutParams(
 				ViewGroup.LayoutParams.MATCH_PARENT,
 				ViewGroup.LayoutParams.WRAP_CONTENT));
 
-		// creating the fullscreen dialog
-		dialog = new Dialog(getContext());
+		// creates the fullscreen dialog
+		Dialog dialog = new Dialog(mActivity/* this can be null */);
+		// removes the title
 		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		//sets layout
 		dialog.setContentView(root);
 		if (dialog.getWindow() != null) {
 			dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -119,11 +106,15 @@ public abstract class BaseDialog extends DialogFragment {
 					ViewGroup.LayoutParams.MATCH_PARENT,
 					ViewGroup.LayoutParams.WRAP_CONTENT);
 		}
+		//disallows to be cancelable if touched outside
 		dialog.setCanceledOnTouchOutside(false);
 
 		return dialog;
 	}
 
+	/**
+	 * Dismisses the dialog first before stopping the lifecycle
+	 */
 	@Override
 	public void onStop() {
 		this.dismiss();
@@ -131,43 +122,20 @@ public abstract class BaseDialog extends DialogFragment {
 
 	}
 
+	/**
+	 * Adds it to DI list
+	 */
 	private void performDependencyInjection() {
 		AndroidSupportInjection.inject(this);
 	}
 
+	/**
+	 * gets base activity
+	 * @return activity object
+	 */
 	@Nullable
 	public BaseActivity getBaseActivity() {
 		return mActivity;
 	}
 
-	public void hideKeyboard() {
-		if (mActivity != null) {
-			mActivity.hideKeyboard();
-		}
-	}
-
-	public void hideLoading() {
-		if (mActivity != null) {
-			mActivity.hideLoading();
-		}
-	}
-
-	public boolean isNetworkConnected() {
-		return mActivity != null && mActivity.isNetworkConnected();
-	}
-
-/*	@Override
-	public void onDismiss(final DialogInterface dialog) {
-		super.onDismiss(dialog);
-		dialogDismissed = true;
-		dismiss();
-	}
-
-	*/
-
-	public void showLoading() {
-		if (mActivity != null) {
-			mActivity.showLoading();
-		}
-	}
 }

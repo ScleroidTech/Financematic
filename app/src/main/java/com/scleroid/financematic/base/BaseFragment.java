@@ -27,10 +27,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.scleroid.financematic.utils.eventBus.GlobalBus;
-
-import org.greenrobot.eventbus.EventBus;
-
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
@@ -38,40 +34,58 @@ import butterknife.Unbinder;
 import dagger.android.support.AndroidSupportInjection;
 
 /**
- * Created by amitshekhar on 09/07/17.
+ * Base class for all fragments
+ * @param <V> generic viewmodel object
  */
 
 public abstract class BaseFragment<V extends BaseViewModel> extends Fragment {
 
+	/**
+	 * Viewmodel Factory object, injected via DI
+	 */
 	@Inject
 	protected ViewModelProvider.Factory viewModelFactory;
-	EventBus eventBus = GlobalBus.getBus();
+	/**
+	 * Calling activity object
+	 */
 	@Nullable
 	private BaseActivity mActivity;
+	/**
+	 * Unbinder for
+	 * @see ButterKnife
+	 */
 	private Unbinder unbinder;
+	/**
+	 * Rootview displaying the current fragment
+	 */
 	private View rootView;
 
+	/**
+	 * Attaches itself to activity if the context is part of
+	 * @see  BaseActivity
+	 * @param context context of calling activity
+	 */
 	@Override
 	public void onAttach(Context context) {
 		super.onAttach(context);
-		//	eventBus.register(this);
+
 		if (context instanceof BaseActivity) {
 			BaseActivity activity = (BaseActivity) context;
 			this.mActivity = activity;
-			activity.onFragmentAttached();
 		}
 	}
 
+	/**
+	 * Creates and initializes the
+	 * @see Fragment here
+	 * @param savedInstanceState bundle object for initialization parameter
+	 */
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		performDependencyInjection();
 		super.onCreate(savedInstanceState);
 
-
-		final V mViewModel = getViewModel();
 		setHasOptionsMenu(false);
-		//setHasOptionsMenu(true);
-		//getBaseActivity().getActionBarBase().setDisplayHomeAsUpEnabled(true);
 	}
 
 	/**
@@ -117,12 +131,6 @@ public abstract class BaseFragment<V extends BaseViewModel> extends Fragment {
 
 	}
 
-	@Override
-	public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
-
-	}
-
 	/**
 	 * Called when the fragment's activity has been created and this fragment's view hierarchy
 	 * instantiated.  It can be used to do final initialization once these pieces are in place,
@@ -156,10 +164,12 @@ public abstract class BaseFragment<V extends BaseViewModel> extends Fragment {
 		unbinder.unbind();
 	}
 
+	/**
+	 * Detaches the view from the activity
+	 */
 	@Override
 	public void onDetach() {
 		mActivity = null;
-//		eventBus.unregister(this);
 		super.onDetach();
 	}
 
@@ -182,23 +192,6 @@ public abstract class BaseFragment<V extends BaseViewModel> extends Fragment {
 	@Nullable
 	public BaseActivity getBaseActivity() {
 		return mActivity;
-	}
-
-	public void hideKeyboard() {
-		if (mActivity != null) {
-			mActivity.hideKeyboard();
-		}
-	}
-
-	public boolean isNetworkConnected() {
-		return mActivity != null && mActivity.isNetworkConnected();
-	}
-
-	public interface Callback {
-
-		void onFragmentAttached();
-
-		void onFragmentDetached(String tag);
 	}
 
 }

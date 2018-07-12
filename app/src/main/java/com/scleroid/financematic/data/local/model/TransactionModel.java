@@ -52,6 +52,7 @@ public class TransactionModel implements Serializable {
 	@Expose
 	private String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
+	
 	@SerializedName("mydate")
 	@TypeConverters(DateConverter.class)
 	private Date transactionDate;
