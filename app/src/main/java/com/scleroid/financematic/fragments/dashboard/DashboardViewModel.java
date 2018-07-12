@@ -1,14 +1,9 @@
 package com.scleroid.financematic.fragments.dashboard;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.Transformations;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.annimon.stream.Collectors;
-import com.annimon.stream.Stream;
 import com.scleroid.financematic.base.BaseViewModel;
 import com.scleroid.financematic.data.local.dao.InstallmentDao;
 import com.scleroid.financematic.data.local.model.Installment;
@@ -20,7 +15,6 @@ import com.scleroid.financematic.utils.network.Resource;
 import com.scleroid.financematic.utils.ui.DateUtils;
 import com.scleroid.financematic.viewmodels.CustomerViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -45,7 +39,6 @@ public class DashboardViewModel extends BaseViewModel<Installment> implements Cu
 
 	private LiveData<Resource<List<Loan>>> loanListLiveData = new MutableLiveData<>();
 	private LiveData<Resource<List<Installment>>> installments;
-	// private LiveData<List<DashBoardModel>> upcomingInstallmentsTransformed;
 	private LiveData<List<Installment>> upcomingInstallments = new MutableLiveData<>();
 
 
@@ -57,19 +50,15 @@ public class DashboardViewModel extends BaseViewModel<Installment> implements Cu
 		this.loanRepo = loanRepo;
 		this.installmentRepo = installmentRepo;
 
-		// installments = ;
-//        Timber.d(installments.getValue().data.isEmpty() + "" );
+
 		upcomingInstallments = getUpcomingInstallments();
-		//   Timber.d(upcomingInstallments.getValue().isEmpty() + "" );
-		//   setUpcomingInstallmentsTransformed(getTransformedUpcomingData());
 		loanListLiveData = getLoans();
 	}
 
 
 	public LiveData<List<Installment>> getUpcomingInstallments() {
 		if (upcomingInstallments.getValue() == null || upcomingInstallments.getValue().isEmpty()) {
-			upcomingInstallments = setUpcomingInstallments();  /*filterResults(installmentRepo
-					.getLocalInstallmentsLab().getItems());*/
+			upcomingInstallments = setUpcomingInstallments();
 		}
 		return upcomingInstallments;
 	}
@@ -84,8 +73,7 @@ public class DashboardViewModel extends BaseViewModel<Installment> implements Cu
 		if (loanListLiveData.getValue() == null || loanListLiveData.getValue().data == null ||
 				loanListLiveData
 						.getValue().data.isEmpty()) {
-			loanListLiveData = setLoans(); /*filterResults(installmentRepo
-					.getLocalInstallmentsLab().getItems());*/
+			loanListLiveData = setLoans();
 		}
 		return loanListLiveData;
 	}
@@ -97,107 +85,10 @@ public class DashboardViewModel extends BaseViewModel<Installment> implements Cu
 	}
 
 
-	//There's a copy of this code in adapter too,
-	private List<Installment> filterResults(@Nullable List<Installment> installments) {
 
-		if (installments == null) return new ArrayList<>();
-		return Stream.of(installments)
-				.filter(installment -> dateUtils.isThisDateWithinRange(
-						installment.getInstallmentDate(), FILTER_DAYS))
-				.collect(Collectors.toList());
-	}
-
-	private boolean filterResult(@NonNull Installment installment) {
-
-		if (installments == null) return false;
-		return dateUtils.isThisDateWithinRange(
-				installment.getInstallmentDate(), FILTER_DAYS);
-
-	}
-
-	//TODO doesnt work
-	public LiveData<List<Installment>> getFilteredResult() {
-		LiveData<List<Installment>> installmentsLive = getUpcomingInstallments();
-
-		// TODO Test this, if works remove below code, this part has performance issues
-		final LiveData<List<Installment>> finalInstallmentsLive = installmentsLive;
-		installmentsLive = Transformations.switchMap(installmentsLive,
-				(List<Installment> inputInstallment) -> {
-					MediatorLiveData<List<Installment>> installmentMediatorLiveData =
-							new MediatorLiveData<>();
-					final List<Installment> install = new ArrayList<>();
-
-					installmentMediatorLiveData.postValue(install);
-					return installmentMediatorLiveData;
-				});
-		return installmentsLive;
-		/*loansLive = Transformations.map(loansLive, new Function<List<Customer>, List<Customer>>
-		() {
-
-			@Override
-			public List<Customer> apply(final List<Customer> inputStates) {
-               *//* for (Customer state : inputStates) {
-                    state.setLoans(dao.getLoans(state.getCustomerId()));
-                }*//*
-				return inputStates;
-			}
-		});
-		return loansLive;*/
-	}
-
-	/* public LiveData<List<DashboardViewModel>> getTransformedUpcomingData() {
-	 *//* new MediatorLiveData<List<DashBoardModel>>();
-        LiveData<List<DashBoardModel>> dashBoardLiveData;
-        dashBoardLiveData = Transformations.switchMap(getUpcomingInstallments(),
-        (List<Installment> input) -> {
-            MediatorLiveData<List<DashBoardModel>> data = new MediatorLiveData<>();
-            List<DashBoardModel> dash = new ArrayList<>();
-            for (Installment installment : input) {
-                DashBoardModel dashBoardModel;
-                installment = loadInstallments(installment);
-                int loanAcNo = installment.getLoanAcNo();
-
-                //TODO remove getLocalLoanLAb from here
-                Loan loan =  ;
-                if (loan == null) continue;
-                Timber.d(loan.toString());
-                int custId = loan.getCustId();
-	            //TODO remove getLocalCstLAb from her
-                Customer customer = customerRepo.getLocalCustomerLab().getItem(
-                        custId).getValue();
-               // if (customer == null) continue;
-                Timber.d(customer.toString());
-                String customerName = customer.getName();
-                dashBoardModel =
-                        new DashBoardModel(custId, loanAcNo, installment.getInstallmentId(),
-                                customerName, customer.getMobileNumber(),
-                                installment.getExpectedAmt(), installment.getInstallmentDate());
-                dash.add(dashBoardModel);
-            }
-            data.setValue(dash);
-            return data;
-        });
-        return dashBoardLiveData;*//*
-    }
-	public LiveData<Installment> loadInstallments(Installment installment) {
-		//LiveData<Installment> quotationLiveData = get
-		LiveData<Installment> result =
-				Transformations.switchMap(installment, quotation -> {
-					MutableLiveData<Installment> mutableResult = new MutableLiveData<>();
-					appExecutors.diskIO().execute(() -> {
-						installment.setLoan(loanRepo.getLocalLoanLab().getRxItem(installment
-						.getLoanAcNo()));
-						mutableResult.postValue(quotation);
-					});
-					return mutableResult;
-				});
-		return result;
-	}
-*/
 	@Nullable
 	@Override
 	protected LiveData<Resource<List<Installment>>> updateItemLiveData() {
-		//TODO implement this
 		return null;
 	}
 

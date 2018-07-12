@@ -19,7 +19,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
@@ -29,7 +28,6 @@ import com.scleroid.financematic.data.local.model.TransactionModel;
 import com.scleroid.financematic.fragments.dialogs.DatePickerDialogFragment;
 import com.scleroid.financematic.utils.ui.ActivityUtils;
 import com.scleroid.financematic.utils.ui.DateUtils;
-import com.scleroid.financematic.utils.ui.RecyclerTouchListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -339,25 +337,7 @@ public class ReportFragment extends BaseFragment<ReportViewModel> {
 
 		reportRecyclerView.setAdapter(mAdapter);
 
-		// row click listener
-		RecyclerTouchListener recyclerTouchListener =
-				new RecyclerTouchListener(getActivity().getApplicationContext(),
-						reportRecyclerView,
-						new RecyclerTouchListener.ClickListener() {
-							@Override
-							public void onClick(View view, int position) {
-								TransactionModel report = transactionsList.get(position);
-								Toast.makeText(getActivity().getApplicationContext(),
-										report.getReceivedAmt() + " is Available Balance",
-										Toast.LENGTH_SHORT).show();
-							}
 
-							@Override
-							public void onLongClick(View view, int position) {
-
-							}
-						});
-		//	reportRecyclerView.addOnItemTouchListener(recyclerTouchListener);
 	}
 
 	private void handleClickFromDashboard() {

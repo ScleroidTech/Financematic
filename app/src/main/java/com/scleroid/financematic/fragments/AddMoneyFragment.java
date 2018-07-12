@@ -25,14 +25,10 @@ import es.dmoral.toasty.Toasty;
 
 /**
  * A simple {@link Fragment} subclass. Activities that contain this fragment interface to handle
- * interaction events. Use the {@link AddMoneyFragment#newInstance} factory method to create an
- * instance of this fragment.
+ * interaction events.
  */
 public class AddMoneyFragment extends BaseFragment {
-	// TODO: Rename parameter arguments, choose names that match
-	// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-	private static final String ARG_PARAM1 = "param1";
-	private static final String ARG_PARAM2 = "param2";
+
 	@BindView(R.id.add_money_edit_text)
 	EditText addMoneyEditText;
 	@BindView(R.id.add_money_button)
@@ -40,9 +36,7 @@ public class AddMoneyFragment extends BaseFragment {
 	Unbinder unbinder;
 	@Inject
 	Session session;
-	// TODO: Rename and change types of parameters
-	private String mParam1;
-	private String mParam2;
+
 	@Inject
 	ActivityUtils activityUtils;
 
@@ -50,23 +44,6 @@ public class AddMoneyFragment extends BaseFragment {
 		// Required empty public constructor
 	}
 
-	/**
-	 * Use this factory method to create a new instance of this fragment using the provided
-	 * parameters.
-	 *
-	 * @param param1 Parameter 1.
-	 * @param param2 Parameter 2.
-	 * @return A new instance of fragment AddMoneyFragment.
-	 */
-	// TODO: Rename and change types and number of parameters
-	public static AddMoneyFragment newInstance(String param1, String param2) {
-		AddMoneyFragment fragment = new AddMoneyFragment();
-		Bundle args = new Bundle();
-		args.putString(ARG_PARAM1, param1);
-		args.putString(ARG_PARAM2, param2);
-		fragment.setArguments(args);
-		return fragment;
-	}
 
 	@Override
 	public void onAttach(Context context) {
@@ -88,10 +65,7 @@ public class AddMoneyFragment extends BaseFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if (getArguments() != null) {
-			mParam1 = getArguments().getString(ARG_PARAM1);
-			mParam2 = getArguments().getString(ARG_PARAM2);
-		}
+
 	}
 
 	private void setTitle() {

@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -116,10 +115,6 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 		// Inflate the layout for this fragment
 		View rootView = getRootView();
 
-		// recyclerView = rootView.findViewById(R.id.recycler_view_dashboard);11
-
-		// prepareTempDashBoardModelData();
-
 
 		setupRecyclerView();
 		textViewUtils.textViewExperiments(upcomingEventsTextView);
@@ -168,7 +163,7 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 
 	private void updateUi() {
 
-		double totalAmt = calculateTotalAmt(loanList);
+		double totalAmt = calculateTotalAmt();
 		double lentAmt = calculateLentAmt(loanList);
 		double receivedAmt = totalAmt - lentAmt;
 		Timber.d("Calculating Daashboard " + totalAmt + "  " + lentAmt + "  " + receivedAmt);
@@ -185,16 +180,10 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 		return sum;
 	}
 
-	private double calculateTotalAmt(@NonNull final List<Loan> loans) {
-	/*	int sum = Stream.of(loans).mapToInt(loan ->
-				loan.getLoanAmt() != null ? loan.getLoanAmt().intValue() : 0).sum();*/
+	private double calculateTotalAmt() {
+
 		double sum = session.getAmount();
 
-		/*//TODO this maybe need to removed
-		if (sum == 0) {
-			sum = Stream.of(loans).mapToDouble(loan ->
-					loan.getLoanAmt() != null ? loan.getLoanAmt().doubleValue() : 0).sum();
-		}*/
 		Timber.i("sum of Total Amt" + sum);
 		return sum;
 	}
@@ -210,10 +199,7 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 		RecyclerView.LayoutManager mLayoutManager =
 				new LinearLayoutManager(getActivity().getApplicationContext());
 
-		// horizontal RecyclerView
-		// keep movie_list_row.xml width to `wrap_content`
-		// RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager
-		// (getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
+
 
 		recyclerViewDashboard.setLayoutManager(mLayoutManager);
 
@@ -221,15 +207,7 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 		recyclerViewDashboard.setItemAnimator(new DefaultItemAnimator());
 
 		recyclerViewDashboard.setAdapter(mAdapter);
-		DividerItemDecoration dividerItemDecoration =
-				new DividerItemDecoration(recyclerViewDashboard.getContext(),
-						DividerItemDecoration.VERTICAL);
-		//  recyclerView.addItemDecoration(dividerItemDecoration);
 
-
-		// row click listener
-		// TODO not needed, should be removed recyclerViewDashboard.addOnItemTouchListener
-		// (recyclerTouchListener);
 	}
 
 	private void setTitle() {
@@ -254,8 +232,6 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 		if (transactions == null) return;
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-			//	transactions.removeIf(transaction -> transaction.getLoan() == null || transaction
-			// .getLoan().getCustomer() == null);
 			transactions.sort(Comparator.comparing(Installment::getInstallmentDate));
 		} else {
 
@@ -264,17 +240,6 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 		}
 	}
 
-	private int calculateReceivedAmt(@NonNull final List<Loan> loans) {
-
-		int sum = Stream.of(loans).withoutNulls().mapToInt(loan ->
-				loan.getReceivedAmt() != null ? loan.getReceivedAmt().intValue() : 0).sum();
-		Timber.i("sum of received Amt" + sum);
-		return sum;
-	}
-
-	private boolean predicate(final Installment next) {
-		return next.getLoan() == null || next.getLoan().getCustomer() == null;
-	}
 
 	@OnClick({R.id.total_amount_text_view, R.id.total_amount_title_text_view, R.id
 			.remaining_amount_text_view, R.id.lent_amount_text_view, R.id
@@ -299,6 +264,8 @@ public class DashboardFragment extends BaseFragment<DashboardViewModel> {
 								.LENT_AMOUNT),
 						getFragmentManager());
 				break;
+			default:
+				//do Nothing
 
 		}
 
